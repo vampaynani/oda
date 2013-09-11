@@ -217,70 +217,9 @@ function setStage(){
     createjs.Touch.enable(stage);
     stage.enableMouseOver();
     
-    setBratzStage();
-    setSide();
-
-    var test = new Dragtxt('test','test',100,100);
-    stage.addChild(test);
+    setWorld();
 }
-function setBratzStage(){
-    bratzAnim.x = stage.canvas.width/2 - 20;
-    bratzAnim.y = stage.canvas.height/2;
-    
-    worldAnim.x = stage.canvas.width/2;
-    worldAnim.y = stage.canvas.height/2;
-    
-    attitudeAnim.x = 370;
-    attitudeAnim.y = 180;
-    
-    zapatosJadeAnim.x = zapatosYasminAnim.x = zapatosCloeAnim.x = ropaJadeAnim.x = ropaYasminAnim.x = ropaCloeAnim.x = labioJadeAnim.x = labioYasminAnim.x = labioCloeAnim.x = stage.canvas.width/2 - 20 ;
-
-    zapatosJadeAnim.y = zapatosYasminAnim.y = zapatosCloeAnim.y = ropaJadeAnim.y = ropaYasminAnim.y = ropaCloeAnim.y = labioJadeAnim.y =   labioYasminAnim.y =  labioCloeAnim.y = stage.canvas.height/2;
-
- 
-    worldAnim.currentFrame = 0;
-    plusAnim.currentFrame = 0;
- 
-    labioJadeAnim.currentFrame = 0;
-    labioYasminAnim.currentFrame = 0;
-    labioCloeAnim.currentFrame = 0;
-
-    ropaJadeAnim.currentFrame = 0;
-    ropaYasminAnim.currentFrame = 0;   
-    ropaCloeAnim.currentFrame = 0;
-
-    zapatosJadeAnim.currentFrame = 0;
-    zapatosYasminAnim.currentFrame = 0;   
-    zapatosCloeAnim.currentFrame = 0;
-
-    stage.addChild(worldAnim);
-    stage.addChild(plusAnim);
-    stage.addChild(bratzAnim);
-    stage.addChild(attitudeAnim);
-
-    stage.addChild(labioJadeAnim);
-    stage.addChild(labioYasminAnim);
-    stage.addChild(labioCloeAnim);
-
-    stage.addChild(ropaJadeAnim);
-    stage.addChild(ropaYasminAnim);
-    stage.addChild(ropaCloeAnim);
-
-    stage.addChild(zapatosJadeAnim);
-    stage.addChild(zapatosYasminAnim);
-    stage.addChild(zapatosCloeAnim);
-
-}
-function setSide(){
-    setBratzSide();
-    setWorldsSide();
-    setAttitudeSide();
-    setLookSide();
-    flechita = new createjs.Bitmap(imgFlechita);
-    flechita.x = sideOut;
-    flechita.y = 0;
-    stage.addChild(flechita);
-
+function setWorld(){
 
 }
 function setBratzSide(){
@@ -332,12 +271,7 @@ function setLookSide(){
 
 }
 function setListeners(){
-    for(var i = 1; i <= 3; i++){
-        sideBratz.getChildByName('brt'+i).addEventListener('dropped', updateStage);
-        //sideWorlds.getChildByName('wld'+i).addEventListener('dropped', updateStage);
-        //sideAttitude.getChildByName('att'+i).addEventListener('dropped', updateStage);
-        //sideLook.getChildByName('lok'+i).addEventListener('dropped', updateStage);
-    }
+    
 }
 function updateStage(e){
     switch(e.target.side){

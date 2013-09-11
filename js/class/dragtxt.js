@@ -44,7 +44,7 @@
       //dragObj.scaleX = 1;
       //dragObj.scaleY = 1;
       //dragObj.cache(0,0,100,100);
-      TweenLite.to(dragObj, 0.5, {ease: Back.easeOut, delay:0.1, x: dragObj.pos.x, y: dragObj.pos.y, alpha: 1});
+      TweenLite.to(dragObj, 0.5, {ease: Back.easeOut, x: dragObj.pos.x, y: dragObj.pos.y, alpha: 1, textShadow:"0px 0px 15px white"});
       dragObj.dispatchEvent('dropped');
   }
   window.Dragtxt = Dragtxt;
