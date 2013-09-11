@@ -73,14 +73,8 @@ function setStage(){
     stage.enableMouseOver();
     
     var header = new createjs.Bitmap(imgHeader);
-
-<<<<<<< HEAD
-    personajeAnim.x = 100;
-    personajeAnim.y = 100;
-=======
     personajeAnim.x = stage.canvas.width/2;
     personajeAnim.y = 200;
->>>>>>> 559e12254f716a0e7c0c6dfc724a458ddbfa8653
     personajeAnim.currentFrame = 0;
     
     console.log(personajeAnim);
