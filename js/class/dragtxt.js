@@ -1,6 +1,6 @@
 (function() {
   var Dragtxt = function(name, text, value, x, y) {
-    this.initialize(name, text, x, y);
+    this.initialize(name, text, value, x, y);
   }
   var p = Dragtxt.prototype = new createjs.Container(); // inherit from Container
   
