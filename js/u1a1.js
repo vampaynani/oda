@@ -74,29 +74,30 @@ function setStage(){
     stage.enableMouseOver();
     
     var header = new createjs.Bitmap(imgHeader);
+
     personajeAnim.x = 100;
     personajeAnim.y = 100;
     personajeAnim.currentFrame = 0;
     
     stage.addChild(personajeAnim);
     stage.addChild(header);
-    /*
+    
     setNube1();
     setNube2();
     setNube3();
-    */
+    
 }
-/*
+
 function setNube1(){
     var fondo1 = new createjs.Bitmap(imgNube1);
 
-    var palabra1nube1 = new Dragtxt("p1n1", "aqui texto", 20, 20);
-    var palabra2nube1 = new Dragtxt("p2n1", "aqui texto", 20, 20);
+    var palabra1nube1 = new Dragtxt("p1n1", "I'm", 0, 0, 20);
+    var palabra2nube1 = new Dragtxt("p2n1", "We're", 1, 120, 120);
    
     nubeUnoContenedor = new createjs.Container();
      
-    nubeUnoContenedor.y = 53;
-    nubeUnoContenedor.x = stage.canvas.width;
+    nubeUnoContenedor.y = 400;
+    nubeUnoContenedor.x = 100;
     
     nubeUnoContenedor.addChild(fondo1, palabra1nube1, palabra2nube1);
 
@@ -113,15 +114,15 @@ function setNube2(){
   
     nubeDosContenedor = new createjs.Container();
      
-    nubeDosContenedor.y = 53;
-    nubeDosContenedor.x = stage.canvas.width;
+    nubeDosContenedor.y = 353;
+    nubeDosContenedor.x = 250;
     
     nubeDosContenedor.addChild(fondo1, palabra1nube2, palabra2nube2, palabra3nube2, palabra4nube2);
 
     stage.addChild(nubeDosContenedor);
 }
 function setNube3(){
-    var fondo1 = new createjs.Bitmap(imgNube2);
+    var fondo1 = new createjs.Bitmap(imgNube3);
 
     var palabra1nube3 = new Dragtxt("p1n3", "aqui texto", 20, 20);
     var palabra2nube3 = new Dragtxt("p2n3", "aqui texto", 20, 20);
@@ -131,10 +132,10 @@ function setNube3(){
   
     nubeTresContenedor = new createjs.Container();
 
-    nubeTresContenedor.y = 53;
-    nubeTresContenedor.x = stage.canvas.width;
+    nubeTresContenedor.y = 353;
+    nubeTresContenedor.x = 540;
     
-    nubeDosContenedor.addChild(fondo1, palabra1nube3, palabra2nube3, palabra3nube3, palabra4nube3, palabra5nube3);
+    nubeTresContenedor.addChild(fondo1, palabra1nube3, palabra2nube3, palabra3nube3, palabra4nube3, palabra5nube3);
 
     stage.addChild(nubeTresContenedor);
 }
@@ -145,7 +146,7 @@ function setListeners(){
 function updateStage(e){
     
 }
-*/
+
 function tick() {
     stage.update();
 }
