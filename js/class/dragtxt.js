@@ -1,5 +1,5 @@
 (function() {
-  var Dragtxt = function(name, text, x, y) {
+  var Dragtxt = function(name, text, value, x, y) {
     this.initialize(name, text, x, y);
   }
   var p = Dragtxt.prototype = new createjs.Container(); // inherit from Container
@@ -7,16 +7,18 @@
   p.pos;
   p.dragObj;
   p.text;
+  p.value;
   p.side;
   p.selection = 0;
-      
+  
   p.Container_initialize = p.initialize;
-  p.initialize = function(name, text, x, y) {
+  p.initialize = function(name, text, value, x, y) {
     this.Container_initialize();
       this.name = name;
       this.x = x;
       this.y = y;
       this.text = new createjs.Text(text);
+      this.value = value;
       this.addChild(this.text);
       this.pos = {x:x, y:y};
       this.addEventListener('mousedown', this.handleMouseDown);

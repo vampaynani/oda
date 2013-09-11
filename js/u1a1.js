@@ -13,6 +13,15 @@ var nubeUnoContenedor, nubeDosContenedor, nubeTresContenedor;
 var progressLabel, preload;
 
 function oda() {
+    var activities = [
+        {img:1, txt1:1, txt2:1, txt3:1},
+        {img:2, txt1:2, txt2:1, txt3:2},
+        {img:3, txt1:1, txt2:1, txt3:3},
+        {img:4, txt1:2, txt2:1, txt3:4},
+        {img:5, txt1:1, txt2:1, txt3:5},
+    ];
+
+
   preload = new createjs.LoadQueue(false);
   preload.addEventListener('complete', handleComplete);
   preload.addEventListener('progress', handleProgress);
@@ -41,11 +50,11 @@ function handleProgress(){
 }
 function handleComplete(){
   $('#preloader').hide();
-  initAssets();
-  setStage();
+    initAssets();
+    setStage();
     setListeners();
     createjs.Ticker.addListener(window);
-  createjs.Ticker.setFPS(60);
+    createjs.Ticker.setFPS(60);
 }
  
 function initAssets(){
