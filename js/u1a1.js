@@ -29,19 +29,14 @@ function oda() {
       {id: 'n1', src: imgurl + 'nube1.png'},
       {id: 'n2', src: imgurl + 'nube2.png'},
       {id: 'n3', src: imgurl + 'nube3.png'},
-
       {id: 'inst', src: imgurl + 'texto_look.png'},
       {id: 'glob', src: imgurl + 'cuadro_naranja.png'},
       {id: 'head', src: imgurl + 'head.png'},
-
-      {id: 'per1', src: imgurl + 'niños_cantando.png'},
-      {id: 'per2', src: imgurl + 'niños_jugando.png'},
-      {id: 'per3', src: imgurl + 'niña_jugando.png'},
-      {id: 'per4', src: imgurl + 'niños_leyendo.png'},
-      {id: 'per5', src: imgurl + 'niño_flauta.png'},
-
-
-     
+      {id: 'per1', src: imgurl + 'ninos_cantando.png'},
+      {id: 'per2', src: imgurl + 'ninos_jugando.png'},
+      {id: 'per3', src: imgurl + 'nina_jugando.png'},
+      {id: 'per4', src: imgurl + 'ninos_leyendo.png'},
+      {id: 'per5', src: imgurl + 'nino_flauta.png'},     
     ]);
 }
 function handleProgress(){
@@ -52,48 +47,46 @@ function handleComplete(){
   $('#preloader').hide();
     initAssets();
     setStage();
-    setListeners();
+    //setListeners();
     createjs.Ticker.addListener(window);
     createjs.Ticker.setFPS(60);
 }
  
 function initAssets(){
-
     imgHeader = preload.getResult('head');
     imgNube1 = preload.getResult('n1');
     imgNube2 = preload.getResult('n2');
     imgNube3 = preload.getResult('n3');
     imgInstrucciones = preload.getResult('inst');
     imgGlobito = preload.getResult('glob');
-   
     personajeSps = new createjs.SpriteSheet({
         images: [preload.getResult('per1'), preload.getResult('per2'), preload.getResult('per3'), preload.getResult('per4'), preload.getResult('per5')],
         frames: {width: 360, height: 465, regX: 180, regY: 233},
       
     });  
-    
-    
-
     personajeAnim = new createjs.BitmapAnimation(personajeSps);
-   
-  
 }
 
 function setStage(){
-    stage = new createjs.Stage("stage");
-  
+    stage = new createjs.Stage('oda');
 
     createjs.Touch.enable(stage);
     stage.enableMouseOver();
     
+    var header = new createjs.Bitmap(imgHeader);
+    personajeAnim.x = 100;
+    personajeAnim.y = 100;
     personajeAnim.currentFrame = 0;
+    
     stage.addChild(personajeAnim);
-
+    stage.addChild(header);
+    /*
     setNube1();
     setNube2();
     setNube3();
+    */
 }
- 
+/*
 function setNube1(){
     var fondo1 = new createjs.Bitmap(imgNube1);
 
@@ -152,8 +145,7 @@ function setListeners(){
 function updateStage(e){
     
 }
- 
- 
+*/
 function tick() {
     stage.update();
 }
