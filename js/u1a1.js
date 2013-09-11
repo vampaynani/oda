@@ -61,8 +61,7 @@ function initAssets(){
     imgGlobito = preload.getResult('glob');
     personajeSps = new createjs.SpriteSheet({
         images: [preload.getResult('per1'), preload.getResult('per2'), preload.getResult('per3'), preload.getResult('per4'), preload.getResult('per5')],
-        frames: {width: 360, height: 465, regX: 180, regY: 233},
-      
+        frames: {width: 250, height: 200, regX: 125, regY: 100},
     });  
     personajeAnim = new createjs.BitmapAnimation(personajeSps);
 }
@@ -75,10 +74,17 @@ function setStage(){
     
     var header = new createjs.Bitmap(imgHeader);
 
+<<<<<<< HEAD
     personajeAnim.x = 100;
     personajeAnim.y = 100;
+=======
+    personajeAnim.x = stage.canvas.width/2;
+    personajeAnim.y = 200;
+>>>>>>> 559e12254f716a0e7c0c6dfc724a458ddbfa8653
     personajeAnim.currentFrame = 0;
     
+    console.log(personajeAnim);
+
     stage.addChild(personajeAnim);
     stage.addChild(header);
     
