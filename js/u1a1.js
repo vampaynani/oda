@@ -209,7 +209,7 @@ function initAssets(){
 }
 
 function setStage(){
-    stage = new createjs.Stage("dressup");
+    stage = new createjs.Stage("stage");
     sideOut = stage.canvas.width;
     sideIn = stage.canvas.width - imgSideBack.width;
     arrowIn = stage.canvas.width - imgFlechita.width;
