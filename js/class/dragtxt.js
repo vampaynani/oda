@@ -23,7 +23,9 @@
       this.value = value;
       this.addChild(this.text);
       this.pos = {x:x, y:y};
-      this.addEventListener('mousedown', this.handleMouseDown);
+      $(window).on('initEval', function(){
+        p.addEventListener('mousedown', p.handleMouseDown);
+      });
   }
   p.handleMouseDown = function (e){
       var draggable = e.target;
@@ -38,18 +40,10 @@
       });
       e.addEventListener('mouseup', function(ev){
           draggable.dispatchEvent('drop');
-          //draggable.returnToPlace(draggable);
-          //TweenLite.to(draggable, 0.5, {ease: Back.easeIn, scaleX: 0.2, scaleY: 0.2, alpha: 0, onComplete: draggable.returnToPlace, onCompleteParams:[draggable]});
       });
   }
   p.returnToPlace = function (){
-      //dragObj.text.filters = [];
-      //dragObj.y = dragObj.pos.y;
-      //dragObj.x = sideOut;
-      //dragObj.scaleX = 1;
-      //dragObj.scaleY = 1;
-      //dragObj.cache(0,0,100,100);
-      TweenLite.to(this, 0.5, {ease: Back.easeOut, x: this.pos.x, y: this.pos.y, alpha: 1});
+      TweenLite.to(this, 1.5, {ease: Elastic.easeOut, x: this.pos.x, y: this.pos.y, alpha: 1});
       this.dispatchEvent('dropped');
   }
   window.Dragtxt = Dragtxt;

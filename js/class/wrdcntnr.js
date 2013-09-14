@@ -17,10 +17,14 @@
       this.txt = new createjs.Text( text, '24px Arial', '#333333' );
       this.graphic = new createjs.Graphics().beginFill( '#f9e5d3' ).drawRect( 0, 0, w, h );
       this.shp = new createjs.Shape( this.graphic );
+
+      this.txt.x = w / 2;
+
       this.addChild( this.shp, this.txt );
   }
   p.changeText = function ( txt ){
     this.txt.text = txt;
+    this.txt.textAlign = 'center';
   }
   p.blink = function(){
     TweenMax.to(this.shp, 0.5, {alpha:.2, repeat:-1, yoyo:true});
