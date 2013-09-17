@@ -24,7 +24,7 @@ var answers = [
     {w1:1, w2:3, w3:1, sound:'english' },
     {w1:0, w2:1, w3:3, sound:'flute'},
 ];
-var stageSize = {w:800, h:600};
+var stageSize = {w:800, h:600, r:1};
 
 function resizeOda(){
     // browser viewport size
@@ -32,9 +32,9 @@ function resizeOda(){
     var h = window.innerHeight;
         
     // keep aspect ratio
-    var ratio = Math.min(w / stageSize.w, h / stageSize.h);
-    mainContainer.scaleX = ratio;
-    mainContainer.scaleY = ratio;
+    stageSize.r = Math.min(w / stageSize.w, h / stageSize.h);
+    mainContainer.scaleX = stageSize.r;
+    mainContainer.scaleY = stageSize.r;
             
     // Resize the canvas element
     $('#oda').width(w);
