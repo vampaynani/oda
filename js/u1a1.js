@@ -264,7 +264,6 @@ function initTest(){
 }
 function playInstructions(){
     if(mobiled.isIOS || mobiled.isAndroid){
-    //if($.browser.mobile){
         imgSG = preload.getResult('sg');
         sg = new createjs.Bitmap(imgSG);
         sg.regX = imgSG.width / 2;
