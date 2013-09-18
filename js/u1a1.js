@@ -263,7 +263,8 @@ function initTest(){
     TweenLite.from(nubeTresContenedor, 0.3, {alpha:0, y:nubeTresContenedor.y+50, delay:2.1, onComplete: playInstructions});
 }
 function playInstructions(){
-    if(createjs.Sound.BrowserDetect.isIOS || createjs.Sound.BrowserDetect.isAndroid){
+    if(mobiled.isIOS || mobiled.isAndroid){
+    //if($.browser.mobile){
         imgSG = preload.getResult('sg');
         sg = new createjs.Bitmap(imgSG);
         sg.regX = imgSG.width / 2;
