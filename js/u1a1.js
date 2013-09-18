@@ -7,9 +7,10 @@ var imgHeader = new Image(),
     imgInstrucciones = new Image(),
     imgGlobito = new Image(),
     imgC1 = new Image(),
-    imgC2 = new Image();
+    imgC2 = new Image(),
+    imgSG = new Image();
 
-var header, instructions;
+var header, instructions, sg;
 var vblurFilter, hblurFilter, vBnds, hBnds;
 var personajeSps, personajeAnim;
 var p1n1, p2n1, p1n2, p2n2, p3n2, p4n2, p1n3, p2n3, p3n3, p4n3, p5n3;
@@ -92,7 +93,8 @@ function oda() {
       {id: 'per4', src: imgurl + 'ninos_leyendo.png'},
       {id: 'per5', src: imgurl + 'nino_flauta.png'},
       {id: 'c1', src: imgurl + 'circle1.png'},
-      {id: 'c2', src: imgurl + 'circle2.png'},     
+      {id: 'c2', src: imgurl + 'circle2.png'}, 
+      {id: 'sg', src: imgurl + 'start_game.png'}    
     ]);
 
     stage.addChild(mainContainer);
@@ -261,8 +263,30 @@ function initTest(){
     TweenLite.from(nubeTresContenedor, 0.3, {alpha:0, y:nubeTresContenedor.y+50, delay:2.1, onComplete: playInstructions});
 }
 function playInstructions(){
+    if(createjs.Sound.BrowserDetect.isIOS || createjs.Sound.BrowserDetect.isAndroid){
+        imgSG = preload.getResult('sg');
+        sg = new createjs.Bitmap(imgSG);
+        sg.regX = imgSG.width / 2;
+        sg.regY = imgSG.height / 2;
+        sg.x = 400;
+        sg.y = 300;
+        sg.addEventListener('click', initMobileInstructions);
+        mainContainer.addChild(sg);
+        TweenLite.from(sg, 0.3, {alpha:0, y:sg.y+20});
+    }else{
+        inst = createjs.Sound.play('instructions');
+        inst.addEventListener('complete', initEvaluation);
+    }
+}
+function initMobileInstructions(e){
+    e.target.removeEventListener('click', initMobileInstructions);
+    createjs.Sound.stop();
     inst = createjs.Sound.play('instructions');
+    TweenLite.to(sg, 0.3, {alpha:0, y:sg.y+20, onComplete: removeMobileInstructions});
     inst.addEventListener('complete', initEvaluation);
+}
+function removeMobileInstructions(){
+    mainContainer.removeChild(sg);
 }
 function initEvaluation(){
     $(window).trigger('initEval');
