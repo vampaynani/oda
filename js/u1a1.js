@@ -8,9 +8,10 @@ var imgHeader = new Image(),
     imgGlobito = new Image(),
     imgC1 = new Image(),
     imgC2 = new Image(),
-    imgSG = new Image();
+    imgSG = new Image(),
+    imgPA = new Image();
 
-var header, instructions, sg;
+var header, instructions, sg, pa;
 var vblurFilter, hblurFilter, vBnds, hBnds;
 var personajeSps, personajeAnim;
 var p1n1, p2n1, p1n2, p2n2, p3n2, p4n2, p1n3, p2n3, p3n3, p4n3, p5n3;
@@ -94,7 +95,8 @@ function oda() {
       {id: 'per5', src: imgurl + 'nino_flauta.png'},
       {id: 'c1', src: imgurl + 'circle1.png'},
       {id: 'c2', src: imgurl + 'circle2.png'}, 
-      {id: 'sg', src: imgurl + 'start_game.png'}    
+      {id: 'sg', src: imgurl + 'start_game.png'},
+      {id: 'pa', src: imgurl + 'play_again.png'}  
     ]);
 
     stage.addChild(mainContainer);
@@ -180,11 +182,13 @@ function setStage(){
     setNube3();
     initTest();
 }
+/*
 function refresh( bf, obj ){
     //obj.filters = [bf];
     //var objBnds = bf.getBounds();
     //obj.cache(obj.x+objBnds.x, obj.y+objBnds.y, obj.image.width+objBnds.width+50, obj.image.height+objBnds.height+50);
 }
+*/
 function setDropper(){
     var fondo = new createjs.Bitmap(imgGlobito);
     hit1 = new WordContainer( 'h1', '', 14, 62, 90, 22 );
@@ -253,17 +257,22 @@ function setNube3(){
 function initTest(){
     i = 0;
 
+    personajeAnim.currentFrame = i;
+    personajeAnim.scaleX = 1;
+    personajeAnim.scaleY = 1;
+    personajeAnim.alpha = 1;
+
     TweenLite.from(header, 1, {y:-imgHeader.height});
     TweenLite.from(instructions, 1, {alpha:0, x:0, delay:0.5});
     TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
-    TweenLite.to(vblurFilter, 1, {blurY:0, onUpdate: refresh, onUpdateParams:[vblurFilter, header]});
+    //TweenLite.to(vblurFilter, 1, {blurY:0, onUpdate: refresh, onUpdateParams:[vblurFilter, header]});
     TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
     TweenLite.from(nubeUnoContenedor, 0.3, {alpha:0, y:nubeUnoContenedor.y+50, delay:1.5});
     TweenLite.from(nubeDosContenedor, 0.3, {alpha:0, y:nubeDosContenedor.y+50, delay:1.8});
     TweenLite.from(nubeTresContenedor, 0.3, {alpha:0, y:nubeTresContenedor.y+50, delay:2.1, onComplete: playInstructions});
 }
 function playInstructions(){
-	if(mobiled.isIOS() || mobiled.isAndroid()){
+    if(dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()){
         imgSG = preload.getResult('sg');
         sg = new createjs.Bitmap(imgSG);
         sg.regX = imgSG.width / 2;
@@ -320,9 +329,24 @@ function nextQuestion(){
         TweenLite.to(personajeAnim, 0.5, {scaleX: 1, scaleY: 1, alpha: 1});
         evaluateWord1();
     }else{
-        alert('Test terminado');
+        imgPA = preload.getResult('pa');
+        pa = new createjs.Bitmap(imgPA);
+        pa.regX = imgPA.width / 2;
+        pa.regY = imgPA.height / 2;
+        pa.x = 400;
+        pa.y = 300;
+        pa.addEventListener('click', paClickEvent);
+        mainContainer.addChild(pa);
+        TweenLite.from(pa, 0.5, {alpha:0, y:pa.y-20});
     }
-
+}
+function paClickEvent(){
+    pa.removeEventListener('click', playAgain);
+    TweenLite.to(pa, 0.5, {alpha:0, y:pa.y-20, onComplete: playAgain});
+}
+function playAgain(){
+    mainContainer.removeChild(pa);
+    initTest();
 }
 function evaluateWord1(){
     p1n1.addEventListener('drop', validateHit1);
