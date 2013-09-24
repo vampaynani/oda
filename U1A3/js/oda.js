@@ -5,28 +5,22 @@ var manifest = [
     {nombre: 'imgInstrucciones', id:'inst' , src: imgurl + 'texto_look.png'},
     {nombre: 'imgC1', id:'c1' , src: imgurl + 'circle1.png'},
     {nombre: 'imgC2', id:'c2' , src: imgurl + 'circle2.png'},
+    {nombre: 'calendar', id:'cal' , src: imgurl + 'calendar.png'},
     {nombre: 'guia', id:'gg' , src: imgurl + 'guia.png'},
-
-    {nombre: 'question', id:'q' , src: imgurl + 'question_name.png'},
-    {nombre: 'button', id:'btn' , src: imgurl + 'repeat_btn.png'},
-    {nombre: 'facesfondo', id:'faces' , src: imgurl + 'faces_stage.png'},
-
-    {nombre: 'name1', id:'n1' , src: imgurl + 'kid_april.png'},
-    {nombre: 'name6', id:'n6' , src: imgurl + 'kid_danielle.png'},
-    {nombre: 'name5', id:'n5' , src: imgurl + 'kid_holly.png'},
-    {nombre: 'name3', id:'n3' , src: imgurl + 'kid_jess.png'},
-    {nombre: 'name2', id:'n2' , src: imgurl + 'kid_lindsey.png'},
-    {nombre: 'name4', id:'n4' , src: imgurl + 'kid_madison.png'},
-   
+    {nombre: 'iconGym', id:'gym' , src: imgurl + 'icon_excercisesGymMM.png'},
+    {nombre: 'iconLunch', id:'lunch' , src: imgurl + 'icon_lunchCafeTnF.png'},
+    {nombre: 'iconArt', id:'art' , src: imgurl + 'icon_paintArtRoomMnF.png'},
+    {nombre: 'iconRead', id:'read' , src: imgurl + 'icon_readLibTT.png'},
+    {nombre: 'iconWatch', id:'watch' , src: imgurl + 'icon_watchAudTT.png'},
+    {nombre: 'line1', id:'l1' , src: imgurl + 'line1.png'},
+    {nombre: 'line2', id:'l2' , src: imgurl + 'line2.png'}
+  
 ];
 
 var manifest2 = [
     {nombre: 'p1', id: 'per1', src: imgurl + 'image_april.png'},
-    {nombre: 'p6', id: 'per6', src: imgurl + 'image_danielle.png'},
-    {nombre: 'p5', id: 'per5', src: imgurl + 'image_holly.png'},
-    {nombre: 'p3', id: 'per3', src: imgurl + 'image_jess.png'},
-    {nombre: 'p2', id: 'per2', src: imgurl + 'image_lindsey.png'},
-    {nombre: 'p4', id: 'per4', src: imgurl + 'image_madison.png'}
+    {nombre: 'p6', id: 'per6', src: imgurl + 'image_danielle.png'}
+
 ];
 
 var manifestSounds = [
@@ -57,10 +51,11 @@ for (var i = manifest.length - 1; i >= 0; i--) {
 
 var personajeSps, personajeAnim;
 var vblurFilter, hblurFilter, vBnds, hBnds;
-var p1n1, p2n1;
-var nombreContenedor, words;
-var hit1;
-var backUno, boton;
+var p1n1, p2n1, p3n1, p4n1, p5n1, p1n2, p2n2, p3n2, p4n2, p5n2, p1n3, p2n3, p3n3, p4n3, p5n3;
+
+var groupUnoContenedor, groupDosContenedor, groupTresContenedor, words;
+var hit1, hit2, hit3;
+var backUno, backDos, backTres;
 var progressLabel, preload, loaderBar, loaderColor, barHeight, barWidth, loadStep;
 
 var stageSize = {w:800, h:600, r:1};
@@ -165,7 +160,7 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
         frames: {width: ancho, height: alto, regX: equis, regY: ye},
     };
     for (var i = 0; i <= manifestName.length - 1; i++) {
-        eval("var im = preload.getResult('"+manifestName[i].src+"'); data.images.push(im); console.log(im.width, im.height);");
+        eval("var im = preload.getResult('"+manifestName[i].src+"'); data.images.push(im); console.log(im);");
     };
     eval(sprite+" = new createjs.SpriteSheet(data);");
     eval(animacion+" = new createjs.BitmapAnimation("+sprite+");");
@@ -173,7 +168,8 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
  
 function initAssets(){
     preloadImagenes(manifest);
-    preloadSprite(manifest2, "personajeSps", "personajeAnim", 180, 180, 0, 0);
+    preloadSprite(manifest2, "personajeSps", "personajeAnim", 0, 0, 0, 0);
+
 }
 
 function setStage(){
@@ -182,25 +178,53 @@ function setStage(){
     vBnds = vblurFilter.getBounds();
     hBnds = hblurFilter.getBounds();
     header = new createjs.Bitmap(imgHeader);
+
+    guiafondo = new createjs.Bitmap(guia);
+    guiafondo.x = 0;
+    guiafondo.y = 0;
+
+ 
+    calendar = new createjs.Bitmap(calendar);
+    calendar.x = 0;
+    calendar.y = 130;
+
+    iconGym = new createjs.Bitmap(iconGym);
+    iconGym.x = 375;
+    iconGym.y = 210;
+
+    iconArt = new createjs.Bitmap(iconArt);
+    iconArt.x = 194;
+    iconArt.y = 199;
+
+    iconWatch = new createjs.Bitmap(iconWatch);
+    iconWatch.x = 255;
+    iconWatch.y = 248;
+
+    iconRead = new createjs.Bitmap(iconRead);
+    iconRead.x = 320;
+    iconRead.y = 248;
+
+    iconLunch = new createjs.Bitmap(iconLunch);
+    iconLunch.x = 455;
+    iconLunch.y = 328;
+
+
+
     instructions = new createjs.Bitmap(imgInstrucciones);
-
-
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
 
     //header.filters = [vblurFilter];
     //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
 
-    personajeAnim.x = 100;
-    personajeAnim.y = stageSize.h - 180;
 
-    personajeAnim.currentFrame = 0;
     header.x = stageSize.w / 2 - imgHeader.width / 2;
     instructions.x = 20;
     instructions.y = 100;
-    mainContainer.addChild(personajeAnim, header, instructions, score);
+    mainContainer.addChild(guiafondo, calendar, personajeAnim, header, instructions, score, iconGym, iconArt, iconLunch, iconRead, iconWatch);
     setDropper();
-    setNombres();
-
+    setGroup1();
+    setGroup2();
+    setGroup3();
     initTest();
 }
 /*
@@ -211,53 +235,76 @@ function refresh( bf, obj ){
 }
 */
 function setDropper(){
-    var fondo = new createjs.Bitmap(question);
-    hit1 = new WordContainer( 'h1', '', 250, 0, 120, 22 );
-   
+    var linea = new createjs.Bitmap(line1);
+    var linea2 = new createjs.Bitmap(line1);
+    var linea3 = new createjs.Bitmap(line2);
+    linea.y = linea2.y = 31;
+    linea2.x = 290;
+    linea3.x = 100;
+    linea3.y = 69;
+    hit1 = new WordContainer( 'h1', '', 0, 0, 275, 30 );
+    hit2 = new WordContainer( 'h2', '', 290, 0, 275, 30 );
+    hit3 = new WordContainer( 'h3', '', 100, 37, 355, 30 );
     words = new createjs.Container();
 
-    words.x = 285;
-    words.y = stageSize.h - 70;
+    words.x = 170;
+    words.y = stageSize.h - 100;
 
-    words.addChild(fondo, hit1);
+    words.addChild(linea, linea2, linea3, hit1, hit2, hit3);
 
     mainContainer.addChild(words);
 }
 
-function setNombres(){
-    backUno = new createjs.Bitmap(facesfondo);
-    backUno.x=69;
+function setGroup1(){
 
-    boton = new createjs.Bitmap(button);
-    boton.x =300;
-    boton.y =320;
+    p1n1 = new Dragtxt("p1n1", "We read books", 1, 0, 0, 0);
+    p2n1 = new Dragtxt("p2n1", "We do exercise", 1, 1, 0, 18);
+    p3n1 = new Dragtxt("p3n1", "We point", 1, 2, 0, 36);
+    p4n1 = new Dragtxt("p4n1", "We eat lunch", 1, 3, 0, 54);
+    p5n1 = new Dragtxt("p5n1", "We watch movies", 1, 4, 0, 72);
 
-    name1 = new createjs.Bitmap(name1);
-    name1.x = 16;
-    name1.y = 20;
-    name2 = new createjs.Bitmap(name2);
-    name2.x = 4;
-    name2.y = 78;
-    name3 = new createjs.Bitmap(name3);
-    name3.x = 16;
-    name3.y = 125;
-    name4 = new createjs.Bitmap(name4);
-    name4.x = 4;
-    name4.y = 164;    
-    name5 = new createjs.Bitmap(name5);
-    name5.x = 16;
-    name5.y = 210;        
-    name6 = new createjs.Bitmap(name6);
-    name6.x = 4;
-    name6.y = 260;      
-  
-    nombreContenedor = new createjs.Container();
-    nombreContenedor.y = 132;
-    nombreContenedor.x = 120;
+    groupUnoContenedor = new createjs.Container();
+     
+    groupUnoContenedor.y = 132;
+    groupUnoContenedor.x = 565;
     
-    nombreContenedor.addChild(backUno, boton, name1, name2, name3, name4, name5, name6);
+    groupUnoContenedor.addChild( p1n1, p2n1, p3n1,p4n1,p5n1);
 
-    mainContainer.addChild(nombreContenedor);
+    mainContainer.addChild(groupUnoContenedor);
+}
+function setGroup2(){
+
+    p1n2 = new Dragtxt("p1n2", "in the gym", 2, 0, 0, 0);
+    p2n2 = new Dragtxt("p2n2", "in the cafeteria", 2, 1, 0, 18);
+    p3n2 = new Dragtxt("p3n2", "in the library", 2, 2, 0, 36);
+    p4n2 = new Dragtxt("p4n2", "in the auditorium", 2, 3, 0, 54);
+    p5n2 = new Dragtxt("p5n2", "in the art room", 2, 4, 0, 72);
+
+    groupDosContenedor = new createjs.Container();
+     
+    groupDosContenedor.y = 247;
+    groupDosContenedor.x = 565;
+    
+    groupDosContenedor.addChild( p1n2, p2n2, p3n2, p4n2, p5n2);
+
+    mainContainer.addChild(groupDosContenedor);
+}
+function setGroup3(){
+
+    p1n3 = new Dragtxt("p1n3", "on Monday and Friday.", 3, 0, 0, 0);
+    p2n3 = new Dragtxt("p2n3", "on Tuesday and Thursday.", 3, 1, 0, 18);
+    p3n3 = new Dragtxt("p3n3", "on Thursday and Friday.", 3, 2, 0, 36);
+    p4n3 = new Dragtxt("p4n3", "on Tuesday and Friday.", 3, 3, 0, 54);
+    p5n3 = new Dragtxt("p5n3", "on Monday and Wednesday.", 3, 4, 0, 72  );
+  
+    groupTresContenedor = new createjs.Container();
+
+    groupTresContenedor.y = 360;
+    groupTresContenedor.x = 565;
+    
+    groupTresContenedor.addChild( p1n3, p2n3, p3n3, p4n3, p5n3);
+
+    mainContainer.addChild(groupTresContenedor);
 }
 function initTest(){
     i = 0;
@@ -272,7 +319,9 @@ function initTest(){
     TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
     //TweenLite.to(vblurFilter, 1, {blurY:0, onUpdate: refresh, onUpdateParams:[vblurFilter, header]});
     TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
-    TweenLite.from(nombreContenedor, 0.3, {alpha:0, y:nombreContenedor.y+50, delay:1.5});
+    TweenLite.from(groupUnoContenedor, 0.3, {alpha:0, y:groupUnoContenedor.y+50, delay:1.5});
+    TweenLite.from(groupDosContenedor, 0.3, {alpha:0, y:groupDosContenedor.y+50, delay:1.8});
+    TweenLite.from(groupTresContenedor, 0.3, {alpha:0, y:groupTresContenedor.y+50, delay:2.1, onComplete: playInstructions});
 }
 function playInstructions(){
     if(dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()){
