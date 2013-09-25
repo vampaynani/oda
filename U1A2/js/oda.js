@@ -31,12 +31,13 @@ var manifest2 = [
 
 var manifestSounds = [
     {src:'sounds/boing.mp3', nombre:'boing'},
-    {src:'sounds/TU2_U1_A1_Instructions.mp3', nombre:'instructions'},
-    {src:'sounds/TU2_U1_A1_Im_painting_picture.mp3', nombre:'picture'},
-    {src:'sounds/TU2_U1_A1_Im_playing_flute.mp3', nombre:'flute'},
-    {src:'sounds/TU2_U1_A1_Were_playing_outside.mp3', nombre:'outside'},
-    {src:'sounds/TU2_U1_A1_Were_singing_song.mp3', nombre:'song'},
-    {src:'sounds/TU2_U1_A1_Were_studying_english.mp3', nombre:'english'}
+    {src:'sounds/TU2_U1_A2_instructions.mp3', nombre:'instructions'},
+    {src:'sounds/TU2_U1_A2_april.mp3', nombre:'april'},
+    {src:'sounds/TU2_U1_A2_danielle.mp3', nombre:'danielle'},
+    {src:'sounds/TU2_U1_A2_holly.mp3', nombre:'holly'},
+    {src:'sounds/TU2_U1_A2_jess.mp3', nombre:'jess'},
+    {src:'sounds/TU2_U1_A2_lindsey.mp3', nombre:'lindsey'},
+    {src:'sounds/TU2_U1_A2_madison.mp3', nombre:'madison'}
 ];
 
 var answers = [
@@ -56,7 +57,6 @@ for (var i = manifest.length - 1; i >= 0; i--) {
 };
 
 var personajeSps, personajeAnim;
-var vblurFilter, hblurFilter, vBnds, hBnds;
 var p1n1, p2n1;
 var nombreContenedor, words;
 var hit1;
@@ -177,18 +177,11 @@ function initAssets(){
 }
 
 function setStage(){
-    vblurFilter = new createjs.BlurFilter(0, 10, 1);
-    hblurFilter = new createjs.BlurFilter(10, 0, 1);
-    vBnds = vblurFilter.getBounds();
-    hBnds = hblurFilter.getBounds();
     header = new createjs.Bitmap(imgHeader);
     instructions = new createjs.Bitmap(imgInstrucciones);
 
 
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
-
-    //header.filters = [vblurFilter];
-    //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
 
     personajeAnim.x = 100;
     personajeAnim.y = stageSize.h - 180;
@@ -203,13 +196,6 @@ function setStage(){
 
     initTest();
 }
-/*
-function refresh( bf, obj ){
-    //obj.filters = [bf];
-    //var objBnds = bf.getBounds();
-    //obj.cache(obj.x+objBnds.x, obj.y+objBnds.y, obj.image.width+objBnds.width+50, obj.image.height+objBnds.height+50);
-}
-*/
 function setDropper(){
     var fondo = new createjs.Bitmap(question);
     hit1 = new WordContainer( 'h1', '', 250, 0, 120, 22 );
@@ -270,9 +256,8 @@ function initTest(){
     TweenLite.from(header, 1, {y:-imgHeader.height});
     TweenLite.from(instructions, 1, {alpha:0, x:0, delay:0.5});
     TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
-    //TweenLite.to(vblurFilter, 1, {blurY:0, onUpdate: refresh, onUpdateParams:[vblurFilter, header]});
     TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
-    TweenLite.from(nombreContenedor, 0.3, {alpha:0, y:nombreContenedor.y+50, delay:1.5});
+    TweenLite.from(nombreContenedor, 0.3, {alpha:0, y:nombreContenedor.y+50, delay:1.5, onComplete: playInstructions});
 }
 function playInstructions(){
     if(dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()){
@@ -286,6 +271,7 @@ function playInstructions(){
         mainContainer.addChild(sg);
         TweenLite.from(sg, 0.3, {alpha:0, y:sg.y+20});
     }else{
+        console.log(createjs.Sound);
         inst = createjs.Sound.play('instructions');
         inst.addEventListener('complete', initEvaluation);
     }

@@ -182,13 +182,6 @@ function setStage(){
     setNube3();
     initTest();
 }
-/*
-function refresh( bf, obj ){
-    //obj.filters = [bf];
-    //var objBnds = bf.getBounds();
-    //obj.cache(obj.x+objBnds.x, obj.y+objBnds.y, obj.image.width+objBnds.width+50, obj.image.height+objBnds.height+50);
-}
-*/
 function setDropper(){
     var fondo = new createjs.Bitmap(imgGlobito);
     hit1 = new WordContainer( 'h1', '', 14, 62, 90, 22 );
@@ -262,10 +255,11 @@ function initTest(){
     personajeAnim.scaleY = 1;
     personajeAnim.alpha = 1;
 
+    score.updateCount( i );
+
     TweenLite.from(header, 1, {y:-imgHeader.height});
     TweenLite.from(instructions, 1, {alpha:0, x:0, delay:0.5});
     TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
-    //TweenLite.to(vblurFilter, 1, {blurY:0, onUpdate: refresh, onUpdateParams:[vblurFilter, header]});
     TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
     TweenLite.from(nubeUnoContenedor, 0.3, {alpha:0, y:nubeUnoContenedor.y+50, delay:1.5});
     TweenLite.from(nubeDosContenedor, 0.3, {alpha:0, y:nubeDosContenedor.y+50, delay:1.8});
@@ -323,8 +317,8 @@ function clearQuestion(){
 }
 function nextQuestion(){
     i++;
+    score.updateCount( i );
     if(i < answers.length){
-        score.updateCount( i );
         personajeAnim.currentFrame = i;
         TweenLite.to(personajeAnim, 0.5, {scaleX: 1, scaleY: 1, alpha: 1});
         evaluateWord1();
