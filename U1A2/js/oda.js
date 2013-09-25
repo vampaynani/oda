@@ -5,7 +5,7 @@ var manifest = [
     {nombre: 'imgInstrucciones', id:'inst' , src: imgurl + 'texto_look.png'},
     {nombre: 'imgC1', id:'c1' , src: imgurl + 'circle1.png'},
     {nombre: 'imgC2', id:'c2' , src: imgurl + 'circle2.png'},
-    {nombre: 'guia', id:'gg' , src: imgurl + 'guia.png'},
+    {nombre: 'guiafondo', id:'gg' , src: imgurl + 'guia.png'},
 
     {nombre: 'question', id:'q' , src: imgurl + 'question_name.png'},
     {nombre: 'button', id:'btn' , src: imgurl + 'repeat_btn.png'},
@@ -49,11 +49,9 @@ var answers = [
 ];
 
 var todo = $.merge( manifest, manifest2);
-console.log(todo);
 
 for (var i = manifest.length - 1; i >= 0; i--) {
    eval("var " + manifest[i].nombre + " = new Image(); "); 
-   console.log ( manifest[i].nombre);
 };
 
 var personajeSps, personajeAnim;
@@ -157,7 +155,7 @@ function preloadImagenes(manifestName){
     };
 }
 
-function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis, ye){
+function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis, ye, Xtotal, Ytotal){
     var sprite=  (spriteName); 
     var animacion=  (spriteAnim); 
     var data = {
@@ -165,21 +163,33 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
         frames: {width: ancho, height: alto, regX: equis, regY: ye},
     };
     for (var i = 0; i <= manifestName.length - 1; i++) {
-        eval("var im = preload.getResult('"+manifestName[i].src+"'); data.images.push(im); console.log(im.width, im.height);");
+        eval("var im = preload.getResult('"+manifestName[i].src+"'); data.images.push(im);");
     };
     eval(sprite+" = new createjs.SpriteSheet(data);");
     eval(animacion+" = new createjs.BitmapAnimation("+sprite+");");
+    eval(animacion+".x ="+Xtotal+";");
+    eval(animacion+".y ="+Ytotal+";");
+    eval(animacion+".currentFrame =0;");
 }
- 
+
+
+function createImage(name, equis, ye){
+    eval(name+" =  new createjs.Bitmap("+name+");");
+    eval(name+".x = "+equis+";");
+    eval(name+".y = "+ye+";");
+}
+
 function initAssets(){
     preloadImagenes(manifest);
-    preloadSprite(manifest2, "personajeSps", "personajeAnim", 180, 180, 0, 0);
+    preloadSprite(manifest2, "personajeSps", "personajeAnim", 180, 180, 0, 0,100,stageSize.h - 180);
 }
 
 function setStage(){
     header = new createjs.Bitmap(imgHeader);
     instructions = new createjs.Bitmap(imgInstrucciones);
-
+    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0);
+    createImage("imgInstrucciones",20,100);
+    createImage("guiafondo",0,0);
 
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
 
@@ -253,8 +263,8 @@ function initTest(){
     personajeAnim.scaleY = 1;
     personajeAnim.alpha = 1;
 
-    TweenLite.from(header, 1, {y:-imgHeader.height});
-    TweenLite.from(instructions, 1, {alpha:0, x:0, delay:0.5});
+    TweenLite.from(imgHeader, 1, {y:-imgHeader.height});
+    TweenLite.from(imgInstrucciones, 1, {alpha:0, x:0, delay:0.5});
     TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
     TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
     TweenLite.from(nombreContenedor, 0.3, {alpha:0, y:nombreContenedor.y+50, delay:1.5, onComplete: playInstructions});
