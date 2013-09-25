@@ -1,31 +1,33 @@
 var stage, mainContainer, i, song, imgurl="imgs/";
 
 var manifest = [
-    {nombre: 'imgHeader', id: 'head', src: imgurl + 'pleca.png'},
-    {nombre: 'imgInstrucciones', id:'inst' , src: imgurl + 'texto_look.png'},
+    {nombre: 'imgHeader', id: 'header', src: imgurl + 'pleca.png'},
+    {nombre: 'instructions', id:'inst' , src: imgurl + 'texto_look.png'},
     {nombre: 'imgC1', id:'c1' , src: imgurl + 'circle1.png'},
     {nombre: 'imgC2', id:'c2' , src: imgurl + 'circle2.png'},
-    {nombre: 'calendar', id:'cal' , src: imgurl + 'calendar.png'},
-    {nombre: 'guiafondo', id:'gg' , src: imgurl + 'guia.png'},
-    {nombre: 'iconGym', id:'gym' , src: imgurl + 'icon_excercisesGymMM.png'},
-    {nombre: 'iconLunch', id:'lunch' , src: imgurl + 'icon_lunchCafeTnF.png'},
-    {nombre: 'iconArt', id:'art' , src: imgurl + 'icon_paintArtRoomMnF.png'},
-    {nombre: 'iconRead', id:'read' , src: imgurl + 'icon_readLibTT.png'},
-    {nombre: 'iconWatch', id:'watch' , src: imgurl + 'icon_watchAudTT.png'},
-    {nombre: 'line1', id:'l1' , src: imgurl + 'line1.png'},
-    {nombre: 'line2', id:'l2' , src: imgurl + 'line2.png'}
-  
+    {nombre: 'teacher', id:'teac' , src: imgurl + 'teacher.png'},
+    {nombre: 'button', id:'btn' , src: imgurl + 'repeat_btn.png'} ,  
+    {nombre: 'guiafondo', id:'guia' , src: imgurl + 'guia.png'}   
 ];
 
 var manifest2 = [
-    {nombre: 'p1', id: 'per1', src: imgurl + 'image_april.png'},
-    {nombre: 'p6', id: 'per6', src: imgurl + 'image_danielle.png'}
+    {nombre: 'busScene', id:'bus' , src: imgurl + 'bus_late.png'},  
+    {nombre: 'eatClassScene', id:'eat' , src: imgurl + 'eat_class.png'},  
+    {nombre: 'walkHallScene', id:'walk' , src: imgurl + 'walk_hall.png'},  
+    {nombre: 'runAudScene', id:'aud' , src: imgurl + 'run_aud.png'},  
+    {nombre: 'runHallScene', id:'run' , src: imgurl + 'run_hall.png'},  
+    {nombre: 'beQuietScene', id:'quiet' , src: imgurl + 'be_quiet.png'},  
+    {nombre: 'talkLibraryScene', id:'library' , src: imgurl + 'talk_library.png'},  
+    {nombre: 'arriveTimeScene', id:'arrive' , src: imgurl + 'arrive_time.png'},  
+    {nombre: 'trashCafeScene', id:'cafe' , src: imgurl + 'trash_cafeteria.png'},  
+    {nombre: 'throwTrashScene', id:'trash' , src: imgurl + 'throw_trash.png'},  
+    {nombre: 'watchMoviesScene', id:'movies' , src: imgurl + 'watch_movies.png'},  
 
 ];
 
 var manifestSounds = [
     {src:'sounds/boing.mp3', nombre:'boing'},
-  
+   
 ];
 
 var answers = [
@@ -43,13 +45,11 @@ for (var i = manifest.length - 1; i >= 0; i--) {
 };
 
 var personajeSps, personajeAnim;
+var personajeSps2, personajeAnim2;
 var vblurFilter, hblurFilter, vBnds, hBnds;
-var p1n1, p2n1, p3n1, p4n1, p5n1, p1n2, p2n2, p3n2, p4n2, p5n2, p1n3, p2n3, p3n3, p4n3, p5n3;
 
-var groupUnoContenedor, groupDosContenedor, groupTresContenedor, words;
-var hit1, hit2, hit3;
-var backUno, backDos, backTres;
-var progressLabel, preload, loaderBar, loaderColor, barHeight, barWidth, loadStep;
+var boton;
+var guia, progressLabel, preload, loaderBar, loaderColor, barHeight, barWidth, loadStep;
 
 var stageSize = {w:800, h:600, r:1};
 
@@ -162,6 +162,11 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
     eval(animacion+".currentFrame =0;");
 }
  
+function initAssets(){
+    preloadImagenes(manifest);
+    preloadSprite(manifest2, "personajeSps", "personajeAnim", 268, 210, 0, 0, 457,347);
+    preloadSprite(manifest2, "personajeSps2", "personajeAnim2", 268, 210, 0, 0, 136, 347);
+}
 
 function createImage(name, equis, ye){
     eval(name+" =  new createjs.Bitmap("+name+");");
@@ -169,40 +174,25 @@ function createImage(name, equis, ye){
     eval(name+".y = "+ye+";");
 }
 
-function initAssets(){
-    preloadImagenes(manifest);
-    preloadSprite(manifest2, "personajeSps", "personajeAnim", 0, 0, 0, 0, 0, 0);
-
-}
-
 function setStage(){
     vblurFilter = new createjs.BlurFilter(0, 10, 1);
     hblurFilter = new createjs.BlurFilter(10, 0, 1);
     vBnds = vblurFilter.getBounds();
     hBnds = hblurFilter.getBounds();
-
+ 
     createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0);
-    createImage("imgInstrucciones",20,100);
+    createImage("instructions",20,100);
+    createImage("teacher",250,124);
+    createImage("button",441,210);
     createImage("guiafondo",0,0);
-    createImage("calendar",0,130);
-    createImage("iconGym",375,210);
-    createImage("iconArt",194,199);
-    createImage("iconWatch",255,248);
-    createImage("iconRead",320,248);
-    createImage("iconLunch",455,328);
-
+  
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
 
     //header.filters = [vblurFilter];
     //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
 
+    mainContainer.addChild(guiafondo,teacher, button, personajeAnim, personajeAnim2, imgHeader, instructions, score);
 
-
-    mainContainer.addChild(guiafondo, calendar, personajeAnim, imgHeader, imgInstrucciones, score, iconGym, iconArt, iconLunch, iconRead, iconWatch);
-    setDropper();
-    setGroup1();
-    setGroup2();
-    setGroup3();
     initTest();
 }
 /*
@@ -211,79 +201,7 @@ function refresh( bf, obj ){
     //var objBnds = bf.getBounds();
     //obj.cache(obj.x+objBnds.x, obj.y+objBnds.y, obj.image.width+objBnds.width+50, obj.image.height+objBnds.height+50);
 }
-*/
-function setDropper(){
-    var linea = new createjs.Bitmap(line1);
-    var linea2 = new createjs.Bitmap(line1);
-    var linea3 = new createjs.Bitmap(line2);
-    linea.y = linea2.y = 31;
-    linea2.x = 290;
-    linea3.x = 100;
-    linea3.y = 69;
-    hit1 = new WordContainer( 'h1', '', 0, 0, 275, 30 );
-    hit2 = new WordContainer( 'h2', '', 290, 0, 275, 30 );
-    hit3 = new WordContainer( 'h3', '', 100, 37, 355, 30 );
-    words = new createjs.Container();
-
-    words.x = 170;
-    words.y = stageSize.h - 100;
-
-    words.addChild(linea, linea2, linea3, hit1, hit2, hit3);
-
-    mainContainer.addChild(words);
-}
-
-function setGroup1(){
-
-    p1n1 = new Dragtxt("p1n1", "We read books", 1, 0, 0, 0);
-    p2n1 = new Dragtxt("p2n1", "We do exercise", 1, 1, 0, 18);
-    p3n1 = new Dragtxt("p3n1", "We point", 1, 2, 0, 36);
-    p4n1 = new Dragtxt("p4n1", "We eat lunch", 1, 3, 0, 54);
-    p5n1 = new Dragtxt("p5n1", "We watch movies", 1, 4, 0, 72);
-
-    groupUnoContenedor = new createjs.Container();
-     
-    groupUnoContenedor.y = 132;
-    groupUnoContenedor.x = 565;
-    
-    groupUnoContenedor.addChild( p1n1, p2n1, p3n1,p4n1,p5n1);
-
-    mainContainer.addChild(groupUnoContenedor);
-}
-function setGroup2(){
-
-    p1n2 = new Dragtxt("p1n2", "in the gym", 2, 0, 0, 0);
-    p2n2 = new Dragtxt("p2n2", "in the cafeteria", 2, 1, 0, 18);
-    p3n2 = new Dragtxt("p3n2", "in the library", 2, 2, 0, 36);
-    p4n2 = new Dragtxt("p4n2", "in the auditorium", 2, 3, 0, 54);
-    p5n2 = new Dragtxt("p5n2", "in the art room", 2, 4, 0, 72);
-
-    groupDosContenedor = new createjs.Container();
-     
-    groupDosContenedor.y = 247;
-    groupDosContenedor.x = 565;
-    
-    groupDosContenedor.addChild( p1n2, p2n2, p3n2, p4n2, p5n2);
-
-    mainContainer.addChild(groupDosContenedor);
-}
-function setGroup3(){
-
-    p1n3 = new Dragtxt("p1n3", "on Monday and Friday.", 3, 0, 0, 0);
-    p2n3 = new Dragtxt("p2n3", "on Tuesday and Thursday.", 3, 1, 0, 18);
-    p3n3 = new Dragtxt("p3n3", "on Thursday and Friday.", 3, 2, 0, 36);
-    p4n3 = new Dragtxt("p4n3", "on Tuesday and Friday.", 3, 3, 0, 54);
-    p5n3 = new Dragtxt("p5n3", "on Monday and Wednesday.", 3, 4, 0, 72  );
-  
-    groupTresContenedor = new createjs.Container();
-
-    groupTresContenedor.y = 360;
-    groupTresContenedor.x = 565;
-    
-    groupTresContenedor.addChild( p1n3, p2n3, p3n3, p4n3, p5n3);
-
-    mainContainer.addChild(groupTresContenedor);
-}
+*/ 
 function initTest(){
     i = 0;
 
@@ -293,14 +211,11 @@ function initTest(){
     personajeAnim.alpha = 1;
 
     TweenLite.from(imgHeader, 1, {y:-imgHeader.height});
-    TweenLite.from(imgInstrucciones, 1, {alpha:0, x:0, delay:0.5});
+    TweenLite.from(instructions, 1, {alpha:0, x:0, delay:0.5});
     TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
     //TweenLite.to(vblurFilter, 1, {blurY:0, onUpdate: refresh, onUpdateParams:[vblurFilter, header]});
-    TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
-    TweenLite.from(groupUnoContenedor, 0.3, {alpha:0, y:groupUnoContenedor.y+50, delay:1.5});
-    TweenLite.from(groupDosContenedor, 0.3, {alpha:0, y:groupDosContenedor.y+50, delay:1.8});
-    TweenLite.from(groupTresContenedor, 0.3, {alpha:0, y:groupTresContenedor.y+50, delay:2.1, onComplete: playInstructions});
 }
+
 function playInstructions(){
     if(dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()){
         imgSG = preload.getResult('sg');

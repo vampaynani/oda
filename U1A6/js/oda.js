@@ -1,25 +1,57 @@
 var stage, mainContainer, i, song, imgurl="imgs/";
 
 var manifest = [
-    {nombre: 'imgHeader', id: 'head', src: imgurl + 'pleca.png'},
-    {nombre: 'imgInstrucciones', id:'inst' , src: imgurl + 'texto_look.png'},
-    {nombre: 'imgC1', id:'c1' , src: imgurl + 'circle1.png'},
-    {nombre: 'imgC2', id:'c2' , src: imgurl + 'circle2.png'},
-    {nombre: 'calendar', id:'cal' , src: imgurl + 'calendar.png'},
-    {nombre: 'guiafondo', id:'gg' , src: imgurl + 'guia.png'},
-    {nombre: 'iconGym', id:'gym' , src: imgurl + 'icon_excercisesGymMM.png'},
-    {nombre: 'iconLunch', id:'lunch' , src: imgurl + 'icon_lunchCafeTnF.png'},
-    {nombre: 'iconArt', id:'art' , src: imgurl + 'icon_paintArtRoomMnF.png'},
-    {nombre: 'iconRead', id:'read' , src: imgurl + 'icon_readLibTT.png'},
-    {nombre: 'iconWatch', id:'watch' , src: imgurl + 'icon_watchAudTT.png'},
-    {nombre: 'line1', id:'l1' , src: imgurl + 'line1.png'},
-    {nombre: 'line2', id:'l2' , src: imgurl + 'line2.png'}
-  
+    {nombre: 'imgHeader', src: imgurl + 'pleca.png'},
+    {nombre: 'imgInstrucciones', src: imgurl + 'texto_look.png'},
+    {nombre: 'imgC1',  src: imgurl + 'circle1.png'},
+    {nombre: 'imgC2',  src: imgurl + 'circle2.png'},
+    {nombre: 'guiafondo',  src: imgurl + 'guia.png'},
+    {nombre: 'crossWords',  src: imgurl + 'cross_words.png'},
+    {nombre: 'bass', src: imgurl + 'bass.png'},
+    {nombre: 'bass_number', src: imgurl + 'bass_number.png'},
+    {nombre: 'drum', src: imgurl + 'drum.png'},
+    {nombre: 'drum_number', src: imgurl + 'drum_number.png'},
+    {nombre: 'guitar', src: imgurl + 'guitar.png'},
+    {nombre: 'guitar_number', src: imgurl + 'guitar_number.png'},
+    {nombre: 'flute', src: imgurl + 'flute.png'},
+    {nombre: 'flute_number', src: imgurl + 'flute_number.png'},
+    {nombre: 'piano', src: imgurl + 'piano.png'},
+    {nombre: 'piano_number', src: imgurl + 'piano_number.png'},
+    {nombre: 'sax', src: imgurl + 'sax.png'},
+    {nombre: 'sax_number', src: imgurl + 'sax_number.png'},
+    {nombre: 'tambourine', src: imgurl + 'tambourine.png'},
+    {nombre: 'tambourine_number', src: imgurl + 'tambourine_number.png'},
+    {nombre: 'trumpet', src: imgurl + 'trumpet.png'},
+    {nombre: 'trumpet_number', src: imgurl + 'trumpet_number.png'},
 ];
 
 var manifest2 = [
-    {nombre: 'p1', id: 'per1', src: imgurl + 'image_april.png'},
-    {nombre: 'p6', id: 'per6', src: imgurl + 'image_danielle.png'}
+    {nombre: 'aLetra', src: imgurl + 'a.png'},
+    {nombre: 'bLetra', src: imgurl + 'b.png'},
+    {nombre: 'cLetra', src: imgurl + 'c.png'},
+    {nombre: 'dLetra', src: imgurl + 'd.png'},
+    {nombre: 'eLetra', src: imgurl + 'e.png'},
+    {nombre: 'fLetra', src: imgurl + 'f.png'},
+    {nombre: 'gLetra', src: imgurl + 'g.png'},
+    {nombre: 'hLetra', src: imgurl + 'h.png'},
+    {nombre: 'iLetra', src: imgurl + 'i.png'},
+    {nombre: 'jLetra', src: imgurl + 'j.png'},
+    {nombre: 'kLetra', src: imgurl + 'k.png'},
+    {nombre: 'lLetra', src: imgurl + 'l.png'},
+    {nombre: 'mLetra', src: imgurl + 'm.png'},
+    {nombre: 'nLetra', src: imgurl + 'n.png'},
+    {nombre: 'oLetra', src: imgurl + 'o.png'},
+    {nombre: 'pLetra', src: imgurl + 'p.png'},
+    {nombre: 'qLetra', src: imgurl + 'q.png'},
+    {nombre: 'rLetra', src: imgurl + 'r.png'},
+    {nombre: 'sLetra', src: imgurl + 's.png'},
+    {nombre: 'tLetra', src: imgurl + 't.png'},
+    {nombre: 'uLetra', src: imgurl + 'u.png'},
+    {nombre: 'vLetra', src: imgurl + 'v.png'},
+    {nombre: 'wLetra', src: imgurl + 'w.png'},
+    {nombre: 'xLetra', src: imgurl + 'x.png'},
+    {nombre: 'yLetra', src: imgurl + 'y.png'},
+    {nombre: 'zLetra', src: imgurl + 'z.png'},
 
 ];
 
@@ -155,24 +187,35 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
     for (var i = 0; i <= manifestName.length - 1; i++) {
         eval("var im = preload.getResult('"+manifestName[i].src+"'); data.images.push(im);");
     };
+
     eval(sprite+" = new createjs.SpriteSheet(data);");
     eval(animacion+" = new createjs.BitmapAnimation("+sprite+");");
     eval(animacion+".x ="+Xtotal+";");
     eval(animacion+".y ="+Ytotal+";");
-    eval(animacion+".currentFrame =0;");
+    eval(animacion+".currentFrame = 0;");
+    eval("mainContainer.addChild("+animacion+");");
 }
  
-
 function createImage(name, equis, ye){
     eval(name+" =  new createjs.Bitmap("+name+");");
     eval(name+".x = "+equis+";");
     eval(name+".y = "+ye+";");
+    eval("mainContainer.addChild("+name+");");
+}
+function letrasAbajo(){
+    for (var i = 0; i <= 13; i++) {
+        eval("var letra"+i+" = new Draggable('letra"+i+"', "+manifest2[i].nombre+", 0, i, 135+41.5*i, 510);");
+        eval("mainContainer.addChild(letra"+i+");");
+    }
+    for (var i = 14; i <= manifest2.length-1; i++) {
+        eval("var letra"+i+" = new Draggable('letra"+i+"', "+manifest2[i].nombre+", 0, i, 41.5*i-405, 544);");
+        eval("mainContainer.addChild(letra"+i+");");
+
+    }
 }
 
 function initAssets(){
     preloadImagenes(manifest);
-    preloadSprite(manifest2, "personajeSps", "personajeAnim", 0, 0, 0, 0, 0, 0);
-
 }
 
 function setStage(){
@@ -183,26 +226,35 @@ function setStage(){
 
     createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0);
     createImage("imgInstrucciones",20,100);
-    createImage("guiafondo",0,0);
-    createImage("calendar",0,130);
-    createImage("iconGym",375,210);
-    createImage("iconArt",194,199);
-    createImage("iconWatch",255,248);
-    createImage("iconRead",320,248);
-    createImage("iconLunch",455,328);
+    //createImage("guiafondo",0,0);
+    createImage("crossWords",289,200);
+    createImage("sax",341,118);
+    createImage("sax_number",346,130);
+    createImage("drum",99,125);
+    createImage("drum_number",69,125);
+    createImage("guitar",99,228);
+    createImage("guitar_number",163,252);
+    createImage("tambourine",192,412);
+    createImage("tambourine_number",197,390);
+    createImage("trumpet",353,446);
+    createImage("trumpet_number",322,444);
+    createImage("flute",546,448);
+    createImage("flute_number",521,443);
+    createImage("bass",639,249);
+    createImage("bass_number",621,279);
+    createImage("piano",567,77);
+    createImage("piano_number",567,138);
 
-    score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
+    letrasAbajo();
 
     //header.filters = [vblurFilter];
     //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
 
+    score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
+    mainContainer.addChild(score);
 
-
-    mainContainer.addChild(guiafondo, calendar, personajeAnim, imgHeader, imgInstrucciones, score, iconGym, iconArt, iconLunch, iconRead, iconWatch);
     setDropper();
-    setGroup1();
-    setGroup2();
-    setGroup3();
+
     initTest();
 }
 /*
@@ -212,95 +264,83 @@ function refresh( bf, obj ){
     //obj.cache(obj.x+objBnds.x, obj.y+objBnds.y, obj.image.width+objBnds.width+50, obj.image.height+objBnds.height+50);
 }
 */
+function charContainer( hit, numero, xcoord, ycoord){
+    eval("var hit"+numero+";");
+    var cuadricula=23.5;
+    eval("hit"+numero+"= new WordContainer('h"+numero+"', '', "+xcoord*cuadricula+","+ycoord*cuadricula+",22,22);");
+    eval("words.addChild(hit"+numero+");");
+}
 function setDropper(){
-    var linea = new createjs.Bitmap(line1);
-    var linea2 = new createjs.Bitmap(line1);
-    var linea3 = new createjs.Bitmap(line2);
-    linea.y = linea2.y = 31;
-    linea2.x = 290;
-    linea3.x = 100;
-    linea3.y = 69;
-    hit1 = new WordContainer( 'h1', '', 0, 0, 275, 30 );
-    hit2 = new WordContainer( 'h2', '', 290, 0, 275, 30 );
-    hit3 = new WordContainer( 'h3', '', 100, 37, 355, 30 );
+  
     words = new createjs.Container();
+    words.x = 303;
+    words.y = 214;
 
-    words.x = 170;
-    words.y = stageSize.h - 100;
+    charContainer("hit1", 1,0,2);
+    charContainer("hit2", 2,0,3);
+    charContainer("hit3", 3,0,4);
+    charContainer("hit4", 4,0,5);
+    charContainer("hit5", 5,0,6);
+    charContainer("hit6", 6,0,7);
+    charContainer("hit7", 7,0,8);
 
-    words.addChild(linea, linea2, linea3, hit1, hit2, hit3);
+    charContainer("hit8", 8,1,2);
+    charContainer("hit9", 9,1,6);
+
+    charContainer("hit10", 10,2,2);
+    charContainer("hit11", 11,2,5);
+    charContainer("hit12", 12,2,6);
+    charContainer("hit13", 13,2,7);
+    charContainer("hit14", 14,2,8);
+
+    charContainer("hit15", 15,3,2);
+    charContainer("hit16", 16,3,6);
+    charContainer("hit17", 17,3,8);
+
+    charContainer("hit18", 18,4,2);
+    charContainer("hit19", 19,4,6);
+    charContainer("hit20", 20,4,8);
+
+    charContainer("hit21", 21,5,0);
+    charContainer("hit22", 22,5,1);
+    charContainer("hit23", 23,5,2);
+    charContainer("hit24", 24,5,3);
+    charContainer("hit25", 25,5,8);
+
+    charContainer("hit26", 26,6,2);
+    charContainer("hit27", 27,6,8);
+
+    charContainer("hit28", 28,7,0);
+    charContainer("hit29", 29,7,1);
+    charContainer("hit30", 30,7,2);
+    charContainer("hit31", 31,7,3);
+    charContainer("hit32", 32,7,4);
+    charContainer("hit33", 33,7,5);
+    charContainer("hit34", 34,7,8);
+
+    charContainer("hit35", 35,8,2);
+    charContainer("hit36", 36,8,8);
+
+    charContainer("hit37", 37,9,2);
+    charContainer("hit38", 38,9,8);
+
+    charContainer("hit39", 39,10,4);
+    charContainer("hit40", 40,10,5);
+    charContainer("hit41", 41,10,6);
+    charContainer("hit42", 42,10,7);
+    charContainer("hit43", 43,10,8);
 
     mainContainer.addChild(words);
 }
 
-function setGroup1(){
-
-    p1n1 = new Dragtxt("p1n1", "We read books", 1, 0, 0, 0);
-    p2n1 = new Dragtxt("p2n1", "We do exercise", 1, 1, 0, 18);
-    p3n1 = new Dragtxt("p3n1", "We point", 1, 2, 0, 36);
-    p4n1 = new Dragtxt("p4n1", "We eat lunch", 1, 3, 0, 54);
-    p5n1 = new Dragtxt("p5n1", "We watch movies", 1, 4, 0, 72);
-
-    groupUnoContenedor = new createjs.Container();
-     
-    groupUnoContenedor.y = 132;
-    groupUnoContenedor.x = 565;
-    
-    groupUnoContenedor.addChild( p1n1, p2n1, p3n1,p4n1,p5n1);
-
-    mainContainer.addChild(groupUnoContenedor);
-}
-function setGroup2(){
-
-    p1n2 = new Dragtxt("p1n2", "in the gym", 2, 0, 0, 0);
-    p2n2 = new Dragtxt("p2n2", "in the cafeteria", 2, 1, 0, 18);
-    p3n2 = new Dragtxt("p3n2", "in the library", 2, 2, 0, 36);
-    p4n2 = new Dragtxt("p4n2", "in the auditorium", 2, 3, 0, 54);
-    p5n2 = new Dragtxt("p5n2", "in the art room", 2, 4, 0, 72);
-
-    groupDosContenedor = new createjs.Container();
-     
-    groupDosContenedor.y = 247;
-    groupDosContenedor.x = 565;
-    
-    groupDosContenedor.addChild( p1n2, p2n2, p3n2, p4n2, p5n2);
-
-    mainContainer.addChild(groupDosContenedor);
-}
-function setGroup3(){
-
-    p1n3 = new Dragtxt("p1n3", "on Monday and Friday.", 3, 0, 0, 0);
-    p2n3 = new Dragtxt("p2n3", "on Tuesday and Thursday.", 3, 1, 0, 18);
-    p3n3 = new Dragtxt("p3n3", "on Thursday and Friday.", 3, 2, 0, 36);
-    p4n3 = new Dragtxt("p4n3", "on Tuesday and Friday.", 3, 3, 0, 54);
-    p5n3 = new Dragtxt("p5n3", "on Monday and Wednesday.", 3, 4, 0, 72  );
-  
-    groupTresContenedor = new createjs.Container();
-
-    groupTresContenedor.y = 360;
-    groupTresContenedor.x = 565;
-    
-    groupTresContenedor.addChild( p1n3, p2n3, p3n3, p4n3, p5n3);
-
-    mainContainer.addChild(groupTresContenedor);
-}
 function initTest(){
     i = 0;
 
-    personajeAnim.currentFrame = i;
-    personajeAnim.scaleX = 1;
-    personajeAnim.scaleY = 1;
-    personajeAnim.alpha = 1;
-
     TweenLite.from(imgHeader, 1, {y:-imgHeader.height});
     TweenLite.from(imgInstrucciones, 1, {alpha:0, x:0, delay:0.5});
-    TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
     //TweenLite.to(vblurFilter, 1, {blurY:0, onUpdate: refresh, onUpdateParams:[vblurFilter, header]});
     TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
-    TweenLite.from(groupUnoContenedor, 0.3, {alpha:0, y:groupUnoContenedor.y+50, delay:1.5});
-    TweenLite.from(groupDosContenedor, 0.3, {alpha:0, y:groupDosContenedor.y+50, delay:1.8});
-    TweenLite.from(groupTresContenedor, 0.3, {alpha:0, y:groupTresContenedor.y+50, delay:2.1, onComplete: playInstructions});
-}
+   }
 function playInstructions(){
     if(dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()){
         imgSG = preload.getResult('sg');
