@@ -1,17 +1,48 @@
 var stage, mainContainer, i, song, imgurl="imgs/";
 
-var imgHeader = new Image(),
-    imgNube1 = new Image(),
-    imgNube2 = new Image(),
-    imgNube3 = new Image(),
-    imgInstrucciones = new Image(),
-    imgGlobito = new Image(),
-    imgC1 = new Image(),
-    imgC2 = new Image(),
-    imgSG = new Image(),
-    imgPA = new Image();
 
-var header, instructions, sg, pa;
+var manifest = [
+    {nombre: 'imgHeader', id: 'head', src: imgurl + 'pleca.png'},
+    {nombre: 'imgInstrucciones', id:'inst' , src: imgurl + 'texto_look.png'},
+    {nombre: 'imgC1', id:'c1' , src: imgurl + 'circle1.png'},
+    {nombre: 'imgC2', id:'c2' , src: imgurl + 'circle2.png'},
+    {nombre: 'imgSG', id:'sg' , src: imgurl + 'start_game.png'},
+    {nombre: 'imgPA', id:'pa' , src: imgurl + 'play_again.png'},
+    {nombre: 'guiafondo', id:'gu' , src: imgurl + 'guia.png'},
+    {nombre: 'imgNube1', id: 'n1', src: imgurl + 'nube1.png'},
+    {nombre: 'imgNube2', id: 'n2', src: imgurl + 'nube2.png'},
+    {nombre: 'imgNube3', id: 'n3', src: imgurl + 'nube3.png'},
+    {nombre: 'imgGlobito', id: 'gg', src: imgurl + 'cuadro_naranja.png'},
+];
+
+var manifest2 = [
+    {nombre: 'p1', id: 'per1', src: imgurl + 'ninos_cantando.png'},
+    {nombre: 'p2', id: 'per2', src: imgurl + 'ninos_jugando.png'},
+    {nombre: 'p3', id: 'per3', src: imgurl + 'nina_jugando.png'},
+    {nombre: 'p4', id: 'per4', src: imgurl + 'ninos_leyendo.png'},
+    {nombre: 'p5', id: 'per5', src: imgurl + 'nino_flauta.png'},
+];
+
+
+var manifestSounds = [
+    {src:'sounds/boing.mp3', nombre:'boing'},
+    {src:'sounds/TU2_U1_A1_Instructions.mp3', nombre:'instructions'},
+    {src:'sounds/TU2_U1_A1_Im_painting_picture.mp3', nombre:'picture'},
+    {src:'sounds/TU2_U1_A1_Im_playing_flute.mp3', nombre:'flute'},
+    {src:'sounds/TU2_U1_A1_Were_playing_outside.mp3', nombre:'outside'},
+    {src:'sounds/TU2_U1_A1_Were_singing_song.mp3', nombre:'song'},
+    {src:'sounds/TU2_U1_A1_Were_studying_english.mp3', nombre:'english'},
+];
+
+
+
+var todo = $.merge( manifest, manifest2);
+
+for (var i = manifest.length - 1; i >= 0; i--) {
+   eval("var " + manifest[i].nombre + " = new Image(); "); 
+};
+
+//var header, instructions, sg, pa;
 var vblurFilter, hblurFilter, vBnds, hBnds;
 var personajeSps, personajeAnim;
 var p1n1, p2n1, p1n2, p2n2, p3n2, p4n2, p1n3, p2n3, p3n3, p4n3, p5n3;
@@ -68,36 +99,17 @@ function oda() {
     mainContainer.regY = stageSize.h / 2;
     mainContainer.regX = stageSize.w / 2;
 
-    createjs.Sound.registerSound('sounds/boing.mp3', 'boing');
-    createjs.Sound.registerSound('sounds/TU2_U1_A1_Instructions.mp3', 'instructions');
-    createjs.Sound.registerSound('sounds/TU2_U1_A1_Im_painting_picture.mp3', 'picture');
-    createjs.Sound.registerSound('sounds/TU2_U1_A1_Im_playing_flute.mp3', 'flute');
-    createjs.Sound.registerSound('sounds/TU2_U1_A1_Were_playing_outside.mp3', 'outside');
-    createjs.Sound.registerSound('sounds/TU2_U1_A1_Were_singing_song.mp3', 'song');
-    createjs.Sound.registerSound('sounds/TU2_U1_A1_Were_studying_english.mp3', 'english');
+    //crea todos los sonidos
+    for (var i = manifestSounds.length - 1; i >= 0; i--) {
+       eval("createjs.Sound.registerSound('"+manifestSounds[i].src+"', '"+manifestSounds[i].nombre+"');");
+    }
 
     createPreloaderBar();
     resizeOda();
 
     preload.addEventListener('complete', handleComplete);
     preload.addEventListener('progress', handleProgress);
-    preload.loadManifest([
-      {id: 'n1', src: imgurl + 'nube1.png'},
-      {id: 'n2', src: imgurl + 'nube2.png'},
-      {id: 'n3', src: imgurl + 'nube3.png'},
-      {id: 'inst', src: imgurl + 'texto_look.png'},
-      {id: 'glob', src: imgurl + 'cuadro_naranja.png'},
-      {id: 'head', src: imgurl + 'pleca.png'},
-      {id: 'per1', src: imgurl + 'ninos_cantando.png'},
-      {id: 'per2', src: imgurl + 'ninos_jugando.png'},
-      {id: 'per3', src: imgurl + 'nina_jugando.png'},
-      {id: 'per4', src: imgurl + 'ninos_leyendo.png'},
-      {id: 'per5', src: imgurl + 'nino_flauta.png'},
-      {id: 'c1', src: imgurl + 'circle1.png'},
-      {id: 'c2', src: imgurl + 'circle2.png'}, 
-      {id: 'sg', src: imgurl + 'start_game.png'},
-      {id: 'pa', src: imgurl + 'play_again.png'}  
-    ]);
+    preload.loadManifest(todo);
 
     stage.addChild(mainContainer);
     mainContainer.addChild(loaderBar);
@@ -135,20 +147,41 @@ function handleComplete(){
     initAssets();
     setStage();
 }
+
+function preloadImagenes(manifestName){
+    for (var i = manifestName.length - 1; i >= 0; i--) {
+       eval(manifestName[i].nombre+" = preload.getResult('"+manifestName[i].id+"');");
+    };
+}
+
+function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis, ye, Xtotal, Ytotal){
+    var sprite=  (spriteName); 
+    var animacion=  (spriteAnim); 
+    var data = {
+        images: [], 
+        frames: {width: ancho, height: alto, regX: equis, regY: ye},
+    };
+    for (var i = 0; i <= manifestName.length - 1; i++) {
+        eval("var im = preload.getResult('"+manifestName[i].src+"'); data.images.push(im);");
+    };
+
+    eval(sprite+" = new createjs.SpriteSheet(data);");
+    eval(animacion+" = new createjs.BitmapAnimation("+sprite+");");
+    eval(animacion+".x ="+Xtotal+";");
+    eval(animacion+".y ="+Ytotal+";");
+    eval(animacion+".currentFrame = 0;");
+    eval("mainContainer.addChild("+animacion+");");
+}
+ 
+function createImage(name, equis, ye, parent){
+    eval(name+" =  new createjs.Bitmap("+name+");");
+    eval(name+".x = "+equis+";");
+    eval(name+".y = "+ye+";");
+    eval(parent+".addChild("+name+");");
+}
 function initAssets(){
-    imgHeader = preload.getResult('head');
-    imgNube1 = preload.getResult('n1');
-    imgNube2 = preload.getResult('n2');
-    imgNube3 = preload.getResult('n3');
-    imgInstrucciones = preload.getResult('inst');
-    imgGlobito = preload.getResult('glob');
-    imgC1 = preload.getResult('c1');
-    imgC2 = preload.getResult('c2');
-    personajeSps = new createjs.SpriteSheet({
-        images: [preload.getResult('per1'), preload.getResult('per2'), preload.getResult('per3'), preload.getResult('per4'), preload.getResult('per5')],
-        frames: {width: 250, height: 200, regX: 125, regY: 100},
-    });  
-    personajeAnim = new createjs.BitmapAnimation(personajeSps);
+    preloadImagenes(manifest);
+    preloadSprite(manifest2, "personajeSps", "personajeAnim", 250, 200,125, 100,stageSize.w/2,200);
 }
 
 function setStage(){
@@ -157,25 +190,15 @@ function setStage(){
     vBnds = vblurFilter.getBounds();
     hBnds = hblurFilter.getBounds();
 
-    header = new createjs.Bitmap(imgHeader);
-    instructions = new createjs.Bitmap(imgInstrucciones);
+    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0, "mainContainer");
+    createImage("imgInstrucciones",20,100, "mainContainer");
+
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
 
     //header.filters = [vblurFilter];
     //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
 
-    personajeAnim.x = stageSize.w/2;
-    personajeAnim.y = 200;
-    personajeAnim.currentFrame = 0;
-    
-    header.x = stageSize.w / 2 - imgHeader.width / 2;
-
-    instructions.x = 20;
-    instructions.y = 100;
-    
-
-    mainContainer.addChild(personajeAnim, header, instructions, score);
-
+    mainContainer.addChild( score);
     setDropper();
     setNube1();
     setNube2();
@@ -257,8 +280,8 @@ function initTest(){
 
     score.updateCount( i );
 
-    TweenLite.from(header, 1, {y:-imgHeader.height});
-    TweenLite.from(instructions, 1, {alpha:0, x:0, delay:0.5});
+    TweenLite.from(imgHeader, 1, {y:-imgHeader.height});
+    TweenLite.from(imgInstrucciones, 1, {alpha:0, x:0, delay:0.5});
     TweenLite.from(personajeAnim, 0.5, {alpha:0, y:personajeAnim.y+20, delay:1});
     TweenLite.from(words, 0.5, {alpha:0, y:words.y+50, delay:1});
     TweenLite.from(nubeUnoContenedor, 0.3, {alpha:0, y:nubeUnoContenedor.y+50, delay:1.5});

@@ -173,10 +173,11 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
 }
 
 
-function createImage(name, equis, ye){
+function createImage(name, equis, ye, parent){
     eval(name+" =  new createjs.Bitmap("+name+");");
     eval(name+".x = "+equis+";");
     eval(name+".y = "+ye+";");
+    eval(parent+".addChild("+name+");");
 }
 
 function initAssets(){
@@ -185,22 +186,14 @@ function initAssets(){
 }
 
 function setStage(){
-    header = new createjs.Bitmap(imgHeader);
-    instructions = new createjs.Bitmap(imgInstrucciones);
-    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0);
-    createImage("imgInstrucciones",20,100);
-    createImage("guiafondo",0,0);
+ 
+    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0,"mainContainer");
+    createImage("imgInstrucciones",20,100,"mainContainer");
+    createImage("guiafondo",0,0,"mainContainer");
 
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
 
-    personajeAnim.x = 100;
-    personajeAnim.y = stageSize.h - 180;
-
-    personajeAnim.currentFrame = 0;
-    header.x = stageSize.w / 2 - imgHeader.width / 2;
-    instructions.x = 20;
-    instructions.y = 100;
-    mainContainer.addChild(personajeAnim, header, instructions, score);
+    mainContainer.addChild(score);
     setDropper();
     setNombres();
 
@@ -281,7 +274,7 @@ function playInstructions(){
         mainContainer.addChild(sg);
         TweenLite.from(sg, 0.3, {alpha:0, y:sg.y+20});
     }else{
-        console.log(createjs.Sound);
+        //console.log(createjs.Sound);
         inst = createjs.Sound.play('instructions');
         inst.addEventListener('complete', initEvaluation);
     }

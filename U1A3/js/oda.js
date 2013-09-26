@@ -155,23 +155,25 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
     for (var i = 0; i <= manifestName.length - 1; i++) {
         eval("var im = preload.getResult('"+manifestName[i].src+"'); data.images.push(im);");
     };
+
     eval(sprite+" = new createjs.SpriteSheet(data);");
     eval(animacion+" = new createjs.BitmapAnimation("+sprite+");");
     eval(animacion+".x ="+Xtotal+";");
     eval(animacion+".y ="+Ytotal+";");
-    eval(animacion+".currentFrame =0;");
+    eval(animacion+".currentFrame = 0;");
+    eval("mainContainer.addChild("+animacion+");");
 }
  
-
-function createImage(name, equis, ye){
+function createImage(name, equis, ye, parent){
     eval(name+" =  new createjs.Bitmap("+name+");");
     eval(name+".x = "+equis+";");
     eval(name+".y = "+ye+";");
+    eval(parent+".addChild("+name+");");
 }
 
 function initAssets(){
     preloadImagenes(manifest);
-    preloadSprite(manifest2, "personajeSps", "personajeAnim", 0, 0, 0, 0, 0, 0);
+    preloadSprite(manifest2, "personajeSps", "personajeAnim", 0, 0, 0, 0, 0, 0 );
 
 }
 
@@ -181,24 +183,22 @@ function setStage(){
     vBnds = vblurFilter.getBounds();
     hBnds = hblurFilter.getBounds();
 
-    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0);
-    createImage("imgInstrucciones",20,100);
-    createImage("guiafondo",0,0);
-    createImage("calendar",0,130);
-    createImage("iconGym",375,210);
-    createImage("iconArt",194,199);
-    createImage("iconWatch",255,248);
-    createImage("iconRead",320,248);
-    createImage("iconLunch",455,328);
+    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0, "mainContainer");
+    createImage("imgInstrucciones",20,100, "mainContainer");
+    //createImage("guiafondo",0,0, "mainContainer");
+    createImage("calendar",0,130, "mainContainer");
+    createImage("iconGym",375,210, "mainContainer");
+    createImage("iconArt",194,199, "mainContainer");
+    createImage("iconWatch",255,248, "mainContainer");
+    createImage("iconRead",320,248, "mainContainer");
+    createImage("iconLunch",455,328, "mainContainer");
 
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
 
     //header.filters = [vblurFilter];
     //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
 
-
-
-    mainContainer.addChild(guiafondo, calendar, personajeAnim, imgHeader, imgInstrucciones, score, iconGym, iconArt, iconLunch, iconRead, iconWatch);
+    mainContainer.addChild(score);
     setDropper();
     setGroup1();
     setGroup2();

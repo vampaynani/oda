@@ -160,6 +160,8 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
     eval(animacion+".x ="+Xtotal+";");
     eval(animacion+".y ="+Ytotal+";");
     eval(animacion+".currentFrame =0;");
+        eval("mainContainer.addChild("+animacion+");");
+
 }
  
 function initAssets(){
@@ -168,10 +170,12 @@ function initAssets(){
     preloadSprite(manifest2, "personajeSps2", "personajeAnim2", 268, 210, 0, 0, 136, 347);
 }
 
-function createImage(name, equis, ye){
+ 
+function createImage(name, equis, ye, parent){
     eval(name+" =  new createjs.Bitmap("+name+");");
     eval(name+".x = "+equis+";");
     eval(name+".y = "+ye+";");
+    eval(parent+".addChild("+name+");");
 }
 
 function setStage(){
@@ -180,18 +184,18 @@ function setStage(){
     vBnds = vblurFilter.getBounds();
     hBnds = hblurFilter.getBounds();
  
-    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0);
-    createImage("instructions",20,100);
-    createImage("teacher",250,124);
-    createImage("button",441,210);
-    createImage("guiafondo",0,0);
+    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0, "mainContainer");
+    createImage("instructions",20,100, "mainContainer");
+    createImage("teacher",250,124, "mainContainer");
+    createImage("button",441,210, "mainContainer");
+    //createImage("guiafondo",0,0, "mainContainer");
   
     score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
 
     //header.filters = [vblurFilter];
     //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
 
-    mainContainer.addChild(guiafondo,teacher, button, personajeAnim, personajeAnim2, imgHeader, instructions, score);
+    mainContainer.addChild( score);
 
     initTest();
 }
