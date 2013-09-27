@@ -196,12 +196,14 @@ function preloadSprite(manifestName, spriteName, spriteAnim, ancho, alto, equis,
     eval("mainContainer.addChild("+animacion+");");
 }
  
-function createImage(name, equis, ye){
+ 
+function createImage(name, equis, ye, parent){
     eval(name+" =  new createjs.Bitmap("+name+");");
     eval(name+".x = "+equis+";");
     eval(name+".y = "+ye+";");
-    eval("mainContainer.addChild("+name+");");
+    eval(parent+".addChild("+name+");");
 }
+
 function letrasAbajo(){
     for (var i = 0; i <= 13; i++) {
         eval("var letra"+i+" = new Draggable('letra"+i+"', "+manifest2[i].nombre+", 0, i, 135+41.5*i, 510);");
@@ -224,26 +226,26 @@ function setStage(){
     vBnds = vblurFilter.getBounds();
     hBnds = hblurFilter.getBounds();
 
-    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0);
-    createImage("imgInstrucciones",20,100);
-    //createImage("guiafondo",0,0);
-    createImage("crossWords",289,200);
-    createImage("sax",341,118);
-    createImage("sax_number",346,130);
-    createImage("drum",99,125);
-    createImage("drum_number",69,125);
-    createImage("guitar",99,228);
-    createImage("guitar_number",163,252);
-    createImage("tambourine",192,412);
-    createImage("tambourine_number",197,390);
-    createImage("trumpet",353,446);
-    createImage("trumpet_number",322,444);
-    createImage("flute",546,448);
-    createImage("flute_number",521,443);
-    createImage("bass",639,249);
-    createImage("bass_number",621,279);
-    createImage("piano",567,77);
-    createImage("piano_number",567,138);
+    createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0, "mainContainer");
+    createImage("imgInstrucciones",20,100, "mainContainer");
+    //createImage("guiafondo",0,0, "mainContainer");
+    createImage("crossWords",289,200, "mainContainer");
+    createImage("sax",341,118, "mainContainer");
+    createImage("sax_number",346,130, "mainContainer");
+    createImage("drum",99,125, "mainContainer");
+    createImage("drum_number",69,125, "mainContainer");
+    createImage("guitar",99,228, "mainContainer");
+    createImage("guitar_number",163,252, "mainContainer");
+    createImage("tambourine",192,412, "mainContainer");
+    createImage("tambourine_number",197,390, "mainContainer");
+    createImage("trumpet",353,446, "mainContainer");
+    createImage("trumpet_number",322,444, "mainContainer");
+    createImage("flute",546,448, "mainContainer");
+    createImage("flute_number",521,443, "mainContainer");
+    createImage("bass",639,249, "mainContainer");
+    createImage("bass_number",621,279, "mainContainer");
+    createImage("piano",567,77, "mainContainer");
+    createImage("piano_number",567,138, "mainContainer");
 
     letrasAbajo();
 

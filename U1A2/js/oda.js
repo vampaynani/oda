@@ -86,7 +86,6 @@
       this.stage.addChild(this.mainContainer);
       return this;
     };
-
     Oda.prototype.initPreloader = function() {
       var bgBar, i, _i;
       this.preload = new createjs.LoadQueue(false);
