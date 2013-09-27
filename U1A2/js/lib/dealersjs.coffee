@@ -1,4 +1,4 @@
-window.dealersjs = {}
+window.dealersjs ||= {}
 
 dealersjs.mobile =
 	user_agent: navigator.userAgent.toLowerCase()
