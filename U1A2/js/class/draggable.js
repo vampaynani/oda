@@ -60,6 +60,9 @@
     };
 
     Draggable.prototype.blink = function(state) {
+      if (state == null) {
+        state = true;
+      }
       TweenMax.killTweensOf(this);
       this.alpha = 1;
       if (state) {

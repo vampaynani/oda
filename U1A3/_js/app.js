@@ -1,7 +1,9 @@
+var last = '', dragObj;
+var showMsg = false;
+
 $(document).ready(function(){
-	var oda = new U1A3();
 	$(window).on('resize', function(){
-		oda.resize();
+		resizeOda();
 	});
-	oda.initialize();
+	oda();
 })

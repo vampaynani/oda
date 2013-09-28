@@ -121,17 +121,13 @@ class Oda
 		animation = @createSprite name, imgs, x, y, position
 		@addToMain animation
 		animation
-	addToMain: (objects...) ->
-		@addToLibrary objects
-		for obj in objects
-			do (obj) ->
-				@mainContainer.addChild obj
+	addToMain: (obj) ->
+		@addToLibrary obj
+		@mainContainer.addChild obj
 		@mainContainer
-	addToLibrary: (objects...) ->
-		for obj in objects
-			do (obj) ->
-				@assets.push obj
-				@library = @assets.toDictionary 'name'
+	addToLibrary: (obj) ->
+		@assets.push obj
+		@library = @assets.toDictionary 'name'
 		@library
 	setReg: (obj, regY, regX) ->
 		obj.regY = regY
