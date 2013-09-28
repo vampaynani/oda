@@ -22,6 +22,29 @@
       return dict;
     };
 
+    Array.prototype.where = function(query) {
+      var hit;
+      if (typeof query !== "object") {
+        return [];
+      }
+      hit = Object.keys(query).length;
+      return this.filter(function(item) {
+        var key, match, val;
+        match = 0;
+        for (key in query) {
+          val = query[key];
+          if (item[key] === val) {
+            match += 1;
+          }
+        }
+        if (match === hit) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    };
+
     function Oda(imgurl, manifest, sounds) {
       var def_manifest, item, sound;
       this.imgurl = imgurl != null ? imgurl : 'imgs/';
@@ -86,6 +109,7 @@
       this.stage.addChild(this.mainContainer);
       return this;
     };
+
     Oda.prototype.initPreloader = function() {
       var bgBar, i, _i;
       this.preload = new createjs.LoadQueue(false);
@@ -194,8 +218,11 @@
       return bmp;
     };
 
-    Oda.prototype.createSprite = function(name, imgs, x, y, position) {
+    Oda.prototype.createSprite = function(name, imgs, anim, x, y, position) {
       var animation, h, img, sprite, spriteImgs, w;
+      if (anim == null) {
+        anim = null;
+      }
       if (position == null) {
         position = 'tl';
       }
@@ -212,6 +239,7 @@
       h = spriteImgs[0].height;
       sprite = new createjs.SpriteSheet({
         images: spriteImgs,
+        animations: anim,
         frames: {
           width: w,
           height: h
@@ -253,12 +281,15 @@
       return animation;
     };
 
-    Oda.prototype.insertSprite = function(name, imgs, x, y, position) {
+    Oda.prototype.insertSprite = function(name, imgs, anim, x, y, position) {
       var animation;
+      if (anim == null) {
+        anim = null;
+      }
       if (position == null) {
         position = 'tl';
       }
-      animation = this.createSprite(name, imgs, x, y, position);
+      animation = this.createSprite(name, imgs, anim, x, y, position);
       this.addToMain(animation);
       return animation;
     };

@@ -5,9 +5,17 @@ window.stageSize || = {
 }
 class Oda
 	Array::toDictionary = (key) ->
-	  dict = {}
-	  dict[obj[key]] = obj for obj in this when obj[key]?
-	  dict
+		dict = {}
+		dict[obj[key]] = obj for obj in this when obj[key]?
+		dict
+	Array::where = (query) ->
+    	return [] if typeof query isnt "object"
+    	hit = Object.keys(query).length
+    	@filter (item) ->
+        	match = 0
+        	for key, val of query
+            	match += 1 if item[key] is val
+        	if match is hit then true else false
 	constructor: ( @imgurl = 'imgs/', manifest, sounds ) ->
 		def_manifest = [
 			{id: 'sg', src: "#{ @imgurl }start_game.png"},
@@ -95,12 +103,12 @@ class Oda
 		bmp = @createBitmap name, id, x, y, position
 		@addToMain bmp
 		bmp
-	createSprite: (name, imgs, x, y, position = 'tl') ->
+	createSprite: (name, imgs, anim=null, x, y, position = 'tl') ->
 		spriteImgs = for img in imgs
 			@preload.getResult img
 		w = spriteImgs[0].width
 		h = spriteImgs[0].height
-		sprite = new createjs.SpriteSheet (images: spriteImgs, frames: {width: w, height: h})
+		sprite = new createjs.SpriteSheet (images: spriteImgs, animations: anim, frames: {width: w, height: h})
 		animation = new createjs.BitmapAnimation sprite
 		animation.x = x
 		animation.y = y
@@ -117,8 +125,8 @@ class Oda
 			when 'br' then @setReg animation, spriteImgs[0].height, spriteImgs[0].width
 			else @setReg animation, 0, 0
 		animation
-	insertSprite: (name, imgs, x, y, position = 'tl') ->
-		animation = @createSprite name, imgs, x, y, position
+	insertSprite: (name, imgs, anim=null, x, y, position = 'tl') ->
+		animation = @createSprite name, imgs, anim, x, y, position
 		@addToMain animation
 		animation
 	addToMain: (obj) ->
