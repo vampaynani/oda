@@ -1,63 +1,28 @@
 var stage, mainContainer, i, song, imgurl="imgs/";
 
-
 var manifest = [
     {nombre: 'imgHeader', id: 'head', src: imgurl + 'pleca.png'},
     {nombre: 'imgInstrucciones', id:'inst' , src: imgurl + 'texto_look.png'},
-    {nombre: 'imgC1', id:'c1' , src: imgurl + 'circle1.png'},
-    {nombre: 'imgC2', id:'c2' , src: imgurl + 'circle2.png'},
-    {nombre: 'fondoguia', id:'gu' , src: imgurl + 'guia.png'},
-    {nombre: 'finishBtn', id:'finish' , src: imgurl + 'finish-btn.png'},
-    {nombre: 'repeatBtn', id:'repeat' , src: imgurl + 'repeat-btn.png'},
-    {nombre: 'box1', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box2', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box3', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box4', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box5', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box6', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box7', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box8', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box9', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box10', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box11', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'box12', id:'clockbox' , src: imgurl + 'clock-container.png'},
-    {nombre: 'megClock1', id:'mc1' , src: imgurl + 'meg-clock-1.png'},
-    {nombre: 'megClock2', id:'mc2' , src: imgurl + 'meg-clock-2.png'},
-    {nombre: 'megClock3', id:'mc3' , src: imgurl + 'meg-clock-3.png'},
-    {nombre: 'megClock4', id:'mc4' , src: imgurl + 'meg-clock-4.png'},
-    {nombre: 'megClock5', id:'mc5' , src: imgurl + 'meg-clock-5.png'},
-    {nombre: 'megClock6', id:'mc6' , src: imgurl + 'meg-clock-6.png'},
-
-    {nombre: 'megWakes', id:'m1' , src: imgurl + 'meg-wakes.png'},
-    {nombre: 'megBreakfast', id:'m2' , src: imgurl + 'meg-breakfast.png'},
-    {nombre: 'megLeaves', id:'m3' , src: imgurl + 'meg-leaves.png'},
-    {nombre: 'megDishes', id:'m4' , src: imgurl + 'meg-dishes.png'},
-    {nombre: 'megDinner', id:'m5' , src: imgurl + 'meg-dinner.png'},
-    {nombre: 'megSleep', id:'m6' , src: imgurl + 'meg-sleep.png'},
-
-    {nombre: 'jimClock1', id:'jc1' , src: imgurl + 'jim-clock-1.png'},
-    {nombre: 'jimClock2', id:'jc2' , src: imgurl + 'jim-clock-2.png'},
-    {nombre: 'jimClock3', id:'jc3' , src: imgurl + 'jim-clock-3.png'},
-    {nombre: 'jimClock4', id:'jc4' , src: imgurl + 'jim-clock-4.png'},
-    {nombre: 'jimClock5', id:'jc5' , src: imgurl + 'jim-clock-5.png'},
-    {nombre: 'jimClock6', id:'jc6' , src: imgurl + 'jim-clock-6.png'},
-
-    {nombre: 'jimShower', id:'j1' , src: imgurl + 'jim-shower.png'},
-    {nombre: 'jimBreakfast', id:'j2' , src: imgurl + 'jim-breakfast.png'},
-    {nombre: 'jimLeaves', id:'j3' , src: imgurl + 'jim-leaves.png'},
-    {nombre: 'jimBus', id:'j4' , src: imgurl + 'jim-bus.png'},
-    {nombre: 'jimCat', id:'j5' , src: imgurl + 'jim-cat.png'},
-    {nombre: 'jimTv', id:'j6' , src: imgurl + 'jim-tv.png'},
+    {nombre: 'fondoguia', id:'guia' , src: imgurl + 'guia.png'},
+    {nombre: 'background', id:'background', src:imgurl + 'background.png'},
+    {nombre: 'bucket6', id:'bucket6', src:imgurl + 'bucket.png'},
+    {nombre: 'bucket1', id:'bucket1', src:imgurl + 'bucket.png'},
+    {nombre: 'bucket2', id:'bucket2', src:imgurl + 'bucket.png'},
+    {nombre: 'bucket3', id:'bucket3', src:imgurl + 'bucket.png'},
+    {nombre: 'bucket4', id:'bucket4', src:imgurl + 'bucket.png'},
+    {nombre: 'bucket5', id:'bucket5', src:imgurl + 'bucket.png'},
+    {nombre: 'circle', id:'circle', src:imgurl + 'circle.png'},
+    {nombre: 'level1Btn', id:'level1Btn', src:imgurl + 'level1-btn.png'},
+    {nombre: 'level2Btn', id:'level2Btn', src:imgurl + 'level2-btn.png'},
+    {nombre: 'level3Btn', id:'level3Btn', src:imgurl + 'level3-btn.png'},
  ];
 
 var manifest2 = [
-   
 ];
 
 
 var manifestSounds = [
     {src:'sounds/boing.mp3', nombre:'boing'},
- 
 ];
 
 
@@ -68,19 +33,14 @@ for (var i = manifest.length - 1; i >= 0; i--) {
    eval("var " + manifest[i].nombre + " = new Image(); "); 
 };
 
-
 //var header, instructions, sg, pa;
 var vblurFilter, hblurFilter, vBnds, hBnds;
 
-var meg, box;
+var gotas;
 var hit1, hit2, hit3, hit4, hit5, hit6;
 var progressLabel, preload, loaderBar, loaderColor, barHeight, barWidth, loadStep;
 var answers = [
-    {w1:1, w2:2, w3:2, sound:'song' },
-    {w1:1, w2:1, w3:4, sound:'outside' },
-    {w1:0, w2:0, w3:0, sound:'picture'},
-    {w1:1, w2:3, w3:1, sound:'english' },
-    {w1:0, w2:1, w3:3, sound:'flute'},
+
 ];
 var stageSize = {w:800, h:600, r:1};
 
@@ -207,115 +167,62 @@ function createImage(name, equis, ye, parent){
 
 function initAssets(){
     preloadImagenes(manifest);
-   // preloadSprite(manifest2, "personajeSps", "personajeAnim", 250, 200,125, 100,stageSize.w/2,200);
 }
 function setStage(){
     vblurFilter = new createjs.BlurFilter(0, 10, 1);
     hblurFilter = new createjs.BlurFilter(10, 0, 1);
     vBnds = vblurFilter.getBounds();
     hBnds = hblurFilter.getBounds();
-
-
+    createImage("background",0,0, "mainContainer");
+    createImage("level1Btn",731,436, "mainContainer");
+    createImage("level2Btn",731,483, "mainContainer");
+    createImage("level3Btn",731,530, "mainContainer");
+    createImage("circle",20,482, "mainContainer");
 
     createImage("imgHeader",stageSize.w / 2 - imgHeader.width / 2,0, "mainContainer");
     createImage("imgInstrucciones",20,100, "mainContainer");
-    createImage("fondoguia",0,0, "mainContainer");
-    createImage("repeatBtn",117+428,124+415, "mainContainer");
-    createImage("finishBtn",546+117,124+415, "mainContainer");
- 
 
-    score = new Score('score', 20, 500, imgC2, imgC1, 5, 0);
-
-    //header.filters = [vblurFilter];
-    //header.cache(header.x+vBnds.x, header.y+vBnds.y, header.image.width+vBnds.width, header.image.height+vBnds.height);
-
-    mainContainer.addChild(score);
-
-    setMeg();
-    setJim();
+    setGotas();
     setDropper();
-
     initTest();
 }
 function setDropper(){
-    hit1 = new WordContainer( 'h1', '',17,5,    66, 42 );
-    hit2 = new WordContainer( 'h2', '',225,5,   66, 42 );
-    hit3 = new WordContainer( 'h3', '',17,153,  66, 42 );
-    hit4 = new WordContainer( 'h4', '',225,153, 66, 42 );
-    hit5 = new WordContainer( 'h5', '',17,305,  66, 42 );
-    hit6 = new WordContainer( 'h6', '',225,305, 66, 42 );
-
+    hit1 = new WordContainer( 'h1', '',132,492, 76,80 );
+    hit2 = new WordContainer( 'h2', '',232,466, 76,80 );
+    hit3 = new WordContainer( 'h3', '',332,492, 76,80 );
+    hit4 = new WordContainer( 'h4', '',432,466, 76,80 );
+    hit5 = new WordContainer( 'h5', '',532,492, 76,80 );
+    hit6 = new WordContainer( 'h6', '',632,466, 76,80 );
    
     box = new createjs.Container();
-    box.x = 118;
-    box.y = 122;
+    box.x = 0;
+    box.y = 0;
+    createImage("bucket1",132,492,"box");
+    createImage("bucket2",232,466,"box");
+    createImage("bucket3",332,492,"box");
+    createImage("bucket4",432,466,"box");
+    createImage("bucket5",532,492,"box");
+    createImage("bucket6",632,466,"box");
 
     box.addChild( hit1, hit2, hit3, hit4, hit5, hit6);
 
     mainContainer.addChild(box);
 }
 
-function setMeg(){
-    meg = new createjs.Container();
-    meg.y = 124;
-    meg.x = 117;
+function setGotas(){
+    gotas = new createjs.Container();
+    gotas.y = 0;
+    gotas.x = 0;
 
-    createImage("megWakes",15,13,"meg")
-    createImage("box1",17,5,"meg")
-    createImage("megBreakfast",223,13,"meg")
-    createImage("box2",225,5,"meg")
-    createImage("megLeaves",15,161,"meg")
-    createImage("box3",17,153,"meg")
-    createImage("megDishes",223,161,"meg")
-    createImage("box4",225,153,"meg")
-    createImage("megDinner",15,313,"meg")
-    createImage("box5",17,305,"meg")
-    createImage("megSleep",223,313,"meg")
-    createImage("box6",225,305,"meg")
+    gotas.addChild();
 
-    var mClock1 = new Draggable("mClock1",megClock1.src,0,1,485,13);
-    var mClock2 = new Draggable("mClock2",megClock2.src,0,2,527,79 );
-    var mClock3 = new Draggable("mClock3",megClock3.src,0,3,485,145);
-    var mClock4 = new Draggable("mClock4",megClock4.src,0,4,527,211);
-    var mClock5 = new Draggable("mClock5",megClock5.src,0,5,485,276);
-    var mClock6 = new Draggable("mClock6",megClock6.src,0,6,527,343);
-    meg.addChild(mClock1,mClock2,mClock3,mClock4,mClock5,mClock6);
-
-    mainContainer.addChild(meg);
-}
-function setJim(){
-    jim = new createjs.Container();
-    jim.y = 124;
-    jim.x = 117;
-
-    createImage("jimShower",15,13,"jim")
-    createImage("box7",17,5,"jim")
-    createImage("jimBreakfast",223,13,"jim")
-    createImage("box8",225,5,"jim")
-    createImage("jimLeaves",15,161,"jim")
-    createImage("box9",17,153,"jim")
-    createImage("jimBus",223,161,"jim")
-    createImage("box10",225,153,"jim")
-    createImage("jimCat",15,313,"jim")
-    createImage("box11",17,305,"jim")
-    createImage("jimTv",223,313,"jim")
-    createImage("box12",225,305,"jim")
-
-    var jClock1 = new Draggable("jClock1",jimClock1.src,0,1,485,13);
-    var jClock2 = new Draggable("jClock2",jimClock2.src,0,2,527,79 );
-    var jClock3 = new Draggable("jClock3",jimClock3.src,0,3,485,145);
-    var jClock4 = new Draggable("jClock4",jimClock4.src,0,4,527,211);
-    var jClock5 = new Draggable("jClock5",jimClock5.src,0,5,485,276);
-    var jClock6 = new Draggable("jClock6",jimClock6.src,0,6,527,343);
-    jim.addChild(jClock1,jClock2,jClock3,jClock4,jClock5,jClock6);
-
-    mainContainer.addChild(jim);
+    mainContainer.addChild(gotas);
 }
  
 function initTest(){
     i = 0;
  
-    score.updateCount( i );
+    //score.updateCount( i );
 
     TweenLite.from(imgHeader, 1, {y:-imgHeader.height});
     TweenLite.from(imgInstrucciones, 1, {alpha:0, x:0, delay:0.5});
@@ -349,7 +256,6 @@ function removeMobileInstructions(){
 }
 function initEvaluation(){
     $(window).trigger('initEval');
-    evaluateWord1();
 }
 function blink( object, on ){
     if( on ){
@@ -359,68 +265,7 @@ function blink( object, on ){
         object.alpha = 1;
     }
 }
-function clearQuestion(){
-    var qs = new Array(p1n1, p2n1, p1n2, p2n2, p3n2, p4n2, p1n3, p2n3, p3n3, p4n3, p5n3);
-    var hits = new Array(hit1, hit2, hit3);
 
-    for(p in qs){
-        qs[p].visible = true;
-        qs[p].returnToPlace();
-    }
-    for(h in hits){
-        hits[h].changeText('');
-    }
-}
-function nextQuestion(){
-    i++;
-    score.updateCount( i );
-    if(i < answers.length){
-        evaluateWord1();
-    }else{
-        imgPA = preload.getResult('pa');
-        pa = new createjs.Bitmap(imgPA);
-        pa.regX = imgPA.width / 2;
-        pa.regY = imgPA.height / 2;
-        pa.x = 400;
-        pa.y = 300;
-        pa.addEventListener('click', paClickEvent);
-        mainContainer.addChild(pa);
-        TweenLite.from(pa, 0.5, {alpha:0, y:pa.y-20});
-    }
-}
-function paClickEvent(){
-    pa.removeEventListener('click', playAgain);
-    TweenLite.to(pa, 0.5, {alpha:0, y:pa.y-20, onComplete: playAgain});
-}
-function playAgain(){
-    mainContainer.removeChild(pa);
-    initTest();
-}
-function evaluateWord1(){
-    p1n1.addEventListener('drop', validateHit1);
-    p1n2.addEventListener('drop', validateHit1);
-    p1n3.addEventListener('drop', validateHit1);
-    p1n4.addEventListener('drop', validateHit1);
-  
-}
-function validateHit1(e){
-    var palabra = e.target;
-    var pt = hit1.globalToLocal(stage.mouseX, stage.mouseY);
-    if(hit1.hitTest( pt.x, pt.y ) ){
-        if(palabra.value == answers[i].w1){
-            palabra.visible = false;
-            hit1.changeText( palabra.text.text );
-            hit1.noBlink();
-            blink(backUno, false);
-        }else{
-            warning();
-            palabra.returnToPlace();
-        }
-    }else{
-        //createjs.Sound.play('boing');
-        palabra.returnToPlace();
-    }
-}
 function warning(){
     createjs.Sound.play('boing');
     TweenMax.to(mainContainer, 0.1, {x:mainContainer.x+10, repeat:6, yoyo:true});
