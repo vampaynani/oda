@@ -8,7 +8,7 @@ class WordContainer
 		@name = name
 		@x = x
 		@y = y
-		@text = new createjs.Text text,'20px Arial','#333'
+		@text = new createjs.Text text,'24px Arial','#333'
 		@graphic = new createjs.Graphics().beginFill( bgcolor ).drawRect( 0, 0, w, h ).beginStroke( stcolor ).moveTo( 0, h ).lineTo( w, h );
 		@shape = new createjs.Shape @graphic
 
@@ -22,5 +22,5 @@ class WordContainer
 	blink: (state=on) ->
 		TweenMax.killTweensOf @
 		@.alpha = 1
-		TweenMax.to @, 0.5, {alpha:.2, repeat:-1, yoyo:true}  if state
+		TweenMax.to @, 0.2, {alpha:.2, repeat:-1, yoyo:true}  if state
 	window.WordContainer = WordContainer
