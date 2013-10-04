@@ -44,8 +44,8 @@ class U1A2 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@insertSprite 'characters', ['p1','p2','p3','p4','p5','p6'], 100, stageSize.h - 180
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@insertSprite 'characters', ['p1','p2','p3','p4','p5','p6'], null, 100, stageSize.h - 180
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 6, 0
 		@setDropper().setNames().introEvaluation()
 	setDropper: ->
 		myname = new createjs.Container()
@@ -80,13 +80,7 @@ class U1A2 extends Oda
 		name6.addEventListener 'drop', @evaluateAnswer
 		repeat.addEventListener 'click', @repeatSound
 		
-		@addToLibrary name1
-		@addToLibrary name2
-		@addToLibrary name3
-		@addToLibrary name4
-		@addToLibrary name5
-		@addToLibrary name6
-
+		@addToLibrary name1, name2, name3, name4, name5, name6
 		names.addChild faces, repeat, name1, name2, name3, name4, name5, name6
 		@addToMain names
 		@
@@ -120,12 +114,12 @@ class U1A2 extends Oda
 		else
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
+		@library['score'].plusOne()
 		@answer.returnToPlace()
+		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, delay:0.5, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library['score'].updateCount( @index )
 			@library['characters'].alpha = 1
 			@library['characters'].y = stageSize.h - 180
 			@library['characters'].currentFrame = @answers[@index].id

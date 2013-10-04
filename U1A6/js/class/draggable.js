@@ -30,7 +30,6 @@
     };
 
     Draggable.prototype.onInitEvaluation = function() {
-      this.blink(true);
       return this.addEventListener('mousedown', this.handleMouseDown);
     };
 
@@ -53,7 +52,11 @@
         return false;
       });
       e.addEventListener('mouseup', function(ev) {
-        _this.dispatchEvent('drop');
+        _this.dispatchEvent({
+          type: 'drop',
+          stageX: ev.stageX,
+          stageY: ev.stageY
+        });
         return false;
       });
       return false;
@@ -75,8 +78,7 @@
     };
 
     Draggable.prototype.blinkAgain = function() {
-      TweenLite.killTweensOf(this);
-      return this.blink(true);
+      return TweenLite.killTweensOf(this);
     };
 
     Draggable.prototype.returnToPlace = function() {

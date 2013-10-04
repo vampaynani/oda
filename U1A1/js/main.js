@@ -134,9 +134,7 @@
       h2 = new WordContainer('h2', '', '#fef2e7', '#f39234', 118, 62, 122, 22);
       h3 = new WordContainer('h3', '', '#fef2e7', '#f39234', 254, 62, 137, 22);
       dropper.addChild(back, h1, h2, h3);
-      this.addToLibrary(h1);
-      this.addToLibrary(h2);
-      this.addToLibrary(h3);
+      this.addToLibrary(h1, h2, h3);
       this.addToMain(dropper);
       return this;
     };
@@ -151,9 +149,7 @@
       p1n1 = new DraggableText('p1n1', "I'm", 0, 40, 10);
       p2n1 = new DraggableText('p2n1', "We're", 1, 30, 40);
       container.addChild(back, p1n1, p2n1);
-      this.addToLibrary(back);
-      this.addToLibrary(p1n1);
-      this.addToLibrary(p2n1);
+      this.addToLibrary(back, p1n1, p2n1);
       this.addToMain(container);
       return this;
     };
@@ -170,11 +166,7 @@
       p3n2 = new DraggableText('p3n2', "singing", 2, 40, 80);
       p4n2 = new DraggableText('p4n2', "studying", 3, 120, 120);
       container.addChild(back, p1n2, p2n2, p3n2, p4n2);
-      this.addToLibrary(back);
-      this.addToLibrary(p1n2);
-      this.addToLibrary(p2n2);
-      this.addToLibrary(p3n2);
-      this.addToLibrary(p4n2);
+      this.addToLibrary(back, p1n2, p2n2, p3n2, p4n2);
       this.addToMain(container);
       return this;
     };
@@ -192,12 +184,7 @@
       p4n3 = new DraggableText('p4n3', "the flute.", 3, 30, 100);
       p5n3 = new DraggableText('p5n3', "outside.", 4, 100, 140);
       container.addChild(back, p1n3, p2n3, p3n3, p4n3, p5n3);
-      this.addToLibrary(back);
-      this.addToLibrary(p1n3);
-      this.addToLibrary(p2n3);
-      this.addToLibrary(p3n3);
-      this.addToLibrary(p4n3);
-      this.addToLibrary(p5n3);
+      this.addToLibrary(back, p1n3, p2n3, p3n3, p4n3, p5n3);
       this.addToMain(container);
       return this;
     };
@@ -218,7 +205,6 @@
       this.library['characters'].scaleX = 1;
       this.library['characters'].scaleY = 1;
       this.library['characters'].alpha = 1;
-      this.library['score'].updateCount(this.index);
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
       });
@@ -340,6 +326,7 @@
 
     U1A1.prototype.finishEvaluation = function() {
       var song;
+      this.library['score'].plusOne();
       song = createjs.Sound.play(this.answers[this.index].sound);
       return song.addEventListener('complete', this.clearEvaluation);
     };
@@ -374,7 +361,6 @@
       var i, _i, _results;
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
         this.library['characters'].currentFrame = this.index;
         this.library['h1'].blink();
         this.blink(this.library['backNube1']);
@@ -390,7 +376,6 @@
         }
         return _results;
       } else {
-        this.library['score'].updateCount(this.index);
         return this.finish();
       }
     };

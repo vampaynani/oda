@@ -49,11 +49,7 @@ class U1A3 extends Oda
 		word5 = new ClickableText 'w15', 'We watch movies', 5, 0, 72
 
 		group1.addChild word1, word2, word3, word4, word5
-		@addToLibrary word1
-		@addToLibrary word2
-		@addToLibrary word3
-		@addToLibrary word4
-		@addToLibrary word5
+		@addToLibrary word1, word2, word3, word4, word5
 		@addToMain group1
 		@
 	setGrupo2: ->
@@ -68,11 +64,7 @@ class U1A3 extends Oda
 		word5 = new ClickableText 'w25', 'in the art room', 5, 0, 72
 
 		group2.addChild word1, word2, word3, word4, word5
-		@addToLibrary word1
-		@addToLibrary word2
-		@addToLibrary word3
-		@addToLibrary word4
-		@addToLibrary word5
+		@addToLibrary word1, word2, word3, word4, word5
 		@addToMain group2
 		@
 	setGrupo3: ->
@@ -87,11 +79,7 @@ class U1A3 extends Oda
 		word5 = new ClickableText 'w35', 'on Monday and Wednesday.', 5, 0, 72
 
 		group3.addChild word1, word2, word3, word4, word5
-		@addToLibrary word1
-		@addToLibrary word2
-		@addToLibrary word3
-		@addToLibrary word4
-		@addToLibrary word5
+		@addToLibrary word1, word2, word3, word4, word5
 		@addToMain group3
 		@
 	setDropper: ->
@@ -110,12 +98,6 @@ class U1A3 extends Oda
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-		
-		@library['characters'].currentFrame = @answers[@index].id
-		###
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenMax.allFrom [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
@@ -166,11 +148,11 @@ class U1A3 extends Oda
 		else
 			@warning()
 	finishEvaluation: =>
+		@library['score'].plusOne()
 		TweenLite.to @library['words'], 0.5, {alpha: 0, ease: Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library['score'].updateCount @index
 			@library['wc1'].changeText ''
 			@library['wc2'].changeText ''
 			@library['wc3'].changeText ''

@@ -9,8 +9,7 @@
     __extends(U1A6, _super);
 
     function U1A6() {
-      this.repeat = __bind(this.repeat, this);
-      this.showPhrase = __bind(this.showPhrase, this);
+      this.finish = __bind(this.finish, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -30,44 +29,134 @@
           id: 'c2',
           src: 'circle2.png'
         }, {
-          id: 'teacher',
-          src: 'teacher.png'
+          id: 'crossWords',
+          src: 'cross_words.png'
         }, {
-          id: 'repeat',
-          src: 'repeat_btn.png'
+          id: 'bass',
+          src: 'bass.png'
         }, {
-          id: 'arrive',
-          src: 'arrive_time.png'
+          id: 'drum',
+          src: 'drum.png'
         }, {
-          id: 'quiet',
-          src: 'be_quiet.png'
+          id: 'guitar',
+          src: 'guitar.png'
         }, {
-          id: 'bus',
-          src: 'bus_late.png'
+          id: 'flute',
+          src: 'flute.png'
         }, {
-          id: 'eat',
-          src: 'eat_class.png'
+          id: 'piano',
+          src: 'piano.png'
         }, {
-          id: 'aud',
-          src: 'run_aud.png'
+          id: 'sax',
+          src: 'sax.png'
         }, {
-          id: 'run',
-          src: 'run_hall.png'
+          id: 'tambourine',
+          src: 'tambourine.png'
         }, {
-          id: 'cafe',
-          src: 'trash_cafeteria.png'
+          id: 'trumpet',
+          src: 'trumpet.png'
         }, {
-          id: 'library',
-          src: 'talk_library.png'
+          id: 'drum_number',
+          src: 'drum_number.png'
         }, {
-          id: 'movies',
-          src: 'watch_movies.png'
+          id: 'guitar_number',
+          src: 'guitar_number.png'
         }, {
-          id: 'trash',
-          src: 'throw_trash.png'
+          id: 'flute_number',
+          src: 'flute_number.png'
         }, {
-          id: 'walk',
-          src: 'walk_hall.png'
+          id: 'piano_number',
+          src: 'piano_number.png'
+        }, {
+          id: 'sax_number',
+          src: 'sax_number.png'
+        }, {
+          id: 'tambourine_number',
+          src: 'tambourine_number.png'
+        }, {
+          id: 'trumpet_number',
+          src: 'trumpet_number.png'
+        }, {
+          id: 'bass_number',
+          src: 'bass_number.png'
+        }, {
+          id: 'aLetra',
+          src: 'a.png'
+        }, {
+          id: 'bLetra',
+          src: 'b.png'
+        }, {
+          id: 'cLetra',
+          src: 'c.png'
+        }, {
+          id: 'dLetra',
+          src: 'd.png'
+        }, {
+          id: 'eLetra',
+          src: 'e.png'
+        }, {
+          id: 'fLetra',
+          src: 'f.png'
+        }, {
+          id: 'gLetra',
+          src: 'g.png'
+        }, {
+          id: 'hLetra',
+          src: 'h.png'
+        }, {
+          id: 'iLetra',
+          src: 'i.png'
+        }, {
+          id: 'jLetra',
+          src: 'j.png'
+        }, {
+          id: 'kLetra',
+          src: 'k.png'
+        }, {
+          id: 'lLetra',
+          src: 'l.png'
+        }, {
+          id: 'mLetra',
+          src: 'm.png'
+        }, {
+          id: 'nLetra',
+          src: 'n.png'
+        }, {
+          id: 'oLetra',
+          src: 'o.png'
+        }, {
+          id: 'pLetra',
+          src: 'p.png'
+        }, {
+          id: 'qLetra',
+          src: 'q.png'
+        }, {
+          id: 'rLetra',
+          src: 'r.png'
+        }, {
+          id: 'sLetra',
+          src: 's.png'
+        }, {
+          id: 'tLetra',
+          src: 't.png'
+        }, {
+          id: 'uLetra',
+          src: 'u.png'
+        }, {
+          id: 'vLetra',
+          src: 'v.png'
+        }, {
+          id: 'wLetra',
+          src: 'w.png'
+        }, {
+          id: 'xLetra',
+          src: 'x.png'
+        }, {
+          id: 'yLetra',
+          src: 'y.png'
+        }, {
+          id: 'zLetra',
+          src: 'z.png'
         }
       ];
       sounds = [
@@ -97,7 +186,7 @@
           id: 'piano'
         }, {
           src: 'sounds/TU2_U1_A6_saxophone.mp3',
-          id: 'sax'
+          id: 'saxophone'
         }, {
           src: 'sounds/TU2_U1_A6_tambourine.mp3',
           id: 'tambourine'
@@ -109,42 +198,223 @@
           id: 'violin'
         }
       ];
-      this.answers = [
+      this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      this.containers = [
         {
-          id: 'arrive',
-          a: false
+          id: 'd',
+          x: 5,
+          y: 0,
+          a: true
         }, {
-          id: 'quiet',
-          a: false
+          id: 'r',
+          x: 5,
+          y: 1
         }, {
-          id: 'bus',
-          a: false
+          id: 'u',
+          x: 5,
+          y: 2
         }, {
-          id: 'eat',
-          a: false
+          id: 'm',
+          x: 5,
+          y: 3
         }, {
-          id: 'aud',
-          a: false
+          id: 'g',
+          x: 7,
+          y: 0,
+          a: true
         }, {
-          id: 'run',
-          a: false
+          id: 'u',
+          x: 7,
+          y: 1
         }, {
-          id: 'cafe',
-          a: false
+          id: 'i',
+          x: 7,
+          y: 2
         }, {
-          id: 'library',
-          a: false
+          id: 't',
+          x: 7,
+          y: 3
         }, {
-          id: 'movies',
-          a: false
+          id: 'a',
+          x: 7,
+          y: 4
         }, {
-          id: 'trash',
-          a: false
+          id: 'r',
+          x: 7,
+          y: 5
         }, {
-          id: 'walk',
-          a: false
+          id: 't',
+          x: 0,
+          y: 2,
+          a: true
+        }, {
+          id: 'a',
+          x: 1,
+          y: 2
+        }, {
+          id: 'm',
+          x: 2,
+          y: 2
+        }, {
+          id: 'b',
+          x: 3,
+          y: 2
+        }, {
+          id: 'o',
+          x: 4,
+          y: 2
+        }, {
+          id: 'r',
+          x: 6,
+          y: 2
+        }, {
+          id: 'n',
+          x: 8,
+          y: 2
+        }, {
+          id: 'e',
+          x: 9,
+          y: 2
+        }, {
+          id: 'r',
+          x: 0,
+          y: 3
+        }, {
+          id: 'u',
+          x: 0,
+          y: 4
+        }, {
+          id: 'm',
+          x: 0,
+          y: 5
+        }, {
+          id: 'p',
+          x: 0,
+          y: 6,
+          a: true
+        }, {
+          id: 'e',
+          x: 0,
+          y: 7
+        }, {
+          id: 't',
+          x: 0,
+          y: 8
+        }, {
+          id: 'f',
+          x: 10,
+          y: 4,
+          a: true
+        }, {
+          id: 'l',
+          x: 10,
+          y: 5
+        }, {
+          id: 'u',
+          x: 10,
+          y: 6
+        }, {
+          id: 't',
+          x: 10,
+          y: 7
+        }, {
+          id: 'e',
+          x: 10,
+          y: 8
+        }, {
+          id: 'b',
+          x: 2,
+          y: 5,
+          a: true
+        }, {
+          id: 'a',
+          x: 2,
+          y: 6
+        }, {
+          id: 's',
+          x: 2,
+          y: 7
+        }, {
+          id: 's',
+          x: 2,
+          y: 8,
+          a: true
+        }, {
+          id: 'i',
+          x: 1,
+          y: 6
+        }, {
+          id: 'n',
+          x: 3,
+          y: 6
+        }, {
+          id: 'o',
+          x: 4,
+          y: 6
+        }, {
+          id: 'a',
+          x: 3,
+          y: 8
+        }, {
+          id: 'x',
+          x: 4,
+          y: 8
+        }, {
+          id: 'o',
+          x: 5,
+          y: 8
+        }, {
+          id: 'p',
+          x: 6,
+          y: 8
+        }, {
+          id: 'h',
+          x: 7,
+          y: 8
+        }, {
+          id: 'o',
+          x: 8,
+          y: 8
+        }, {
+          id: 'n',
+          x: 9,
+          y: 8
         }
       ];
+      this.answers = {
+        drum: {
+          r: false,
+          c: [0, 1, 2, 3]
+        },
+        guitar: {
+          r: false,
+          c: [4, 5, 6, 7, 8, 9]
+        },
+        tambourine: {
+          r: false,
+          c: [10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
+        },
+        trumpet: {
+          r: false,
+          c: [10, 18, 19, 20, 21, 22, 23]
+        },
+        flute: {
+          r: false,
+          c: [24, 25, 26, 27, 28]
+        },
+        bass: {
+          r: false,
+          c: [29, 30, 31, 32]
+        },
+        piano: {
+          r: false,
+          c: [21, 33, 30, 34, 35]
+        },
+        saxophone: {
+          r: false,
+          c: [32, 36, 37, 38, 39, 40, 41, 42, 28]
+        }
+      };
       U1A6.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -152,44 +422,93 @@
       U1A6.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('teacher', 'teacher', 250, 124);
-      this.insertBitmap('repeat', 'repeat', 441, 210);
-      this.insertSprite('choose1', ['arrive', 'quiet', 'bus', 'eat', 'aud', 'run', 'cafe', 'library', 'movies', 'trash', 'walk'], {
-        arrive: 0,
-        quiet: 1,
-        bus: 2,
-        eat: 3,
-        aud: 4,
-        run: 5,
-        cafe: 6,
-        library: 7,
-        movies: 8,
-        trash: 9,
-        walk: 10
-      }, 270, 452, 'mc');
-      this.insertSprite('choose2', ['arrive', 'quiet', 'bus', 'eat', 'aud', 'run', 'cafe', 'library', 'movies', 'trash', 'walk'], {
-        arrive: 0,
-        quiet: 1,
-        bus: 2,
-        eat: 3,
-        aud: 4,
-        run: 5,
-        cafe: 6,
-        library: 7,
-        movies: 8,
-        trash: 9,
-        walk: 10
-      }, 591, 452, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 11, 0));
+      this.insertBitmap('saxophone', 'sax', 341, 118);
+      this.insertBitmap('saxophoneNo', 'sax_number', 346, 130);
+      this.insertBitmap('drum', 'drum', 99, 125);
+      this.insertBitmap('drumNo', 'drum_number', 69, 125);
+      this.insertBitmap('guitar', 'guitar', 99, 228);
+      this.insertBitmap('guitarNo', 'guitar_number', 163, 252);
+      this.insertBitmap('tambourine', 'tambourine', 192, 412);
+      this.insertBitmap('tambourineNo', 'tambourine_number', 197, 390);
+      this.insertBitmap('trumpet', 'trumpet', 353, 446);
+      this.insertBitmap('trumpetNo', 'trumpet_number', 322, 444);
+      this.insertBitmap('flute', 'flute', 546, 448);
+      this.insertBitmap('fluteNo', 'flute_number', 521, 443);
+      this.insertBitmap('bass', 'bass', 639, 249);
+      this.insertBitmap('bassNo', 'bass_number', 621, 279);
+      this.insertBitmap('piano', 'piano', 567, 77);
+      this.insertBitmap('pianoNo', 'piano_number', 567, 138);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.createDroppers();
+      this.createAlphabet();
       return this.introEvaluation();
     };
 
+    U1A6.prototype.createAlphabet = function() {
+      var alphabet, i, letter, letterObj, _i, _ref;
+      alphabet = new createjs.Container();
+      alphabet.x = 135;
+      alphabet.y = 510;
+      alphabet.name = 'alphabet';
+      for (i = _i = 0, _ref = this.abc.length - 1; _i <= _ref; i = _i += 1) {
+        letter = this.abc[i];
+        if (i <= 13) {
+          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 41.5 * i, 0);
+        } else {
+          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 41.5 * i - 540, 34);
+        }
+        letterObj.onInitEvaluation();
+        alphabet.addChild(letterObj);
+        this.addToLibrary(letterObj);
+      }
+      return this.addToMain(alphabet);
+    };
+
+    U1A6.prototype.createDroppers = function() {
+      var crosswords, drop, i, _i, _ref;
+      crosswords = new createjs.Container();
+      crosswords.x = 305;
+      crosswords.y = 216;
+      crosswords.name = 'crosswords';
+      for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
+        drop = new WordContainer('h' + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
+        drop.id = this.containers[i].id;
+        this.addToLibrary(drop);
+        crosswords.addChild(drop);
+      }
+      return this.addToMain(crosswords);
+    };
+
     U1A6.prototype.introEvaluation = function() {
+      var i, _i, _ref;
       U1A6.__super__.introEvaluation.apply(this, arguments);
-      this.library['choose1'].alpha = 0;
-      this.library['choose1'].scaleX = this.library['choose1'].scaleY = 0.3;
-      this.library['choose2'].alpha = 0;
-      this.library['choose2'].scaleX = this.library['choose2'].scaleY = 0.3;
+      this.library['crosswords'].y = 216;
+      this.library['crosswords'].alpha = 1;
+      this.library['alphabet'].y = 510;
+      this.library['alphabet'].alpha = 1;
+      this.library['saxophone'].alpha = 1;
+      this.library['saxophoneNo'].alpha = 1;
+      this.library['drum'].alpha = 1;
+      this.library['drumNo'].alpha = 1;
+      this.library['guitar'].alpha = 1;
+      this.library['guitarNo'].alpha = 1;
+      this.library['tambourine'].alpha = 1;
+      this.library['tambourineNo'].alpha = 1;
+      this.library['trumpet'].alpha = 1;
+      this.library['trumpetNo'].alpha = 1;
+      this.library['flute'].alpha = 1;
+      this.library['fluteNo'].alpha = 1;
+      this.library['bass'].alpha = 1;
+      this.library['bassNo'].alpha = 1;
+      this.library['piano'].alpha = 1;
+      this.library['pianoNo'].alpha = 1;
+      for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
+        if (this.containers[i].a) {
+          this.library['h' + i].changeText(this.containers[i].id);
+        } else {
+          this.library['h' + i].changeText('');
+        }
+      }
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
       });
@@ -198,14 +517,22 @@
         x: 0,
         delay: 0.5
       });
-      TweenLite.from(this.library['teacher'], 1, {
+      TweenMax.allFrom([this.library['saxophone'], this.library['drum'], this.library['guitar'], this.library['tambourine'], this.library['trumpet'], this.library['flute'], this.library['bass'], this.library['piano']], 1, {
         alpha: 0,
-        y: this.library['teacher'].y + 50,
-        delay: 1
+        delay: 1.5
+      }, 0.2);
+      TweenMax.allFrom([this.library['saxophoneNo'], this.library['drumNo'], this.library['guitarNo'], this.library['tambourineNo'], this.library['trumpetNo'], this.library['fluteNo'], this.library['bassNo'], this.library['pianoNo']], 1, {
+        alpha: 0,
+        delay: 1.5
+      }, 0.2);
+      TweenLite.from(this.library['alphabet'], 1, {
+        alpha: 0,
+        y: this.library['alphabet'].y + 50,
+        delay: 1.5
       });
-      return TweenLite.from(this.library['repeat'], 1, {
+      return TweenLite.from(this.library['crosswords'], 1, {
         alpha: 0,
-        y: this.library['repeat'].y + 50,
+        y: this.library['crosswords'].y + 50,
         delay: 1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -213,103 +540,100 @@
     };
 
     U1A6.prototype.initEvaluation = function(e) {
-      var answer, _i, _len, _ref;
+      var letter, _i, _len, _ref, _results;
       U1A6.__super__.initEvaluation.apply(this, arguments);
-      _ref = this.answers;
+      _ref = this.abc;
+      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        answer = _ref[_i];
-        answer.a = false;
+        letter = _ref[_i];
+        _results.push(this.library[letter].addEventListener('drop', this.evaluateAnswer));
       }
-      this.showPhrase();
-      this.library['choose1'].addEventListener('click', this.evaluateAnswer);
-      this.library['choose2'].addEventListener('click', this.evaluateAnswer);
-      return this.library['repeat'].addEventListener('click', this.repeat);
+      return _results;
     };
 
     U1A6.prototype.evaluateAnswer = function(e) {
-      var selection;
+      var hit, i, pt, _i, _ref, _results;
       this.answer = e.target;
-      if (this.phrase.id === this.answer.currentAnimation) {
-        selection = this.answers.where({
-          id: this.phrase.id
-        });
-        selection[0].a = true;
-        createjs.Sound.play('good');
-        return setTimeout(this.finishEvaluation, 1 * 1000);
-      } else {
-        TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
-          alpha: 0,
-          scaleX: 0.3,
-          scaleY: 0.3,
-          ease: Elastic.easeOut,
-          onComplete: this.showPhrase
-        });
-        return this.warning();
+      _results = [];
+      for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
+        hit = this.library['h' + i];
+        pt = this.library['h1'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (hit.hitTest(pt.x, pt.y)) {
+          if (hit.id === this.answer.index) {
+            hit.changeText(hit.id);
+            this.answer.x = this.answer.pos.x;
+            this.answer.y = this.answer.pos.y;
+            this.evaluate('drum');
+            this.evaluate('guitar');
+            this.evaluate('tambourine');
+            this.evaluate('trumpet');
+            this.evaluate('flute');
+            this.evaluate('bass');
+            this.evaluate('piano');
+            _results.push(this.evaluate('saxophone'));
+          } else {
+            _results.push(this.warning());
+          }
+        } else {
+          _results.push(this.answer.returnToPlace());
+        }
+      }
+      return _results;
+    };
+
+    U1A6.prototype.evaluate = function(instrument) {
+      var box, ready, snd, _i, _len, _ref;
+      ready = true;
+      if (!this.answers[instrument].r) {
+        _ref = this.answers[instrument].c;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          box = _ref[_i];
+          if (this.library['h' + box].text.text === '') {
+            ready = false;
+          }
+        }
+        if (ready) {
+          this.instrument = instrument;
+          snd = createjs.Sound.play(instrument);
+          snd.addEventListener('complete', this.finishEvaluation);
+          this.answers[instrument].r = true;
+          return this.library['score'].plusOne();
+        }
       }
     };
 
     U1A6.prototype.finishEvaluation = function() {
-      return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
+      return TweenMax.allTo([this.library[this.instrument], this.library[this.instrument + 'No']], 1, {
         alpha: 0,
-        scaleX: 0.3,
-        scaleY: 0.3,
-        ease: Elastic.easeOut,
+        ease: Quart.easeOut,
         onComplete: this.nextEvaluation
       });
     };
 
     U1A6.prototype.nextEvaluation = function() {
-      this.index++;
-      if (this.index < this.answers.length) {
-        return this.showPhrase();
-      } else {
-        return this.finish();
+      var complete, instrument;
+      complete = true;
+      for (instrument in this.answers) {
+        if (this.answers[instrument].r === false) {
+          complete = false;
+        }
       }
-    };
-
-    U1A6.prototype.showPhrase = function() {
-      var fake, other, others, rand,
-        _this = this;
-      rand = Math.random() > 0.5 ? 1 : 2;
-      other = rand === 1 ? 2 : 1;
-      this.phrase = this.getPhrase();
-      others = this.answers.filter(function(answer) {
-        return answer.id !== _this.phrase.id;
-      });
-      fake = Math.floor(Math.random() * others.length);
-      this.library['score'].updateCount(this.index);
-      this.library['choose' + rand].gotoAndStop(this.phrase.id);
-      this.library['choose' + other].gotoAndStop(others[fake].id);
-      createjs.Sound.play(this.phrase.id);
-      return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
-        alpha: 1,
-        scaleX: 1,
-        scaleY: 1,
-        ease: Elastic.easeOut
-      });
-    };
-
-    U1A6.prototype.getPhrase = function() {
-      var id, possible;
-      possible = this.answers.filter(function(answer) {
-        return answer.a === false;
-      });
-      id = Math.floor(Math.random() * possible.length);
-      return possible[id];
-    };
-
-    U1A6.prototype.repeat = function(e) {
-      return createjs.Sound.play(this.answers[this.index].id);
-    };
-
-    U1A6.prototype.shuffle = function(a) {
-      var i, j, _i, _ref, _ref1, _results;
-      _results = [];
-      for (i = _i = _ref = a.length; _ref <= 1 ? _i <= 1 : _i >= 1; i = _ref <= 1 ? ++_i : --_i) {
-        j = Math.floor(Math.random() * (i + 1));
-        _results.push((_ref1 = [a[j], a[i]], a[i] = _ref1[0], a[j] = _ref1[1], _ref1));
+      if (complete) {
+        TweenLite.to(this.library['alphabet'], 0.5, {
+          alpha: 0,
+          y: this.library['alphabet'].y - 100,
+          ease: Quart.easeOut
+        });
       }
-      return _results;
+      if (complete) {
+        return TweenLite.to(this.library['crosswords'], 0.5, {
+          alpha: 0,
+          y: this.library['crosswords'].y - 100,
+          ease: Quart.easeOut,
+          onComplete: this.finish
+        });
+      }
     };
 
     U1A6.prototype.blink = function(obj, state) {
@@ -328,7 +652,6 @@
     };
 
     U1A6.prototype.finish = function() {
-      this.library['score'].updateCount(this.index);
       return U1A6.__super__.finish.apply(this, arguments);
     };
 

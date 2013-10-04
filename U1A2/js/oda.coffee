@@ -87,6 +87,8 @@ class Oda
 		bmp = new createjs.Bitmap img
 		bmp.x = x
 		bmp.y = y
+		bmp.width = img.width
+		bmp.height = img.height
 		bmp.name = name
 		switch position
 			when 'tc' then @setReg bmp, 0, img.width / 2
@@ -112,6 +114,8 @@ class Oda
 		animation = new createjs.BitmapAnimation sprite
 		animation.x = x
 		animation.y = y
+		animation.width = w
+		animation.height = h
 		animation.name = name
 		animation.currentFrame = 0
 		switch position
@@ -129,14 +133,24 @@ class Oda
 		animation = @createSprite name, imgs, anim, x, y, position
 		@addToMain animation
 		animation
-	addToMain: (obj) ->
-		@addToLibrary obj
-		@mainContainer.addChild obj
+	addToMain: (objs...) ->
+		@addToLibrary objs
+		for o in objs
+			@mainContainer.addChild o
 		@mainContainer
-	addToLibrary: (obj) ->
-		@assets.push obj
+	addToLibrary: (obj, objs...) ->
+		if @isArray obj
+			for o in obj
+				@assets.push o
+		else
+			@assets.push obj
+			for o in objs
+				@assets.push o
 		@library = @assets.toDictionary 'name'
 		@library
+	isArray: ( value ) ->
+		Array.isArray value || (value) ->
+			{}.toString.call( value ) is '[object Array]'
 	setReg: (obj, regY, regX) ->
 		obj.regY = regY
 		obj.regX = regX
@@ -181,7 +195,7 @@ class Oda
 		@observer = new Observer()
 	introEvaluation: ->
 		@index = 0
-		@library['score'].updateCount @index
+		@library['score'].reset()
 	initEvaluation: (e) =>
 		@observer.notify 'init_evaluation'
 	finish: ->

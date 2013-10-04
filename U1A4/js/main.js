@@ -255,6 +255,7 @@
     };
 
     U1A4.prototype.finishEvaluation = function() {
+      this.library['score'].plusOne();
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 0,
         scaleX: 0.3,
@@ -283,7 +284,6 @@
         return answer.id !== _this.phrase.id;
       });
       fake = Math.floor(Math.random() * others.length);
-      this.library['score'].updateCount(this.index);
       this.library['choose' + rand].gotoAndStop(this.phrase.id);
       this.library['choose' + other].gotoAndStop(others[fake].id);
       createjs.Sound.play(this.phrase.id);
@@ -334,7 +334,6 @@
     };
 
     U1A4.prototype.finish = function() {
-      this.library['score'].updateCount(this.index);
       return U1A4.__super__.finish.apply(this, arguments);
     };
 

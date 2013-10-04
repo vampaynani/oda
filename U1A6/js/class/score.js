@@ -16,6 +16,7 @@
       this.name = name;
       this.x = x;
       this.y = y;
+      this.counter = 0;
       this.bmpBack = new createjs.Bitmap(back);
       this.bmpFront = new createjs.Bitmap(front);
       this.txtTotal = new createjs.Text(total, '24px Arial', '#666666');
@@ -32,6 +33,16 @@
       this.txtCount.y = this.bmpFront.y + front.height / 2 - this.txtCount.getMeasuredHeight() / 2;
       this.addChild(this.bmpFront, this.txtCount, this.bmpBack, this.txtTotal);
       return false;
+    };
+
+    Score.prototype.reset = function() {
+      this.counter = 0;
+      return this.updateCount(this.counter);
+    };
+
+    Score.prototype.plusOne = function() {
+      this.counter++;
+      return this.updateCount(this.counter);
     };
 
     Score.prototype.updateCount = function(txt) {

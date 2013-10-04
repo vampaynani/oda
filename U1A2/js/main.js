@@ -130,8 +130,8 @@
       U1A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'], 100, stageSize.h - 180);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'], null, 100, stageSize.h - 180);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 6, 0));
       return this.setDropper().setNames().introEvaluation();
     };
 
@@ -170,12 +170,7 @@
       name5.addEventListener('drop', this.evaluateAnswer);
       name6.addEventListener('drop', this.evaluateAnswer);
       repeat.addEventListener('click', this.repeatSound);
-      this.addToLibrary(name1);
-      this.addToLibrary(name2);
-      this.addToLibrary(name3);
-      this.addToLibrary(name4);
-      this.addToLibrary(name5);
-      this.addToLibrary(name6);
+      this.addToLibrary(name1, name2, name3, name4, name5, name6);
       names.addChild(faces, repeat, name1, name2, name3, name4, name5, name6);
       this.addToMain(names);
       return this;
@@ -244,19 +239,20 @@
     };
 
     U1A2.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      this.library['score'].plusOne();
+      this.answer.returnToPlace();
+      return TweenLite.to(this.library['characters'], 0.5, {
         alpha: 0,
         y: -200,
+        delay: 0.5,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
       });
-      return this.answer.returnToPlace();
     };
 
     U1A2.prototype.nextEvaluation = function() {
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
         this.library['characters'].alpha = 1;
         this.library['characters'].y = stageSize.h - 180;
         this.library['characters'].currentFrame = this.answers[this.index].id;

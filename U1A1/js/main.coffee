@@ -49,9 +49,7 @@ class U1A1 extends Oda
 		h2 = new WordContainer 'h2', '', '#fef2e7', '#f39234', 118, 62, 122, 22
 		h3 = new WordContainer 'h3', '', '#fef2e7', '#f39234', 254, 62, 137, 22
 		dropper.addChild back, h1, h2, h3
-		@addToLibrary h1
-		@addToLibrary h2
-		@addToLibrary h3
+		@addToLibrary h1, h2, h3
 		@addToMain dropper
 		@
 	setNube1: ->
@@ -63,9 +61,7 @@ class U1A1 extends Oda
 		p1n1 = new DraggableText 'p1n1', "I'm", 0, 40, 10
 		p2n1 = new DraggableText 'p2n1', "We're", 1, 30, 40
 		container.addChild back, p1n1, p2n1
-		@addToLibrary back
-		@addToLibrary p1n1
-		@addToLibrary p2n1
+		@addToLibrary back, p1n1, p2n1
 		@addToMain container
 		@
 	setNube2: ->
@@ -79,11 +75,7 @@ class U1A1 extends Oda
 		p3n2 = new DraggableText 'p3n2', "singing", 2, 40, 80
 		p4n2 = new DraggableText 'p4n2', "studying", 3, 120, 120
 		container.addChild back, p1n2, p2n2, p3n2, p4n2
-		@addToLibrary back
-		@addToLibrary p1n2
-		@addToLibrary p2n2
-		@addToLibrary p3n2
-		@addToLibrary p4n2
+		@addToLibrary back, p1n2, p2n2, p3n2, p4n2
 		@addToMain container
 		@
 	setNube3: ->
@@ -98,12 +90,7 @@ class U1A1 extends Oda
 		p4n3 = new DraggableText 'p4n3', "the flute.", 3, 30, 100
 		p5n3 = new DraggableText 'p5n3', "outside.", 4, 100, 140
 		container.addChild back, p1n3, p2n3, p3n3, p4n3, p5n3
-		@addToLibrary back
-		@addToLibrary p1n3
-		@addToLibrary p2n3
-		@addToLibrary p3n3
-		@addToLibrary p4n3
-		@addToLibrary p5n3
+		@addToLibrary back, p1n3, p2n3, p3n3, p4n3, p5n3
 		@addToMain container
 		@
 	introEvaluation: ->
@@ -119,8 +106,7 @@ class U1A1 extends Oda
 		@library['characters'].scaleX = 1
 		@library['characters'].scaleY = 1
 		@library['characters'].alpha = 1
-		@library['score'].updateCount @index
-
+		
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 50, delay: 1}
@@ -188,6 +174,7 @@ class U1A1 extends Oda
 		else
 			@answer.returnToPlace()
 	finishEvaluation: =>
+		@library['score'].plusOne()
 		song = createjs.Sound.play @answers[@index].sound
 		song.addEventListener 'complete', @clearEvaluation
 	clearEvaluation: (e) =>
@@ -206,7 +193,6 @@ class U1A1 extends Oda
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library['score'].updateCount( @index )
 			@library['characters'].currentFrame = @index
 			@library['h1'].blink()
 			@blink @library['backNube1']
@@ -214,7 +200,6 @@ class U1A1 extends Oda
 			for i in [1..2] by 1
 				@library['p'+i+'n1'].addEventListener 'drop', @evaluateAnswer1
 		else
-			@library['score'].updateCount( @index )
 			@finish()
 	blink: (obj, state = on) ->
 		TweenMax.killTweensOf obj

@@ -88,6 +88,7 @@ class U1A4 extends Oda
 			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @showPhrase}
 			@warning()
 	finishEvaluation: =>
+		@library['score'].plusOne()
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
@@ -102,7 +103,6 @@ class U1A4 extends Oda
 		others = @answers.filter (answer) =>
 			answer.id isnt @phrase.id
 		fake = Math.floor Math.random() * others.length
-		@library['score'].updateCount @index
 		@library['choose' + rand].gotoAndStop @phrase.id
 		@library['choose' + other].gotoAndStop others[fake].id
 		createjs.Sound.play @phrase.id
@@ -123,6 +123,5 @@ class U1A4 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
-		@library['score'].updateCount @index
 		super
 	window.U1A4 = U1A4

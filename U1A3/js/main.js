@@ -118,11 +118,7 @@
       word4 = new ClickableText('w14', 'We eat lunch', 4, 0, 54);
       word5 = new ClickableText('w15', 'We watch movies', 5, 0, 72);
       group1.addChild(word1, word2, word3, word4, word5);
-      this.addToLibrary(word1);
-      this.addToLibrary(word2);
-      this.addToLibrary(word3);
-      this.addToLibrary(word4);
-      this.addToLibrary(word5);
+      this.addToLibrary(word1, word2, word3, word4, word5);
       this.addToMain(group1);
       return this;
     };
@@ -139,11 +135,7 @@
       word4 = new ClickableText('w24', 'in the auditorium', 4, 0, 54);
       word5 = new ClickableText('w25', 'in the art room', 5, 0, 72);
       group2.addChild(word1, word2, word3, word4, word5);
-      this.addToLibrary(word1);
-      this.addToLibrary(word2);
-      this.addToLibrary(word3);
-      this.addToLibrary(word4);
-      this.addToLibrary(word5);
+      this.addToLibrary(word1, word2, word3, word4, word5);
       this.addToMain(group2);
       return this;
     };
@@ -160,11 +152,7 @@
       word4 = new ClickableText('w34', 'on Tuesday and Friday.', 4, 0, 54);
       word5 = new ClickableText('w35', 'on Monday and Wednesday.', 5, 0, 72);
       group3.addChild(word1, word2, word3, word4, word5);
-      this.addToLibrary(word1);
-      this.addToLibrary(word2);
-      this.addToLibrary(word3);
-      this.addToLibrary(word4);
-      this.addToLibrary(word5);
+      this.addToLibrary(word1, word2, word3, word4, word5);
       this.addToMain(group3);
       return this;
     };
@@ -188,13 +176,6 @@
 
     U1A3.prototype.introEvaluation = function() {
       U1A3.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      		
-      		@library['characters'].currentFrame = @answers[@index].id
-      */
-
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
       });
@@ -299,6 +280,7 @@
     };
 
     U1A3.prototype.finishEvaluation = function() {
+      this.library['score'].plusOne();
       return TweenLite.to(this.library['words'], 0.5, {
         alpha: 0,
         ease: Quart.easeOut,
@@ -310,7 +292,6 @@
       var i, _i;
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
         this.library['wc1'].changeText('');
         this.library['wc2'].changeText('');
         this.library['wc3'].changeText('');
