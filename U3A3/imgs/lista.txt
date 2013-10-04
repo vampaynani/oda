@@ -1,80 +1,82 @@
-C:\xampp\htdocs\oda\U3A3\imgs\guia1.png
-C:\xampp\htdocs\oda\U3A3\imgs\guia2.png
-C:\xampp\htdocs\oda\U3A3\imgs\guia3.png
-C:\xampp\htdocs\oda\U3A3\imgs\guia4.png
+{id:'guia1', src: 'guia1.png'}
+{id:'guia2', src: 'guia2.png'}
+{id:'guia3', src: 'guia3.png'}
+{id:'guia4', src: 'guia4.png'}
 
-C:\xampp\htdocs\oda\U3A3\imgs\btn_salad.png
-C:\xampp\htdocs\oda\U3A3\imgs\btn_sandwich.png
-C:\xampp\htdocs\oda\U3A3\imgs\prop_salad.png
-C:\xampp\htdocs\oda\U3A3\imgs\prop_sandwich.png
+{id:'btn_salad', src: 'btn_salad.png'}
+{id:'btn_sandwich', src: 'btn_sandwich.png'}
+{id:'prop_salad', src: 'prop_salad.png'}
+{id:'prop_sandwich', src: 'prop_sandwich.png'}
 
-C:\xampp\htdocs\oda\U3A3\imgs\wrong.png
-C:\xampp\htdocs\oda\U3A3\imgs\correct.png
+{id:'wrong', src: 'wrong.png'}
+{id:'correct', src: 'correct.png'}
 
-C:\xampp\htdocs\oda\U3A3\imgs\chef\check_chef_scene0001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\check_chef_scene0002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\check_chef_scene0003.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_100001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_100002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_10001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_10002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_110001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_110002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_120001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_120002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_130001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_130002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_140001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_140002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_150001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_150002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_20001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_20002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_30001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_30002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_40001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_40002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_50001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_50002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_60001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_60002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_70001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_70002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_80001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_80002.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_90001.png
-C:\xampp\htdocs\oda\U3A3\imgs\chef\cubierto_90002.png
+{id:'checkchefscene0001', src: 'chef\check_chef_scene0001.png'}
+{id:'checkchefscene0002', src: 'chef\check_chef_scene0002.png'}
+{id:'checkchefscene0003', src: 'chef\check_chef_scene0003.png'}
+{id:'1cubierto1', src: 'chef\cubierto_10001.png'}
+{id:'1cubierto2', src: 'chef\cubierto_10002.png'}
+{id:'2cubierto1', src: 'chef\cubierto_20001.png'}
+{id:'2cubierto2', src: 'chef\cubierto_20002.png'}
+{id:'3cubierto1', src: 'chef\cubierto_30001.png'}
+{id:'3cubierto2', src: 'chef\cubierto_30002.png'}
+{id:'4cubierto1', src: 'chef\cubierto_40001.png'}
+{id:'4cubierto2', src: 'chef\cubierto_40002.png'}
+{id:'5cubierto1', src: 'chef\cubierto_50001.png'}
+{id:'5cubierto2', src: 'chef\cubierto_50002.png'}
+{id:'6cubierto1', src: 'chef\cubierto_60001.png'}
+{id:'6cubierto2', src: 'chef\cubierto_60002.png'}
+{id:'7cubierto1', src: 'chef\cubierto_70001.png'}
+{id:'7cubierto2', src: 'chef\cubierto_70002.png'}
+{id:'8cubierto1', src: 'chef\cubierto_80001.png'}
+{id:'8cubierto2', src: 'chef\cubierto_80002.png'}
+{id:'9cubierto1', src: 'chef\cubierto_90001.png'}
+{id:'9cubierto2', src: 'chef\cubierto_90002.png'}
+{id:'10cubierto1', src: 'chef\cubierto_100001.png'}
+{id:'10cubierto2', src: 'chef\cubierto_100002.png'}
+{id:'11cubierto1', src: 'chef\cubierto_110001.png'}
+{id:'11cubierto2', src: 'chef\cubierto_110002.png'}
+{id:'12cubierto1', src: 'chef\cubierto_120001.png'}
+{id:'12cubierto2', src: 'chef\cubierto_120002.png'}
+{id:'13cubierto1', src: 'chef\cubierto_130001.png'}
+{id:'13cubierto2', src: 'chef\cubierto_130002.png'}
+{id:'14cubierto1', src: 'chef\cubierto_140001.png'}
+{id:'14cubierto2', src: 'chef\cubierto_140002.png'}
+{id:'15cubierto1', src: 'chef\cubierto_150001.png'}
+{id:'15cubierto2', src: 'chef\cubierto_150002.png'}
 
-C:\xampp\htdocs\oda\U3A3\imgs\salad\btn_ready.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\btn_start.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\final_CutFruit.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\final_Eat.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\final_MixFruit.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\final_WashFruit.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\final_WashHands.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\label_fruit.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\line.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\number_1.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\number_2.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\number_3.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\number_4.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\number_5.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\score.png
-C:\xampp\htdocs\oda\U3A3\imgs\salad\step.png
+{id:'saladbtnready', src: 'salad\btn_ready.png'}
+{id:'saladbtnstart', src: 'salad\btn_start.png'}
+{id:'sandwichbtnready', src: 'sandwich\btn_ready.png'}
+{id:'sandwichbtnstart', src: 'sandwich\btn_start.png'}
 
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\btn_ready.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\btn_start.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\final_Bread.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\final_Eat.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\final_Spread.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\final_Turkey.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\final_Wash.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\label_sandwich.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\line.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\number_1.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\number_2.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\number_3.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\number_4.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\number_5.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\score.png
-C:\xampp\htdocs\oda\U3A3\imgs\sandwich\step.png
+{id:'saladfinalCutFruit', src: 'salad\final_CutFruit.png'}
+{id:'saladfinalEat', src: 'salad\final_Eat.png'}
+{id:'saladfinalMixFruit', src: 'salad\final_MixFruit.png'}
+{id:'saladfinalWashFruit', src: 'salad\final_WashFruit.png'}
+{id:'saladfinalWashHands', src: 'salad\final_WashHands.png'}
+{id:'saladlabelfruit', src: 'salad\label_fruit.png'}
+{id:'sandwichfinalBread', src: 'sandwich\final_Bread.png'}
+{id:'sandwichfinalEat', src: 'sandwich\final_Eat.png'}
+{id:'sandwichfinalSpread', src: 'sandwich\final_Spread.png'}
+{id:'sandwichfinalTurkey', src: 'sandwich\final_Turkey.png'}
+{id:'sandwichfinalWash', src: 'sandwich\final_Wash.png'}
+{id:'sandwichlabelsandwich', src: 'sandwich\label_sandwich.png'}
+
+{id:'saladstep', src: 'salad\stepsal.png'}
+{id:'sandwichstep', src: 'sandwich\stepsan.png'}
+
+{id:'saladnumber1', src: 'salad\number_1.png'}
+{id:'saladnumber2', src: 'salad\number_2.png'}
+{id:'saladnumber3', src: 'salad\number_3.png'}
+{id:'saladnumber4', src: 'salad\number_4.png'}
+{id:'saladnumber5', src: 'salad\number_5.png'}
+{id:'sandwichnumber1', src: 'sandwich\number_1.png'}
+{id:'sandwichnumber2', src: 'sandwich\number_2.png'}
+{id:'sandwichnumber3', src: 'sandwich\number_3.png'}
+{id:'sandwichnumber4', src: 'sandwich\number_4.png'}
+{id:'sandwichnumber5', src: 'sandwich\number_5.png'}
+
+{id:'saladscore', src: 'salad\score.png'}
+{id:'sandwichscore', src: 'sandwich\score.png'}
+
