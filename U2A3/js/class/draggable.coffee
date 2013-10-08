@@ -11,10 +11,15 @@ class Draggable
 		@x = x
 		@y = y
 		@pos = x:x, y:y
+		@inPlace = off
 		@addChild @bitmap
 	onInitEvaluation: =>
-		@blink on
-		@addEventListener 'mousedown', @handleMouseDown
+		if not @inPlace
+			@blink on
+			@addEventListener 'mousedown', @handleMouseDown
+	onStopEvaluation: =>
+		@blink off
+		@removeEventListener 'mousedown', @handleMouseDown
 	handleMouseDown: (e) =>
 		posX = e.stageX / stageSize.r
 		posY = e.stageY / stageSize.r
@@ -38,6 +43,9 @@ class Draggable
 	blinkAgain: =>
 		TweenLite.killTweensOf @
 		@blink on
+	putInPlace: (position) ->
+		@inPlace = on
+		TweenLite.to @, 1, { ease: Back.easeOut, delay: 0.1, x: position.x, y: position.y, scaleX: 1, scaleY: 1, alpha: 1 }
 	returnToPlace: ->
-		TweenLite.to @, 0.5, { ease: Back.easeOut, delay: 0.1, x: @pos.x, y: @pos.y, alpha: 1, scaleX: 1, scaleY: 1, onComplete: @blinkAgain }
+		TweenLite.to @, 1, { ease: Back.easeOut, delay: 0.1, x: @pos.x, y: @pos.y, alpha: 1, onComplete: @blinkAgain }
 	window.Draggable = Draggable

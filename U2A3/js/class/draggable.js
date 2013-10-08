@@ -7,6 +7,7 @@
     function Draggable(name, image, index, x, y) {
       this.blinkAgain = __bind(this.blinkAgain, this);
       this.handleMouseDown = __bind(this.handleMouseDown, this);
+      this.onStopEvaluation = __bind(this.onStopEvaluation, this);
       this.onInitEvaluation = __bind(this.onInitEvaluation, this);
       this.initialize(name, image, index, x, y);
     }
@@ -26,12 +27,20 @@
         x: x,
         y: y
       };
+      this.inPlace = false;
       return this.addChild(this.bitmap);
     };
 
     Draggable.prototype.onInitEvaluation = function() {
-      this.blink(true);
-      return this.addEventListener('mousedown', this.handleMouseDown);
+      if (!this.inPlace) {
+        this.blink(true);
+        return this.addEventListener('mousedown', this.handleMouseDown);
+      }
+    };
+
+    Draggable.prototype.onStopEvaluation = function() {
+      this.blink(false);
+      return this.removeEventListener('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.handleMouseDown = function(e) {
@@ -79,15 +88,26 @@
       return this.blink(true);
     };
 
+    Draggable.prototype.putInPlace = function(position) {
+      this.inPlace = true;
+      return TweenLite.to(this, 1, {
+        ease: Back.easeOut,
+        delay: 0.1,
+        x: position.x,
+        y: position.y,
+        scaleX: 1,
+        scaleY: 1,
+        alpha: 1
+      });
+    };
+
     Draggable.prototype.returnToPlace = function() {
-      return TweenLite.to(this, 0.5, {
+      return TweenLite.to(this, 1, {
         ease: Back.easeOut,
         delay: 0.1,
         x: this.pos.x,
         y: this.pos.y,
         alpha: 1,
-        scaleX: 1,
-        scaleY: 1,
         onComplete: this.blinkAgain
       });
     };

@@ -172,14 +172,14 @@
         alpha: 0,
         x: this.library['dropper'].x + 50,
         ease: Quart.easeOut,
-        delay: 3
+        delay: 3,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
       });
       return TweenMax.allFrom([this.library['nube1'], this.library['nube2'], this.library['nube3'], this.library['nube4']], 1, {
         alpha: 0,
         y: stageSize.h,
-        delay: 2,
-        onComplete: this.playInstructions,
-        onCompleteParams: [this]
+        delay: 2
       });
     };
 

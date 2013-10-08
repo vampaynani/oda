@@ -177,6 +177,7 @@ class Oda
 		@stage.update()
 	playInstructions: (oda) ->
 		if dealersjs.mobile.isIOS() or dealersjs.mobile.isAndroid()
+			console.log 'mobile'
 			oda.insertBitmap 'start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc'
 			oda.library['start'].addEventListener 'click', oda.initMobileInstructions
 			TweenLite.from oda.library['start'], 0.3, { alpha: 0, y: oda.library['start'].y + 20 }
@@ -188,7 +189,7 @@ class Oda
 		createjs.Sound.stop()
 		inst = createjs.Sound.play 'instructions'
 		inst.addEventListener 'complete', @initEvaluation
-		TweenLite.to @library['start'], 0.3, { alpha: 0, y: @library['start'].y + 20, onComplete: removeMobileInstructions, onCompleteParams: @ }
+		TweenLite.to @library['start'], 0.3, { alpha: 0, y: @library['start'].y + 20, onComplete: @removeMobileInstructions, onCompleteParams: [@] }
 	removeMobileInstructions: (oda) ->
 		oda.mainContainer.removeChild(oda.library['start']);
 	setStage: ->

@@ -373,6 +373,7 @@
     Oda.prototype.playInstructions = function(oda) {
       var inst;
       if (dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()) {
+        console.log('mobile');
         oda.insertBitmap('start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc');
         oda.library['start'].addEventListener('click', oda.initMobileInstructions);
         return TweenLite.from(oda.library['start'], 0.3, {
@@ -394,8 +395,8 @@
       return TweenLite.to(this.library['start'], 0.3, {
         alpha: 0,
         y: this.library['start'].y + 20,
-        onComplete: removeMobileInstructions,
-        onCompleteParams: this
+        onComplete: this.removeMobileInstructions,
+        onCompleteParams: [this]
       });
     };
 

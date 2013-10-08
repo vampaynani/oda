@@ -91,14 +91,14 @@ class Oda
 		bmp.height = img.height
 		bmp.name = name
 		switch position
-			when 'tc' then @setReg bmp, 0, img.width / 2
-			when 'tr' then @setReg bmp, 0, img.width
-			when 'ml' then @setReg bmp, img.height / 2, 0
-			when 'mc' then @setReg bmp, img.height / 2, img.width / 2
-			when 'mr' then @setReg bmp, img.height / 2, img.width
-			when 'bl' then @setReg bmp, img.height, 0
-			when 'bc' then @setReg bmp, img.height, img.width / 2
-			when 'br' then @setReg bmp, img.height, img.width
+			when 'tc' then @setReg bmp, img.width / 2, 0
+			when 'tr' then @setReg bmp, img.width, 0
+			when 'ml' then @setReg bmp, 0, img.height / 2
+			when 'mc' then @setReg bmp, img.width / 2, img.height / 2
+			when 'mr' then @setReg bmp, img.width, img.height / 2
+			when 'bl' then @setReg bmp, 0, img.height
+			when 'bc' then @setReg bmp, img.width / 2, img.height
+			when 'br' then @setReg bmp, img.width, img.height
 			else @setReg bmp, 0, 0
 		bmp
 	insertBitmap: (name, id, x, y, position = 'tl') ->
@@ -119,14 +119,14 @@ class Oda
 		animation.name = name
 		animation.currentFrame = 0
 		switch position
-			when 'tc' then @setReg animation, 0, spriteImgs[0].width / 2
-			when 'tr' then @setReg animation, 0, spriteImgs[0].width
-			when 'ml' then @setReg animation, spriteImgs[0].height / 2, 0
-			when 'mc' then @setReg animation, spriteImgs[0].height / 2, spriteImgs[0].width / 2
-			when 'mr' then @setReg animation, spriteImgs[0].height / 2, spriteImgs[0].width
-			when 'bl' then @setReg animation, spriteImgs[0].height, 0
-			when 'bc' then @setReg animation, spriteImgs[0].height, spriteImgs[0].width / 2
-			when 'br' then @setReg animation, spriteImgs[0].height, spriteImgs[0].width
+			when 'tc' then @setReg animation, animation.width / 2, 0
+			when 'tr' then @setReg animation, animation.width, 0
+			when 'ml' then @setReg animation, 0, animation.height / 2
+			when 'mc' then @setReg animation, animation.width / 2, animation.height / 2
+			when 'mr' then @setReg animation, animation.width, animation.height / 2
+			when 'bl' then @setReg animation, 0, animation.height
+			when 'bc' then @setReg animation, animation.width / 2, animation.height
+			when 'br' then @setReg animation, animation.width, animation.height
 			else @setReg animation, 0, 0
 		animation
 	insertSprite: (name, imgs, anim=null, x, y, position = 'tl') ->
@@ -151,9 +151,13 @@ class Oda
 	isArray: ( value ) ->
 		Array.isArray value || (value) ->
 			{}.toString.call( value ) is '[object Array]'
-	setReg: (obj, regY, regX) ->
-		obj.regY = regY
+	setReg: (obj, regX, regY) ->
 		obj.regX = regX
+		obj.regY = regY
+		obj
+	setPosition: (obj, x, y) ->
+		obj.x = x
+		obj.y = y
 		obj
 	warning: ->
 		createjs.Sound.play 'boing'
@@ -177,6 +181,7 @@ class Oda
 		@stage.update()
 	playInstructions: (oda) ->
 		if dealersjs.mobile.isIOS() or dealersjs.mobile.isAndroid()
+			console.log 'mobile'
 			oda.insertBitmap 'start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc'
 			oda.library['start'].addEventListener 'click', oda.initMobileInstructions
 			TweenLite.from oda.library['start'], 0.3, { alpha: 0, y: oda.library['start'].y + 20 }
@@ -188,7 +193,7 @@ class Oda
 		createjs.Sound.stop()
 		inst = createjs.Sound.play 'instructions'
 		inst.addEventListener 'complete', @initEvaluation
-		TweenLite.to @library['start'], 0.3, { alpha: 0, y: @library['start'].y + 20, onComplete: removeMobileInstructions, onCompleteParams: @ }
+		TweenLite.to @library['start'], 0.3, { alpha: 0, y: @library['start'].y + 20, onComplete: @removeMobileInstructions, onCompleteParams: [@] }
 	removeMobileInstructions: (oda) ->
 		oda.mainContainer.removeChild(oda.library['start']);
 	setStage: ->

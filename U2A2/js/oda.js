@@ -182,28 +182,28 @@
       bmp.name = name;
       switch (position) {
         case 'tc':
-          this.setReg(bmp, 0, img.width / 2);
+          this.setReg(bmp, img.width / 2, 0);
           break;
         case 'tr':
-          this.setReg(bmp, 0, img.width);
+          this.setReg(bmp, img.width, 0);
           break;
         case 'ml':
-          this.setReg(bmp, img.height / 2, 0);
+          this.setReg(bmp, 0, img.height / 2);
           break;
         case 'mc':
-          this.setReg(bmp, img.height / 2, img.width / 2);
+          this.setReg(bmp, img.width / 2, img.height / 2);
           break;
         case 'mr':
-          this.setReg(bmp, img.height / 2, img.width);
+          this.setReg(bmp, img.width, img.height / 2);
           break;
         case 'bl':
-          this.setReg(bmp, img.height, 0);
+          this.setReg(bmp, 0, img.height);
           break;
         case 'bc':
-          this.setReg(bmp, img.height, img.width / 2);
+          this.setReg(bmp, img.width / 2, img.height);
           break;
         case 'br':
-          this.setReg(bmp, img.height, img.width);
+          this.setReg(bmp, img.width, img.height);
           break;
         default:
           this.setReg(bmp, 0, 0);
@@ -257,28 +257,28 @@
       animation.currentFrame = 0;
       switch (position) {
         case 'tc':
-          this.setReg(animation, 0, spriteImgs[0].width / 2);
+          this.setReg(animation, animation.width / 2, 0);
           break;
         case 'tr':
-          this.setReg(animation, 0, spriteImgs[0].width);
+          this.setReg(animation, animation.width, 0);
           break;
         case 'ml':
-          this.setReg(animation, spriteImgs[0].height / 2, 0);
+          this.setReg(animation, 0, animation.height / 2);
           break;
         case 'mc':
-          this.setReg(animation, spriteImgs[0].height / 2, spriteImgs[0].width / 2);
+          this.setReg(animation, animation.width / 2, animation.height / 2);
           break;
         case 'mr':
-          this.setReg(animation, spriteImgs[0].height / 2, spriteImgs[0].width);
+          this.setReg(animation, animation.width, animation.height / 2);
           break;
         case 'bl':
-          this.setReg(animation, spriteImgs[0].height, 0);
+          this.setReg(animation, 0, animation.height);
           break;
         case 'bc':
-          this.setReg(animation, spriteImgs[0].height, spriteImgs[0].width / 2);
+          this.setReg(animation, animation.width / 2, animation.height);
           break;
         case 'br':
-          this.setReg(animation, spriteImgs[0].height, spriteImgs[0].width);
+          this.setReg(animation, animation.width, animation.height);
           break;
         default:
           this.setReg(animation, 0, 0);
@@ -335,9 +335,15 @@
       });
     };
 
-    Oda.prototype.setReg = function(obj, regY, regX) {
-      obj.regY = regY;
+    Oda.prototype.setReg = function(obj, regX, regY) {
       obj.regX = regX;
+      obj.regY = regY;
+      return obj;
+    };
+
+    Oda.prototype.setPosition = function(obj, x, y) {
+      obj.x = x;
+      obj.y = y;
       return obj;
     };
 
@@ -373,6 +379,7 @@
     Oda.prototype.playInstructions = function(oda) {
       var inst;
       if (dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()) {
+        console.log('mobile');
         oda.insertBitmap('start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc');
         oda.library['start'].addEventListener('click', oda.initMobileInstructions);
         return TweenLite.from(oda.library['start'], 0.3, {
@@ -394,8 +401,8 @@
       return TweenLite.to(this.library['start'], 0.3, {
         alpha: 0,
         y: this.library['start'].y + 20,
-        onComplete: removeMobileInstructions,
-        onCompleteParams: this
+        onComplete: this.removeMobileInstructions,
+        onCompleteParams: [this]
       });
     };
 

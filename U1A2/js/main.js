@@ -80,6 +80,9 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
           src: 'sounds/TU2_U1_A2_instructions.mp3',
           id: 'instructions'
         }, {
@@ -227,6 +230,7 @@
       pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
       if (this.library['dropname'].hitTest(pt.x, pt.y)) {
         if (this.answer.index === this.answers[this.index].id) {
+          createjs.Sound.play('good');
           this.answer.blink(false);
           return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {

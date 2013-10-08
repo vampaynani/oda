@@ -201,7 +201,6 @@ class U1A6 extends Oda
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenMax.allFrom [@library['saxophone'], @library['drum'], @library['guitar'], @library['tambourine'], @library['trumpet'], @library['flute'], @library['bass'], @library['piano']], 1, {alpha:0, delay:1.5}, 0.2
 		TweenMax.allFrom [@library['saxophoneNo'], @library['drumNo'], @library['guitarNo'], @library['tambourineNo'], @library['trumpetNo'], @library['fluteNo'], @library['bassNo'], @library['pianoNo']], 1, {alpha:0, delay:1.5}, 0.2
-		#TweenLite.from @library['crosswordsBack'], 1, {alpha: 0, y: @library['crosswordsBack'].y + 50, delay: 1}
 		TweenLite.from @library['alphabet'], 1, {alpha: 0, y: @library['alphabet'].y + 50, delay: 1.5}
 		TweenLite.from @library['crosswords'], 1, {alpha: 0, y: @library['crosswords'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
@@ -212,7 +211,6 @@ class U1A6 extends Oda
 		@answer = e.target
 		for i in [0..@containers.length - 1] by 1
 			hit = @library['h'+i]
-			pt = @library['h1'].globalToLocal @stage.mouseX, @stage.mouseY
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 			if hit.hitTest pt.x, pt.y
 				if hit.id is @answer.index

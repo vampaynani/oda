@@ -23,6 +23,7 @@ class U1A2 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
+			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U1_A2_instructions.mp3', id:'instructions'}
 		    {src:'sounds/TU2_U1_A2_april.mp3', id:'april'}
 		    {src:'sounds/TU2_U1_A2_danielle.mp3', id:'danielle'}
@@ -106,6 +107,7 @@ class U1A2 extends Oda
 		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
 		if @library['dropname'].hitTest pt.x, pt.y
 			if @answer.index is @answers[@index].id
+				createjs.Sound.play 'good'
 				@answer.blink off
 				setTimeout @finishEvaluation, 1 * 1000
 			else

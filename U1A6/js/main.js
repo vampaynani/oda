@@ -557,7 +557,6 @@
       _results = [];
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
         hit = this.library['h' + i];
-        pt = this.library['h1'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
         pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
         if (hit.hitTest(pt.x, pt.y)) {
           if (hit.id === this.answer.index) {

@@ -54,11 +54,11 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U1_A3_instructions.mp3',
-          id: 'instructions'
-        }, {
           src: 'sounds/good.mp3',
           id: 'good'
+        }, {
+          src: 'sounds/TU2_U1_A3_instructions.mp3',
+          id: 'instructions'
         }
       ];
       this.answers = [
@@ -167,9 +167,7 @@
       wc2 = new WordContainer('wc2', '', '#FFF', '#ff983a', 290, 0, 275, 30);
       wc3 = new WordContainer('wc3', '', '#FFF', '#ff983a', 100, 37, 355, 30);
       words.addChild(wc1, wc2, wc3);
-      this.addToLibrary(wc1);
-      this.addToLibrary(wc2);
-      this.addToLibrary(wc3);
+      this.addToLibrary(wc1, wc2, wc3);
       this.addToMain(words);
       return this;
     };

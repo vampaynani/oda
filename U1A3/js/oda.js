@@ -394,8 +394,8 @@
       return TweenLite.to(this.library['start'], 0.3, {
         alpha: 0,
         y: this.library['start'].y + 20,
-        onComplete: removeMobileInstructions,
-        onCompleteParams: this
+        onComplete: this.removeMobileInstructions,
+        onCompleteParams: [this]
       });
     };
 
