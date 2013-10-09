@@ -1,9 +1,9 @@
 class Draggable
-	constructor: (name, image, index, x, y)->
-		@initialize name, image, index, x, y
+	constructor: (name, image, index, x, y, position='tl')->
+		@initialize name, image, index, x, y, position
 	Draggable.prototype = new createjs.Container()
 	Draggable::Container_initialize = Draggable::initialize
-	Draggable::initialize = (name, image, index, x, y)->
+	Draggable::initialize = (name, image, index, x, y, position='tl')->
 		@Container_initialize()
 		@name = name
 		@bitmap = new createjs.Bitmap image
@@ -12,6 +12,20 @@ class Draggable
 		@y = y
 		@pos = x:x, y:y
 		@addChild @bitmap
+		switch position
+			when 'tc' then @setReg @, image.width / 2, 0
+			when 'tr' then @setReg @, image.width, 0
+			when 'ml' then @setReg @, 0, image.height / 2
+			when 'mc' then @setReg @, image.width / 2, image.height / 2
+			when 'mr' then @setReg @, image.width, image.height / 2
+			when 'bl' then @setReg @, 0, image.height
+			when 'bc' then @setReg @, image.width / 2, image.height
+			when 'br' then @setReg @, image.width, image.height
+			else @setReg @, 0, 0
+	setReg: (obj, regX, regY) ->
+		obj.regX = regX
+		obj.regY = regY
+		obj
 	onInitEvaluation: =>
 		@blink on
 		@addEventListener 'mousedown', @handleMouseDown

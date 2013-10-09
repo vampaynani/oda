@@ -22,9 +22,9 @@ class U3A3 extends Oda
 			{id:'wrong', src: 'wrong.png'}
 			{id:'correct', src: 'correct.png'}
 
-			{id:'checkchefscene0001', src: 'chef/check_chef_scene0001.png'}
-			{id:'checkchefscene0002', src: 'chef/check_chef_scene0002.png'}
-			{id:'checkchefscene0003', src: 'chef/check_chef_scene0003.png'}
+			{id:'chefAgain', src: 'chef/chef_again.png'}
+			{id:'chefSalad', src: 'chef/chef_salad.png'}
+			{id:'chefSandwich', src: 'chef/chef_sandwich.png'}
 			{id:'1cubierto1', src: 'chef/cubierto_10001.png'}
 			{id:'1cubierto2', src: 'chef/cubierto_10002.png'}
 			{id:'2cubierto1', src: 'chef/cubierto_20001.png'}
@@ -169,7 +169,7 @@ class U3A3 extends Oda
 		@insertBitmap 'instructions', 'inst', 20, 100
 	
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setDropper().setSandwich().setSalad().setStart().introEvaluation()
+		@setDropper().setSandwich().setSalad().setFinal().setStart().introEvaluation()
 	setStart:  ->
 		@insertBitmap 'btnsalad', 'btnsalad', 412, 450, 'tc'
 		@insertBitmap 'propsalad', 'propsalad', 412, 361, 'tc'
@@ -193,20 +193,24 @@ class U3A3 extends Oda
 		
 		for i in [1..5]
 			v = new Draggable @sandwich.drags[i-1].id,  (@preload.getResult @sandwich.drags[i-1].id), i,  @positions.dragsImg[i-1].x, @positions.dragsImg[i-1].y, 'bl'
+			v.scaleX = v.scaleY = 0.46
+
 			sandwich.addChild v
 			@addToLibrary v
 
 		for i in [1..5]
 			v = @createBitmap 'sandwichstep', 'sandwichstep', @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
+			v.scaleX = v.scaleY = 0.53
 			sandwich.addChild v
 			@addToLibrary v
 		for i in [1..5]
 			v = @createBitmap @sandwich.finals[i-1].id,  @sandwich.finals[i-1].id, @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
+			v.scaleX = v.scaleY = 0.53
 			sandwich.addChild v
 			@addToLibrary v
 
 		for i in [1..5]
-			v = @createBitmap 'sandwichnumber'+[i], 'sandwichnumber'+[i], @positions.steps[i-1].x-(-56), @positions.steps[i-1].y-43, 'bl'
+			v = @createBitmap 'sandwichnumber'+[i], 'sandwichnumber'+[i], @positions.steps[i-1].x-(-56), @positions.steps[i-1].y-43, 'mc'
 			sandwich.addChild v
 			@addToLibrary v
 
@@ -224,7 +228,7 @@ class U3A3 extends Oda
 		@addToLibrary v
 
 		for i in [1..5]
-			v = new Draggable 'sandwichscore',  (@preload.getResult 'sandwichscore'), i,  @positions.dragsTxt[i-1].x, @positions.dragsTxt[i-1].y
+			v = new DraggableText 'text', "texto", i,  @positions.dragsTxt[i-1].x, @positions.dragsTxt[i-1].y 
 			sandwich.addChild v
 			@addToLibrary v
 
@@ -237,20 +241,26 @@ class U3A3 extends Oda
 		
 		for i in [1..5]
 			v = new Draggable @salad.drags[i-1].id,  (@preload.getResult @salad.drags[i-1].id), i,  @positions.dragsImg[i-1].x, @positions.dragsImg[i-1].y, 'bl'
+			v.scaleX = v.scaleY = 0.46
+
 			salad.addChild v
 			@addToLibrary v
 
 		for i in [1..5]
 			v = @createBitmap 'saladstep', 'saladstep', @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
+			v.scaleX = v.scaleY = 0.53
+
 			salad.addChild v
 			@addToLibrary v
 		for i in [1..5]
 			v = @createBitmap @salad.finals[i-1].id,  @salad.finals[i-1].id, @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
+			v.scaleX = v.scaleY = 0.53
+
 			salad.addChild v
 			@addToLibrary v
 
 		for i in [1..5]
-			v = @createBitmap 'saladnumber'+[i], 'saladnumber'+[i], @positions.steps[i-1].x-(-56), @positions.steps[i-1].y-43, 'bl'
+			v = @createBitmap 'saladnumber'+[i], 'saladnumber'+[i], @positions.steps[i-1].x-(-56), @positions.steps[i-1].y-43, 'mc'
 			salad.addChild v
 			@addToLibrary v
 
@@ -267,11 +277,16 @@ class U3A3 extends Oda
 		salad.addChild v
 		@addToLibrary v
 		for i in [1..5]
-			v = new Draggable 'saladscore', (@preload.getResult 'saladscore'), i,  @positions.dragsTxt[i-1].x, @positions.dragsTxt[i-1].y
+			v = new DraggableText 'text', "texto", i,  @positions.dragsTxt[i-1].x, @positions.dragsTxt[i-1].y 
 			salad.addChild v
 			@addToLibrary v
 
 		@addToMain salad
+		@
+	setFinal: ->
+		@insertBitmap 'chefAgain', 'chefAgain', 400, 600, 'bc'
+		@insertBitmap 'chefSalad', 'chefSalad', 400, 600, 'bc'
+		@insertBitmap 'chefSandwich', 'chefSandwich', 400, 600, 'bc'
 		@
 	introEvaluation: ->
 		super

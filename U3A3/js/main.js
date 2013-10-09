@@ -68,14 +68,14 @@
           id: 'correct',
           src: 'correct.png'
         }, {
-          id: 'checkchefscene0001',
-          src: 'chef/check_chef_scene0001.png'
+          id: 'chefAgain',
+          src: 'chef/chef_again.png'
         }, {
-          id: 'checkchefscene0002',
-          src: 'chef/check_chef_scene0002.png'
+          id: 'chefSalad',
+          src: 'chef/chef_salad.png'
         }, {
-          id: 'checkchefscene0003',
-          src: 'chef/check_chef_scene0003.png'
+          id: 'chefSandwich',
+          src: 'chef/chef_sandwich.png'
         }, {
           id: '1cubierto1',
           src: 'chef/cubierto_10001.png'
@@ -409,7 +409,7 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setDropper().setSandwich().setSalad().setStart().introEvaluation();
+      return this.setDropper().setSandwich().setSalad().setFinal().setStart().introEvaluation();
     };
 
     U3A3.prototype.setStart = function() {
@@ -440,21 +440,24 @@
       sandwich.y = 0;
       for (i = _i = 1; _i <= 5; i = ++_i) {
         v = new Draggable(this.sandwich.drags[i - 1].id, this.preload.getResult(this.sandwich.drags[i - 1].id), i, this.positions.dragsImg[i - 1].x, this.positions.dragsImg[i - 1].y, 'bl');
+        v.scaleX = v.scaleY = 0.46;
         sandwich.addChild(v);
         this.addToLibrary(v);
       }
       for (i = _j = 1; _j <= 5; i = ++_j) {
         v = this.createBitmap('sandwichstep', 'sandwichstep', this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
+        v.scaleX = v.scaleY = 0.53;
         sandwich.addChild(v);
         this.addToLibrary(v);
       }
       for (i = _k = 1; _k <= 5; i = ++_k) {
         v = this.createBitmap(this.sandwich.finals[i - 1].id, this.sandwich.finals[i - 1].id, this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
+        v.scaleX = v.scaleY = 0.53;
         sandwich.addChild(v);
         this.addToLibrary(v);
       }
       for (i = _l = 1; _l <= 5; i = ++_l) {
-        v = this.createBitmap('sandwichnumber' + [i], 'sandwichnumber' + [i], this.positions.steps[i - 1].x - (-56), this.positions.steps[i - 1].y - 43, 'bl');
+        v = this.createBitmap('sandwichnumber' + [i], 'sandwichnumber' + [i], this.positions.steps[i - 1].x - (-56), this.positions.steps[i - 1].y - 43, 'mc');
         sandwich.addChild(v);
         this.addToLibrary(v);
       }
@@ -471,7 +474,7 @@
       sandwich.addChild(v);
       this.addToLibrary(v);
       for (i = _m = 1; _m <= 5; i = ++_m) {
-        v = new Draggable('sandwichscore', this.preload.getResult('sandwichscore'), i, this.positions.dragsTxt[i - 1].x, this.positions.dragsTxt[i - 1].y);
+        v = new DraggableText('text', "texto", i, this.positions.dragsTxt[i - 1].x, this.positions.dragsTxt[i - 1].y);
         sandwich.addChild(v);
         this.addToLibrary(v);
       }
@@ -486,21 +489,24 @@
       salad.y = 0;
       for (i = _i = 1; _i <= 5; i = ++_i) {
         v = new Draggable(this.salad.drags[i - 1].id, this.preload.getResult(this.salad.drags[i - 1].id), i, this.positions.dragsImg[i - 1].x, this.positions.dragsImg[i - 1].y, 'bl');
+        v.scaleX = v.scaleY = 0.46;
         salad.addChild(v);
         this.addToLibrary(v);
       }
       for (i = _j = 1; _j <= 5; i = ++_j) {
         v = this.createBitmap('saladstep', 'saladstep', this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
+        v.scaleX = v.scaleY = 0.53;
         salad.addChild(v);
         this.addToLibrary(v);
       }
       for (i = _k = 1; _k <= 5; i = ++_k) {
         v = this.createBitmap(this.salad.finals[i - 1].id, this.salad.finals[i - 1].id, this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
+        v.scaleX = v.scaleY = 0.53;
         salad.addChild(v);
         this.addToLibrary(v);
       }
       for (i = _l = 1; _l <= 5; i = ++_l) {
-        v = this.createBitmap('saladnumber' + [i], 'saladnumber' + [i], this.positions.steps[i - 1].x - (-56), this.positions.steps[i - 1].y - 43, 'bl');
+        v = this.createBitmap('saladnumber' + [i], 'saladnumber' + [i], this.positions.steps[i - 1].x - (-56), this.positions.steps[i - 1].y - 43, 'mc');
         salad.addChild(v);
         this.addToLibrary(v);
       }
@@ -517,11 +523,18 @@
       salad.addChild(v);
       this.addToLibrary(v);
       for (i = _m = 1; _m <= 5; i = ++_m) {
-        v = new Draggable('saladscore', this.preload.getResult('saladscore'), i, this.positions.dragsTxt[i - 1].x, this.positions.dragsTxt[i - 1].y);
+        v = new DraggableText('text', "texto", i, this.positions.dragsTxt[i - 1].x, this.positions.dragsTxt[i - 1].y);
         salad.addChild(v);
         this.addToLibrary(v);
       }
       this.addToMain(salad);
+      return this;
+    };
+
+    U3A3.prototype.setFinal = function() {
+      this.insertBitmap('chefAgain', 'chefAgain', 400, 600, 'bc');
+      this.insertBitmap('chefSalad', 'chefSalad', 400, 600, 'bc');
+      this.insertBitmap('chefSandwich', 'chefSandwich', 400, 600, 'bc');
       return this;
     };
 

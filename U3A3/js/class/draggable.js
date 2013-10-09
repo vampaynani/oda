@@ -4,18 +4,24 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Draggable = (function() {
-    function Draggable(name, image, index, x, y) {
+    function Draggable(name, image, index, x, y, position) {
+      if (position == null) {
+        position = 'tl';
+      }
       this.blinkAgain = __bind(this.blinkAgain, this);
       this.handleMouseDown = __bind(this.handleMouseDown, this);
       this.onInitEvaluation = __bind(this.onInitEvaluation, this);
-      this.initialize(name, image, index, x, y);
+      this.initialize(name, image, index, x, y, position);
     }
 
     Draggable.prototype = new createjs.Container();
 
     Draggable.prototype.Container_initialize = Draggable.prototype.initialize;
 
-    Draggable.prototype.initialize = function(name, image, index, x, y) {
+    Draggable.prototype.initialize = function(name, image, index, x, y, position) {
+      if (position == null) {
+        position = 'tl';
+      }
       this.Container_initialize();
       this.name = name;
       this.bitmap = new createjs.Bitmap(image);
@@ -26,7 +32,33 @@
         x: x,
         y: y
       };
-      return this.addChild(this.bitmap);
+      this.addChild(this.bitmap);
+      switch (position) {
+        case 'tc':
+          return this.setReg(this, image.width / 2, 0);
+        case 'tr':
+          return this.setReg(this, image.width, 0);
+        case 'ml':
+          return this.setReg(this, 0, image.height / 2);
+        case 'mc':
+          return this.setReg(this, image.width / 2, image.height / 2);
+        case 'mr':
+          return this.setReg(this, image.width, image.height / 2);
+        case 'bl':
+          return this.setReg(this, 0, image.height);
+        case 'bc':
+          return this.setReg(this, image.width / 2, image.height);
+        case 'br':
+          return this.setReg(this, image.width, image.height);
+        default:
+          return this.setReg(this, 0, 0);
+      }
+    };
+
+    Draggable.prototype.setReg = function(obj, regX, regY) {
+      obj.regX = regX;
+      obj.regY = regY;
+      return obj;
     };
 
     Draggable.prototype.onInitEvaluation = function() {
