@@ -242,28 +242,29 @@ class U3A3 extends Oda
 		for i in [1..5]
 			v = new Draggable @salad.drags[i-1].id,  (@preload.getResult @salad.drags[i-1].id), i,  @positions.dragsImg[i-1].x, @positions.dragsImg[i-1].y, 'bl'
 			v.scaleX = v.scaleY = 0.46
-
 			salad.addChild v
 			@addToLibrary v
 
 		for i in [1..5]
 			v = @createBitmap 'saladstep', 'saladstep', @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
 			v.scaleX = v.scaleY = 0.53
-
 			salad.addChild v
 			@addToLibrary v
-		for i in [1..5]
+
 			v = @createBitmap @salad.finals[i-1].id,  @salad.finals[i-1].id, @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
 			v.scaleX = v.scaleY = 0.53
-
 			salad.addChild v
 			@addToLibrary v
-
-		for i in [1..5]
+ 
 			v = @createBitmap 'saladnumber'+[i], 'saladnumber'+[i], @positions.steps[i-1].x-(-56), @positions.steps[i-1].y-43, 'mc'
 			salad.addChild v
 			@addToLibrary v
 
+			checkimg = @createSprite 'check', ['wrong', 'correct'], null, @positions.steps[i-1].x-(-90), @positions.steps[i-1].y, 'bl'
+			checkimg.scaleX = checkimg.scaleY = 0.53
+			salad.addChild checkimg
+			@addToLibrary checkimg
+ 
 		v = @createBitmap 'saladscore', 'saladscore', @positions.score[0].x, @positions.score[0].y
 		salad.addChild v
 		@addToLibrary v

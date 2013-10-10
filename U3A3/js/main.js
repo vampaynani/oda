@@ -483,7 +483,7 @@
     };
 
     U3A3.prototype.setSalad = function() {
-      var i, salad, v, _i, _j, _k, _l, _m;
+      var checkimg, i, salad, v, _i, _j, _k;
       salad = new createjs.Container();
       salad.x = 0;
       salad.y = 0;
@@ -498,17 +498,17 @@
         v.scaleX = v.scaleY = 0.53;
         salad.addChild(v);
         this.addToLibrary(v);
-      }
-      for (i = _k = 1; _k <= 5; i = ++_k) {
         v = this.createBitmap(this.salad.finals[i - 1].id, this.salad.finals[i - 1].id, this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
         v.scaleX = v.scaleY = 0.53;
         salad.addChild(v);
         this.addToLibrary(v);
-      }
-      for (i = _l = 1; _l <= 5; i = ++_l) {
         v = this.createBitmap('saladnumber' + [i], 'saladnumber' + [i], this.positions.steps[i - 1].x - (-56), this.positions.steps[i - 1].y - 43, 'mc');
         salad.addChild(v);
         this.addToLibrary(v);
+        checkimg = this.createSprite('check', ['wrong', 'correct'], null, this.positions.steps[i - 1].x - (-90), this.positions.steps[i - 1].y, 'bl');
+        checkimg.scaleX = checkimg.scaleY = 0.53;
+        salad.addChild(checkimg);
+        this.addToLibrary(checkimg);
       }
       v = this.createBitmap('saladscore', 'saladscore', this.positions.score[0].x, this.positions.score[0].y);
       salad.addChild(v);
@@ -522,7 +522,7 @@
       v = this.createBitmap('saladlabel', 'saladlabel', this.positions.titulo[0].x, this.positions.titulo[0].y, 'tc');
       salad.addChild(v);
       this.addToLibrary(v);
-      for (i = _m = 1; _m <= 5; i = ++_m) {
+      for (i = _k = 1; _k <= 5; i = ++_k) {
         v = new DraggableText('text', "texto", i, this.positions.dragsTxt[i - 1].x, this.positions.dragsTxt[i - 1].y);
         salad.addChild(v);
         this.addToLibrary(v);

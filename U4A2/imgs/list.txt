@@ -1,0 +1,17 @@
+C:\xampp\htdocs\oda\U4A2\imgs\bluewhale_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\circle1.png
+C:\xampp\htdocs\oda\U4A2\imgs\circle2.png
+C:\xampp\htdocs\oda\U4A2\imgs\dolphin_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\eagle_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\giantpanda_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\gorilla_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\jaguar_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\lion_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\list.txt
+C:\xampp\htdocs\oda\U4A2\imgs\play_again.png
+C:\xampp\htdocs\oda\U4A2\imgs\pleca.png
+C:\xampp\htdocs\oda\U4A2\imgs\polarbear_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\repeat-btn.png
+C:\xampp\htdocs\oda\U4A2\imgs\seaturttle_img.png
+C:\xampp\htdocs\oda\U4A2\imgs\start_game.png
+C:\xampp\htdocs\oda\U4A2\imgs\texto_look.png
