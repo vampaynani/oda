@@ -14,14 +14,29 @@
           id: 'head',
           src: 'head.png'
         }, {
+<<<<<<< HEAD
           id: 'yo',
           src: 'nina_jugando.png'
+=======
+          id: 'borrar',
+          src: 'borrar.png'
+        }, {
+          id: 'c1',
+          src: 'circle1.png'
+        }, {
+          id: 'c2',
+          src: 'circle2.png'
+>>>>>>> 7661125581f1a81752bf70f8dce8706a705beb55
         }
       ];
       sounds = [
         {
           id: 'good',
+<<<<<<< HEAD
           src: 'boing.mp3'
+=======
+          src: 'boring.mp3'
+>>>>>>> 7661125581f1a81752bf70f8dce8706a705beb55
         }
       ];
       U1A1.__super__.constructor.call(this, null, manifest, sounds);
@@ -30,8 +45,13 @@
     U1A1.prototype.setStage = function() {
       U1A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', 10, 12);
+<<<<<<< HEAD
       this.insertBitmap('pintura', 'yo', 20, 30, 'tr');
       this.addToMain(new Score('score', this.preload.getResult('head'), this.preload.getResult('yo'), 100, 100, 5, 0));
+=======
+      this.insertBitmap('borrar', 'borrar', 30, 80, 'mc');
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 10, 100, 5, 0));
+>>>>>>> 7661125581f1a81752bf70f8dce8706a705beb55
       return this.introEvaluation();
     };
 
