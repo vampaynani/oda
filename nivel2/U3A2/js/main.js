@@ -9,10 +9,10 @@
     __extends(U3A2, _super);
 
     function U3A2() {
-      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.evaluateClick = __bind(this.evaluateClick, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -134,129 +134,205 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U3_A1_instructions.mp3',
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
+          src: 'sounds/TU2_U3_A2_instructions.mp3',
           id: 'instructions'
         }
       ];
-      this.answers = [];
-      this.menu1 = [
+      this.game = {
+        common: [
+          {
+            id: 'mattno',
+            x: '606',
+            y: '116'
+          }, {
+            id: 'mattyes',
+            x: '464',
+            y: '121'
+          }, {
+            id: 'patno',
+            x: '274',
+            y: '124'
+          }, {
+            id: 'patyes',
+            x: '127',
+            y: '123'
+          }, {
+            id: 'labelmatt',
+            x: '569',
+            y: '233'
+          }, {
+            id: 'labelpat',
+            x: '235',
+            y: '233'
+          }
+        ],
+        buttons: [
+          {
+            id: 'btnYesTheyDo',
+            x: '166',
+            y: '485'
+          }, {
+            id: 'btnYesHeDoes',
+            x: '361',
+            y: '485'
+          }, {
+            id: 'btnYesSheDoes',
+            x: '555',
+            y: '485'
+          }, {
+            id: 'btnNoTheyDont',
+            x: '166',
+            y: '539'
+          }, {
+            id: 'btnNoHeDoesnt',
+            x: '361',
+            y: '539'
+          }, {
+            id: 'btnNoSheDoesnt',
+            x: '555',
+            y: '539'
+          }
+        ],
+        m1: [
+          {
+            id: 'lineastable1',
+            x: '150',
+            y: '245'
+          }, {
+            id: 'table1foodmattno',
+            x: '594',
+            y: '285'
+          }, {
+            id: 'table1foodmattyes',
+            x: '424',
+            y: '294'
+          }, {
+            id: 'table1foodpatno',
+            x: '265',
+            y: '319'
+          }, {
+            id: 'table1foodpatyes',
+            x: '84',
+            y: '306'
+          }
+        ],
+        m2: [
+          {
+            id: 'lineastable2',
+            x: '182',
+            y: '216'
+          }, {
+            id: 'table2foodmattyes',
+            x: '431',
+            y: '310'
+          }, {
+            id: 'table2foodmattno',
+            x: '612',
+            y: '307'
+          }, {
+            id: 'table2foodpatno',
+            x: '284',
+            y: '313'
+          }, {
+            id: 'table2foodpatyes',
+            x: '81',
+            y: '320'
+          }
+        ],
+        m3: [
+          {
+            id: 'lineastable3',
+            x: '163',
+            y: '227'
+          }, {
+            id: 'table3foodpatyes',
+            x: '96',
+            y: '311'
+          }, {
+            id: 'table3foodmattno',
+            x: '629',
+            y: '333'
+          }, {
+            id: 'table3foodmattyes',
+            x: '447',
+            y: '311'
+          }, {
+            id: 'table3foodpatno',
+            x: '255',
+            y: '327'
+          }
+        ]
+      };
+      this.answers = [
         {
-          id: 'lineastable1',
-          x: '150',
-          y: '245'
+          values: [
+            {
+              text: 'Does Pat like salad?',
+              index: 6
+            }, {
+              text: 'Does Matt like beets?',
+              index: 5
+            }, {
+              text: 'Do Pat and Matt like beets?',
+              index: 4
+            }, {
+              text: 'Does Pat like corn?',
+              index: 3
+            }, {
+              text: 'Do Pat and Matt like steak?',
+              index: 1
+            }, {
+              text: 'Does Matt like salad?',
+              index: 2
+            }
+          ]
         }, {
-          id: 'table1foodmattno',
-          x: '594',
-          y: '285'
+          values: [
+            {
+              text: 'Does Pat like pineapple?',
+              index: 6
+            }, {
+              text: 'Does Pat like ham?',
+              index: 3
+            }, {
+              text: 'Does Matt like grapes?',
+              index: 5
+            }, {
+              text: 'Do Matt and Pat like ham?',
+              index: 1
+            }, {
+              text: 'Does Matt like eggs?',
+              index: 5
+            }, {
+              text: 'Does Pat like grapes?',
+              index: 3
+            }
+          ]
         }, {
-          id: 'table1foodmattyes',
-          x: '424',
-          y: '294'
-        }, {
-          id: 'table1foodpatno',
-          x: '265',
-          y: '319'
-        }, {
-          id: 'table1foodpatyes',
-          x: '84',
-          y: '306'
-        }
-      ];
-      this.menu2 = [
-        {
-          id: 'lineastable2',
-          x: '182',
-          y: '216'
-        }, {
-          id: 'table2foodmattyes',
-          x: '431',
-          y: '310'
-        }, {
-          id: 'table2foodmattno',
-          x: '612',
-          y: '307'
-        }, {
-          id: 'table2foodpatno',
-          x: '284',
-          y: '313'
-        }, {
-          id: 'table2foodpatyes',
-          x: '81',
-          y: '320'
-        }
-      ];
-      this.menu3 = [
-        {
-          id: 'lineastable3',
-          x: '163',
-          y: '227'
-        }, {
-          id: 'table3foodpatyes',
-          x: '96',
-          y: '311'
-        }, {
-          id: 'table3foodmattno',
-          x: '629',
-          y: '333'
-        }, {
-          id: 'table3foodmattyes',
-          x: '447',
-          y: '311'
-        }, {
-          id: 'table3foodpatno',
-          x: '255',
-          y: '327'
-        }
-      ];
-      this.common = [
-        {
-          id: 'mattno',
-          x: '606',
-          y: '116'
-        }, {
-          id: 'mattyes',
-          x: '464',
-          y: '121'
-        }, {
-          id: 'patno',
-          x: '274',
-          y: '124'
-        }, {
-          id: 'patyes',
-          x: '127',
-          y: '123'
-        }, {
-          id: 'labelmatt',
-          x: '569',
-          y: '233'
-        }, {
-          id: 'labelpat',
-          x: '235',
-          y: '233'
-        }, {
-          id: 'btnYesTheyDo',
-          x: '166',
-          y: '485'
-        }, {
-          id: 'btnYesHeDoes',
-          x: '361',
-          y: '485'
-        }, {
-          id: 'btnYesSheDoes',
-          x: '555',
-          y: '485'
-        }, {
-          id: 'btnNoTheyDont',
-          x: '166',
-          y: '539'
-        }, {
-          id: 'btnNoHeDoesnt',
-          x: '361',
-          y: '539'
-        }, {
-          id: 'btnNoSheDoesnt',
-          x: '555',
-          y: '539'
+          values: [
+            {
+              text: 'Do Matt and Pat like milk?',
+              index: 1
+            }, {
+              text: 'Does Matt like cherries?',
+              index: 2
+            }, {
+              text: 'Does Matt like cheese?',
+              index: 5
+            }, {
+              text: 'Does Pat like milk?',
+              index: 3
+            }, {
+              text: 'Does Pat like cherries?',
+              index: 6
+            }, {
+              text: 'Do Matt and Pat like cucumbers?',
+              index: 4
+            }
+          ]
         }
       ];
       U3A2.__super__.constructor.call(this, null, manifest, sounds);
@@ -266,152 +342,144 @@
       U3A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setDropper().setMenu1().introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 18, 0));
+      return this.setCommon().setMenu(1).introEvaluation();
     };
 
-    U3A2.prototype.setDropper = function() {
-      var h1, myname, question;
-      myname = new createjs.Container();
-      myname.x = 285;
-      myname.y = stageSize.h - 70;
-      myname.name = 'dropname';
-      question = this.createBitmap('question', 'q', 0, 0);
-      h1 = new Droppable('h1', '#FFFFFF', 250, 0, 120, 22);
-      myname.addChild(question, h1);
-      this.addToLibrary(h1);
-      this.addToMain(myname);
-      return this;
-    };
-
-    U3A2.prototype.setMenu1 = function() {
-      var common, i, menu1, menu2, menu3, v, _i, _j, _k, _l;
+    U3A2.prototype.setCommon = function() {
+      var common, i, v, value, _i, _j, _len, _ref, _ref1;
       common = new createjs.Container();
-      common.x = 0;
-      common.y = 0;
-      menu1 = new createjs.Container();
-      menu1.x = 0;
-      menu1.y = 0;
-      menu2 = new createjs.Container();
-      menu2.x = 0;
-      menu2.y = 0;
-      menu3 = new createjs.Container();
-      menu3.x = 0;
-      menu3.y = 0;
-      for (i = _i = 1; _i <= 5; i = ++_i) {
-        v = this.createBitmap(this.menu1[i - 1].id, this.menu1[i - 1].id, this.menu1[i - 1].x, this.menu1[i - 1].y);
-        menu1.addChild(v);
-        this.addToLibrary(v);
-      }
-      for (i = _j = 1; _j <= 5; i = ++_j) {
-        v = this.createBitmap(this.menu2[i - 1].id, this.menu2[i - 1].id, this.menu2[i - 1].x, this.menu2[i - 1].y);
-        menu2.addChild(v);
-        this.addToLibrary(v);
-      }
-      for (i = _k = 1; _k <= 5; i = ++_k) {
-        v = this.createBitmap(this.menu3[i - 1].id, this.menu3[i - 1].id, this.menu3[i - 1].x, this.menu3[i - 1].y);
-        menu3.addChild(v);
-        this.addToLibrary(v);
-      }
-      for (i = _l = 1; _l <= 12; i = ++_l) {
-        v = this.createBitmap(this.common[i - 1].id, this.common[i - 1].id, this.common[i - 1].x, this.common[i - 1].y);
+      common.name = 'common';
+      _ref = this.game.common;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        value = _ref[_i];
+        v = this.createBitmap(value.id, value.id, value.x, value.y);
         common.addChild(v);
         this.addToLibrary(v);
       }
-      this.addToMain(common);
-      this.addToMain(menu1);
-      /*@addToMain menu2
-      		@addToMain menu3
-      */
+      for (i = _j = 1, _ref1 = this.game.buttons.length; _j <= _ref1; i = _j += 1) {
+        value = this.game.buttons[i - 1];
+        v = this.createBitmap("b" + i, value.id, value.x, value.y);
+        common.addChild(v);
+        this.addToLibrary(v);
+      }
+      this.phrase = new createjs.Text('', '20px Arial', '#333333');
+      this.phrase.name = 'phrase';
+      this.phrase.textAlign = 'center';
+      this.phrase.x = stageSize.w / 2;
+      this.phrase.y = 440;
+      this.addToMain(common, this.phrase);
+      return this;
+    };
 
+    U3A2.prototype.setMenu = function(num) {
+      var menu, v, value, _i, _len, _ref;
+      menu = new createjs.Container();
+      menu.name = 'menu';
+      _ref = this.game["m" + num];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        value = _ref[_i];
+        v = this.createBitmap(value.id, value.id, value.x, value.y);
+        menu.addChild(v);
+        this.addToLibrary(v);
+      }
+      this.addToMain(menu);
       return this;
     };
 
     U3A2.prototype.introEvaluation = function() {
-      return U3A2.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
-    };
-
-    U3A2.prototype.initEvaluation = function(e) {
-      U3A2.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
+      U3A2.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      TweenLite.from(this.library['common'], 1, {
+        alpha: 0,
+        y: this.library['common'].y - 20,
+        delay: 1
+      });
+      return TweenLite.from(this.library['menu'], 1, {
+        alpha: 0,
+        y: this.library['menu'].y - 20,
+        delay: 1.2,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
       });
     };
 
-    U3A2.prototype.evaluateAnswer = function(e) {
-      var pt;
+    U3A2.prototype.initEvaluation = function(e) {
+      var i, _i, _ref;
+      U3A2.__super__.initEvaluation.apply(this, arguments);
+      this.a_index = 0;
+      this.phrase.text = this.answers[this.index].values[this.a_index].text;
+      for (i = _i = 1, _ref = this.game.buttons.length; _i <= _ref; i = _i += 1) {
+        this.library["b" + i].index = i;
+        this.library["b" + i].addEventListener('click', this.evaluateClick);
+      }
+      return TweenLite.from(this.library['phrase'], 1, {
+        alpha: 0
+      });
+    };
+
+    U3A2.prototype.evaluateClick = function(e) {
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
+      if (this.answer.index === this.answers[this.index].values[this.a_index].index) {
+        this.library['score'].plusOne();
+        createjs.Sound.play('good');
       } else {
-        return this.answer.returnToPlace();
+        this.warning();
+      }
+      return TweenLite.to(this.library['phrase'], 1, {
+        alpha: 0,
+        onComplete: this.evaluateAnswer
+      });
+    };
+
+    U3A2.prototype.evaluateAnswer = function() {
+      this.a_index++;
+      if (this.a_index < this.answers[this.index].values.length) {
+        this.phrase.text = this.answers[this.index].values[this.a_index].text;
+        return TweenLite.to(this.library['phrase'], 1, {
+          alpha: 1
+        });
+      } else {
+        return setTimeout(this.finishEvaluation, 1 * 1000);
       }
     };
 
     U3A2.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      return TweenLite.to(this.library['menu'], 1, {
         alpha: 0,
-        y: -200,
+        y: this.library['menu'].y - 20,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
       });
-      return this.answer.returnToPlace();
     };
 
     U3A2.prototype.nextEvaluation = function() {
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
+        this.a_index = 0;
+        this.phrase.text = this.answers[this.index].values[this.a_index].text;
+        this.setMenu(this.index + 1);
+        TweenLite.to(this.library['phrase'], 1, {
+          alpha: 1
+        });
+        return TweenLite.to(this.library['menu'], 1, {
+          alpha: 1,
+          y: 0
         });
       } else {
         return this.finish();
       }
     };
 
-    U3A2.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
-    };
-
     U3A2.prototype.finish = function() {
-      var i, _i, _results;
-      U3A2.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U3A2.__super__.finish.apply(this, arguments);
     };
 
     window.U3A2 = U3A2;

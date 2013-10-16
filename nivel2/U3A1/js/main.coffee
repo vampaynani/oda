@@ -12,7 +12,7 @@ class U3A1 extends Oda
 			{id: 'guia2b', src: 'guia2b.png'}
 			{id: 'guia3', src: 'guia3.png'}
 			{id: 'guia3b', src: 'guia3b.png'}
-
+			
 			{id: 'hojabreakfast', src: 'hoja_breakfast.png'}
 			{id: 'hojadinner', src: 'hoja_dinner.png'}
 			{id: 'hojalunch', src: 'hoja_lunch.png'}

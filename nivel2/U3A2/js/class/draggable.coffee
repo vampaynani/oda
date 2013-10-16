@@ -10,12 +10,21 @@ class Draggable
 		@index = index
 		@x = x
 		@y = y
+		@width = image.width
+		@height = image.height
 		@pos = x:x, y:y
+		@inPlace = off
 		@addChild @bitmap
+	initDragListener: ->
+		@addEventListener 'mousedown', @handleMouseDown
 	onInitEvaluation: =>
 		@blink on
 		@addEventListener 'mousedown', @handleMouseDown
+	onStopEvaluation: =>
+		@blink off
+		@removeEventListener 'mousedown', @handleMouseDown
 	handleMouseDown: (e) =>
+		TweenLite.killTweensOf @
 		posX = e.stageX / stageSize.r
 		posY = e.stageY / stageSize.r
 		offset = x: posX - @x, y: posY - @y
@@ -38,6 +47,14 @@ class Draggable
 	blinkAgain: =>
 		TweenLite.killTweensOf @
 		@blink on
+	killMe: =>
+		TweenLite.killTweensOf @
+		@.parent.removeChild @
+	putInPlace: (position) ->
+		@inPlace = on
+		TweenLite.to @, 1, { ease: Back.easeOut, delay: 0.1, x: position.x, y: position.y, scaleX: 1, scaleY: 1, alpha: 1 }
 	returnToPlace: ->
-		TweenLite.to @, 0.5, { ease: Back.easeOut, delay: 0.1, x: @pos.x, y: @pos.y, alpha: 1, scaleX: 1, scaleY: 1, onComplete: @blinkAgain }
+		TweenLite.to @, 1, { ease: Back.easeOut, delay: 0.1, x: @pos.x, y: @pos.y, alpha: 1, onComplete: @blinkAgain }
+	takeMeOut: ->
+		TweenLite.to @, 0.5, { ease: Linear.easeNone, delay: 0.1, x: @pos.x, y: @pos.y, alpha: 0, onComplete: @killMe }
 	window.Draggable = Draggable

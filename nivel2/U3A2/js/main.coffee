@@ -47,153 +47,157 @@ class U3A2 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U3_A1_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/TU2_U3_A2_instructions.mp3', id:'instructions'}
 		]
-		@answers = [	
+		@game = {
+			common: [
+				{id:'mattno', x:'606' , y:'116' }
+				{id:'mattyes',  x:'464' , y:'121' }
+				{id:'patno',  x:'274' , y:'124' }
+				{id:'patyes', x:'127' , y:'123' }
+				{id:'labelmatt',  x:'569' , y:'233' }
+				{id:'labelpat', x:'235' , y:'233' }
+			]
+			buttons: [
+				{id:'btnYesTheyDo', x:'166' , y:'485' }
+				{id:'btnYesHeDoes', x:'361' , y:'485' }
+				{id:'btnYesSheDoes',  x:'555' , y:'485' }
+				{id:'btnNoTheyDont',  x:'166' , y:'539' }
+				{id:'btnNoHeDoesnt',  x:'361' , y:'539' }
+				{id:'btnNoSheDoesnt', x:'555' , y:'539' }
+			]
+			m1: [
+				{id:'lineastable1', x:'150' , y:'245' }
+				{id:'table1foodmattno',  x:'594' , y:'285' }
+				{id:'table1foodmattyes',  x:'424' , y:'294' }
+				{id:'table1foodpatno', x:'265' , y:'319' }
+				{id:'table1foodpatyes',  x:'84' , y:'306' }		
 
-		
-		]
-		@menu1 = [
-			{id:'lineastable1', x:'150' , y:'245' }
-			{id:'table1foodmattno',  x:'594' , y:'285' }
-			{id:'table1foodmattyes',  x:'424' , y:'294' }
-			{id:'table1foodpatno', x:'265' , y:'319' }
-			{id:'table1foodpatyes',  x:'84' , y:'306' }		
-
-		]
-		@menu2 = [
-			{id:'lineastable2', x:'182' , y:'216' }
-			{id:'table2foodmattyes', x:'431' , y:'310' }
-			{id:'table2foodmattno', x:'612' , y:'307' }
-			{id:'table2foodpatno', x:'284' , y:'313' }
-			{id:'table2foodpatyes',  x:'81' , y:'320' } 
-		]
-		@menu3 = [
-			{id:'lineastable3', x:'163' , y:'227' }
-			{id:'table3foodpatyes', x:'96' , y:'311' }
-			{id:'table3foodmattno', x:'629' , y:'333' }
-			{id:'table3foodmattyes',  x:'447' , y:'311' }
-			{id:'table3foodpatno',  x:'255' , y:'327' }
-		]
-		@common = [
-			{id:'mattno', x:'606' , y:'116' }
-			{id:'mattyes',  x:'464' , y:'121' }
-			{id:'patno',  x:'274' , y:'124' }
-			{id:'patyes', x:'127' , y:'123' }
-			{id:'labelmatt',  x:'569' , y:'233' }
-			{id:'labelpat', x:'235' , y:'233' }
-
-
-			{id:'btnYesTheyDo', x:'166' , y:'485' }
-			{id:'btnYesHeDoes', x:'361' , y:'485' }
-			{id:'btnYesSheDoes',  x:'555' , y:'485' }
-			{id:'btnNoTheyDont',  x:'166' , y:'539' }
-			{id:'btnNoHeDoesnt',  x:'361' , y:'539' }
-			{id:'btnNoSheDoesnt', x:'555' , y:'539' }		
+			]
+			m2: [
+				{id:'lineastable2', x:'182' , y:'216' }
+				{id:'table2foodmattyes', x:'431' , y:'310' }
+				{id:'table2foodmattno', x:'612' , y:'307' }
+				{id:'table2foodpatno', x:'284' , y:'313' }
+				{id:'table2foodpatyes',  x:'81' , y:'320' } 
+			]
+			m3: [
+				{id:'lineastable3', x:'163' , y:'227' }
+				{id:'table3foodpatyes', x:'96' , y:'311' }
+				{id:'table3foodmattno', x:'629' , y:'333' }
+				{id:'table3foodmattyes',  x:'447' , y:'311' }
+				{id:'table3foodpatno',  x:'255' , y:'327' }
+			]
+		}
+		@answers = [
+			{
+				values: [
+					{text:'Does Pat like salad?', index:6}
+					{text:'Does Matt like beets?', index: 5}
+					{text:'Do Pat and Matt like beets?', index: 4}
+					{text:'Does Pat like corn?', index: 3}
+					{text:'Do Pat and Matt like steak?', index: 1}
+					{text:'Does Matt like salad?', index: 2}
+				]
+			}
+			{
+				values: [
+					{text:'Does Pat like pineapple?', index:6}
+					{text:'Does Pat like ham?', index: 3}
+					{text:'Does Matt like grapes?', index: 5}
+					{text:'Do Matt and Pat like ham?', index: 1}
+					{text:'Does Matt like eggs?', index: 5}
+					{text:'Does Pat like grapes?', index: 3}
+				]
+			}
+			{
+				values: [
+					{text:'Do Matt and Pat like milk?', index:1}
+					{text:'Does Matt like cherries?', index: 2}
+					{text:'Does Matt like cheese?', index: 5}
+					{text:'Does Pat like milk?', index: 3}
+					{text:'Does Pat like cherries?', index: 6}
+					{text:'Do Matt and Pat like cucumbers?', index: 4}
+				]
+			}
 		]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setDropper().setMenu1().introEvaluation()
-	setDropper: ->
-		myname = new createjs.Container()
-		myname.x = 285
-		myname.y = stageSize.h - 70
-		myname.name = 'dropname'
-		question = @createBitmap 'question', 'q', 0, 0
-		h1 = new Droppable 'h1', '#FFFFFF', 250, 0, 120, 22
-		myname.addChild question, h1
-		@addToLibrary h1
-		@addToMain myname
-		@
-	setMenu1: ->
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 18, 0
+		@setCommon().setMenu(1).introEvaluation()
+	setCommon: ->
 		common = new createjs.Container()
-		common.x = 0
-		common.y = 0		
-		menu1 = new createjs.Container()
-		menu1.x = 0
-		menu1.y = 0
-		menu2 = new createjs.Container()
-		menu2.x = 0
-		menu2.y = 0
-		menu3 = new createjs.Container()
-		menu3.x = 0
-		menu3.y = 0
-
-		for i in [1..5]
-			v = @createBitmap @menu1[i-1].id, @menu1[i-1].id, @menu1[i-1].x, @menu1[i-1].y
-			menu1.addChild v
-			@addToLibrary v
-		for i in [1..5]
-			v = @createBitmap @menu2[i-1].id, @menu2[i-1].id, @menu2[i-1].x, @menu2[i-1].y
-			menu2.addChild v
-			@addToLibrary v
-		for i in [1..5]
-			v = @createBitmap @menu3[i-1].id, @menu3[i-1].id, @menu3[i-1].x, @menu3[i-1].y
-			menu3.addChild v
-			@addToLibrary v
-		for i in [1..12]
-			v = @createBitmap @common[i-1].id, @common[i-1].id, @common[i-1].x, @common[i-1].y
+		common.name = 'common'
+		for value in @game.common
+			v = @createBitmap value.id, value.id, value.x, value.y
 			common.addChild v
 			@addToLibrary v
-
-		@addToMain common
-		@addToMain menu1
-		###@addToMain menu2
-		@addToMain menu3###
+		for i in [1..@game.buttons.length] by 1
+			value = @game.buttons[i - 1]
+			v = @createBitmap "b#{i}", value.id, value.x, value.y
+			common.addChild v
+			@addToLibrary v
+		@phrase = new createjs.Text '', '20px Arial', '#333333'
+		@phrase.name = 'phrase'
+		@phrase.textAlign = 'center'
+		@phrase.x = stageSize.w / 2
+		@phrase.y = 440
+		@addToMain common, @phrase
+		@
+	setMenu: (num) ->
+		menu = new createjs.Container()
+		menu.name = 'menu'
+		for value in @game["m#{num}"]
+			v = @createBitmap value.id, value.id, value.x, value.y
+			menu.addChild v
+			@addToLibrary v
+		@addToMain menu
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library['instructions'], 1, {alpha:0, x: 0, delay: 0.5}
+		TweenLite.from @library['common'], 1, {alpha:0, y: @library['common'].y - 20, delay: 1}
+		TweenLite.from @library['menu'], 1, {alpha :0, y: @library['menu'].y - 20, delay: 1.2, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
-	evaluateAnswer: (e) =>
+		@a_index = 0
+		@phrase.text = @answers[@index].values[@a_index].text
+		for i in [1..@game.buttons.length] by 1
+			@library["b#{i}"].index = i
+			@library["b#{i}"].addEventListener 'click', @evaluateClick
+		TweenLite.from @library['phrase'], 1, {alpha:0}
+	evaluateClick: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
+		if @answer.index is @answers[@index].values[@a_index].index
+			@library['score'].plusOne()
+			createjs.Sound.play 'good'
 		else
-			@answer.returnToPlace()
+			@warning()
+		TweenLite.to @library['phrase'], 1, {alpha:0, onComplete: @evaluateAnswer}
+	evaluateAnswer: =>
+		@a_index++
+		if @a_index < @answers[@index].values.length
+			@phrase.text = @answers[@index].values[@a_index].text
+			TweenLite.to @library['phrase'], 1, {alpha:1}
+		else
+			setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		TweenLite.to @library['menu'], 1, {alpha: 0, y: @library['menu'].y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+			@a_index = 0
+			@phrase.text = @answers[@index].values[@a_index].text
+			@setMenu @index + 1
+			TweenLite.to @library['phrase'], 1, {alpha:1}
+			TweenLite.to @library['menu'], 1, {alpha :1, y: 0}
 		else
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U3A2 = U3A2
