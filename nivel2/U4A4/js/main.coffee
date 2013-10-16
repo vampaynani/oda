@@ -52,28 +52,48 @@ class U4A4 extends Oda
 		    {src:'sounds/TU2_U4_A3_instructions.mp3', id:'instructions'}
 		]
 		@answers = [
-			{text: "A lion has paws", animal: 'lion', respuestas:'on'}
-			{text: "A parrot has claws", animal: 'parrot', respuestas:'on'}
-			{text: "Monkeys can't climb", animal: 'monkey', respuestas:'off'}
-			{text: "Lizards eat insects", animal: 'lizard', respuestas:'on'}
-			{text: "A scorpion can't crawl", animal: 'scorpion', respuestas:'off'}
-			{text: "Zebras can run", animal:'zebras', respuestas:'on'}
-			{text: "A lion can sleep in trees", animal:'lion', respuestas: 'on'}
-			{text: "A baby dolphin drinks milk", animal:'dolphin', respuestas:'on'}
-			{text: "Sharks have wings", animal:'shark', respuestas:'off'}
-			{text:"Giraffes don't have a tail", animal:'giraffe', respuestas:'off'}
-			{text:"Camels live in the grasslands", animal:'camel', respuestas:'off'}
-			{text:"A lizard can crawl", animal:'lizard', respuestas:'on'}
-			{text:"A dolphin can fly", animal:'dolphin', respuestas:'off'}
-			{text:"An octopus can jump", animal:'octopus', respuestas:'off'}
-			{text:"Monkeys don't have feathers", animal:'monkey', respuestas:'on'}
-			{text:"A crocodile has a tail", animal:'crocodile', respuestas:'on'}
-			{text:"A jaguar eats meat", animal:'jaguar', respuestas:'on'}
-			{text:"A camel eats meat", animal: 'camel', respuestas:'off'}
-			{text:"An octopus can change colors", animal:'octopus', respuestas:'on'}
-			{text:"Giraffes live in the jungle", animal:'giraffe', respuestas:'off'}
-			{text:"Elephants live in the desert", animal:'elephant', respuestas:'off'}
-			{text:"Whales have a tail", animal:'whale', respuestas:'on'}
+
+			{text:"A camel eats meat", animal: 'camel', respuestas:'off', showanimal:'incamel'}
+			
+			{text:"A jaguar eats meat.", animal:'jaguar', respuestas:'on', showanimal:'injaguar'}
+
+			{text:"A dolphin can fly", animal:'dolphin', respuestas:'off', showanimal:'indolphin'}
+			{text:"An octopus can jump.", animal:'octopus', respuestas:'off', showanimal:'inoctopus'}
+
+			{text:"Elephants live in the desert", animal:'elephant', respuestas:'off', showanimal:'inelephant'}
+			{text:"An elephant has a beak.", animal:'elephant', respuestas:'off', showanimal:'inelephant'}
+
+			{text: "A lion has paws", animal: 'lion', respuestas:'on', showanimal: 'inlion' }
+			{text: "A parrot has claws.", animal: 'parrot', respuestas:'on', showanimal:'inparrot'}
+			{text: "Sharks have wings.", animal:'shark', respuestas:'off', showanimal:'inshark'}		
+			{text:"A lizard can crawl.", animal:'lizard', respuestas:'on', showanimal:'inlizard'}
+			{text: "Snakes have scales.", animal:'snake', respuestas:'on', showanimal:'snake '}
+			{text: "Monkeys can't climb.", animal: 'monkey', respuestas:'off', showanimal:'inmonkey'}
+			{text:"Giraffes live in the jungle.", animal:'giraffe', respuestas:'off', showanimal:'ingiraffe'}
+			{text:"Whales have a tail.", animal:'whale', respuestas:'on', showanimal:'inwhale'}
+			{text:"An octopus can change colors.", animal:'octopus', respuestas:'on', showanimal:'inoctopus'}
+			{text: "A baby dolphin drinks milk", animal:'dolphin', respuestas:'on', showanimal:'indolphin'}
+
+			{text: "A parrot can't speak.", animal: 'parrot', respuestas:'on', showanimal:'inparrot'}
+			{text: "Lizards eat insects.", animal: 'lizard', respuestas:'on', showanimal:'inlizard'}
+
+			{text: "A scorpion can't crawl.", animal: 'scorpion', respuestas:'off', showanimal:'inscorpion'}
+			{text:"Monkeys don't have feathers.", animal:'monkey', respuestas:'on', showanimal:'inmonkey'}
+
+			{text: "Snakes don't have fur.", animal:'snake', respuestas:'on', showanimal:'snake'}
+			
+			{text:"Giraffes don't have a tail.", animal:'giraffe', respuestas:'off', showanimal:'ingiraffe'}
+
+			{text:"A jaguar doesn't have fur.", animal:'jaguar', respuestas:'on', showanimal:'injaguar'}
+			{text: "A lion can sleep in trees", animal:'lion', respuestas: 'on', showanimal:'inlion'}
+
+
+			{text:"A whale can't crawl", animal:'whale', respuestas:'on', showanimal:'inwhale'}
+			{text:"A crocodile has a tail", animal:'crocodile', respuestas:'on', showanimal:'incrocodile'}
+
+			{text: "Zebras can run", animal:'zebras', respuestas:'on', showanimal:'inzebra'}
+			{text:"Camels live in the grasslands", animal:'camel', respuestas:'off', showanimal:'incamel'}
+
 		]
 
 		super null, manifest, sounds
@@ -90,7 +110,8 @@ class U4A4 extends Oda
 		@insertBitmap 'framejungle', 'framejungle', 174, 309
 		@insertBitmap 'frameocean', 'frameocean', 168, 131
 
-		@insertBitmap 'incamel', 'incamel', 446, 365
+	
+		@insertBitmap 'incamel', 'incamel', 446, 365 
 		@insertBitmap 'incrocodile', 'incrocodile', 282, 419
 		@insertBitmap 'indolphin', 'indolphin', 168, 217
 		@insertBitmap 'inelephant', 'inelephant', 605, 180
@@ -106,8 +127,26 @@ class U4A4 extends Oda
 		@insertBitmap 'insnake', 'insnake', 601, 366
 		@insertBitmap 'inwhale', 'inwhale', 240, 219
 		@insertBitmap 'inzebra', 'inzebra', 513, 198
+		
+		@library['incamel'].visible = false
+		@library['incrocodile'].visible = false
+		@library['indolphin'].visible = false
+		@library['inelephant'].visible = false
+		@library['ingiraffe'].visible = false
+		@library['injaguar'].visible = false
+		@library['inlion'].visible = false
+		@library['inlizard'].visible = false
+		@library['inmonkey'].visible = false
+		@library['inoctopus'].visible = false
+		@library['inparrot'].visible = false
+		@library['inscorpion'].visible = false
+		@library['inshark'].visible = false
+		@library['insnake'].visible = false 
+		@library['inwhale'].visible = false
+		@library['inzebra'].visible = false
 
 		@insertSprite 'animalesfuera', ['outcamel', 'outcrocodile', 'outdolphin', 'outelephant',  'outgiraffe', 'outjaguar', 'outlion', 'outlizard', 'outmonkey', 'outoctopus', 'outparrot', 'outscorpion', 'outshark', 'outsnake', 'outwhale', 'outzebra'], {camel:0, crocodile:1, dolphin: 2, elephant: 3, giraffe: 4, jaguar: 5, lion: 6, lizard: 7, monkey: 8, octopus: 9, parrot: 10, scorpion: 11, shark: 12, snake: 13, whale: 14, zebra: 15}, 243, 535, 'mc'
+
 		@
 	
 	setClick: -> 
@@ -148,10 +187,14 @@ class U4A4 extends Oda
 		@answer = e.target
 		if @answer.index is @answers[@index].respuestas
 			@library['score'].plusOne()
+
 			createjs.Sound.play 'good'
-			TweenLite.to @library['animalesfuera'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
+			TweenLite.to @library['animalesfuera'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}			
+			@library[@answers[@index].showanimal].visible = true
 		else 
+			TweenLite.to @library['animalesfuera'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}	
 			@warning()	
+
 	finishEvaluation: =>
 		@nextEvaluation()
 	nextEvaluation: =>
@@ -167,6 +210,5 @@ class U4A4 extends Oda
 		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
+		
 	window.U4A4 = U4A4

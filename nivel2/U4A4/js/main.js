@@ -164,93 +164,145 @@
       ];
       this.answers = [
         {
-          text: "A lion has paws",
-          animal: 'lion',
-          respuestas: 'on'
-        }, {
-          text: "A parrot has claws",
-          animal: 'parrot',
-          respuestas: 'on'
-        }, {
-          text: "Monkeys can't climb",
-          animal: 'monkey',
-          respuestas: 'off'
-        }, {
-          text: "Lizards eat insects",
-          animal: 'lizard',
-          respuestas: 'on'
-        }, {
-          text: "A scorpion can't crawl",
-          animal: 'scorpion',
-          respuestas: 'off'
-        }, {
-          text: "Zebras can run",
-          animal: 'zebras',
-          respuestas: 'on'
-        }, {
-          text: "A lion can sleep in trees",
-          animal: 'lion',
-          respuestas: 'on'
-        }, {
-          text: "A baby dolphin drinks milk",
-          animal: 'dolphin',
-          respuestas: 'on'
-        }, {
-          text: "Sharks have wings",
-          animal: 'shark',
-          respuestas: 'off'
-        }, {
-          text: "Giraffes don't have a tail",
-          animal: 'giraffe',
-          respuestas: 'off'
-        }, {
-          text: "Camels live in the grasslands",
+          text: "A camel eats meat",
           animal: 'camel',
-          respuestas: 'off'
+          respuestas: 'off',
+          showanimal: 'incamel'
         }, {
-          text: "A lizard can crawl",
-          animal: 'lizard',
-          respuestas: 'on'
+          text: "A jaguar eats meat.",
+          animal: 'jaguar',
+          respuestas: 'on',
+          showanimal: 'injaguar'
         }, {
           text: "A dolphin can fly",
           animal: 'dolphin',
-          respuestas: 'off'
+          respuestas: 'off',
+          showanimal: 'indolphin'
         }, {
-          text: "An octopus can jump",
+          text: "An octopus can jump.",
           animal: 'octopus',
-          respuestas: 'off'
-        }, {
-          text: "Monkeys don't have feathers",
-          animal: 'monkey',
-          respuestas: 'on'
-        }, {
-          text: "A crocodile has a tail",
-          animal: 'crocodile',
-          respuestas: 'on'
-        }, {
-          text: "A jaguar eats meat",
-          animal: 'jaguar',
-          respuestas: 'on'
-        }, {
-          text: "A camel eats meat",
-          animal: 'camel',
-          respuestas: 'off'
-        }, {
-          text: "An octopus can change colors",
-          animal: 'octopus',
-          respuestas: 'on'
-        }, {
-          text: "Giraffes live in the jungle",
-          animal: 'giraffe',
-          respuestas: 'off'
+          respuestas: 'off',
+          showanimal: 'inoctopus'
         }, {
           text: "Elephants live in the desert",
           animal: 'elephant',
-          respuestas: 'off'
+          respuestas: 'off',
+          showanimal: 'inelephant'
         }, {
-          text: "Whales have a tail",
+          text: "An elephant has a beak.",
+          animal: 'elephant',
+          respuestas: 'off',
+          showanimal: 'inelephant'
+        }, {
+          text: "A lion has paws",
+          animal: 'lion',
+          respuestas: 'on',
+          showanimal: 'inlion'
+        }, {
+          text: "A parrot has claws.",
+          animal: 'parrot',
+          respuestas: 'on',
+          showanimal: 'inparrot'
+        }, {
+          text: "Sharks have wings.",
+          animal: 'shark',
+          respuestas: 'off',
+          showanimal: 'inshark'
+        }, {
+          text: "A lizard can crawl.",
+          animal: 'lizard',
+          respuestas: 'on',
+          showanimal: 'inlizard'
+        }, {
+          text: "Snakes have scales.",
+          animal: 'snake',
+          respuestas: 'on',
+          showanimal: 'snake '
+        }, {
+          text: "Monkeys can't climb.",
+          animal: 'monkey',
+          respuestas: 'off',
+          showanimal: 'inmonkey'
+        }, {
+          text: "Giraffes live in the jungle.",
+          animal: 'giraffe',
+          respuestas: 'off',
+          showanimal: 'ingiraffe'
+        }, {
+          text: "Whales have a tail.",
           animal: 'whale',
-          respuestas: 'on'
+          respuestas: 'on',
+          showanimal: 'inwhale'
+        }, {
+          text: "An octopus can change colors.",
+          animal: 'octopus',
+          respuestas: 'on',
+          showanimal: 'inoctopus'
+        }, {
+          text: "A baby dolphin drinks milk",
+          animal: 'dolphin',
+          respuestas: 'on',
+          showanimal: 'indolphin'
+        }, {
+          text: "A parrot can't speak.",
+          animal: 'parrot',
+          respuestas: 'on',
+          showanimal: 'inparrot'
+        }, {
+          text: "Lizards eat insects.",
+          animal: 'lizard',
+          respuestas: 'on',
+          showanimal: 'inlizard'
+        }, {
+          text: "A scorpion can't crawl.",
+          animal: 'scorpion',
+          respuestas: 'off',
+          showanimal: 'inscorpion'
+        }, {
+          text: "Monkeys don't have feathers.",
+          animal: 'monkey',
+          respuestas: 'on',
+          showanimal: 'inmonkey'
+        }, {
+          text: "Snakes don't have fur.",
+          animal: 'snake',
+          respuestas: 'on',
+          showanimal: 'snake'
+        }, {
+          text: "Giraffes don't have a tail.",
+          animal: 'giraffe',
+          respuestas: 'off',
+          showanimal: 'ingiraffe'
+        }, {
+          text: "A jaguar doesn't have fur.",
+          animal: 'jaguar',
+          respuestas: 'on',
+          showanimal: 'injaguar'
+        }, {
+          text: "A lion can sleep in trees",
+          animal: 'lion',
+          respuestas: 'on',
+          showanimal: 'inlion'
+        }, {
+          text: "A whale can't crawl",
+          animal: 'whale',
+          respuestas: 'on',
+          showanimal: 'inwhale'
+        }, {
+          text: "A crocodile has a tail",
+          animal: 'crocodile',
+          respuestas: 'on',
+          showanimal: 'incrocodile'
+        }, {
+          text: "Zebras can run",
+          animal: 'zebras',
+          respuestas: 'on',
+          showanimal: 'inzebra'
+        }, {
+          text: "Camels live in the grasslands",
+          animal: 'camel',
+          respuestas: 'off',
+          showanimal: 'incamel'
         }
       ];
       U4A4.__super__.constructor.call(this, null, manifest, sounds);
@@ -285,6 +337,22 @@
       this.insertBitmap('insnake', 'insnake', 601, 366);
       this.insertBitmap('inwhale', 'inwhale', 240, 219);
       this.insertBitmap('inzebra', 'inzebra', 513, 198);
+      this.library['incamel'].visible = false;
+      this.library['incrocodile'].visible = false;
+      this.library['indolphin'].visible = false;
+      this.library['inelephant'].visible = false;
+      this.library['ingiraffe'].visible = false;
+      this.library['injaguar'].visible = false;
+      this.library['inlion'].visible = false;
+      this.library['inlizard'].visible = false;
+      this.library['inmonkey'].visible = false;
+      this.library['inoctopus'].visible = false;
+      this.library['inparrot'].visible = false;
+      this.library['inscorpion'].visible = false;
+      this.library['inshark'].visible = false;
+      this.library['insnake'].visible = false;
+      this.library['inwhale'].visible = false;
+      this.library['inzebra'].visible = false;
       this.insertSprite('animalesfuera', ['outcamel', 'outcrocodile', 'outdolphin', 'outelephant', 'outgiraffe', 'outjaguar', 'outlion', 'outlizard', 'outmonkey', 'outoctopus', 'outparrot', 'outscorpion', 'outshark', 'outsnake', 'outwhale', 'outzebra'], {
         camel: 0,
         crocodile: 1,
@@ -356,13 +424,20 @@
       if (this.answer.index === this.answers[this.index].respuestas) {
         this.library['score'].plusOne();
         createjs.Sound.play('good');
-        return TweenLite.to(this.library['animalesfuera'], 0.5, {
+        TweenLite.to(this.library['animalesfuera'], 0.5, {
           alpha: 0,
           y: stageSize.h,
           ease: Back.easeOut,
           onComplete: this.nextEvaluation
         });
+        return this.library[this.answers[this.index].showanimal].visible = true;
       } else {
+        TweenLite.to(this.library['animalesfuera'], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut,
+          onComplete: this.nextEvaluation
+        });
         return this.warning();
       }
     };
@@ -392,13 +467,7 @@
     };
 
     U4A4.prototype.finish = function() {
-      var i, _i, _results;
-      U4A4.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U4A4.__super__.finish.apply(this, arguments);
     };
 
     window.U4A4 = U4A4;
