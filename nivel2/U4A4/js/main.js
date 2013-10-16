@@ -162,7 +162,97 @@
           id: 'instructions'
         }
       ];
-      this.answers = [];
+      this.answers = [
+        {
+          text: "A lion has paws",
+          animal: 'lion',
+          respuestas: 'on'
+        }, {
+          text: "A parrot has claws",
+          animal: 'parrot',
+          respuestas: 'on'
+        }, {
+          text: "Monkeys can't climb",
+          animal: 'monkey',
+          respuestas: 'off'
+        }, {
+          text: "Lizards eat insects",
+          animal: 'lizard',
+          respuestas: 'on'
+        }, {
+          text: "A scorpion can't crawl",
+          animal: 'scorpion',
+          respuestas: 'off'
+        }, {
+          text: "Zebras can run",
+          animal: 'zebras',
+          respuestas: 'on'
+        }, {
+          text: "A lion can sleep in trees",
+          animal: 'lion',
+          respuestas: 'on'
+        }, {
+          text: "A baby dolphin drinks milk",
+          animal: 'dolphin',
+          respuestas: 'on'
+        }, {
+          text: "Sharks have wings",
+          animal: 'shark',
+          respuestas: 'off'
+        }, {
+          text: "Giraffes don't have a tail",
+          animal: 'giraffe',
+          respuestas: 'off'
+        }, {
+          text: "Camels live in the grasslands",
+          animal: 'camel',
+          respuestas: 'off'
+        }, {
+          text: "A lizard can crawl",
+          animal: 'lizard',
+          respuestas: 'on'
+        }, {
+          text: "A dolphin can fly",
+          animal: 'dolphin',
+          respuestas: 'off'
+        }, {
+          text: "An octopus can jump",
+          animal: 'octopus',
+          respuestas: 'off'
+        }, {
+          text: "Monkeys don't have feathers",
+          animal: 'monkey',
+          respuestas: 'on'
+        }, {
+          text: "A crocodile has a tail",
+          animal: 'crocodile',
+          respuestas: 'on'
+        }, {
+          text: "A jaguar eats meat",
+          animal: 'jaguar',
+          respuestas: 'on'
+        }, {
+          text: "A camel eats meat",
+          animal: 'camel',
+          respuestas: 'off'
+        }, {
+          text: "An octopus can change colors",
+          animal: 'octopus',
+          respuestas: 'on'
+        }, {
+          text: "Giraffes live in the jungle",
+          animal: 'giraffe',
+          respuestas: 'off'
+        }, {
+          text: "Elephants live in the desert",
+          animal: 'elephant',
+          respuestas: 'off'
+        }, {
+          text: "Whales have a tail",
+          animal: 'whale',
+          respuestas: 'on'
+        }
+      ];
       U4A4.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -171,12 +261,10 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setAnimals().introEvaluation();
+      return this.setAnimals().setClick().introEvaluation();
     };
 
     U4A4.prototype.setAnimals = function() {
-      this.insertBitmap('btnfalse', 'btnfalse', 536, 535);
-      this.insertBitmap('btntrue', 'btntrue', 409, 536);
       this.insertBitmap('framedesert', 'framedesert', 447, 309);
       this.insertBitmap('framegrasslands', 'framegrasslands', 447, 131);
       this.insertBitmap('framejungle', 'framejungle', 174, 309);
@@ -197,12 +285,46 @@
       this.insertBitmap('insnake', 'insnake', 601, 366);
       this.insertBitmap('inwhale', 'inwhale', 240, 219);
       this.insertBitmap('inzebra', 'inzebra', 513, 198);
-      this.insertSprite('animalesfuera', ['outcamel', 'outcrocodile', 'outdolphin', 'outelephant', 'outgiraffe', 'outjaguar', 'outlion', 'outlizard', 'outmonkey', 'outoctopus', 'outparrot', 'outscorpion', 'outshark', 'outsnake', 'outwhale', 'outzebra'], null, 243, 535, 'mc');
+      this.insertSprite('animalesfuera', ['outcamel', 'outcrocodile', 'outdolphin', 'outelephant', 'outgiraffe', 'outjaguar', 'outlion', 'outlizard', 'outmonkey', 'outoctopus', 'outparrot', 'outscorpion', 'outshark', 'outsnake', 'outwhale', 'outzebra'], {
+        camel: 0,
+        crocodile: 1,
+        dolphin: 2,
+        elephant: 3,
+        giraffe: 4,
+        jaguar: 5,
+        lion: 6,
+        lizard: 7,
+        monkey: 8,
+        octopus: 9,
+        parrot: 10,
+        scorpion: 11,
+        shark: 12,
+        snake: 13,
+        whale: 14,
+        zebra: 15
+      }, 243, 535, 'mc');
+      return this;
+    };
+
+    U4A4.prototype.setClick = function() {
+      this.insertBitmap('btnfalse', 'btnfalse', 536, 535);
+      this.insertBitmap('btntrue', 'btntrue', 409, 536);
+      this.library['btnfalse'].index = 'off';
+      this.library['btntrue'].index = 'on';
+      this.library['btntrue'].addEventListener('click', this.evaluateAnswer);
+      this.library['btnfalse'].addEventListener('click', this.evaluateAnswer);
       return this;
     };
 
     U4A4.prototype.introEvaluation = function() {
-      return U4A4.__super__.introEvaluation.apply(this, arguments);
+      var text;
+      U4A4.__super__.introEvaluation.apply(this, arguments);
+      this.library['animalesfuera'].gotoAndStop(this.answers[this.index].animal);
+      text = new createjs.Text(this.answers[this.index].text, '20px Arial', '#333');
+      text.name = 'frases';
+      text.x = 410;
+      text.y = 500;
+      return this.addToMain(text);
       /*
       		for i in [1..6] by 1
       			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
@@ -230,45 +352,36 @@
     };
 
     U4A4.prototype.evaluateAnswer = function(e) {
-      var pt;
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
+      if (this.answer.index === this.answers[this.index].respuestas) {
+        this.library['score'].plusOne();
+        createjs.Sound.play('good');
+        return TweenLite.to(this.library['animalesfuera'], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut,
+          onComplete: this.nextEvaluation
+        });
       } else {
-        return this.answer.returnToPlace();
+        return this.warning();
       }
     };
 
     U4A4.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
+      return this.nextEvaluation();
     };
 
     U4A4.prototype.nextEvaluation = function() {
       this.index++;
       if (this.index < this.answers.length) {
         this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
+        this.library['animalesfuera'].gotoAndStop(this.answers[this.index].animal);
+        TweenLite.to(this.library['animalesfuera'], 0.5, {
+          alpha: 1,
+          y: 535,
+          ease: Back.easeOut
         });
+        return this.library['frases'].text = this.answers[this.index].text;
       } else {
         return this.finish();
       }
