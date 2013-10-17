@@ -20,10 +20,10 @@
       manifest = [
         {
           id: 'head',
-          src: 'pleca.png'
+          src: 'pleca1.png'
         }, {
           id: 'inst',
-          src: 'texto_look.png'
+          src: 'inst.png'
         }, {
           id: 'c1',
           src: 'circle1.png'

@@ -1,7 +1,7 @@
 class U1A4 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
+			{id: 'head', src: 'pleca1.png'}
 			{id: 'inst', src: 'texto_look.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
