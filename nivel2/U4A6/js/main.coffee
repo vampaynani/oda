@@ -49,10 +49,36 @@ class U4A6 extends Oda
 		@answers = [	
 		]
 		@preguntas = [
-			{tipo:'texto', imagen:'toastMilkJuice', pregunta:"What's for breakfast?", opcionUno:'Cereal. milk and juice', opcionDos:'Toast, milk and juice'}
-			{tipo:'texto', imagen:'zebras', pregunta:'Do zebras live in the grasslands?', opcionUno:'Yes, they do.', opcionDos:"No, they don't."}
-			{tipo:'imagen', pregunta:'It has fins and scales. What is it?', opcionUno:'fish', opcionDos:'parrot'}
-			{tipo:'imagen', pregunta:'This animal is endangered', opcionUno:'rhino', opcionDos:'snake'}
+			{tipo:'texto', imagen:'toastMilkJuice', pregunta:"What's for breakfast?", opcionUno:'Cereal. milk and juice', opcionDos:'Toast, milk and juice', respuesta:"opcionDos"}
+			{tipo:'texto', imagen:'zebras', pregunta:'Do zebras live in the grasslands?', opcionUno:'Yes, they do.', opcionDos:"No, they don't.", respuesta:"opcionUno"}
+			{tipo:'imagen', pregunta:'It has fins and scales. What is it?', opcionUno:'fish', opcionDos:'parrot', respuesta:"opcionUno"}
+			{tipo:'imagen', pregunta:'This animal is endangered', opcionUno:'rhino', opcionDos:'snake', respuesta:"opcionUno"}
+			{tipo:'texto', imagen:'closet', pregunta:'Where is the broom?', opcionUno:"It's in the drawer", opcionDos:"It's in the closet", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:'girlWashing', pregunta:"What's she doing?", opcionUno:"She's setting the table", opcionDos:"She's washing the dishes", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:'turtle', pregunta:"Do turtles have a tail?", opcionUno:"Yes, they do", opcionDos:"No, they don't", respuesta:"opcionUno"}
+			{tipo:'texto', imagen:'girlPlayingFlute', pregunta:"What's she playing?", opcionUno:"A trumpet", opcionDos:"A flute", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:'lion', pregunta:"What does lion eat?", opcionUno:"Plants", opcionDos:"Meat", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:"polarBearSwim", pregunta:"Can polar bears swim?", opcionUno:"Yes, they can", opcionDos:"No, they can't", respuesta:"opcionUno"}
+			{tipo:'texto', imagen:"chart", pregunta:"We work on computers on Wednesday", opcionUno:"True", opcionDos:"False", respuesta:"opcionDos"}
+			{tipo:'imagen', pregunta:"I like ham, rice and brocoli", opcionUno:'chickenRice', opcionDos:'hamRice', respuesta:"opcionUno"}
+			{tipo:'texto', imagen:"desk", pregunta:"Where is it?", opcionUno:"It's behind the desk.", opcionDos:"It's under the desk.", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:'childrensDrawing', pregunta:"What are they doing?", opcionUno:"They're drawing.", opcionDos:"They're painting.", respuesta:"opcionUno"}
+			{tipo:'texto', imagen:"applepieicecream", pregunta:"What's for dessert?", opcionUno:"Cake and ice cream.", opcionDos:"Apple pie and ice cream.", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:"sixthirty", pregunta:"What time does she wake up?", opcionUno:"Six Thirty.", opcionDos:"Seven Thirty.", respuesta:"opcionUno"}
+			{tipo:'texto', imagen:"dogEmptyBowl", pregunta:"", opcionUno:"Feed the dogs.", opcionDos:"Take out the dog.", respuesta:"opcionUno"}
+			{tipo:'texto', imagen:"houseAttic", pregunta:"", opcionUno:"There's an attic.", opcionDos:"There isn't an attic.", respuesta:"opcionUno"}
+			{tipo:'texto', imagen:"fireTruck", pregunta:"Where's the fire truck?", opcionUno:"It's under the garage", opcionDos:"It's in the garage", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:"girlPlayingGuitar", pregunta:"Is she playing the Violin?", opcionUno:"Yes, she is", opcionDos:"No, she isn't", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:"likePancakes", pregunta:"Do they like pancakes", opcionUno:"Yes, they do.", opcionDos:"No, they don't", respuesta:"opcionUno"}
+			{tipo:"texto", imagen:"polarBear", pregunta:"Where do the polar bears live?", opcionUno:"In the forest", opcionDos:"On the ice", respuesta:"opcionDos"}
+			{tipo:'texto', imagen:"monkeys", pregunta:"Do monkeys have fins?", opcionUno:"Yes, they do", opcionDos:"No, they don't", respuesta:"opcionDos"}
+			{tipo:'imagen', pregunta:"It lives in the desert. It can carry water in it's humps", opcionUno:"camel", opcionDos:"lizard", respuesta:"opcionUno"}
+			{tipo:'imagen', pregunta:"It has fins and scales. What is it?", opcionUno:"fish", opcionDos:"parrot", respuesta:"opcionUno"}
+			{tipo:"texto", pregunta:"We excercise in the", opcionUno:"auditorium", opcionDos:"gym", respuesta:"opcionDos"}
+			{tipo:"texto", pregunta:"cherries", pregunta:"", opcionUno:"These are strawberries", opcionDos:"These are cherries", respuesta:"opcionDos"}
+
+
+			{tipo:'texto', imagen:"frogelephant", pregunta:"It can't jump", opcionUno:"Frog", opcionDos:"Elephant", respuesta:'opcionDos' }
 		]
 
 		super null, manifest, sounds
@@ -60,9 +86,11 @@ class U4A6 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-	
+		
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setQuestion().introEvaluation()
+
+		@setQuestion().setClick().introEvaluation()
+
 	setQuestion:  ->
 		question = new createjs.Container()
 		question.x = 0
@@ -83,16 +111,18 @@ class U4A6 extends Oda
 
 				opciones = new createjs.Container()
 
-				uno = new ClickableText @preguntas[i].opcionUno, @preguntas[i].opcionUno, i, 0, 0
+				uno = new ClickableText 'opcionUno', @preguntas[i].opcionUno, i, 0, 0
 				opciones.addChild uno
+				@addToLibrary uno 
 
 				diagonal = new createjs.Text ' / ','24px Arial','#333'
 				diagonal.x = uno.x + uno.width
 				diagonal.y = 0
 				opciones.addChild diagonal
 
-				dos = new ClickableText @preguntas[i].opcionDos, @preguntas[i].opcionDos, i,  diagonal.x + 24, 0
+				dos = new ClickableText 'opcionDos', @preguntas[i].opcionDos, i,  diagonal.x + 24, 0
 				opciones.addChild dos
+				@addToLibrary dos
 
 				total = uno.width + dos.width + 20
 
@@ -135,18 +165,19 @@ class U4A6 extends Oda
 		@library['characters'].currentFrame = @answers[@index].id
 		createjs.Sound.play @answers[@index].sound
 		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+	setClick: =>
+		@library['opcionUno'].addEventListener 'click', @evaluateAnswer
+		@library['opcionDos'].addEventListener 'click', @evaluateAnswer
+		@
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
+		if @answer.name is @preguntas[@index].respuesta
+			createjs.Sound.play 'good'
+			@library['score'].plusOne()
 		else
-			@answer.returnToPlace()
+			@warning()
+
+
 	finishEvaluation: =>
 		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
 		@answer.returnToPlace()
