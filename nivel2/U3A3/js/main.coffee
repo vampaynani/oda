@@ -77,6 +77,8 @@ class U3A3 extends Oda
 
 			{id:'saladstep', src: 'salad/step.png'}
 			{id:'sandwichstep', src: 'sandwich/step.png'}
+			{id:'saladline', src: 'salad/line.png'}
+			{id:'sandwichline', src: 'sandwich/line.png'}
 
 			{id:'saladnumber1', src: 'salad/number_1.png'}
 			{id:'saladnumber2', src: 'salad/number_2.png'}
@@ -88,15 +90,6 @@ class U3A3 extends Oda
 			{id:'sandwichnumber3', src: 'sandwich/number_3.png'}
 			{id:'sandwichnumber4', src: 'sandwich/number_4.png'}
 			{id:'sandwichnumber5', src: 'sandwich/number_5.png'}
-
-			{id:'saladscore', src: 'salad/score.png'}
-			{id:'sandwichscore', src: 'sandwich/score.png'}
-		]
-		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U3_A1_instructions.mp3', id:'instructions'}
-		]
-		@answers = [	
 		]
 		@salad = 
 			drags:[
@@ -106,14 +99,13 @@ class U3A3 extends Oda
 				{id:'saladStart4Final3'}
 				{id:'saladStart5Final2'}
 			]
-			finals:[
-				{id:'saladStart3Final1'}
-				{id:'saladStart5Final2'}
-				{id:'saladStart4Final3'}
-				{id:'saladStart2Final4'}
-				{id:'saladStart1Final5'}
+			texts:[
+				{t:'Wash the fruit.',x:'165',y:'487'}
+				{t:'Wash your hands.',x:'294',y:'456'}
+				{t:'Mix the fruit.',x:'430',y:'487'}
+				{t:'Serve and eat!',x:'553',y:'456'}
+				{t:'Cut the fruit.',x:'696',y:'487'}
 			]
-
 		@sandwich =
 			drags:[
 				{id:'sandwichStart1Final3'}
@@ -122,222 +114,258 @@ class U3A3 extends Oda
 				{id:'sandwichStart4Final4'}
 				{id:'sandwichStart5Final2'}
 			]
-			finals:[
-				{id:'sandwichStart2Final1'}
-				{id:'sandwichStart5Final2'}
-				{id:'sandwichStart1Final3'}
-				{id:'sandwichStart4Final4'}
-				{id:'sandwichStart3Final5'}
+			texts:[
+				{t:'Put slices of turkey on the bread.',x:'165',y:'487'}
+				{t:'Wash your hands.',x:'294',y:'456'}
+				{t:'Spread mayonnaise on the bread.',x:'430',y:'487'}
+				{t:'Eat your sandwich!',x:'553',y:'456'}
+				{t:'Put the two slices of bread together.',x:'696',y:'487'}
 			]
 		@positions = 
 			dragsImg:[
-				{x:'160',y:'245'}
-				{x:'284',y:'245'}
-				{x:'407',y:'245'}
-				{x:'531',y:'245'}
-				{x:'654',y:'245'}
-			]
-			dragsTxt:[
-				{x:'115',y:'487'}
-				{x:'244',y:'456'}
-				{x:'380',y:'487'}
-				{x:'503',y:'456'}
-				{x:'646',y:'487'}
-			]			
+				{x:'160',y:'195'}
+				{x:'284',y:'195'}
+				{x:'407',y:'195'}
+				{x:'531',y:'195'}
+				{x:'654',y:'195'}
+			]		
 			steps:[
-				{x:'77', y:'376'}
-				{x:'219',y:'376'}
-				{x:'360',y:'376'}
-				{x:'502',y:'376'}
-				{x:'644',y:'376'}
+				{x:77, y:296}
+				{x:219,y:296}
+				{x:360,y:296}
+				{x:502,y:296}
+				{x:644,y:296}
 			]
-			botones:[				
-				{x:'284',y:'539'}
-				{x:'431',y:'539'}
+			ready: {x:431,y:539}
+			start: {x:284,y:539}
+			score: {x:86,y:191}
+			titulo: {x:410,y:131}
+		sounds = [
+			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/boing.mp3', id:'boing'}
+		    {src:'sounds/TU2_U3_A3_instructions.mp3', id:'instructions'}
+		]
+		@answers =
+			sandwich: [
+				{t:'sandwichstep1', d:'d2'}
+				{t:'sandwichstep2', d:'d5'}
+				{t:'sandwichstep3', d:'d1'}
+				{t:'sandwichstep4', d:'d4'}
+				{t:'sandwichstep5', d:'d3'}
+				{t:'dt2', d:'sandwichline1'}
+				{t:'dt3', d:'sandwichline2'}
+				{t:'dt1', d:'sandwichline3'}
+				{t:'dt5', d:'sandwichline4'}
+				{t:'dt4', d:'sandwichline5'}
 			]
-			score:[
-				{x:'86',y:'191'}
+			salad: [
+				{t:'saladstep1', d:'d3'}
+				{t:'saladstep2', d:'d5'}
+				{t:'saladstep3', d:'d4'}
+				{t:'saladstep4', d:'d2'}
+				{t:'saladstep5', d:'d1'}
+				{t:'dt2', d:'saladline1'}
+				{t:'dt1', d:'saladline2'}
+				{t:'dt5', d:'saladline3'}
+				{t:'dt3', d:'saladline4'}
+				{t:'dt4', d:'saladline5'}
 			]
-			titulo:[
-				{x:'410',y:'131'}
-			]
-
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setDropper().setSandwich().setSalad().setFinal().setStart().introEvaluation()
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@setStart()
 	setStart:  ->
-		@insertBitmap 'btnsalad', 'btnsalad', 412, 450, 'tc'
 		@insertBitmap 'propsalad', 'propsalad', 412, 361, 'tc'
-		@insertBitmap 'btnsandwich', 'btnsandwich', 412, 244, 'tc'
+		@insertBitmap 'btnsalad', 'btnsalad', 412, 450, 'tc'
 		@insertBitmap 'propsandwich', 'propsandwich', 412, 149, 'tc'
-	setDropper: ->
-		myname = new createjs.Container()
-		myname.x = 285
-		myname.y = stageSize.h - 70
-		myname.name = 'dropname'
-		question = @createBitmap 'question', 'q', 0, 0
-		h1 = new Droppable 'h1', '#FFFFFF', 250, 0, 120, 22
-		myname.addChild question, h1
-		@addToLibrary h1
-		@addToMain myname
+		@insertBitmap 'btnsandwich', 'btnsandwich', 412, 244, 'tc'
+		@library['btnsalad'].addEventListener 'click', @setSalad
+		@library['btnsandwich'].addEventListener 'click', @setSandwich
 		@
-	setSandwich: ->
-		sandwich = new createjs.Container()
-		sandwich.x = 0
-		sandwich.y = 0		
+	removeStart: ->
+		@library['btnsalad'].removeEventListener 'click', @setSalad
+		@library['btnsandwich'].removeEventListener 'click', @setSandwich
 		
-		for i in [1..5]
-			v = new Draggable @sandwich.drags[i-1].id,  (@preload.getResult @sandwich.drags[i-1].id), i,  @positions.dragsImg[i-1].x, @positions.dragsImg[i-1].y, 'bl'
+		TweenLite.to @library['btnsalad'], 0.5, {alpha:0}
+		TweenLite.to @library['propsalad'], 0.5, {alpha:0}
+		TweenLite.to @library['btnsandwich'], 0.5, {alpha:0}
+		TweenLite.to @library['propsandwich'], 0.5, {alpha:0}
+	setSandwich: (e) =>
+		@removeStart()
+		
+		sandwich = new createjs.Container()
+		@current = sandwich.name = 'sandwich'
+
+		for i in [1..5] by 1
+			s = @createBitmap 'sandwichstep'+i, 'sandwichstep', @positions.steps[i-1].x, @positions.steps[i-1].y
+			n = @createBitmap 'sandwichnumber'+i, 'sandwichnumber'+i, s.x + 56, s.y + 43, 'mc'
+			l = @createBitmap 'sandwichline'+i, 'sandwichline', s.x - 10, s.y + 90
+			s.scaleX = s.scaleY = 0.46
+			@addToLibrary s, l
+			sandwich.addChild s, n, l
+
+		label = @createBitmap 'label', 'sandwichlabel', @positions.titulo.x, @positions.titulo.y, 'tc'
+		ready = new Button 'btnready', (@preload.getResult 'sandwichbtnready'), 'ready', @positions.ready.x, @positions.ready.y
+		start = new Button 'btnstart', (@preload.getResult 'sandwichbtnstart'), 'start', @positions.start.x, @positions.start.y
+		counter = new Counter 'counter', 60, '#56bb5b', @positions.score.x, @positions.score.y
+		sandwich.addChild label, ready, start, counter
+		@addToLibrary counter, ready, start
+
+		for i in [1..@sandwich.drags.length] by 1
+			value = @sandwich.drags[i - 1]
+			v = new Draggable "d#{i}", (@preload.getResult value.id), i, @positions.dragsImg[i-1].x, @positions.dragsImg[i-1].y
 			v.scaleX = v.scaleY = 0.46
-
+			@observer.subscribe 'init_sandwich', v.initDragListener
+			v.addEventListener 'drop', @evaluateImageDrop
 			sandwich.addChild v
 			@addToLibrary v
 
-		for i in [1..5]
-			v = @createBitmap 'sandwichstep', 'sandwichstep', @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
-			v.scaleX = v.scaleY = 0.53
-			sandwich.addChild v
-			@addToLibrary v
-		for i in [1..5]
-			v = @createBitmap @sandwich.finals[i-1].id,  @sandwich.finals[i-1].id, @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
-			v.scaleX = v.scaleY = 0.53
-			sandwich.addChild v
-			@addToLibrary v
-
-		for i in [1..5]
-			v = @createBitmap 'sandwichnumber'+[i], 'sandwichnumber'+[i], @positions.steps[i-1].x-(-56), @positions.steps[i-1].y-43, 'mc'
-			sandwich.addChild v
-			@addToLibrary v
-
-		v = @createBitmap 'sandwichscore', 'sandwichscore', @positions.score[0].x, @positions.score[0].y
-		sandwich.addChild v
-		@addToLibrary v
-		v = @createBitmap 'sandwichbtnready', 'sandwichbtnready', @positions.botones[1].x, @positions.botones[1].y
-		sandwich.addChild v
-		@addToLibrary v
-		v = @createBitmap 'sandwichbtnstart', 'sandwichbtnstart', @positions.botones[0].x, @positions.botones[0].y
-		sandwich.addChild v
-		@addToLibrary v
-		v = @createBitmap 'sandwichlabel', 'sandwichlabel', @positions.titulo[0].x, @positions.titulo[0].y, 'tc'
-		sandwich.addChild v
-		@addToLibrary v
-
-		for i in [1..5]
-			v = new DraggableText 'text', "texto", i,  @positions.dragsTxt[i-1].x, @positions.dragsTxt[i-1].y 
+		for i in [1..@sandwich.texts.length] by 1
+			value = @sandwich.texts[i - 1]
+			v = new DraggableText "dt#{i}", value.t, i, value.x, value.y
+			v.text.font = '20px Arial'
+			v.text.lineHeight = 40
+			v.text.lineWidth = 200
+			v.text.textAlign = 'center'
+			v.scaleX = v.scaleY = 0.46
+			v.setHitArea()
+			@observer.subscribe 'init_sandwich', v.initDragListener
+			v.addEventListener 'drop', @evaluateTextDrop
 			sandwich.addChild v
 			@addToLibrary v
 
 		@addToMain sandwich
+		@introEvaluation()
 		@
-	setSalad: ->
+	setSalad: (e) =>
+		@removeStart()
 		salad = new createjs.Container()
-		salad.x = 0
-		salad.y = 0		
-		
-		for i in [1..5]
-			v = new Draggable @salad.drags[i-1].id,  (@preload.getResult @salad.drags[i-1].id), i,  @positions.dragsImg[i-1].x, @positions.dragsImg[i-1].y, 'bl'
+		@current = salad.name = 'salad'
+
+		for i in [1..5] by 1
+			s = @createBitmap 'saladstep'+i, 'saladstep', @positions.steps[i-1].x, @positions.steps[i-1].y
+			n = @createBitmap 'saladnumber'+i, 'saladnumber'+i, s.x + 56, s.y + 43, 'mc'
+			l = @createBitmap 'saladline'+i, 'saladline', s.x - 10, s.y + 90
+			s.scaleX = s.scaleY = 0.46
+			@addToLibrary s, l
+			salad.addChild s, n, l
+
+		label = @createBitmap 'label', 'saladlabel', @positions.titulo.x, @positions.titulo.y, 'tc'
+		ready = new Button 'btnready', (@preload.getResult 'saladbtnready'), 'ready', @positions.ready.x, @positions.ready.y
+		start = new Button 'btnstart', (@preload.getResult 'saladbtnstart'), 'start', @positions.start.x, @positions.start.y
+		counter = new Counter 'counter', 60, '#eb2d3d', @positions.score.x, @positions.score.y
+		salad.addChild label, ready, start, counter
+		@addToLibrary counter, ready, start
+
+		for i in [1..@salad.drags.length] by 1
+			value = @salad.drags[i - 1]
+			v = new Draggable "d#{i}", (@preload.getResult value.id), i, @positions.dragsImg[i-1].x, @positions.dragsImg[i-1].y
 			v.scaleX = v.scaleY = 0.46
+			@observer.subscribe 'init_salad', v.initDragListener
+			v.addEventListener 'drop', @evaluateImageDrop
 			salad.addChild v
 			@addToLibrary v
 
-		for i in [1..5]
-			v = @createBitmap 'saladstep', 'saladstep', @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
-			v.scaleX = v.scaleY = 0.53
-			salad.addChild v
-			@addToLibrary v
-
-			v = @createBitmap @salad.finals[i-1].id,  @salad.finals[i-1].id, @positions.steps[i-1].x, @positions.steps[i-1].y, 'bl'
-			v.scaleX = v.scaleY = 0.53
-			salad.addChild v
-			@addToLibrary v
- 
-			v = @createBitmap 'saladnumber'+[i], 'saladnumber'+[i], @positions.steps[i-1].x-(-56), @positions.steps[i-1].y-43, 'mc'
-			salad.addChild v
-			@addToLibrary v
-
-			checkimg = @createSprite 'check', ['wrong', 'correct'], null, @positions.steps[i-1].x-(-90), @positions.steps[i-1].y, 'bl'
-			checkimg.scaleX = checkimg.scaleY = 0.53
-			salad.addChild checkimg
-			@addToLibrary checkimg
- 
-		v = @createBitmap 'saladscore', 'saladscore', @positions.score[0].x, @positions.score[0].y
-		salad.addChild v
-		@addToLibrary v
-		v = @createBitmap 'saladbtnready', 'saladbtnready', @positions.botones[1].x, @positions.botones[1].y
-		salad.addChild v
-		@addToLibrary v
-		v = @createBitmap 'saladbtnstart', 'saladbtnstart', @positions.botones[0].x, @positions.botones[0].y
-		salad.addChild v
-		@addToLibrary v
-		v = @createBitmap 'saladlabel', 'saladlabel', @positions.titulo[0].x, @positions.titulo[0].y, 'tc'
-		salad.addChild v
-		@addToLibrary v
-		for i in [1..5]
-			v = new DraggableText 'text', "texto", i,  @positions.dragsTxt[i-1].x, @positions.dragsTxt[i-1].y 
+		for i in [1..@salad.texts.length] by 1
+			value = @salad.texts[i - 1]
+			v = new DraggableText "dt#{i}", value.t, i, value.x, value.y
+			v.text.font = '20px Arial'
+			v.text.lineHeight = 40
+			v.text.lineWidth = 200
+			v.text.textAlign = 'center'
+			v.scaleX = v.scaleY = 0.46
+			v.setHitArea()
+			@observer.subscribe 'init_salad', v.initDragListener
+			v.addEventListener 'drop', @evaluateTextDrop
 			salad.addChild v
 			@addToLibrary v
 
 		@addToMain salad
-		@
-	setFinal: ->
-		@insertBitmap 'chefAgain', 'chefAgain', 400, 600, 'bc'
-		@insertBitmap 'chefSalad', 'chefSalad', 400, 600, 'bc'
-		@insertBitmap 'chefSandwich', 'chefSandwich', 400, 600, 'bc'
+		@introEvaluation()
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library.btnstart, 0.5, {alpha: 0}
+		@playInstructions(@)
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
-	evaluateAnswer: (e) =>
+		@library.btnstart.blink()
+		@library.btnstart.addEventListener 'click', @startGame
+	startGame: (e) =>
+		@observer.notify "init_#{@current}"
+		@library.btnstart.removeEventListener 'click', @startGame
+		@library.btnstart.blink(off)
+		@library.btnready.addEventListener 'click', @evaluateAnswer
+		@library.btnready.blink()
+		TweenLite.to @library.btnstart, 0.5, {alpha: 0}
+		@library.counter.addEventListener 'timer_complete', @endGame
+		@library.counter.start()
+	evaluateImageDrop: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
+		dropped = off
+		i = 1
+		until dropped is on or i > 5
+			hit = @library["#{@current}step#{i}"]
+			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
+			if hit.hitTest pt.x, pt.y
+				@answer.putInPlace {x: hit.x, y: hit.y}
+				dropped = on
 			else
-				@warning()
-				@answer.returnToPlace()
-		else
+				i++
+		if not dropped
 			@answer.returnToPlace()
+	evaluateTextDrop: (e) =>
+		@answer = e.target
+		dropped = off
+		i = 1
+		until dropped is on or i > 5
+			hit = @library["#{@current}line#{i}"]
+			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
+			if hit.hitTest pt.x, pt.y
+				if @current is 'sandwich'
+					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 10}
+				if @current is 'salad'
+					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 7}
+				dropped = on
+			else
+				i++
+		if not dropped
+			@answer.returnToPlace()
+	evaluateAnswer: (e) =>
+		@complete = on
+		@library.btnready.removeEventListener 'click', @evaluateAnswer
+		@library.btnready.blink(off)
+		@library.counter.stop()
+		for value in @answers[@current]
+			pt = @library[value.t].localToLocal 5, 5, @library[value.d]
+			if @library[value.t].name.length > 3
+				npt = @library[value.t].localToLocal 0,0, @mainContainer
+			else
+				npt = @library[value.d].localToLocal 0,0, @mainContainer
+			if @library[value.t].hitTest pt.x, pt.y
+				@library.score.plusOne()
+				r = @createBitmap 'correct'+value.t.name, 'correct', npt.x, npt.y
+			else
+				@complete = off
+				r = @createBitmap 'wrong'+value.t.name, 'wrong', npt.x, npt.y
+			@library[@current].addChild r
+		setTimeout @finishEvaluation, 2 * 1000
+	endGame: (e) =>
+		@complete = off
+		@finishEvaluation()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
-	nextEvaluation: =>
-		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		if not @complete
+			@insertBitmap 'chefAgain', 'chefAgain', 400, 600, 'bc'
 		else
-			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
-	finish: ->
+			if @current is 'salad'
+				@insertBitmap 'chefSalad', 'chefSalad', 400, 600, 'bc'
+			if @current is 'sandwich'
+				@insertBitmap 'chefSandwich', 'chefSandwich', 400, 600, 'bc'
+		TweenLite.to @library[@current], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @finish}
+	finish: =>
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U3A3 = U3A3

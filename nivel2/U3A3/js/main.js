@@ -9,11 +9,16 @@
     __extends(U3A3, _super);
 
     function U3A3() {
-      this.repeatSound = __bind(this.repeatSound, this);
-      this.nextEvaluation = __bind(this.nextEvaluation, this);
+      this.finish = __bind(this.finish, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
+      this.endGame = __bind(this.endGame, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.evaluateTextDrop = __bind(this.evaluateTextDrop, this);
+      this.evaluateImageDrop = __bind(this.evaluateImageDrop, this);
+      this.startGame = __bind(this.startGame, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
+      this.setSalad = __bind(this.setSalad, this);
+      this.setSandwich = __bind(this.setSandwich, this);
       var manifest, sounds;
       manifest = [
         {
@@ -221,6 +226,12 @@
           id: 'sandwichstep',
           src: 'sandwich/step.png'
         }, {
+          id: 'saladline',
+          src: 'salad/line.png'
+        }, {
+          id: 'sandwichline',
+          src: 'sandwich/line.png'
+        }, {
           id: 'saladnumber1',
           src: 'salad/number_1.png'
         }, {
@@ -250,24 +261,8 @@
         }, {
           id: 'sandwichnumber5',
           src: 'sandwich/number_5.png'
-        }, {
-          id: 'saladscore',
-          src: 'salad/score.png'
-        }, {
-          id: 'sandwichscore',
-          src: 'sandwich/score.png'
         }
       ];
-      sounds = [
-        {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
-        }, {
-          src: 'sounds/TU2_U3_A1_instructions.mp3',
-          id: 'instructions'
-        }
-      ];
-      this.answers = [];
       this.salad = {
         drags: [
           {
@@ -282,17 +277,27 @@
             id: 'saladStart5Final2'
           }
         ],
-        finals: [
+        texts: [
           {
-            id: 'saladStart3Final1'
+            t: 'Wash the fruit.',
+            x: '165',
+            y: '487'
           }, {
-            id: 'saladStart5Final2'
+            t: 'Wash your hands.',
+            x: '294',
+            y: '456'
           }, {
-            id: 'saladStart4Final3'
+            t: 'Mix the fruit.',
+            x: '430',
+            y: '487'
           }, {
-            id: 'saladStart2Final4'
+            t: 'Serve and eat!',
+            x: '553',
+            y: '456'
           }, {
-            id: 'saladStart1Final5'
+            t: 'Cut the fruit.',
+            x: '696',
+            y: '487'
           }
         ]
       };
@@ -310,17 +315,27 @@
             id: 'sandwichStart5Final2'
           }
         ],
-        finals: [
+        texts: [
           {
-            id: 'sandwichStart2Final1'
+            t: 'Put slices of turkey on the bread.',
+            x: '165',
+            y: '487'
           }, {
-            id: 'sandwichStart5Final2'
+            t: 'Wash your hands.',
+            x: '294',
+            y: '456'
           }, {
-            id: 'sandwichStart1Final3'
+            t: 'Spread mayonnaise on the bread.',
+            x: '430',
+            y: '487'
           }, {
-            id: 'sandwichStart4Final4'
+            t: 'Eat your sandwich!',
+            x: '553',
+            y: '456'
           }, {
-            id: 'sandwichStart3Final5'
+            t: 'Put the two slices of bread together.',
+            x: '696',
+            y: '487'
           }
         ]
       };
@@ -328,76 +343,133 @@
         dragsImg: [
           {
             x: '160',
-            y: '245'
+            y: '195'
           }, {
             x: '284',
-            y: '245'
+            y: '195'
           }, {
             x: '407',
-            y: '245'
+            y: '195'
           }, {
             x: '531',
-            y: '245'
+            y: '195'
           }, {
             x: '654',
-            y: '245'
-          }
-        ],
-        dragsTxt: [
-          {
-            x: '115',
-            y: '487'
-          }, {
-            x: '244',
-            y: '456'
-          }, {
-            x: '380',
-            y: '487'
-          }, {
-            x: '503',
-            y: '456'
-          }, {
-            x: '646',
-            y: '487'
+            y: '195'
           }
         ],
         steps: [
           {
-            x: '77',
-            y: '376'
+            x: 77,
+            y: 296
           }, {
-            x: '219',
-            y: '376'
+            x: 219,
+            y: 296
           }, {
-            x: '360',
-            y: '376'
+            x: 360,
+            y: 296
           }, {
-            x: '502',
-            y: '376'
+            x: 502,
+            y: 296
           }, {
-            x: '644',
-            y: '376'
+            x: 644,
+            y: 296
           }
         ],
-        botones: [
+        ready: {
+          x: 431,
+          y: 539
+        },
+        start: {
+          x: 284,
+          y: 539
+        },
+        score: {
+          x: 86,
+          y: 191
+        },
+        titulo: {
+          x: 410,
+          y: 131
+        }
+      };
+      sounds = [
+        {
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
+          src: 'sounds/boing.mp3',
+          id: 'boing'
+        }, {
+          src: 'sounds/TU2_U3_A3_instructions.mp3',
+          id: 'instructions'
+        }
+      ];
+      this.answers = {
+        sandwich: [
           {
-            x: '284',
-            y: '539'
+            t: 'sandwichstep1',
+            d: 'd2'
           }, {
-            x: '431',
-            y: '539'
+            t: 'sandwichstep2',
+            d: 'd5'
+          }, {
+            t: 'sandwichstep3',
+            d: 'd1'
+          }, {
+            t: 'sandwichstep4',
+            d: 'd4'
+          }, {
+            t: 'sandwichstep5',
+            d: 'd3'
+          }, {
+            t: 'dt2',
+            d: 'sandwichline1'
+          }, {
+            t: 'dt3',
+            d: 'sandwichline2'
+          }, {
+            t: 'dt1',
+            d: 'sandwichline3'
+          }, {
+            t: 'dt5',
+            d: 'sandwichline4'
+          }, {
+            t: 'dt4',
+            d: 'sandwichline5'
           }
         ],
-        score: [
+        salad: [
           {
-            x: '86',
-            y: '191'
-          }
-        ],
-        titulo: [
-          {
-            x: '410',
-            y: '131'
+            t: 'saladstep1',
+            d: 'd3'
+          }, {
+            t: 'saladstep2',
+            d: 'd5'
+          }, {
+            t: 'saladstep3',
+            d: 'd4'
+          }, {
+            t: 'saladstep4',
+            d: 'd2'
+          }, {
+            t: 'saladstep5',
+            d: 'd1'
+          }, {
+            t: 'dt2',
+            d: 'saladline1'
+          }, {
+            t: 'dt1',
+            d: 'saladline2'
+          }, {
+            t: 'dt5',
+            d: 'saladline3'
+          }, {
+            t: 'dt3',
+            d: 'saladline4'
+          }, {
+            t: 'dt4',
+            d: 'saladline5'
           }
         ]
       };
@@ -408,221 +480,265 @@
       U3A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setDropper().setSandwich().setSalad().setFinal().setStart().introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
+      return this.setStart();
     };
 
     U3A3.prototype.setStart = function() {
-      this.insertBitmap('btnsalad', 'btnsalad', 412, 450, 'tc');
       this.insertBitmap('propsalad', 'propsalad', 412, 361, 'tc');
+      this.insertBitmap('btnsalad', 'btnsalad', 412, 450, 'tc');
+      this.insertBitmap('propsandwich', 'propsandwich', 412, 149, 'tc');
       this.insertBitmap('btnsandwich', 'btnsandwich', 412, 244, 'tc');
-      return this.insertBitmap('propsandwich', 'propsandwich', 412, 149, 'tc');
-    };
-
-    U3A3.prototype.setDropper = function() {
-      var h1, myname, question;
-      myname = new createjs.Container();
-      myname.x = 285;
-      myname.y = stageSize.h - 70;
-      myname.name = 'dropname';
-      question = this.createBitmap('question', 'q', 0, 0);
-      h1 = new Droppable('h1', '#FFFFFF', 250, 0, 120, 22);
-      myname.addChild(question, h1);
-      this.addToLibrary(h1);
-      this.addToMain(myname);
+      this.library['btnsalad'].addEventListener('click', this.setSalad);
+      this.library['btnsandwich'].addEventListener('click', this.setSandwich);
       return this;
     };
 
-    U3A3.prototype.setSandwich = function() {
-      var i, sandwich, v, _i, _j, _k, _l, _m;
+    U3A3.prototype.removeStart = function() {
+      this.library['btnsalad'].removeEventListener('click', this.setSalad);
+      this.library['btnsandwich'].removeEventListener('click', this.setSandwich);
+      TweenLite.to(this.library['btnsalad'], 0.5, {
+        alpha: 0
+      });
+      TweenLite.to(this.library['propsalad'], 0.5, {
+        alpha: 0
+      });
+      TweenLite.to(this.library['btnsandwich'], 0.5, {
+        alpha: 0
+      });
+      return TweenLite.to(this.library['propsandwich'], 0.5, {
+        alpha: 0
+      });
+    };
+
+    U3A3.prototype.setSandwich = function(e) {
+      var counter, i, l, label, n, ready, s, sandwich, start, v, value, _i, _j, _k, _ref, _ref1;
+      this.removeStart();
       sandwich = new createjs.Container();
-      sandwich.x = 0;
-      sandwich.y = 0;
-      for (i = _i = 1; _i <= 5; i = ++_i) {
-        v = new Draggable(this.sandwich.drags[i - 1].id, this.preload.getResult(this.sandwich.drags[i - 1].id), i, this.positions.dragsImg[i - 1].x, this.positions.dragsImg[i - 1].y, 'bl');
+      this.current = sandwich.name = 'sandwich';
+      for (i = _i = 1; _i <= 5; i = _i += 1) {
+        s = this.createBitmap('sandwichstep' + i, 'sandwichstep', this.positions.steps[i - 1].x, this.positions.steps[i - 1].y);
+        n = this.createBitmap('sandwichnumber' + i, 'sandwichnumber' + i, s.x + 56, s.y + 43, 'mc');
+        l = this.createBitmap('sandwichline' + i, 'sandwichline', s.x - 10, s.y + 90);
+        s.scaleX = s.scaleY = 0.46;
+        this.addToLibrary(s, l);
+        sandwich.addChild(s, n, l);
+      }
+      label = this.createBitmap('label', 'sandwichlabel', this.positions.titulo.x, this.positions.titulo.y, 'tc');
+      ready = new Button('btnready', this.preload.getResult('sandwichbtnready'), 'ready', this.positions.ready.x, this.positions.ready.y);
+      start = new Button('btnstart', this.preload.getResult('sandwichbtnstart'), 'start', this.positions.start.x, this.positions.start.y);
+      counter = new Counter('counter', 60, '#56bb5b', this.positions.score.x, this.positions.score.y);
+      sandwich.addChild(label, ready, start, counter);
+      this.addToLibrary(counter, ready, start);
+      for (i = _j = 1, _ref = this.sandwich.drags.length; _j <= _ref; i = _j += 1) {
+        value = this.sandwich.drags[i - 1];
+        v = new Draggable("d" + i, this.preload.getResult(value.id), i, this.positions.dragsImg[i - 1].x, this.positions.dragsImg[i - 1].y);
         v.scaleX = v.scaleY = 0.46;
+        this.observer.subscribe('init_sandwich', v.initDragListener);
+        v.addEventListener('drop', this.evaluateImageDrop);
         sandwich.addChild(v);
         this.addToLibrary(v);
       }
-      for (i = _j = 1; _j <= 5; i = ++_j) {
-        v = this.createBitmap('sandwichstep', 'sandwichstep', this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
-        v.scaleX = v.scaleY = 0.53;
-        sandwich.addChild(v);
-        this.addToLibrary(v);
-      }
-      for (i = _k = 1; _k <= 5; i = ++_k) {
-        v = this.createBitmap(this.sandwich.finals[i - 1].id, this.sandwich.finals[i - 1].id, this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
-        v.scaleX = v.scaleY = 0.53;
-        sandwich.addChild(v);
-        this.addToLibrary(v);
-      }
-      for (i = _l = 1; _l <= 5; i = ++_l) {
-        v = this.createBitmap('sandwichnumber' + [i], 'sandwichnumber' + [i], this.positions.steps[i - 1].x - (-56), this.positions.steps[i - 1].y - 43, 'mc');
-        sandwich.addChild(v);
-        this.addToLibrary(v);
-      }
-      v = this.createBitmap('sandwichscore', 'sandwichscore', this.positions.score[0].x, this.positions.score[0].y);
-      sandwich.addChild(v);
-      this.addToLibrary(v);
-      v = this.createBitmap('sandwichbtnready', 'sandwichbtnready', this.positions.botones[1].x, this.positions.botones[1].y);
-      sandwich.addChild(v);
-      this.addToLibrary(v);
-      v = this.createBitmap('sandwichbtnstart', 'sandwichbtnstart', this.positions.botones[0].x, this.positions.botones[0].y);
-      sandwich.addChild(v);
-      this.addToLibrary(v);
-      v = this.createBitmap('sandwichlabel', 'sandwichlabel', this.positions.titulo[0].x, this.positions.titulo[0].y, 'tc');
-      sandwich.addChild(v);
-      this.addToLibrary(v);
-      for (i = _m = 1; _m <= 5; i = ++_m) {
-        v = new DraggableText('text', "texto", i, this.positions.dragsTxt[i - 1].x, this.positions.dragsTxt[i - 1].y);
+      for (i = _k = 1, _ref1 = this.sandwich.texts.length; _k <= _ref1; i = _k += 1) {
+        value = this.sandwich.texts[i - 1];
+        v = new DraggableText("dt" + i, value.t, i, value.x, value.y);
+        v.text.font = '20px Arial';
+        v.text.lineHeight = 40;
+        v.text.lineWidth = 200;
+        v.text.textAlign = 'center';
+        v.scaleX = v.scaleY = 0.46;
+        v.setHitArea();
+        this.observer.subscribe('init_sandwich', v.initDragListener);
+        v.addEventListener('drop', this.evaluateTextDrop);
         sandwich.addChild(v);
         this.addToLibrary(v);
       }
       this.addToMain(sandwich);
+      this.introEvaluation();
       return this;
     };
 
-    U3A3.prototype.setSalad = function() {
-      var checkimg, i, salad, v, _i, _j, _k;
+    U3A3.prototype.setSalad = function(e) {
+      var counter, i, l, label, n, ready, s, salad, start, v, value, _i, _j, _k, _ref, _ref1;
+      this.removeStart();
       salad = new createjs.Container();
-      salad.x = 0;
-      salad.y = 0;
-      for (i = _i = 1; _i <= 5; i = ++_i) {
-        v = new Draggable(this.salad.drags[i - 1].id, this.preload.getResult(this.salad.drags[i - 1].id), i, this.positions.dragsImg[i - 1].x, this.positions.dragsImg[i - 1].y, 'bl');
+      this.current = salad.name = 'salad';
+      for (i = _i = 1; _i <= 5; i = _i += 1) {
+        s = this.createBitmap('saladstep' + i, 'saladstep', this.positions.steps[i - 1].x, this.positions.steps[i - 1].y);
+        n = this.createBitmap('saladnumber' + i, 'saladnumber' + i, s.x + 56, s.y + 43, 'mc');
+        l = this.createBitmap('saladline' + i, 'saladline', s.x - 10, s.y + 90);
+        s.scaleX = s.scaleY = 0.46;
+        this.addToLibrary(s, l);
+        salad.addChild(s, n, l);
+      }
+      label = this.createBitmap('label', 'saladlabel', this.positions.titulo.x, this.positions.titulo.y, 'tc');
+      ready = new Button('btnready', this.preload.getResult('saladbtnready'), 'ready', this.positions.ready.x, this.positions.ready.y);
+      start = new Button('btnstart', this.preload.getResult('saladbtnstart'), 'start', this.positions.start.x, this.positions.start.y);
+      counter = new Counter('counter', 60, '#eb2d3d', this.positions.score.x, this.positions.score.y);
+      salad.addChild(label, ready, start, counter);
+      this.addToLibrary(counter, ready, start);
+      for (i = _j = 1, _ref = this.salad.drags.length; _j <= _ref; i = _j += 1) {
+        value = this.salad.drags[i - 1];
+        v = new Draggable("d" + i, this.preload.getResult(value.id), i, this.positions.dragsImg[i - 1].x, this.positions.dragsImg[i - 1].y);
         v.scaleX = v.scaleY = 0.46;
+        this.observer.subscribe('init_salad', v.initDragListener);
+        v.addEventListener('drop', this.evaluateImageDrop);
         salad.addChild(v);
         this.addToLibrary(v);
       }
-      for (i = _j = 1; _j <= 5; i = ++_j) {
-        v = this.createBitmap('saladstep', 'saladstep', this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
-        v.scaleX = v.scaleY = 0.53;
-        salad.addChild(v);
-        this.addToLibrary(v);
-        v = this.createBitmap(this.salad.finals[i - 1].id, this.salad.finals[i - 1].id, this.positions.steps[i - 1].x, this.positions.steps[i - 1].y, 'bl');
-        v.scaleX = v.scaleY = 0.53;
-        salad.addChild(v);
-        this.addToLibrary(v);
-        v = this.createBitmap('saladnumber' + [i], 'saladnumber' + [i], this.positions.steps[i - 1].x - (-56), this.positions.steps[i - 1].y - 43, 'mc');
-        salad.addChild(v);
-        this.addToLibrary(v);
-        checkimg = this.createSprite('check', ['wrong', 'correct'], null, this.positions.steps[i - 1].x - (-90), this.positions.steps[i - 1].y, 'bl');
-        checkimg.scaleX = checkimg.scaleY = 0.53;
-        salad.addChild(checkimg);
-        this.addToLibrary(checkimg);
-      }
-      v = this.createBitmap('saladscore', 'saladscore', this.positions.score[0].x, this.positions.score[0].y);
-      salad.addChild(v);
-      this.addToLibrary(v);
-      v = this.createBitmap('saladbtnready', 'saladbtnready', this.positions.botones[1].x, this.positions.botones[1].y);
-      salad.addChild(v);
-      this.addToLibrary(v);
-      v = this.createBitmap('saladbtnstart', 'saladbtnstart', this.positions.botones[0].x, this.positions.botones[0].y);
-      salad.addChild(v);
-      this.addToLibrary(v);
-      v = this.createBitmap('saladlabel', 'saladlabel', this.positions.titulo[0].x, this.positions.titulo[0].y, 'tc');
-      salad.addChild(v);
-      this.addToLibrary(v);
-      for (i = _k = 1; _k <= 5; i = ++_k) {
-        v = new DraggableText('text', "texto", i, this.positions.dragsTxt[i - 1].x, this.positions.dragsTxt[i - 1].y);
+      for (i = _k = 1, _ref1 = this.salad.texts.length; _k <= _ref1; i = _k += 1) {
+        value = this.salad.texts[i - 1];
+        v = new DraggableText("dt" + i, value.t, i, value.x, value.y);
+        v.text.font = '20px Arial';
+        v.text.lineHeight = 40;
+        v.text.lineWidth = 200;
+        v.text.textAlign = 'center';
+        v.scaleX = v.scaleY = 0.46;
+        v.setHitArea();
+        this.observer.subscribe('init_salad', v.initDragListener);
+        v.addEventListener('drop', this.evaluateTextDrop);
         salad.addChild(v);
         this.addToLibrary(v);
       }
       this.addToMain(salad);
-      return this;
-    };
-
-    U3A3.prototype.setFinal = function() {
-      this.insertBitmap('chefAgain', 'chefAgain', 400, 600, 'bc');
-      this.insertBitmap('chefSalad', 'chefSalad', 400, 600, 'bc');
-      this.insertBitmap('chefSandwich', 'chefSandwich', 400, 600, 'bc');
+      this.introEvaluation();
       return this;
     };
 
     U3A3.prototype.introEvaluation = function() {
-      return U3A3.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
+      U3A3.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library.btnstart, 0.5, {
+        alpha: 0
+      });
+      return this.playInstructions(this);
     };
 
     U3A3.prototype.initEvaluation = function(e) {
       U3A3.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      this.library.btnstart.blink();
+      return this.library.btnstart.addEventListener('click', this.startGame);
     };
 
-    U3A3.prototype.evaluateAnswer = function(e) {
-      var pt;
+    U3A3.prototype.startGame = function(e) {
+      this.observer.notify("init_" + this.current);
+      this.library.btnstart.removeEventListener('click', this.startGame);
+      this.library.btnstart.blink(false);
+      this.library.btnready.addEventListener('click', this.evaluateAnswer);
+      this.library.btnready.blink();
+      TweenLite.to(this.library.btnstart, 0.5, {
+        alpha: 0
+      });
+      this.library.counter.addEventListener('timer_complete', this.endGame);
+      return this.library.counter.start();
+    };
+
+    U3A3.prototype.evaluateImageDrop = function(e) {
+      var dropped, hit, i, pt;
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+      dropped = false;
+      i = 1;
+      while (!(dropped === true || i > 5)) {
+        hit = this.library["" + this.current + "step" + i];
+        pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (hit.hitTest(pt.x, pt.y)) {
+          this.answer.putInPlace({
+            x: hit.x,
+            y: hit.y
+          });
+          dropped = true;
         } else {
-          this.warning();
-          return this.answer.returnToPlace();
+          i++;
         }
-      } else {
+      }
+      if (!dropped) {
         return this.answer.returnToPlace();
       }
     };
 
+    U3A3.prototype.evaluateTextDrop = function(e) {
+      var dropped, hit, i, pt;
+      this.answer = e.target;
+      dropped = false;
+      i = 1;
+      while (!(dropped === true || i > 5)) {
+        hit = this.library["" + this.current + "line" + i];
+        pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (hit.hitTest(pt.x, pt.y)) {
+          if (this.current === 'sandwich') {
+            this.answer.putInPlace({
+              x: hit.x + hit.width / 2,
+              y: hit.y + 10
+            });
+          }
+          if (this.current === 'salad') {
+            this.answer.putInPlace({
+              x: hit.x + hit.width / 2,
+              y: hit.y + 7
+            });
+          }
+          dropped = true;
+        } else {
+          i++;
+        }
+      }
+      if (!dropped) {
+        return this.answer.returnToPlace();
+      }
+    };
+
+    U3A3.prototype.evaluateAnswer = function(e) {
+      var npt, pt, r, value, _i, _len, _ref;
+      this.complete = true;
+      this.library.btnready.removeEventListener('click', this.evaluateAnswer);
+      this.library.btnready.blink(false);
+      this.library.counter.stop();
+      _ref = this.answers[this.current];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        value = _ref[_i];
+        pt = this.library[value.t].localToLocal(5, 5, this.library[value.d]);
+        if (this.library[value.t].name.length > 3) {
+          npt = this.library[value.t].localToLocal(0, 0, this.mainContainer);
+        } else {
+          npt = this.library[value.d].localToLocal(0, 0, this.mainContainer);
+        }
+        if (this.library[value.t].hitTest(pt.x, pt.y)) {
+          this.library.score.plusOne();
+          r = this.createBitmap('correct' + value.t.name, 'correct', npt.x, npt.y);
+        } else {
+          this.complete = false;
+          r = this.createBitmap('wrong' + value.t.name, 'wrong', npt.x, npt.y);
+        }
+        this.library[this.current].addChild(r);
+      }
+      return setTimeout(this.finishEvaluation, 2 * 1000);
+    };
+
+    U3A3.prototype.endGame = function(e) {
+      this.complete = false;
+      return this.finishEvaluation();
+    };
+
     U3A3.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      if (!this.complete) {
+        this.insertBitmap('chefAgain', 'chefAgain', 400, 600, 'bc');
+      } else {
+        if (this.current === 'salad') {
+          this.insertBitmap('chefSalad', 'chefSalad', 400, 600, 'bc');
+        }
+        if (this.current === 'sandwich') {
+          this.insertBitmap('chefSandwich', 'chefSandwich', 400, 600, 'bc');
+        }
+      }
+      return TweenLite.to(this.library[this.current], 0.5, {
         alpha: 0,
         y: -200,
         ease: Back.easeOut,
-        onComplete: this.nextEvaluation
+        onComplete: this.finish
       });
-      return this.answer.returnToPlace();
-    };
-
-    U3A3.prototype.nextEvaluation = function() {
-      this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
-      } else {
-        return this.finish();
-      }
-    };
-
-    U3A3.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
     };
 
     U3A3.prototype.finish = function() {
-      var i, _i, _results;
-      U3A3.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U3A3.__super__.finish.apply(this, arguments);
     };
 
     window.U3A3 = U3A3;

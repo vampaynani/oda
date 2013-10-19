@@ -8,6 +8,7 @@ class Score
 		@name = name
 		@x = x
 		@y = y
+		@counter = 0
 		@bmpBack = new createjs.Bitmap back
 		@bmpFront = new createjs.Bitmap front
 		@txtTotal = new createjs.Text total, '24px Arial', '#666666'
@@ -25,6 +26,14 @@ class Score
 		@txtCount.y = @bmpFront.y + front.height / 2 - @txtCount.getMeasuredHeight() / 2
 		@addChild @bmpFront, @txtCount, @bmpBack, @txtTotal
 		false
+	reset: ->
+		@counter = 0
+		@updateCount @counter
+	plusOne: ->
+		@counter++
+		@updateCount @counter
 	updateCount: (txt)->
 		@txtCount.text = txt
+	updateTotal: (txt)->
+		@txtTotal.text = txt
 	window.Score = Score
