@@ -9,7 +9,7 @@
     __extends(U4A3, _super);
 
     function U4A3() {
-      this.repeatSound = __bind(this.repeatSound, this);
+      this.finish = __bind(this.finish, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -38,10 +38,10 @@
           id: 'startgame',
           src: 'start_game.png'
         }, {
-          id: 'animalsfeathers',
+          id: 'animalfeathers',
           src: 'animals_feathers.png'
         }, {
-          id: 'animalbeak',
+          id: 'animalbeaks',
           src: 'animal_beak.png'
         }, {
           id: 'animalclaws',
@@ -59,7 +59,7 @@
           id: 'animalscales',
           src: 'animal_scales.png'
         }, {
-          id: 'animaltail',
+          id: 'animaltails',
           src: 'animal_tail.png'
         }, {
           id: 'animalwhiskers',
@@ -68,7 +68,7 @@
           id: 'animalwings',
           src: 'animal_wings.png'
         }, {
-          id: 'bodybeak',
+          id: 'bodybeaks',
           src: 'body_beak.png'
         }, {
           id: 'bodyclaws',
@@ -89,7 +89,7 @@
           id: 'bodyscales',
           src: 'body_scales.png'
         }, {
-          id: 'bodytail',
+          id: 'bodytails',
           src: 'body_tail.png'
         }, {
           id: 'bodywhiskers',
@@ -106,10 +106,120 @@
         }, {
           src: 'sounds/TU2_U4_A3_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU2_U4_A3_animals.mp3',
+          id: 'animals'
         }
       ];
-      this.answers = [];
       this.letra = ['Animals, animals everywhere!', 'Some have wings and fly through the air,', 'Some have feathers. Some have scales.', 'Some have fur, and some have tails!', 'Some have whiskers. Some have claws.', 'Some have fins, and some have paws.', 'Some have beaks, and some can speak!', 'Animals, animals everywhere!'];
+      this.answers = {
+        words: [
+          {
+            w: 'whiskers',
+            x: 70,
+            y: 72
+          }, {
+            w: 'fur',
+            x: 70,
+            y: 54
+          }, {
+            w: 'fins',
+            x: 70,
+            y: 90
+          }, {
+            w: 'beaks',
+            x: 70,
+            y: 108
+          }, {
+            w: 'wings',
+            x: 70,
+            y: 18
+          }, {
+            w: 'scales',
+            x: 195,
+            y: 36
+          }, {
+            w: 'paws',
+            x: 192,
+            y: 90
+          }, {
+            w: 'tails',
+            x: 186,
+            y: 54
+          }, {
+            w: 'claws',
+            x: 199,
+            y: 72
+          }, {
+            w: 'feathers',
+            x: 70,
+            y: 36
+          }
+        ],
+        pairs: [
+          {
+            b: 'bodybeaks',
+            a: 'animalbeaks',
+            x: 464,
+            y: 504,
+            s: false
+          }, {
+            b: 'bodyclaws',
+            a: 'animalclaws',
+            x: 204,
+            y: 217,
+            s: false
+          }, {
+            b: 'bodyfeathers',
+            a: 'animalfeathers',
+            x: 610,
+            y: 217,
+            s: false
+          }, {
+            b: 'bodyfins',
+            a: 'animalfins',
+            x: 204,
+            y: 468,
+            s: false
+          }, {
+            b: 'bodyfur',
+            a: 'animalfur',
+            x: 610,
+            y: 468,
+            s: false
+          }, {
+            b: 'bodypaws',
+            a: 'animalpaws',
+            x: 696,
+            y: 333,
+            s: false
+          }, {
+            b: 'bodyscales',
+            a: 'animalscales',
+            x: 331,
+            y: 181,
+            s: false
+          }, {
+            b: 'bodytails',
+            a: 'animaltails',
+            x: 464,
+            y: 181,
+            s: false
+          }, {
+            b: 'bodywhiskers',
+            a: 'animalwhiskers',
+            x: 330,
+            y: 504,
+            s: false
+          }, {
+            b: 'bodywings',
+            a: 'animalwings',
+            x: 119,
+            y: 333,
+            s: false
+          }
+        ]
+      };
       U4A3.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -118,46 +228,58 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setAnimals().setParts().setText().introEvaluation();
+      return this.setParts().setAnimals().setText().introEvaluation();
     };
 
     U4A3.prototype.setParts = function() {
-      this.insertBitmap('bodybeak', 'bodybeak', 414, 454);
-      this.insertBitmap('bodyclaws', 'bodyclaws', 154, 167);
-      this.insertBitmap('bodyfeathers', 'bodyfeathers', 561, 167);
-      this.insertBitmap('bodyfins', 'bodyfins', 154, 418);
-      this.insertBitmap('bodyfur', 'bodyfur', 560, 418);
-      this.insertBitmap('bodypaws', 'bodypaws', 646, 283);
-      this.insertBitmap('bodyscales', 'bodyscales', 281, 131);
-      this.insertBitmap('bodytail', 'bodytail', 414, 131);
-      this.insertBitmap('bodywhiskers', 'bodywhiskers', 280, 454);
-      this.insertBitmap('bodywings', 'bodywings', 69, 283);
+      var m, parts, value, _i, _len, _ref;
+      parts = new createjs.Container();
+      parts.name = 'parts';
+      _ref = this.answers.pairs;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        value = _ref[_i];
+        m = this.insertBitmap(value.b, value.b, value.x, value.y, 'mc');
+        this.addToLibrary(m);
+        parts.addChild(m);
+      }
+      this.addToMain(parts);
       return this;
     };
 
     U4A3.prototype.setAnimals = function() {
-      this.insertBitmap('animalbeak', 'animalbeak', 414, 454);
-      this.insertBitmap('animalclaws', 'animalclaws', 151, 133);
-      this.insertBitmap('animalsfeathers', 'animalsfeathers', 553, 156);
-      this.insertBitmap('animalfins', 'animalfins', 87, 398);
-      this.insertBitmap('animalfur', 'animalfur', 552, 345);
-      this.insertBitmap('animalpaws', 'animalpaws', 646, 283);
-      this.insertBitmap('animalscales', 'animalscales', 265, 131);
-      this.insertBitmap('animaltail', 'animaltail', 414, 105);
-      this.insertBitmap('animalwhiskers', 'animalwhiskers', 280, 450);
-      this.insertBitmap('animalwings', 'animalwings', 47, 285);
+      var animals, m, value, _i, _len, _ref;
+      animals = new createjs.Container();
+      animals.name = 'animals';
+      _ref = this.answers.pairs;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        value = _ref[_i];
+        m = this.insertBitmap(value.a, value.a, value.x, value.y, 'mc');
+        m.alpha = 0;
+        this.addToLibrary(m);
+        animals.addChild(m);
+      }
+      this.addToMain(animals);
       return this;
     };
 
     U4A3.prototype.setText = function() {
-      var cancion, i, text, _i;
+      var cancion, i, text, _i, _j, _ref, _ref1;
       cancion = new createjs.Container();
+      cancion.name = 'cancion';
       cancion.x = 290;
       cancion.y = 270;
-      for (i = _i = 0; _i <= 9; i = ++_i) {
-        text = new createjs.Text(this.letra[i], '13px Arial', '#333');
+      for (i = _i = 0, _ref = this.letra.length - 1; _i <= _ref; i = _i += 1) {
+        text = new createjs.Text(this.letra[i], '13px Arial', '#666');
         text.x = 0;
         text.y = i * 18;
+        cancion.addChild(text);
+      }
+      for (i = _j = 0, _ref1 = this.answers.words.length - 1; _j <= _ref1; i = _j += 1) {
+        text = new createjs.Text(this.answers.words[i].w, '13px Arial', '#000');
+        text.name = "t" + i;
+        text.x = this.answers.words[i].x;
+        text.y = this.answers.words[i].y;
+        this.addToLibrary(text);
         cancion.addChild(text);
       }
       this.addToMain(cancion);
@@ -165,90 +287,94 @@
     };
 
     U4A3.prototype.introEvaluation = function() {
-      return U4A3.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
-    };
-
-    U4A3.prototype.initEvaluation = function(e) {
-      U4A3.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
+      U4A3.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      TweenLite.from(this.library['cancion'], 0.5, {
+        alpha: 0,
+        y: this.library['cancion'].y - 20,
+        delay: 1
+      });
+      return TweenLite.from(this.library['parts'], 0.5, {
+        alpha: 0,
+        y: this.library['parts'].y + 20,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
       });
     };
 
+    U4A3.prototype.initEvaluation = function(e) {
+      var value, _i, _len, _ref, _results;
+      U4A3.__super__.initEvaluation.apply(this, arguments);
+      this.blink(this.library["t" + this.index]);
+      _ref = this.answers.pairs;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        value = _ref[_i];
+        _results.push(this.library[value.b].addEventListener('click', this.evaluateAnswer));
+      }
+      return _results;
+    };
+
     U4A3.prototype.evaluateAnswer = function(e) {
-      var pt;
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
+      this.animal = this.answers.words[this.index].w;
+      if (this.answer.name === ("body" + this.answers.words[this.index].w)) {
+        createjs.Sound.play('good');
+        return setTimeout(this.finishEvaluation, 0.5 * 1000);
       } else {
-        return this.answer.returnToPlace();
+        return this.warning();
       }
     };
 
     U4A3.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      this.blink(this.library["t" + this.index], false);
+      TweenLite.to(this.library["body" + this.animal], 1, {
         alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
+        ease: Quart.easeOut
+      });
+      return TweenLite.to(this.library["animal" + this.animal], 1, {
+        alpha: 1,
+        ease: Quart.easeOut,
         onComplete: this.nextEvaluation
       });
-      return this.answer.returnToPlace();
     };
 
     U4A3.prototype.nextEvaluation = function() {
+      var anim;
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
+      if (this.index < this.answers.words.length) {
+        return this.blink(this.library["t" + this.index]);
       } else {
-        return this.finish();
+        anim = createjs.Sound.play('animals');
+        return anim.addEventListener('complete', this.finish);
       }
     };
 
-    U4A3.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
+    U4A3.prototype.blink = function(obj, state) {
+      if (state == null) {
+        state = true;
+      }
+      TweenMax.killTweensOf(obj);
+      obj.alpha = 1;
+      if (state) {
+        return TweenMax.to(obj, 0.5, {
+          alpha: .2,
+          repeat: -1,
+          yoyo: true
+        });
+      }
     };
 
     U4A3.prototype.finish = function() {
-      var i, _i, _results;
-      U4A3.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U4A3.__super__.finish.apply(this, arguments);
     };
 
     window.U4A3 = U4A3;
