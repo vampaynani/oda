@@ -1,4 +1,4 @@
-var oda = new U5A3();
+var oda = new U3A2();
 $(document).ready(function(){
 	$(window).on('resize', function(){
 		oda.resize();
