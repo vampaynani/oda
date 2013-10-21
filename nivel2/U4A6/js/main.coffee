@@ -60,7 +60,7 @@ class U4A6 extends Oda
 			{tipo:'texto', imagen:'lion', pregunta:"What does lion eat?", opcionUno:"Plants", opcionDos:"Meat", respuesta:"opcionDos"}
 			{tipo:'texto', imagen:"polarBearSwim", pregunta:"Can polar bears swim?", opcionUno:"Yes, they can", opcionDos:"No, they can't", respuesta:"opcionUno"}
 			{tipo:'texto', imagen:"chart", pregunta:"We work on computers on Wednesday", opcionUno:"True", opcionDos:"False", respuesta:"opcionDos"}
-			{tipo:'imagen', pregunta:"I like ham, rice and brocoli", opcionUno:'chickenRice', opcionDos:'hamRice', respuesta:"opcionUno"}
+			{tipo:'imagen', pregunta:"I like ham, rice and brocoli", opcionUno:'hamRice', opcionDos:'chickenRice', respuesta:"opcionUno"}
 			{tipo:'texto', imagen:"desk", pregunta:"Where is it?", opcionUno:"It's behind the desk.", opcionDos:"It's under the desk.", respuesta:"opcionDos"}
 			{tipo:'texto', imagen:'childrensDrawing', pregunta:"What are they doing?", opcionUno:"They're drawing.", opcionDos:"They're painting.", respuesta:"opcionUno"}
 			{tipo:'texto', imagen:"applepieicecream", pregunta:"What's for dessert?", opcionUno:"Cake and ice cream.", opcionDos:"Apple pie and ice cream.", respuesta:"opcionDos"}
@@ -89,60 +89,65 @@ class U4A6 extends Oda
 		
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 
-		@setQuestion().setClick().introEvaluation()
+		@setQuestion(0).setClick(0).introEvaluation()
 
-	setQuestion:  ->
+	setQuestion: (i) ->
 		question = new createjs.Container()
 		question.x = 0
 		question.y = 0	
+		
+		if @preguntas[i].tipo == 'texto'
+			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'
+			v.scaleX = v.scaleY = 0.5
+			question.addChild v
+			@addToLibrary v
 
-		for i in [1..1]
-			if @preguntas[i].tipo == 'texto'
-				v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'
-				v.scaleX = v.scaleY = 0.5
-				question.addChild v
-				@addToLibrary v
+			text = new createjs.Text @preguntas[i].pregunta,'24px Arial','#333'
+			text.name = 'titulo'
+			text.x = stageSize.w / 2
+			text.y = 140
+			text.textAlign = 'center'
+			question.addChild text
+			@addToLibrary text
 
-				text = new createjs.Text @preguntas[i].pregunta,'24px Arial','#333'
-				text.x = stageSize.w / 2
-				text.y = 140
-				text.textAlign = 'center'
-				question.addChild text
+			opciones = new createjs.Container()
 
-				opciones = new createjs.Container()
+			uno = new ClickableText @preguntas[i].opcionUno, @preguntas[i].opcionUno, i, 0, 0
+			opciones.addChild uno
+			@addToLibrary uno 
 
-				uno = new ClickableText 'opcionUno', @preguntas[i].opcionUno, i, 0, 0
-				opciones.addChild uno
-				@addToLibrary uno 
+			diagonal = new createjs.Text ' / ','24px Arial','#333'
+			diagonal.name = 'diagonal'
+			diagonal.x = uno.x + uno.width
+			diagonal.y = 0
+			opciones.addChild diagonal
+			@addToLibrary diagonal
 
-				diagonal = new createjs.Text ' / ','24px Arial','#333'
-				diagonal.x = uno.x + uno.width
-				diagonal.y = 0
-				opciones.addChild diagonal
+			dos = new ClickableText @preguntas[i].opcionDos, @preguntas[i].opcionDos, i,  diagonal.x + 24, 0
+			opciones.addChild dos
+			@addToLibrary dos
 
-				dos = new ClickableText 'opcionDos', @preguntas[i].opcionDos, i,  diagonal.x + 24, 0
-				opciones.addChild dos
-				@addToLibrary dos
+			total = uno.width + dos.width + 20
 
-				total = uno.width + dos.width + 20
+			opciones.x = stageSize.w / 2 - total / 2;
+			opciones.y = 490;
+			question.addChild opciones
+		else if @preguntas[i].tipo = 'imagen'
+			text = new createjs.Text @preguntas[i].pregunta,'24px Arial','#333'
+			text.name = 'titulo'
+			text.x = 200
+			text.y = 140
+			question.addChild text
+			@addToLibrary text
 
-				opciones.x = stageSize.w / 2 - total / 2;
-				opciones.y = 490;
-				question.addChild opciones
-			else if @preguntas[i].tipo = 'imagen'
-				text = new createjs.Text @preguntas[i].pregunta,'24px Arial','#333'
-				text.x = 0
-				text.y = 140
-				question.addChild text
-
-				v = @createBitmap @preguntas[i].opcionUno, @preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2+30, 'mc'
-				v.scaleX = v.scaleY = 0.3
-				question.addChild v
-				@addToLibrary v
-				v = @createBitmap @preguntas[i].opcionDos, @preguntas[i].opcionDos, (stageSize.w / 4)*3, stageSize.h / 2+30, 'mc'
-				v.scaleX = v.scaleY = 0.3
-				question.addChild v
-				@addToLibrary v
+			v = @createBitmap @preguntas[i].opcionUno, @preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2+30, 'mc'
+			v.scaleX = v.scaleY = 0.3
+			question.addChild v
+			@addToLibrary v
+			v = @createBitmap @preguntas[i].opcionDos, @preguntas[i].opcionDos, (stageSize.w / 4)*3, stageSize.h / 2+30, 'mc'
+			v.scaleX = v.scaleY = 0.3
+			question.addChild v
+			@addToLibrary v
 
 		@addToMain question
 		@
@@ -165,37 +170,62 @@ class U4A6 extends Oda
 		@library['characters'].currentFrame = @answers[@index].id
 		createjs.Sound.play @answers[@index].sound
 		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
-	setClick: =>
-		@library['opcionUno'].addEventListener 'click', @evaluateAnswer
-		@library['opcionDos'].addEventListener 'click', @evaluateAnswer
+	setClick: (i) =>
+
+		if @preguntas[i].tipo = 'texto'
+			@library[@preguntas[i].opcionUno].index = 'opcionUno'
+			@library[@preguntas[i].opcionDos].index = 'opcionDos'
+			@library[@preguntas[i].opcionUno].addEventListener 'click', @evaluateAnswer
+			@library[@preguntas[i].opcionDos].addEventListener 'click', @evaluateAnswer
+		else if @preguntas[i].tipo = 'imagen'
+			@library[@preguntas[i].opcionUno] is @preguntas.index
+			@library[@preguntas[i].opcionDos] is @preguntas.index
+			@library[@preguntas[i].opcionUno].addEventListener 'click', evaluateAnswer
+			@library[preguntas[i].opcionDos].addEventListener 'click', evaluateAnswer
 		@
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		if @answer.name is @preguntas[@index].respuesta
+		if @answer.index is @preguntas[@index].respuesta
 			createjs.Sound.play 'good'
 			@library['score'].plusOne()
+
+			if @preguntas[@index].tipo = 'texto'
+			
+				TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
+				TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
+				TweenLite.to @library['titulo'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
+				TweenLite.to @library['diagonal'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}				
+				TweenLite.to @library[@preguntas[@index].imagen], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
+			
+			else if @preguntas[@index].tipo = 'imagen'
+				TweenLite.to @library[@preguntas[@index].pregunta], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
+				TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
+				TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
+
 		else
 			@warning()
-
 
 	finishEvaluation: =>
 		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
 		@answer.returnToPlace()
 	nextEvaluation: =>
-		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
-		else
-			@finish()
+		@index++		
+		@setQuestion(@index)
+
+		@library['score'].updateCount( @index )
+		if @preguntas[@index].tipo = 'texto'
+			@library[@preguntas[@index].opcionUno].index = 'opcionUno'
+			@library[@preguntas[@index].opcionDos].index = 'opcionDos'
+			@library[@preguntas[@index].opcionUno].addEventListener 'click', @evaluateAnswer
+			@library[@preguntas[@index].opcionDos].addEventListener 'click', @evaluateAnswer
+		else if @preguntas[@index].tipo = 'imagen'
+			@library[@preguntas[@index].opcionUno] is @preguntas.index
+			@library[@preguntas[@index].opcionDos] is @preguntas.index
+			@library[@preguntas[@index].opcionUno].addEventListener 'click', evaluateAnswer
+			@library[preguntas[@index].opcionDos].addEventListener 'click', evaluateAnswer
 	repeatSound: =>
 		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
+		
 	window.U4A6 = U4A6

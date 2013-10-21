@@ -228,8 +228,8 @@
         }, {
           tipo: 'imagen',
           pregunta: "I like ham, rice and brocoli",
-          opcionUno: 'chickenRice',
-          opcionDos: 'hamRice',
+          opcionUno: 'hamRice',
+          opcionDos: 'chickenRice',
           respuesta: "opcionUno"
         }, {
           tipo: 'texto',
@@ -350,54 +350,58 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setQuestion().setClick().introEvaluation();
+      return this.setQuestion(0).setClick(0).introEvaluation();
     };
 
-    U4A6.prototype.setQuestion = function() {
-      var diagonal, dos, i, opciones, question, text, total, uno, v, _i;
+    U4A6.prototype.setQuestion = function(i) {
+      var diagonal, dos, opciones, question, text, total, uno, v;
       question = new createjs.Container();
       question.x = 0;
       question.y = 0;
-      for (i = _i = 1; _i <= 1; i = ++_i) {
-        if (this.preguntas[i].tipo === 'texto') {
-          v = this.createBitmap(this.preguntas[i].imagen, this.preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2 + 30, 'mc');
-          v.scaleX = v.scaleY = 0.5;
-          question.addChild(v);
-          this.addToLibrary(v);
-          text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
-          text.x = stageSize.w / 2;
-          text.y = 140;
-          text.textAlign = 'center';
-          question.addChild(text);
-          opciones = new createjs.Container();
-          uno = new ClickableText('opcionUno', this.preguntas[i].opcionUno, i, 0, 0);
-          opciones.addChild(uno);
-          this.addToLibrary(uno);
-          diagonal = new createjs.Text(' / ', '24px Arial', '#333');
-          diagonal.x = uno.x + uno.width;
-          diagonal.y = 0;
-          opciones.addChild(diagonal);
-          dos = new ClickableText('opcionDos', this.preguntas[i].opcionDos, i, diagonal.x + 24, 0);
-          opciones.addChild(dos);
-          this.addToLibrary(dos);
-          total = uno.width + dos.width + 20;
-          opciones.x = stageSize.w / 2 - total / 2;
-          opciones.y = 490;
-          question.addChild(opciones);
-        } else if (this.preguntas[i].tipo = 'imagen') {
-          text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
-          text.x = 0;
-          text.y = 140;
-          question.addChild(text);
-          v = this.createBitmap(this.preguntas[i].opcionUno, this.preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2 + 30, 'mc');
-          v.scaleX = v.scaleY = 0.3;
-          question.addChild(v);
-          this.addToLibrary(v);
-          v = this.createBitmap(this.preguntas[i].opcionDos, this.preguntas[i].opcionDos, (stageSize.w / 4) * 3, stageSize.h / 2 + 30, 'mc');
-          v.scaleX = v.scaleY = 0.3;
-          question.addChild(v);
-          this.addToLibrary(v);
-        }
+      if (this.preguntas[i].tipo === 'texto') {
+        v = this.createBitmap(this.preguntas[i].imagen, this.preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2 + 30, 'mc');
+        v.scaleX = v.scaleY = 0.5;
+        question.addChild(v);
+        this.addToLibrary(v);
+        text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
+        text.name = 'titulo';
+        text.x = stageSize.w / 2;
+        text.y = 140;
+        text.textAlign = 'center';
+        question.addChild(text);
+        this.addToLibrary(text);
+        opciones = new createjs.Container();
+        uno = new ClickableText(this.preguntas[i].opcionUno, this.preguntas[i].opcionUno, i, 0, 0);
+        opciones.addChild(uno);
+        this.addToLibrary(uno);
+        diagonal = new createjs.Text(' / ', '24px Arial', '#333');
+        diagonal.name = 'diagonal';
+        diagonal.x = uno.x + uno.width;
+        diagonal.y = 0;
+        opciones.addChild(diagonal);
+        this.addToLibrary(diagonal);
+        dos = new ClickableText(this.preguntas[i].opcionDos, this.preguntas[i].opcionDos, i, diagonal.x + 24, 0);
+        opciones.addChild(dos);
+        this.addToLibrary(dos);
+        total = uno.width + dos.width + 20;
+        opciones.x = stageSize.w / 2 - total / 2;
+        opciones.y = 490;
+        question.addChild(opciones);
+      } else if (this.preguntas[i].tipo = 'imagen') {
+        text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
+        text.name = 'titulo';
+        text.x = 200;
+        text.y = 140;
+        question.addChild(text);
+        this.addToLibrary(text);
+        v = this.createBitmap(this.preguntas[i].opcionUno, this.preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2 + 30, 'mc');
+        v.scaleX = v.scaleY = 0.3;
+        question.addChild(v);
+        this.addToLibrary(v);
+        v = this.createBitmap(this.preguntas[i].opcionDos, this.preguntas[i].opcionDos, (stageSize.w / 4) * 3, stageSize.h / 2 + 30, 'mc');
+        v.scaleX = v.scaleY = 0.3;
+        question.addChild(v);
+        this.addToLibrary(v);
       }
       this.addToMain(question);
       return this;
@@ -431,17 +435,70 @@
       });
     };
 
-    U4A6.prototype.setClick = function() {
-      this.library['opcionUno'].addEventListener('click', this.evaluateAnswer);
-      this.library['opcionDos'].addEventListener('click', this.evaluateAnswer);
+    U4A6.prototype.setClick = function(i) {
+      if (this.preguntas[i].tipo = 'texto') {
+        this.library[this.preguntas[i].opcionUno].index = 'opcionUno';
+        this.library[this.preguntas[i].opcionDos].index = 'opcionDos';
+        this.library[this.preguntas[i].opcionUno].addEventListener('click', this.evaluateAnswer);
+        this.library[this.preguntas[i].opcionDos].addEventListener('click', this.evaluateAnswer);
+      } else if (this.preguntas[i].tipo = 'imagen') {
+        this.library[this.preguntas[i].opcionUno] === this.preguntas.index;
+        this.library[this.preguntas[i].opcionDos] === this.preguntas.index;
+        this.library[this.preguntas[i].opcionUno].addEventListener('click', evaluateAnswer);
+        this.library[preguntas[i].opcionDos].addEventListener('click', evaluateAnswer);
+      }
       return this;
     };
 
     U4A6.prototype.evaluateAnswer = function(e) {
       this.answer = e.target;
-      if (this.answer.name === this.preguntas[this.index].respuesta) {
+      if (this.answer.index === this.preguntas[this.index].respuesta) {
         createjs.Sound.play('good');
-        return this.library['score'].plusOne();
+        this.library['score'].plusOne();
+        if (this.preguntas[this.index].tipo = 'texto') {
+          TweenLite.to(this.library[this.preguntas[this.index].opcionUno], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut
+          });
+          TweenLite.to(this.library[this.preguntas[this.index].opcionDos], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut
+          });
+          TweenLite.to(this.library['titulo'], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut
+          });
+          TweenLite.to(this.library['diagonal'], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut
+          });
+          return TweenLite.to(this.library[this.preguntas[this.index].imagen], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut,
+            onComplete: this.nextEvaluation
+          });
+        } else if (this.preguntas[this.index].tipo = 'imagen') {
+          TweenLite.to(this.library[this.preguntas[this.index].pregunta], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut
+          });
+          TweenLite.to(this.library[this.preguntas[this.index].opcionDos], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut
+          });
+          return TweenLite.to(this.library[this.preguntas[this.index].opcionUno], 0.5, {
+            alpha: 0,
+            y: stageSize.h,
+            ease: Back.easeOut
+          });
+        }
       } else {
         return this.warning();
       }
@@ -459,19 +516,18 @@
 
     U4A6.prototype.nextEvaluation = function() {
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
-      } else {
-        return this.finish();
+      this.setQuestion(this.index);
+      this.library['score'].updateCount(this.index);
+      if (this.preguntas[this.index].tipo = 'texto') {
+        this.library[this.preguntas[this.index].opcionUno].index = 'opcionUno';
+        this.library[this.preguntas[this.index].opcionDos].index = 'opcionDos';
+        this.library[this.preguntas[this.index].opcionUno].addEventListener('click', this.evaluateAnswer);
+        return this.library[this.preguntas[this.index].opcionDos].addEventListener('click', this.evaluateAnswer);
+      } else if (this.preguntas[this.index].tipo = 'imagen') {
+        this.library[this.preguntas[this.index].opcionUno] === this.preguntas.index;
+        this.library[this.preguntas[this.index].opcionDos] === this.preguntas.index;
+        this.library[this.preguntas[this.index].opcionUno].addEventListener('click', evaluateAnswer);
+        return this.library[preguntas[this.index].opcionDos].addEventListener('click', evaluateAnswer);
       }
     };
 
@@ -480,13 +536,7 @@
     };
 
     U4A6.prototype.finish = function() {
-      var i, _i, _results;
-      U4A6.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U4A6.__super__.finish.apply(this, arguments);
     };
 
     window.U4A6 = U4A6;
