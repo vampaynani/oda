@@ -189,29 +189,22 @@ class U4A6 extends Oda
 			createjs.Sound.play 'good'
 			@library['score'].plusOne()
 
-			if @preguntas[@index].tipo = 'texto'
-			
+			if @preguntas[@index].tipo = 'texto'			
 				TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
 				TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
 				TweenLite.to @library['titulo'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
 				TweenLite.to @library['diagonal'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}				
-				TweenLite.to @library[@preguntas[@index].imagen], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
-			
+				TweenLite.to @library[@preguntas[@index].imagen], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}			
 			else if @preguntas[@index].tipo = 'imagen'
-				TweenLite.to @library[@preguntas[@index].pregunta], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
 				TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
 				TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
-
 		else
 			@warning()
 
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
 	nextEvaluation: =>
 		@index++		
 		@setQuestion(@index)
-
 		@library['score'].updateCount( @index )
 		if @preguntas[@index].tipo = 'texto'
 			@library[@preguntas[@index].opcionUno].index = 'opcionUno'
@@ -227,5 +220,6 @@ class U4A6 extends Oda
 		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
-		
+		for i in [1..6] by 1
+			@library['name'+i].blink on
 	window.U4A6 = U4A6

@@ -483,11 +483,6 @@
             onComplete: this.nextEvaluation
           });
         } else if (this.preguntas[this.index].tipo = 'imagen') {
-          TweenLite.to(this.library[this.preguntas[this.index].pregunta], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut
-          });
           TweenLite.to(this.library[this.preguntas[this.index].opcionDos], 0.5, {
             alpha: 0,
             y: stageSize.h,
@@ -504,15 +499,7 @@
       }
     };
 
-    U4A6.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
-    };
+    U4A6.prototype.finishEvaluation = function() {};
 
     U4A6.prototype.nextEvaluation = function() {
       this.index++;
@@ -536,7 +523,13 @@
     };
 
     U4A6.prototype.finish = function() {
-      return U4A6.__super__.finish.apply(this, arguments);
+      var i, _i, _results;
+      U4A6.__super__.finish.apply(this, arguments);
+      _results = [];
+      for (i = _i = 1; _i <= 6; i = _i += 1) {
+        _results.push(this.library['name' + i].blink(true));
+      }
+      return _results;
     };
 
     window.U4A6 = U4A6;
