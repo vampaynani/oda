@@ -13,6 +13,7 @@
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.initDraw = __bind(this.initDraw, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -71,21 +72,15 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
           src: 'sounds/TU2_U4_A2_instructions.mp3',
           id: 'instructions'
         }
       ];
+      this.letters = [['g', 'i', 'a', 'n', 't', 'p', 'a', 'n', 'd', 'a'], ['p', 's', 'e', 'a', 't', 'u', 'r', 't', 'l', 'e'], ['o', 'u', 's', 'q', 'f', 'a', 't', 'y', 'i', 'j'], ['l', 'g', 'e', 'x', 'k', 'e', 'j', 'd', 'o', 'a'], ['a', 'e', 'd', 'o', 'l', 'p', 'h', 'i', 'n', 'g'], ['r', 'a', 'n', 'h', 'y', 'j', 'i', 'n', 'b', 'u'], ['b', 'g', 'o', 'r', 'i', 'l', 'l', 'a', 't', 'a'], ['e', 'l', 'k', 'd', 'o', 'z', 'p', 'l', 'n', 'r'], ['a', 'e', 'o', 'f', 'e', 'a', 'd', 'o', 'f', 'l'], ['r', 'b', 'l', 'u', 'e', 'w', 'h', 'a', 'l', 'e']];
       this.answers = [];
-      this.linea1 = ['g', 'i', 'a', 'n', 't', 'p', 'a', 'n', 'd', 'a'];
-      this.linea2 = ['p', 's', 'e', 'a', 't', 'u', 'r', 't', 'l', 'e'];
-      this.linea3 = ['o', 'u', 's', 'q', 'f', 'a', 't', 'y', 'i', 'j'];
-      this.linea4 = ['l', 'g', 'e', 'x', 'k', 'e', 'j', 'd', 'o', 'a'];
-      this.linea5 = ['a', 'e', 'd', 'o', 'l', 'p', 'h', 'i', 'n', 'g'];
-      this.linea6 = ['r', 'a', 'n', 'h', 'y', 'j', 'i', 'n', 'b', 'u'];
-      this.linea7 = ['b', 'g', 'o', 'r', 'i', 'l', 'l', 'a', 't', 'a'];
-      this.linea8 = ['e', 'l', 'k', 'd', 'o', 'z', 'p', 'l', 'n', 'r'];
-      this.linea9 = ['a', 'e', 'o', 'f', 'e', 'a', 'd', 'o', 'f', 'l'];
-      this.linea10 = ['r', 'b', 'l', 'u', 'e', 'w', 'h', 'a', 'l', 'e'];
       U4A2.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -111,48 +106,56 @@
     };
 
     U4A2.prototype.setSopa = function() {
-      var h, i, letra, sopa, _i, _j;
+      var h, i, letra, sopa, _i, _j, _ref, _ref1;
+      this.shapeCanvas = new createjs.Shape();
       sopa = new createjs.Container();
       sopa.x = 297;
       sopa.y = 148;
-      for (h = _i = 0; _i <= 9; h = ++_i) {
-        for (i = _j = 0; _j <= 9; i = ++_j) {
-          letra = new createjs.Text(this['linea' + (h + 1)][i], '20px Arial', '#333');
-          letra.x = i * 26;
-          letra.y = h * 26;
+      sopa.name = 'sopa';
+      for (h = _i = 0, _ref = this.letters.length - 1; _i <= _ref; h = _i += 1) {
+        for (i = _j = 0, _ref1 = this.letters[h].length - 1; _j <= _ref1; i = _j += 1) {
+          letra = new ClickableText(this.letters[h][i], this.letters[h][i], 'l#{h+i}', i * 26, h * 26);
+          letra.text.font = '20px Arial';
+          letra.text.textAlign = 'center';
           sopa.addChild(letra);
         }
       }
+      sopa.addChild(this.shapeCanvas);
       this.addToMain(sopa);
       return this;
     };
 
     U4A2.prototype.introEvaluation = function() {
-      return U4A2.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
+      U4A2.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      TweenLite.from(this.library['sopa'], 1, {
+        alpha: 0,
+        y: this.library['sopa'].y - 20,
+        delay: 0.5,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
+      return TweenMax.allFrom([this.library['bluewhale'], this.library['dolphin'], this.library['eagle'], this.library['giantpanda'], this.library['gorilla'], this.library['jaguar'], this.library['lion'], this.library['seaturttle'], this.library['polarbear']], 1, {
+        alpha: 0,
+        delay: 1.5
+      }, 0.1);
     };
 
     U4A2.prototype.initEvaluation = function(e) {
       U4A2.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      this.shapeCanvas.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(20, 20, 100, 50, 10);
+      return this.mainContainer.addEventListener('mousedown', this.initDraw);
+    };
+
+    U4A2.prototype.initDraw = function(e) {
+      return console.log(e);
     };
 
     U4A2.prototype.evaluateAnswer = function(e) {

@@ -22,7 +22,7 @@
       this.name = name;
       this.x = x;
       this.y = y;
-      this.text = new createjs.Text(text, '24px Arial', '#333');
+      this.text = new createjs.Text(text, '20px Arial', '#333');
       this.graphic = new createjs.Graphics().beginFill(bgcolor).drawRect(0, 0, w, h).beginStroke(stcolor).moveTo(0, h).lineTo(w, h);
       this.shape = new createjs.Shape(this.graphic);
       this.text.x = w / 2;
@@ -42,7 +42,7 @@
       TweenMax.killTweensOf(this);
       this.alpha = 1;
       if (state) {
-        return TweenMax.to(this, 0.2, {
+        return TweenMax.to(this, 0.5, {
           alpha: .2,
           repeat: -1,
           yoyo: true
