@@ -341,7 +341,7 @@
     };
 
     U2A2.prototype.repeat = function(e) {
-      return createjs.Sound.play(this.answers[this.index].id);
+      return createjs.Sound.play(this.phrase.id);
     };
 
     U2A2.prototype.shuffle = function(a) {

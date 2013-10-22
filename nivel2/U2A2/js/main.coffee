@@ -123,7 +123,7 @@ class U2A2 extends Oda
 		id = Math.floor Math.random() * possible.length
 		possible[id]
 	repeat: (e) =>
-		createjs.Sound.play @answers[@index].id
+		createjs.Sound.play @phrase.id
 	shuffle: (a) ->
 		for i in [a.length..1]
 			j = Math.floor Math.random() * ( i + 1 )
