@@ -305,7 +305,7 @@
     };
 
     U1A4.prototype.repeat = function(e) {
-      return createjs.Sound.play(this.answers[this.index].id);
+      return createjs.Sound.play(this.phrase.id);
     };
 
     U1A4.prototype.shuffle = function(a) {
