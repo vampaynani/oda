@@ -65,6 +65,30 @@
           id: '8',
           src: '8.png'
         }, {
+          id: '1b',
+          src: '1b.png'
+        }, {
+          id: '2b',
+          src: '2b.png'
+        }, {
+          id: '3b',
+          src: '3b.png'
+        }, {
+          id: '4b',
+          src: '4b.png'
+        }, {
+          id: '5b',
+          src: '5b.png'
+        }, {
+          id: '6b',
+          src: '6b.png'
+        }, {
+          id: '7b',
+          src: '7b.png'
+        }, {
+          id: '8b',
+          src: '8b.png'
+        }, {
           id: 'btn',
           src: 'btn.png'
         }
@@ -104,74 +128,56 @@
           opcionDos: 'snake'
         }
       ];
-      this.positions = [
-        {
-          x: '231',
-          y: '260'
-        }, {
-          x: '455',
-          y: '261'
-        }, {
-          x: '226',
-          y: '475'
-        }, {
-          x: '450',
-          y: '473'
-        }, {
-          x: '231',
-          y: '260'
-        }, {
-          x: '455',
-          y: '261'
-        }, {
-          x: '226',
-          y: '475'
-        }, {
-          x: '450',
-          y: '473'
-        }, {
-          x: '',
-          y: ''
-        }, {
-          x: '',
-          y: ''
-        }, {
-          x: '',
-          y: ''
-        }, {
-          x: '',
-          y: ''
-        }
-      ];
+      this.positions = {
+        p1: [
+          {
+            x: '231',
+            y: '260'
+          }, {
+            x: '465',
+            y: '271'
+          }, {
+            x: '236',
+            y: '475'
+          }, {
+            x: '450',
+            y: '473'
+          }, {
+            x: '231',
+            y: '260'
+          }, {
+            x: '455',
+            y: '261'
+          }, {
+            x: '226',
+            y: '475'
+          }, {
+            x: '450',
+            y: '473'
+          }
+        ]
+      };
       this.texto = {
         t1: [
           {
-            uno: "Outside it's snowing hard!",
-            dos: ''
+            uno: "Outside it's snowing hard!"
           }, {
-            uno: 'She is watching ',
-            dos: 'the weather report on TV'
+            uno: 'She is watching the weather report on TV'
           }, {
-            uno: 'He is drinking hot chocolate',
-            dos: 'and petting his dog, Bo.'
+            uno: 'He is drinking hot chocolate and petting his dog, Bo.'
           }, {
-            uno: "Its windy and cold,",
-            dos: "but it isn't snowing"
+            uno: "Its windy and cold, but it isn't snowing"
           }
         ],
         t2: [
           {
-            uno: "Phil and Bo sit in the living room.",
-            dos: ''
+            uno: "Phil and Bo sit in the living room."
           }, {
-            uno: 'He puts on his snow',
-            dos: 'pants, sweater, coat and boats.'
+            uno: 'He puts on his snow pants, sweater, coat and boats.'
           }, {
-            uno: 'Phil jumps up and',
-            dos: 'down and claps his hands.'
+            uno: 'Phil jumps up and down and claps his hands.'
           }, {
-            uno: "Phil calls his friend Jack on the phone",
-            dos: ''
+            uno: "Phil calls his friend Jack on the phone"
           }
         ]
       };
@@ -189,15 +195,24 @@
     };
 
     U5A5.prototype.setCuento = function() {
-      var cuento, i, m, text, _i;
+      var cuento, i, m, text, _i, _j, _k, _l;
       cuento = new createjs.Container();
       for (i = _i = 1; _i <= 4; i = ++_i) {
-        m = this.createBitmap(i, i, this.positions[i - 1].x, this.positions[i - 1].y, 'mc');
+        m = this.createSprite(i + 'imagen', [i, i + 'b'], null, this.positions.p1[i - 1].x, this.positions.p1[i - 1].y, 'mc');
         cuento.addChild(m);
         this.addToLibrary(m);
+      }
+      for (i = _j = 1; _j <= 4; i = ++_j) {
         text = new DraggableText(this.texto.t1[i - 1].uno, this.texto.t1[i - 1].uno, i, 620, (i * 60) + 200);
         cuento.addChild(text);
-        text = new DraggableText(this.texto.t1[i - 1].dos, this.texto.t1[i - 1].dos, i, 620, (i * 60) + 215);
+      }
+      for (i = _k = 5; _k <= 8; i = ++_k) {
+        m = this.createSprite(i + 'imagen', [i, i + 'b'], null, this.positions.p1[i - 1].x, this.positions.p1[i - 1].y, 'mc');
+        cuento.addChild(m);
+        this.addToLibrary(m);
+      }
+      for (i = _l = 1; _l <= 4; i = ++_l) {
+        text = new DraggableText(this.texto.t2[i - 1].uno, this.texto.t2[i - 1].uno, i, 620, (i * 60) + 200);
         cuento.addChild(text);
       }
       this.addToMain(cuento);
