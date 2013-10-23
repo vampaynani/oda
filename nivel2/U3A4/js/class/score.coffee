@@ -34,4 +34,6 @@ class Score
 		@updateCount @counter
 	updateCount: (txt)->
 		@txtCount.text = txt
+	updateTotal: (txt)->
+		@txtTotal.text = txt
 	window.Score = Score

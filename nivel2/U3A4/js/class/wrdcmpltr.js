@@ -3,37 +3,44 @@
   var WordCompleter;
 
   WordCompleter = (function() {
-    function WordCompleter(name, text, label, bgcolor, stcolor, x, y, w, h) {
+    function WordCompleter(name, after_label, text, before_label, bgcolor, stcolor, x, y, w, h) {
       if (w == null) {
         w = 100;
       }
       if (h == null) {
         h = 20;
       }
-      this.initialize(name, text, label, bgcolor, stcolor, x, y, w, h);
+      this.initialize(name, after_label, text, before_label, bgcolor, stcolor, x, y, w, h);
     }
 
     WordCompleter.prototype = new createjs.Container();
 
     WordCompleter.prototype.Container_initialize = WordCompleter.prototype.initialize;
 
-    WordCompleter.prototype.initialize = function(name, text, label, bgcolor, stcolor, x, y, w, h) {
+    WordCompleter.prototype.initialize = function(name, after_label, text, before_label, bgcolor, stcolor, x, y, w, h) {
       this.Container_initialize();
       this.name = name;
       this.x = x;
       this.y = y;
-      this.label = new createjs.Text(label, '26px Arial', '#333');
-      this.label.x = w + 10;
+      this.alabel = new createjs.Text(after_label, '26px Arial', '#333');
       this.text = new createjs.Text(text, '26px Arial', '#333');
+      this.blabel = new createjs.Text(before_label, '26px Arial', '#333');
       this.graphic = new createjs.Graphics().beginFill(bgcolor).drawRect(0, 0, w, h).beginStroke(stcolor).moveTo(0, h).lineTo(w, h);
       this.shape = new createjs.Shape(this.graphic);
       this.text.textAlign = 'center';
-      this.text.x = w / 2;
-      this.addChild(this.shape, this.text, this.label);
+      this.shape.x = this.alabel.getMeasuredWidth();
+      this.text.x = this.alabel.getMeasuredWidth() + w / 2;
+      this.blabel.x = this.alabel.getMeasuredWidth() + w;
+      this.width = this.alabel.getMeasuredWidth() + w + this.blabel.getMeasuredWidth();
+      this.addChild(this.shape, this.alabel, this.text, this.blabel);
       return false;
     };
 
-    WordCompleter.prototype.changeLabel = function(text) {
+    WordCompleter.prototype.changeAfterLabel = function(text) {
+      return this.label.text = text;
+    };
+
+    WordCompleter.prototype.changeBeforeLabel = function(text) {
       return this.label.text = text;
     };
 

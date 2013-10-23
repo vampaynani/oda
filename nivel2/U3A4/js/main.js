@@ -11,7 +11,9 @@
     function U3A4() {
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
-      this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.evaluateAnswer3 = __bind(this.evaluateAnswer3, this);
+      this.evaluateAnswer2 = __bind(this.evaluateAnswer2, this);
+      this.evaluateAnswer1 = __bind(this.evaluateAnswer1, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -221,7 +223,57 @@
           id: 'instructions'
         }
       ];
-      this.answers = [];
+      this.answers = [
+        {
+          a1: 0,
+          a2: 3,
+          a3: 12
+        }, {
+          a1: 0,
+          a2: 7,
+          a3: 11
+        }, {
+          a1: 0,
+          a2: 7,
+          a3: 10
+        }, {
+          a1: 0,
+          a2: 7,
+          a3: 9
+        }, {
+          a1: 2,
+          a2: 6,
+          a3: 12
+        }, {
+          a1: 2,
+          a2: 6,
+          a3: 11
+        }, {
+          a1: 2,
+          a2: 6,
+          a3: 10
+        }, {
+          a1: 2,
+          a2: 5,
+          a3: 9
+        }, {
+          a1: 1,
+          a2: 5,
+          a3: 12
+        }, {
+          a1: 1,
+          a2: 8,
+          a3: 11
+        }, {
+          a1: 1,
+          a2: 5,
+          a3: 10
+        }, {
+          a1: 1,
+          a2: 6,
+          a3: 9
+        }
+      ];
       U3A4.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -230,13 +282,13 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
-      return this.setDropper().setClouds().setFaces().setTable().introEvaluation();
+      return this.setDropper().setClouds(1).setFaces().setTable(3).introEvaluation();
     };
 
     U3A4.prototype.setDropper = function() {
-      this.addToMain(new WordCompleter('dropper', '', '', '#FFF', '#F59743', 170, 541, 188, 30));
-      this.addToMain(new WordCompleter('dropper', '', '', '#FFF', '#F59743', 373, 541, 158, 30));
-      this.addToMain(new WordCompleter('dropper', '', '', '#FFF', '#F59743', 544, 541, 136, 30));
+      this.addToMain(new WordContainer('dropper1', '', '#FFF', '#F59743', 170, 541, 188, 30));
+      this.addToMain(new WordContainer('dropper2', '', '#FFF', '#F59743', 373, 541, 158, 30));
+      this.addToMain(new WordContainer('dropper3', '', '#FFF', '#F59743', 544, 541, 136, 30));
       return this;
     };
 
@@ -267,9 +319,9 @@
       t5n2 = new DraggableText('t5n2', "love", 7, 188, 98);
       t6n2 = new DraggableText('t6n2', "loves", 8, 23, 75);
       t1n3 = new DraggableText('t1n3', "Tomatoes", 9, 32, 23);
-      t2n3 = new DraggableText('t2n3', "Broccoli", 9, 92, 48);
-      t3n3 = new DraggableText('t3n3', "fish", 9, 23, 67);
-      t4n3 = new DraggableText('t4n3', "lettuce", 9, 85, 87);
+      t2n3 = new DraggableText('t2n3', "Broccoli", 10, 92, 48);
+      t3n3 = new DraggableText('t3n3', "fish", 11, 23, 67);
+      t4n3 = new DraggableText('t4n3', "lettuce", 12, 85, 87);
       nube1.addChild(n1, t1n1, t2n1, t3n1);
       nube2.addChild(n2, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2);
       nube3.addChild(n3, t1n3, t2n3, t3n3, t4n3);
@@ -291,29 +343,28 @@
       return this;
     };
 
-    U3A4.prototype.setTable = function() {
-      var i, smiley, smileys, table, _i, _j, _k;
+    U3A4.prototype.setTable = function(table) {
+      var i, smiley, smileys, _i, _j, _k;
       smileys = new createjs.Container();
       smileys.x = 246;
       smileys.y = 174;
       smileys.name = 'smileys';
-      table = 3;
-      this.insertBitmap('table' + table + 'food1', 'table' + table + 'food1', 298, 171, 'bc');
-      this.insertBitmap('table' + table + 'food2', 'table' + table + 'food2', 429, 171, 'bc');
-      this.insertBitmap('table' + table + 'food3', 'table' + table + 'food3', 558, 171, 'bc');
-      this.insertBitmap('table' + table + 'food4', 'table' + table + 'food4', 690, 171, 'bc');
+      this.insertBitmap("table" + table + "food1", "table" + table + "food1", 298, 171, 'bc');
+      this.insertBitmap("table" + table + "food2", "table" + table + "food2", 429, 171, 'bc');
+      this.insertBitmap("table" + table + "food3", "table" + table + "food3", 558, 171, 'bc');
+      this.insertBitmap("table" + table + "food4", "table" + table + "food4", 690, 171, 'bc');
       for (i = _i = 0; _i <= 3; i = ++_i) {
-        smiley = this.createBitmap('Table' + table + 'num' + (i + 1), 'Table' + table + 'num' + (i + 1), i * 130, 0);
+        smiley = this.createBitmap("Table" + table + "num" + (i + 1), "Table" + table + "num" + (i + 1), i * 130, 0);
         smileys.addChild(smiley);
         this.addToLibrary(smiley);
       }
       for (i = _j = 0; _j <= 3; i = ++_j) {
-        smiley = this.createBitmap('Table' + table + 'num' + (i + 5), 'Table' + table + 'num' + (i + 5), i * 130, 58);
+        smiley = this.createBitmap("Table" + table + "num" + (i + 5), "Table" + table + "num" + (i + 5), i * 130, 58);
         smileys.addChild(smiley);
         this.addToLibrary(smiley);
       }
       for (i = _k = 0; _k <= 3; i = ++_k) {
-        smiley = this.createBitmap('Table' + table + 'num' + (i + 9), 'Table' + table + 'num' + (i + 9), i * 130, 116);
+        smiley = this.createBitmap("Table" + table + "num" + (i + 9), "Table" + table + "num" + (i + 9), i * 130, 116);
         smileys.addChild(smiley);
         this.addToLibrary(smiley);
       }
@@ -322,24 +373,28 @@
     };
 
     U3A4.prototype.introEvaluation = function() {
+      var i, _i, _j, _k;
       U3A4.__super__.introEvaluation.apply(this, arguments);
+      for (i = _i = 1; _i <= 3; i = _i += 1) {
+        this.observer.subscribe('init_evaluation', this.library["t" + i + "n1"].onInitEvaluation);
+      }
+      for (i = _j = 1; _j <= 6; i = _j += 1) {
+        this.observer.subscribe('init_evaluation', this.library["t" + i + "n2"].onInitEvaluation);
+      }
+      for (i = _k = 1; _k <= 4; i = _k += 1) {
+        this.observer.subscribe('init_evaluation', this.library["t" + i + "n3"].onInitEvaluation);
+      }
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
       });
       TweenLite.from(this.library['instructions'], 1, {
         alpha: 0,
         x: 0,
-        delay: 0.5
-      });
-      TweenLite.from(this.library['dropper'], 1, {
-        alpha: 0,
-        x: this.library['dropper'].x + 50,
-        ease: Quart.easeOut,
-        delay: 3,
+        delay: 0.5,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
       });
-      return TweenMax.allFrom([this.library['nube1'], this.library['nube2'], this.library['nube3'], this.library['nube4']], 1, {
+      return TweenMax.allFrom([this.library['nube1'], this.library['nube2'], this.library['nube3']], 1, {
         alpha: 0,
         y: stageSize.h,
         delay: 2
@@ -350,54 +405,106 @@
       var i, _i, _results;
       U3A4.__super__.initEvaluation.apply(this, arguments);
       _results = [];
-      for (i = _i = 0; _i <= 3; i = _i += 1) {
-        _results.push(this.library['tn' + i].addEventListener('drop', this.evaluateAnswer));
+      for (i = _i = 1; _i <= 3; i = _i += 1) {
+        _results.push(this.library["t" + i + "n1"].addEventListener('drop', this.evaluateAnswer1));
+      }
+      return _results;
+      /*
+      		for i in [1..6] by 1
+      			@library["t#{i}n2"].addEventListener 'drop', @evaluateAnswer
+      		for i in [1..4] by 1
+      			@library["t#{i}n3"].addEventListener 'drop', @evaluateAnswer
+      */
+
+    };
+
+    U3A4.prototype.evaluateAnswer1 = function(e) {
+      var i, pt, _i, _j, _results;
+      this.answer = e.target;
+      _results = [];
+      for (i = _i = 1; _i <= 3; i = _i += 1) {
+        pt = this.library["dropper1"].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library["dropper1"].hitTest(pt.x, pt.y)) {
+          if (this.answer.index === this.answers[this.index].a1) {
+            this.answer.x = this.answer.pos.x;
+            this.answer.y = this.answer.pos.y;
+            this.library['dropper1'].changeText(this.answer.text.text);
+            for (i = _j = 1; _j <= 6; i = _j += 1) {
+              this.library["t" + i + "n2"].addEventListener('drop', this.evaluateAnswer2);
+            }
+            _results.push(false);
+          } else {
+            this.answer.returnToPlace();
+            _results.push(this.warning());
+          }
+        } else {
+          _results.push(this.answer.returnToPlace());
+        }
       }
       return _results;
     };
 
-    U3A4.prototype.evaluateAnswer = function(e) {
-      var pt;
+    U3A4.prototype.evaluateAnswer2 = function(e) {
+      var i, pt, _i, _j, _results;
       this.answer = e.target;
-      pt = this.library['dropper'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropper'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.x = this.answer.pos.x;
-          this.answer.y = this.answer.pos.y;
-          this.library['dropper'].changeText(this.answer.text.text);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+      _results = [];
+      for (i = _i = 1; _i <= 6; i = _i += 1) {
+        pt = this.library["dropper2"].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library["dropper2"].hitTest(pt.x, pt.y)) {
+          if (this.answer.index === this.answers[this.index].a2) {
+            this.answer.x = this.answer.pos.x;
+            this.answer.y = this.answer.pos.y;
+            this.library['dropper2'].changeText(this.answer.text.text);
+            for (i = _j = 1; _j <= 4; i = _j += 1) {
+              this.library["t" + i + "n3"].addEventListener('drop', this.evaluateAnswer3);
+            }
+            _results.push(false);
+          } else {
+            this.answer.returnToPlace();
+            _results.push(this.warning());
+          }
         } else {
-          this.answer.returnToPlace();
-          return this.warning();
+          _results.push(this.answer.returnToPlace());
         }
-      } else {
-        return this.answer.returnToPlace();
       }
+      return _results;
+    };
+
+    U3A4.prototype.evaluateAnswer3 = function(e) {
+      var i, pt, _i, _results;
+      this.answer = e.target;
+      _results = [];
+      for (i = _i = 1; _i <= 6; i = _i += 1) {
+        pt = this.library["dropper3"].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library["dropper3"].hitTest(pt.x, pt.y)) {
+          if (this.answer.index === this.answers[this.index].a3) {
+            this.answer.x = this.answer.pos.x;
+            this.answer.y = this.answer.pos.y;
+            this.library['dropper3'].changeText(this.answer.text.text);
+            _results.push(setTimeout(this.finishEvaluation, 1 * 1000));
+          } else {
+            this.answer.returnToPlace();
+            _results.push(this.warning());
+          }
+        } else {
+          _results.push(this.answer.returnToPlace());
+        }
+      }
+      return _results;
     };
 
     U3A4.prototype.finishEvaluation = function() {
       this.library['score'].plusOne();
       createjs.Sound.play('good');
-      return TweenLite.to(this.library['dropper'], 0.5, {
-        alpha: 0,
-        y: stageSize.h,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
+      return this.nextEvaluation();
     };
 
     U3A4.prototype.nextEvaluation = function() {
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['dropper'].y = 525;
-        this.library['dropper'].x = 150 + 50;
-        this.library['dropper'].changeText('');
-        this.library['dropper'].changeLabel(this.answers[this.index].text);
-        return TweenLite.to(this.library['dropper'], 0.5, {
-          alpha: 1,
-          x: 150,
-          ease: Quart.easeOut
-        });
+        this.library['dropper1'].changeText('');
+        this.library['dropper2'].changeText('');
+        return this.library['dropper3'].changeText('');
       } else {
         return this.finish();
       }
