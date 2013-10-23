@@ -12,7 +12,8 @@
       this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
-      this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.evaluateRows = __bind(this.evaluateRows, this);
+      this.evaluateClick = __bind(this.evaluateClick, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -110,9 +111,6 @@
           id: 'lion',
           src: 'lion.png'
         }, {
-          id: 'list',
-          src: 'list.txt'
-        }, {
           id: 'monkey',
           src: 'monkey.png'
         }, {
@@ -146,7 +144,7 @@
           id: 'scales',
           src: 'scales.png'
         }, {
-          id: 'sea-turtle',
+          id: 'seaturtle',
           src: 'sea-turtle.png'
         }, {
           id: 'shark',
@@ -179,131 +177,130 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
           src: 'sounds/TU2_U4_A1_instructions.mp3',
           id: 'instructions'
         }, {
-          id: 'beakSound',
+          id: 'beak',
           src: 'sounds/beak.mp3'
         }, {
-          id: 'bearSound',
+          id: 'bear',
           src: 'sounds/bear.mp3'
         }, {
-          id: 'camelSound',
+          id: 'camel',
           src: 'sounds/camel.mp3'
         }, {
-          id: 'chimpanzeeSound',
+          id: 'chimpanzee',
           src: 'sounds/chimpanzee.mp3'
         }, {
-          id: 'clawsSound',
+          id: 'claws',
           src: 'sounds/claws.mp3'
         }, {
-          id: 'crocodileSound',
+          id: 'crocodile',
           src: 'sounds/crocodile.mp3'
         }, {
-          id: 'dolphinSound',
+          id: 'dolphin',
           src: 'sounds/dolphin.mp3'
         }, {
-          id: 'eagleSound',
+          id: 'eagle',
           src: 'sounds/eagle.mp3'
         }, {
-          id: 'elephantSound',
+          id: 'elephant',
           src: 'sounds/elephant.mp3'
         }, {
-          id: 'feathersSound',
+          id: 'feathers',
           src: 'sounds/feathers.mp3'
         }, {
-          id: 'finsSound',
+          id: 'fins',
           src: 'sounds/fins.mp3'
         }, {
-          id: 'fishSound',
+          id: 'fish',
           src: 'sounds/fish.mp3'
         }, {
-          id: 'foxSound',
+          id: 'fox',
           src: 'sounds/fox.mp3'
         }, {
-          id: 'frogSound',
+          id: 'frog',
           src: 'sounds/frog.mp3'
         }, {
-          id: 'furSound',
+          id: 'fur',
           src: 'sounds/fur.mp3'
         }, {
-          id: 'giraffeSound',
+          id: 'giraffe',
           src: 'sounds/giraffe.mp3'
         }, {
-          id: 'gorillaSound',
+          id: 'gorilla',
           src: 'sounds/gorilla.mp3'
         }, {
-          id: 'jaguarSound',
+          id: 'jaguar',
           src: 'sounds/jaguar.mp3'
         }, {
-          id: 'lionSound',
+          id: 'lion',
           src: 'sounds/lion.mp3'
         }, {
-          id: 'listSound',
-          src: 'sounds/list.txt'
-        }, {
-          id: 'monkeySound',
+          id: 'monkey',
           src: 'sounds/monkey.mp3'
         }, {
-          id: 'octopusSound',
+          id: 'octopus',
           src: 'sounds/octopus.mp3'
         }, {
-          id: 'owlSound',
+          id: 'owl',
           src: 'sounds/owl.mp3'
         }, {
-          id: 'pandaSound',
+          id: 'panda',
           src: 'sounds/panda.mp3'
         }, {
-          id: 'parrotSound',
+          id: 'parrot',
           src: 'sounds/parrot.mp3'
         }, {
-          id: 'pawsSound',
+          id: 'paws',
           src: 'sounds/paws.mp3'
         }, {
-          id: 'penguinSound',
+          id: 'penguin',
           src: 'sounds/penguin.mp3'
         }, {
-          id: 'polarbearSound',
+          id: 'polarbear',
           src: 'sounds/polar-bear.mp3'
         }, {
-          id: 'pythonSound',
+          id: 'python',
           src: 'sounds/python.mp3'
         }, {
-          id: 'rhinoSound',
+          id: 'rhino',
           src: 'sounds/rhino.mp3'
         }, {
-          id: 'scalesSound',
+          id: 'scales',
           src: 'sounds/scales.mp3'
         }, {
-          id: 'sea-turtleSound',
+          id: 'seaturtle',
           src: 'sounds/sea-turtle.mp3'
         }, {
-          id: 'sharkSound',
+          id: 'shark',
           src: 'sounds/shark.mp3'
         }, {
-          id: 'snakeSound',
+          id: 'snake',
           src: 'sounds/snake.mp3'
         }, {
-          id: 'tailSound',
+          id: 'tail',
           src: 'sounds/tail.mp3'
         }, {
-          id: 'tigerSound',
+          id: 'tiger',
           src: 'sounds/tiger.mp3'
         }, {
-          id: 'whaleSound',
+          id: 'whale',
           src: 'sounds/whale.mp3'
         }, {
-          id: 'whiskersSound',
+          id: 'whiskers',
           src: 'sounds/whiskers.mp3'
         }, {
-          id: 'wingsSound',
+          id: 'wings',
           src: 'sounds/wings.mp3'
         }, {
-          id: 'zebraSound',
+          id: 'zebra',
           src: 'sounds/zebra.mp3'
         }
       ];
-      this.answers = [];
       this.animals = [
         {
           id: 'beak'
@@ -344,8 +341,6 @@
         }, {
           id: 'lion'
         }, {
-          id: 'list'
-        }, {
           id: 'monkey'
         }, {
           id: 'octopus'
@@ -368,7 +363,7 @@
         }, {
           id: 'scales'
         }, {
-          id: 'sea-turtle'
+          id: 'seaturtle'
         }, {
           id: 'shark'
         }, {
@@ -392,34 +387,46 @@
 
     U4A1.prototype.setStage = function() {
       U4A1.__super__.setStage.apply(this, arguments);
+      this.youcards = this.shuffleNoRepeat(this.animals, 9);
+      this.pccards = this.shuffleNoRepeat(this.animals, 9);
+      this.game = {
+        animals: this.shuffle(this.animals),
+        you: 0,
+        pc: 0
+      };
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.insertBitmap('scoreComputer', 'scoreComputer', 19, 463);
       this.insertBitmap('scoreYou', 'scoreYou', 19, 370);
       this.insertBitmap('repeatbtn', 'repeatbtn', 395, 536);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.insertText('pcCount', this.game.pc, '24px Arial', '#ffffff', 41, 487, 'center');
+      this.insertText('youCount', this.game.you, '24px Arial', '#ffffff', 41, 397, 'center');
       return this.setCardsYou().setCardsPc().introEvaluation();
     };
 
     U4A1.prototype.setCardsYou = function() {
-      var animal, borde, cartas, h, i, texto, _i, _j;
+      var a, b, carta, cartas, h, i, j, texto, _i, _j;
+      j = 0;
       cartas = new createjs.Container();
       cartas.x = 100;
       cartas.y = 145;
       cartas.name = 'cartas';
-      texto = new createjs.Text('You', '22px Arial', '#333');
-      texto.x = 150;
-      texto.y = -25;
+      texto = this.createText('', 'You', '22px Arial', '#333', 150, -25);
       cartas.addChild(texto);
       for (h = _i = 0; _i <= 2; h = ++_i) {
         for (i = _j = 0; _j <= 2; i = ++_j) {
-          borde = this.createSprite('borde', ['borde1', 'borde2', 'borde3'], null, i * 112, h * 130, 'tl');
-          cartas.addChild(borde);
-          this.addToLibrary(borde);
-          animal = this.createBitmap(this.animals[i].id, this.animals[i].id, i * 112, h * 130);
-          animal.scaleX = animal.scaleY = 0.36333;
-          cartas.addChild(animal);
-          this.addToLibrary(animal);
+          b = this.createSprite('borde', ['borde1', 'borde2', 'borde3'], null, 0, 0);
+          a = this.createBitmap('animal', this.youcards[j].id, 0, 0);
+          a.scaleX = a.scaleY = 0.36333;
+          carta = new createjs.Container();
+          carta.name = "cartay" + j;
+          carta.index = this.youcards[j].id;
+          carta.x = i * 112;
+          carta.y = h * 130;
+          carta.addChild(b, a);
+          cartas.addChild(carta);
+          this.addToLibrary(carta);
+          j++;
         }
       }
       this.addToMain(cartas);
@@ -427,24 +434,28 @@
     };
 
     U4A1.prototype.setCardsPc = function() {
-      var animal, borde, cartaspc, h, i, texto, _i, _j;
+      var a, b, carta, cartaspc, h, i, j, texto, _i, _j;
+      j = 0;
       cartaspc = new createjs.Container();
       cartaspc.x = 449;
       cartaspc.y = 145;
       cartaspc.name = 'cartaspc';
-      texto = new createjs.Text('Computer', '22px Arial', '#333');
-      texto.x = 117;
-      texto.y = -25;
+      texto = this.createText('', 'Computer', '22px Arial', '#333', 117, -25);
       cartaspc.addChild(texto);
       for (h = _i = 0; _i <= 2; h = ++_i) {
         for (i = _j = 0; _j <= 2; i = ++_j) {
-          borde = this.createSprite('borde', ['borde1', 'borde2', 'borde3'], null, i * 112, h * 130, 'tl');
-          cartaspc.addChild(borde);
-          this.addToLibrary(borde);
-          animal = this.createBitmap(this.animals[i].id, this.animals[i].id, i * 112, h * 130);
-          animal.scaleX = animal.scaleY = 0.36333;
-          cartaspc.addChild(animal);
-          this.addToLibrary(animal);
+          b = this.createSprite('borde', ['borde1', 'borde2', 'borde3'], null, 0, 0);
+          a = this.createBitmap('animal', this.pccards[j].id, 0, 0);
+          a.scaleX = a.scaleY = 0.36333;
+          carta = new createjs.Container();
+          carta.name = "cartac" + j;
+          carta.index = this.pccards[j].id;
+          carta.x = i * 112;
+          carta.y = h * 130;
+          carta.addChild(b, a);
+          cartaspc.addChild(carta);
+          this.addToLibrary(carta);
+          j++;
         }
       }
       this.addToMain(cartaspc);
@@ -452,90 +463,129 @@
     };
 
     U4A1.prototype.introEvaluation = function() {
-      return U4A1.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
+      U4A1.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      TweenLite.from(this.library['cartas'], 1, {
+        alpha: 0,
+        y: this.library['cartas'].y - 50,
+        delay: 1
+      });
+      return TweenLite.from(this.library['cartaspc'], 1, {
+        alpha: 0,
+        y: this.library['cartaspc'].y - 50,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U4A1.prototype.initEvaluation = function(e) {
+      var i, _i;
       U4A1.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      for (i = _i = 0; _i <= 8; i = ++_i) {
+        this.library["cartay" + i].addEventListener('click', this.evaluateClick);
+      }
+      this.library['repeatbtn'].addEventListener('click', this.repeatSound);
+      createjs.Sound.play(this.game.animals[this.index].id);
+      return this.interval = setInterval(this.nextEvaluation, 5 * 1000);
     };
 
-    U4A1.prototype.evaluateAnswer = function(e) {
-      var pt;
+    U4A1.prototype.evaluateClick = function(e) {
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
-      } else {
-        return this.answer.returnToPlace();
+      if (this.answer.index === this.game.animals[this.index].id) {
+        this.game.you++;
+        this.library['youCount'].text = this.game.you;
+        this.answer.getChildByName('borde').currentFrame = 1;
+        return this.evaluateRows();
       }
     };
 
-    U4A1.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
+    U4A1.prototype.evaluateRows = function(e) {
+      if (this.library["cartay0"].getChildByName('borde').currentFrame === 1 && this.library["cartay1"].getChildByName('borde').currentFrame === 1 && this.library["cartay2"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartay3"].getChildByName('borde').currentFrame === 1 && this.library["cartay4"].getChildByName('borde').currentFrame === 1 && this.library["cartay5"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartay6"].getChildByName('borde').currentFrame === 1 && this.library["cartay7"].getChildByName('borde').currentFrame === 1 && this.library["cartay8"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartay0"].getChildByName('borde').currentFrame === 1 && this.library["cartay3"].getChildByName('borde').currentFrame === 1 && this.library["cartay6"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartay1"].getChildByName('borde').currentFrame === 1 && this.library["cartay4"].getChildByName('borde').currentFrame === 1 && this.library["cartay7"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartay2"].getChildByName('borde').currentFrame === 1 && this.library["cartay5"].getChildByName('borde').currentFrame === 1 && this.library["cartay8"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartay0"].getChildByName('borde').currentFrame === 1 && this.library["cartay4"].getChildByName('borde').currentFrame === 1 && this.library["cartay8"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartay2"].getChildByName('borde').currentFrame === 1 && this.library["cartay4"].getChildByName('borde').currentFrame === 1 && this.library["cartay6"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac0"].getChildByName('borde').currentFrame === 1 && this.library["cartac1"].getChildByName('borde').currentFrame === 1 && this.library["cartac2"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac3"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac5"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac6"].getChildByName('borde').currentFrame === 1 && this.library["cartac7"].getChildByName('borde').currentFrame === 1 && this.library["cartac8"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac0"].getChildByName('borde').currentFrame === 1 && this.library["cartac3"].getChildByName('borde').currentFrame === 1 && this.library["cartac6"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac1"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac7"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac2"].getChildByName('borde').currentFrame === 1 && this.library["cartac5"].getChildByName('borde').currentFrame === 1 && this.library["cartac8"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac0"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac8"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      if (this.library["cartac2"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac6"].getChildByName('borde').currentFrame === 1) {
+        this.finish();
+      }
+      return this;
     };
 
+    U4A1.prototype.finishEvaluation = function() {};
+
     U4A1.prototype.nextEvaluation = function() {
+      var i, _i;
+      for (i = _i = 0; _i <= 8; i = ++_i) {
+        if (this.library["cartac" + i].index === this.game.animals[this.index].id) {
+          this.game.pc++;
+          this.library['pcCount'].text = this.game.pc;
+          this.library["cartac" + i].getChildByName('borde').currentFrame = 2;
+          this.evaluateRows();
+        }
+      }
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
+      if (this.index < this.game.animals.length) {
+        return createjs.Sound.play(this.game.animals[this.index].id);
       } else {
         return this.finish();
       }
     };
 
     U4A1.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
+      return createjs.Sound.play(this.game.animals[this.index].id);
     };
 
     U4A1.prototype.finish = function() {
-      var i, _i, _results;
       U4A1.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return clearInterval(this.interval);
     };
 
     window.U4A1 = U4A1;

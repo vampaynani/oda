@@ -33,7 +33,6 @@ class U4A1 extends Oda
 			{id: 'gorilla', src:'gorilla.png'}
 			{id: 'jaguar', src:'jaguar.png'}
 			{id: 'lion', src:'lion.png'}
-			{id: 'list', src:'list.txt'}
 			{id: 'monkey', src:'monkey.png'}
 			{id: 'octopus', src:'octopus.png'}
 			{id: 'owl', src:'owl.png'}
@@ -45,7 +44,7 @@ class U4A1 extends Oda
 			{id: 'python', src:'python.png'}
 			{id: 'rhino', src:'rhino.png'}
 			{id: 'scales', src:'scales.png'}
-			{id: 'sea-turtle', src:'sea-turtle.png'}
+			{id: 'seaturtle', src:'sea-turtle.png'}
 			{id: 'shark', src:'shark.png'}
 			{id: 'snake', src:'snake.png'}
 			{id: 'tail', src:'tail.png'}
@@ -57,52 +56,50 @@ class U4A1 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
+			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U4_A1_instructions.mp3', id:'instructions'}
-		    {id:'beakSound', src:'sounds/beak.mp3'}
-			{id:'bearSound', src:'sounds/bear.mp3'}
-			{id:'camelSound', src:'sounds/camel.mp3'}
-			{id:'chimpanzeeSound', src:'sounds/chimpanzee.mp3'}
-			{id:'clawsSound', src:'sounds/claws.mp3'}
-			{id:'crocodileSound', src:'sounds/crocodile.mp3'}
-			{id:'dolphinSound', src:'sounds/dolphin.mp3'}
-			{id:'eagleSound', src:'sounds/eagle.mp3'}
-			{id:'elephantSound', src:'sounds/elephant.mp3'}
-			{id:'feathersSound', src:'sounds/feathers.mp3'}
-			{id:'finsSound', src:'sounds/fins.mp3'}
-			{id:'fishSound', src:'sounds/fish.mp3'}
-			{id:'foxSound', src:'sounds/fox.mp3'}
-			{id:'frogSound', src:'sounds/frog.mp3'}
-			{id:'furSound', src:'sounds/fur.mp3'}
-			{id:'giraffeSound', src:'sounds/giraffe.mp3'}
-			{id:'gorillaSound', src:'sounds/gorilla.mp3'}
-			{id:'jaguarSound', src:'sounds/jaguar.mp3'}
-			{id:'lionSound', src:'sounds/lion.mp3'}
-			{id:'listSound', src:'sounds/list.txt'}
-			{id:'monkeySound', src:'sounds/monkey.mp3'}
-			{id:'octopusSound', src:'sounds/octopus.mp3'}
-			{id:'owlSound', src:'sounds/owl.mp3'}
-			{id:'pandaSound', src:'sounds/panda.mp3'}
-			{id:'parrotSound', src:'sounds/parrot.mp3'}
-			{id:'pawsSound', src:'sounds/paws.mp3'}
-			{id:'penguinSound', src:'sounds/penguin.mp3'}
-			{id:'polarbearSound', src:'sounds/polar-bear.mp3'}
-			{id:'pythonSound', src:'sounds/python.mp3'}
-			{id:'rhinoSound', src:'sounds/rhino.mp3'}
-			{id:'scalesSound', src:'sounds/scales.mp3'}
-			{id:'sea-turtleSound', src:'sounds/sea-turtle.mp3'}
-			{id:'sharkSound', src:'sounds/shark.mp3'}
-			{id:'snakeSound', src:'sounds/snake.mp3'}
-			{id:'tailSound', src:'sounds/tail.mp3'}
-			{id:'tigerSound', src:'sounds/tiger.mp3'}
-			{id:'whaleSound', src:'sounds/whale.mp3'}
-			{id:'whiskersSound', src:'sounds/whiskers.mp3'}
-			{id:'wingsSound', src:'sounds/wings.mp3'}
-			{id:'zebraSound', src:'sounds/zebra.mp3'}
-		]
-		@answers = [	
+		    {id:'beak', src:'sounds/beak.mp3'}
+			{id:'bear', src:'sounds/bear.mp3'}
+			{id:'camel', src:'sounds/camel.mp3'}
+			{id:'chimpanzee', src:'sounds/chimpanzee.mp3'}
+			{id:'claws', src:'sounds/claws.mp3'}
+			{id:'crocodile', src:'sounds/crocodile.mp3'}
+			{id:'dolphin', src:'sounds/dolphin.mp3'}
+			{id:'eagle', src:'sounds/eagle.mp3'}
+			{id:'elephant', src:'sounds/elephant.mp3'}
+			{id:'feathers', src:'sounds/feathers.mp3'}
+			{id:'fins', src:'sounds/fins.mp3'}
+			{id:'fish', src:'sounds/fish.mp3'}
+			{id:'fox', src:'sounds/fox.mp3'}
+			{id:'frog', src:'sounds/frog.mp3'}
+			{id:'fur', src:'sounds/fur.mp3'}
+			{id:'giraffe', src:'sounds/giraffe.mp3'}
+			{id:'gorilla', src:'sounds/gorilla.mp3'}
+			{id:'jaguar', src:'sounds/jaguar.mp3'}
+			{id:'lion', src:'sounds/lion.mp3'}
+			{id:'monkey', src:'sounds/monkey.mp3'}
+			{id:'octopus', src:'sounds/octopus.mp3'}
+			{id:'owl', src:'sounds/owl.mp3'}
+			{id:'panda', src:'sounds/panda.mp3'}
+			{id:'parrot', src:'sounds/parrot.mp3'}
+			{id:'paws', src:'sounds/paws.mp3'}
+			{id:'penguin', src:'sounds/penguin.mp3'}
+			{id:'polarbear', src:'sounds/polar-bear.mp3'}
+			{id:'python', src:'sounds/python.mp3'}
+			{id:'rhino', src:'sounds/rhino.mp3'}
+			{id:'scales', src:'sounds/scales.mp3'}
+			{id:'seaturtle', src:'sounds/sea-turtle.mp3'}
+			{id:'shark', src:'sounds/shark.mp3'}
+			{id:'snake', src:'sounds/snake.mp3'}
+			{id:'tail', src:'sounds/tail.mp3'}
+			{id:'tiger', src:'sounds/tiger.mp3'}
+			{id:'whale', src:'sounds/whale.mp3'}
+			{id:'whiskers', src:'sounds/whiskers.mp3'}
+			{id:'wings', src:'sounds/wings.mp3'}
+			{id:'zebra', src:'sounds/zebra.mp3'}
 		]
 		@animals = [
- 			{id: 'beak'}
+			{id: 'beak'}
 			{id: 'bear'}
 			{id: 'camel'}
 			{id: 'chimpanzee'}
@@ -121,7 +118,6 @@ class U4A1 extends Oda
 			{id: 'gorilla'}
 			{id: 'jaguar'}
 			{id: 'lion'}
-			{id: 'list'}
 			{id: 'monkey'}
 			{id: 'octopus'}
 			{id: 'owl'}
@@ -133,7 +129,7 @@ class U4A1 extends Oda
 			{id: 'python'}
 			{id: 'rhino'}
 			{id: 'scales'}
-			{id: 'sea-turtle'}
+			{id: 'seaturtle'}
 			{id: 'shark'}
 			{id: 'snake'}
 			{id: 'tail'}
@@ -146,102 +142,129 @@ class U4A1 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@youcards = @shuffleNoRepeat @animals, 9
+		@pccards = @shuffleNoRepeat @animals, 9
+		@game = {
+			animals: @shuffle @animals
+			you: 0
+			pc: 0
+		}
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'scoreComputer', 'scoreComputer', 19, 463
 		@insertBitmap 'scoreYou', 'scoreYou', 19, 370
 		@insertBitmap 'repeatbtn', 'repeatbtn', 395, 536
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@insertText 'pcCount',@game.pc,'24px Arial', '#ffffff',41,487,'center'
+		@insertText 'youCount',@game.you,'24px Arial', '#ffffff',41,397,'center'
 		@setCardsYou().setCardsPc().introEvaluation()
 	setCardsYou: ->
+		j = 0
 		cartas = new createjs.Container()
 		cartas.x = 100
 		cartas.y = 145
 		cartas.name = 'cartas'
-		texto = new createjs.Text 'You','22px Arial','#333'
-		texto.x = 150
-		texto.y = -25
+
+		texto = @createText '','You','22px Arial','#333',150,-25
 		cartas.addChild texto
+		
 		for h in [0..2]
 			for i in [0..2]
-				borde= @createSprite 'borde', ['borde1', 'borde2', 'borde3'], null, i*112, h*130, 'tl'
-				cartas.addChild borde 
-				@addToLibrary borde
-				animal = @createBitmap @animals[i].id, @animals[i].id, i*112, h*130
-				animal.scaleX = animal.scaleY = 0.36333
-				cartas.addChild animal
-				@addToLibrary animal
+				b = @createSprite 'borde', ['borde1', 'borde2', 'borde3'], null, 0, 0
+				a = @createBitmap 'animal', @youcards[j].id, 0, 0
+				a.scaleX = a.scaleY = 0.36333
+				carta = new createjs.Container()
+				carta.name = "cartay#{j}"
+				carta.index = @youcards[j].id
+				carta.x = i * 112
+				carta.y = h * 130
+				carta.addChild b, a
+				cartas.addChild carta
+				@addToLibrary carta
+				j++
+		
 		@addToMain cartas
 		@
 	setCardsPc: ->
+		j = 0
 		cartaspc = new createjs.Container()
 		cartaspc.x = 449
 		cartaspc.y = 145
 		cartaspc.name = 'cartaspc'
-		texto = new createjs.Text 'Computer','22px Arial','#333'
-		texto.x = 117
-		texto.y = -25
+		
+		texto = @createText '', 'Computer','22px Arial','#333', 117, -25
 		cartaspc.addChild texto
+		
 		for h in [0..2]
 			for i in [0..2]
-				borde= @createSprite 'borde', ['borde1', 'borde2', 'borde3'], null, i*112, h*130, 'tl'
-				cartaspc.addChild borde 
-				@addToLibrary borde
-				animal = @createBitmap @animals[i].id, @animals[i].id, i*112, h*130
-				animal.scaleX = animal.scaleY = 0.36333
-				cartaspc.addChild animal
-				@addToLibrary animal
+				b = @createSprite 'borde', ['borde1', 'borde2', 'borde3'], null, 0, 0
+				a = @createBitmap 'animal', @pccards[j].id, 0, 0
+				a.scaleX = a.scaleY = 0.36333
+				carta = new createjs.Container()
+				carta.name = "cartac#{j}"
+				carta.index = @pccards[j].id
+				carta.x = i * 112
+				carta.y = h * 130
+				carta.addChild b, a
+				cartaspc.addChild carta
+				@addToLibrary carta
+				j++
+
 		@addToMain cartaspc
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library['cartas'], 1, {alpha: 0, y: @library['cartas'].y - 50, delay: 1}
+		TweenLite.from @library['cartaspc'], 1, {alpha: 0, y: @library['cartaspc'].y - 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
-	evaluateAnswer: (e) =>
+		for i in [0..8]
+			@library["cartay#{i}"].addEventListener 'click', @evaluateClick
+		@library['repeatbtn'].addEventListener 'click', @repeatSound
+		createjs.Sound.play @game.animals[@index].id
+		@interval = setInterval @nextEvaluation, 5 * 1000
+	evaluateClick: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
+		if @answer.index is @game.animals[@index].id
+				@game.you++
+				@library['youCount'].text = @game.you
+				@answer.getChildByName('borde').currentFrame = 1
+				@evaluateRows()
+	evaluateRows: (e) =>
+		if @library["cartay0"].getChildByName('borde').currentFrame is 1 and @library["cartay1"].getChildByName('borde').currentFrame is 1 and @library["cartay2"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartay3"].getChildByName('borde').currentFrame is 1 and @library["cartay4"].getChildByName('borde').currentFrame is 1 and @library["cartay5"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartay6"].getChildByName('borde').currentFrame is 1 and @library["cartay7"].getChildByName('borde').currentFrame is 1 and @library["cartay8"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartay0"].getChildByName('borde').currentFrame is 1 and @library["cartay3"].getChildByName('borde').currentFrame is 1 and @library["cartay6"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartay1"].getChildByName('borde').currentFrame is 1 and @library["cartay4"].getChildByName('borde').currentFrame is 1 and @library["cartay7"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartay2"].getChildByName('borde').currentFrame is 1 and @library["cartay5"].getChildByName('borde').currentFrame is 1 and @library["cartay8"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartay0"].getChildByName('borde').currentFrame is 1 and @library["cartay4"].getChildByName('borde').currentFrame is 1 and @library["cartay8"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartay2"].getChildByName('borde').currentFrame is 1 and @library["cartay4"].getChildByName('borde').currentFrame is 1 and @library["cartay6"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac0"].getChildByName('borde').currentFrame is 1 and @library["cartac1"].getChildByName('borde').currentFrame is 1 and @library["cartac2"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac3"].getChildByName('borde').currentFrame is 1 and @library["cartac4"].getChildByName('borde').currentFrame is 1 and @library["cartac5"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac6"].getChildByName('borde').currentFrame is 1 and @library["cartac7"].getChildByName('borde').currentFrame is 1 and @library["cartac8"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac0"].getChildByName('borde').currentFrame is 1 and @library["cartac3"].getChildByName('borde').currentFrame is 1 and @library["cartac6"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac1"].getChildByName('borde').currentFrame is 1 and @library["cartac4"].getChildByName('borde').currentFrame is 1 and @library["cartac7"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac2"].getChildByName('borde').currentFrame is 1 and @library["cartac5"].getChildByName('borde').currentFrame is 1 and @library["cartac8"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac0"].getChildByName('borde').currentFrame is 1 and @library["cartac4"].getChildByName('borde').currentFrame is 1 and @library["cartac8"].getChildByName('borde').currentFrame is 1 then @finish()
+		if @library["cartac2"].getChildByName('borde').currentFrame is 1 and @library["cartac4"].getChildByName('borde').currentFrame is 1 and @library["cartac6"].getChildByName('borde').currentFrame is 1 then @finish()
+		@
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
 	nextEvaluation: =>
+		for i in [0..8]
+			if @library["cartac#{i}"].index is @game.animals[@index].id
+				@game.pc++
+				@library['pcCount'].text = @game.pc
+				@library["cartac#{i}"].getChildByName('borde').currentFrame = 2
+				@evaluateRows()
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		if @index < @game.animals.length
+			createjs.Sound.play @game.animals[@index].id
 		else
 			@finish()
 	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
+		createjs.Sound.play @game.animals[@index].id
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
+		clearInterval @interval
 	window.U4A1 = U4A1
