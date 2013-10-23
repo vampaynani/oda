@@ -397,13 +397,13 @@
       this.summer = {
         child1: ['summerchildjennifer', 'summerchildjenniferdress', 'summerchildjenniferglasses', 'summerchildjenniferhat', 'summerchildjennifershoes'],
         child2: ['summerchildtyler', 'summerchildtylerhat', 'summerchildtylershoes', 'summerchildtylershort'],
-        child3: ['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit', 'winterchildrachelbufanda'],
+        child3: ['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit'],
         child4: ['summerchildmike', 'summerchildmikeglasses', 'summerchildmikehat', 'summerchildmikeshirt', 'summerchildmikeshoes', 'summerchildmikeshort']
       };
       this.winter = {
         child1: ['winterchildjennifer', 'winterchildjenniferboots', 'winterchildjennifercoat', 'winterchildjenniferhat'],
         child2: ['winterchildtyler', 'winterchildtylerhat', 'winterchildtylerpants', 'winterchildtylersweater', 'winterchildtylertennis'],
-        child3: ['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt'],
+        child3: ['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt', 'winterchildrachelbufanda'],
         child4: ['winterchildmike', 'winterchildmikeboats', 'winterchildmikecoat', 'winterchildmikegloves', 'winterchildmikehat', 'winterchildmikejeans']
       };
       U5A4.__super__.constructor.call(this, null, manifest, sounds);
@@ -418,7 +418,7 @@
     };
 
     U5A4.prototype.setKids = function() {
-      var boton, estacion, fondo, i, ropa, ropas, todo, _i, _j, _k;
+      var boton, chico, estacion, fondo, i, ropa, ropas, todo, _i, _j, _k, _l, _m, _n, _o, _ref, _ref1, _ref2, _ref3;
       todo = new createjs.Container();
       todo.x = 0;
       todo.y = 150;
@@ -428,37 +428,37 @@
       fondo = this.createBitmap('bg', 'bg', 85, 150);
       todo.addChild(fondo);
       this.addToLibrary(fondo);
+      estacion = 'summer';
       for (i = _i = 1; _i <= 4; i = ++_i) {
         boton = this.createBitmap('repeatbtn', 'repeatbtn', i * 155, 200);
         todo.addChild(boton);
       }
-      this.insertBitmap('summerchildmike', 'summerchildmike', (4 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildmikeglasses', 'summerchildmikeglasses', (4 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildmikehat', 'summerchildmikehat', (4 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildmikeshirt', 'summerchildmikeshirt', (4 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildmikeshoes', 'summerchildmikeshoes', (4 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildmikeshort', 'summerchildmikeshort', (4 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildrachel', 'summerchildrachel', (3 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildrachelhat', 'summerchildrachelhat', (3 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildrachelshoes', 'summerchildrachelshoes', (3 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildrachelsuit', 'summerchildrachelsuit', (3 * 160) + 20, 85, 'mc');
-      this.insertBitmap('winterchildrachelbufanda', 'winterchildrachelbufanda', (3 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildtyler', 'summerchildtyler', (2 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildtylerhat', 'summerchildtylerhat', (2 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildtylershoes', 'summerchildtylershoes', (2 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildtylershort', 'summerchildtylershort', (2 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildjennifer', 'summerchildjennifer', (1 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildjenniferdress', 'summerchildjenniferdress', (1 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildjenniferglasses', 'summerchildjenniferglasses', (1 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildjenniferhat', 'summerchildjenniferhat', (1 * 160) + 20, 85, 'mc');
-      this.insertBitmap('summerchildjennifershoes', 'summerchildjennifershoes', (1 * 160) + 20, 85, 'mc');
-      estacion = 'summer';
-      for (i = _j = 0; _j <= 14; i = ++_j) {
+      for (i = _j = 0, _ref = this[estacion].child1.length - 1; 0 <= _ref ? _j <= _ref : _j >= _ref; i = 0 <= _ref ? ++_j : --_j) {
+        chico = this.createBitmap(this[estacion].child1[i], this[estacion].child1[i], (1 * 160) + 20, 85, 'mc');
+        chico.scaleX = chico.scaleY = 0.45;
+        todo.addChild(chico);
+      }
+      for (i = _k = 0, _ref1 = this[estacion].child2.length - 1; 0 <= _ref1 ? _k <= _ref1 : _k >= _ref1; i = 0 <= _ref1 ? ++_k : --_k) {
+        chico = this.createBitmap(this[estacion].child2[i], this[estacion].child2[i], (2 * 160) + 20, 85, 'mc');
+        chico.scaleX = chico.scaleY = 0.45;
+        todo.addChild(chico);
+      }
+      for (i = _l = 0, _ref2 = this[estacion].child3.length - 1; 0 <= _ref2 ? _l <= _ref2 : _l >= _ref2; i = 0 <= _ref2 ? ++_l : --_l) {
+        chico = this.createBitmap(this[estacion].child3[i], this[estacion].child3[i], (3 * 160) + 20, 85, 'mc');
+        chico.scaleX = chico.scaleY = 0.45;
+        todo.addChild(chico);
+      }
+      for (i = _m = 0, _ref3 = this[estacion].child4.length - 1; 0 <= _ref3 ? _m <= _ref3 : _m >= _ref3; i = 0 <= _ref3 ? ++_m : --_m) {
+        chico = this.createBitmap(this[estacion].child4[i], this[estacion].child4[i], (4 * 160) + 20, 85, 'mc');
+        chico.scaleX = chico.scaleY = 0.45;
+        todo.addChild(chico);
+      }
+      for (i = _n = 0; _n <= 14; i = ++_n) {
         ropa = new Draggable(this.positions.summer[i].id, this.preload.getResult(this.positions.summer[i].id), i, this.positions.summer[i].x, this.positions.summer[i].y, 'mc');
         ropas.addChild(ropa);
         this.addToLibrary(ropa);
       }
-      for (i = _k = 0; _k <= 15; i = ++_k) {
+      for (i = _o = 0; _o <= 15; i = ++_o) {
         ropa = new Draggable(this.positions.winter[i].id, this.preload.getResult(this.positions.winter[i].id), i, this.positions.winter[i].x, this.positions.winter[i].y, 'mc');
         ropas.addChild(ropa);
         this.addToLibrary(ropa);
