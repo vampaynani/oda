@@ -46,14 +46,6 @@
       });
     };
 
-    /*
-    	Array::unique = ->
-    		output = {}
-    		output[@[key]] = @[key] for key in [0...@length]
-    		value for key, value of output
-    */
-
-
     function Oda(imgurl, manifest, sounds) {
       var def_manifest, item, sound;
       this.imgurl = imgurl != null ? imgurl : 'imgs/';
@@ -141,6 +133,7 @@
       }
       this.preload.addEventListener('progress', this.handleProgress);
       this.preload.addEventListener('complete', this.handleComplete);
+      this.preload.installPlugin(createjs.Sound);
       this.preload.loadManifest(this.manifest);
       this.mainContainer.addChild(this.loaderBar);
       TweenLite.from(this.loaderBar, 1, {

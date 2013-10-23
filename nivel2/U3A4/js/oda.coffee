@@ -16,12 +16,6 @@ class Oda
         	for key, val of query
             	match += 1 if item[key] is val
         	if match is hit then true else false
-	###
-	Array::unique = ->
- 		output = {}
-		output[@[key]] = @[key] for key in [0...@length]
-		value for key, value of output
-	###
 	constructor: ( @imgurl = 'imgs/', manifest, sounds ) ->
 		def_manifest = [
 			{id: 'sg', src: "#{ @imgurl }start_game.png"},
@@ -72,6 +66,7 @@ class Oda
 
 		@preload.addEventListener 'progress', @handleProgress
 		@preload.addEventListener 'complete', @handleComplete
+		@preload.installPlugin createjs.Sound
 		@preload.loadManifest @manifest
 		@mainContainer.addChild @loaderBar
 		TweenLite.from @loaderBar, 1, (alpha: 0.1, ease: Quart.easeOut)
