@@ -1,0 +1,14 @@
+{id:'calles', src:'calles.png'}
+{id:'map1', src:'map_1.png'}
+{id:'map2', src:'map_2.png'}
+{id:'map3', src:'map_3.png'}
+{id:'bus', src:'place_bus.png'}
+{id:'cafe', src:'place_cafe.png'}
+{id:'hospital', src:'place_hospital.png'}
+{id:'library', src:'place_library.png'}
+{id:'museum', src:'place_museum.png'}
+{id:'pet', src:'place_pet.png'}
+{id:'restaurant', src:'place_restaurant.png'}
+{id:'school', src:'place_school.png'}
+{id:'theater', src:'place_theater.png'}
+

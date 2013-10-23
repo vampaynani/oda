@@ -16,7 +16,15 @@ class U5A5 extends Oda
 			{id: '5', src:'5.png'}	
 			{id: '6', src:'6.png'}	
 			{id: '7', src:'7.png'}	
-			{id: '8', src:'8.png'}	
+			{id: '8', src:'8.png'}
+			{id: '1b', src:'1b.png'}
+			{id: '2b', src:'2b.png'}
+			{id: '3b', src:'3b.png'}
+			{id: '4b', src:'4b.png'}	
+			{id: '5b', src:'5b.png'}	
+			{id: '6b', src:'6b.png'}	
+			{id: '7b', src:'7b.png'}	
+			{id: '8b', src:'8b.png'}	
 			{id: 'btn', src:'btn.png'}	
 		]
 		sounds = [
@@ -31,32 +39,31 @@ class U5A5 extends Oda
 			{tipo:'imagen', pregunta:'It has fins and scales. What is it?', opcionUno:'fish', opcionDos:'parrot'}
 			{tipo:'imagen', pregunta:'This animal is endangered', opcionUno:'rhino', opcionDos:'snake'}
 		]
-		@positions = [
-			{x:'231', y:'260'}
-			{x:'455', y:'261'}
-			{x:'226', y:'475'}
-			{x:'450', y:'473'}
-			{x:'231', y:'260'}
-			{x:'455', y:'261'}
-			{x:'226', y:'475'}
-			{x:'450', y:'473'}
-			{x:'', y:''}
-			{x:'', y:''}
-			{x:'', y:''}
-			{x:'', y:''}
-		]
+		@positions = 
+			p1:[
+				{x:'231', y:'260'}
+				{x:'465', y:'271'}
+				{x:'236', y:'475'}
+				{x:'450', y:'473'}
+			
+				{x:'231', y:'260'}
+				{x:'455', y:'261'}
+				{x:'226', y:'475'}
+				{x:'450', y:'473'}
+			]
+		
 		@texto = 
 			t1:[
-				{uno:"Outside it's snowing hard!", dos:''}
-				{uno:'She is watching ', dos: 'the weather report on TV'}
-				{uno:'He is drinking hot chocolate', dos: 'and petting his dog, Bo.'}
-				{uno:"Its windy and cold,", dos: "but it isn't snowing"}
+				{uno:"Outside it's snowing hard!"}
+				{uno:'She is watching the weather report on TV'}
+				{uno:'He is drinking hot chocolate and petting his dog, Bo.'}
+				{uno:"Its windy and cold, but it isn't snowing"}
 			]
 			t2:[
-				{uno:"Phil and Bo sit in the living room.", dos:''}
-				{uno:'He puts on his snow', dos: 'pants, sweater, coat and boats.'}
-				{uno:'Phil jumps up and', dos: 'down and claps his hands.'}
-				{uno:"Phil calls his friend Jack on the phone", dos: ''}
+				{uno:"Phil and Bo sit in the living room."}
+				{uno:'He puts on his snow pants, sweater, coat and boats.'}
+				{uno:'Phil jumps up and down and claps his hands.'}
+				{uno:"Phil calls his friend Jack on the phone"}
 			]
 
 		super null, manifest, sounds
@@ -73,14 +80,21 @@ class U5A5 extends Oda
 		cuento = new createjs.Container()
 		
 		for i in [1..4]
-			m = @createBitmap i, i, @positions[i-1].x, @positions[i-1].y, 'mc'
+			m = @createSprite i+'imagen', [i, i+'b'],null, @positions.p1[i-1].x, @positions.p1[i-1].y, 'mc'
 			cuento.addChild m
 			@addToLibrary m
 
+		for i in [1..4]
 			text = new DraggableText @texto.t1[i-1].uno, @texto.t1[i-1].uno,i,620, (i*60)+200
 			cuento.addChild text
-			
-			text = new DraggableText @texto.t1[i-1].dos, @texto.t1[i-1].dos,i,620, (i*60)+215
+
+		for i in [5..8]
+			m = @createSprite i+'imagen', [i, i+'b'],null, @positions.p1[i-1].x, @positions.p1[i-1].y, 'mc'
+			cuento.addChild m
+			@addToLibrary m
+
+		for i in [1..4]
+			text = new DraggableText @texto.t2[i-1].uno, @texto.t2[i-1].uno,i,620, (i*60)+200
 			cuento.addChild text
 
 		@addToMain cuento
