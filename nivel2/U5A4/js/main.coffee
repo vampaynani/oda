@@ -1,8 +1,8 @@
 class U5A4 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -130,13 +130,13 @@ class U5A4 extends Oda
 		@summer =
 			child1:['summerchildjennifer', 'summerchildjenniferdress', 'summerchildjenniferglasses', 'summerchildjenniferhat', 'summerchildjennifershoes']
 			child2:['summerchildtyler', 'summerchildtylerhat', 'summerchildtylershoes', 'summerchildtylershort']
-			child3:['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit', 'winterchildrachelbufanda']
+			child3:['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit']
 			child4:['summerchildmike', 'summerchildmikeglasses', 'summerchildmikehat', 'summerchildmikeshirt', 'summerchildmikeshoes', 'summerchildmikeshort']
 
 		@winter =
 			child1:['winterchildjennifer', 'winterchildjenniferboots', 'winterchildjennifercoat', 'winterchildjenniferhat']
 			child2:['winterchildtyler', 'winterchildtylerhat', 'winterchildtylerpants', 'winterchildtylersweater', 'winterchildtylertennis']
-			child3:['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt']
+			child3:['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt', 'winterchildrachelbufanda']
 			child4:['winterchildmike', 'winterchildmikeboats', 'winterchildmikecoat', 'winterchildmikegloves', 'winterchildmikehat', 'winterchildmikejeans']
 
 		super null, manifest, sounds
@@ -161,35 +161,29 @@ class U5A4 extends Oda
 		todo.addChild fondo
 		@addToLibrary fondo
 
+		estacion = 'summer'
+		
 		for i in [1..4]		
 			boton = @createBitmap 'repeatbtn', 'repeatbtn', i*155, 200
 			todo.addChild boton
+			
+		for i in [0..@[estacion].child1.length-1]
+			chico = @createBitmap @[estacion].child1[i], @[estacion].child1[i], (1*160)+20, 85, 'mc'
+			chico.scaleX = chico.scaleY = 0.45
+			todo.addChild chico
+		for i in [0..@[estacion].child2.length-1]
+			chico = @createBitmap @[estacion].child2[i], @[estacion].child2[i], (2*160)+20, 85, 'mc'
+			chico.scaleX = chico.scaleY = 0.45
+			todo.addChild chico
+		for i in [0..@[estacion].child3.length-1]
+			chico = @createBitmap @[estacion].child3[i], @[estacion].child3[i], (3*160)+20, 85, 'mc'
+			chico.scaleX = chico.scaleY = 0.45
+			todo.addChild chico
+		for i in [0..@[estacion].child4.length-1]
+			chico = @createBitmap @[estacion].child4[i], @[estacion].child4[i], (4*160)+20, 85, 'mc'
+			chico.scaleX = chico.scaleY = 0.45
+			todo.addChild chico
 
-		@insertBitmap 'summerchildmike', 'summerchildmike', (4*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildmikeglasses', 'summerchildmikeglasses', (4*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildmikehat', 'summerchildmikehat', (4*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildmikeshirt', 'summerchildmikeshirt', (4*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildmikeshoes', 'summerchildmikeshoes', (4*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildmikeshort', 'summerchildmikeshort', (4*160)+20, 85, 'mc'
-
-		@insertBitmap 'summerchildrachel', 'summerchildrachel', (3*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildrachelhat', 'summerchildrachelhat', (3*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildrachelshoes', 'summerchildrachelshoes', (3*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildrachelsuit', 'summerchildrachelsuit', (3*160)+20, 85, 'mc'
-		@insertBitmap 'winterchildrachelbufanda', 'winterchildrachelbufanda', (3*160)+20, 85, 'mc'
-
-		@insertBitmap 'summerchildtyler', 'summerchildtyler', (2*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildtylerhat', 'summerchildtylerhat', (2*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildtylershoes', 'summerchildtylershoes', (2*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildtylershort', 'summerchildtylershort', (2*160)+20, 85, 'mc'
-
-		@insertBitmap 'summerchildjennifer', 'summerchildjennifer', (1*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildjenniferdress', 'summerchildjenniferdress', (1*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildjenniferglasses', 'summerchildjenniferglasses', (1*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildjenniferhat', 'summerchildjenniferhat', (1*160)+20, 85, 'mc'
-		@insertBitmap 'summerchildjennifershoes', 'summerchildjennifershoes', (1*160)+20, 85, 'mc'
-
-		estacion = 'summer'
 
 		for i in [0..14]
 			ropa = new Draggable @positions.summer[i].id, @preload.getResult(@positions.summer[i].id), i, @positions.summer[i].x, @positions.summer[i].y, 'mc'
