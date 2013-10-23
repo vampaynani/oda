@@ -26,21 +26,6 @@
       return false;
     };
 
-    Button.prototype.blink = function(state) {
-      if (state == null) {
-        state = true;
-      }
-      TweenMax.killTweensOf(this);
-      this.alpha = 1;
-      if (state) {
-        return TweenMax.to(this, 0.5, {
-          alpha: .2,
-          repeat: -1,
-          yoyo: true
-        });
-      }
-    };
-
     window.Button = Button;
 
     return Button;

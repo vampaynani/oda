@@ -18,10 +18,10 @@
       manifest = [
         {
           id: 'head',
-          src: 'pleca.png'
+          src: 'pleca1.png'
         }, {
           id: 'inst',
-          src: 'texto_look.png'
+          src: 'inst.png'
         }, {
           id: 'c1',
           src: 'circle1.png'
@@ -206,6 +206,7 @@
 
     U5A5.prototype.introEvaluation = function() {
       return U5A5.__super__.introEvaluation.apply(this, arguments);
+
       /*
       		for i in [1..6] by 1
       			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
@@ -218,7 +219,6 @@
       		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
       		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
       */
-
     };
 
     U5A5.prototype.initEvaluation = function(e) {
