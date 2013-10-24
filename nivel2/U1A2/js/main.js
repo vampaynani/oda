@@ -103,6 +103,9 @@
         }, {
           src: 'sounds/TU2_U1_A2_madison.mp3',
           id: 'madison'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.answers = [

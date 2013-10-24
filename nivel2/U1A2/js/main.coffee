@@ -31,6 +31,7 @@ class U1A2 extends Oda
 		    {src:'sounds/TU2_U1_A2_jess.mp3', id:'jess'}
 		    {src:'sounds/TU2_U1_A2_lindsey.mp3', id:'lindsey'}
 		    {src:'sounds/TU2_U1_A2_madison.mp3', id:'madison'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [
 			{id:3, sound:'holly'}

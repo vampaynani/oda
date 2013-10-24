@@ -62,6 +62,7 @@ class U1A6 extends Oda
 		    {src:'sounds/TU2_U1_A6_tambourine.mp3', id:'tambourine'}
 		    {src:'sounds/TU2_U1_A6_trumpet.mp3', id:'trumpet'}
 		    {src:'sounds/TU2_U1_A6_violin.mp3', id:'violin'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}	
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 		@containers = [

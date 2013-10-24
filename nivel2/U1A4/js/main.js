@@ -113,6 +113,9 @@
         }, {
           src: 'sounds/TU2_U1_A4_walkHall.mp3',
           id: 'walk'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.answers = [

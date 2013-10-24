@@ -16,6 +16,7 @@ class U1A3 extends Oda
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U1_A3_instructions.mp3', id:'instructions'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [
 			{id:'iconRead', a1: 1, a2: 3, a3: 4}

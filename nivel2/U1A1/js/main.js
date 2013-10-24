@@ -81,6 +81,9 @@
         }, {
           src: 'sounds/TU2_U1_A1_Were_studying_english.mp3',
           id: 'english'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.answers = [

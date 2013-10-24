@@ -34,6 +34,7 @@ class U1A4 extends Oda
 		    {src:'sounds/TU2_U1_A4_talkQuietly.mp3', id:'library'}
 		    {src:'sounds/TU2_U1_A4_throwAway.mp3', id:'trash'}
 		    {src:'sounds/TU2_U1_A4_walkHall.mp3', id:'walk'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [
 			{id:'arrive', a: false}
