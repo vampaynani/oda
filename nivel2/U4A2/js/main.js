@@ -63,7 +63,7 @@
           id: 'lion',
           src: 'lion_img.png'
         }, {
-          id: 'seaturttle',
+          id: 'seaturtle',
           src: 'seaturttle_img.png'
         }
       ];
@@ -88,7 +88,7 @@
       U4A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 9, 0));
       return this.setAnimals().setSopa().introEvaluation();
     };
 
@@ -100,13 +100,14 @@
       this.insertBitmap('gorilla', 'gorilla', 122, 361);
       this.insertBitmap('jaguar', 'jaguar', 142, 132);
       this.insertBitmap('lion', 'lion', 586, 130);
-      this.insertBitmap('seaturttle', 'seaturttle', 590, 372);
+      this.insertBitmap('seaturtle', 'seaturtle', 590, 372);
       this.insertBitmap('polarbear', 'polarbear', 368, 424);
       return this;
     };
 
     U4A2.prototype.setSopa = function() {
-      var h, i, letra, sopa, _i, _j, _ref, _ref1;
+      var h, i, j, letra, sopa, _i, _j, _ref, _ref1;
+      j = 0;
       this.shapeCanvas = new createjs.Shape();
       sopa = new createjs.Container();
       sopa.x = 297;
@@ -114,10 +115,12 @@
       sopa.name = 'sopa';
       for (h = _i = 0, _ref = this.letters.length - 1; _i <= _ref; h = _i += 1) {
         for (i = _j = 0, _ref1 = this.letters[h].length - 1; _j <= _ref1; i = _j += 1) {
-          letra = new ClickableText(this.letters[h][i], this.letters[h][i], 'l#{h+i}', i * 26, h * 26);
+          letra = new ClickableText("l" + j, this.letters[h][i], "l" + j, i * 26, h * 26);
           letra.text.font = '20px Arial';
           letra.text.textAlign = 'center';
           sopa.addChild(letra);
+          this.addToLibrary(letra);
+          j++;
         }
       }
       sopa.addChild(this.shapeCanvas);
@@ -142,7 +145,7 @@
         onComplete: this.playInstructions,
         onCompleteParams: [this]
       });
-      return TweenMax.allFrom([this.library['bluewhale'], this.library['dolphin'], this.library['eagle'], this.library['giantpanda'], this.library['gorilla'], this.library['jaguar'], this.library['lion'], this.library['seaturttle'], this.library['polarbear']], 1, {
+      return TweenMax.allFrom([this.library['bluewhale'], this.library['dolphin'], this.library['eagle'], this.library['giantpanda'], this.library['gorilla'], this.library['jaguar'], this.library['lion'], this.library['seaturtle'], this.library['polarbear']], 1, {
         alpha: 0,
         delay: 1.5
       }, 0.1);
@@ -150,12 +153,28 @@
 
     U4A2.prototype.initEvaluation = function(e) {
       U4A2.__super__.initEvaluation.apply(this, arguments);
-      this.shapeCanvas.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(20, 20, 100, 50, 10);
       return this.mainContainer.addEventListener('mousedown', this.initDraw);
     };
 
     U4A2.prototype.initDraw = function(e) {
-      return console.log(e);
+      var i, pt, _i, _results;
+      _results = [];
+      for (i = _i = 0; _i <= 99; i = _i += 1) {
+        _results.push(pt = this.library["l" + i].globalToLocal(this.stage.mouseX, this.stage.mouseY));
+      }
+      return _results;
+      /*
+      		if @library['sopa'].hitTest pt.x, pt.y
+      		@shapeCanvas.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(0,0,26,26,4)
+      		e.addEventListener 'mousemove', (ev)=>
+      			console.log 'move'
+      			@shapeCanvas.graphics.rr(e.mouseX,e.mouseY,ev.mouseX,ev.mouseY,10)
+      			false
+      		e.addEventListener 'mouseup', (ev)=>
+      			console.log 'end'
+      			false
+      */
+
     };
 
     U4A2.prototype.evaluateAnswer = function(e) {

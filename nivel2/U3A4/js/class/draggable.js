@@ -4,38 +4,64 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Draggable = (function() {
-    function Draggable(name, image, index, x, y) {
+    function Draggable(name, image, index, x, y, position) {
+      if (position == null) {
+        position = 'tl';
+      }
+      this.killMe = __bind(this.killMe, this);
       this.blinkAgain = __bind(this.blinkAgain, this);
       this.handleMouseDown = __bind(this.handleMouseDown, this);
+      this.onStopEvaluation = __bind(this.onStopEvaluation, this);
       this.onInitEvaluation = __bind(this.onInitEvaluation, this);
-      this.initialize(name, image, index, x, y);
+      this.initDragListener = __bind(this.initDragListener, this);
+      this.initialize(name, image, index, x, y, position);
     }
 
     Draggable.prototype = new createjs.Container();
 
     Draggable.prototype.Container_initialize = Draggable.prototype.initialize;
 
-    Draggable.prototype.initialize = function(name, image, index, x, y) {
+    Draggable.prototype.initialize = function(name, image, index, x, y, position) {
       this.Container_initialize();
       this.name = name;
       this.bitmap = new createjs.Bitmap(image);
       this.index = index;
       this.x = x;
       this.y = y;
+      this.width = image.width;
+      this.height = image.height;
       this.pos = {
         x: x,
         y: y
       };
+      this.inPlace = false;
       return this.addChild(this.bitmap);
     };
 
-    Draggable.prototype.onInitEvaluation = function() {
+    Draggable.prototype.setReg = function(obj, regX, regY) {
+      obj.regX = regX;
+      obj.regY = regY;
+      return obj;
+    };
+
+    Draggable.prototype.initDragListener = function() {
       return this.addEventListener('mousedown', this.handleMouseDown);
+    };
+
+    Draggable.prototype.onInitEvaluation = function() {
+      this.blink(true);
+      return this.addEventListener('mousedown', this.handleMouseDown);
+    };
+
+    Draggable.prototype.onStopEvaluation = function() {
+      this.blink(false);
+      return this.removeEventListener('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.handleMouseDown = function(e) {
       var offset, posX, posY,
         _this = this;
+      TweenLite.killTweensOf(this);
       posX = e.stageX / stageSize.r;
       posY = e.stageY / stageSize.r;
       offset = {
@@ -52,11 +78,7 @@
         return false;
       });
       e.addEventListener('mouseup', function(ev) {
-        _this.dispatchEvent({
-          type: 'drop',
-          stageX: ev.stageX,
-          stageY: ev.stageY
-        });
+        _this.dispatchEvent('drop');
         return false;
       });
       return false;
@@ -78,19 +100,44 @@
     };
 
     Draggable.prototype.blinkAgain = function() {
-      return TweenLite.killTweensOf(this);
+      TweenLite.killTweensOf(this);
+      return this.blink(true);
+    };
+
+    Draggable.prototype.killMe = function() {
+      TweenLite.killTweensOf(this);
+      return this.parent.removeChild(this);
+    };
+
+    Draggable.prototype.putInPlace = function(position) {
+      this.inPlace = true;
+      return TweenLite.to(this, 1, {
+        ease: Back.easeOut,
+        delay: 0.1,
+        x: position.x,
+        y: position.y,
+        alpha: 1
+      });
     };
 
     Draggable.prototype.returnToPlace = function() {
-      return TweenLite.to(this, 0.5, {
+      return TweenLite.to(this, 1, {
         ease: Back.easeOut,
         delay: 0.1,
         x: this.pos.x,
         y: this.pos.y,
-        alpha: 1,
-        scaleX: 1,
-        scaleY: 1,
-        onComplete: this.blinkAgain
+        alpha: 1
+      });
+    };
+
+    Draggable.prototype.takeMeOut = function() {
+      return TweenLite.to(this, 0.5, {
+        ease: Linear.easeNone,
+        delay: 0.1,
+        x: this.pos.x,
+        y: this.pos.y,
+        alpha: 0,
+        onComplete: this.killMe
       });
     };
 

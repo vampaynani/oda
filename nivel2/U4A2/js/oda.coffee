@@ -16,6 +16,12 @@ class Oda
         	for key, val of query
             	match += 1 if item[key] is val
         	if match is hit then true else false
+	###
+	Array::unique = ->
+ 		output = {}
+		output[@[key]] = @[key] for key in [0...@length]
+		value for key, value of output
+	###
 	constructor: ( @imgurl = 'imgs/', manifest, sounds ) ->
 		def_manifest = [
 			{id: 'sg', src: "#{ @imgurl }start_game.png"},
@@ -133,6 +139,30 @@ class Oda
 		animation = @createSprite name, imgs, anim, x, y, position
 		@addToMain animation
 		animation
+	createText: (name, t, f, c, x, y, align = 'left') ->
+		text = new createjs.Text t,f,c
+		text.name = name
+		text.x = x
+		text.y = y
+		text.align = align
+		text
+	insertText: (name, t, f, c, x, y, align = 'left') ->
+		text = @createText name, t, f, c, x, y, align
+		@addToMain text
+		text
+	shuffleNoRepeat: (a, len) ->
+		copy = a[..]
+		shuffle = Array()
+		for i in [1..len]
+			rand = Math.round Math.random() * (copy.length - 1)
+			shuffle.push copy[rand]
+			copy.splice rand, 1
+		shuffle
+	shuffle: (a) ->
+		for i in [a.length - 1..0]
+			j = Math.floor Math.random() * ( i + 1 )
+			[a[i], a[j]] = [a[j], a[i]]
+		a
 	addToMain: (objs...) ->
 		@addToLibrary objs
 		for o in objs
@@ -148,6 +178,22 @@ class Oda
 				@assets.push o
 		@library = @assets.toDictionary 'name'
 		@library
+	clone: (obj) ->
+		if not obj? or typeof obj isnt 'object'
+			return obj
+		if obj instanceof Date
+			return new Date(obj.getTime()) 
+		if obj instanceof RegExp
+			flags = ''
+			flags += 'g' if obj.global?
+			flags += 'i' if obj.ignoreCase?
+			flags += 'm' if obj.multiline?
+			flags += 'y' if obj.sticky?
+			return new RegExp(obj.source, flags) 
+		newInstance = new obj.constructor()
+		for key of obj
+			newInstance[key] = @clone obj[key]
+		return newInstance
 	isArray: ( value ) ->
 		Array.isArray value || (value) ->
 			{}.toString.call( value ) is '[object Array]'
@@ -216,7 +262,7 @@ class Oda
 		@observer = new Observer()
 	introEvaluation: ->
 		@index = 0
-		@library['score'].reset()
+		@library['score'].reset() if @library['score']
 	initEvaluation: (e) =>
 		@observer.notify 'init_evaluation'
 	finish: ->

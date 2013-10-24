@@ -16,7 +16,7 @@ class U4A2 extends Oda
 			{id: 'gorilla', src:'gorilla_img.png'}
 			{id: 'jaguar', src:'jaguar_img.png'}
 			{id: 'lion', src:'lion_img.png'}
-			{id: 'seaturttle', src:'seaturttle_img.png'}
+			{id: 'seaturtle', src:'seaturttle_img.png'}
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
@@ -43,7 +43,7 @@ class U4A2 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
 		@setAnimals().setSopa().introEvaluation()
 	setAnimals:  ->
 		@insertBitmap 'bluewhale', 'bluewhale', 509, 465
@@ -53,10 +53,11 @@ class U4A2 extends Oda
 		@insertBitmap 'gorilla', 'gorilla', 122, 361
 		@insertBitmap 'jaguar', 'jaguar', 142, 132
 		@insertBitmap 'lion', 'lion', 586, 130
-		@insertBitmap 'seaturttle', 'seaturttle', 590, 372
+		@insertBitmap 'seaturtle', 'seaturtle', 590, 372
 		@insertBitmap 'polarbear', 'polarbear', 368, 424
 		@
 	setSopa: ->
+		j = 0
 		@shapeCanvas = new createjs.Shape()
 		sopa = new createjs.Container()
 		sopa.x = 297
@@ -64,10 +65,12 @@ class U4A2 extends Oda
 		sopa.name = 'sopa'
 		for h in [0..@letters.length - 1] by 1
 			for i in [0..@letters[h].length - 1] by 1
-				letra = new ClickableText @letters[h][i], @letters[h][i], 'l#{h+i}', i * 26, h * 26
+				letra = new ClickableText "l#{j}", @letters[h][i], "l#{j}", i * 26, h * 26
 				letra.text.font = '20px Arial'
 				letra.text.textAlign = 'center'
 				sopa.addChild letra
+				@addToLibrary letra
+				j++
 		sopa.addChild @shapeCanvas
 		@addToMain sopa
 		@
@@ -83,15 +86,27 @@ class U4A2 extends Oda
 						@library['gorilla'],
 						@library['jaguar'],
 						@library['lion'],
-						@library['seaturttle'],
+						@library['seaturtle'],
 						@library['polarbear']
 						], 1, {alpha: 0, delay: 1.5}, 0.1
 	initEvaluation: (e) =>
 		super
-		@shapeCanvas.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(20,20,100,50,10)
 		@mainContainer.addEventListener 'mousedown', @initDraw
 	initDraw: (e) =>
-		console.log e
+		for i in [0..99] by 1
+			pt = @library["l#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
+			#if @library["l#{i}"].hitTest pt.x, pt.y
+		###
+		if @library['sopa'].hitTest pt.x, pt.y
+		@shapeCanvas.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(0,0,26,26,4)
+		e.addEventListener 'mousemove', (ev)=>
+			console.log 'move'
+			@shapeCanvas.graphics.rr(e.mouseX,e.mouseY,ev.mouseX,ev.mouseY,10)
+			false
+		e.addEventListener 'mouseup', (ev)=>
+			console.log 'end'
+			false
+		###
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY

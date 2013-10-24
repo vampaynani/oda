@@ -66,6 +66,7 @@ class Oda
 
 		@preload.addEventListener 'progress', @handleProgress
 		@preload.addEventListener 'complete', @handleComplete
+		@preload.installPlugin createjs.Sound
 		@preload.loadManifest @manifest
 		@mainContainer.addChild @loaderBar
 		TweenLite.from @loaderBar, 1, (alpha: 0.1, ease: Quart.easeOut)
@@ -133,6 +134,30 @@ class Oda
 		animation = @createSprite name, imgs, anim, x, y, position
 		@addToMain animation
 		animation
+	createText: (name, t, f, c, x, y, align = 'left') ->
+		text = new createjs.Text t,f,c
+		text.name = name
+		text.x = x
+		text.y = y
+		text.align = align
+		text
+	insertText: (name, t, f, c, x, y, align = 'left') ->
+		text = @createText name, t, f, c, x, y, align
+		@addToMain text
+		text
+	shuffleNoRepeat: (a, len) ->
+		copy = a[..]
+		shuffle = Array()
+		for i in [1..len]
+			rand = Math.round Math.random() * (copy.length - 1)
+			shuffle.push copy[rand]
+			copy.splice rand, 1
+		shuffle
+	shuffle: (a) ->
+		for i in [a.length - 1..0]
+			j = Math.floor Math.random() * ( i + 1 )
+			[a[i], a[j]] = [a[j], a[i]]
+		a
 	addToMain: (objs...) ->
 		@addToLibrary objs
 		for o in objs
@@ -148,6 +173,22 @@ class Oda
 				@assets.push o
 		@library = @assets.toDictionary 'name'
 		@library
+	clone: (obj) ->
+		if not obj? or typeof obj isnt 'object'
+			return obj
+		if obj instanceof Date
+			return new Date(obj.getTime()) 
+		if obj instanceof RegExp
+			flags = ''
+			flags += 'g' if obj.global?
+			flags += 'i' if obj.ignoreCase?
+			flags += 'm' if obj.multiline?
+			flags += 'y' if obj.sticky?
+			return new RegExp(obj.source, flags) 
+		newInstance = new obj.constructor()
+		for key of obj
+			newInstance[key] = @clone obj[key]
+		return newInstance
 	isArray: ( value ) ->
 		Array.isArray value || (value) ->
 			{}.toString.call( value ) is '[object Array]'
@@ -216,7 +257,7 @@ class Oda
 		@observer = new Observer()
 	introEvaluation: ->
 		@index = 0
-		@library['score'].reset()
+		@library['score'].reset() if @library['score']
 	initEvaluation: (e) =>
 		@observer.notify 'init_evaluation'
 	finish: ->
