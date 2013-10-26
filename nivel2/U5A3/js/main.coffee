@@ -32,6 +32,7 @@ class U5A3 extends Oda
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [	
 		]

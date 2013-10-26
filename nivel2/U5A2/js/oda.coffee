@@ -142,9 +142,11 @@ class Oda
 		obj.regX = regX
 		obj
 	warning: ->
-		createjs.Sound.play 'boing'
-		TweenMax.to @mainContainer, 0.1, (x: @mainContainer.x + 10, repeat: 6, yoyo: true)
+		createjs.Sound.play 'wrong'
+		TweenMax.to @mainContainer, 0.1, (x: @mainContainer.x + 10, repeat: 6, yoyo: true, onComplete:@warningComplete)
 		@
+	warningComplete: =>
+		@mainContainer.x = @stage.canvas.width / 2	
 	resize: ->
 		w = window.innerWidth
 		h = window.innerHeight

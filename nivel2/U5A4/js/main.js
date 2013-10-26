@@ -259,6 +259,9 @@
         }, {
           src: 'sounds/TU2_U5_A4_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.answers = [];

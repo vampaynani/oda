@@ -175,6 +175,9 @@
         }, {
           src: 'sounds/TU2_U4_A6_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.positions = {
