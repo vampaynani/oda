@@ -39,6 +39,7 @@ class U2A4 extends Oda
 			{src:'sounds/TU2_U2_A4_UncleJim.mp3', id:'jim'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers =[
 			{

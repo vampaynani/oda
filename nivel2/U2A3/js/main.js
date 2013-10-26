@@ -294,6 +294,9 @@
         }, {
           src: 'sounds/good.mp3',
           id: 'good'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       U2A3.__super__.constructor.call(this, null, manifest, sounds);

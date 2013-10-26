@@ -41,6 +41,7 @@ class U2A2 extends Oda
 		    {src:'sounds/TU2_U2_A2_walkTheDog.mp3', id:'walkdog'}
 		    {src:'sounds/TU2_U2_A2_washTheDishes.mp3', id:'dishes'}
 		    {src:'sounds/TU2_U2_A2_waterThePlants.mp3', id:'plants'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [
 			{id:'kitchen', a: false}

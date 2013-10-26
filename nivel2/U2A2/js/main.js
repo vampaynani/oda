@@ -134,6 +134,9 @@
         }, {
           src: 'sounds/TU2_U2_A2_waterThePlants.mp3',
           id: 'plants'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.answers = [

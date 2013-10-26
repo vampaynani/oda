@@ -63,6 +63,9 @@
         }, {
           src: 'sounds/good.mp3',
           id: 'good'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.counter = {
