@@ -23,7 +23,7 @@
       this.x = x;
       this.y = y;
       this.text = new createjs.Text(text, '20px Arial', '#333');
-      this.graphic = new createjs.Graphics().beginStroke(stcolor).beginFill(bgcolor).drawRect(0, 0, w, h);
+      this.graphic = new createjs.Graphics().beginFill(bgcolor).drawRect(0, 0, w, h).beginStroke(stcolor).moveTo(0, h).lineTo(w, h);
       this.shape = new createjs.Shape(this.graphic);
       this.text.textAlign = 'center';
       this.text.x = w / 2;

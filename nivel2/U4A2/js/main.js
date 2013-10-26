@@ -9,11 +9,9 @@
     __extends(U4A2, _super);
 
     function U4A2() {
-      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
-      this.initDraw = __bind(this.initDraw, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -80,7 +78,36 @@
         }
       ];
       this.letters = [['g', 'i', 'a', 'n', 't', 'p', 'a', 'n', 'd', 'a'], ['p', 's', 'e', 'a', 't', 'u', 'r', 't', 'l', 'e'], ['o', 'u', 's', 'q', 'f', 'a', 't', 'y', 'i', 'j'], ['l', 'g', 'e', 'x', 'k', 'e', 'j', 'd', 'o', 'a'], ['a', 'e', 'd', 'o', 'l', 'p', 'h', 'i', 'n', 'g'], ['r', 'a', 'n', 'h', 'y', 'j', 'i', 'n', 'b', 'u'], ['b', 'g', 'o', 'r', 'i', 'l', 'l', 'a', 't', 'a'], ['e', 'l', 'k', 'd', 'o', 'z', 'p', 'l', 'n', 'r'], ['a', 'e', 'o', 'f', 'e', 'a', 'd', 'o', 'f', 'l'], ['r', 'b', 'l', 'u', 'e', 'w', 'h', 'a', 'l', 'e']];
-      this.answers = [];
+      this.answers = [
+        {
+          id: 'seaturtle',
+          line: ['l11', 'l12', 'l13', 'l14', 'l15', 'l16', 'l17', 'l18', 'l19']
+        }, {
+          id: 'polarbear',
+          line: ['l10', 'l20', 'l30', 'l40', 'l50', 'l60', 'l70', 'l80', 'l90']
+        }, {
+          id: 'bluewhale',
+          line: ['l91', 'l92', 'l93', 'l94', 'l95', 'l96', 'l97', 'l98', 'l99']
+        }, {
+          id: 'giantpanda',
+          line: ['l0', 'l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7', 'l8', 'l9']
+        }, {
+          id: 'dolphin',
+          line: ['l42', 'l43', 'l44', 'l45', 'l46', 'l47', 'l48']
+        }, {
+          id: 'gorilla',
+          line: ['l61', 'l62', 'l63', 'l64', 'l65', 'l66', 'l67']
+        }, {
+          id: 'jaguar',
+          line: ['l29', 'l39', 'l49', 'l59', 'l69', 'l79']
+        }, {
+          id: 'eagle',
+          line: ['l41', 'l51', 'l61', 'l71', 'l81']
+        }, {
+          id: 'lion',
+          line: ['l18', 'l28', 'l38', 'l48']
+        }
+      ];
       U4A2.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -106,16 +133,21 @@
     };
 
     U4A2.prototype.setSopa = function() {
-      var h, i, j, letra, sopa, _i, _j, _ref, _ref1;
+      var h, i, j, letra, shapesContainer, sopa, _i, _j, _ref, _ref1;
       j = 0;
-      this.shapeCanvas = new createjs.Shape();
       sopa = new createjs.Container();
       sopa.x = 297;
       sopa.y = 148;
       sopa.name = 'sopa';
+      shapesContainer = new createjs.Container();
+      shapesContainer.name = 'shapesContainer';
+      sopa.addChild(shapesContainer);
+      this.addToLibrary(shapesContainer);
       for (h = _i = 0, _ref = this.letters.length - 1; _i <= _ref; h = _i += 1) {
         for (i = _j = 0, _ref1 = this.letters[h].length - 1; _j <= _ref1; i = _j += 1) {
           letra = new ClickableText("l" + j, this.letters[h][i], "l" + j, i * 26, h * 26);
+          letra.h = h;
+          letra.i = i;
           letra.text.font = '20px Arial';
           letra.text.textAlign = 'center';
           sopa.addChild(letra);
@@ -123,7 +155,6 @@
           j++;
         }
       }
-      sopa.addChild(this.shapeCanvas);
       this.addToMain(sopa);
       return this;
     };
@@ -153,87 +184,97 @@
 
     U4A2.prototype.initEvaluation = function(e) {
       U4A2.__super__.initEvaluation.apply(this, arguments);
-      return this.mainContainer.addEventListener('mousedown', this.initDraw);
-    };
-
-    U4A2.prototype.initDraw = function(e) {
-      var i, pt, _i, _results;
-      _results = [];
-      for (i = _i = 0; _i <= 99; i = _i += 1) {
-        _results.push(pt = this.library["l" + i].globalToLocal(this.stage.mouseX, this.stage.mouseY));
-      }
-      return _results;
-      /*
-      		if @library['sopa'].hitTest pt.x, pt.y
-      		@shapeCanvas.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(0,0,26,26,4)
-      		e.addEventListener 'mousemove', (ev)=>
-      			console.log 'move'
-      			@shapeCanvas.graphics.rr(e.mouseX,e.mouseY,ev.mouseX,ev.mouseY,10)
-      			false
-      		e.addEventListener 'mouseup', (ev)=>
-      			console.log 'end'
-      			false
-      */
-
+      return this.mainContainer.addEventListener('mousedown', this.evaluateAnswer);
     };
 
     U4A2.prototype.evaluateAnswer = function(e) {
-      var pt;
-      this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
+      var answer, clktxt, h, i, oup, pos, pt, shape,
+        _this = this;
+      answer = Array();
+      shape = new createjs.Shape();
+      pt = this.mainContainer.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+      oup = this.mainContainer.getObjectUnderPoint(pt.x, pt.y);
+      i = 0;
+      h = 0;
+      this.library.shapesContainer.addChild(shape);
+      if (oup) {
+        clktxt = oup.parent;
+        if (clktxt instanceof ClickableText) {
+          answer.push(clktxt.index);
+          pos = {
+            x: clktxt.i * 26 - 13,
+            y: clktxt.h * 26,
+            i: clktxt.i,
+            h: clktxt.h
+          };
+          shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x, pos.y, 26, 26, 5);
+          e.addEventListener('mousemove', function(ev) {
+            var npos;
+            pt = _this.mainContainer.globalToLocal(_this.stage.mouseX, _this.stage.mouseY);
+            oup = _this.mainContainer.getObjectUnderPoint(pt.x, pt.y);
+            if (oup) {
+              clktxt = oup.parent;
+              if (clktxt instanceof ClickableText) {
+                i = Math.abs(clktxt.i - pos.i + 1) === 0 ? 1 : Math.abs(clktxt.i - pos.i + 1);
+                h = Math.abs(clktxt.h - pos.h + 1) === 0 ? 1 : Math.abs(clktxt.h - pos.h + 1);
+                npos = {
+                  w: i * 26,
+                  h: h * 26
+                };
+                answer.push(clktxt.index);
+                return shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x, pos.y, npos.w, npos.h, 5);
+              }
+            }
+          });
+          return e.addEventListener('mouseup', function(ev) {
+            var find, obj, _i, _j, _len, _ref;
+            find = false;
+            answer = Array();
+            for (i = _i = 0; _i <= 99; i = _i += 1) {
+              if (shape.hitTest(_this.library["l" + i].x, _this.library["l" + i].y + 13)) {
+                answer.push(_this.library["l" + i].name);
+              }
+            }
+            _ref = _this.answers;
+            for (_j = 0, _len = _ref.length; _j < _len; _j++) {
+              obj = _ref[_j];
+              if (obj.line.toString() === answer.toString()) {
+                TweenLite.to(_this.library[obj.id], 0.3, {
+                  y: _this.library[obj.id].y - 100,
+                  alpha: 0,
+                  onComplete: _this.finishEvaluation
+                });
+                find = true;
+              }
+            }
+            if (!find) {
+              return _this.library.shapesContainer.removeChild(shape);
+            }
+          });
         }
-      } else {
-        return this.answer.returnToPlace();
       }
     };
 
     U4A2.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
+      createjs.Sound.play('good');
+      return this.nextEvaluation();
     };
 
     U4A2.prototype.nextEvaluation = function() {
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
-      } else {
+      this.library.score.plusOne();
+      if (this.index >= this.answers.length) {
         return this.finish();
       }
     };
 
-    U4A2.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
-    };
-
     U4A2.prototype.finish = function() {
-      var i, _i, _results;
-      U4A2.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      this.mainContainer.removeEventListener('mousedown', this.evaluateAnswer);
+      TweenLite.to(this.library['sopa'], 1, {
+        y: this.library['sopa'].y + 100,
+        alpha: 0
+      });
+      return U4A2.__super__.finish.apply(this, arguments);
     };
 
     window.U4A2 = U4A2;

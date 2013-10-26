@@ -10,42 +10,58 @@
     r: 1
   });
 
-  Oda = (function() {
-    Array.prototype.toDictionary = function(key) {
-      var dict, obj, _i, _len;
-      dict = {};
-      for (_i = 0, _len = this.length; _i < _len; _i++) {
-        obj = this[_i];
-        if (obj[key] != null) {
-          dict[obj[key]] = obj;
-        }
+  Array.prototype.toDictionary = function(key) {
+    var dict, obj, _i, _len;
+    dict = {};
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      obj = this[_i];
+      if (obj[key] != null) {
+        dict[obj[key]] = obj;
       }
-      return dict;
-    };
+    }
+    return dict;
+  };
 
-    Array.prototype.where = function(query) {
-      var hit;
-      if (typeof query !== "object") {
-        return [];
-      }
-      hit = Object.keys(query).length;
-      return this.filter(function(item) {
-        var key, match, val;
-        match = 0;
-        for (key in query) {
-          val = query[key];
-          if (item[key] === val) {
-            match += 1;
-          }
+  Array.prototype.where = function(query) {
+    var hit;
+    if (typeof query !== "object") {
+      return [];
+    }
+    hit = Object.keys(query).length;
+    return this.filter(function(item) {
+      var key, match, val, _results;
+      match = 0;
+      _results = [];
+      for (key in query) {
+        val = query[key];
+        if (item[key] === val) {
+          match += 1;
         }
         if (match === hit) {
-          return true;
+          _results.push(true);
         } else {
-          return false;
+          _results.push(false);
         }
-      });
-    };
+      }
+      return _results;
+    });
+  };
 
+  Array.prototype.unique = function() {
+    var key, output, value, _i, _ref, _results;
+    output = {};
+    for (key = _i = 0, _ref = this.length; 0 <= _ref ? _i < _ref : _i > _ref; key = 0 <= _ref ? ++_i : --_i) {
+      output[this[key]] = this[key];
+    }
+    _results = [];
+    for (key in output) {
+      value = output[key];
+      _results.push(value);
+    }
+    return _results;
+  };
+
+  Oda = (function() {
     function Oda(imgurl, manifest, sounds) {
       var def_manifest, item, sound;
       this.imgurl = imgurl != null ? imgurl : 'imgs/';
@@ -299,6 +315,50 @@
       return animation;
     };
 
+    Oda.prototype.createText = function(name, t, f, c, x, y, align) {
+      var text;
+      if (align == null) {
+        align = 'left';
+      }
+      text = new createjs.Text(t, f, c);
+      text.name = name;
+      text.x = x;
+      text.y = y;
+      text.align = align;
+      return text;
+    };
+
+    Oda.prototype.insertText = function(name, t, f, c, x, y, align) {
+      var text;
+      if (align == null) {
+        align = 'left';
+      }
+      text = this.createText(name, t, f, c, x, y, align);
+      this.addToMain(text);
+      return text;
+    };
+
+    Oda.prototype.shuffleNoRepeat = function(a, len) {
+      var copy, i, rand, shuffle, _i;
+      copy = a.slice(0);
+      shuffle = Array();
+      for (i = _i = 1; 1 <= len ? _i <= len : _i >= len; i = 1 <= len ? ++_i : --_i) {
+        rand = Math.round(Math.random() * (copy.length - 1));
+        shuffle.push(copy[rand]);
+        copy.splice(rand, 1);
+      }
+      return shuffle;
+    };
+
+    Oda.prototype.shuffle = function(a) {
+      var i, j, _i, _ref, _ref1;
+      for (i = _i = _ref = a.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {
+        j = Math.floor(Math.random() * (i + 1));
+        _ref1 = [a[j], a[i]], a[i] = _ref1[0], a[j] = _ref1[1];
+      }
+      return a;
+    };
+
     Oda.prototype.addToMain = function() {
       var o, objs, _i, _len;
       objs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -327,6 +387,37 @@
       }
       this.library = this.assets.toDictionary('name');
       return this.library;
+    };
+
+    Oda.prototype.clone = function(obj) {
+      var flags, key, newInstance;
+      if ((obj == null) || typeof obj !== 'object') {
+        return obj;
+      }
+      if (obj instanceof Date) {
+        return new Date(obj.getTime());
+      }
+      if (obj instanceof RegExp) {
+        flags = '';
+        if (obj.global != null) {
+          flags += 'g';
+        }
+        if (obj.ignoreCase != null) {
+          flags += 'i';
+        }
+        if (obj.multiline != null) {
+          flags += 'm';
+        }
+        if (obj.sticky != null) {
+          flags += 'y';
+        }
+        return new RegExp(obj.source, flags);
+      }
+      newInstance = new obj.constructor();
+      for (key in obj) {
+        newInstance[key] = this.clone(obj[key]);
+      }
+      return newInstance;
     };
 
     Oda.prototype.isArray = function(value) {
@@ -445,7 +536,9 @@
 
     Oda.prototype.introEvaluation = function() {
       this.index = 0;
-      return this.library['score'].reset();
+      if (this.library['score']) {
+        return this.library['score'].reset();
+      }
     };
 
     Oda.prototype.initEvaluation = function(e) {

@@ -163,12 +163,12 @@
           src: 'sounds/good.mp3',
           id: 'good'
         }, {
-          src: 'sounds/TU2_U2_A1_instructions.mp3',
+          src: 'sounds/TU2_U3_A6_instructions.mp3',
           id: 'instructions'
         }
       ];
       this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-      this.answers = [];
+      this.answers = ['broccoli', 'cherries', 'bread', 'pancakes', 'chocolate cake', 'cheese', 'chicken', 'cut the fruit', 'breakfast', 'mashed potatoes'];
       U3A6.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -177,11 +177,7 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
-      return this.setDropper().setChango().createAlphabet().introEvaluation();
-    };
-
-    U3A6.prototype.setDropper = function() {
-      return this;
+      return this.setChango().createAlphabet().introEvaluation();
     };
 
     U3A6.prototype.setChango = function() {
@@ -198,17 +194,18 @@
       for (i = _i = 0, _ref = this.abc.length - 1; _i <= _ref; i = _i += 1) {
         letter = this.abc[i];
         if (i <= 9) {
-          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 41.5 * i, 0);
+          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i, 0);
         } else if (i <= 18) {
-          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 41.5 * i - 395, 34);
+          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i - 395, 34);
         } else {
-          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 41.5 * i - 750, 68);
+          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i - 750, 68);
         }
-        letterObj.onInitEvaluation();
-        alphabet.addChild(letterObj);
+        letterObj.text.font = '20px Arial';
         this.addToLibrary(letterObj);
+        alphabet.addChild(letterObj);
       }
-      return this.addToMain(alphabet);
+      this.addToMain(alphabet);
+      return this;
     };
 
     U3A6.prototype.introEvaluation = function() {
@@ -221,47 +218,60 @@
         x: 0,
         delay: 0.5
       });
-      TweenLite.from(this.library['dropper'], 1, {
+      TweenLite.from(this.library['chango'], 1, {
         alpha: 0,
-        x: this.library['dropper'].x + 50,
+        x: this.library['chango'].x + 50,
         ease: Quart.easeOut,
-        delay: 3,
-        onComplete: this.playInstructions,
-        onCompleteParams: [this]
+        delay: 1.5
       });
-      return TweenMax.allFrom([this.library['nube1'], this.library['nube2'], this.library['nube3'], this.library['nube4']], 1, {
+      return TweenMax.from(this.library['alphabet'], 1, {
         alpha: 0,
         y: stageSize.h,
-        delay: 2
+        delay: 2,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
       });
     };
 
     U3A6.prototype.initEvaluation = function(e) {
-      var i, _i, _results;
+      var i, wc, word, wordContainers, _i, _j, _ref, _ref1;
       U3A6.__super__.initEvaluation.apply(this, arguments);
-      _results = [];
-      for (i = _i = 0; _i <= 3; i = _i += 1) {
-        _results.push(this.library['tn' + i].addEventListener('drop', this.evaluateAnswer));
+      word = this.answers[this.index];
+      this.col = word.split('');
+      wordContainers = new createjs.Container();
+      wordContainers.name = 'wordContainers';
+      wordContainers.y = 400;
+      wordContainers.x = (this.library['alphabet'].x + 177) - this.col.length * 30 / 2;
+      for (i = _i = 0, _ref = this.abc.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        this.library["l" + i].addEventListener('click', this.evaluateAnswer);
       }
-      return _results;
+      for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
+        if (this.col[i] !== '') {
+          wc = new WordContainer("w" + i, '', '#fff', '#0098d7', 30 * i, 0, 26, 26);
+          wc.index = this.col[i - 1];
+          this.addToLibrary(wc);
+          wordContainers.addChild(wc);
+        }
+      }
+      return this.addToMain(wordContainers);
     };
 
     U3A6.prototype.evaluateAnswer = function(e) {
-      var pt;
+      var check, current, i, _i, _ref;
       this.answer = e.target;
-      pt = this.library['dropper'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropper'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.x = this.answer.pos.x;
-          this.answer.y = this.answer.pos.y;
-          this.library['dropper'].changeText(this.answer.text.text);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.answer.returnToPlace();
-          return this.warning();
+      this.answer.visible = false;
+      check = false;
+      for (i = _i = 1, _ref = this.col.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        if (this.answer.index === this.library["w" + i].index) {
+          this.library["w" + i].changeText(this.answer.index);
+          check = true;
         }
-      } else {
-        return this.answer.returnToPlace();
+      }
+      if (!check) {
+        current = this.library["chango"].currentFrame;
+        current++;
+        this.library["chango"].gotoAndStop(current);
+        return setTimeout(this.finishEvaluation, 1 * 1000);
       }
     };
 

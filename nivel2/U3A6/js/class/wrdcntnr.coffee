@@ -9,7 +9,7 @@ class WordContainer
 		@x = x
 		@y = y
 		@text = new createjs.Text text,'20px Arial','#333'
-		@graphic = new createjs.Graphics().beginStroke( stcolor ).beginFill( bgcolor ).drawRect( 0, 0, w, h );
+		@graphic = new createjs.Graphics().beginFill( bgcolor ).drawRect( 0, 0, w, h ).beginStroke( stcolor ).moveTo( 0, h ).lineTo( w, h );
 		@shape = new createjs.Shape @graphic
 		@text.textAlign = 'center'
 		@text.x = w / 2

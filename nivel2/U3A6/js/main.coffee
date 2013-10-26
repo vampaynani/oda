@@ -51,11 +51,20 @@ class U3A6 extends Oda
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U2_A1_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U3_A6_instructions.mp3', id:'instructions'}
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 		@answers = [
-		
+			'broccoli'
+			'cherries'
+			'bread'
+			'pancakes'
+			'chocolate cake'
+			'cheese'
+			'chicken'
+			'cut the fruit'
+			'breakfast'
+			'mashed potatoes'
 		]
 		super null, manifest, sounds
 	setStage: ->
@@ -63,13 +72,9 @@ class U3A6 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
-		@setDropper().setChango().createAlphabet().introEvaluation()
-	setDropper: ->
-		#@addToMain new WordCompleter 'dropper', '', '', '#FFF', '#F59743', 170, 541, 188, 30
-		@
+		@setChango().createAlphabet().introEvaluation()
 	setChango: ->
 		@insertSprite 'chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 549, 150, 'tl'
-
 		@
 	createAlphabet: ->
 		alphabet = new createjs.Container()
@@ -79,40 +84,55 @@ class U3A6 extends Oda
 		for i in [0..@abc.length - 1] by 1
 			letter = @abc[i]
 			if i <= 9
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i, 0
+				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i, 0
 			else if i <= 18
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i-395, 34
-			else 
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i-750, 68
-			letterObj.onInitEvaluation()
-			alphabet.addChild letterObj	
+				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i - 395, 34
+			else
+				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i - 750, 68
+			letterObj.text.font = '20px Arial'
 			@addToLibrary letterObj
+			alphabet.addChild letterObj
 		@addToMain alphabet
+		@
 	introEvaluation: ->
 		super
-
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['dropper'], 1, {alpha: 0, x: @library['dropper'].x + 50, ease: Quart.easeOut, delay: 3, onComplete: @playInstructions, onCompleteParams: [@]}
-		TweenMax.allFrom [@library['nube1'], @library['nube2'], @library['nube3'], @library['nube4']], 1, {alpha: 0, y: stageSize.h, delay: 2}
+		TweenLite.from @library['chango'], 1, {alpha: 0, x: @library['chango'].x + 50, ease: Quart.easeOut, delay: 1.5}
+		TweenMax.from @library['alphabet'], 1, {alpha: 0, y: stageSize.h, delay: 2, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		for i in [0..3] by 1
-			@library['tn'+i].addEventListener 'drop', @evaluateAnswer
+		word = @answers[@index]
+		@col = word.split('')
+		wordContainers = new createjs.Container()
+		wordContainers.name = 'wordContainers'
+		wordContainers.y = 400
+		wordContainers.x = (@library['alphabet'].x + 177) - @col.length * 30 / 2
+		
+		for i in [0..@abc.length - 1]
+			@library["l#{i}"].addEventListener 'click', @evaluateAnswer
+		
+		for i in [1..@col.length]
+			if @col[i] isnt ''
+				wc = new WordContainer "w#{i}", '', '#fff', '#0098d7', 30 * i, 0, 26, 26
+				wc.index = @col[i - 1]
+				@addToLibrary wc
+				wordContainers.addChild wc
+		@addToMain wordContainers
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropper'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropper'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.x = @answer.pos.x
-				@answer.y = @answer.pos.y
-				@library['dropper'].changeText @answer.text.text
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@answer.returnToPlace()	
-				@warning()
-		else
-			@answer.returnToPlace()
+		@answer.visible = false
+		check = off
+		for i in [1..@col.length]
+			if @answer.index is @library["w#{i}"].index
+				@library["w#{i}"].changeText @answer.index
+				check = on
+		if not check
+			current = @library["chango"].currentFrame
+			current++
+			@library["chango"].gotoAndStop current
+		
+			setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
 		@library['score'].plusOne()
 		createjs.Sound.play 'good'

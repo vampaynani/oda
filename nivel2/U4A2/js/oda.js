@@ -10,50 +10,58 @@
     r: 1
   });
 
-  Oda = (function() {
-    Array.prototype.toDictionary = function(key) {
-      var dict, obj, _i, _len;
-      dict = {};
-      for (_i = 0, _len = this.length; _i < _len; _i++) {
-        obj = this[_i];
-        if (obj[key] != null) {
-          dict[obj[key]] = obj;
-        }
+  Array.prototype.toDictionary = function(key) {
+    var dict, obj, _i, _len;
+    dict = {};
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      obj = this[_i];
+      if (obj[key] != null) {
+        dict[obj[key]] = obj;
       }
-      return dict;
-    };
+    }
+    return dict;
+  };
 
-    Array.prototype.where = function(query) {
-      var hit;
-      if (typeof query !== "object") {
-        return [];
-      }
-      hit = Object.keys(query).length;
-      return this.filter(function(item) {
-        var key, match, val;
-        match = 0;
-        for (key in query) {
-          val = query[key];
-          if (item[key] === val) {
-            match += 1;
-          }
+  Array.prototype.where = function(query) {
+    var hit;
+    if (typeof query !== "object") {
+      return [];
+    }
+    hit = Object.keys(query).length;
+    return this.filter(function(item) {
+      var key, match, val, _results;
+      match = 0;
+      _results = [];
+      for (key in query) {
+        val = query[key];
+        if (item[key] === val) {
+          match += 1;
         }
         if (match === hit) {
-          return true;
+          _results.push(true);
         } else {
-          return false;
+          _results.push(false);
         }
-      });
-    };
+      }
+      return _results;
+    });
+  };
 
-    /*
-    	Array::unique = ->
-    		output = {}
-    		output[@[key]] = @[key] for key in [0...@length]
-    		value for key, value of output
-    */
+  Array.prototype.unique = function() {
+    var key, output, value, _i, _ref, _results;
+    output = {};
+    for (key = _i = 0, _ref = this.length; 0 <= _ref ? _i < _ref : _i > _ref; key = 0 <= _ref ? ++_i : --_i) {
+      output[this[key]] = this[key];
+    }
+    _results = [];
+    for (key in output) {
+      value = output[key];
+      _results.push(value);
+    }
+    return _results;
+  };
 
-
+  Oda = (function() {
     function Oda(imgurl, manifest, sounds) {
       var def_manifest, item, sound;
       this.imgurl = imgurl != null ? imgurl : 'imgs/';
