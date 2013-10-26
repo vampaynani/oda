@@ -68,7 +68,7 @@ class U3A4 extends Oda
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U2_A1_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U3_A4_instructions.mp3', id:'instructions'}
 		]
 		@answers = [
 			{a1:0,a2:3,a3:12}

@@ -36,6 +36,15 @@ class U4A2 extends Oda
 			['r', 'b', 'l', 'u', 'e', 'w', 'h', 'a', 'l', 'e']
 		]
 		@answers = [
+			{id: 'seaturtle', line: ['l11','l12','l13','l14','l15','l16','l17','l18','l19']}
+			{id: 'polarbear', line: ['l10','l20','l30','l40','l50','l60','l70','l80','l90']}
+			{id: 'bluewhale', line: ['l91','l92','l93','l94','l95','l96','l97','l98','l99']}
+			{id: 'giantpanda', line: ['l0','l1','l2','l3','l4','l5','l6','l7','l8','l9']}
+			{id: 'dolphin', line: ['l42','l43','l44','l45','l46','l47','l48']}
+			{id: 'gorilla', line: ['l61','l62','l63','l64','l65','l66','l67']}
+			{id: 'jaguar', line: ['l29','l39','l49','l59','l69','l79']}
+			{id: 'eagle', line: ['l41','l51','l61','l71','l81']}
+			{id: 'lion', line: ['l18','l28','l38','l48']}
 		]
 		super null, manifest, sounds
 	setStage: ->
@@ -58,20 +67,24 @@ class U4A2 extends Oda
 		@
 	setSopa: ->
 		j = 0
-		@shapeCanvas = new createjs.Shape()
 		sopa = new createjs.Container()
 		sopa.x = 297
 		sopa.y = 148
 		sopa.name = 'sopa'
+		shapesContainer = new createjs.Container()
+		shapesContainer.name = 'shapesContainer'
+		sopa.addChild shapesContainer
+		@addToLibrary shapesContainer
 		for h in [0..@letters.length - 1] by 1
 			for i in [0..@letters[h].length - 1] by 1
 				letra = new ClickableText "l#{j}", @letters[h][i], "l#{j}", i * 26, h * 26
+				letra.h = h
+				letra.i = i
 				letra.text.font = '20px Arial'
 				letra.text.textAlign = 'center'
 				sopa.addChild letra
 				@addToLibrary letra
 				j++
-		sopa.addChild @shapeCanvas
 		@addToMain sopa
 		@
 	introEvaluation: ->
@@ -91,52 +104,53 @@ class U4A2 extends Oda
 						], 1, {alpha: 0, delay: 1.5}, 0.1
 	initEvaluation: (e) =>
 		super
-		@mainContainer.addEventListener 'mousedown', @initDraw
-	initDraw: (e) =>
-		for i in [0..99] by 1
-			pt = @library["l#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
-			#if @library["l#{i}"].hitTest pt.x, pt.y
-		###
-		if @library['sopa'].hitTest pt.x, pt.y
-		@shapeCanvas.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(0,0,26,26,4)
-		e.addEventListener 'mousemove', (ev)=>
-			console.log 'move'
-			@shapeCanvas.graphics.rr(e.mouseX,e.mouseY,ev.mouseX,ev.mouseY,10)
-			false
-		e.addEventListener 'mouseup', (ev)=>
-			console.log 'end'
-			false
-		###
+		@mainContainer.addEventListener 'mousedown', @evaluateAnswer
 	evaluateAnswer: (e) =>
-		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
+		answer = Array()
+		shape = new createjs.Shape()
+		pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
+		oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
+		i = 0
+		h = 0
+		@library.shapesContainer.addChild shape
+		if oup
+			clktxt = oup.parent
+			if clktxt instanceof ClickableText
+				answer.push clktxt.index
+				pos = x: clktxt.i * 26 - 13, y: clktxt.h * 26, i: clktxt.i, h: clktxt.h
+				shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,26,26,5)
+				e.addEventListener 'mousemove', (ev) =>
+					pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
+					oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
+					if oup
+						clktxt = oup.parent
+						if clktxt instanceof ClickableText
+							i = if Math.abs(clktxt.i - pos.i + 1) is 0 then 1 else Math.abs(clktxt.i - pos.i + 1)
+							h = if Math.abs(clktxt.h - pos.h + 1) is 0 then 1 else Math.abs(clktxt.h - pos.h + 1)
+							npos = w: i * 26, h: h * 26
+							answer.push clktxt.index
+							shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,npos.w,npos.h,5)
+				e.addEventListener 'mouseup', (ev) =>
+					find = off
+					answer = Array()
+					for i in [0..99] by 1
+						if shape.hitTest @library["l#{i}"].x, @library["l#{i}"].y + 13 
+							answer.push @library["l#{i}"].name
+					for obj in @answers
+						if obj.line.toString() is answer.toString()
+							TweenLite.to @library[obj.id], 0.3, {y:@library[obj.id].y - 100, alpha:0, onComplete: @finishEvaluation}
+							find = on
+					@library.shapesContainer.removeChild shape if not find
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		createjs.Sound.play 'good'
+		@nextEvaluation()
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
-		else
+		@library.score.plusOne()
+		if @index >= @answers.length
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
+		@mainContainer.removeEventListener 'mousedown', @evaluateAnswer
+		TweenLite.to @library['sopa'], 1, {y:@library['sopa'].y + 100, alpha:0}
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U4A2 = U4A2

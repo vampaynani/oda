@@ -3,25 +3,25 @@ window.stageSize || = {
 	h: 600
 	r: 1
 }
+
+Array::toDictionary = (key) ->
+	dict = {}
+	dict[obj[key]] = obj for obj in this when obj[key]?
+	dict
+Array::where = (query) ->
+	return [] if typeof query isnt "object"
+	hit = Object.keys(query).length
+	@filter (item) ->
+		match = 0
+		for key, val of query
+			match += 1 if item[key] is val
+			if match is hit then true else false
+Array::unique = ->
+	output = {}
+	output[@[key]] = @[key] for key in [0...@length]
+	value for key, value of output
+
 class Oda
-	Array::toDictionary = (key) ->
-		dict = {}
-		dict[obj[key]] = obj for obj in this when obj[key]?
-		dict
-	Array::where = (query) ->
-    	return [] if typeof query isnt "object"
-    	hit = Object.keys(query).length
-    	@filter (item) ->
-        	match = 0
-        	for key, val of query
-            	match += 1 if item[key] is val
-        	if match is hit then true else false
-	###
-	Array::unique = ->
- 		output = {}
-		output[@[key]] = @[key] for key in [0...@length]
-		value for key, value of output
-	###
 	constructor: ( @imgurl = 'imgs/', manifest, sounds ) ->
 		def_manifest = [
 			{id: 'sg', src: "#{ @imgurl }start_game.png"},
