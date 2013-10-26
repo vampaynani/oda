@@ -49,6 +49,7 @@ class U3A2 extends Oda
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U3_A2_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@game = {
 			common: [

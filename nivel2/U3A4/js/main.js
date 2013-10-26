@@ -219,8 +219,11 @@
           src: 'sounds/good.mp3',
           id: 'good'
         }, {
-          src: 'sounds/TU2_U2_A1_instructions.mp3',
+          src: 'sounds/TU2_U3_A4_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.answers = [
@@ -409,13 +412,13 @@
         _results.push(this.library["t" + i + "n1"].addEventListener('drop', this.evaluateAnswer1));
       }
       return _results;
+
       /*
       		for i in [1..6] by 1
       			@library["t#{i}n2"].addEventListener 'drop', @evaluateAnswer
       		for i in [1..4] by 1
       			@library["t#{i}n3"].addEventListener 'drop', @evaluateAnswer
       */
-
     };
 
     U3A4.prototype.evaluateAnswer1 = function(e) {

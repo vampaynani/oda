@@ -404,6 +404,9 @@
         }, {
           src: 'sounds/TU2_U3_A1_menu4_lunch.mp3',
           id: 'm4l'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.game = {
