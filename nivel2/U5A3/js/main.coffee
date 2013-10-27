@@ -30,10 +30,11 @@ class U5A3 extends Oda
 			{id: 'imageWinter', src:'image_winter.png'}
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U5_A3_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
+		@answers = []
 		@imagenes = [
 			{id: 'imageApril', x:'592', y:'175'}
 			{id: 'imageAugust', x:'495', y:'522'}

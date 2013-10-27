@@ -100,16 +100,17 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
-        }, {
           src: 'sounds/good.mp3',
           id: 'good'
         }, {
           src: 'sounds/TU2_U5_A3_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
+      this.answers = [];
       this.imagenes = [
         {
           id: 'imageApril',

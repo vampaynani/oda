@@ -94,6 +94,7 @@ class U2A3 extends Oda
 			{src:'sounds/TU2_U2_A3_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		super null, manifest, sounds
 	setStage: ->

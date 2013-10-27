@@ -170,11 +170,11 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
-        }, {
           src: 'sounds/TU2_U5_A1_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.positions = {
