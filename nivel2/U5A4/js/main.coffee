@@ -87,6 +87,7 @@ class U5A4 extends Oda
 		]
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U5_A4_instructions.mp3', id:'instructions'}
 		    {src:'sounds/TU2_U5_A4_summer_jennifer.mp3', id:'summerchildjennifer'}
 		    {src:'sounds/TU2_U5_A4_summer_mike.mp3', id:'summerchildmike'}
@@ -96,7 +97,6 @@ class U5A4 extends Oda
 		    {src:'sounds/TU2_U5_A4_winter_mike.mp3', id:'winterchildmike'}
 		    {src:'sounds/TU2_U5_A4_winter_rachel.mp3', id:'winterchildrachel'}
 		    {src:'sounds/TU2_U5_A4_winter_tyler.mp3', id:'winterchildtyler'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@game = 
 			summer:

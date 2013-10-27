@@ -258,6 +258,9 @@
           src: 'sounds/good.mp3',
           id: 'good'
         }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
+        }, {
           src: 'sounds/TU2_U5_A4_instructions.mp3',
           id: 'instructions'
         }, {
@@ -284,9 +287,6 @@
         }, {
           src: 'sounds/TU2_U5_A4_winter_tyler.mp3',
           id: 'winterchildtyler'
-        }, {
-          src: 'sounds/wrong.mp3',
-          id: 'wrong'
         }
       ];
       this.game = {

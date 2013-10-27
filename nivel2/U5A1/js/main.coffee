@@ -56,8 +56,9 @@ class U5A1 extends Oda
 			{id:'cal2Dragble5', src:'cal2/dragble_bike.png'}
 		]
 		sounds = [
-		    {src:'sounds/TU2_U5_A1_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
+		    {src:'sounds/TU2_U5_A1_instructions.mp3', id:'instructions'}
 		]
 		@positions =
 			finales:[
