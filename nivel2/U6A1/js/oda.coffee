@@ -159,6 +159,22 @@ class Oda
 		obj.x = x
 		obj.y = y
 		obj
+	debuggable: (obj) ->
+		KEYCODE_ENTER = 13;
+		KEYCODE_SPACE = 32;
+		KEYCODE_UP = 38;
+		KEYCODE_DOWN = 40;
+		KEYCODE_LEFT = 37;
+		KEYCODE_RIGHT = 39;	
+		@debugged = obj
+		document.addEventListener 'keyup', (e) =>
+			switch e.keyCode
+				when KEYCODE_UP then @debugged.y -= 10
+				when KEYCODE_DOWN then @debugged.y += 10
+				when KEYCODE_LEFT then @debugged.x -= 10
+				when KEYCODE_RIGHT then @debugged.x += 10
+			console.log @debugged.x, @debugged.y
+		obj
 	warning: ->
 		createjs.Sound.play 'boing'
 		TweenMax.to @mainContainer, 0.1, (x: @mainContainer.x + 10, repeat: 6, yoyo: true)

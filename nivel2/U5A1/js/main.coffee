@@ -57,7 +57,7 @@ class U5A1 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U5_A1_instructions.mp3', id:'instructions'}
 		]
 		@positions =
 			finales:[
@@ -93,21 +93,19 @@ class U5A1 extends Oda
 		@insertBitmap 'btnFinished', 'btnFinished', 598, 292
 	
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setCalendar().introEvaluation()
-	setCalendar:  ->
+		@setCalendar(1).introEvaluation()
+	setCalendar: (calendar) ->
 		cal = new createjs.Container()
+		cal.name = 'calendar'
 		cal.x = 60
 		cal.y = 0	
 		@insertBitmap 'propCalendar', 'propCalendar', 60, 128
-
-		calendario = 2
-
 		for i in [1..12]
-			v = @createBitmap 'cal'+calendario+'Final'+i, 'cal'+calendario+'Final'+i, @positions.finales[i-1].x, @positions.finales[i-1].y, 'mc'
+			v = @createBitmap "cal#{calendar}Final#{i}", "cal#{calendar}Final#{i}", @positions.finales[i-1].x, @positions.finales[i-1].y, 'mc'
 			cal.addChild v
 			@addToLibrary v
 		for i in [1..8]
-			v = @createBitmap 'cal'+calendario+'Dragble'+i, 'cal'+calendario+'Dragble'+i, @positions.drags[i-1].x,@positions.drags[i-1].y, 'mc'
+			v = @createBitmap "cal#{calendar}Dragble#{i}", "cal#{calendar}Dragble#{i}", @positions.drags[i-1].x,@positions.drags[i-1].y, 'mc'
 			cal.addChild v
 			@addToLibrary v
 		@addToMain cal
@@ -117,20 +115,12 @@ class U5A1 extends Oda
 		###
 		for i in [1..6] by 1
 			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
+		###
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library['calendar'], 1, {alpha: 0, y: @library['calendar'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY

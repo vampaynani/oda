@@ -9,7 +9,6 @@
     __extends(U5A3, _super);
 
     function U5A3() {
-      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -104,11 +103,13 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
+          src: 'sounds/TU2_U5_A3_instructions.mp3',
           id: 'instructions'
         }
       ];
-      this.answers = [];
       this.imagenes = [
         {
           id: 'imageApril',
@@ -192,6 +193,69 @@
           y: '184'
         }
       ];
+      this.answers = [
+        {
+          txt: 'January',
+          img: 'imageJanuary'
+        }, {
+          txt: 'February',
+          img: 'imageFebruary'
+        }, {
+          txt: 'March',
+          img: 'imageMarch'
+        }, {
+          txt: 'April',
+          img: 'imageApril'
+        }, {
+          txt: 'May',
+          img: 'imageMay'
+        }, {
+          txt: 'June',
+          img: 'imageJune'
+        }, {
+          txt: 'July',
+          img: 'imageJuly'
+        }, {
+          txt: 'August',
+          img: 'imageAugust'
+        }, {
+          txt: 'September',
+          img: 'imageSeptember'
+        }, {
+          txt: 'October',
+          img: 'imageOctober'
+        }, {
+          txt: 'November',
+          img: 'imageNovember'
+        }, {
+          txt: 'December',
+          img: 'imageDecember'
+        }, {
+          txt: 'Spring',
+          img: 'imageSpring'
+        }, {
+          txt: 'Summer',
+          img: 'imageSummer'
+        }, {
+          txt: 'Fall',
+          img: 'imageFall'
+        }, {
+          txt: 'Winter',
+          img: 'imageWinter'
+        }, {
+          txt: 'Easter',
+          img: 'imageEaster'
+        }, {
+          txt: "Valentine's Day",
+          img: 'imageValentine'
+        }, {
+          txt: 'Christmas',
+          img: 'imageChristmas'
+        }, {
+          txt: 'Thanksgiving',
+          img: 'imageThanksgiving'
+        }
+      ];
       U5A3.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -200,125 +264,145 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setQuestion().introEvaluation();
+      return this.setSeasons().introEvaluation();
     };
 
-    U5A3.prototype.setQuestion = function() {
-      var guion, i, img, largo, letra, letras, palabra, seasons, _i, _j;
+    U5A3.prototype.setSeasons = function() {
+      var i, img, seasons, _i;
       seasons = new createjs.Container();
+      seasons.name = 'seasons';
       for (i = _i = 0; _i <= 19; i = ++_i) {
         img = this.createBitmap(this.imagenes[i].id, this.imagenes[i].id, this.imagenes[i].x, this.imagenes[i].y, 'mc');
         img.scaleX = img.scaleY = 0.5;
+        this.addToLibrary(img);
         seasons.addChild(img);
       }
-      largo = 7;
-      letras = new createjs.Container();
-      palabra = new createjs.Container();
-      for (i = _j = 1; 1 <= largo ? _j <= largo : _j >= largo; i = 1 <= largo ? ++_j : --_j) {
-        letra = new createjs.Text('a', '24px Arial', '#333');
-        letra.x = i * 30;
-        letra.y = 0;
-        letras.addChild(letra);
-        guion = new WordContainer('l' + 1, '', '', '#f39234', i * 40, 50, 32, 22);
-        palabra.addChild(guion);
-        this.addToLibrary(guion);
-      }
-      letras.y = palabra.y = 300;
-      palabra.x = stageSize.w / 2 - (largo * 40) / 2;
-      letras.x = stageSize.w / 2 - (largo * 30) / 2;
-      seasons.x = 0;
-      seasons.y = 0;
       this.addToMain(seasons);
-      this.addToMain(palabra);
-      this.addToMain(letras);
       return this;
     };
 
     U5A3.prototype.introEvaluation = function() {
-      return U5A3.__super__.introEvaluation.apply(this, arguments);
-
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
+      U5A3.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      return TweenLite.from(this.library['seasons'], 0.5, {
+        alpha: 0,
+        y: this.library['seasons'].y + 20,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U5A3.prototype.initEvaluation = function(e) {
       U5A3.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      this.answers = this.shuffle(this.answers);
+      return this.setQuestion(this.index);
+    };
+
+    U5A3.prototype.setQuestion = function(question) {
+      var col, i, letra, letras, palabra, wc, _i, _ref;
+      letras = new createjs.Container();
+      palabra = new createjs.Container();
+      col = this.answers[this.index].txt.split('');
+      this.scrambled = this.shuffle(col);
+      for (i = _i = 1, _ref = this.scrambled.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        if (this.scrambled[i - 1] !== ' ') {
+          letra = new DraggableText("t" + i, this.scrambled[i - 1], this.scrambled[i - 1], i * 30, 0);
+          letra.text.font = '20px Arial';
+          letra.addEventListener('drop', this.evaluateAnswer);
+          letra.onInitEvaluation();
+          this.addToLibrary(letra);
+          letras.addChild(letra);
+        }
+        if (col[i - 1] !== ' ') {
+          wc = new WordContainer("l" + i, '', '#FFF', '#f39234', i * 40, 50, 32, 22);
+          wc.index = col[i - 1];
+          this.addToLibrary(wc);
+          palabra.addChild(wc);
+        }
+      }
+      palabra.name = 'palabra';
+      palabra.y = 300;
+      palabra.x = stageSize.w / 2 - this.scrambled.length * 40 / 2 - 50;
+      this.addToMain(palabra);
+      letras.name = 'letras';
+      letras.y = 300;
+      letras.x = stageSize.w / 2 - this.scrambled.length * 30 / 2 - 30;
+      return this.addToMain(letras);
     };
 
     U5A3.prototype.evaluateAnswer = function(e) {
-      var pt;
+      var dropped, i, pt, _i, _ref;
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
+      dropped = false;
+      for (i = _i = 1, _ref = this.scrambled.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        if (this.library["l" + i]) {
+          pt = this.library["l" + i].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+          if (this.library["l" + i].hitTest(pt.x, pt.y)) {
+            if (this.answer.index === this.library["l" + i].index) {
+              this.answer.visible = false;
+              this.library["l" + i].changeText(this.library["l" + i].index);
+              dropped = true;
+            } else {
+              this.warning();
+            }
+          }
         }
-      } else {
+      }
+      if (!dropped) {
         return this.answer.returnToPlace();
+      } else {
+        return this.finishEvaluation();
       }
     };
 
     U5A3.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      var i, _i, _ref;
+      for (i = _i = 1, _ref = this.scrambled.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        if (this.library["l" + i]) {
+          if (this.library["l" + i].text.text === '') {
+            return;
+          }
+        }
+      }
+      createjs.Sound.play('good');
+      TweenLite.to(this.library[this.answers[this.index].img], 1, {
         alpha: 0,
-        y: -200,
+        y: this.library[this.answers[this.index].img].y - 20,
+        ease: Back.easeOut
+      });
+      TweenLite.to(this.library['letras'], 1, {
+        alpha: 0,
+        y: this.library['letras'].y - 20,
+        ease: Back.easeOut
+      });
+      return TweenLite.to(this.library['palabra'], 1, {
+        alpha: 0,
+        y: this.library['palabra'].y - 20,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
       });
-      return this.answer.returnToPlace();
     };
 
     U5A3.prototype.nextEvaluation = function() {
       this.index++;
       if (this.index < this.answers.length) {
         this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
+        return this.setQuestion(this.index);
       } else {
         return this.finish();
       }
     };
 
-    U5A3.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
-    };
-
     U5A3.prototype.finish = function() {
-      var i, _i, _results;
-      U5A3.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U5A3.__super__.finish.apply(this, arguments);
     };
 
     window.U5A3 = U5A3;

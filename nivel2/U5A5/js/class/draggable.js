@@ -8,9 +8,12 @@
       if (position == null) {
         position = 'tl';
       }
+      this.killMe = __bind(this.killMe, this);
       this.blinkAgain = __bind(this.blinkAgain, this);
       this.handleMouseDown = __bind(this.handleMouseDown, this);
+      this.onStopEvaluation = __bind(this.onStopEvaluation, this);
       this.onInitEvaluation = __bind(this.onInitEvaluation, this);
+      this.initDragListener = __bind(this.initDragListener, this);
       this.initialize(name, image, index, x, y, position);
     }
 
@@ -19,40 +22,20 @@
     Draggable.prototype.Container_initialize = Draggable.prototype.initialize;
 
     Draggable.prototype.initialize = function(name, image, index, x, y, position) {
-      if (position == null) {
-        position = 'tl';
-      }
       this.Container_initialize();
       this.name = name;
       this.bitmap = new createjs.Bitmap(image);
       this.index = index;
       this.x = x;
       this.y = y;
+      this.width = image.width;
+      this.height = image.height;
       this.pos = {
         x: x,
         y: y
       };
-      this.addChild(this.bitmap);
-      switch (position) {
-        case 'tc':
-          return this.setReg(this, image.width / 2, 0);
-        case 'tr':
-          return this.setReg(this, image.width, 0);
-        case 'ml':
-          return this.setReg(this, 0, image.height / 2);
-        case 'mc':
-          return this.setReg(this, image.width / 2, image.height / 2);
-        case 'mr':
-          return this.setReg(this, image.width, image.height / 2);
-        case 'bl':
-          return this.setReg(this, 0, image.height);
-        case 'bc':
-          return this.setReg(this, image.width / 2, image.height);
-        case 'br':
-          return this.setReg(this, image.width, image.height);
-        default:
-          return this.setReg(this, 0, 0);
-      }
+      this.inPlace = false;
+      return this.addChild(this.bitmap);
     };
 
     Draggable.prototype.setReg = function(obj, regX, regY) {
@@ -61,9 +44,17 @@
       return obj;
     };
 
-    Draggable.prototype.onInitEvaluation = function() {
-      this.blink(true);
+    Draggable.prototype.initDragListener = function() {
       return this.addEventListener('mousedown', this.handleMouseDown);
+    };
+
+    Draggable.prototype.onInitEvaluation = function() {
+      return this.addEventListener('mousedown', this.handleMouseDown);
+    };
+
+    Draggable.prototype.onStopEvaluation = function() {
+      this.blink(false);
+      return this.removeEventListener('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.handleMouseDown = function(e) {
@@ -77,6 +68,7 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
+      this.alpha = 1;
       e.addEventListener('mousemove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
@@ -111,16 +103,40 @@
       return this.blink(true);
     };
 
+    Draggable.prototype.killMe = function() {
+      TweenLite.killTweensOf(this);
+      return this.parent.removeChild(this);
+    };
+
+    Draggable.prototype.putInPlace = function(position) {
+      this.inPlace = true;
+      return TweenLite.to(this, 1, {
+        ease: Back.easeOut,
+        delay: 0.1,
+        x: position.x,
+        y: position.y,
+        alpha: 1
+      });
+    };
+
     Draggable.prototype.returnToPlace = function() {
-      return TweenLite.to(this, 0.5, {
+      return TweenLite.to(this, 1, {
         ease: Back.easeOut,
         delay: 0.1,
         x: this.pos.x,
         y: this.pos.y,
-        alpha: 1,
-        scaleX: 1,
-        scaleY: 1,
-        onComplete: this.blinkAgain
+        alpha: 1
+      });
+    };
+
+    Draggable.prototype.takeMeOut = function() {
+      return TweenLite.to(this, 0.5, {
+        ease: Linear.easeNone,
+        delay: 0.1,
+        x: this.pos.x,
+        y: this.pos.y,
+        alpha: 0,
+        onComplete: this.killMe
       });
     };
 

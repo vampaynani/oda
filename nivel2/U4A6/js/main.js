@@ -9,7 +9,6 @@
     __extends(U4A6, _super);
 
     function U4A6() {
-      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -148,7 +147,6 @@
           id: 'instructions'
         }
       ];
-      this.answers = [];
       this.preguntas = [
         {
           tipo: 'texto',
@@ -315,19 +313,15 @@
           opcionDos: "lizard",
           respuesta: "opcionUno"
         }, {
-          tipo: 'imagen',
-          pregunta: "It has fins and scales. What is it?",
-          opcionUno: "fish",
-          opcionDos: "parrot",
-          respuesta: "opcionUno"
-        }, {
           tipo: "texto",
+          imagen: "childrenSport",
           pregunta: "We excercise in the",
           opcionUno: "auditorium",
           opcionDos: "gym",
           respuesta: "opcionDos"
         }, {
           tipo: "texto",
+          imagen: "cherries",
           pregunta: "cherries",
           pregunta: "",
           opcionUno: "These are strawberries",
@@ -342,6 +336,7 @@
           respuesta: 'opcionDos'
         }
       ];
+      this.answers = [];
       U4A6.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -349,8 +344,8 @@
       U4A6.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setQuestion(0).setClick(0).introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 27, 0));
+      return this.setQuestion(0).introEvaluation();
     };
 
     U4A6.prototype.setQuestion = function(i) {
@@ -358,6 +353,8 @@
       question = new createjs.Container();
       question.x = 0;
       question.y = 0;
+      question.name = 'question';
+      console.log(this.preguntas[i]);
       if (this.preguntas[i].tipo === 'texto') {
         v = this.createBitmap(this.preguntas[i].imagen, this.preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2 + 30, 'mc');
         v.scaleX = v.scaleY = 0.5;
@@ -387,7 +384,7 @@
         opciones.x = stageSize.w / 2 - total / 2;
         opciones.y = 490;
         question.addChild(opciones);
-      } else if (this.preguntas[i].tipo = 'imagen') {
+      } else if (this.preguntas[i].tipo === 'imagen') {
         text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
         text.name = 'titulo';
         text.x = 200;
@@ -408,45 +405,34 @@
     };
 
     U4A6.prototype.introEvaluation = function() {
-      return U4A6.__super__.introEvaluation.apply(this, arguments);
-
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
+      U4A6.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      return TweenLite.from(this.library['question'], 1, {
+        alpha: 0,
+        y: this.library['question'].y - 20,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U4A6.prototype.initEvaluation = function(e) {
       U4A6.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      return this.setClick(0);
     };
 
     U4A6.prototype.setClick = function(i) {
-      if (this.preguntas[i].tipo = 'texto') {
-        this.library[this.preguntas[i].opcionUno].index = 'opcionUno';
-        this.library[this.preguntas[i].opcionDos].index = 'opcionDos';
-        this.library[this.preguntas[i].opcionUno].addEventListener('click', this.evaluateAnswer);
-        this.library[this.preguntas[i].opcionDos].addEventListener('click', this.evaluateAnswer);
-      } else if (this.preguntas[i].tipo = 'imagen') {
-        this.library[this.preguntas[i].opcionUno] === this.preguntas.index;
-        this.library[this.preguntas[i].opcionDos] === this.preguntas.index;
-        this.library[this.preguntas[i].opcionUno].addEventListener('click', evaluateAnswer);
-        this.library[preguntas[i].opcionDos].addEventListener('click', evaluateAnswer);
-      }
+      this.library[this.preguntas[i].opcionUno].index = 'opcionUno';
+      this.library[this.preguntas[i].opcionDos].index = 'opcionDos';
+      this.library[this.preguntas[i].opcionUno].addEventListener('click', this.evaluateAnswer);
+      this.library[this.preguntas[i].opcionDos].addEventListener('click', this.evaluateAnswer);
       return this;
     };
 
@@ -455,81 +441,71 @@
       if (this.answer.index === this.preguntas[this.index].respuesta) {
         createjs.Sound.play('good');
         this.library['score'].plusOne();
-        if (this.preguntas[this.index].tipo = 'texto') {
-          TweenLite.to(this.library[this.preguntas[this.index].opcionUno], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut
-          });
-          TweenLite.to(this.library[this.preguntas[this.index].opcionDos], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut
-          });
-          TweenLite.to(this.library['titulo'], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut
-          });
-          TweenLite.to(this.library['diagonal'], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut
-          });
-          return TweenLite.to(this.library[this.preguntas[this.index].imagen], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut,
-            onComplete: this.nextEvaluation
-          });
-        } else if (this.preguntas[this.index].tipo = 'imagen') {
-          TweenLite.to(this.library[this.preguntas[this.index].opcionDos], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut
-          });
-          return TweenLite.to(this.library[this.preguntas[this.index].opcionUno], 0.5, {
-            alpha: 0,
-            y: stageSize.h,
-            ease: Back.easeOut
-          });
-        }
+        return this.finishEvaluation();
       } else {
         return this.warning();
       }
     };
 
-    U4A6.prototype.finishEvaluation = function() {};
+    U4A6.prototype.finishEvaluation = function() {
+      if (this.preguntas[this.index].tipo === 'texto') {
+        TweenLite.to(this.library[this.preguntas[this.index].opcionUno], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut
+        });
+        TweenLite.to(this.library[this.preguntas[this.index].opcionDos], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut
+        });
+        TweenLite.to(this.library['titulo'], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut
+        });
+        TweenLite.to(this.library['diagonal'], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut
+        });
+        return TweenLite.to(this.library[this.preguntas[this.index].imagen], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut,
+          onComplete: this.nextEvaluation
+        });
+      } else if (this.preguntas[this.index].tipo === 'imagen') {
+        TweenLite.to(this.library['titulo'], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut,
+          onComplete: this.nextEvaluation
+        });
+        TweenLite.to(this.library[this.preguntas[this.index].opcionDos], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut
+        });
+        return TweenLite.to(this.library[this.preguntas[this.index].opcionUno], 0.5, {
+          alpha: 0,
+          y: stageSize.h,
+          ease: Back.easeOut
+        });
+      }
+    };
 
     U4A6.prototype.nextEvaluation = function() {
       this.index++;
-      this.setQuestion(this.index);
-      this.library['score'].updateCount(this.index);
-      if (this.preguntas[this.index].tipo = 'texto') {
-        this.library[this.preguntas[this.index].opcionUno].index = 'opcionUno';
-        this.library[this.preguntas[this.index].opcionDos].index = 'opcionDos';
-        this.library[this.preguntas[this.index].opcionUno].addEventListener('click', this.evaluateAnswer);
-        return this.library[this.preguntas[this.index].opcionDos].addEventListener('click', this.evaluateAnswer);
-      } else if (this.preguntas[this.index].tipo = 'imagen') {
-        this.library[this.preguntas[this.index].opcionUno] === this.preguntas.index;
-        this.library[this.preguntas[this.index].opcionDos] === this.preguntas.index;
-        this.library[this.preguntas[this.index].opcionUno].addEventListener('click', evaluateAnswer);
-        return this.library[preguntas[this.index].opcionDos].addEventListener('click', evaluateAnswer);
+      if (this.index < this.preguntas.length) {
+        return this.setQuestion(this.index).setClick(this.index);
+      } else {
+        return this.finish();
       }
-    };
-
-    U4A6.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
     };
 
     U4A6.prototype.finish = function() {
-      var i, _i, _results;
-      U4A6.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(true));
-      }
-      return _results;
+      return U4A6.__super__.finish.apply(this, arguments);
     };
 
     window.U4A6 = U4A6;

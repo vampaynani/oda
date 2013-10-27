@@ -173,7 +173,7 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/TU2_U5_A1_instructions.mp3',
           id: 'instructions'
         }
       ];
@@ -255,23 +255,23 @@
       this.insertBitmap('btnRepeat', 'btnRepeat', 598, 245);
       this.insertBitmap('btnFinished', 'btnFinished', 598, 292);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setCalendar().introEvaluation();
+      return this.setCalendar(1).introEvaluation();
     };
 
-    U5A1.prototype.setCalendar = function() {
-      var cal, calendario, i, v, _i, _j;
+    U5A1.prototype.setCalendar = function(calendar) {
+      var cal, i, v, _i, _j;
       cal = new createjs.Container();
+      cal.name = 'calendar';
       cal.x = 60;
       cal.y = 0;
       this.insertBitmap('propCalendar', 'propCalendar', 60, 128);
-      calendario = 2;
       for (i = _i = 1; _i <= 12; i = ++_i) {
-        v = this.createBitmap('cal' + calendario + 'Final' + i, 'cal' + calendario + 'Final' + i, this.positions.finales[i - 1].x, this.positions.finales[i - 1].y, 'mc');
+        v = this.createBitmap("cal" + calendar + "Final" + i, "cal" + calendar + "Final" + i, this.positions.finales[i - 1].x, this.positions.finales[i - 1].y, 'mc');
         cal.addChild(v);
         this.addToLibrary(v);
       }
       for (i = _j = 1; _j <= 8; i = ++_j) {
-        v = this.createBitmap('cal' + calendario + 'Dragble' + i, 'cal' + calendario + 'Dragble' + i, this.positions.drags[i - 1].x, this.positions.drags[i - 1].y, 'mc');
+        v = this.createBitmap("cal" + calendar + "Dragble" + i, "cal" + calendar + "Dragble" + i, this.positions.drags[i - 1].x, this.positions.drags[i - 1].y, 'mc');
         cal.addChild(v);
         this.addToLibrary(v);
       }
@@ -280,31 +280,31 @@
     };
 
     U5A1.prototype.introEvaluation = function() {
-      return U5A1.__super__.introEvaluation.apply(this, arguments);
-
+      U5A1.__super__.introEvaluation.apply(this, arguments);
       /*
       		for i in [1..6] by 1
       			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
       */
+
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      return TweenLite.from(this.library['calendar'], 1, {
+        alpha: 0,
+        y: this.library['calendar'].y + 20,
+        delay: 1.5,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U5A1.prototype.initEvaluation = function(e) {
-      U5A1.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      return U5A1.__super__.initEvaluation.apply(this, arguments);
     };
 
     U5A1.prototype.evaluateAnswer = function(e) {

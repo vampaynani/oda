@@ -31,9 +31,8 @@ class U5A3 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
-		]
-		@answers = [	
+			{src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/TU2_U5_A3_instructions.mp3', id:'instructions'}
 		]
 		@imagenes = [
 			{id: 'imageApril', x:'592', y:'175'}
@@ -57,7 +56,28 @@ class U5A3 extends Oda
 			{id: 'imageValentine', x:'205', y:'251'}
 			{id: 'imageWinter', x:'304', y:'184'}
 		]
-
+		@answers = [
+			{txt:'January',img:'imageJanuary'}
+			{txt:'February',img:'imageFebruary'}
+			{txt:'March',img:'imageMarch'}
+			{txt:'April',img:'imageApril'}
+			{txt:'May',img:'imageMay'}
+			{txt:'June',img:'imageJune'}
+			{txt:'July',img:'imageJuly'}
+			{txt:'August',img:'imageAugust'}
+			{txt:'September',img:'imageSeptember'}
+			{txt:'October',img:'imageOctober'}
+			{txt:'November',img:'imageNovember'}
+			{txt:'December',img:'imageDecember'}
+			{txt:'Spring',img:'imageSpring'}
+			{txt:'Summer',img:'imageSummer'}
+			{txt:'Fall',img:'imageFall'}
+			{txt:'Winter',img:'imageWinter'}
+			{txt:'Easter',img:'imageEaster'}
+			{txt:"Valentine's Day",img:'imageValentine'}
+			{txt:'Christmas',img:'imageChristmas'}
+			{txt:'Thanksgiving',img:'imageThanksgiving'}
+		]
 		super null, manifest, sounds
 	setStage: ->
 		super
@@ -65,87 +85,82 @@ class U5A3 extends Oda
 		@insertBitmap 'instructions', 'inst', 20, 100
 	
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setQuestion().introEvaluation()
-	setQuestion:  ->
+		@setSeasons().introEvaluation()
+	setSeasons: ->
 		seasons = new createjs.Container()
-
+		seasons.name = 'seasons'
 		for i in [0..19]
 			img = @createBitmap @imagenes[i].id, @imagenes[i].id, @imagenes[i].x, @imagenes[i].y, 'mc'
 			img.scaleX = img.scaleY = 0.5
+			@addToLibrary img
 			seasons.addChild img
-
-		largo = 7
-		letras = new createjs.Container()
-		palabra = new createjs.Container()
-
-		for i in [1..largo]
-			letra = new createjs.Text 'a','24px Arial','#333'
-			letra.x = (i*30)
-			letra.y = 0
-			letras.addChild letra
-
-			guion = new WordContainer 'l'+1, '', '', '#f39234', (i*40), 50, 32, 22
-			palabra.addChild guion
-			@addToLibrary guion
-
-		letras.y = palabra.y = 300
-		palabra.x = stageSize.w / 2 - (largo * 40)/2
-		letras.x = stageSize.w / 2 - (largo * 30)/2
-		seasons.x = 0
-		seasons.y = 0
 		@addToMain seasons
-		@addToMain palabra
-		@addToMain letras
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library['seasons'], 0.5, {alpha: 0, y: @library['seasons'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		@answers = @shuffle @answers
+		@setQuestion @index
+	setQuestion: (question) ->
+		letras = new createjs.Container()
+		palabra = new createjs.Container()
+		col = @answers[@index].txt.split ''
+		@scrambled = @shuffle col
+		for i in [1..@scrambled.length]
+			if @scrambled[i - 1] isnt ' '
+				letra = new DraggableText "t#{i}", @scrambled[i - 1], @scrambled[i - 1], i * 30, 0
+				letra.text.font = '20px Arial'
+				letra.addEventListener 'drop', @evaluateAnswer
+				letra.onInitEvaluation()
+				@addToLibrary letra
+				letras.addChild letra
+			if col[i - 1] isnt ' '
+				wc = new WordContainer "l#{i}", '', '#FFF','#f39234', i * 40, 50, 32, 22
+				wc.index = col[i - 1]
+				@addToLibrary wc
+				palabra.addChild wc
+		palabra.name = 'palabra'
+		palabra.y = 300
+		palabra.x = stageSize.w / 2 - @scrambled.length * 40 / 2 - 50
+		@addToMain palabra
+		letras.name = 'letras'
+		letras.y = 300
+		letras.x = stageSize.w / 2 - @scrambled.length * 30 / 2 - 30
+		@addToMain letras
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
+		dropped = off
+		for i in [1..@scrambled.length]
+			if @library["l#{i}"]
+				pt = @library["l#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
+				if @library["l#{i}"].hitTest pt.x, pt.y
+					if @answer.index is @library["l#{i}"].index
+						@answer.visible = off
+						@library["l#{i}"].changeText @library["l#{i}"].index
+						dropped = on
+					else
+						@warning()
+		if not dropped then @answer.returnToPlace() else @finishEvaluation()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		for i in [1..@scrambled.length]
+			if @library["l#{i}"]
+				if @library["l#{i}"].text.text is ''
+					return
+		createjs.Sound.play 'good'
+		TweenLite.to @library[@answers[@index].img], 1, {alpha: 0, y: @library[@answers[@index].img].y - 20, ease: Back.easeOut}
+		TweenLite.to @library['letras'], 1, {alpha: 0, y: @library['letras'].y - 20, ease: Back.easeOut}
+		TweenLite.to @library['palabra'], 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+			@library['score'].updateCount @index
+			@setQuestion @index
 		else
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U5A3 = U5A3
