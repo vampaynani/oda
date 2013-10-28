@@ -37,13 +37,13 @@ class U1A1 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@insertSprite 'characters', ['p1','p2','p3','p4','p5'], null, stageSize.w / 2, 215, 'mc'
+		@insertSprite 'characters', ['p1','p2','p3','p4','p5'], null, stageSize.w / 2, 235, 'mc'
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setDropper().setNube1().setNube2().setNube3().introEvaluation()
 	setDropper: ->
 		dropper = new createjs.Container()
 		dropper.x = stageSize.w / 2 - 205
-		dropper.y = @library['characters'].y + 80
+		dropper.y = @library['characters'].y + 60
 		dropper.name = 'dropper'
 		back = @createBitmap 'backDropper','gg', 0, 0
 		h1 = new WordContainer 'h1', '', '#fef2e7', '#f39234', 14, 62, 90, 22
