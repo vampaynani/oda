@@ -22,6 +22,7 @@ class U4A2 extends Oda
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U4_A2_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@letters = [
 			['g', 'i', 'a', 'n', 't', 'p', 'a', 'n', 'd', 'a']

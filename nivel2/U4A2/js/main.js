@@ -75,6 +75,9 @@
         }, {
           src: 'sounds/TU2_U4_A2_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.letters = [['g', 'i', 'a', 'n', 't', 'p', 'a', 'n', 'd', 'a'], ['p', 's', 'e', 'a', 't', 'u', 'r', 't', 'l', 'e'], ['o', 'u', 's', 'q', 'f', 'a', 't', 'y', 'i', 'j'], ['l', 'g', 'e', 'x', 'k', 'e', 'j', 'd', 'o', 'a'], ['a', 'e', 'd', 'o', 'l', 'p', 'h', 'i', 'n', 'g'], ['r', 'a', 'n', 'h', 'y', 'j', 'i', 'n', 'b', 'u'], ['b', 'g', 'o', 'r', 'i', 'l', 'l', 'a', 't', 'a'], ['e', 'l', 'k', 'd', 'o', 'z', 'p', 'l', 'n', 'r'], ['a', 'e', 'o', 'f', 'e', 'a', 'd', 'o', 'f', 'l'], ['r', 'b', 'l', 'u', 'e', 'w', 'h', 'a', 'l', 'e']];

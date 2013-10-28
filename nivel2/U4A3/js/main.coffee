@@ -33,6 +33,7 @@ class U4A3 extends Oda
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/TU2_U4_A3_instructions.mp3', id:'instructions'}
 		    {src:'sounds/TU2_U4_A3_animals.mp3', id:'animals'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@letra = [
 			'Animals, animals everywhere!',	

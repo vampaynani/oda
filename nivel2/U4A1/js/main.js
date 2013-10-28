@@ -299,6 +299,9 @@
         }, {
           id: 'zebra',
           src: 'sounds/zebra.mp3'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.animals = [
