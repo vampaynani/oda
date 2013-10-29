@@ -399,6 +399,28 @@
     };
 
     U1A1.prototype.finish = function() {
+      TweenLite.to(this.library['dropper'], 1, {
+        alpha: 0,
+        y: this.library['dropper'].y + 20,
+        delay: 0.2
+      });
+      TweenLite.to(this.library['nube1'], 1, {
+        alpha: 0,
+        y: this.library['nube1'].y + 20,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['nube2'], 1, {
+        alpha: 0,
+        y: this.library['nube2'].y + 20,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['nube3'], 1, {
+        alpha: 0,
+        y: this.library['nube3'].y + 20,
+        delay: 0.1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
       return U1A1.__super__.finish.apply(this, arguments);
     };
 
