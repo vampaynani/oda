@@ -160,7 +160,7 @@ class Oda
 		TweenMax.to @mainContainer, 0.1, (x: @mainContainer.x + 10, repeat: 6, yoyo: true, onComplete:@warningComplete)
 		@
 	warningComplete: =>
-		@mainContainer.x = @stage.canvas.width / 2	
+		@mainContainer.x = @stage.canvas.width / 2 
 	resize: ->
 		w = window.innerWidth
 		h = window.innerHeight
