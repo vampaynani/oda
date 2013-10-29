@@ -239,6 +239,7 @@
       if (position == null) {
         position = 'tl';
       }
+      console.log(imgs);
       spriteImgs = (function() {
         var _i, _len, _results;
         _results = [];
@@ -248,8 +249,10 @@
         }
         return _results;
       }).call(this);
+      console.log(spriteImgs);
       w = spriteImgs[0].width;
       h = spriteImgs[0].height;
+      console.log(w, h);
       sprite = new createjs.SpriteSheet({
         images: spriteImgs,
         animations: anim,
@@ -421,6 +424,7 @@
     };
 
     Oda.prototype.setReg = function(obj, regX, regY) {
+      console.log(obj, regX, regY);
       obj.regX = regX;
       obj.regY = regY;
       return obj;

@@ -171,31 +171,31 @@
           id: 'good'
         }, {
           src: 'sounds/TU2_U1_A6_bass.mp3',
-          id: 'bass'
+          id: 'sbass'
         }, {
           src: 'sounds/TU2_U1_A6_drum.mp3',
-          id: 'drum'
+          id: 'sdrum'
         }, {
           src: 'sounds/TU2_U1_A6_flute.mp3',
-          id: 'flute'
+          id: 'sflute'
         }, {
           src: 'sounds/TU2_U1_A6_guitar.mp3',
-          id: 'guitar'
+          id: 'sguitar'
         }, {
           src: 'sounds/TU2_U1_A6_piano.mp3',
-          id: 'piano'
+          id: 'spiano'
         }, {
           src: 'sounds/TU2_U1_A6_saxophone.mp3',
-          id: 'saxophone'
+          id: 'ssaxophone'
         }, {
           src: 'sounds/TU2_U1_A6_tambourine.mp3',
-          id: 'tambourine'
+          id: 'stambourine'
         }, {
           src: 'sounds/TU2_U1_A6_trumpet.mp3',
-          id: 'trumpet'
+          id: 'strumpet'
         }, {
           src: 'sounds/TU2_U1_A6_violin.mp3',
-          id: 'violin'
+          id: 'sviolin'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
@@ -597,7 +597,7 @@
         }
         if (ready) {
           this.instrument = instrument;
-          snd = createjs.Sound.play(instrument);
+          snd = createjs.Sound.play("s" + instrument);
           snd.addEventListener('complete', this.finishEvaluation);
           this.answers[instrument].r = true;
           return this.library['score'].plusOne();

@@ -113,10 +113,13 @@ class Oda
 		@addToMain bmp
 		bmp
 	createSprite: (name, imgs, anim=null, x, y, position = 'tl') ->
+		console.log imgs
 		spriteImgs = for img in imgs
 			@preload.getResult img
+		console.log spriteImgs
 		w = spriteImgs[0].width
 		h = spriteImgs[0].height
+		console.log w, h
 		sprite = new createjs.SpriteSheet (images: spriteImgs, animations: anim, frames: {width: w, height: h})
 		animation = new createjs.BitmapAnimation sprite
 		animation.x = x
@@ -199,6 +202,7 @@ class Oda
 		Array.isArray value || (value) ->
 			{}.toString.call( value ) is '[object Array]'
 	setReg: (obj, regX, regY) ->
+		console.log obj, regX, regY
 		obj.regX = regX
 		obj.regY = regY
 		obj

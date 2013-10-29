@@ -53,15 +53,15 @@ class U1A6 extends Oda
 			{src:'sounds/TU2_U1_A6_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U1_A6_bass.mp3', id:'bass'}
-		    {src:'sounds/TU2_U1_A6_drum.mp3', id:'drum'}
-		    {src:'sounds/TU2_U1_A6_flute.mp3', id:'flute'}
-		    {src:'sounds/TU2_U1_A6_guitar.mp3', id:'guitar'}
-		    {src:'sounds/TU2_U1_A6_piano.mp3', id:'piano'}
-		    {src:'sounds/TU2_U1_A6_saxophone.mp3', id:'saxophone'}
-		    {src:'sounds/TU2_U1_A6_tambourine.mp3', id:'tambourine'}
-		    {src:'sounds/TU2_U1_A6_trumpet.mp3', id:'trumpet'}
-		    {src:'sounds/TU2_U1_A6_violin.mp3', id:'violin'}
+		    {src:'sounds/TU2_U1_A6_bass.mp3', id:'sbass'}
+		    {src:'sounds/TU2_U1_A6_drum.mp3', id:'sdrum'}
+		    {src:'sounds/TU2_U1_A6_flute.mp3', id:'sflute'}
+		    {src:'sounds/TU2_U1_A6_guitar.mp3', id:'sguitar'}
+		    {src:'sounds/TU2_U1_A6_piano.mp3', id:'spiano'}
+		    {src:'sounds/TU2_U1_A6_saxophone.mp3', id:'ssaxophone'}
+		    {src:'sounds/TU2_U1_A6_tambourine.mp3', id:'stambourine'}
+		    {src:'sounds/TU2_U1_A6_trumpet.mp3', id:'strumpet'}
+		    {src:'sounds/TU2_U1_A6_violin.mp3', id:'sviolin'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}	
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
@@ -238,7 +238,7 @@ class U1A6 extends Oda
 					ready = false
 			if ready
 				@instrument = instrument
-				snd = createjs.Sound.play instrument
+				snd = createjs.Sound.play "s#{instrument}"
 				snd.addEventListener 'complete', @finishEvaluation
 				@answers[instrument].r = on
 				@library['score'].plusOne()
