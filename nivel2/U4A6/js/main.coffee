@@ -47,8 +47,6 @@ class U4A6 extends Oda
 		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@answers = [	
-		]
 		@preguntas = [
 			{tipo:'texto', imagen:'toastMilkJuice', pregunta:"What's for breakfast?", opcionUno:'Cereal. milk and juice', opcionDos:'Toast, milk and juice', respuesta:"opcionDos"}
 			{tipo:'texto', imagen:'zebras', pregunta:'Do zebras live in the grasslands?', opcionUno:'Yes, they do.', opcionDos:"No, they don't.", respuesta:"opcionUno"}
@@ -74,30 +72,27 @@ class U4A6 extends Oda
 			{tipo:"texto", imagen:"polarBear", pregunta:"Where do the polar bears live?", opcionUno:"In the forest", opcionDos:"On the ice", respuesta:"opcionDos"}
 			{tipo:'texto', imagen:"monkeys", pregunta:"Do monkeys have fins?", opcionUno:"Yes, they do", opcionDos:"No, they don't", respuesta:"opcionDos"}
 			{tipo:'imagen', pregunta:"It lives in the desert. It can carry water in it's humps", opcionUno:"camel", opcionDos:"lizard", respuesta:"opcionUno"}
-			{tipo:'imagen', pregunta:"It has fins and scales. What is it?", opcionUno:"fish", opcionDos:"parrot", respuesta:"opcionUno"}
-			{tipo:"texto", pregunta:"We excercise in the", opcionUno:"auditorium", opcionDos:"gym", respuesta:"opcionDos"}
-			{tipo:"texto", pregunta:"cherries", pregunta:"", opcionUno:"These are strawberries", opcionDos:"These are cherries", respuesta:"opcionDos"}
-
-
+			{tipo:"texto", imagen:"childrenSport", pregunta:"We excercise in the", opcionUno:"auditorium", opcionDos:"gym", respuesta:"opcionDos"}
+			{tipo:"texto", imagen:"cherries", pregunta:"cherries", pregunta:"", opcionUno:"These are strawberries", opcionDos:"These are cherries", respuesta:"opcionDos"}
 			{tipo:'texto', imagen:"frogelephant", pregunta:"It can't jump", opcionUno:"Frog", opcionDos:"Elephant", respuesta:'opcionDos' }
 		]
-
+		@answers = []
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-
-		@setQuestion(0).setClick(0).introEvaluation()
-
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 27, 0
+		@setQuestion(0).introEvaluation()
 	setQuestion: (i) ->
 		question = new createjs.Container()
 		question.x = 0
-		question.y = 0	
-		
-		if @preguntas[i].tipo == 'texto'
+		question.y = 0
+		question.name = 'question'
+		console.log @preguntas[i]
+
+		if @preguntas[i].tipo is 'texto'
 			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'
 			v.scaleX = v.scaleY = 0.5
 			question.addChild v
@@ -133,7 +128,7 @@ class U4A6 extends Oda
 			opciones.x = stageSize.w / 2 - total / 2;
 			opciones.y = 490;
 			question.addChild opciones
-		else if @preguntas[i].tipo = 'imagen'
+		else if @preguntas[i].tipo is 'imagen'
 			text = new createjs.Text @preguntas[i].pregunta,'24px Arial','#333'
 			text.name = 'titulo'
 			text.x = 200
@@ -154,73 +149,43 @@ class U4A6 extends Oda
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library['question'], 1, {alpha:0, y: @library['question'].y - 20, delay: 1, onComplete:@playInstructions, onCompleteParams:[@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		@setClick 0
 	setClick: (i) =>
-
-		if @preguntas[i].tipo = 'texto'
-			@library[@preguntas[i].opcionUno].index = 'opcionUno'
-			@library[@preguntas[i].opcionDos].index = 'opcionDos'
-			@library[@preguntas[i].opcionUno].addEventListener 'click', @evaluateAnswer
-			@library[@preguntas[i].opcionDos].addEventListener 'click', @evaluateAnswer
-		else if @preguntas[i].tipo = 'imagen'
-			@library[@preguntas[i].opcionUno] is @preguntas.index
-			@library[@preguntas[i].opcionDos] is @preguntas.index
-			@library[@preguntas[i].opcionUno].addEventListener 'click', evaluateAnswer
-			@library[preguntas[i].opcionDos].addEventListener 'click', evaluateAnswer
+		@library[@preguntas[i].opcionUno].index = 'opcionUno'
+		@library[@preguntas[i].opcionDos].index = 'opcionDos'
+		@library[@preguntas[i].opcionUno].addEventListener 'click', @evaluateAnswer
+		@library[@preguntas[i].opcionDos].addEventListener 'click', @evaluateAnswer
 		@
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		if @answer.index is @preguntas[@index].respuesta
 			createjs.Sound.play 'good'
 			@library['score'].plusOne()
-
-			if @preguntas[@index].tipo = 'texto'			
-				TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
-				TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
-				TweenLite.to @library['titulo'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
-				TweenLite.to @library['diagonal'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}				
-				TweenLite.to @library[@preguntas[@index].imagen], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}			
-			else if @preguntas[@index].tipo = 'imagen'
-				TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
-				TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
+			@finishEvaluation()
 		else
 			@warning()
-
 	finishEvaluation: =>
+		if @preguntas[@index].tipo is 'texto'			
+			TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
+			TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
+			TweenLite.to @library['titulo'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
+			TweenLite.to @library['diagonal'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}				
+			TweenLite.to @library[@preguntas[@index].imagen], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}			
+		else if @preguntas[@index].tipo is 'imagen'
+			TweenLite.to @library['titulo'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
+			TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
+			TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
 	nextEvaluation: =>
-		@index++		
-		@setQuestion(@index)
-		@library['score'].updateCount( @index )
-		if @preguntas[@index].tipo = 'texto'
-			@library[@preguntas[@index].opcionUno].index = 'opcionUno'
-			@library[@preguntas[@index].opcionDos].index = 'opcionDos'
-			@library[@preguntas[@index].opcionUno].addEventListener 'click', @evaluateAnswer
-			@library[@preguntas[@index].opcionDos].addEventListener 'click', @evaluateAnswer
-		else if @preguntas[@index].tipo = 'imagen'
-			@library[@preguntas[@index].opcionUno] is @preguntas.index
-			@library[@preguntas[@index].opcionDos] is @preguntas.index
-			@library[@preguntas[@index].opcionUno].addEventListener 'click', evaluateAnswer
-			@library[preguntas[@index].opcionDos].addEventListener 'click', evaluateAnswer
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
+		@index++
+		if @index < @preguntas.length
+			@setQuestion(@index).setClick(@index)
+		else
+			@finish()
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink on
 	window.U4A6 = U4A6

@@ -9,7 +9,7 @@
     __extends(U5A5, _super);
 
     function U5A5() {
-      this.repeatSound = __bind(this.repeatSound, this);
+      this.finish = __bind(this.finish, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -95,95 +95,88 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
-        }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
-          id: 'instructions'
+          src: 'sounds/good.mp3',
+          id: 'good'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
+        }, {
+          src: 'sounds/TU2_U5_A5_instructions.mp3',
+          id: 'instructions'
+        }, {
+          src: 'sounds/TU2_U5_A5_scene1.mp3',
+          id: 'scene1'
+        }, {
+          src: 'sounds/TU2_U5_A5_scene2.mp3',
+          id: 'scene2'
+        }
+      ];
+      this.game = [
+        {
+          texts: [
+            {
+              idx: 3,
+              t: "Outside it's snowing hard!"
+            }, {
+              idx: 4,
+              t: 'She is watching the weather report on TV'
+            }, {
+              idx: 1,
+              t: 'He is drinking hot chocolate and petting his dog, Bo.'
+            }, {
+              idx: 2,
+              t: "Its windy and cold, but it isn't snowing"
+            }
+          ],
+          positions: [
+            {
+              x: '101',
+              y: '160'
+            }, {
+              x: '335',
+              y: '171'
+            }, {
+              x: '106',
+              y: '375'
+            }, {
+              x: '320',
+              y: '373'
+            }
+          ]
+        }, {
+          texts: [
+            {
+              idx: 8,
+              t: "Phil and Bo sit in the living room."
+            }, {
+              idx: 7,
+              t: 'He puts on his snow pants, sweater, coat and boats.'
+            }, {
+              idx: 5,
+              t: 'Phil jumps up and down and claps his hands.'
+            }, {
+              idx: 6,
+              t: "Phil calls his friend Jack on the phone"
+            }
+          ],
+          positions: [
+            {
+              x: '101',
+              y: '160'
+            }, {
+              x: '335',
+              y: '171'
+            }, {
+              x: '106',
+              y: '375'
+            }, {
+              x: '320',
+              y: '373'
+            }
+          ]
         }
       ];
       this.answers = [];
-      this.preguntas = [
-        {
-          tipo: 'texto',
-          imagen: 'toastMilkJuice',
-          pregunta: "What's for breakfast?",
-          opcionUno: 'Cereal. milk and juice',
-          opcionDos: 'Toast, milk and juice'
-        }, {
-          tipo: 'texto',
-          imagen: 'zebras',
-          pregunta: 'Do zebras live in the grasslands?',
-          opcionUno: 'Yes, they do.',
-          opcionDos: "No, they don't."
-        }, {
-          tipo: 'imagen',
-          pregunta: 'It has fins and scales. What is it?',
-          opcionUno: 'fish',
-          opcionDos: 'parrot'
-        }, {
-          tipo: 'imagen',
-          pregunta: 'This animal is endangered',
-          opcionUno: 'rhino',
-          opcionDos: 'snake'
-        }
-      ];
-      this.positions = {
-        p1: [
-          {
-            x: '231',
-            y: '260'
-          }, {
-            x: '465',
-            y: '271'
-          }, {
-            x: '236',
-            y: '475'
-          }, {
-            x: '450',
-            y: '473'
-          }, {
-            x: '231',
-            y: '260'
-          }, {
-            x: '455',
-            y: '261'
-          }, {
-            x: '226',
-            y: '475'
-          }, {
-            x: '450',
-            y: '473'
-          }
-        ]
-      };
-      this.texto = {
-        t1: [
-          {
-            uno: "Outside it's snowing hard!"
-          }, {
-            uno: 'She is watching the weather report on TV'
-          }, {
-            uno: 'He is drinking hot chocolate and petting his dog, Bo.'
-          }, {
-            uno: "Its windy and cold, but it isn't snowing"
-          }
-        ],
-        t2: [
-          {
-            uno: "Phil and Bo sit in the living room."
-          }, {
-            uno: 'He puts on his snow pants, sweater, coat and boats.'
-          }, {
-            uno: 'Phil jumps up and down and claps his hands.'
-          }, {
-            uno: "Phil calls his friend Jack on the phone"
-          }
-        ]
-      };
       U5A5.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -191,122 +184,159 @@
       U5A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('title1', 'title1', 350, 120, 'tc');
-      this.insertBitmap('btn', 'btn', 760, 520, 'tc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setCuento().introEvaluation();
+      this.insertBitmap('title', 'title1', 350, 125, 'tc');
+      this.insertBitmap('btnnext', 'btn', 760, 520, 'tc');
+      this.library['btnnext'].visible = false;
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      return this.setCuento(1).introEvaluation();
     };
 
-    U5A5.prototype.setCuento = function() {
-      var cuento, i, m, text, _i, _j, _k, _l;
+    U5A5.prototype.setCuento = function(scene) {
+      var cuento, i, m, t, _i, _j, _ref, _ref1;
       cuento = new createjs.Container();
-      for (i = _i = 1; _i <= 4; i = ++_i) {
-        m = this.createSprite(i + 'imagen', [i, i + 'b'], null, this.positions.p1[i - 1].x, this.positions.p1[i - 1].y, 'mc');
+      cuento.name = 'cuento';
+      this.scene = scene;
+      for (i = _i = 1, _ref = this.game[scene - 1].positions.length; _i <= _ref; i = _i += 1) {
+        m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i), "" + ((scene - 1) * 4 + i) + "b"], null, this.game[scene - 1].positions[i - 1].x, this.game[scene - 1].positions[i - 1].y);
+        m.index = (scene - 1) * 4 + i;
         cuento.addChild(m);
         this.addToLibrary(m);
       }
-      for (i = _j = 1; _j <= 4; i = ++_j) {
-        text = new DraggableText(this.texto.t1[i - 1].uno, this.texto.t1[i - 1].uno, i, 620, (i * 60) + 200);
-        cuento.addChild(text);
-      }
-      for (i = _k = 5; _k <= 8; i = ++_k) {
-        m = this.createSprite(i + 'imagen', [i, i + 'b'], null, this.positions.p1[i - 1].x, this.positions.p1[i - 1].y, 'mc');
-        cuento.addChild(m);
-        this.addToLibrary(m);
-      }
-      for (i = _l = 1; _l <= 4; i = ++_l) {
-        text = new DraggableText(this.texto.t2[i - 1].uno, this.texto.t2[i - 1].uno, i, 620, (i * 60) + 200);
-        cuento.addChild(text);
+      for (i = _j = 1, _ref1 = this.game[scene - 1].texts.length; _j <= _ref1; i = _j += 1) {
+        t = new DraggableText("t" + i, this.game[scene - 1].texts[i - 1].t, this.game[scene - 1].texts[i - 1].idx, 700, i * 60 + 200);
+        t.text.lineHeight = 20;
+        t.text.lineWidth = 200;
+        t.text.textAlign = 'center';
+        t.setHitArea();
+        this.addToLibrary(t);
+        cuento.addChild(t);
       }
       this.addToMain(cuento);
       return this;
     };
 
     U5A5.prototype.introEvaluation = function() {
-      return U5A5.__super__.introEvaluation.apply(this, arguments);
-
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
+      var i, _i, _ref;
+      U5A5.__super__.introEvaluation.apply(this, arguments);
+      for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
+        this.observer.subscribe('init_evaluation', this.library["t" + i].onInitEvaluation);
+      }
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      TweenLite.from(this.library['title'], 1, {
+        alpha: 0,
+        y: this.library['title'].y + 20,
+        delay: 1
+      });
+      return TweenLite.from(this.library['cuento'], 1, {
+        alpha: 0,
+        y: this.library['cuento'].y + 20,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U5A5.prototype.initEvaluation = function(e) {
+      var i, _i, _ref, _results;
       U5A5.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      _results = [];
+      for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
+        _results.push(this.library["t" + i].addEventListener('click', this.evaluateAnswer));
+      }
+      return _results;
     };
 
     U5A5.prototype.evaluateAnswer = function(e) {
-      var pt;
+      var dropped, i, pt, _i, _ref, _results;
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+      dropped = false;
+      _results = [];
+      for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
+        pt = this.library["sc" + i].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library["sc" + i].hitTest(pt.x, pt.y)) {
+          if (this.answer.index === this.library["sc" + i].index) {
+            this.library["sc" + i].currentFrame = 1;
+            this.answer.visible = false;
+            createjs.Sound.play('good');
+            this.library['score'].plusOne();
+            _results.push(this.finishEvaluation());
+          } else {
+            this.warning();
+            _results.push(this.answer.returnToPlace());
+          }
         } else {
-          this.warning();
-          return this.answer.returnToPlace();
+          _results.push(this.answer.returnToPlace());
         }
-      } else {
-        return this.answer.returnToPlace();
       }
+      return _results;
     };
 
     U5A5.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
+      var i, _i, _ref;
+      for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
+        if (this.library["sc" + i].currentFrame === 0) {
+          return;
+        }
+      }
+      if (this.scene < 2) {
+        this.library['btnnext'].visible = true;
+        this.library['btnnext'].alpha = 1;
+        this.library['btnnext'].y = 520;
+        TweenLite.from(this.library['btnnext'], 1, {
+          alpha: 0,
+          y: this.library['btnnext'].y + 10
+        });
+        return this.library['btnnext'].addEventListener('click', this.nextEvaluation);
+      } else {
+        return this.nextEvaluation();
+      }
     };
 
     U5A5.prototype.nextEvaluation = function() {
+      var i, _i, _ref, _results;
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
+      if (this.index < this.game.length) {
+        TweenLite.to(this.library['btnnext'], 1, {
           alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
+          y: this.library['btnnext'].y + 10
         });
+        TweenLite.to(this.library['cuento'], 1, {
+          alpha: 0,
+          y: this.library['cuento'].y + 10
+        });
+        this.setCuento(this.index + 1);
+        TweenLite.from(this.library['cuento'], 1, {
+          alpha: 0,
+          y: this.library['cuento'].y + 10
+        });
+        _results = [];
+        for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
+          this.library["t" + i].onInitEvaluation();
+          _results.push(this.library["t" + i].addEventListener('click', this.evaluateAnswer));
+        }
+        return _results;
       } else {
-        return this.finish();
+        return setTimeout(this.finish, 2 * 1000);
       }
-    };
-
-    U5A5.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
     };
 
     U5A5.prototype.finish = function() {
-      var i, _i, _results;
-      U5A5.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      TweenLite.to(this.library['title'], 1, {
+        alpha: 0,
+        y: this.library['title'].y + 20
+      });
+      TweenLite.to(this.library['cuento'], 1, {
+        alpha: 0,
+        y: this.library['cuento'].y - 50
+      });
+      return U5A5.__super__.finish.apply(this, arguments);
     };
 
     window.U5A5 = U5A5;

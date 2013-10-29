@@ -121,7 +121,7 @@
       U1A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5'], null, stageSize.w / 2, 215, 'mc');
+      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5'], null, stageSize.w / 2, 235, 'mc');
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       return this.setDropper().setNube1().setNube2().setNube3().introEvaluation();
     };
@@ -130,7 +130,7 @@
       var back, dropper, h1, h2, h3;
       dropper = new createjs.Container();
       dropper.x = stageSize.w / 2 - 205;
-      dropper.y = this.library['characters'].y + 80;
+      dropper.y = this.library['characters'].y + 60;
       dropper.name = 'dropper';
       back = this.createBitmap('backDropper', 'gg', 0, 0);
       h1 = new WordContainer('h1', '', '#fef2e7', '#f39234', 14, 62, 90, 22);

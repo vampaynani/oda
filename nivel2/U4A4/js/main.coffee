@@ -166,19 +166,6 @@ class U4A4 extends Oda
 		text.x = 410
 		text.y = 500
 		@addToMain text
-
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
 	initEvaluation: (e) =>
 		super
 		@library['characters'].currentFrame = @answers[@index].id
@@ -211,5 +198,4 @@ class U4A4 extends Oda
 		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
-		
 	window.U4A4 = U4A4

@@ -13,7 +13,7 @@ class U5A4 extends Oda
 			{id: 'summerJenifferdressclothdrag', src:'summer/jeniffer_dress_cloth_drag_summer.png'}
 			{id: 'summerJenifferhatclothdrag', src:'summer/jeniffer_hat_cloth_drag_summer.png'}
 			{id: 'summerJeniffersandalsclothdrag', src:'summer/jeniffer_sandals_cloth_drag_summer.png'}
-			{id: 'summerJeniffersunglassesclothdrag_', src:'summer/jeniffer_sunglasses_cloth_drag_summer.png'}
+			{id: 'summerJeniffersunglassesclothdrag', src:'summer/jeniffer_sunglasses_cloth_drag_summer.png'}
 			{id: 'summerMIkecapclothdrag', src:'summer/mIke_cap_cloth_drag_summer.png'}
 			{id: 'summerMIkeshirtclothdrag', src:'summer/mIke_shirt_cloth_drag_summer.png'}
 			{id: 'summerMIkesunglassesclothdrag', src:'summer/mIke_sunglasses_cloth_drag_summer.png'}
@@ -86,167 +86,200 @@ class U5A4 extends Oda
 			{id:'winterchildtylertennis', src:'winter_child_tyler_tennis.png'}
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
+			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U5_A4_instructions.mp3', id:'instructions'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
+		    {src:'sounds/TU2_U5_A4_summer_jennifer.mp3', id:'summerchildjennifer'}
+		    {src:'sounds/TU2_U5_A4_summer_mike.mp3', id:'summerchildmike'}
+		    {src:'sounds/TU2_U5_A4_summer_rachel.mp3', id:'summerchildrachel'}
+		    {src:'sounds/TU2_U5_A4_summer_tyler.mp3', id:'summerchildtyler'}
+		    {src:'sounds/TU2_U5_A4_winter_jennifer.mp3', id:'winterchildjennifer'}
+		    {src:'sounds/TU2_U5_A4_winter_mike.mp3', id:'winterchildmike'}
+		    {src:'sounds/TU2_U5_A4_winter_rachel.mp3', id:'winterchildrachel'}
+		    {src:'sounds/TU2_U5_A4_winter_tyler.mp3', id:'winterchildtyler'}
 		]
-		@answers = [	
-		]
-		@positions = 
-			summer:[
-				{id: 'summerJenifferdressclothdrag', x:'713', y:'490'}
-				{id: 'summerJenifferhatclothdrag', x:'146', y:'432'}
-				{id: 'summerJeniffersandalsclothdrag', x:'717', y:'405'}
-				{id: 'summerJeniffersunglassesclothdrag_', x:'247', y:'432'}
-				{id: 'summerMIkecapclothdrag', x:'632', y:'439'}
-				{id: 'summerMIkeshirtclothdrag', x:'504', y:'450'}
-				{id: 'summerMIkesunglassesclothdrag', x:'695', y:'555'}
-				{id: 'summerMIkeswimsuitclothdrag', x:'590', y:'500'}
-				{id: 'summerMIketennisclothdrag', x:'422', y:'518'}
-				{id: 'summerRachelhatclothdrag', x:'348', y:'427'}
-				{id: 'summerRachelsandalsclothdrag', x:'503', y:'544'}
-				{id: 'summerRachelswimsuitclothdrag',x:'421', y:'461'}
-				{id: 'summerTylercapclothdrag', x:'303', y:'490'}
-				{id: 'summerTylersandalsclothdrag', x:'291', y:'535'}
-				{id: 'summerTylerswimsuitclothdrag', x:'177', y:'516'}
-			]
-			winter:[
-				{id: 'winterJenniferbootsclothdrag', x:'630', y:'409'}
-				{id: 'winterJenniferhatclothdrag', x:'541', y:'428'}
-				{id: 'winterJenniferraincoatclothdrag', x:'713', y:'515'}
-				{id: 'winterMikebootsclothdrag', x:'304', y:'536'}
-				{id: 'winterMikecoatclothdrag', x:'410', y:'497'}
-				{id: 'winterMikeglovesclothdrag', x:'480', y:'490'}
-				{id: 'winterMikehatclothdragwinter', x:'221', y:'429'}
-				{id: 'winterMikejeansclothdrag', x:'132', y:'444'}
-				{id: 'winterRacheljacketclothdrag', x:'147', y:'523'}
-				{id: 'winterRachelscarfclothdrag', x:'732', y:'407'}
-				{id: 'winterRachelshoesclothdrag', x:'427', y:'415'}
-				{id: 'winterRachelskirtclothdrag', x:'211', y:'495'}
-				{id: 'winterTylerhatclothdrag', x:'678', y:'453'}
-				{id: 'winterTylerpantsclothdrag', x:'316', y:'447'}
-				{id: 'winterTylersweaterclothdrag', x:'566', y:'494'}
-				{id: 'winterTylertennisclothdrag', x:'632', y:'533'}
-			]
-		@summer =
-			child1:['summerchildjennifer', 'summerchildjenniferdress', 'summerchildjenniferglasses', 'summerchildjenniferhat', 'summerchildjennifershoes']
-			child2:['summerchildtyler', 'summerchildtylerhat', 'summerchildtylershoes', 'summerchildtylershort']
-			child3:['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit']
-			child4:['summerchildmike', 'summerchildmikeglasses', 'summerchildmikehat', 'summerchildmikeshirt', 'summerchildmikeshoes', 'summerchildmikeshort']
-
-		@winter =
-			child1:['winterchildjennifer', 'winterchildjenniferboots', 'winterchildjennifercoat', 'winterchildjenniferhat']
-			child2:['winterchildtyler', 'winterchildtylerhat', 'winterchildtylerpants', 'winterchildtylersweater', 'winterchildtylertennis']
-			child3:['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt', 'winterchildrachelbufanda']
-			child4:['winterchildmike', 'winterchildmikeboats', 'winterchildmikecoat', 'winterchildmikegloves', 'winterchildmikehat', 'winterchildmikejeans']
-
+		@game = 
+			summer:
+				kids: [
+					['summerchildjennifer', 'summerchildjenniferdress', 'summerchildjenniferglasses', 'summerchildjenniferhat', 'summerchildjennifershoes']
+					['summerchildtyler', 'summerchildtylershort', 'summerchildtylerhat', 'summerchildtylershoes']
+					['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit']
+					['summerchildmike', 'summerchildmikeglasses', 'summerchildmikehat', 'summerchildmikeshort', 'summerchildmikeshirt', 'summerchildmikeshoes']
+				]
+				drops: [
+					{
+						summerJenifferdressclothdrag: 'summerchildjenniferdress'
+						summerJenifferhatclothdrag:'summerchildjenniferhat'
+						summerJeniffersandalsclothdrag:'summerchildjennifershoes'
+						summerJeniffersunglassesclothdrag:'summerchildjenniferglasses'
+					}
+					{
+						summerTylercapclothdrag: 'summerchildtylerhat'
+						summerTylersandalsclothdrag: 'summerchildtylershoes'
+						summerTylerswimsuitclothdrag: 'summerchildtylershort'
+					}
+					{
+						summerRachelhatclothdrag: 'summerchildrachelhat'
+						summerRachelsandalsclothdrag: 'summerchildrachelshoes'
+						summerRachelswimsuitclothdrag: 'summerchildrachelsuit'
+					}
+					{
+						summerMIkecapclothdrag: 'summerchildmikehat'
+						summerMIkeshirtclothdrag:'summerchildmikeshirt'
+						summerMIkesunglassesclothdrag:'summerchildmikeglasses'
+						summerMIkeswimsuitclothdrag:'summerchildmikeshort'
+						summerMIketennisclothdrag:'summerchildmikeshoes'
+					}
+				]
+				positions: [
+					{id: 'summerJenifferdressclothdrag', x:'713', y:'490'}
+					{id: 'summerJenifferhatclothdrag', x:'146', y:'432'}
+					{id: 'summerJeniffersandalsclothdrag', x:'717', y:'405'}
+					{id: 'summerJeniffersunglassesclothdrag', x:'247', y:'432'}
+					{id: 'summerMIkecapclothdrag', x:'632', y:'439'}
+					{id: 'summerMIkeshirtclothdrag', x:'504', y:'450'}
+					{id: 'summerMIkesunglassesclothdrag', x:'695', y:'555'}
+					{id: 'summerMIkeswimsuitclothdrag', x:'590', y:'500'}
+					{id: 'summerMIketennisclothdrag', x:'422', y:'518'}
+					{id: 'summerRachelhatclothdrag', x:'348', y:'427'}
+					{id: 'summerRachelsandalsclothdrag', x:'503', y:'544'}
+					{id: 'summerRachelswimsuitclothdrag',x:'421', y:'461'}
+					{id: 'summerTylercapclothdrag', x:'303', y:'490'}
+					{id: 'summerTylersandalsclothdrag', x:'291', y:'535'}
+					{id: 'summerTylerswimsuitclothdrag', x:'177', y:'516'}
+				]
+			winter:
+				kids: [
+					['winterchildjennifer', 'winterchildjenniferboots', 'winterchildjennifercoat', 'winterchildjenniferhat']
+					['winterchildtyler', 'winterchildtylerhat', 'winterchildtylerpants', 'winterchildtylersweater', 'winterchildtylertennis']
+					['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt', 'winterchildrachelbufanda']
+					['winterchildmike', 'winterchildmikejeans', 'winterchildmikeboats', 'winterchildmikecoat', 'winterchildmikegloves', 'winterchildmikehat']
+				]
+				drops: []
+				positions: [
+					{id: 'winterJenniferbootsclothdrag', x:'630', y:'409'}
+					{id: 'winterJenniferhatclothdrag', x:'541', y:'428'}
+					{id: 'winterJenniferraincoatclothdrag', x:'713', y:'515'}
+					{id: 'winterMikebootsclothdrag', x:'304', y:'536'}
+					{id: 'winterMikecoatclothdrag', x:'410', y:'497'}
+					{id: 'winterMikeglovesclothdrag', x:'480', y:'490'}
+					{id: 'winterMikehatclothdragwinter', x:'221', y:'429'}
+					{id: 'winterMikejeansclothdrag', x:'132', y:'444'}
+					{id: 'winterRacheljacketclothdrag', x:'147', y:'523'}
+					{id: 'winterRachelscarfclothdrag', x:'732', y:'407'}
+					{id: 'winterRachelshoesclothdrag', x:'427', y:'415'}
+					{id: 'winterRachelskirtclothdrag', x:'211', y:'495'}
+					{id: 'winterTylerhatclothdrag', x:'678', y:'453'}
+					{id: 'winterTylerpantsclothdrag', x:'316', y:'447'}
+					{id: 'winterTylersweaterclothdrag', x:'566', y:'494'}
+					{id: 'winterTylertennisclothdrag', x:'632', y:'533'}
+				]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setKids().introEvaluation()
-	setKids: ->
-		todo = new createjs.Container()
-		todo.x = 0
-		todo.y = 150	
-
+		@insertBitmap 'bg', 'bg', 85, 300
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 4, 0
+		@setKids('summer').setRopa().introEvaluation()
+	setKids: (station) ->
+		kids = new createjs.Container()
+		kids.name = 'kids'
+		kids.x = 160
+		kids.y = 150
+		
+		@station = station
+		current = @game[@station].kids
+		for i in [0..3]	by 1
+			boton = @createBitmap "repeat#{current[i][0]}", 'repeatbtn', i * 145, 200
+			boton.visible = off
+			@addToLibrary boton
+			kids.addChild boton
+		for i in [0..3] by 1
+			for j in [0..current[i].length-1] by 1
+				asset = @createBitmap current[i][j], current[i][j], i * 160 + 20, 85, 'mc'
+				asset.scaleX = asset.scaleY = 0.45
+				if j > 0 then asset.visible = off else asset.index = i
+				@addToLibrary asset
+				kids.addChild asset
+		@addToMain kids
+		@
+	setRopa: ->
 		ropas = new createjs.Container()
+		ropas.name = 'ropas'
 		ropas.x = 0
 		ropas.y = 0
 
-		fondo = @createBitmap 'bg', 'bg', 85, 150
-
-		todo.addChild fondo
-		@addToLibrary fondo
-
-		estacion = 'summer'
-		
-		for i in [1..4]		
-			boton = @createBitmap 'repeatbtn', 'repeatbtn', i*155, 200
-			todo.addChild boton
-			
-		for i in [0..@[estacion].child1.length-1]
-			chico = @createBitmap @[estacion].child1[i], @[estacion].child1[i], (1*160)+20, 85, 'mc'
-			chico.scaleX = chico.scaleY = 0.45
-			todo.addChild chico
-		for i in [0..@[estacion].child2.length-1]
-			chico = @createBitmap @[estacion].child2[i], @[estacion].child2[i], (2*160)+20, 85, 'mc'
-			chico.scaleX = chico.scaleY = 0.45
-			todo.addChild chico
-		for i in [0..@[estacion].child3.length-1]
-			chico = @createBitmap @[estacion].child3[i], @[estacion].child3[i], (3*160)+20, 85, 'mc'
-			chico.scaleX = chico.scaleY = 0.45
-			todo.addChild chico
-		for i in [0..@[estacion].child4.length-1]
-			chico = @createBitmap @[estacion].child4[i], @[estacion].child4[i], (4*160)+20, 85, 'mc'
-			chico.scaleX = chico.scaleY = 0.45
-			todo.addChild chico
-
-
-		for i in [0..14]
-			ropa = new Draggable @positions.summer[i].id, @preload.getResult(@positions.summer[i].id), i, @positions.summer[i].x, @positions.summer[i].y, 'mc'
-			ropas.addChild ropa
+		current = @game[@station].positions
+		for i in [0..current.length - 1] by 1
+			ropa = new Draggable "r#{i}", @preload.getResult(current[i].id), current[i].id, current[i].x, current[i].y, 'mc'
 			@addToLibrary ropa
-			
-		for i in [0..15]			
-			ropa = new Draggable @positions.winter[i].id, @preload.getResult(@positions.winter[i].id), i, @positions.winter[i].x, @positions.winter[i].y, 'mc'
 			ropas.addChild ropa
-			@addToLibrary ropa
-
-		@addToMain todo
 		@addToMain ropas
+		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
+		for i in [0..@game[@station].positions.length - 1] by 1
+			@observer.subscribe 'init_kid_evaluation', @library["r#{i}"].onInitEvaluation
+		for kid in @game[@station].kids
+			@blink @library[kid[0]]
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library['bg'], 1, {alpha: 0, y: @library['bg'].y + 20, delay: 1}
+		TweenLite.from @library['kids'], 1, {alpha: 0, y: @library['kids'].y + 20, delay: 1}
+		TweenLite.from @library['ropas'], 1, {alpha: 0, y: @library['ropas'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		for kid in @game[@station].kids
+			@library[kid[0]].addEventListener 'click', @selectKid
+	selectKid: (e) =>
+		@selected = e.target
+		@blink @selected, off
+		
+		for kid in @game[@station].kids
+			@library[kid[0]].removeEventListener 'click', @selectKid
+		
+		for i in [0..@game[@station].positions.length - 1] by 1
+			@library["r#{i}"].addEventListener 'drop', @evaluateAnswer
+
+		createjs.Sound.play @selected.name
+		@library["repeat#{@selected.name}"].visible = on
+		@library["repeat#{@selected.name}"].addEventListener 'click', @repeatSound
+		@observer.notify 'init_kid_evaluation'
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
+		pt = @selected.globalToLocal @stage.mouseX, @stage.mouseY
+		if @selected.hitTest pt.x, pt.y
+			drops = @game[@station].drops[@selected.index]
+			if drops[@answer.index]
+				@library[drops[@answer.index]].visible = on
+				@answer.visible = off
+				@finishEvaluation()
 			else
-				@warning()
 				@answer.returnToPlace()
+				@warning()
 		else
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		for asset in @game[@station].kids[@selected.index]
+			if @library[asset].visible is off
+				return
+		@library['score'].plusOne()
+		@library["repeat#{@selected.name}"].removeEventListener 'click', @repeatSound
+		TweenLite.to @library["repeat#{@selected.name}"], 1, {y: @library["repeat#{@selected.name}"] + 50, alpha: 0, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		if @index < @game[@station].kids.length
+			for kid in @game[@station].kids
+				@library[kid[0]].addEventListener 'click', @selectKid
 		else
 			@finish()
+	blink: (obj, state=on) ->
+		TweenMax.killTweensOf obj
+		obj.alpha = 1
+		TweenMax.to obj, 0.5, {alpha:.2, repeat:-1, yoyo:true}  if state
 	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
+		createjs.Sound.play @selected.name
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U5A4 = U5A4

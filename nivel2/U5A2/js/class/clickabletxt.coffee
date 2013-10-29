@@ -10,8 +10,7 @@ class ClickableText
 		@x = x
 		@y = y
 		@pos = x:x, y:y
-		@text = new createjs.Text text, '24px Arial', '#333333'
-		@width = @text.getMeasuredWidth()
+		@text = new createjs.Text text, '16px Arial', '#333333'
 		hit = new createjs.Shape()
 		hit.graphics.beginFill('#000').drawRect(0, 0, @text.getMeasuredWidth(), @text.getMeasuredHeight())
 		@text.hitArea = hit

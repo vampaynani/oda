@@ -8,6 +8,7 @@
       this.blinkAgain = __bind(this.blinkAgain, this);
       this.handleMouseDown = __bind(this.handleMouseDown, this);
       this.onInitEvaluation = __bind(this.onInitEvaluation, this);
+      this.initDragListener = __bind(this.initDragListener, this);
       this.initialize(name, text, index, x, y);
     }
 
@@ -16,7 +17,6 @@
     DraggableText.prototype.Container_initialize = DraggableText.prototype.initialize;
 
     DraggableText.prototype.initialize = function(name, text, index, x, y) {
-      var hit;
       this.Container_initialize();
       this.name = name;
       this.index = index;
@@ -27,11 +27,33 @@
         y: y
       };
       this.text = new createjs.Text(text, '16px Arial', '#333333');
-      hit = new createjs.Shape();
-      hit.graphics.beginFill('#000').drawRect(0, 0, this.text.getMeasuredWidth(), this.text.getMeasuredHeight());
-      this.text.hitArea = hit;
+      this.hit = new createjs.Shape();
+      this.hit.graphics.beginFill('#000').drawRect(0, 0, this.text.getMeasuredWidth(), this.text.getMeasuredHeight());
+      this.text.hitArea = this.hit;
+      this.inPlace = false;
       this.addChild(this.text);
       return false;
+    };
+
+    DraggableText.prototype.setHitArea = function() {
+      var h, w;
+      w = this.text.getMeasuredWidth();
+      h = this.text.getMeasuredHeight();
+      switch (this.text.textAlign) {
+        case 'left':
+          this.hit.graphics.c().beginFill('#000').drawRect(0, 0, w, h);
+          break;
+        case 'center':
+          this.hit.graphics.c().beginFill('#000').drawRect(-w / 2, 0, w, h);
+          break;
+        case 'right':
+          this.hit.graphics.c().beginFill('#000').drawRect(-w, 0, w, h);
+      }
+      return this.text.hitArea = this.hit;
+    };
+
+    DraggableText.prototype.initDragListener = function() {
+      return this.addEventListener('mousedown', this.handleMouseDown);
     };
 
     DraggableText.prototype.onInitEvaluation = function() {
@@ -83,15 +105,24 @@
       return this.blink(true);
     };
 
+    DraggableText.prototype.putInPlace = function(position) {
+      this.inPlace = true;
+      return TweenLite.to(this, 1, {
+        ease: Back.easeOut,
+        delay: 0.1,
+        x: position.x,
+        y: position.y,
+        alpha: 1
+      });
+    };
+
     DraggableText.prototype.returnToPlace = function() {
       return TweenLite.to(this, 0.5, {
         ease: Back.easeOut,
         delay: 0.1,
         x: this.pos.x,
         y: this.pos.y,
-        alpha: 1,
-        scaleX: 1,
-        scaleY: 1
+        alpha: 1
       });
     };
 

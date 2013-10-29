@@ -11,11 +11,22 @@ class DraggableText
 		@y = y
 		@pos = x:x, y:y
 		@text = new createjs.Text text, '16px Arial', '#333333'
-		hit = new createjs.Shape()
-		hit.graphics.beginFill('#000').drawRect(0, 0, @text.getMeasuredWidth(), @text.getMeasuredHeight())
-		@text.hitArea = hit
+		@hit = new createjs.Shape()
+		@hit.graphics.beginFill('#000').drawRect(0, 0, @text.getMeasuredWidth(), @text.getMeasuredHeight())
+		@text.hitArea = @hit
+		@inPlace = off
 		@addChild @text
 		false
+	setHitArea: ->
+		w = @text.getMeasuredWidth()
+		h = @text.getMeasuredHeight()
+		switch @text.textAlign
+			when 'left' then @hit.graphics.c().beginFill('#000').drawRect(0, 0, w, h)
+			when 'center' then @hit.graphics.c().beginFill('#000').drawRect(-w/2, 0, w, h)
+			when 'right' then @hit.graphics.c().beginFill('#000').drawRect(-w, 0, w, h)
+		@text.hitArea = @hit
+	initDragListener: =>
+		@addEventListener 'mousedown', @handleMouseDown
 	onInitEvaluation: =>
 		@addEventListener 'mousedown', @handleMouseDown
 	handleMouseDown: (e) =>
@@ -41,6 +52,9 @@ class DraggableText
 	blinkAgain: =>
 		TweenLite.killTweensOf @
 		@blink on
+	putInPlace: (position) ->
+		@inPlace = on
+		TweenLite.to @, 1, { ease: Back.easeOut, delay: 0.1, x: position.x, y: position.y, alpha: 1 }
 	returnToPlace: ->
-		TweenLite.to @, 0.5, { ease: Back.easeOut, delay: 0.1, x: @pos.x, y: @pos.y, alpha: 1, scaleX: 1, scaleY: 1 }
+		TweenLite.to @, 0.5, { ease: Back.easeOut, delay: 0.1, x: @pos.x, y: @pos.y, alpha: 1 }
 	window.DraggableText = DraggableText

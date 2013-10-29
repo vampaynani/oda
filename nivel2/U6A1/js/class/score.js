@@ -49,6 +49,10 @@
       return this.txtCount.text = txt;
     };
 
+    Score.prototype.updateTotal = function(txt) {
+      return this.txtTotal.text = txt;
+    };
+
     window.Score = Score;
 
     return Score;

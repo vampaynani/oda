@@ -13,6 +13,7 @@
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.selectKid = __bind(this.selectKid, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -50,7 +51,7 @@
           id: 'summerJeniffersandalsclothdrag',
           src: 'summer/jeniffer_sandals_cloth_drag_summer.png'
         }, {
-          id: 'summerJeniffersunglassesclothdrag_',
+          id: 'summerJeniffersunglassesclothdrag',
           src: 'summer/jeniffer_sunglasses_cloth_drag_summer.png'
         }, {
           id: 'summerMIkecapclothdrag',
@@ -254,160 +255,200 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }, {
           src: 'sounds/TU2_U5_A4_instructions.mp3',
           id: 'instructions'
         }, {
-          src: 'sounds/wrong.mp3',
-          id: 'wrong'
+          src: 'sounds/TU2_U5_A4_summer_jennifer.mp3',
+          id: 'summerchildjennifer'
+        }, {
+          src: 'sounds/TU2_U5_A4_summer_mike.mp3',
+          id: 'summerchildmike'
+        }, {
+          src: 'sounds/TU2_U5_A4_summer_rachel.mp3',
+          id: 'summerchildrachel'
+        }, {
+          src: 'sounds/TU2_U5_A4_summer_tyler.mp3',
+          id: 'summerchildtyler'
+        }, {
+          src: 'sounds/TU2_U5_A4_winter_jennifer.mp3',
+          id: 'winterchildjennifer'
+        }, {
+          src: 'sounds/TU2_U5_A4_winter_mike.mp3',
+          id: 'winterchildmike'
+        }, {
+          src: 'sounds/TU2_U5_A4_winter_rachel.mp3',
+          id: 'winterchildrachel'
+        }, {
+          src: 'sounds/TU2_U5_A4_winter_tyler.mp3',
+          id: 'winterchildtyler'
         }
       ];
-      this.answers = [];
-      this.positions = {
-        summer: [
-          {
-            id: 'summerJenifferdressclothdrag',
-            x: '713',
-            y: '490'
-          }, {
-            id: 'summerJenifferhatclothdrag',
-            x: '146',
-            y: '432'
-          }, {
-            id: 'summerJeniffersandalsclothdrag',
-            x: '717',
-            y: '405'
-          }, {
-            id: 'summerJeniffersunglassesclothdrag_',
-            x: '247',
-            y: '432'
-          }, {
-            id: 'summerMIkecapclothdrag',
-            x: '632',
-            y: '439'
-          }, {
-            id: 'summerMIkeshirtclothdrag',
-            x: '504',
-            y: '450'
-          }, {
-            id: 'summerMIkesunglassesclothdrag',
-            x: '695',
-            y: '555'
-          }, {
-            id: 'summerMIkeswimsuitclothdrag',
-            x: '590',
-            y: '500'
-          }, {
-            id: 'summerMIketennisclothdrag',
-            x: '422',
-            y: '518'
-          }, {
-            id: 'summerRachelhatclothdrag',
-            x: '348',
-            y: '427'
-          }, {
-            id: 'summerRachelsandalsclothdrag',
-            x: '503',
-            y: '544'
-          }, {
-            id: 'summerRachelswimsuitclothdrag',
-            x: '421',
-            y: '461'
-          }, {
-            id: 'summerTylercapclothdrag',
-            x: '303',
-            y: '490'
-          }, {
-            id: 'summerTylersandalsclothdrag',
-            x: '291',
-            y: '535'
-          }, {
-            id: 'summerTylerswimsuitclothdrag',
-            x: '177',
-            y: '516'
-          }
-        ],
-        winter: [
-          {
-            id: 'winterJenniferbootsclothdrag',
-            x: '630',
-            y: '409'
-          }, {
-            id: 'winterJenniferhatclothdrag',
-            x: '541',
-            y: '428'
-          }, {
-            id: 'winterJenniferraincoatclothdrag',
-            x: '713',
-            y: '515'
-          }, {
-            id: 'winterMikebootsclothdrag',
-            x: '304',
-            y: '536'
-          }, {
-            id: 'winterMikecoatclothdrag',
-            x: '410',
-            y: '497'
-          }, {
-            id: 'winterMikeglovesclothdrag',
-            x: '480',
-            y: '490'
-          }, {
-            id: 'winterMikehatclothdragwinter',
-            x: '221',
-            y: '429'
-          }, {
-            id: 'winterMikejeansclothdrag',
-            x: '132',
-            y: '444'
-          }, {
-            id: 'winterRacheljacketclothdrag',
-            x: '147',
-            y: '523'
-          }, {
-            id: 'winterRachelscarfclothdrag',
-            x: '732',
-            y: '407'
-          }, {
-            id: 'winterRachelshoesclothdrag',
-            x: '427',
-            y: '415'
-          }, {
-            id: 'winterRachelskirtclothdrag',
-            x: '211',
-            y: '495'
-          }, {
-            id: 'winterTylerhatclothdrag',
-            x: '678',
-            y: '453'
-          }, {
-            id: 'winterTylerpantsclothdrag',
-            x: '316',
-            y: '447'
-          }, {
-            id: 'winterTylersweaterclothdrag',
-            x: '566',
-            y: '494'
-          }, {
-            id: 'winterTylertennisclothdrag',
-            x: '632',
-            y: '533'
-          }
-        ]
-      };
-      this.summer = {
-        child1: ['summerchildjennifer', 'summerchildjenniferdress', 'summerchildjenniferglasses', 'summerchildjenniferhat', 'summerchildjennifershoes'],
-        child2: ['summerchildtyler', 'summerchildtylerhat', 'summerchildtylershoes', 'summerchildtylershort'],
-        child3: ['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit'],
-        child4: ['summerchildmike', 'summerchildmikeglasses', 'summerchildmikehat', 'summerchildmikeshirt', 'summerchildmikeshoes', 'summerchildmikeshort']
-      };
-      this.winter = {
-        child1: ['winterchildjennifer', 'winterchildjenniferboots', 'winterchildjennifercoat', 'winterchildjenniferhat'],
-        child2: ['winterchildtyler', 'winterchildtylerhat', 'winterchildtylerpants', 'winterchildtylersweater', 'winterchildtylertennis'],
-        child3: ['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt', 'winterchildrachelbufanda'],
-        child4: ['winterchildmike', 'winterchildmikeboats', 'winterchildmikecoat', 'winterchildmikegloves', 'winterchildmikehat', 'winterchildmikejeans']
+      this.game = {
+        summer: {
+          kids: [['summerchildjennifer', 'summerchildjenniferdress', 'summerchildjenniferglasses', 'summerchildjenniferhat', 'summerchildjennifershoes'], ['summerchildtyler', 'summerchildtylershort', 'summerchildtylerhat', 'summerchildtylershoes'], ['summerchildrachel', 'summerchildrachelhat', 'summerchildrachelshoes', 'summerchildrachelsuit'], ['summerchildmike', 'summerchildmikeglasses', 'summerchildmikehat', 'summerchildmikeshort', 'summerchildmikeshirt', 'summerchildmikeshoes']],
+          drops: [
+            {
+              summerJenifferdressclothdrag: 'summerchildjenniferdress',
+              summerJenifferhatclothdrag: 'summerchildjenniferhat',
+              summerJeniffersandalsclothdrag: 'summerchildjennifershoes',
+              summerJeniffersunglassesclothdrag: 'summerchildjenniferglasses'
+            }, {
+              summerTylercapclothdrag: 'summerchildtylerhat',
+              summerTylersandalsclothdrag: 'summerchildtylershoes',
+              summerTylerswimsuitclothdrag: 'summerchildtylershort'
+            }, {
+              summerRachelhatclothdrag: 'summerchildrachelhat',
+              summerRachelsandalsclothdrag: 'summerchildrachelshoes',
+              summerRachelswimsuitclothdrag: 'summerchildrachelsuit'
+            }, {
+              summerMIkecapclothdrag: 'summerchildmikehat',
+              summerMIkeshirtclothdrag: 'summerchildmikeshirt',
+              summerMIkesunglassesclothdrag: 'summerchildmikeglasses',
+              summerMIkeswimsuitclothdrag: 'summerchildmikeshort',
+              summerMIketennisclothdrag: 'summerchildmikeshoes'
+            }
+          ],
+          positions: [
+            {
+              id: 'summerJenifferdressclothdrag',
+              x: '713',
+              y: '490'
+            }, {
+              id: 'summerJenifferhatclothdrag',
+              x: '146',
+              y: '432'
+            }, {
+              id: 'summerJeniffersandalsclothdrag',
+              x: '717',
+              y: '405'
+            }, {
+              id: 'summerJeniffersunglassesclothdrag',
+              x: '247',
+              y: '432'
+            }, {
+              id: 'summerMIkecapclothdrag',
+              x: '632',
+              y: '439'
+            }, {
+              id: 'summerMIkeshirtclothdrag',
+              x: '504',
+              y: '450'
+            }, {
+              id: 'summerMIkesunglassesclothdrag',
+              x: '695',
+              y: '555'
+            }, {
+              id: 'summerMIkeswimsuitclothdrag',
+              x: '590',
+              y: '500'
+            }, {
+              id: 'summerMIketennisclothdrag',
+              x: '422',
+              y: '518'
+            }, {
+              id: 'summerRachelhatclothdrag',
+              x: '348',
+              y: '427'
+            }, {
+              id: 'summerRachelsandalsclothdrag',
+              x: '503',
+              y: '544'
+            }, {
+              id: 'summerRachelswimsuitclothdrag',
+              x: '421',
+              y: '461'
+            }, {
+              id: 'summerTylercapclothdrag',
+              x: '303',
+              y: '490'
+            }, {
+              id: 'summerTylersandalsclothdrag',
+              x: '291',
+              y: '535'
+            }, {
+              id: 'summerTylerswimsuitclothdrag',
+              x: '177',
+              y: '516'
+            }
+          ]
+        },
+        winter: {
+          kids: [['winterchildjennifer', 'winterchildjenniferboots', 'winterchildjennifercoat', 'winterchildjenniferhat'], ['winterchildtyler', 'winterchildtylerhat', 'winterchildtylerpants', 'winterchildtylersweater', 'winterchildtylertennis'], ['winterchildrachel', 'winterchildrachelcoat', 'winterchildrachelshoes', 'winterchildrachelskirt', 'winterchildrachelbufanda'], ['winterchildmike', 'winterchildmikejeans', 'winterchildmikeboats', 'winterchildmikecoat', 'winterchildmikegloves', 'winterchildmikehat']],
+          drops: [],
+          positions: [
+            {
+              id: 'winterJenniferbootsclothdrag',
+              x: '630',
+              y: '409'
+            }, {
+              id: 'winterJenniferhatclothdrag',
+              x: '541',
+              y: '428'
+            }, {
+              id: 'winterJenniferraincoatclothdrag',
+              x: '713',
+              y: '515'
+            }, {
+              id: 'winterMikebootsclothdrag',
+              x: '304',
+              y: '536'
+            }, {
+              id: 'winterMikecoatclothdrag',
+              x: '410',
+              y: '497'
+            }, {
+              id: 'winterMikeglovesclothdrag',
+              x: '480',
+              y: '490'
+            }, {
+              id: 'winterMikehatclothdragwinter',
+              x: '221',
+              y: '429'
+            }, {
+              id: 'winterMikejeansclothdrag',
+              x: '132',
+              y: '444'
+            }, {
+              id: 'winterRacheljacketclothdrag',
+              x: '147',
+              y: '523'
+            }, {
+              id: 'winterRachelscarfclothdrag',
+              x: '732',
+              y: '407'
+            }, {
+              id: 'winterRachelshoesclothdrag',
+              x: '427',
+              y: '415'
+            }, {
+              id: 'winterRachelskirtclothdrag',
+              x: '211',
+              y: '495'
+            }, {
+              id: 'winterTylerhatclothdrag',
+              x: '678',
+              y: '453'
+            }, {
+              id: 'winterTylerpantsclothdrag',
+              x: '316',
+              y: '447'
+            }, {
+              id: 'winterTylersweaterclothdrag',
+              x: '566',
+              y: '494'
+            }, {
+              id: 'winterTylertennisclothdrag',
+              x: '632',
+              y: '533'
+            }
+          ]
+        }
       };
       U5A4.__super__.constructor.call(this, null, manifest, sounds);
     }
@@ -416,99 +457,139 @@
       U5A4.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setKids().introEvaluation();
+      this.insertBitmap('bg', 'bg', 85, 300);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 4, 0));
+      return this.setKids('summer').setRopa().introEvaluation();
     };
 
-    U5A4.prototype.setKids = function() {
-      var boton, chico, estacion, fondo, i, ropa, ropas, todo, _i, _j, _k, _l, _m, _n, _o, _ref, _ref1, _ref2, _ref3;
-      todo = new createjs.Container();
-      todo.x = 0;
-      todo.y = 150;
+    U5A4.prototype.setKids = function(station) {
+      var asset, boton, current, i, j, kids, _i, _j, _k, _ref;
+      kids = new createjs.Container();
+      kids.name = 'kids';
+      kids.x = 160;
+      kids.y = 150;
+      this.station = station;
+      current = this.game[this.station].kids;
+      for (i = _i = 0; _i <= 3; i = _i += 1) {
+        boton = this.createBitmap("repeat" + current[i][0], 'repeatbtn', i * 145, 200);
+        boton.visible = false;
+        this.addToLibrary(boton);
+        kids.addChild(boton);
+      }
+      for (i = _j = 0; _j <= 3; i = _j += 1) {
+        for (j = _k = 0, _ref = current[i].length - 1; _k <= _ref; j = _k += 1) {
+          asset = this.createBitmap(current[i][j], current[i][j], i * 160 + 20, 85, 'mc');
+          asset.scaleX = asset.scaleY = 0.45;
+          if (j > 0) {
+            asset.visible = false;
+          } else {
+            asset.index = i;
+          }
+          this.addToLibrary(asset);
+          kids.addChild(asset);
+        }
+      }
+      this.addToMain(kids);
+      return this;
+    };
+
+    U5A4.prototype.setRopa = function() {
+      var current, i, ropa, ropas, _i, _ref;
       ropas = new createjs.Container();
+      ropas.name = 'ropas';
       ropas.x = 0;
       ropas.y = 0;
-      fondo = this.createBitmap('bg', 'bg', 85, 150);
-      todo.addChild(fondo);
-      this.addToLibrary(fondo);
-      estacion = 'summer';
-      for (i = _i = 1; _i <= 4; i = ++_i) {
-        boton = this.createBitmap('repeatbtn', 'repeatbtn', i * 155, 200);
-        todo.addChild(boton);
-      }
-      for (i = _j = 0, _ref = this[estacion].child1.length - 1; 0 <= _ref ? _j <= _ref : _j >= _ref; i = 0 <= _ref ? ++_j : --_j) {
-        chico = this.createBitmap(this[estacion].child1[i], this[estacion].child1[i], (1 * 160) + 20, 85, 'mc');
-        chico.scaleX = chico.scaleY = 0.45;
-        todo.addChild(chico);
-      }
-      for (i = _k = 0, _ref1 = this[estacion].child2.length - 1; 0 <= _ref1 ? _k <= _ref1 : _k >= _ref1; i = 0 <= _ref1 ? ++_k : --_k) {
-        chico = this.createBitmap(this[estacion].child2[i], this[estacion].child2[i], (2 * 160) + 20, 85, 'mc');
-        chico.scaleX = chico.scaleY = 0.45;
-        todo.addChild(chico);
-      }
-      for (i = _l = 0, _ref2 = this[estacion].child3.length - 1; 0 <= _ref2 ? _l <= _ref2 : _l >= _ref2; i = 0 <= _ref2 ? ++_l : --_l) {
-        chico = this.createBitmap(this[estacion].child3[i], this[estacion].child3[i], (3 * 160) + 20, 85, 'mc');
-        chico.scaleX = chico.scaleY = 0.45;
-        todo.addChild(chico);
-      }
-      for (i = _m = 0, _ref3 = this[estacion].child4.length - 1; 0 <= _ref3 ? _m <= _ref3 : _m >= _ref3; i = 0 <= _ref3 ? ++_m : --_m) {
-        chico = this.createBitmap(this[estacion].child4[i], this[estacion].child4[i], (4 * 160) + 20, 85, 'mc');
-        chico.scaleX = chico.scaleY = 0.45;
-        todo.addChild(chico);
-      }
-      for (i = _n = 0; _n <= 14; i = ++_n) {
-        ropa = new Draggable(this.positions.summer[i].id, this.preload.getResult(this.positions.summer[i].id), i, this.positions.summer[i].x, this.positions.summer[i].y, 'mc');
-        ropas.addChild(ropa);
+      current = this.game[this.station].positions;
+      for (i = _i = 0, _ref = current.length - 1; _i <= _ref; i = _i += 1) {
+        ropa = new Draggable("r" + i, this.preload.getResult(current[i].id), current[i].id, current[i].x, current[i].y, 'mc');
         this.addToLibrary(ropa);
-      }
-      for (i = _o = 0; _o <= 15; i = ++_o) {
-        ropa = new Draggable(this.positions.winter[i].id, this.preload.getResult(this.positions.winter[i].id), i, this.positions.winter[i].x, this.positions.winter[i].y, 'mc');
         ropas.addChild(ropa);
-        this.addToLibrary(ropa);
       }
-      this.addToMain(todo);
-      return this.addToMain(ropas);
+      this.addToMain(ropas);
+      return this;
     };
 
     U5A4.prototype.introEvaluation = function() {
-      return U5A4.__super__.introEvaluation.apply(this, arguments);
-
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-    };
-
-    U5A4.prototype.initEvaluation = function(e) {
-      U5A4.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
+      var i, kid, _i, _j, _len, _ref, _ref1;
+      U5A4.__super__.introEvaluation.apply(this, arguments);
+      for (i = _i = 0, _ref = this.game[this.station].positions.length - 1; _i <= _ref; i = _i += 1) {
+        this.observer.subscribe('init_kid_evaluation', this.library["r" + i].onInitEvaluation);
+      }
+      _ref1 = this.game[this.station].kids;
+      for (_j = 0, _len = _ref1.length; _j < _len; _j++) {
+        kid = _ref1[_j];
+        this.blink(this.library[kid[0]]);
+      }
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      TweenLite.from(this.library['bg'], 1, {
+        alpha: 0,
+        y: this.library['bg'].y + 20,
+        delay: 1
+      });
+      TweenLite.from(this.library['kids'], 1, {
+        alpha: 0,
+        y: this.library['kids'].y + 20,
+        delay: 1
+      });
+      return TweenLite.from(this.library['ropas'], 1, {
+        alpha: 0,
+        y: this.library['ropas'].y + 20,
+        delay: 1.5,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
       });
     };
 
+    U5A4.prototype.initEvaluation = function(e) {
+      var kid, _i, _len, _ref, _results;
+      U5A4.__super__.initEvaluation.apply(this, arguments);
+      _ref = this.game[this.station].kids;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        kid = _ref[_i];
+        _results.push(this.library[kid[0]].addEventListener('click', this.selectKid));
+      }
+      return _results;
+    };
+
+    U5A4.prototype.selectKid = function(e) {
+      var i, kid, _i, _j, _len, _ref, _ref1;
+      this.selected = e.target;
+      this.blink(this.selected, false);
+      _ref = this.game[this.station].kids;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        kid = _ref[_i];
+        this.library[kid[0]].removeEventListener('click', this.selectKid);
+      }
+      for (i = _j = 0, _ref1 = this.game[this.station].positions.length - 1; _j <= _ref1; i = _j += 1) {
+        this.library["r" + i].addEventListener('drop', this.evaluateAnswer);
+      }
+      createjs.Sound.play(this.selected.name);
+      this.library["repeat" + this.selected.name].visible = true;
+      this.library["repeat" + this.selected.name].addEventListener('click', this.repeatSound);
+      return this.observer.notify('init_kid_evaluation');
+    };
+
     U5A4.prototype.evaluateAnswer = function(e) {
-      var pt;
+      var drops, pt;
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+      pt = this.selected.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+      if (this.selected.hitTest(pt.x, pt.y)) {
+        drops = this.game[this.station].drops[this.selected.index];
+        if (drops[this.answer.index]) {
+          this.library[drops[this.answer.index]].visible = true;
+          this.answer.visible = false;
+          return this.finishEvaluation();
         } else {
-          this.warning();
-          return this.answer.returnToPlace();
+          this.answer.returnToPlace();
+          return this.warning();
         }
       } else {
         return this.answer.returnToPlace();
@@ -516,45 +597,60 @@
     };
 
     U5A4.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      var asset, _i, _len, _ref;
+      _ref = this.game[this.station].kids[this.selected.index];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        asset = _ref[_i];
+        if (this.library[asset].visible === false) {
+          return;
+        }
+      }
+      this.library['score'].plusOne();
+      this.library["repeat" + this.selected.name].removeEventListener('click', this.repeatSound);
+      return TweenLite.to(this.library["repeat" + this.selected.name], 1, {
+        y: this.library["repeat" + this.selected.name] + 50,
         alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
         onComplete: this.nextEvaluation
       });
-      return this.answer.returnToPlace();
     };
 
     U5A4.prototype.nextEvaluation = function() {
+      var kid, _i, _len, _ref, _results;
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
+      if (this.index < this.game[this.station].kids.length) {
+        _ref = this.game[this.station].kids;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          kid = _ref[_i];
+          _results.push(this.library[kid[0]].addEventListener('click', this.selectKid));
+        }
+        return _results;
       } else {
         return this.finish();
       }
     };
 
+    U5A4.prototype.blink = function(obj, state) {
+      if (state == null) {
+        state = true;
+      }
+      TweenMax.killTweensOf(obj);
+      obj.alpha = 1;
+      if (state) {
+        return TweenMax.to(obj, 0.5, {
+          alpha: .2,
+          repeat: -1,
+          yoyo: true
+        });
+      }
+    };
+
     U5A4.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
+      return createjs.Sound.play(this.selected.name);
     };
 
     U5A4.prototype.finish = function() {
-      var i, _i, _results;
-      U5A4.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U5A4.__super__.finish.apply(this, arguments);
     };
 
     window.U5A4 = U5A4;
