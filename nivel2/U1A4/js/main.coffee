@@ -124,5 +124,7 @@ class U1A4 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenLite.to @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 50, delay: 0.1}
+		TweenLite.to @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 0.1, onComplete: @playInstructions, onCompleteParams: [@]}
 		super
 	window.U1A4 = U1A4
