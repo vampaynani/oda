@@ -139,6 +139,9 @@
         }, {
           src: 'sounds/TU2_U3_A2_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.game = {

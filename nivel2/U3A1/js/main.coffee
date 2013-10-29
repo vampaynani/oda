@@ -139,6 +139,7 @@ class U3A1 extends Oda
 		    {src:'sounds/TU2_U3_A1_menu4_breakfast.mp3', id:'m4b'}
 		    {src:'sounds/TU2_U3_A1_menu4_dinner.mp3', id:'m4d'}
 		    {src:'sounds/TU2_U3_A1_menu4_lunch.mp3', id:'m4l'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@game = {
 			common: [

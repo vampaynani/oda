@@ -97,6 +97,7 @@ class U4A1 extends Oda
 			{id:'whiskers', src:'sounds/whiskers.mp3'}
 			{id:'wings', src:'sounds/wings.mp3'}
 			{id:'zebra', src:'sounds/zebra.mp3'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@animals = [
 			{id: 'beak'}

@@ -109,6 +109,9 @@
         }, {
           src: 'sounds/TU2_U4_A3_animals.mp3',
           id: 'animals'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.letra = ['Animals, animals everywhere!', 'Some have wings and fly through the air,', 'Some have feathers. Some have scales.', 'Some have fur, and some have tails!', 'Some have whiskers. Some have claws.', 'Some have fins, and some have paws.', 'Some have beaks, and some can speak!', 'Animals, animals everywhere!'];

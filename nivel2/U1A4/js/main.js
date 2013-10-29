@@ -337,6 +337,18 @@
     };
 
     U1A4.prototype.finish = function() {
+      TweenLite.to(this.library['teacher'], 1, {
+        alpha: 0,
+        y: this.library['teacher'].y + 50,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['repeat'], 1, {
+        alpha: 0,
+        y: this.library['repeat'].y + 50,
+        delay: 0.1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
       return U1A4.__super__.finish.apply(this, arguments);
     };
 

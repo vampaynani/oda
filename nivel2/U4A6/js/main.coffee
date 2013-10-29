@@ -45,6 +45,7 @@ class U4A6 extends Oda
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@preguntas = [
 			{tipo:'texto', imagen:'toastMilkJuice', pregunta:"What's for breakfast?", opcionUno:'Cereal. milk and juice', opcionDos:'Toast, milk and juice', respuesta:"opcionDos"}

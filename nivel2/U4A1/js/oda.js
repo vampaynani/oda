@@ -69,6 +69,7 @@
       this.handlePlayAgain = __bind(this.handlePlayAgain, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       this.initMobileInstructions = __bind(this.initMobileInstructions, this);
+      this.warningComplete = __bind(this.warningComplete, this);
       this.handleComplete = __bind(this.handleComplete, this);
       this.handleProgress = __bind(this.handleProgress, this);
       def_manifest = [
@@ -468,13 +469,18 @@
     };
 
     Oda.prototype.warning = function() {
-      createjs.Sound.play('boing');
+      createjs.Sound.play('wrong');
       TweenMax.to(this.mainContainer, 0.1, {
         x: this.mainContainer.x + 10,
         repeat: 6,
-        yoyo: true
+        yoyo: true,
+        onComplete: this.warningComplete
       });
       return this;
+    };
+
+    Oda.prototype.warningComplete = function() {
+      return this.mainContainer.x = this.stage.canvas.width / 2;
     };
 
     Oda.prototype.resize = function() {
