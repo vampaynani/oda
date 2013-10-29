@@ -89,7 +89,6 @@ class U4A6 extends Oda
 		question.x = 0
 		question.y = 0
 		question.name = 'question'
-		console.log @preguntas[i]
 
 		if @preguntas[i].tipo is 'texto'
 			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'

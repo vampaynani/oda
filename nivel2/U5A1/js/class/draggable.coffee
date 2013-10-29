@@ -15,17 +15,17 @@ class Draggable
 		@pos = x:x, y:y
 		@inPlace = off
 		@addChild @bitmap
-	setReg: (obj, regX, regY) ->
-		obj.regX = regX
-		obj.regY = regY
-		obj
+	setReg: (regX, regY) ->
+		@regX = regX
+		@regY = regY
+		@
 	initDragListener: =>
 		@addEventListener 'mousedown', @handleMouseDown
 	onInitEvaluation: =>
-		@blink on
+		#@blink on
 		@addEventListener 'mousedown', @handleMouseDown
 	onStopEvaluation: =>
-		@blink off
+		#@blink off
 		@removeEventListener 'mousedown', @handleMouseDown
 	handleMouseDown: (e) =>
 		TweenLite.killTweensOf @
@@ -34,6 +34,7 @@ class Draggable
 		offset = x: posX - @x, y: posY - @y
 		@x = posX - offset.x
 		@y = posY - offset.y
+		@alpha = 1
 		e.addEventListener 'mousemove', (ev)=>
 			posX = ev.stageX / stageSize.r
 			posY = ev.stageY / stageSize.r

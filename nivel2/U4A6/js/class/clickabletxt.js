@@ -23,6 +23,8 @@
         y: y
       };
       this.text = new createjs.Text(text, '16px Arial', '#333333');
+      this.width = this.text.getMeasuredWidth();
+      this.height = this.text.getMeasuredHeight();
       hit = new createjs.Shape();
       hit.graphics.beginFill('#000').drawRect(0, 0, this.text.getMeasuredWidth(), this.text.getMeasuredHeight());
       this.text.hitArea = hit;

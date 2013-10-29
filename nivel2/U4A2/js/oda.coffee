@@ -30,9 +30,9 @@ class Oda
 		@assets = new Array()
 		@manifest = for item in manifest
 			{ id:"#{ item.id }", src:"#{ @imgurl + item.src}" }
+		
 		Array::push.apply @manifest, def_manifest
-		@sounds = for sound in sounds
-			createjs.Sound.registerSound sound.src, sound.id
+		Array::push.apply @manifest, sounds
 	initialize: ->
 		@initStage().initContainer().initPreloader().resize()
 		@
@@ -70,6 +70,7 @@ class Oda
 			bgBar.name = 'bar' + i.toString()
 			@loaderBar.addChild bgBar
 
+		@preload.installPlugin createjs.Sound
 		@preload.addEventListener 'progress', @handleProgress
 		@preload.addEventListener 'complete', @handleComplete
 		@preload.loadManifest @manifest

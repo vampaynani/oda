@@ -63,7 +63,7 @@
 
   Oda = (function() {
     function Oda(imgurl, manifest, sounds) {
-      var def_manifest, item, sound;
+      var def_manifest, item;
       this.imgurl = imgurl != null ? imgurl : 'imgs/';
       this.playAgain = __bind(this.playAgain, this);
       this.handlePlayAgain = __bind(this.handlePlayAgain, this);
@@ -94,15 +94,7 @@
         return _results;
       }).call(this);
       Array.prototype.push.apply(this.manifest, def_manifest);
-      this.sounds = (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = sounds.length; _i < _len; _i++) {
-          sound = sounds[_i];
-          _results.push(createjs.Sound.registerSound(sound.src, sound.id));
-        }
-        return _results;
-      })();
+      Array.prototype.push.apply(this.manifest, sounds);
     }
 
     Oda.prototype.initialize = function() {
@@ -147,6 +139,7 @@
         bgBar.name = 'bar' + i.toString();
         this.loaderBar.addChild(bgBar);
       }
+      this.preload.installPlugin(createjs.Sound);
       this.preload.addEventListener('progress', this.handleProgress);
       this.preload.addEventListener('complete', this.handleComplete);
       this.preload.loadManifest(this.manifest);

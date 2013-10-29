@@ -34,7 +34,6 @@ class U5A3 extends Oda
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U5_A3_instructions.mp3', id:'instructions'}
 		]
-		@answers = []
 		@imagenes = [
 			{id: 'imageApril', x:'592', y:'175'}
 			{id: 'imageAugust', x:'495', y:'522'}

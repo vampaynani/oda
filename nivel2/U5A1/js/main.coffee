@@ -59,31 +59,43 @@ class U5A1 extends Oda
 			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U5_A1_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U5_A1_calendar1.mp3', id:'cal1'}
+		    {src:'sounds/TU2_U5_A1_calendar2.mp3', id:'cal2'}
 		]
-		@positions =
+		@game =
 			finales:[
-				{x:'201', y:'204'}
-				{x:'314', y:'211'}
-				{x:'408', y:'218'}
-				{x:'212', y:'265'}
-				{x:'331', y:'268'}
-				{x:'429', y:'273'}
-				{x:'228', y:'331'}
-				{x:'347', y:'327'}
-				{x:'445', y:'327'}
-				{x:'246', y:'399'}
-				{x:'364', y:'392'}
-				{x:'466', y:'385'}
+				{x:190, y:186}
+				{x:294, y:200}
+				{x:395, y:208}
+				{x:200, y:248}
+				{x:310, y:250}
+				{x:397, y:263}
+				{x:218, y:316}
+				{x:332, y:314}
+				{x:415, y:317}
+				{x:216, y:379}
+				{x:340, y:372}
+				{x:456, y:370}
 			]
 			drags:[
-				{x:'145', y:'528'}
-				{x:'232', y:'547'}
-				{x:'303', y:'525'}
-				{x:'377', y:'533'}
-				{x:'464', y:'523'}
-				{x:'540', y:'534'}
-				{x:'614', y:'532'}
-				{x:'710', y:'541'}
+				{x:'70', y:'508'}
+				{x:'157', y:'527'}
+				{x:'228', y:'505'}
+				{x:'302', y:'513'}
+				{x:'389', y:'503'}
+				{x:'465', y:'514'}
+				{x:'539', y:'512'}
+				{x:'635', y:'521'}
+			]
+			drops:[
+				{id:'cal1Dragble8', tgt:'cal1Final3'}
+				{id:'cal1Dragble4', tgt:'cal1Final4'}
+				{id:'cal1Dragble6', tgt:'cal1Final10'}
+				{id:'cal1Dragble7', tgt:'cal1Final7'}
+				{id:'cal1Dragble1', tgt:'cal1Final12'}
+				{id:'cal1Dragble5', tgt:'cal1Final5'}
+				{id:'cal1Dragble2', tgt:'cal1Final1'}
+				{id:'cal1Dragble3', tgt:'cal1Final8'}
 			]
 		super null, manifest, sounds
 	setStage: ->
@@ -92,38 +104,58 @@ class U5A1 extends Oda
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'btnRepeat', 'btnRepeat', 598, 245
 		@insertBitmap 'btnFinished', 'btnFinished', 598, 292
-	
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setCalendar(1).introEvaluation()
 	setCalendar: (calendar) ->
+		@calendar = calendar
 		cal = new createjs.Container()
 		cal.name = 'calendar'
 		cal.x = 60
 		cal.y = 0	
 		@insertBitmap 'propCalendar', 'propCalendar', 60, 128
 		for i in [1..12]
-			v = @createBitmap "cal#{calendar}Final#{i}", "cal#{calendar}Final#{i}", @positions.finales[i-1].x, @positions.finales[i-1].y, 'mc'
+			v = @createBitmap "cal#{calendar}Final#{i}", "cal#{calendar}Final#{i}", @game.finales[i-1].x, @game.finales[i-1].y
+			if calendar is 1
+				if i isnt 2 and i isnt 6 and i isnt 9 and i isnt 11
+					console.log i
+					#v.visible = off
 			cal.addChild v
 			@addToLibrary v
 		for i in [1..8]
-			v = @createBitmap "cal#{calendar}Dragble#{i}", "cal#{calendar}Dragble#{i}", @positions.drags[i-1].x,@positions.drags[i-1].y, 'mc'
+			v = new Draggable "cal#{calendar}Dragble#{i}", (@preload.getResult "cal#{calendar}Dragble#{i}"), i, @game.drags[i-1].x, @game.drags[i-1].y
 			cal.addChild v
 			@addToLibrary v
 		@addToMain cal
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-		###
+		for i in [1..8] by 1
+			@observer.subscribe 'init_evaluation', @library["cal#{@calendar}Dragble#{i}"].onInitEvaluation
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['calendar'], 1, {alpha: 0, y: @library['calendar'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['btnRepeat'], 1, {alpha :0, y: @library['btnRepeat'].y + 20, delay: 0.5}
+		TweenLite.from @library['btnFinished'], 1, {alpha: 0, y: @library['btnFinished'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-	evaluateAnswer: (e) =>
+		for i in [1..8]
+			@library["cal#{@calendar}Dragble#{i}"].addEventListener 'drop', @evaluateDrop
+		@library['btnRepeat'].addEventListener 'click', @repeatSound
+		@library['btnFinished'].addEventListener 'click', @evaluateAnswer
+		#createjs.Sound.play "cal#{@calendar}"
+	evaluateDrop: (e) =>
 		@answer = e.target
+		dropped = off
+		for drop in @game.drops
+			pt = @library[drop.tgt].globalToLocal @stage.mouseX, @stage.mouseY
+			if @library[drop.tgt].hitTest pt.x, pt.y
+				if drop.id is @answer.name
+					dropped = on
+					console.log 'true' 
+				else
+					@warning()
+					@answer.returnToPlace()
+		if not dropped then @answer.returnToPlace()
+		###
 		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
 		if @library['dropname'].hitTest pt.x, pt.y
 			if @answer.index is @answers[@index].id
@@ -134,6 +166,7 @@ class U5A1 extends Oda
 				@answer.returnToPlace()
 		else
 			@answer.returnToPlace()
+		###
 	finishEvaluation: =>
 		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
 		@answer.returnToPlace()
@@ -149,7 +182,8 @@ class U5A1 extends Oda
 		else
 			@finish()
 	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
+		createjs.Sound.stop()
+		createjs.Sound.play "cal#{@calendar}"
 	finish: ->
 		super
 		for i in [1..6] by 1

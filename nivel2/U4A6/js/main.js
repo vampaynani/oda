@@ -354,7 +354,6 @@
       question.x = 0;
       question.y = 0;
       question.name = 'question';
-      console.log(this.preguntas[i]);
       if (this.preguntas[i].tipo === 'texto') {
         v = this.createBitmap(this.preguntas[i].imagen, this.preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2 + 30, 'mc');
         v.scaleX = v.scaleY = 0.5;
