@@ -275,7 +275,6 @@
     };
 
     U1A2.prototype.repeatSound = function() {
-      createjs.Sound.stop();
       return createjs.Sound.play(this.answers[this.index].sound);
     };
 
