@@ -210,6 +210,6 @@ class U1A1 extends Oda
 		TweenLite.to @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 0.2}
 		TweenLite.to @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 20, delay: 0.1}
 		TweenLite.to @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 20, delay: 0.1}
-		TweenLite.to @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 20, delay: 0.1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.to @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 20, delay: 0.1,}
 		super
 	window.U1A1 = U1A1

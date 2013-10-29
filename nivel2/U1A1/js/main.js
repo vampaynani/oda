@@ -417,9 +417,7 @@
       TweenLite.to(this.library['nube3'], 1, {
         alpha: 0,
         y: this.library['nube3'].y + 20,
-        delay: 0.1,
-        onComplete: this.playInstructions,
-        onCompleteParams: [this]
+        delay: 0.1
       });
       return U1A1.__super__.finish.apply(this, arguments);
     };
