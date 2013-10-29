@@ -10,44 +10,60 @@
     r: 1
   });
 
-  Oda = (function() {
-    Array.prototype.toDictionary = function(key) {
-      var dict, obj, _i, _len;
-      dict = {};
-      for (_i = 0, _len = this.length; _i < _len; _i++) {
-        obj = this[_i];
-        if (obj[key] != null) {
-          dict[obj[key]] = obj;
-        }
+  Array.prototype.toDictionary = function(key) {
+    var dict, obj, _i, _len;
+    dict = {};
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      obj = this[_i];
+      if (obj[key] != null) {
+        dict[obj[key]] = obj;
       }
-      return dict;
-    };
+    }
+    return dict;
+  };
 
-    Array.prototype.where = function(query) {
-      var hit;
-      if (typeof query !== "object") {
-        return [];
-      }
-      hit = Object.keys(query).length;
-      return this.filter(function(item) {
-        var key, match, val;
-        match = 0;
-        for (key in query) {
-          val = query[key];
-          if (item[key] === val) {
-            match += 1;
-          }
+  Array.prototype.where = function(query) {
+    var hit;
+    if (typeof query !== "object") {
+      return [];
+    }
+    hit = Object.keys(query).length;
+    return this.filter(function(item) {
+      var key, match, val, _results;
+      match = 0;
+      _results = [];
+      for (key in query) {
+        val = query[key];
+        if (item[key] === val) {
+          match += 1;
         }
         if (match === hit) {
-          return true;
+          _results.push(true);
         } else {
-          return false;
+          _results.push(false);
         }
-      });
-    };
+      }
+      return _results;
+    });
+  };
 
+  Array.prototype.unique = function() {
+    var key, output, value, _i, _ref, _results;
+    output = {};
+    for (key = _i = 0, _ref = this.length; 0 <= _ref ? _i < _ref : _i > _ref; key = 0 <= _ref ? ++_i : --_i) {
+      output[this[key]] = this[key];
+    }
+    _results = [];
+    for (key in output) {
+      value = output[key];
+      _results.push(value);
+    }
+    return _results;
+  };
+
+  Oda = (function() {
     function Oda(imgurl, manifest, sounds) {
-      var def_manifest, item, sound;
+      var def_manifest, item;
       this.imgurl = imgurl != null ? imgurl : 'imgs/';
       this.playAgain = __bind(this.playAgain, this);
       this.handlePlayAgain = __bind(this.handlePlayAgain, this);
@@ -79,15 +95,7 @@
         return _results;
       }).call(this);
       Array.prototype.push.apply(this.manifest, def_manifest);
-      this.sounds = (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = sounds.length; _i < _len; _i++) {
-          sound = sounds[_i];
-          _results.push(createjs.Sound.registerSound(sound.src, sound.id));
-        }
-        return _results;
-      })();
+      Array.prototype.push.apply(this.manifest, sounds);
     }
 
     Oda.prototype.initialize = function() {
@@ -132,6 +140,7 @@
         bgBar.name = 'bar' + i.toString();
         this.loaderBar.addChild(bgBar);
       }
+      this.preload.installPlugin(createjs.Sound);
       this.preload.addEventListener('progress', this.handleProgress);
       this.preload.addEventListener('complete', this.handleComplete);
       this.preload.loadManifest(this.manifest);
@@ -183,28 +192,28 @@
       bmp.name = name;
       switch (position) {
         case 'tc':
-          this.setReg(bmp, 0, img.width / 2);
+          this.setReg(bmp, img.width / 2, 0);
           break;
         case 'tr':
-          this.setReg(bmp, 0, img.width);
+          this.setReg(bmp, img.width, 0);
           break;
         case 'ml':
-          this.setReg(bmp, img.height / 2, 0);
+          this.setReg(bmp, 0, img.height / 2);
           break;
         case 'mc':
-          this.setReg(bmp, img.height / 2, img.width / 2);
+          this.setReg(bmp, img.width / 2, img.height / 2);
           break;
         case 'mr':
-          this.setReg(bmp, img.height / 2, img.width);
+          this.setReg(bmp, img.width, img.height / 2);
           break;
         case 'bl':
-          this.setReg(bmp, img.height, 0);
+          this.setReg(bmp, 0, img.height);
           break;
         case 'bc':
-          this.setReg(bmp, img.height, img.width / 2);
+          this.setReg(bmp, img.width / 2, img.height);
           break;
         case 'br':
-          this.setReg(bmp, img.height, img.width);
+          this.setReg(bmp, img.width, img.height);
           break;
         default:
           this.setReg(bmp, 0, 0);
@@ -258,28 +267,28 @@
       animation.currentFrame = 0;
       switch (position) {
         case 'tc':
-          this.setReg(animation, 0, spriteImgs[0].width / 2);
+          this.setReg(animation, animation.width / 2, 0);
           break;
         case 'tr':
-          this.setReg(animation, 0, spriteImgs[0].width);
+          this.setReg(animation, animation.width, 0);
           break;
         case 'ml':
-          this.setReg(animation, spriteImgs[0].height / 2, 0);
+          this.setReg(animation, 0, animation.height / 2);
           break;
         case 'mc':
-          this.setReg(animation, spriteImgs[0].height / 2, spriteImgs[0].width / 2);
+          this.setReg(animation, animation.width / 2, animation.height / 2);
           break;
         case 'mr':
-          this.setReg(animation, spriteImgs[0].height / 2, spriteImgs[0].width);
+          this.setReg(animation, animation.width, animation.height / 2);
           break;
         case 'bl':
-          this.setReg(animation, spriteImgs[0].height, 0);
+          this.setReg(animation, 0, animation.height);
           break;
         case 'bc':
-          this.setReg(animation, spriteImgs[0].height, spriteImgs[0].width / 2);
+          this.setReg(animation, animation.width / 2, animation.height);
           break;
         case 'br':
-          this.setReg(animation, spriteImgs[0].height, spriteImgs[0].width);
+          this.setReg(animation, animation.width, animation.height);
           break;
         default:
           this.setReg(animation, 0, 0);
@@ -298,6 +307,50 @@
       animation = this.createSprite(name, imgs, anim, x, y, position);
       this.addToMain(animation);
       return animation;
+    };
+
+    Oda.prototype.createText = function(name, t, f, c, x, y, align) {
+      var text;
+      if (align == null) {
+        align = 'left';
+      }
+      text = new createjs.Text(t, f, c);
+      text.name = name;
+      text.x = x;
+      text.y = y;
+      text.align = align;
+      return text;
+    };
+
+    Oda.prototype.insertText = function(name, t, f, c, x, y, align) {
+      var text;
+      if (align == null) {
+        align = 'left';
+      }
+      text = this.createText(name, t, f, c, x, y, align);
+      this.addToMain(text);
+      return text;
+    };
+
+    Oda.prototype.shuffleNoRepeat = function(a, len) {
+      var copy, i, rand, shuffle, _i;
+      copy = a.slice(0);
+      shuffle = Array();
+      for (i = _i = 1; 1 <= len ? _i <= len : _i >= len; i = 1 <= len ? ++_i : --_i) {
+        rand = Math.round(Math.random() * (copy.length - 1));
+        shuffle.push(copy[rand]);
+        copy.splice(rand, 1);
+      }
+      return shuffle;
+    };
+
+    Oda.prototype.shuffle = function(a) {
+      var i, j, _i, _ref, _ref1;
+      for (i = _i = _ref = a.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {
+        j = Math.floor(Math.random() * (i + 1));
+        _ref1 = [a[j], a[i]], a[i] = _ref1[0], a[j] = _ref1[1];
+      }
+      return a;
     };
 
     Oda.prototype.addToMain = function() {
@@ -330,15 +383,81 @@
       return this.library;
     };
 
+    Oda.prototype.clone = function(obj) {
+      var flags, key, newInstance;
+      if ((obj == null) || typeof obj !== 'object') {
+        return obj;
+      }
+      if (obj instanceof Date) {
+        return new Date(obj.getTime());
+      }
+      if (obj instanceof RegExp) {
+        flags = '';
+        if (obj.global != null) {
+          flags += 'g';
+        }
+        if (obj.ignoreCase != null) {
+          flags += 'i';
+        }
+        if (obj.multiline != null) {
+          flags += 'm';
+        }
+        if (obj.sticky != null) {
+          flags += 'y';
+        }
+        return new RegExp(obj.source, flags);
+      }
+      newInstance = new obj.constructor();
+      for (key in obj) {
+        newInstance[key] = this.clone(obj[key]);
+      }
+      return newInstance;
+    };
+
     Oda.prototype.isArray = function(value) {
       return Array.isArray(value || function(value) {
         return {}.toString.call(value) === '[object Array]';
       });
     };
 
-    Oda.prototype.setReg = function(obj, regY, regX) {
-      obj.regY = regY;
+    Oda.prototype.setReg = function(obj, regX, regY) {
       obj.regX = regX;
+      obj.regY = regY;
+      return obj;
+    };
+
+    Oda.prototype.setPosition = function(obj, x, y) {
+      obj.x = x;
+      obj.y = y;
+      return obj;
+    };
+
+    Oda.prototype.debuggable = function(obj) {
+      var KEYCODE_DOWN, KEYCODE_ENTER, KEYCODE_LEFT, KEYCODE_RIGHT, KEYCODE_SPACE, KEYCODE_UP,
+        _this = this;
+      KEYCODE_ENTER = 13;
+      KEYCODE_SPACE = 32;
+      KEYCODE_UP = 38;
+      KEYCODE_DOWN = 40;
+      KEYCODE_LEFT = 37;
+      KEYCODE_RIGHT = 39;
+      this.debugged = obj;
+      document.addEventListener('keyup', function(e) {
+        switch (e.keyCode) {
+          case KEYCODE_UP:
+            _this.debugged.y -= 10;
+            break;
+          case KEYCODE_DOWN:
+            _this.debugged.y += 10;
+            break;
+          case KEYCODE_LEFT:
+            _this.debugged.x -= 10;
+            break;
+          case KEYCODE_RIGHT:
+            _this.debugged.x += 10;
+        }
+        return console.log(_this.debugged.x, _this.debugged.y);
+      });
       return obj;
     };
 
@@ -379,6 +498,7 @@
     Oda.prototype.playInstructions = function(oda) {
       var inst;
       if (dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()) {
+        console.log('mobile');
         oda.insertBitmap('start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc');
         oda.library['start'].addEventListener('click', oda.initMobileInstructions);
         return TweenLite.from(oda.library['start'], 0.3, {
@@ -415,7 +535,9 @@
 
     Oda.prototype.introEvaluation = function() {
       this.index = 0;
-      return this.library['score'].reset();
+      if (this.library['score']) {
+        return this.library['score'].reset();
+      }
     };
 
     Oda.prototype.initEvaluation = function(e) {
@@ -441,8 +563,8 @@
     };
 
     Oda.prototype.playAgain = function() {
-      this.mainContainer.removeChild(this.library['play_again']);
-      return this.introEvaluation();
+      this.mainContainer.removeAllChildren();
+      return this.setStage();
     };
 
     window.Oda = Oda;
