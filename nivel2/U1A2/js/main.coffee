@@ -131,6 +131,7 @@ class U1A2 extends Oda
 		else
 			@finish()
 	repeatSound: =>
+		createjs.Sound.stop()
 		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
