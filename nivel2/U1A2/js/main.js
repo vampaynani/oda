@@ -281,11 +281,6 @@
 
     U1A2.prototype.finish = function() {
       var i, _i, _results;
-      TweenLite.to(this.library['instructions'], 1, {
-        alpha: 0,
-        x: 0,
-        delay: 0.1
-      });
       TweenLite.to(this.library['names'], 1, {
         alpha: 0,
         y: this.library['names'].y + 50,
