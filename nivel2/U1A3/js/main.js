@@ -333,6 +333,30 @@
     };
 
     U1A3.prototype.finish = function() {
+      TweenMax.to([this.library['calendar'], this.library['iconGym'], this.library['iconArt'], this.library['iconWatch'], this.library['iconRead'], this.library['iconLunch']], 1, {
+        alpha: 0,
+        delay: 0.5
+      });
+      TweenLite.to(this.library['group1'], 1, {
+        alpha: 0,
+        y: this.library['group1'].y + 50,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['group2'], 1, {
+        alpha: 0,
+        y: this.library['group2'].y + 50,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['group3'], 1, {
+        alpha: 0,
+        y: this.library['group3'].y + 50,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['words'], 1, {
+        alpha: 0,
+        y: this.library['words'].y + 20,
+        delay: 0.1
+      });
       return U1A3.__super__.finish.apply(this, arguments);
     };
 

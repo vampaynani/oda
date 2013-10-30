@@ -171,5 +171,10 @@ class U1A3 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenMax.to [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
+		TweenLite.to @library['group1'], 1, {alpha: 0, y: @library['group1'].y + 50, delay: 0.1}
+		TweenLite.to @library['group2'], 1, {alpha: 0, y: @library['group2'].y + 50, delay: 0.1}
+		TweenLite.to @library['group3'], 1, {alpha: 0, y: @library['group3'].y + 50, delay: 0.1}
+		TweenLite.to @library['words'], 1, {alpha: 0, y: @library['words'].y + 20, delay: 0.1}
 		super
 	window.U1A3 = U1A3
