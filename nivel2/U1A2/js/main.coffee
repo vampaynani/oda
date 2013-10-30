@@ -134,6 +134,10 @@ class U1A2 extends Oda
 		createjs.Sound.stop()
 		createjs.Sound.play @answers[@index].sound
 	finish: ->
+		TweenLite.to @library['instructions'], 1, {alpha :0, x: 0, delay: 0.1}
+		TweenLite.to @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 0.1}
+		TweenLite.to @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 0.1}
+		TweenLite.to @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 0.1}
 		super
 		for i in [1..6] by 1
 			@library['name'+i].blink off

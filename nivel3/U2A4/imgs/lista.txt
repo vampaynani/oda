@@ -1,0 +1,14 @@
+{id: 'image_bacon.png', src:'image_bacon.png'}
+{id: 'image_butter.png', src:'image_butter.png'}
+{id: 'image_cheese.png', src:'image_cheese.png'}
+{id: 'image_cream.png', src:'image_cream.png'}
+{id: 'image_honey.png', src:'image_honey.png'}
+{id: 'image_leather.png', src:'image_leather.png'}
+{id: 'image_peanutbutter.png', src:'image_peanutbutter.png'}
+{id: 'image_pumpkins.png', src:'image_pumpkins.png'}
+{id: 'image_sugar.png', src:'image_sugar.png'}
+{id: 'image_tomatoes.png', src:'image_tomatoes.png'}
+{id: 'image_turbines.png', src:'image_turbines.png'}
+{id: 'image_wax.png', src:'image_wax.png'}
+{id: 'image_yarn.png', src:'image_yarn.png'}
+{id: 'image_yogurt.png', src:'image_yogurt.png'}
