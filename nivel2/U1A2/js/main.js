@@ -281,6 +281,26 @@
 
     U1A2.prototype.finish = function() {
       var i, _i, _results;
+      TweenLite.to(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['names'], 1, {
+        alpha: 0,
+        y: this.library['names'].y + 50,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['dropname'], 1, {
+        alpha: 0,
+        y: this.library['dropname'].y + 50,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['characters'], 1, {
+        alpha: 0,
+        y: this.library['characters'].y + 20,
+        delay: 0.1
+      });
       U1A2.__super__.finish.apply(this, arguments);
       _results = [];
       for (i = _i = 1; _i <= 6; i = _i += 1) {
