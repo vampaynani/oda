@@ -15,14 +15,51 @@ class U5A2 extends Oda
 			{id: 'cloudy', src:'cloudy_image.png'}
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/TU2_U5_A2_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U5_A2_raining.mp3', id:'sraining'}
+		    {src:'sounds/TU2_U5_A2_cloudy.mp3', id:'scloudy'}
+		    {src:'sounds/TU2_U5_A2_snowing.mp3', id:'ssnowing'}
+		    {src:'sounds/TU2_U5_A2_sunny.mp3', id:'ssunny'}
+		    {src:'sounds/TU2_U5_A2_windy.mp3', id:'swindy'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@answers = [	
-		]
-		@textos = [
-			'my pants.'
+		@game = [
+			{
+				id:'windy'
+				texts:[
+					'my jacket.'
+					'my sweater.'
+				]
+			}
+			{
+				id:'sunny'
+				texts:[
+					'my swimsuit.'
+					'my jacket.'
+				]
+			}
+			{
+				id:'rainy'
+				texts:[
+					'my raincoat.'
+					'my umbrella.'
+				]
+			}
+			{
+				id:'snowy'
+				texts:[
+					'my boots.'
+					'my coat.'
+				]
+			}
+			{
+				id:'cloudy'
+				texts:[
+					'my swimsuit.'
+					'my jeans.'
+				]
+			}
 		]
 
 		super null, manifest, sounds
@@ -43,35 +80,32 @@ class U5A2 extends Oda
 
 
 		sujeto = new createjs.Text 'I ','24px Arial','#333'
-		sujeto.x = 0
-		sujeto.y = 0
 		opciones.addChild sujeto
 
 		uno = new ClickableText 'want', 'want', 1, sujeto.x + sujeto.getMeasuredWidth(), 0
+		uno.setFont '24px Arial'
 		opciones.addChild uno
 
 		diagonal = new createjs.Text ' / ','24px Arial','#333'
 		diagonal.x = uno.x + uno.width
-		diagonal.y = 0
 		opciones.addChild diagonal
 
 		dos = new ClickableText " don't want","don't want ", 2,  diagonal.x + 24, 0
+		dos.setFont '24px Arial'
 		opciones.addChild dos
 
 		frase = new createjs.Text @textos[0],'24px Arial','#333'
 		frase.x = dos.x + dos.width
-		frase.y = 0
 		opciones.addChild frase
 
 		total = uno.width + dos.width + 12 + sujeto.getMeasuredWidth() + frase.getMeasuredWidth() + diagonal.getMeasuredWidth()
-		console.log total
-
+		
 		opciones.x = (stageSize.w / 2) - total / 2
 		opciones.y = 400;
 		@addToMain opciones
 
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@.introEvaluation()
+		@introEvaluation()
 	introEvaluation: ->
 		super
 		###

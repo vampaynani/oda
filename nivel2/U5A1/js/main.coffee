@@ -104,7 +104,7 @@ class U5A1 extends Oda
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'btnRepeat', 'btnRepeat', 598, 245
 		@insertBitmap 'btnFinished', 'btnFinished', 598, 292
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
 		@setCalendar(1).introEvaluation()
 	setCalendar: (calendar) ->
 		@calendar = calendar
@@ -117,20 +117,23 @@ class U5A1 extends Oda
 			v = @createBitmap "cal#{calendar}Final#{i}", "cal#{calendar}Final#{i}", @game.finales[i-1].x, @game.finales[i-1].y
 			if calendar is 1
 				if i isnt 2 and i isnt 6 and i isnt 9 and i isnt 11
-					console.log i
-					#v.visible = off
+					v.hitArea = new createjs.Shape new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50)
+					v.visible = off
+			else
+				if i isnt 6 and i isnt 8 and i isnt 10 and i isnt 12
+					v.hitArea = new createjs.Shape new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50)
+					v.visible = off
 			cal.addChild v
 			@addToLibrary v
 		for i in [1..8]
 			v = new Draggable "cal#{calendar}Dragble#{i}", (@preload.getResult "cal#{calendar}Dragble#{i}"), i, @game.drags[i-1].x, @game.drags[i-1].y
+			v.onInitEvaluation()
 			cal.addChild v
 			@addToLibrary v
 		@addToMain cal
 		@
 	introEvaluation: ->
 		super
-		for i in [1..8] by 1
-			@observer.subscribe 'init_evaluation', @library["cal#{@calendar}Dragble#{i}"].onInitEvaluation
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenLite.from @library['btnRepeat'], 1, {alpha :0, y: @library['btnRepeat'].y + 20, delay: 0.5}
@@ -141,7 +144,7 @@ class U5A1 extends Oda
 			@library["cal#{@calendar}Dragble#{i}"].addEventListener 'drop', @evaluateDrop
 		@library['btnRepeat'].addEventListener 'click', @repeatSound
 		@library['btnFinished'].addEventListener 'click', @evaluateAnswer
-		#createjs.Sound.play "cal#{@calendar}"
+		createjs.Sound.play "cal#{@calendar}"
 	evaluateDrop: (e) =>
 		@answer = e.target
 		dropped = off
@@ -150,42 +153,41 @@ class U5A1 extends Oda
 			if @library[drop.tgt].hitTest pt.x, pt.y
 				if drop.id is @answer.name
 					dropped = on
-					console.log 'true' 
+					@answer.visible = false;
+					@library[drop.tgt].visible = true
 				else
 					@warning()
 					@answer.returnToPlace()
 		if not dropped then @answer.returnToPlace()
-		###
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
-		###
+	evaluateAnswer: (e) =>
+		for i in [1..8]
+			if @library["cal#{@calendar}Dragble#{i}"].visible is off
+				@library.score.plusOne()
+		@finishEvaluation()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		TweenLite.to @library.calendar, 1, {alpha:0, y:@library.calendar.y - 20}
+		TweenLite.to @library.propCalendar, 1, {alpha:0, y:@library.propCalendar.y - 20}
+		@nextEvaluation()
 	nextEvaluation: =>
+		###
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		if @index < @game.drops.length
+			@setCalendar @index + 1
+			for i in [1..8]
+				@library["cal#{@calendar}Dragble#{i}"].addEventListener 'drop', @evaluateDrop
+				@library['btnRepeat'].addEventListener 'click', @repeatSound
+				@library['btnFinished'].addEventListener 'click', @evaluateAnswer
+				createjs.Sound.stop()
+				createjs.Sound.play "cal#{@calendar}"
 		else
-			@finish()
+		###
+		@finish()
 	repeatSound: =>
 		createjs.Sound.stop()
 		createjs.Sound.play "cal#{@calendar}"
 	finish: ->
+		createjs.Sound.stop()
+		TweenLite.to @library['btnRepeat'], 1, {alpha :0, y: @library['btnRepeat'].y + 20}
+		TweenLite.to @library['btnFinished'], 1, {alpha: 0, y: @library['btnFinished'].y + 20}
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U5A1 = U5A1

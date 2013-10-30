@@ -56,18 +56,49 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/TU2_U5_A2_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU2_U5_A2_raining.mp3',
+          id: 'sraining'
+        }, {
+          src: 'sounds/TU2_U5_A2_cloudy.mp3',
+          id: 'scloudy'
+        }, {
+          src: 'sounds/TU2_U5_A2_snowing.mp3',
+          id: 'ssnowing'
+        }, {
+          src: 'sounds/TU2_U5_A2_sunny.mp3',
+          id: 'ssunny'
+        }, {
+          src: 'sounds/TU2_U5_A2_windy.mp3',
+          id: 'swindy'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }
       ];
-      this.answers = [];
-      this.textos = ['my pants.'];
+      this.game = [
+        {
+          id: 'windy',
+          texts: ['my jacket.', 'my sweater.']
+        }, {
+          id: 'sunny',
+          texts: ['my swimsuit.', 'my jacket.']
+        }, {
+          id: 'rainy',
+          texts: ['my raincoat.', 'my umbrella.']
+        }, {
+          id: 'snowy',
+          texts: ['my boots.', 'my coat.']
+        }, {
+          id: 'cloudy',
+          texts: ['my swimsuit.', 'my jeans.']
+        }
+      ];
       U5A2.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -96,23 +127,20 @@
       this.addToMain(v);
       opciones = new createjs.Container();
       sujeto = new createjs.Text('I ', '24px Arial', '#333');
-      sujeto.x = 0;
-      sujeto.y = 0;
       opciones.addChild(sujeto);
       uno = new ClickableText('want', 'want', 1, sujeto.x + sujeto.getMeasuredWidth(), 0);
+      uno.setFont('24px Arial');
       opciones.addChild(uno);
       diagonal = new createjs.Text(' / ', '24px Arial', '#333');
       diagonal.x = uno.x + uno.width;
-      diagonal.y = 0;
       opciones.addChild(diagonal);
       dos = new ClickableText(" don't want", "don't want ", 2, diagonal.x + 24, 0);
+      dos.setFont('24px Arial');
       opciones.addChild(dos);
       frase = new createjs.Text(this.textos[0], '24px Arial', '#333');
       frase.x = dos.x + dos.width;
-      frase.y = 0;
       opciones.addChild(frase);
       total = uno.width + dos.width + 12 + sujeto.getMeasuredWidth() + frase.getMeasuredWidth() + diagonal.getMeasuredWidth();
-      console.log(total);
       opciones.x = (stageSize.w / 2) - total / 2;
       opciones.y = 400;
       this.addToMain(opciones);
@@ -122,7 +150,6 @@
 
     U5A2.prototype.introEvaluation = function() {
       return U5A2.__super__.introEvaluation.apply(this, arguments);
-
       /*
       		for i in [1..6] by 1
       			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
@@ -135,6 +162,7 @@
       		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
       		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
       */
+
     };
 
     U5A2.prototype.initEvaluation = function(e) {

@@ -12,6 +12,7 @@
       this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
+      this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.evaluateDrop = __bind(this.evaluateDrop, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
@@ -290,7 +291,7 @@
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.insertBitmap('btnRepeat', 'btnRepeat', 598, 245);
       this.insertBitmap('btnFinished', 'btnFinished', 598, 292);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
       return this.setCalendar(1).introEvaluation();
     };
 
@@ -306,7 +307,13 @@
         v = this.createBitmap("cal" + calendar + "Final" + i, "cal" + calendar + "Final" + i, this.game.finales[i - 1].x, this.game.finales[i - 1].y);
         if (calendar === 1) {
           if (i !== 2 && i !== 6 && i !== 9 && i !== 11) {
-            console.log(i);
+            v.hitArea = new createjs.Shape(new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50));
+            v.visible = false;
+          }
+        } else {
+          if (i !== 6 && i !== 8 && i !== 10 && i !== 12) {
+            v.hitArea = new createjs.Shape(new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50));
+            v.visible = false;
           }
         }
         cal.addChild(v);
@@ -314,6 +321,7 @@
       }
       for (i = _j = 1; _j <= 8; i = ++_j) {
         v = new Draggable("cal" + calendar + "Dragble" + i, this.preload.getResult("cal" + calendar + "Dragble" + i), i, this.game.drags[i - 1].x, this.game.drags[i - 1].y);
+        v.onInitEvaluation();
         cal.addChild(v);
         this.addToLibrary(v);
       }
@@ -322,11 +330,7 @@
     };
 
     U5A1.prototype.introEvaluation = function() {
-      var i, _i;
       U5A1.__super__.introEvaluation.apply(this, arguments);
-      for (i = _i = 1; _i <= 8; i = _i += 1) {
-        this.observer.subscribe('init_evaluation', this.library["cal" + this.calendar + "Dragble" + i].onInitEvaluation);
-      }
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
       });
@@ -356,7 +360,8 @@
         this.library["cal" + this.calendar + "Dragble" + i].addEventListener('drop', this.evaluateDrop);
       }
       this.library['btnRepeat'].addEventListener('click', this.repeatSound);
-      return this.library['btnFinished'].addEventListener('click', this.evaluateAnswer);
+      this.library['btnFinished'].addEventListener('click', this.evaluateAnswer);
+      return createjs.Sound.play("cal" + this.calendar);
     };
 
     U5A1.prototype.evaluateDrop = function(e) {
@@ -370,7 +375,8 @@
         if (this.library[drop.tgt].hitTest(pt.x, pt.y)) {
           if (drop.id === this.answer.name) {
             dropped = true;
-            console.log('true');
+            this.answer.visible = false;
+            this.library[drop.tgt].visible = true;
           } else {
             this.warning();
             this.answer.returnToPlace();
@@ -380,47 +386,45 @@
       if (!dropped) {
         return this.answer.returnToPlace();
       }
-      /*
-      		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-      		if @library['dropname'].hitTest pt.x, pt.y
-      			if @answer.index is @answers[@index].id
-      				@answer.blink off
-      				setTimeout @finishEvaluation, 1 * 1000
-      			else
-      				@warning()
-      				@answer.returnToPlace()
-      		else
-      			@answer.returnToPlace()
-      */
+    };
 
+    U5A1.prototype.evaluateAnswer = function(e) {
+      var i, _i;
+      for (i = _i = 1; _i <= 8; i = ++_i) {
+        if (this.library["cal" + this.calendar + "Dragble" + i].visible === false) {
+          this.library.score.plusOne();
+        }
+      }
+      return this.finishEvaluation();
     };
 
     U5A1.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      TweenLite.to(this.library.calendar, 1, {
         alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
+        y: this.library.calendar.y - 20
       });
-      return this.answer.returnToPlace();
+      TweenLite.to(this.library.propCalendar, 1, {
+        alpha: 0,
+        y: this.library.propCalendar.y - 20
+      });
+      return this.nextEvaluation();
     };
 
     U5A1.prototype.nextEvaluation = function() {
-      this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
-      } else {
-        return this.finish();
-      }
+      /*
+      		@index++
+      		if @index < @game.drops.length
+      			@setCalendar @index + 1
+      			for i in [1..8]
+      				@library["cal#{@calendar}Dragble#{i}"].addEventListener 'drop', @evaluateDrop
+      				@library['btnRepeat'].addEventListener 'click', @repeatSound
+      				@library['btnFinished'].addEventListener 'click', @evaluateAnswer
+      				createjs.Sound.stop()
+      				createjs.Sound.play "cal#{@calendar}"
+      		else
+      */
+
+      return this.finish();
     };
 
     U5A1.prototype.repeatSound = function() {
@@ -429,13 +433,16 @@
     };
 
     U5A1.prototype.finish = function() {
-      var i, _i, _results;
-      U5A1.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      createjs.Sound.stop();
+      TweenLite.to(this.library['btnRepeat'], 1, {
+        alpha: 0,
+        y: this.library['btnRepeat'].y + 20
+      });
+      TweenLite.to(this.library['btnFinished'], 1, {
+        alpha: 0,
+        y: this.library['btnFinished'].y + 20
+      });
+      return U5A1.__super__.finish.apply(this, arguments);
     };
 
     window.U5A1 = U5A1;

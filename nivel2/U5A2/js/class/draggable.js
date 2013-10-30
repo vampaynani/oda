@@ -38,10 +38,10 @@
       return this.addChild(this.bitmap);
     };
 
-    Draggable.prototype.setReg = function(obj, regX, regY) {
-      obj.regX = regX;
-      obj.regY = regY;
-      return obj;
+    Draggable.prototype.setReg = function(regX, regY) {
+      this.regX = regX;
+      this.regY = regY;
+      return this;
     };
 
     Draggable.prototype.initDragListener = function() {
@@ -49,12 +49,10 @@
     };
 
     Draggable.prototype.onInitEvaluation = function() {
-      this.blink(true);
       return this.addEventListener('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.onStopEvaluation = function() {
-      this.blink(false);
       return this.removeEventListener('mousedown', this.handleMouseDown);
     };
 
@@ -70,6 +68,7 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
+      this.alpha = 1;
       e.addEventListener('mousemove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
