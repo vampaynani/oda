@@ -23,17 +23,17 @@ class U1A4 extends Oda
 			{src:'sounds/TU2_U1_A4_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U1_A4_arriveClass.mp3', id:'sarrive'}
-		    {src:'sounds/TU2_U1_A4_beQuiet.mp3', id:'squiet'}
-		    {src:'sounds/TU2_U1_A4_dontBeLate.mp3', id:'sbus'}
-		    {src:'sounds/TU2_U1_A4_dontEat.mp3', id:'seat'}
-		    {src:'sounds/TU2_U1_A4_dontRunAuditorium.mp3', id:'saud'}
-		    {src:'sounds/TU2_U1_A4_dontRunHall.mp3', id:'srun'}
-		    {src:'sounds/TU2_U1_A4_keepCafe.mp3', id:'scafe'}
-		    {src:'sounds/TU2_U1_A4_sitQuietly.mp3', id:'smovies'}
-		    {src:'sounds/TU2_U1_A4_talkQuietly.mp3', id:'slibrary'}
-		    {src:'sounds/TU2_U1_A4_throwAway.mp3', id:'strash'}
-		    {src:'sounds/TU2_U1_A4_walkHall.mp3', id:'swalk'}
+		    {src:'sounds/TU2_U1_A4_arriveClass.mp3', id:'arrive'}
+		    {src:'sounds/TU2_U1_A4_beQuiet.mp3', id:'quiet'}
+		    {src:'sounds/TU2_U1_A4_dontBeLate.mp3', id:'bus'}
+		    {src:'sounds/TU2_U1_A4_dontEat.mp3', id:'eat'}
+		    {src:'sounds/TU2_U1_A4_dontRunAuditorium.mp3', id:'aud'}
+		    {src:'sounds/TU2_U1_A4_dontRunHall.mp3', id:'run'}
+		    {src:'sounds/TU2_U1_A4_keepCafe.mp3', id:'cafe'}
+		    {src:'sounds/TU2_U1_A4_sitQuietly.mp3', id:'movies'}
+		    {src:'sounds/TU2_U1_A4_talkQuietly.mp3', id:'library'}
+		    {src:'sounds/TU2_U1_A4_throwAway.mp3', id:'trash'}
+		    {src:'sounds/TU2_U1_A4_walkHall.mp3', id:'walk'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [
@@ -104,9 +104,9 @@ class U1A4 extends Oda
 		others = @answers.filter (answer) =>
 			answer.id isnt @phrase.id
 		fake = Math.floor Math.random() * others.length
-		@library["choose#{rand}"].gotoAndStop @phrase.id
-		@library["choose#{other}"].gotoAndStop others[fake].id
-		createjs.Sound.play "s#{@phrase.id}"
+		@library['choose' + rand].gotoAndStop @phrase.id
+		@library['choose' + other].gotoAndStop others[fake].id
+		createjs.Sound.play @phrase.id
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 1, scaleX: 1, scaleY: 1, ease:Elastic.easeOut}
 	getPhrase: ->
 		possible = @answers.filter (answer) ->
@@ -114,8 +114,7 @@ class U1A4 extends Oda
 		id = Math.floor Math.random() * possible.length
 		possible[id]
 	repeat: (e) =>
-		createjs.Sound.stop()
-		createjs.Sound.play "s#{@phrase.id}"
+		createjs.Sound.play @phrase.id
 	shuffle: (a) ->
 		for i in [a.length..1]
 			j = Math.floor Math.random() * ( i + 1 )

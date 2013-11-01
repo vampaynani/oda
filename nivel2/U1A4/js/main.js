@@ -82,37 +82,37 @@
           id: 'good'
         }, {
           src: 'sounds/TU2_U1_A4_arriveClass.mp3',
-          id: 'sarrive'
+          id: 'arrive'
         }, {
           src: 'sounds/TU2_U1_A4_beQuiet.mp3',
-          id: 'squiet'
+          id: 'quiet'
         }, {
           src: 'sounds/TU2_U1_A4_dontBeLate.mp3',
-          id: 'sbus'
+          id: 'bus'
         }, {
           src: 'sounds/TU2_U1_A4_dontEat.mp3',
-          id: 'seat'
+          id: 'eat'
         }, {
           src: 'sounds/TU2_U1_A4_dontRunAuditorium.mp3',
-          id: 'saud'
+          id: 'aud'
         }, {
           src: 'sounds/TU2_U1_A4_dontRunHall.mp3',
-          id: 'srun'
+          id: 'run'
         }, {
           src: 'sounds/TU2_U1_A4_keepCafe.mp3',
-          id: 'scafe'
+          id: 'cafe'
         }, {
           src: 'sounds/TU2_U1_A4_sitQuietly.mp3',
-          id: 'smovies'
+          id: 'movies'
         }, {
           src: 'sounds/TU2_U1_A4_talkQuietly.mp3',
-          id: 'slibrary'
+          id: 'library'
         }, {
           src: 'sounds/TU2_U1_A4_throwAway.mp3',
-          id: 'strash'
+          id: 'trash'
         }, {
           src: 'sounds/TU2_U1_A4_walkHall.mp3',
-          id: 'swalk'
+          id: 'walk'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
@@ -287,9 +287,9 @@
         return answer.id !== _this.phrase.id;
       });
       fake = Math.floor(Math.random() * others.length);
-      this.library["choose" + rand].gotoAndStop(this.phrase.id);
-      this.library["choose" + other].gotoAndStop(others[fake].id);
-      createjs.Sound.play("s" + this.phrase.id);
+      this.library['choose' + rand].gotoAndStop(this.phrase.id);
+      this.library['choose' + other].gotoAndStop(others[fake].id);
+      createjs.Sound.play(this.phrase.id);
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 1,
         scaleX: 1,
@@ -308,8 +308,7 @@
     };
 
     U1A4.prototype.repeat = function(e) {
-      createjs.Sound.stop();
-      return createjs.Sound.play("s" + this.phrase.id);
+      return createjs.Sound.play(this.phrase.id);
     };
 
     U1A4.prototype.shuffle = function(a) {
