@@ -1,0 +1,9 @@
+{id: 'cloud', src:'cloud.png'}
+{id: 'hersToothpaste', src:'hers-toothpaste.png'}
+{id: 'hersWhose', src:'hers-whose.png'}
+{id: 'hisTowel', src:'his-towel.png'}
+{id: 'hisWhose', src:'his-whose.png'}
+{id: 'mineBackpack', src:'mine-backpack.png'}
+{id: 'mineSwimsuit', src:'mine-swimsuit.png'}
+{id: 'mineWhose', src:'mine-whose.png'}
+{id: 'yoursWhose', src:'yours-whose.png'}
