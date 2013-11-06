@@ -14,6 +14,7 @@
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
+      this.filterByID = __bind(this.filterByID, this);
       var manifest, sounds;
       manifest = [
         {
@@ -44,10 +45,10 @@
           id: 'sunny',
           src: 'sunny_image.png'
         }, {
-          id: 'snowing',
+          id: 'snowy',
           src: 'snowing_image.png'
         }, {
-          id: 'raining',
+          id: 'rainy',
           src: 'raining_image.png'
         }, {
           id: 'cloudy',
@@ -81,71 +82,99 @@
           id: 'wrong'
         }
       ];
-      this.game = [
-        {
-          id: 'windy',
-          texts: ['my jacket.', 'my sweater.']
-        }, {
-          id: 'sunny',
-          texts: ['my swimsuit.', 'my jacket.']
-        }, {
-          id: 'rainy',
-          texts: ['my raincoat.', 'my umbrella.']
-        }, {
-          id: 'snowy',
-          texts: ['my boots.', 'my coat.']
-        }, {
-          id: 'cloudy',
-          texts: ['my swimsuit.', 'my jeans.']
-        }
-      ];
+      this.game = {
+        steps: [
+          {
+            id: 'windy',
+            texts: ['my jacket.', 'my sweater.']
+          }, {
+            id: 'sunny',
+            texts: ['my swimsuit.', 'my jacket.']
+          }, {
+            id: 'rainy',
+            texts: ['my raincoat.', 'my umbrella.']
+          }, {
+            id: 'snowy',
+            texts: ['my boots.', 'my coat.']
+          }, {
+            id: 'cloudy',
+            texts: ['my swimsuit.', 'my jeans.']
+          }
+        ]
+      };
       U5A2.__super__.constructor.call(this, null, manifest, sounds);
     }
 
+    U5A2.prototype.filterByID = function(x) {
+      return x !== this.selected;
+    };
+
     U5A2.prototype.setStage = function() {
-      var diagonal, dos, frase, opciones, sujeto, total, uno, v;
+      var choose, i, step, steps, stepsView;
       U5A2.__super__.setStage.apply(this, arguments);
-      this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
-      v = this.createSprite('choose1', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {
-        windy: 0,
-        sunny: 1,
-        snowing: 2,
-        raining: 3,
-        cloudy: 4
-      }, (stageSize.w / 4) + 25, 251, 'mc');
-      v.scaleX = v.scaleY = 0.6;
-      this.addToMain(v);
-      v = this.createSprite('choose2', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {
-        windy: 0,
-        sunny: 1,
-        snowing: 2,
-        raining: 3,
-        cloudy: 4
-      }, (stageSize.w / 4) * 3 - 25, 251, 'mc');
-      v.scaleX = v.scaleY = 0.6;
-      this.addToMain(v);
-      opciones = new createjs.Container();
-      sujeto = new createjs.Text('I ', '24px Arial', '#333');
-      opciones.addChild(sujeto);
-      uno = new ClickableText('want', 'want', 1, sujeto.x + sujeto.getMeasuredWidth(), 0);
-      uno.setFont('24px Arial');
-      opciones.addChild(uno);
-      diagonal = new createjs.Text(' / ', '24px Arial', '#333');
-      diagonal.x = uno.x + uno.width;
-      opciones.addChild(diagonal);
-      dos = new ClickableText(" don't want", "don't want ", 2, diagonal.x + 24, 0);
-      dos.setFont('24px Arial');
-      opciones.addChild(dos);
-      frase = new createjs.Text(this.textos[0], '24px Arial', '#333');
-      frase.x = dos.x + dos.width;
-      opciones.addChild(frase);
-      total = uno.width + dos.width + 12 + sujeto.getMeasuredWidth() + frase.getMeasuredWidth() + diagonal.getMeasuredWidth();
-      opciones.x = (stageSize.w / 2) - total / 2;
-      opciones.y = 400;
-      this.addToMain(opciones);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.introEvaluation();
+      steps = this.shuffle(this.game.steps);
+      steps = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = steps.length; _i < _len; _i++) {
+          step = steps[_i];
+          _results.push(step.id);
+        }
+        return _results;
+      })();
+      i = 0;
+      this.selected = steps[i];
+      stepsView = steps.filter(this.filterByID);
+      stepsView = this.shuffle(stepsView);
+      choose = new ChooseBitmap('chooser', this.preload.getResult(this.selected), this.preload.getResult(stepsView[0]), 2, 0, 200);
+      choose.addEventListener('selection', function(e) {
+        return console.log(e);
+      });
+      return this.addToMain(choose);
+      /*
+      		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
+      		@insertBitmap 'instructions', 'inst', 20, 100
+      
+      		v = @createSprite 'choose1', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {windy:0, sunny:1, snowing:2, raining:3, cloudy:4}, (stageSize.w / 4) + 25, 251, 'mc'
+      		v.scaleX = v.scaleY = 0.6
+      		@addToMain v
+      
+      		v = @createSprite 'choose2', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {windy:0, sunny:1, snowing:2, raining:3, cloudy:4}, (stageSize.w / 4)*3-25, 251, 'mc'
+      		v.scaleX = v.scaleY = 0.6
+      		@addToMain v
+      
+      		opciones = new createjs.Container()
+      
+      
+      		sujeto = new createjs.Text 'I ','24px Arial','#333'
+      		opciones.addChild sujeto
+      
+      		uno = new ClickableText 'want', 'want', 1, sujeto.x + sujeto.getMeasuredWidth(), 0
+      		uno.setFont '24px Arial'
+      		opciones.addChild uno
+      
+      		diagonal = new createjs.Text ' / ','24px Arial','#333'
+      		diagonal.x = uno.x + uno.width
+      		opciones.addChild diagonal
+      
+      		dos = new ClickableText " don't want","don't want ", 2,  diagonal.x + 24, 0
+      		dos.setFont '24px Arial'
+      		opciones.addChild dos
+      
+      		frase = new createjs.Text @textos[0],'24px Arial','#333'
+      		frase.x = dos.x + dos.width
+      		opciones.addChild frase
+      
+      		total = uno.width + dos.width + 12 + sujeto.getMeasuredWidth() + frase.getMeasuredWidth() + diagonal.getMeasuredWidth()
+      		
+      		opciones.x = (stageSize.w / 2) - total / 2
+      		opciones.y = 400;
+      		@addToMain opciones
+      
+      		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+      		@introEvaluation()
+      */
+
     };
 
     U5A2.prototype.introEvaluation = function() {

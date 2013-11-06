@@ -10,8 +10,8 @@ class U5A2 extends Oda
 			{id: 'startgame', src:'start_game.png'}
  			{id: 'windy', src:'windy_image.png'}
 			{id: 'sunny', src:'sunny_image.png'}
-			{id: 'snowing', src:'snowing_image.png'}
-			{id: 'raining', src:'raining_image.png'}
+			{id: 'snowy', src:'snowing_image.png'}
+			{id: 'rainy', src:'raining_image.png'}
 			{id: 'cloudy', src:'cloudy_image.png'}
 		]
 		sounds = [
@@ -24,47 +24,61 @@ class U5A2 extends Oda
 		    {src:'sounds/TU2_U5_A2_windy.mp3', id:'swindy'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@game = [
-			{
-				id:'windy'
-				texts:[
-					'my jacket.'
-					'my sweater.'
-				]
-			}
-			{
-				id:'sunny'
-				texts:[
-					'my swimsuit.'
-					'my jacket.'
-				]
-			}
-			{
-				id:'rainy'
-				texts:[
-					'my raincoat.'
-					'my umbrella.'
-				]
-			}
-			{
-				id:'snowy'
-				texts:[
-					'my boots.'
-					'my coat.'
-				]
-			}
-			{
-				id:'cloudy'
-				texts:[
-					'my swimsuit.'
-					'my jeans.'
-				]
-			}
-		]
+		@game = 
+			steps: [
+				{
+					id:'windy'
+					texts:[
+						'my jacket.'
+						'my sweater.'
+					]
+				}
+				{
+					id:'sunny'
+					texts:[
+						'my swimsuit.'
+						'my jacket.'
+					]
+				}
+				{
+					id:'rainy'
+					texts:[
+						'my raincoat.'
+						'my umbrella.'
+					]
+				}
+				{
+					id:'snowy'
+					texts:[
+						'my boots.'
+						'my coat.'
+					]
+				}
+				{
+					id:'cloudy'
+					texts:[
+						'my swimsuit.'
+						'my jeans.'
+					]
+				}
+			]
 
 		super null, manifest, sounds
+	filterByID: (x) => 
+		x isnt @selected
 	setStage: ->
 		super
+		steps = @shuffle @game.steps
+		steps = (step.id for step in steps)
+		i = 0
+		@selected = steps[i]
+		stepsView = steps.filter @filterByID
+		stepsView = @shuffle stepsView
+		choose = new ChooseBitmap 'chooser', (@preload.getResult @selected), (@preload.getResult stepsView[0]), 2, 0, 200
+		choose.addEventListener 'selection', (e)->
+			console.log e
+		@addToMain choose
+		###
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 
@@ -106,6 +120,7 @@ class U5A2 extends Oda
 
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@introEvaluation()
+		###
 	introEvaluation: ->
 		super
 		###
