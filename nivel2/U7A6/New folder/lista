@@ -1,0 +1,58 @@
+{id: 'backpack', src:'backpack.png'}
+{id: 'baseball', src:'baseball.png'}
+{id: 'brush-my-hair', src:'brush-my-hair.png'}
+{id: 'cabin', src:'cabin.png'}
+{id: 'canoeing', src:'canoeing.png'}
+{id: 'comb', src:'comb.png'}
+{id: 'field', src:'field.png'}
+{id: 'fishing', src:'fishing.png'}
+{id: 'flashlight', src:'flashlight.png'}
+{id: 'floss-my-teeth', src:'floss-my-teeth.png'}
+{id: 'forest', src:'forest.png'}
+{id: 'hiking', src:'hiking.png'}
+{id: 'horseback-riding', src:'horseback-riding.png'}
+{id: 'lake', src:'lake.png'}
+{id: 'mountain-biking', src:'mountain-biking.png'}
+{id: 'mountains', src:'mountains.png'}
+{id: 'plant-trees', src:'plant-trees.png'}
+{id: 'pool', src:'pool.png'}
+{id: 'recycle-bottles', src:'recycle-bottles.png'}
+{id: 'soap', src:'soap.png'}
+{id: 'sunscreen', src:'sunscreen.png'}
+{id: 'swimming', src:'swimming.png'}
+{id: 'swimsuit', src:'swimsuit.png'}
+{id: 'toothbrush', src:'toothbrush.png'}
+{id: 'toothpaste', src:'toothpaste.png'}
+{id: 'towels', src:'towels.png'}
+{id: 'volleyball', src:'volleyball.png'}
+{id: 'wash-my-face', src:'wash-my-face.png'}
+
+
+'backpack'
+'baseball'
+'brush-my-hair'
+'cabin'
+'canoeing'
+'comb'
+'field'
+'fishing'
+'flashlight'
+'floss-my-teeth'
+'forest'
+'hiking'
+'horseback-riding'
+'lake'
+'mountain-biking'
+'mountains'
+'plant-trees'
+'pool'
+'recycle-bottles'
+'soap'
+'sunscreen'
+'swimming'
+'swimsuit'
+'toothbrush'
+'toothpaste'
+'towels'
+'volleyball'
+'wash-my-face'
