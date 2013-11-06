@@ -735,7 +735,7 @@
       if (hit.hitTest(pt.x, pt.y)) {
         hpt = hit.parent.localToGlobal(hit.x, hit.y);
         htt = this.answer.parent.globalToLocal(hpt.x, hpt.y);
-        this.wordcompleter = new WordCompleter('dropper', this.pieces[this.answer.index].texta, '', this.pieces[this.answer.index].textb, '#FFF', '#E90E2C', 150, 560, 90, 30);
+        this.wordcompleter = new AfterBeforeWord('dropper', this.pieces[this.answer.index].texta, '', this.pieces[this.answer.index].textb, '#FFF', '#E90E2C', 150, 560, 110, 30);
         this.wordcompleter.x = stageSize.w / 2 - this.wordcompleter.width / 2;
         if (this.library['dropper']) {
           this.mainContainer.removeChild(this.library['dropper']);
@@ -745,7 +745,7 @@
         this.answer.putInPlace(htt);
         return this.initListeners();
       } else {
-        return this.answer.returnToPlace();
+        return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY);
       }
     };
 
@@ -800,6 +800,18 @@
     };
 
     U2A3.prototype.finish = function() {
+      TweenLite.to(this.library['dragpieces'], 1, {
+        alpha: 0,
+        y: this.y - 20
+      });
+      TweenLite.to(this.library['puzzle'], 1, {
+        alpha: 0,
+        y: this.y - 20
+      });
+      TweenMax.to([this.library['p1'], this.library['p2'], this.library['p3'], this.library['behind'], this.library['in'], this.library['under'], this.library['next'], this.library['on'], this.library['above']], 1, {
+        alpha: 0,
+        y: stageSize.h
+      });
       return U2A3.__super__.finish.apply(this, arguments);
     };
 

@@ -226,56 +226,92 @@
           id: 'wrong'
         }
       ];
+      /*
+      			0:They
+      			1:He
+      			2:She
+      			3:like
+      			4:don't like
+      			5:likes
+      			6:doesn't likes
+      			7:love
+      			8:loves
+      			9:milk
+      			10:pancakes
+      			11:eggs
+      			12:beans
+      			9:corn
+      			10:ice cream
+      			11:peaches
+      			12:spinach
+      */
+
       this.answers = [
-        {
-          a1: 0,
-          a2: 3,
-          a3: 12
-        }, {
-          a1: 0,
-          a2: 7,
-          a3: 11
-        }, {
-          a1: 0,
-          a2: 7,
-          a3: 10
-        }, {
-          a1: 0,
-          a2: 7,
-          a3: 9
-        }, {
-          a1: 2,
-          a2: 6,
-          a3: 12
-        }, {
-          a1: 2,
-          a2: 6,
-          a3: 11
-        }, {
-          a1: 2,
-          a2: 6,
-          a3: 10
-        }, {
-          a1: 2,
-          a2: 5,
-          a3: 9
-        }, {
-          a1: 1,
-          a2: 5,
-          a3: 12
-        }, {
-          a1: 1,
-          a2: 8,
-          a3: 11
-        }, {
-          a1: 1,
-          a2: 5,
-          a3: 10
-        }, {
-          a1: 1,
-          a2: 6,
-          a3: 9
-        }
+        [
+          {
+            a: 'Table1num2',
+            a1: 2,
+            a2: 6,
+            a3: 10
+          }, {
+            a: 'Table1num10',
+            a1: 0,
+            a2: 7,
+            a3: 10
+          }, {
+            a: 'Table1num4',
+            a1: 2,
+            a2: 6,
+            a3: 12
+          }, {
+            a: 'Table1num9',
+            a1: 0,
+            a2: 4,
+            a3: 9
+          }, {
+            a: 'Table1num1',
+            a1: 2,
+            a2: 8,
+            a3: 9
+          }, {
+            a: 'Table1num5',
+            a1: 1,
+            a2: 8,
+            a3: 9
+          }
+        ], [
+          {
+            a: 'Table2num4',
+            a1: 2,
+            a2: 5,
+            a3: 12
+          }, {
+            a: 'Table2num7',
+            a1: 1,
+            a2: 5,
+            a3: 11
+          }, {
+            a: 'Table2num2',
+            a1: 2,
+            a2: 8,
+            a3: 10
+          }, {
+            a: 'Table2num10',
+            a1: 0,
+            a2: 4,
+            a3: 10
+          }, {
+            a: 'Table2num5',
+            a1: 1,
+            a2: 8,
+            a3: 9
+          }, {
+            a: 'Table2num11',
+            a1: 0,
+            a2: 7,
+            a3: 11
+          }
+        ]
       ];
       U3A4.__super__.constructor.call(this, null, manifest, sounds);
     }
@@ -285,7 +321,7 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
-      return this.setDropper().setClouds(1).setFaces().setTable(3).introEvaluation();
+      return this.setDropper().setTable(1).setClouds().introEvaluation();
     };
 
     U3A4.prototype.setDropper = function() {
@@ -295,67 +331,39 @@
       return this;
     };
 
-    U3A4.prototype.setClouds = function() {
-      var n1, n2, n3, nube1, nube2, nube3, t1n1, t1n2, t1n3, t2n1, t2n2, t2n3, t3n1, t3n2, t3n3, t4n2, t4n3, t5n2, t6n2;
-      nube1 = new createjs.Container();
-      nube1.x = 77;
-      nube1.y = 388;
-      nube1.name = 'nube1';
-      nube2 = new createjs.Container();
-      nube2.x = 272;
-      nube2.y = 369;
-      nube2.name = 'nube2';
-      nube3 = new createjs.Container();
-      nube3.x = 581;
-      nube3.y = 372;
-      nube3.name = 'nube3';
-      n1 = this.createBitmap('n1', 'n1', 0, 0);
-      n2 = this.createBitmap('n2', 'n2', 0, 0);
-      n3 = this.createBitmap('n3', 'n3', 0, 0);
-      t1n1 = new DraggableText('t1n1', "They", 0, 32, 42);
-      t2n1 = new DraggableText('t2n1', "He", 1, 80, 74);
-      t3n1 = new DraggableText('t3n1', "She", 2, 90, 21);
-      t1n2 = new DraggableText('t1n2', "like", 3, 103, 91);
-      t2n2 = new DraggableText('t2n2', "don't like", 4, 119, 24);
-      t3n2 = new DraggableText('t3n2', "likes", 5, 55, 38);
-      t4n2 = new DraggableText('t4n2', "doesn't likes", 6, 134, 62);
-      t5n2 = new DraggableText('t5n2', "love", 7, 188, 98);
-      t6n2 = new DraggableText('t6n2', "loves", 8, 23, 75);
-      t1n3 = new DraggableText('t1n3', "Tomatoes", 9, 32, 23);
-      t2n3 = new DraggableText('t2n3', "Broccoli", 10, 92, 48);
-      t3n3 = new DraggableText('t3n3', "fish", 11, 23, 67);
-      t4n3 = new DraggableText('t4n3', "lettuce", 12, 85, 87);
-      nube1.addChild(n1, t1n1, t2n1, t3n1);
-      nube2.addChild(n2, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2);
-      nube3.addChild(n3, t1n3, t2n3, t3n3, t4n3);
-      this.addToLibrary(t1n1, t2n1, t3n1, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2, t1n3, t2n3, t3n3, t4n3);
-      this.addToMain(nube1, nube2, nube3);
-      return this;
-    };
-
-    U3A4.prototype.setFaces = function() {
-      this.insertBitmap('lineaJack', 'lineaJack', 178, 257);
-      this.insertBitmap('lineaMeg', 'lineaMeg', 137, 200);
-      this.insertBitmap('lineaTomandSue', 'lineaTomandSue', 138, 313);
-      this.insertBitmap('imageJack', 'imageJack', 164, 186);
-      this.insertBitmap('imageMeg', 'imageMeg', 70, 124);
-      this.insertBitmap('imageTomandSue', 'imageTomandSue', 1, 240);
-      this.insertBitmap('labelJack', 'labelJack', 177, 264);
-      this.insertBitmap('labelMeg', 'labelMeg', 95, 186);
-      this.insertBitmap('labelTomandSue', 'labelTomandSue', 58, 323);
-      return this;
-    };
-
     U3A4.prototype.setTable = function(table) {
-      var i, smiley, smileys, _i, _j, _k;
-      smileys = new createjs.Container();
-      smileys.x = 246;
-      smileys.y = 174;
-      smileys.name = 'smileys';
-      this.insertBitmap("table" + table + "food1", "table" + table + "food1", 298, 171, 'bc');
-      this.insertBitmap("table" + table + "food2", "table" + table + "food2", 429, 171, 'bc');
-      this.insertBitmap("table" + table + "food3", "table" + table + "food3", 558, 171, 'bc');
-      this.insertBitmap("table" + table + "food4", "table" + table + "food4", 690, 171, 'bc');
+      var f1, f2, f3, f4, i, i1, i2, i3, l1, l2, l3, n1, n2, n3, smiley, smileys, _i, _j, _k;
+      if (!this.library.smileys) {
+        smileys = new createjs.Container();
+        smileys.x = 246;
+        smileys.name = 'smileys';
+      } else {
+        smileys = this.library.smileys;
+      }
+      smileys.alpha = 1;
+      smileys.y = 184;
+      smileys.removeAllChildren();
+      this.table = table;
+      l1 = this.createBitmap('lineaJack', 'lineaJack', -68, 83);
+      l2 = this.createBitmap('lineaMeg', 'lineaMeg', -109, 26);
+      l3 = this.createBitmap('lineaTomandSue', 'lineaTomandSue', -108, 139);
+      i1 = this.createBitmap('imageJack', 'imageJack', -82, 12);
+      i2 = this.createBitmap('imageMeg', 'imageMeg', -176, -50);
+      i3 = this.createBitmap('imageTomandSue', 'imageTomandSue', -245, 66);
+      n1 = this.createBitmap('labelJack', 'labelJack', -69, 90);
+      n2 = this.createBitmap('labelMeg', 'labelMeg', -151, 12);
+      n3 = this.createBitmap('labelTomandSue', 'labelTomandSue', -188, 149);
+      f1 = this.createBitmap("table" + table + "food1", "table" + table + "food1", 52, -3, 'bc');
+      f2 = this.createBitmap("table" + table + "food2", "table" + table + "food2", 183, -3, 'bc');
+      f3 = this.createBitmap("table" + table + "food3", "table" + table + "food3", 312, -3, 'bc');
+      f4 = this.createBitmap("table" + table + "food4", "table" + table + "food4", 444, -3, 'bc');
+      smileys.addChild(l1, l2, l3);
+      smileys.addChild(i1, i2, i3);
+      smileys.addChild(n1, n2, n3);
+      smileys.addChild(f1, f2, f3, f4);
+      TweenMax.allFrom([f1, f2, f3, f4], 1, {
+        alpha: 0
+      });
       for (i = _i = 0; _i <= 3; i = ++_i) {
         smiley = this.createBitmap("Table" + table + "num" + (i + 1), "Table" + table + "num" + (i + 1), i * 130, 0);
         smileys.addChild(smiley);
@@ -375,6 +383,77 @@
       return this;
     };
 
+    U3A4.prototype.setClouds = function() {
+      var n1, n2, n3, nube1, nube2, nube3, t1n1, t1n2, t1n3, t2n1, t2n2, t2n3, t3n1, t3n2, t3n3, t4n2, t4n3, t5n2, t6n2;
+      if (!this.library.nube1) {
+        nube1 = new createjs.Container();
+        nube1.x = 77;
+        nube1.y = 388;
+        nube1.name = 'nube1';
+      } else {
+        nube1 = this.library.nube1;
+      }
+      if (!this.library.nube2) {
+        nube2 = new createjs.Container();
+        nube2.x = 272;
+        nube2.y = 369;
+        nube2.name = 'nube2';
+      } else {
+        nube2 = this.library.nube2;
+      }
+      if (!this.library.nube3) {
+        nube3 = new createjs.Container();
+        nube3.x = 581;
+        nube3.y = 372;
+        nube3.name = 'nube3';
+      } else {
+        nube3 = this.library.nube3;
+      }
+      nube1.alpha = 1;
+      nube2.alpha = 1;
+      nube3.alpha = 1;
+      nube1.removeAllChildren();
+      nube2.removeAllChildren();
+      nube3.removeAllChildren();
+      n1 = this.createBitmap('n1', 'n1', 0, 0);
+      n2 = this.createBitmap('n2', 'n2', 0, 0);
+      n3 = this.createBitmap('n3', 'n3', 0, 0);
+      t1n1 = new DraggableText('t1n1', "They", 0, 32, 42);
+      t2n1 = new DraggableText('t2n1', "He", 1, 80, 74);
+      t3n1 = new DraggableText('t3n1', "She", 2, 90, 21);
+      t1n2 = new DraggableText('t1n2', "like", 3, 103, 91);
+      t2n2 = new DraggableText('t2n2', "don't like", 4, 119, 24);
+      t3n2 = new DraggableText('t3n2', "likes", 5, 55, 38);
+      t4n2 = new DraggableText('t4n2', "doesn't like", 6, 134, 62);
+      t5n2 = new DraggableText('t5n2', "love", 7, 188, 98);
+      t6n2 = new DraggableText('t6n2', "loves", 8, 23, 75);
+      switch (this.table) {
+        case 1:
+          t1n3 = new DraggableText('t1n3', "milk", 9, 32, 23);
+          t2n3 = new DraggableText('t2n3', "pancakes", 10, 92, 48);
+          t3n3 = new DraggableText('t3n3', "eggs", 11, 23, 67);
+          t4n3 = new DraggableText('t4n3', "beans", 12, 85, 87);
+          break;
+        case 2:
+          t1n3 = new DraggableText('t1n3', "corn", 9, 32, 23);
+          t2n3 = new DraggableText('t2n3', "ice cream", 10, 92, 48);
+          t3n3 = new DraggableText('t3n3', "peaches", 11, 23, 67);
+          t4n3 = new DraggableText('t4n3', "spinach", 12, 85, 87);
+          break;
+        case 3:
+          t1n3 = new DraggableText('t1n3', "tomatoes", 9, 32, 23);
+          t2n3 = new DraggableText('t2n3', "broccoli", 10, 92, 48);
+          t3n3 = new DraggableText('t3n3', "fish", 11, 23, 67);
+          t4n3 = new DraggableText('t4n3', "lettuce", 12, 85, 87);
+      }
+      nube1.addChild(n1, t1n1, t2n1, t3n1);
+      nube2.addChild(n2, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2);
+      nube3.addChild(n3, t1n3, t2n3, t3n3, t4n3);
+      this.addToLibrary(t1n1, t2n1, t3n1, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2, t1n3, t2n3, t3n3, t4n3);
+      this.addToMain(nube1, nube2, nube3);
+      return this;
+    };
+
     U3A4.prototype.introEvaluation = function() {
       var i, _i, _j, _k;
       U3A4.__super__.introEvaluation.apply(this, arguments);
@@ -387,133 +466,176 @@
       for (i = _k = 1; _k <= 4; i = _k += 1) {
         this.observer.subscribe('init_evaluation', this.library["t" + i + "n3"].onInitEvaluation);
       }
-      TweenLite.from(this.library['header'], 1, {
+      TweenLite.from(this.library.header, 1, {
         y: -this.library['header'].height
       });
-      TweenLite.from(this.library['instructions'], 1, {
+      TweenLite.from(this.library.instructions, 1, {
         alpha: 0,
         x: 0,
         delay: 0.5,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
       });
-      return TweenMax.allFrom([this.library['nube1'], this.library['nube2'], this.library['nube3']], 1, {
+      return TweenMax.allFrom([this.library.nube1, this.library.nube2, this.library.nube3], 1, {
         alpha: 0,
-        y: stageSize.h,
-        delay: 2
+        delay: 1
       });
     };
 
     U3A4.prototype.initEvaluation = function(e) {
-      var i, _i, _results;
+      var i, _i;
       U3A4.__super__.initEvaluation.apply(this, arguments);
-      _results = [];
+      this.aindex = 0;
       for (i = _i = 1; _i <= 3; i = _i += 1) {
-        _results.push(this.library["t" + i + "n1"].addEventListener('drop', this.evaluateAnswer1));
+        this.library["t" + i + "n1"].addEventListener('drop', this.evaluateAnswer1);
       }
-      return _results;
-
-      /*
-      		for i in [1..6] by 1
-      			@library["t#{i}n2"].addEventListener 'drop', @evaluateAnswer
-      		for i in [1..4] by 1
-      			@library["t#{i}n3"].addEventListener 'drop', @evaluateAnswer
-      */
+      return this.blink(this.library[this.answers[this.table - 1][this.aindex].a]);
     };
 
     U3A4.prototype.evaluateAnswer1 = function(e) {
-      var i, pt, _i, _j, _results;
+      var dropped, i, pt, success, _i, _j;
       this.answer = e.target;
-      _results = [];
+      success = false;
+      dropped = false;
       for (i = _i = 1; _i <= 3; i = _i += 1) {
-        pt = this.library["dropper1"].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-        if (this.library["dropper1"].hitTest(pt.x, pt.y)) {
-          if (this.answer.index === this.answers[this.index].a1) {
+        pt = this.library.dropper1.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library.dropper1.hitTest(pt.x, pt.y)) {
+          dropped = true;
+          if (this.answer.index === this.answers[this.table - 1][this.aindex].a1) {
+            success = true;
             this.answer.x = this.answer.pos.x;
             this.answer.y = this.answer.pos.y;
-            this.library['dropper1'].changeText(this.answer.text.text);
+            this.library.dropper1.changeText(this.answer.text.text);
             for (i = _j = 1; _j <= 6; i = _j += 1) {
               this.library["t" + i + "n2"].addEventListener('drop', this.evaluateAnswer2);
             }
-            _results.push(false);
-          } else {
-            this.answer.returnToPlace();
-            _results.push(this.warning());
           }
-        } else {
-          _results.push(this.answer.returnToPlace());
         }
       }
-      return _results;
+      if (!dropped) {
+        return this.answer.returnToPlace();
+      } else {
+        if (!success) {
+          this.answer.returnToPlace();
+          return this.warning();
+        }
+      }
     };
 
     U3A4.prototype.evaluateAnswer2 = function(e) {
-      var i, pt, _i, _j, _results;
+      var dropped, i, pt, success, _i, _j;
       this.answer = e.target;
-      _results = [];
+      success = false;
+      dropped = false;
       for (i = _i = 1; _i <= 6; i = _i += 1) {
-        pt = this.library["dropper2"].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-        if (this.library["dropper2"].hitTest(pt.x, pt.y)) {
-          if (this.answer.index === this.answers[this.index].a2) {
+        pt = this.library.dropper2.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library.dropper2.hitTest(pt.x, pt.y)) {
+          dropped = true;
+          if (this.answer.index === this.answers[this.table - 1][this.aindex].a2) {
             this.answer.x = this.answer.pos.x;
             this.answer.y = this.answer.pos.y;
-            this.library['dropper2'].changeText(this.answer.text.text);
+            this.library.dropper2.changeText(this.answer.text.text);
+            success = true;
             for (i = _j = 1; _j <= 4; i = _j += 1) {
               this.library["t" + i + "n3"].addEventListener('drop', this.evaluateAnswer3);
             }
-            _results.push(false);
-          } else {
-            this.answer.returnToPlace();
-            _results.push(this.warning());
           }
-        } else {
-          _results.push(this.answer.returnToPlace());
         }
       }
-      return _results;
+      if (!dropped) {
+        return this.answer.returnToPlace();
+      } else {
+        if (!success) {
+          this.answer.returnToPlace();
+          return this.warning();
+        }
+      }
     };
 
     U3A4.prototype.evaluateAnswer3 = function(e) {
-      var i, pt, _i, _results;
+      var dropped, i, pt, success, _i;
       this.answer = e.target;
-      _results = [];
+      dropped = false;
+      success = false;
       for (i = _i = 1; _i <= 6; i = _i += 1) {
-        pt = this.library["dropper3"].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-        if (this.library["dropper3"].hitTest(pt.x, pt.y)) {
-          if (this.answer.index === this.answers[this.index].a3) {
+        pt = this.library.dropper3.globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library.dropper3.hitTest(pt.x, pt.y)) {
+          dropped = true;
+          if (this.answer.index === this.answers[this.table - 1][this.aindex].a3) {
             this.answer.x = this.answer.pos.x;
             this.answer.y = this.answer.pos.y;
-            this.library['dropper3'].changeText(this.answer.text.text);
-            _results.push(setTimeout(this.finishEvaluation, 1 * 1000));
-          } else {
-            this.answer.returnToPlace();
-            _results.push(this.warning());
+            this.library.dropper3.changeText(this.answer.text.text);
+            success = true;
           }
-        } else {
-          _results.push(this.answer.returnToPlace());
         }
       }
-      return _results;
+      if (!dropped) {
+        return this.answer.returnToPlace();
+      } else {
+        if (success) {
+          return setTimeout(this.finishEvaluation, 1 * 1000);
+        } else {
+          this.answer.returnToPlace();
+          return this.warning();
+        }
+      }
     };
 
     U3A4.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
+      this.blink(this.library[this.answers[this.table - 1][this.aindex].a], false);
+      this.library.score.plusOne();
       createjs.Sound.play('good');
-      return this.nextEvaluation();
+      this.aindex++;
+      if (this.aindex < this.answers[this.table - 1].length) {
+        this.blink(this.library[this.answers[this.table - 1][this.aindex].a]);
+        this.library.dropper1.changeText('');
+        this.library.dropper2.changeText('');
+        return this.library.dropper3.changeText('');
+      } else {
+        this.aindex = 0;
+        return this.nextEvaluation();
+      }
     };
 
     U3A4.prototype.nextEvaluation = function() {
+      var i, _i, _j, _k, _l, _results;
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['dropper1'].changeText('');
-        this.library['dropper2'].changeText('');
-        return this.library['dropper3'].changeText('');
+        this.library.dropper1.changeText('');
+        this.library.dropper2.changeText('');
+        this.library.dropper3.changeText('');
+        this.setTable(this.index + 1).setClouds();
+        this.blink(this.library[this.answers[this.table - 1][this.aindex].a]);
+        for (i = _i = 1; _i <= 3; i = _i += 1) {
+          this.library["t" + i + "n1"].onInitEvaluation();
+        }
+        for (i = _j = 1; _j <= 6; i = _j += 1) {
+          this.library["t" + i + "n2"].onInitEvaluation();
+        }
+        for (i = _k = 1; _k <= 4; i = _k += 1) {
+          this.library["t" + i + "n3"].onInitEvaluation();
+        }
+        _results = [];
+        for (i = _l = 1; _l <= 3; i = _l += 1) {
+          _results.push(this.library["t" + i + "n1"].addEventListener('drop', this.evaluateAnswer1));
+        }
+        return _results;
       } else {
         return this.finish();
       }
     };
 
     U3A4.prototype.finish = function() {
+      TweenLite.to(this.library.smileys, 1, {
+        alpha: 0,
+        y: this.library.smileys - 20
+      });
+      TweenMax.allTo([this.library.nube1, this.library.nube2, this.library.nube3], 1, {
+        alpha: 0
+      });
+      TweenMax.allTo([this.library.dropper1, this.library.dropper2, this.library.dropper3], 1, {
+        alpha: 0
+      });
       return U3A4.__super__.finish.apply(this, arguments);
     };
 

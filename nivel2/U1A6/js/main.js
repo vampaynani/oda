@@ -384,38 +384,40 @@
           y: 8
         }
       ];
-      this.answers = {
-        drum: {
-          r: false,
-          c: [0, 1, 2, 3]
-        },
-        guitar: {
-          r: false,
-          c: [4, 5, 6, 7, 8, 9]
-        },
-        tambourine: {
-          r: false,
-          c: [10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
-        },
-        trumpet: {
-          r: false,
-          c: [10, 18, 19, 20, 21, 22, 23]
-        },
-        flute: {
-          r: false,
-          c: [24, 25, 26, 27, 28]
-        },
-        bass: {
-          r: false,
-          c: [29, 30, 31, 32]
-        },
-        piano: {
-          r: false,
-          c: [21, 33, 30, 34, 35]
-        },
-        saxophone: {
-          r: false,
-          c: [32, 36, 37, 38, 39, 40, 41, 42, 28]
+      this.game = {
+        answers: {
+          drum: {
+            r: false,
+            c: [0, 1, 2, 3]
+          },
+          guitar: {
+            r: false,
+            c: [4, 5, 6, 7, 8, 9]
+          },
+          tambourine: {
+            r: false,
+            c: [10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
+          },
+          trumpet: {
+            r: false,
+            c: [10, 18, 19, 20, 21, 22, 23]
+          },
+          flute: {
+            r: false,
+            c: [24, 25, 26, 27, 28]
+          },
+          bass: {
+            r: false,
+            c: [29, 30, 31, 32]
+          },
+          piano: {
+            r: false,
+            c: [21, 33, 30, 34, 35]
+          },
+          saxophone: {
+            r: false,
+            c: [32, 36, 37, 38, 39, 40, 41, 42, 28]
+          }
         }
       };
       U1A6.__super__.constructor.call(this, null, manifest, sounds);
@@ -423,10 +425,11 @@
 
     U1A6.prototype.setStage = function() {
       U1A6.__super__.setStage.apply(this, arguments);
+      this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('saxophone', 'sax', 341, 118);
-      this.insertBitmap('saxophoneNo', 'sax_number', 346, 130);
+      this.insertBitmap('instructions', 'inst', 20, 95);
+      this.insertBitmap('saxophone', 'sax', 341, 123);
+      this.insertBitmap('saxophoneNo', 'sax_number', 346, 135);
       this.insertBitmap('drum', 'drum', 99, 125);
       this.insertBitmap('drumNo', 'drum_number', 69, 125);
       this.insertBitmap('guitar', 'guitar', 99, 228);
@@ -475,10 +478,13 @@
       crosswords.name = 'crosswords';
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
         drop = new WordContainer('h' + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
+        drop.setRectShape('#FFF', '#999', 2, 23, 23);
+        drop.text.y -= 3;
         drop.id = this.containers[i].id;
         this.addToLibrary(drop);
         crosswords.addChild(drop);
       }
+      crosswords.cache(-23, -23, 276, 230);
       return this.addToMain(crosswords);
     };
 
@@ -545,6 +551,7 @@
     U1A6.prototype.initEvaluation = function(e) {
       var letter, _i, _len, _ref, _results;
       U1A6.__super__.initEvaluation.apply(this, arguments);
+      this.library.crosswords.cache(-23, -23, 276, 230);
       _ref = this.abc;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -573,7 +580,8 @@
             this.evaluate('flute');
             this.evaluate('bass');
             this.evaluate('piano');
-            _results.push(this.evaluate('saxophone'));
+            this.evaluate('saxophone');
+            _results.push(this.library.crosswords.cache(-23, -23, 276, 230));
           } else {
             _results.push(this.warning());
           }
@@ -596,8 +604,8 @@
           }
         }
         if (ready) {
-          this.instrument = instrument;
           snd = createjs.Sound.play("s" + instrument);
+          snd.instrument = instrument;
           snd.addEventListener('complete', this.finishEvaluation);
           this.answers[instrument].r = true;
           return this.library['score'].plusOne();
@@ -605,8 +613,8 @@
       }
     };
 
-    U1A6.prototype.finishEvaluation = function() {
-      return TweenMax.allTo([this.library[this.instrument], this.library[this.instrument + 'No']], 1, {
+    U1A6.prototype.finishEvaluation = function(e) {
+      return TweenMax.allTo([this.library[e.target.instrument], this.library[e.target.instrument + 'No']], 1, {
         alpha: 0,
         ease: Quart.easeOut,
         onComplete: this.nextEvaluation

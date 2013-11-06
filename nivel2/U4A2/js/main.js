@@ -136,22 +136,26 @@
     };
 
     U4A2.prototype.setSopa = function() {
-      var h, i, j, letra, shapesContainer, sopa, _i, _j, _ref, _ref1;
+      var h, i, j, letra, lhlength, llength, shapesContainer, sopa, _i, _j;
       j = 0;
+      h = this.letters.length;
       sopa = new createjs.Container();
       sopa.x = 297;
       sopa.y = 148;
       sopa.name = 'sopa';
+      sopa.visible = false;
       shapesContainer = new createjs.Container();
       shapesContainer.name = 'shapesContainer';
       sopa.addChild(shapesContainer);
       this.addToLibrary(shapesContainer);
-      for (h = _i = 0, _ref = this.letters.length - 1; _i <= _ref; h = _i += 1) {
-        for (i = _j = 0, _ref1 = this.letters[h].length - 1; _j <= _ref1; i = _j += 1) {
+      llength = this.letters.length - 1;
+      for (h = _i = 0; _i <= llength; h = _i += 1) {
+        lhlength = this.letters[h].length - 1;
+        for (i = _j = 0; _j <= lhlength; i = _j += 1) {
           letra = new ClickableText("l" + j, this.letters[h][i], "l" + j, i * 26, h * 26);
           letra.h = h;
           letra.i = i;
-          letra.text.font = '20px Arial';
+          letra.text.font = '20px Quicksand';
           letra.text.textAlign = 'center';
           sopa.addChild(letra);
           this.addToLibrary(letra);
@@ -170,11 +174,6 @@
       TweenLite.from(this.library['instructions'], 1, {
         alpha: 0,
         x: 0,
-        delay: 0.5
-      });
-      TweenLite.from(this.library['sopa'], 1, {
-        alpha: 0,
-        y: this.library['sopa'].y - 20,
         delay: 0.5,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -187,6 +186,12 @@
 
     U4A2.prototype.initEvaluation = function(e) {
       U4A2.__super__.initEvaluation.apply(this, arguments);
+      this.library.sopa.visible = true;
+      this.library.sopa.cache(-26, -26, 286, 286);
+      TweenLite.from(this.library['sopa'], 1, {
+        alpha: 0,
+        y: this.library['sopa'].y - 20
+      });
       return this.mainContainer.addEventListener('mousedown', this.evaluateAnswer);
     };
 
@@ -211,6 +216,7 @@
             h: clktxt.h
           };
           shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x, pos.y, 26, 26, 5);
+          this.library.sopa.cache(-26, -26, 286, 286);
           e.addEventListener('mousemove', function(ev) {
             var npos;
             pt = _this.mainContainer.globalToLocal(_this.stage.mouseX, _this.stage.mouseY);
@@ -225,7 +231,8 @@
                   h: h * 26
                 };
                 answer.push(clktxt.index);
-                return shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x, pos.y, npos.w, npos.h, 5);
+                shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x, pos.y, npos.w, npos.h, 5);
+                return _this.library.sopa.cache(-26, -26, 286, 286);
               }
             }
           });
@@ -251,8 +258,9 @@
               }
             }
             if (!find) {
-              return _this.library.shapesContainer.removeChild(shape);
+              _this.library.shapesContainer.removeChild(shape);
             }
+            return _this.library.sopa.cache(-26, -26, 286, 286);
           });
         }
       }

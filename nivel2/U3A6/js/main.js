@@ -155,6 +155,7 @@
           src: 'z.png'
         }
       ];
+      this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
       sounds = [
         {
           src: 'sounds/boing.mp3',
@@ -170,7 +171,6 @@
           id: 'wrong'
         }
       ];
-      this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
       this.answers = ['broccoli', 'cherries', 'bread', 'pancakes', 'chocolate cake', 'cheese', 'chicken', 'cut the fruit', 'breakfast', 'mashed potatoes'];
       U3A6.__super__.constructor.call(this, null, manifest, sounds);
     }
@@ -179,7 +179,7 @@
       U3A6.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setChango().createAlphabet().introEvaluation();
     };
 
@@ -197,13 +197,13 @@
       for (i = _i = 0, _ref = this.abc.length - 1; _i <= _ref; i = _i += 1) {
         letter = this.abc[i];
         if (i <= 9) {
-          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i, 0);
+          letterObj = new ClickableLetter("l" + i, letter, letter, 41.5 * i, 0);
         } else if (i <= 18) {
-          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i - 395, 34);
+          letterObj = new ClickableLetter("l" + i, letter, letter, 41.5 * i - 395, 34);
         } else {
-          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i - 750, 68);
+          letterObj = new ClickableLetter("l" + i, letter, letter, 41.5 * i - 750, 68);
         }
-        letterObj.text.font = '20px Arial';
+        letterObj.text.font = '20px Quicksand';
         this.addToLibrary(letterObj);
         alphabet.addChild(letterObj);
       }
@@ -249,7 +249,7 @@
         this.library["l" + i].addEventListener('click', this.evaluateAnswer);
       }
       for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
-        if (this.col[i] !== '') {
+        if (this.col[i - 1] !== ' ') {
           wc = new WordContainer("w" + i, '', '#fff', '#0098d7', 30 * i, 0, 26, 26);
           wc.index = this.col[i - 1];
           this.addToLibrary(wc);
@@ -260,45 +260,81 @@
     };
 
     U3A6.prototype.evaluateAnswer = function(e) {
-      var check, current, i, _i, _ref;
+      var check, complete, current, i, wc, _i, _j, _ref, _ref1;
       this.answer = e.target;
       this.answer.visible = false;
       check = false;
+      complete = true;
       for (i = _i = 1, _ref = this.col.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
-        if (this.answer.index === this.library["w" + i].index) {
-          this.library["w" + i].changeText(this.answer.index);
-          check = true;
+        if (this.col[i - 1] !== ' ') {
+          if (this.answer.index === this.library["w" + i].index) {
+            this.library["w" + i].changeText(this.answer.index);
+            check = true;
+          }
         }
       }
       if (!check) {
-        current = this.library["chango"].currentFrame;
+        current = this.library.chango.currentFrame;
         current++;
-        this.library["chango"].gotoAndStop(current);
+        this.library.chango.gotoAndStop(current);
+      }
+      if (this.library.chango.currentFrame === this.library.chango.spriteSheet._numFrames) {
+        this.finish();
+      }
+      for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
+        if (this.col[i - 1] !== ' ') {
+          wc = this.library["w" + i];
+          if (wc.text.text !== wc.index) {
+            complete = false;
+          }
+        }
+      }
+      if (complete) {
         return setTimeout(this.finishEvaluation, 1 * 1000);
       }
     };
 
     U3A6.prototype.finishEvaluation = function() {
+      var i, _i, _ref, _results;
       this.library['score'].plusOne();
       createjs.Sound.play('good');
-      return TweenLite.to(this.library['dropper'], 0.5, {
-        alpha: 0,
-        y: stageSize.h,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
+      _results = [];
+      for (i = _i = 1, _ref = this.col.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        if (this.col[i] !== ' ') {
+          _results.push(TweenLite.to(this.library['wordContainers'], 0.5, {
+            alpha: 0,
+            ease: Back.easeOut,
+            onComplete: this.nextEvaluation
+          }));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
     };
 
     U3A6.prototype.nextEvaluation = function() {
+      var i, wc, word, _i, _j, _ref, _ref1;
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['dropper'].y = 525;
-        this.library['dropper'].x = 150 + 50;
-        this.library['dropper'].changeText('');
-        this.library['dropper'].changeLabel(this.answers[this.index].text);
-        return TweenLite.to(this.library['dropper'], 0.5, {
+        word = this.answers[this.index];
+        this.col = word.split('');
+        this.library.chango.currentFrame = 0;
+        this.library.wordContainers.removeAllChildren();
+        this.library.wordContainers.x = (this.library['alphabet'].x + 177) - this.col.length * 30 / 2;
+        for (i = _i = 0, _ref = this.abc.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+          this.library["l" + i].visible = true;
+        }
+        for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
+          if (this.col[i - 1] !== ' ') {
+            wc = new WordContainer("w" + i, '', '#fff', '#0098d7', 30 * i, 0, 26, 26);
+            wc.index = this.col[i - 1];
+            this.addToLibrary(wc);
+            this.library.wordContainers.addChild(wc);
+          }
+        }
+        return TweenLite.to(this.library.wordContainers, 0.5, {
           alpha: 1,
-          x: 150,
           ease: Quart.easeOut
         });
       } else {
@@ -307,6 +343,18 @@
     };
 
     U3A6.prototype.finish = function() {
+      TweenLite.to(this.library.wordContainers, 0.5, {
+        alpha: 0,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.alphabet, 1, {
+        alpha: 0,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.chango, 1, {
+        alpha: 0,
+        ease: Quart.easeOut
+      });
       return U3A6.__super__.finish.apply(this, arguments);
     };
 

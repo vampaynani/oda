@@ -67,8 +67,8 @@ class U2A1 extends Oda
 
 		tn1 = new DraggableText 'tn0', "There is", 0, 14, 21 
 		tn2 = new DraggableText 'tn1', "There are", 1, 15, 25 
-		tn3 = new DraggableText 'tn2', "There isn't", 2, 18, 20 
-		tn4 = new DraggableText 'tn3', "There aren't", 3, 20, 25 
+		tn3 = new DraggableText 'tn2', "There isn't", 2, 15, 20 
+		tn4 = new DraggableText 'tn3', "There aren't", 3, 13, 25 
 
 		nube1.addChild n1, tn1
 		nube2.addChild n2, tn2
@@ -123,5 +123,8 @@ class U2A1 extends Oda
 		else
 			@finish()
 	finish: ->
+		TweenLite.to @library['casa'], 1, {alpha: 0, y: @library['casa'].y + 50}
+		TweenLite.to @library['dropper'], 1, {alpha: 0, x: @library['dropper'].x + 50, ease: Quart.easeOut}
+		TweenMax.allTo [@library['nube1'], @library['nube2'], @library['nube3'], @library['nube4']], 1, {alpha: 0, y: stageSize.h}
 		super
 	window.U2A1 = U2A1

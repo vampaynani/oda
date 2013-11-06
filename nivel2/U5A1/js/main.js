@@ -217,8 +217,8 @@
             x: 415,
             y: 317
           }, {
-            x: 216,
-            y: 379
+            x: 226,
+            y: 389
           }, {
             x: 340,
             y: 372
@@ -288,7 +288,7 @@
     U5A1.prototype.setStage = function() {
       U5A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertBitmap('instructions', 'inst', 20, 95);
       this.insertBitmap('btnRepeat', 'btnRepeat', 598, 245);
       this.insertBitmap('btnFinished', 'btnFinished', 598, 292);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
@@ -296,7 +296,7 @@
     };
 
     U5A1.prototype.setCalendar = function(calendar) {
-      var cal, i, v, _i, _j;
+      var c, cal, hit, i, v, _i, _j;
       this.calendar = calendar;
       cal = new createjs.Container();
       cal.name = 'calendar';
@@ -304,20 +304,23 @@
       cal.y = 0;
       this.insertBitmap('propCalendar', 'propCalendar', 60, 128);
       for (i = _i = 1; _i <= 12; i = ++_i) {
-        v = this.createBitmap("cal" + calendar + "Final" + i, "cal" + calendar + "Final" + i, this.game.finales[i - 1].x, this.game.finales[i - 1].y);
+        hit = new createjs.Shape();
+        hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
+        c = new createjs.Container();
+        c.name = "cal" + calendar + "Final" + i;
+        c.x = this.game.finales[i - 1].x;
+        c.y = this.game.finales[i - 1].y;
+        v = this.createBitmap("", "cal" + calendar + "Final" + i, 0, 0);
         if (calendar === 1) {
           if (i !== 2 && i !== 6 && i !== 9 && i !== 11) {
-            v.hitArea = new createjs.Shape(new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50));
             v.visible = false;
-          }
-        } else {
-          if (i !== 6 && i !== 8 && i !== 10 && i !== 12) {
-            v.hitArea = new createjs.Shape(new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50));
-            v.visible = false;
+            c.addChild(v, hit);
+          } else {
+            c.addChild(v);
           }
         }
-        cal.addChild(v);
-        this.addToLibrary(v);
+        cal.addChild(c);
+        this.addToLibrary(c);
       }
       for (i = _j = 1; _j <= 8; i = ++_j) {
         v = new Draggable("cal" + calendar + "Dragble" + i, this.preload.getResult("cal" + calendar + "Dragble" + i), i, this.game.drags[i - 1].x, this.game.drags[i - 1].y);
@@ -376,7 +379,7 @@
           if (drop.id === this.answer.name) {
             dropped = true;
             this.answer.visible = false;
-            this.library[drop.tgt].visible = true;
+            this.library[drop.tgt].children[0].visible = true;
           } else {
             this.warning();
             this.answer.returnToPlace();

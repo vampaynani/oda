@@ -102,6 +102,8 @@ class U1A2 extends Oda
 		super
 		@library['characters'].currentFrame = @answers[@index].id
 		createjs.Sound.play @answers[@index].sound
+		for i in [1..6] by 1
+			@library['name'+i].blink()
 		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
 	evaluateAnswer: (e) =>
 		@answer = e.target
@@ -113,9 +115,9 @@ class U1A2 extends Oda
 				setTimeout @finishEvaluation, 1 * 1000
 			else
 				@warning()
-				@answer.returnToPlace()
+				@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 		else
-			@answer.returnToPlace()
+			@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 	finishEvaluation: =>
 		@library['score'].plusOne()
 		@answer.returnToPlace()

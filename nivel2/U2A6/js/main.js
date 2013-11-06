@@ -103,7 +103,7 @@
     }
 
     U2A6.prototype.setStage = function() {
-      var b, box, c, count, i, rand, t, _i;
+      var b, box, c, count, i, n, rand, t, _i;
       U2A6.__super__.setStage.apply(this, arguments);
       this.buckets = [
         {
@@ -143,7 +143,7 @@
         this.random.push(rand);
         count++;
       }
-      this.insertBitmap('background', 'background', 0, 0);
+      this.insertBitmap('background', 'background', 0, 50);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.insertBitmap('l1', 'level1Btn', 731, 436);
@@ -151,12 +151,13 @@
       this.insertBitmap('l3', 'level3Btn', 731, 530);
       for (i = _i = 0; _i <= 5; i = _i += 1) {
         c = new createjs.Container();
-        t = new createjs.Text("" + this.random[i], '16px Arial', '#FF0000');
+        n = this.bucketName(this.random[i]);
+        t = new createjs.Text("" + n, '16px Quicksand', '#FF0000');
         b = this.createBitmap("b" + i, 'bucket', 0, 0);
         c.name = "b" + i;
         c.index = this.random[i];
         t.textAlign = 'center';
-        t.x = b.width / 2 - t.getMeasuredWidth() / 2;
+        t.x = b.width / 2 - 15;
         t.y = b.height / 2;
         c.x = this.buckets[i].x;
         c.y = this.buckets[i].y;
@@ -251,12 +252,15 @@
     };
 
     U2A6.prototype.initRaindrops = function(level, interval) {
+      this.raindrops = new createjs.Container();
+      this.raindrops.name = 'raindrops';
       this.level = level;
       this.rnum = 0;
       this.time = 90;
       this.timer = setInterval(this.updateCounter, 1000);
       this.rinterval = setInterval(this.makeRaindropr, interval);
-      return this.binterval = setInterval(this.makeRaindropb, 2000);
+      this.binterval = setInterval(this.makeRaindropb, 2000);
+      return this.addToMain(this.raindrops);
     };
 
     U2A6.prototype.updateCounter = function() {
@@ -282,12 +286,12 @@
     U2A6.prototype.makeRaindrop = function(num) {
       var d, t;
       d = new Draggable('d' + this.rnum, this.preload.getResult('raindrop'), num, Math.random() * (700 - 100) + 100, this.library['header'].height);
-      t = new createjs.Text("" + num, '16px Arial', '#000099');
+      t = new createjs.Text("" + num, '16px Quicksand', '#000099');
       t.textAlign = 'center';
       t.x = d.width / 2;
       t.y = d.height / 2;
       d.addChild(t);
-      this.addToMain(d);
+      this.raindrops.addChild(d);
       d.addEventListener('drop', this.evaluateAnswer);
       d.initDragListener();
       this.rnum++;
@@ -318,7 +322,7 @@
 
     U2A6.prototype.killThis = function(object) {
       TweenLite.killTweensOf(object);
-      return this.mainContainer.removeChild(object);
+      return this.raindrops.removeChild(object);
     };
 
     U2A6.prototype.evaluateAnswer = function(e) {
@@ -380,6 +384,13 @@
       clearInterval(this.timer);
       clearInterval(this.rinterval);
       clearInterval(this.binterval);
+      TweenLite.to([this.library['background'], this.library['box'], this.library['raindrops']], 0.5, {
+        alpha: 0
+      });
+      TweenMax.to([this.library['l1'], this.library['l2'], this.library['l3']], 1, {
+        alpha: 0,
+        y: stageSize.h
+      });
       return U2A6.__super__.finish.apply(this, arguments);
     };
 

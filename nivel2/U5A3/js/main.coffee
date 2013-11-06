@@ -83,8 +83,7 @@ class U5A3 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
 		@setSeasons().introEvaluation()
 	setSeasons: ->
 		seasons = new createjs.Container()
@@ -113,19 +112,20 @@ class U5A3 extends Oda
 		for i in [1..@scrambled.length]
 			if @scrambled[i - 1] isnt ' '
 				letra = new DraggableText "t#{i}", @scrambled[i - 1], @scrambled[i - 1], i * 30, 0
-				letra.text.font = '20px Arial'
+				letra.text.font = '20px Quicksand'
+				letra.createHitArea(28,30)
 				letra.addEventListener 'drop', @evaluateAnswer
 				letra.onInitEvaluation()
 				@addToLibrary letra
 				letras.addChild letra
 			if col[i - 1] isnt ' '
-				wc = new WordContainer "l#{i}", '', '#FFF','#f39234', i * 40, 50, 32, 22
+				wc = new WordContainer "l#{i}", '', 'rgba(238,238,238,0.3)','#f39234', i * 42, 50, 40, 30
 				wc.index = col[i - 1]
 				@addToLibrary wc
 				palabra.addChild wc
 		palabra.name = 'palabra'
 		palabra.y = 300
-		palabra.x = stageSize.w / 2 - @scrambled.length * 40 / 2 - 50
+		palabra.x = stageSize.w / 2 - @scrambled.length * 42 / 2 - 50
 		@addToMain palabra
 		letras.name = 'letras'
 		letras.y = 300

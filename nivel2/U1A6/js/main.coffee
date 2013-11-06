@@ -110,23 +110,24 @@ class U1A6 extends Oda
 			{id:'o', x:8, y:8}
 			{id:'n', x:9, y:8}
 		]
-		@answers = 
-			drum: r: off, c: [0, 1, 2, 3]
-			guitar: r: off, c:[4, 5, 6, 7, 8, 9]
-			tambourine: r: off, c:[10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
-			trumpet: r: off, c:[10, 18, 19, 20, 21, 22, 23]
-			flute: r: off, c:[24, 25, 26, 27, 28]
-			bass: r: off, c:[29, 30, 31, 32]
-			piano: r: off, c:[21,33,30,34,35]
-			saxophone: r: off, c:[32,36,37,38,39,40,41,42,28]
+		@game = 
+			answers:
+				drum: r: off, c: [0, 1, 2, 3]
+				guitar: r: off, c:[4, 5, 6, 7, 8, 9]
+				tambourine: r: off, c:[10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
+				trumpet: r: off, c:[10, 18, 19, 20, 21, 22, 23]
+				flute: r: off, c:[24, 25, 26, 27, 28]
+				bass: r: off, c:[29, 30, 31, 32]
+				piano: r: off, c:[21,33,30,34,35]
+				saxophone: r: off, c:[32,36,37,38,39,40,41,42,28]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@answers = @clone @game.answers
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-		#@insertBitmap 'crosswordsBack', 'crossWords', 289, 200
-		@insertBitmap 'saxophone', 'sax', 341, 118
-		@insertBitmap 'saxophoneNo', 'sax_number', 346, 130
+		@insertBitmap 'instructions', 'inst', 20, 95
+		@insertBitmap 'saxophone', 'sax', 341, 123
+		@insertBitmap 'saxophoneNo', 'sax_number', 346, 135
 		@insertBitmap 'drum', 'drum', 99, 125
 		@insertBitmap 'drumNo', 'drum_number', 69, 125
 		@insertBitmap 'guitar', 'guitar', 99, 228
@@ -167,9 +168,12 @@ class U1A6 extends Oda
 		crosswords.name = 'crosswords'
 		for i in [0..@containers.length - 1] by 1
 			drop = new WordContainer 'h'+i, '', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
+			drop.setRectShape '#FFF', '#999', 2, 23, 23
+			drop.text.y -= 3
 			drop.id = @containers[i].id
 			@addToLibrary drop
 			crosswords.addChild drop
+		crosswords.cache -23, -23, 276, 230
 		@addToMain crosswords
 	introEvaluation: ->
 		super
@@ -206,6 +210,7 @@ class U1A6 extends Oda
 		TweenLite.from @library['crosswords'], 1, {alpha: 0, y: @library['crosswords'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
+		@library.crosswords.cache -23, -23, 276, 230
 		for letter in @abc
 			@library[letter].addEventListener 'drop', @evaluateAnswer
 	evaluateAnswer: (e) =>
@@ -226,6 +231,7 @@ class U1A6 extends Oda
 					@evaluate 'bass'
 					@evaluate 'piano'
 					@evaluate 'saxophone'
+					@library.crosswords.cache -23, -23, 276, 230
 				else
 					@warning()
 			else
@@ -237,13 +243,13 @@ class U1A6 extends Oda
 				if @library['h'+box].text.text is ''
 					ready = false
 			if ready
-				@instrument = instrument
 				snd = createjs.Sound.play "s#{instrument}"
+				snd.instrument = instrument
 				snd.addEventListener 'complete', @finishEvaluation
 				@answers[instrument].r = on
 				@library['score'].plusOne()
-	finishEvaluation: =>
-		TweenMax.allTo [@library[@instrument],@library[@instrument+'No']], 1, {alpha:0, ease:Quart.easeOut, onComplete: @nextEvaluation}
+	finishEvaluation: (e) =>
+		TweenMax.allTo [@library[e.target.instrument],@library[e.target.instrument+'No']], 1, {alpha:0, ease:Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		complete = on
 		for instrument of @answers

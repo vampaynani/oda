@@ -91,49 +91,49 @@
           id: 'good'
         }, {
           src: 'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3',
-          id: 'kitchen'
+          id: 'skitchen'
         }, {
           src: 'sounds/TU2_U2_A2_feedTheCat.mp3',
-          id: 'cat'
+          id: 'scat'
         }, {
           src: 'sounds/TU2_U2_A2_feedTheDog.mp3',
-          id: 'dog'
+          id: 'sdog'
         }, {
           src: 'sounds/TU2_U2_A2_feedTheFish.mp3',
-          id: 'fish'
+          id: 'sfish'
         }, {
           src: 'sounds/TU2_U2_A2_makeYourBed.mp3',
-          id: 'bed'
+          id: 'sbed'
         }, {
           src: 'sounds/TU2_U2_A2_pickUpYourRoom.mp3',
-          id: 'doll'
+          id: 'sdoll'
         }, {
           src: 'sounds/TU2_U2_A2_putAwayYourToys.mp3',
-          id: 'toys'
+          id: 'stoys'
         }, {
           src: 'sounds/TU2_U2_A2_setTheTable.mp3',
-          id: 'soup'
+          id: 'ssoup'
         }, {
           src: 'sounds/TU2_U2_A2_sweepTheFloor.mp3',
-          id: 'swipe'
+          id: 'sswipe'
         }, {
           src: 'sounds/TU2_U2_A2_sweepTheKitchen.mp3',
-          id: 'kitchen1'
+          id: 'skitchen1'
         }, {
           src: 'sounds/TU2_U2_A2_takeOutTheBroom.mp3',
-          id: 'broom'
+          id: 'sbroom'
         }, {
           src: 'sounds/TU2_U2_A2_takeOutTheTrash.mp3',
-          id: 'garbage'
+          id: 'sgarbage'
         }, {
           src: 'sounds/TU2_U2_A2_walkTheDog.mp3',
-          id: 'walkdog'
+          id: 'swalkdog'
         }, {
           src: 'sounds/TU2_U2_A2_washTheDishes.mp3',
-          id: 'dishes'
+          id: 'sdishes'
         }, {
           src: 'sounds/TU2_U2_A2_waterThePlants.mp3',
-          id: 'plants'
+          id: 'splants'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
@@ -191,7 +191,7 @@
       U2A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('teacher', 'lady', 250, 124);
+      this.insertBitmap('teacher', 'lady', 250, 134);
       this.insertBitmap('repeat', 'repeat', 441, 210);
       this.insertSprite('choose1', ['kitchen', 'cat', 'dog', 'fish', 'bed', 'doll', 'toys', 'soup', 'swipe', 'broom', 'garbage', 'walkdog', 'dishes', 'plants'], {
         'kitchen': 0,
@@ -325,7 +325,7 @@
       fake = Math.floor(Math.random() * others.length);
       this.library['choose' + rand].gotoAndStop(this.phrase.id);
       this.library['choose' + other].gotoAndStop(others[fake].id);
-      createjs.Sound.play(this.phrase.id);
+      createjs.Sound.play("s" + this.phrase.id);
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 1,
         scaleX: 1,
@@ -344,7 +344,7 @@
     };
 
     U2A2.prototype.repeat = function(e) {
-      return createjs.Sound.play(this.phrase.id);
+      return createjs.Sound.play("s" + this.phrase.id);
     };
 
     U2A2.prototype.shuffle = function(a) {
@@ -373,6 +373,14 @@
     };
 
     U2A2.prototype.finish = function() {
+      TweenLite.to(this.library['teacher'], 1, {
+        alpha: 0,
+        y: this.library['teacher'].y + 50
+      });
+      TweenLite.to(this.library['repeat'], 1, {
+        alpha: 0,
+        y: this.library['repeat'].y + 50
+      });
       return U2A2.__super__.finish.apply(this, arguments);
     };
 

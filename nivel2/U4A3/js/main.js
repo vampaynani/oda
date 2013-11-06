@@ -119,43 +119,43 @@
         words: [
           {
             w: 'whiskers',
-            x: 70,
+            x: 77,
             y: 72
           }, {
             w: 'fur',
-            x: 70,
+            x: 77,
             y: 54
           }, {
             w: 'fins',
-            x: 70,
+            x: 77,
             y: 90
           }, {
             w: 'beaks',
-            x: 70,
+            x: 77,
             y: 108
           }, {
             w: 'wings',
-            x: 70,
+            x: 77,
             y: 18
           }, {
             w: 'scales',
-            x: 195,
+            x: 214.5,
             y: 36
           }, {
             w: 'paws',
-            x: 192,
+            x: 210,
             y: 90
           }, {
             w: 'tails',
-            x: 186,
+            x: 205.5,
             y: 54
           }, {
             w: 'claws',
-            x: 199,
+            x: 217,
             y: 72
           }, {
             w: 'feathers',
-            x: 70,
+            x: 77,
             y: 36
           }
         ],
@@ -230,7 +230,7 @@
       U4A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setParts().setAnimals().setText().introEvaluation();
     };
 
@@ -272,13 +272,13 @@
       cancion.x = 290;
       cancion.y = 270;
       for (i = _i = 0, _ref = this.letra.length - 1; _i <= _ref; i = _i += 1) {
-        text = new createjs.Text(this.letra[i], '13px Arial', '#666');
+        text = new createjs.Text(this.letra[i], '13px Quicksand', '#666');
         text.x = 0;
         text.y = i * 18;
         cancion.addChild(text);
       }
       for (i = _j = 0, _ref1 = this.answers.words.length - 1; _j <= _ref1; i = _j += 1) {
-        text = new createjs.Text(this.answers.words[i].w, '13px Arial', '#000');
+        text = new createjs.Text(this.answers.words[i].w, '13px Quicksand', '#000');
         text.name = "t" + i;
         text.x = this.answers.words[i].x;
         text.y = this.answers.words[i].y;
@@ -339,6 +339,7 @@
 
     U4A3.prototype.finishEvaluation = function() {
       this.blink(this.library["t" + this.index], false);
+      this.library.score.plusOne();
       TweenLite.to(this.library["body" + this.animal], 1, {
         alpha: 0,
         ease: Quart.easeOut
@@ -377,6 +378,18 @@
     };
 
     U4A3.prototype.finish = function() {
+      TweenLite.to(this.library['cancion'], 0.5, {
+        alpha: 0,
+        y: this.library['cancion'].y - 20
+      });
+      TweenLite.to(this.library['parts'], 0.5, {
+        alpha: 0,
+        y: this.library['parts'].y + 20
+      });
+      TweenLite.to(this.library['animals'], 0.5, {
+        alpha: 0,
+        y: this.library['animals'].y + 20
+      });
       return U4A3.__super__.finish.apply(this, arguments);
     };
 

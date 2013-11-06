@@ -110,7 +110,6 @@
           id: 'instructions'
         }
       ];
-      this.answers = [];
       this.imagenes = [
         {
           id: 'imageApril',
@@ -264,7 +263,7 @@
       U5A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 20, 0));
       return this.setSeasons().introEvaluation();
     };
 
@@ -316,14 +315,15 @@
       for (i = _i = 1, _ref = this.scrambled.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
         if (this.scrambled[i - 1] !== ' ') {
           letra = new DraggableText("t" + i, this.scrambled[i - 1], this.scrambled[i - 1], i * 30, 0);
-          letra.text.font = '20px Arial';
+          letra.text.font = '20px Quicksand';
+          letra.createHitArea(28, 30);
           letra.addEventListener('drop', this.evaluateAnswer);
           letra.onInitEvaluation();
           this.addToLibrary(letra);
           letras.addChild(letra);
         }
         if (col[i - 1] !== ' ') {
-          wc = new WordContainer("l" + i, '', '#FFF', '#f39234', i * 40, 50, 32, 22);
+          wc = new WordContainer("l" + i, '', 'rgba(238,238,238,0.3)', '#f39234', i * 42, 50, 40, 30);
           wc.index = col[i - 1];
           this.addToLibrary(wc);
           palabra.addChild(wc);
@@ -331,7 +331,7 @@
       }
       palabra.name = 'palabra';
       palabra.y = 300;
-      palabra.x = stageSize.w / 2 - this.scrambled.length * 40 / 2 - 50;
+      palabra.x = stageSize.w / 2 - this.scrambled.length * 42 / 2 - 50;
       this.addToMain(palabra);
       letras.name = 'letras';
       letras.y = 300;

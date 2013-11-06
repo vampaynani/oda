@@ -217,9 +217,13 @@
     };
 
     U1A2.prototype.initEvaluation = function(e) {
+      var i, _i;
       U1A2.__super__.initEvaluation.apply(this, arguments);
       this.library['characters'].currentFrame = this.answers[this.index].id;
       createjs.Sound.play(this.answers[this.index].sound);
+      for (i = _i = 1; _i <= 6; i = _i += 1) {
+        this.library['name' + i].blink();
+      }
       return TweenLite.to(this.library['characters'], 0.5, {
         alpha: 1,
         y: stageSize.h - 180,
@@ -238,10 +242,10 @@
           return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {
           this.warning();
-          return this.answer.returnToPlace();
+          return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
         }
       } else {
-        return this.answer.returnToPlace();
+        return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
       }
     };
 

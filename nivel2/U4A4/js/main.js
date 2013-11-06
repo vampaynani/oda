@@ -9,7 +9,7 @@
     __extends(U4A4, _super);
 
     function U4A4() {
-      this.repeatSound = __bind(this.repeatSound, this);
+      this.finish = __bind(this.finish, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -155,167 +155,173 @@
       ];
       sounds = [
         {
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U4_A3_instructions.mp3',
+          src: 'sounds/TU2_U4_A4_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }
       ];
-      this.answers = [
-        {
-          text: "A camel eats meat",
-          animal: 'camel',
-          respuestas: 'off',
-          showanimal: 'incamel'
-        }, {
-          text: "A jaguar eats meat.",
-          animal: 'jaguar',
-          respuestas: 'on',
-          showanimal: 'injaguar'
-        }, {
-          text: "A dolphin can fly",
-          animal: 'dolphin',
-          respuestas: 'off',
-          showanimal: 'indolphin'
-        }, {
-          text: "An octopus can jump.",
-          animal: 'octopus',
-          respuestas: 'off',
-          showanimal: 'inoctopus'
-        }, {
-          text: "Elephants live in the desert",
-          animal: 'elephant',
-          respuestas: 'off',
-          showanimal: 'inelephant'
-        }, {
-          text: "An elephant has a beak.",
-          animal: 'elephant',
-          respuestas: 'off',
-          showanimal: 'inelephant'
-        }, {
-          text: "A lion has paws",
-          animal: 'lion',
-          respuestas: 'on',
-          showanimal: 'inlion'
-        }, {
-          text: "A parrot has claws.",
-          animal: 'parrot',
-          respuestas: 'on',
-          showanimal: 'inparrot'
-        }, {
-          text: "Sharks have wings.",
-          animal: 'shark',
-          respuestas: 'off',
-          showanimal: 'inshark'
-        }, {
-          text: "A lizard can crawl.",
-          animal: 'lizard',
-          respuestas: 'on',
-          showanimal: 'inlizard'
-        }, {
-          text: "Snakes have scales.",
-          animal: 'snake',
-          respuestas: 'on',
-          showanimal: 'snake '
-        }, {
-          text: "Monkeys can't climb.",
-          animal: 'monkey',
-          respuestas: 'off',
-          showanimal: 'inmonkey'
-        }, {
-          text: "Giraffes live in the jungle.",
-          animal: 'giraffe',
-          respuestas: 'off',
-          showanimal: 'ingiraffe'
-        }, {
-          text: "Whales have a tail.",
-          animal: 'whale',
-          respuestas: 'on',
-          showanimal: 'inwhale'
-        }, {
-          text: "An octopus can change colors.",
-          animal: 'octopus',
-          respuestas: 'on',
-          showanimal: 'inoctopus'
-        }, {
-          text: "A baby dolphin drinks milk",
-          animal: 'dolphin',
-          respuestas: 'on',
-          showanimal: 'indolphin'
-        }, {
-          text: "A parrot can't speak.",
-          animal: 'parrot',
-          respuestas: 'on',
-          showanimal: 'inparrot'
-        }, {
-          text: "Lizards eat insects.",
-          animal: 'lizard',
-          respuestas: 'on',
-          showanimal: 'inlizard'
-        }, {
-          text: "A scorpion can't crawl.",
-          animal: 'scorpion',
-          respuestas: 'off',
-          showanimal: 'inscorpion'
-        }, {
-          text: "Monkeys don't have feathers.",
-          animal: 'monkey',
-          respuestas: 'on',
-          showanimal: 'inmonkey'
-        }, {
-          text: "Snakes don't have fur.",
-          animal: 'snake',
-          respuestas: 'on',
-          showanimal: 'snake'
-        }, {
-          text: "Giraffes don't have a tail.",
-          animal: 'giraffe',
-          respuestas: 'off',
-          showanimal: 'ingiraffe'
-        }, {
-          text: "A jaguar doesn't have fur.",
-          animal: 'jaguar',
-          respuestas: 'on',
-          showanimal: 'injaguar'
-        }, {
-          text: "A lion can sleep in trees",
-          animal: 'lion',
-          respuestas: 'on',
-          showanimal: 'inlion'
-        }, {
-          text: "A whale can't crawl",
-          animal: 'whale',
-          respuestas: 'on',
-          showanimal: 'inwhale'
-        }, {
-          text: "A crocodile has a tail",
-          animal: 'crocodile',
-          respuestas: 'on',
-          showanimal: 'incrocodile'
-        }, {
-          text: "Zebras can run",
-          animal: 'zebras',
-          respuestas: 'on',
-          showanimal: 'inzebra'
-        }, {
-          text: "Camels live in the grasslands",
-          animal: 'camel',
-          respuestas: 'off',
-          showanimal: 'incamel'
-        }
-      ];
+      this.game = {
+        answers: [
+          {
+            text: "A camel eats meat.",
+            animal: 'camel',
+            respuestas: 'off',
+            showanimal: 'incamel'
+          }, {
+            text: "A jaguar eats meat.",
+            animal: 'jaguar',
+            respuestas: 'on',
+            showanimal: 'injaguar'
+          }, {
+            text: "A dolphin can fly.",
+            animal: 'dolphin',
+            respuestas: 'off',
+            showanimal: 'indolphin'
+          }, {
+            text: "An octopus can jump.",
+            animal: 'octopus',
+            respuestas: 'off',
+            showanimal: 'inoctopus'
+          }, {
+            text: "Elephants live in the desert.",
+            animal: 'elephant',
+            respuestas: 'off',
+            showanimal: 'inelephant'
+          }, {
+            text: "An elephant has a beak.",
+            animal: 'elephant',
+            respuestas: 'off',
+            showanimal: 'inelephant'
+          }, {
+            text: "A lion has paws.",
+            animal: 'lion',
+            respuestas: 'on',
+            showanimal: 'inlion'
+          }, {
+            text: "A parrot has claws.",
+            animal: 'parrot',
+            respuestas: 'on',
+            showanimal: 'inparrot'
+          }, {
+            text: "Sharks have wings.",
+            animal: 'shark',
+            respuestas: 'off',
+            showanimal: 'inshark'
+          }, {
+            text: "A lizard can crawl.",
+            animal: 'lizard',
+            respuestas: 'on',
+            showanimal: 'inlizard'
+          }, {
+            text: "Snakes have scales.",
+            animal: 'snake',
+            respuestas: 'on',
+            showanimal: 'insnake'
+          }, {
+            text: "Monkeys can't climb.",
+            animal: 'monkey',
+            respuestas: 'off',
+            showanimal: 'inmonkey'
+          }, {
+            text: "Giraffes live in the jungle.",
+            animal: 'giraffe',
+            respuestas: 'off',
+            showanimal: 'ingiraffe'
+          }, {
+            text: "Whales have a tail.",
+            animal: 'whale',
+            respuestas: 'on',
+            showanimal: 'inwhale'
+          }, {
+            text: "An octopus can change colors.",
+            animal: 'octopus',
+            respuestas: 'on',
+            showanimal: 'inoctopus'
+          }, {
+            text: "A baby dolphin drinks milk.",
+            animal: 'dolphin',
+            respuestas: 'on',
+            showanimal: 'indolphin'
+          }, {
+            text: "A parrot can't speak.",
+            animal: 'parrot',
+            respuestas: 'on',
+            showanimal: 'inparrot'
+          }, {
+            text: "Lizards eat insects.",
+            animal: 'lizard',
+            respuestas: 'on',
+            showanimal: 'inlizard'
+          }, {
+            text: "A scorpion can't crawl.",
+            animal: 'scorpion',
+            respuestas: 'off',
+            showanimal: 'inscorpion'
+          }, {
+            text: "Monkeys don't have feathers.",
+            animal: 'monkey',
+            respuestas: 'on',
+            showanimal: 'inmonkey'
+          }, {
+            text: "Snakes don't have fur.",
+            animal: 'snake',
+            respuestas: 'on',
+            showanimal: 'insnake'
+          }, {
+            text: "Giraffes don't have a tail.",
+            animal: 'giraffe',
+            respuestas: 'off',
+            showanimal: 'ingiraffe'
+          }, {
+            text: "A jaguar doesn't have fur.",
+            animal: 'jaguar',
+            respuestas: 'off',
+            showanimal: 'injaguar'
+          }, {
+            text: "A lion can sleep in trees.",
+            animal: 'lion',
+            respuestas: 'on',
+            showanimal: 'inlion'
+          }, {
+            text: "A whale can't crawl.",
+            animal: 'whale',
+            respuestas: 'on',
+            showanimal: 'inwhale'
+          }, {
+            text: "A crocodile has a tail.",
+            animal: 'crocodile',
+            respuestas: 'on',
+            showanimal: 'incrocodile'
+          }, {
+            text: "Zebras can run.",
+            animal: 'zebra',
+            respuestas: 'on',
+            showanimal: 'inzebra'
+          }, {
+            text: "Camels live in the grasslands.",
+            animal: 'camel',
+            respuestas: 'off',
+            showanimal: 'incamel'
+          }
+        ]
+      };
       U4A4.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U4A4.prototype.setStage = function() {
       U4A4.__super__.setStage.apply(this, arguments);
+      this.answers = this.shuffleNoRepeat(this.game.answers, 16);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setAnimals().setClick().introEvaluation();
     };
 
@@ -340,22 +346,6 @@
       this.insertBitmap('insnake', 'insnake', 601, 366);
       this.insertBitmap('inwhale', 'inwhale', 240, 219);
       this.insertBitmap('inzebra', 'inzebra', 513, 198);
-      this.library['incamel'].visible = false;
-      this.library['incrocodile'].visible = false;
-      this.library['indolphin'].visible = false;
-      this.library['inelephant'].visible = false;
-      this.library['ingiraffe'].visible = false;
-      this.library['injaguar'].visible = false;
-      this.library['inlion'].visible = false;
-      this.library['inlizard'].visible = false;
-      this.library['inmonkey'].visible = false;
-      this.library['inoctopus'].visible = false;
-      this.library['inparrot'].visible = false;
-      this.library['inscorpion'].visible = false;
-      this.library['inshark'].visible = false;
-      this.library['insnake'].visible = false;
-      this.library['inwhale'].visible = false;
-      this.library['inzebra'].visible = false;
       this.insertSprite('animalesfuera', ['outcamel', 'outcrocodile', 'outdolphin', 'outelephant', 'outgiraffe', 'outjaguar', 'outlion', 'outlizard', 'outmonkey', 'outoctopus', 'outparrot', 'outscorpion', 'outshark', 'outsnake', 'outwhale', 'outzebra'], {
         camel: 0,
         crocodile: 1,
@@ -374,75 +364,124 @@
         whale: 14,
         zebra: 15
       }, 243, 535, 'mc');
+      this.allInvisible();
       return this;
+    };
+
+    U4A4.prototype.allInvisible = function() {
+      this.library['incamel'].visible = false;
+      this.library['incrocodile'].visible = false;
+      this.library['indolphin'].visible = false;
+      this.library['inelephant'].visible = false;
+      this.library['ingiraffe'].visible = false;
+      this.library['injaguar'].visible = false;
+      this.library['inlion'].visible = false;
+      this.library['inlizard'].visible = false;
+      this.library['inmonkey'].visible = false;
+      this.library['inoctopus'].visible = false;
+      this.library['inparrot'].visible = false;
+      this.library['inscorpion'].visible = false;
+      this.library['inshark'].visible = false;
+      this.library['insnake'].visible = false;
+      this.library['inwhale'].visible = false;
+      return this.library['inzebra'].visible = false;
     };
 
     U4A4.prototype.setClick = function() {
       this.insertBitmap('btnfalse', 'btnfalse', 536, 535);
       this.insertBitmap('btntrue', 'btntrue', 409, 536);
-      this.library['btnfalse'].index = 'off';
-      this.library['btntrue'].index = 'on';
+      this.library.btnfalse.index = 'off';
+      this.library.btntrue.index = 'on';
       this.library['btntrue'].addEventListener('click', this.evaluateAnswer);
       this.library['btnfalse'].addEventListener('click', this.evaluateAnswer);
       return this;
     };
 
     U4A4.prototype.introEvaluation = function() {
-      var text;
       U4A4.__super__.introEvaluation.apply(this, arguments);
-      this.library['animalesfuera'].gotoAndStop(this.answers[this.index].animal);
-      text = new createjs.Text(this.answers[this.index].text, '20px Arial', '#333');
-      text.name = 'frases';
-      text.x = 410;
-      text.y = 500;
-      return this.addToMain(text);
-
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
+      this.library.animalesfuera.visible = false;
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
+      });
+      TweenLite.from(this.library.instructions, 1, {
+        alpha: 0,
+        x: 0
+      });
+      TweenLite.from(this.library.btnfalse, 1, {
+        alpha: 0,
+        y: this.library.btnfalse.y - 10,
+        ease: Quart.easeOut
+      });
+      TweenLite.from(this.library.btntrue, 1, {
+        alpha: 0,
+        y: this.library.btntrue.y - 10,
+        ease: Quart.easeOut
+      });
+      TweenLite.from(this.library.frameocean, 1, {
+        alpha: 0,
+        y: this.library.frameocean.y - 10,
+        ease: Quart.easeOut,
+        delay: 0.4
+      });
+      TweenLite.from(this.library.framejungle, 1, {
+        alpha: 0,
+        y: this.library.framejungle.y - 10,
+        ease: Quart.easeOut,
+        delay: 0.6
+      });
+      TweenLite.from(this.library.framegrasslands, 1, {
+        alpha: 0,
+        y: this.library.framegrasslands.y - 10,
+        ease: Quart.easeOut,
+        delay: 0.8
+      });
+      return TweenLite.from(this.library.framedesert, 1, {
+        alpha: 0,
+        y: this.library.framedesert.y - 10,
+        ease: Quart.easeOut,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U4A4.prototype.initEvaluation = function(e) {
       U4A4.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
+      this.library.animalesfuera.visible = true;
+      this.library.animalesfuera.gotoAndStop(this.answers[this.index].animal);
+      this.insertText('frases', this.answers[this.index].text, '20px Quicksand', '#333', 410, 500);
+      TweenLite.from(this.library.frases, 0.5, {
+        alpha: 0,
+        y: this.library.frases - 10,
         ease: Quart.easeOut
+      });
+      return TweenLite.from(this.library.animalesfuera, 0.5, {
+        alpha: 0,
+        y: this.library.animalesfuera.y - 20
       });
     };
 
     U4A4.prototype.evaluateAnswer = function(e) {
       this.answer = e.target;
       if (this.answer.index === this.answers[this.index].respuestas) {
-        this.library['score'].plusOne();
+        this.library.score.plusOne();
         createjs.Sound.play('good');
-        TweenLite.to(this.library['animalesfuera'], 0.5, {
-          alpha: 0,
-          y: stageSize.h,
-          ease: Back.easeOut,
-          onComplete: this.nextEvaluation
-        });
-        return this.library[this.answers[this.index].showanimal].visible = true;
+        if (!this.library[this.answers[this.index].showanimal].visible) {
+          this.library[this.answers[this.index].showanimal].visible = true;
+          TweenLite.from(this.library[this.answers[this.index].showanimal], 1, {
+            alpha: 0,
+            ease: Back.easeOut
+          });
+        }
       } else {
-        TweenLite.to(this.library['animalesfuera'], 0.5, {
-          alpha: 0,
-          y: stageSize.h,
-          ease: Back.easeOut,
-          onComplete: this.nextEvaluation
-        });
-        return this.warning();
+        this.warning();
       }
+      return TweenLite.to(this.library.animalesfuera, 0.5, {
+        alpha: 0,
+        y: stageSize.h,
+        ease: Back.easeOut,
+        onComplete: this.nextEvaluation
+      });
     };
 
     U4A4.prototype.finishEvaluation = function() {
@@ -452,24 +491,59 @@
     U4A4.prototype.nextEvaluation = function() {
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['animalesfuera'].gotoAndStop(this.answers[this.index].animal);
-        TweenLite.to(this.library['animalesfuera'], 0.5, {
+        this.library.animalesfuera.gotoAndStop(this.answers[this.index].animal);
+        TweenLite.to(this.library.animalesfuera, 0.5, {
           alpha: 1,
           y: 535,
           ease: Back.easeOut
         });
-        return this.library['frases'].text = this.answers[this.index].text;
+        return this.library.frases.text = this.answers[this.index].text;
       } else {
-        return this.finish();
+        return setTimeout(this.finish, 1 * 1000);
       }
     };
 
-    U4A4.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
-    };
-
     U4A4.prototype.finish = function() {
+      this.allInvisible();
+      TweenLite.to(this.library.btnfalse, 1, {
+        alpha: 0,
+        y: this.library.btnfalse.y - 10,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.btntrue, 1, {
+        alpha: 0,
+        y: this.library.btntrue.y - 10,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.frameocean, 1, {
+        alpha: 0,
+        y: this.library.frameocean.y - 10,
+        ease: Quart.easeOut,
+        delay: 0.4
+      });
+      TweenLite.to(this.library.framejungle, 1, {
+        alpha: 0,
+        y: this.library.framejungle.y - 10,
+        ease: Quart.easeOut,
+        delay: 0.6
+      });
+      TweenLite.to(this.library.framegrasslands, 1, {
+        alpha: 0,
+        y: this.library.framegrasslands.y - 10,
+        ease: Quart.easeOut,
+        delay: 0.8
+      });
+      TweenLite.to(this.library.framedesert, 1, {
+        alpha: 0,
+        y: this.library.framedesert.y - 10,
+        ease: Quart.easeOut,
+        delay: 1
+      });
+      TweenLite.to(this.library.frases, 0.5, {
+        alpha: 0,
+        y: this.library.frases - 10,
+        ease: Quart.easeOut
+      });
       return U4A4.__super__.finish.apply(this, arguments);
     };
 

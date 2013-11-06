@@ -89,14 +89,14 @@ class U5A4 extends Oda
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U5_A4_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU2_U5_A4_summer_jennifer.mp3', id:'summerchildjennifer'}
-		    {src:'sounds/TU2_U5_A4_summer_mike.mp3', id:'summerchildmike'}
-		    {src:'sounds/TU2_U5_A4_summer_rachel.mp3', id:'summerchildrachel'}
-		    {src:'sounds/TU2_U5_A4_summer_tyler.mp3', id:'summerchildtyler'}
-		    {src:'sounds/TU2_U5_A4_winter_jennifer.mp3', id:'winterchildjennifer'}
-		    {src:'sounds/TU2_U5_A4_winter_mike.mp3', id:'winterchildmike'}
-		    {src:'sounds/TU2_U5_A4_winter_rachel.mp3', id:'winterchildrachel'}
-		    {src:'sounds/TU2_U5_A4_winter_tyler.mp3', id:'winterchildtyler'}
+		    {src:'sounds/TU2_U5_A4_summer_jennifer.mp3', id:'ssummerchildjennifer'}
+		    {src:'sounds/TU2_U5_A4_summer_mike.mp3', id:'ssummerchildmike'}
+		    {src:'sounds/TU2_U5_A4_summer_rachel.mp3', id:'ssummerchildrachel'}
+		    {src:'sounds/TU2_U5_A4_summer_tyler.mp3', id:'ssummerchildtyler'}
+		    {src:'sounds/TU2_U5_A4_winter_jennifer.mp3', id:'swinterchildjennifer'}
+		    {src:'sounds/TU2_U5_A4_winter_mike.mp3', id:'swinterchildmike'}
+		    {src:'sounds/TU2_U5_A4_winter_rachel.mp3', id:'swinterchildrachel'}
+		    {src:'sounds/TU2_U5_A4_winter_tyler.mp3', id:'swinterchildtyler'}
 		]
 		@game = 
 			summer:
@@ -187,7 +187,6 @@ class U5A4 extends Oda
 		kids.name = 'kids'
 		kids.x = 160
 		kids.y = 150
-		
 		@station = station
 		current = @game[@station].kids
 		for i in [0..3]	by 1
@@ -199,7 +198,13 @@ class U5A4 extends Oda
 			for j in [0..current[i].length-1] by 1
 				asset = @createBitmap current[i][j], current[i][j], i * 160 + 20, 85, 'mc'
 				asset.scaleX = asset.scaleY = 0.45
-				if j > 0 then asset.visible = off else asset.index = i
+				if j > 0 
+					asset.visible = off
+				else 
+					hit = new createjs.Shape()
+					hit.graphics.beginFill('#000').drawRect(-5, -3, asset.width + 20, asset.height + 10)
+					asset.index = i
+					asset.hitArea = hit
 				@addToLibrary asset
 				kids.addChild asset
 		@addToMain kids
@@ -223,11 +228,11 @@ class U5A4 extends Oda
 			@observer.subscribe 'init_kid_evaluation', @library["r#{i}"].onInitEvaluation
 		for kid in @game[@station].kids
 			@blink @library[kid[0]]
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['bg'], 1, {alpha: 0, y: @library['bg'].y + 20, delay: 1}
-		TweenLite.from @library['kids'], 1, {alpha: 0, y: @library['kids'].y + 20, delay: 1}
-		TweenLite.from @library['ropas'], 1, {alpha: 0, y: @library['ropas'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from @library.bg, 1, {alpha: 0, y: @library.bg.y + 20, delay: 1}
+		TweenLite.from @library.kids, 1, {alpha: 0, y: @library.kids.y + 20, delay: 1}
+		TweenLite.from @library.ropas, 1, {alpha: 0, y: @library.ropas.y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for kid in @game[@station].kids
@@ -242,7 +247,7 @@ class U5A4 extends Oda
 		for i in [0..@game[@station].positions.length - 1] by 1
 			@library["r#{i}"].addEventListener 'drop', @evaluateAnswer
 
-		createjs.Sound.play @selected.name
+		createjs.Sound.play "s#{@selected.name}"
 		@library["repeat#{@selected.name}"].visible = on
 		@library["repeat#{@selected.name}"].addEventListener 'click', @repeatSound
 		@observer.notify 'init_kid_evaluation'
@@ -264,7 +269,7 @@ class U5A4 extends Oda
 		for asset in @game[@station].kids[@selected.index]
 			if @library[asset].visible is off
 				return
-		@library['score'].plusOne()
+		@library.score.plusOne()
 		@library["repeat#{@selected.name}"].removeEventListener 'click', @repeatSound
 		TweenLite.to @library["repeat#{@selected.name}"], 1, {y: @library["repeat#{@selected.name}"] + 50, alpha: 0, onComplete: @nextEvaluation}
 	nextEvaluation: =>
@@ -279,7 +284,10 @@ class U5A4 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.2, repeat:-1, yoyo:true}  if state
 	repeatSound: =>
-		createjs.Sound.play @selected.name
+		createjs.Sound.stop()
+		createjs.Sound.play "s#{@selected.name}"
 	finish: ->
+		TweenLite.to @library.bg, 1, {alpha: 0, y: @library.bg.y + 20}
+		TweenLite.to @library.kids, 1, {alpha: 0, y: @library.kids.y + 20}
 		super
 	window.U5A4 = U5A4

@@ -68,20 +68,24 @@ class U4A2 extends Oda
 		@
 	setSopa: ->
 		j = 0
+		h = @letters.length
 		sopa = new createjs.Container()
 		sopa.x = 297
 		sopa.y = 148
 		sopa.name = 'sopa'
+		sopa.visible = off
 		shapesContainer = new createjs.Container()
 		shapesContainer.name = 'shapesContainer'
 		sopa.addChild shapesContainer
 		@addToLibrary shapesContainer
-		for h in [0..@letters.length - 1] by 1
-			for i in [0..@letters[h].length - 1] by 1
+		llength = @letters.length - 1
+		for h in [0..llength] by 1
+			lhlength = @letters[h].length - 1
+			for i in [0..lhlength] by 1
 				letra = new ClickableText "l#{j}", @letters[h][i], "l#{j}", i * 26, h * 26
 				letra.h = h
 				letra.i = i
-				letra.text.font = '20px Arial'
+				letra.text.font = '20px Quicksand'
 				letra.text.textAlign = 'center'
 				sopa.addChild letra
 				@addToLibrary letra
@@ -91,8 +95,7 @@ class U4A2 extends Oda
 	introEvaluation: ->
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['sopa'], 1, {alpha :0, y: @library['sopa'].y - 20, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
 		TweenMax.allFrom [@library['bluewhale'], 
 						@library['dolphin'], 
 						@library['eagle'], 
@@ -105,6 +108,9 @@ class U4A2 extends Oda
 						], 1, {alpha: 0, delay: 1.5}, 0.1
 	initEvaluation: (e) =>
 		super
+		@library.sopa.visible = on
+		@library.sopa.cache -26,-26,286,286
+		TweenLite.from @library['sopa'], 1, {alpha :0, y: @library['sopa'].y - 20}
 		@mainContainer.addEventListener 'mousedown', @evaluateAnswer
 	evaluateAnswer: (e) =>
 		answer = Array()
@@ -120,6 +126,7 @@ class U4A2 extends Oda
 				answer.push clktxt.index
 				pos = x: clktxt.i * 26 - 13, y: clktxt.h * 26, i: clktxt.i, h: clktxt.h
 				shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,26,26,5)
+				@library.sopa.cache -26,-26,286,286
 				e.addEventListener 'mousemove', (ev) =>
 					pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
 					oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
@@ -131,6 +138,7 @@ class U4A2 extends Oda
 							npos = w: i * 26, h: h * 26
 							answer.push clktxt.index
 							shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,npos.w,npos.h,5)
+							@library.sopa.cache -26,-26,286,286
 				e.addEventListener 'mouseup', (ev) =>
 					find = off
 					answer = Array()
@@ -142,6 +150,7 @@ class U4A2 extends Oda
 							TweenLite.to @library[obj.id], 0.3, {y:@library[obj.id].y - 100, alpha:0, onComplete: @finishEvaluation}
 							find = on
 					@library.shapesContainer.removeChild shape if not find
+					@library.sopa.cache -26,-26,286,286
 	finishEvaluation: =>
 		createjs.Sound.play 'good'
 		@nextEvaluation()

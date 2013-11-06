@@ -73,7 +73,7 @@ class U5A1 extends Oda
 				{x:218, y:316}
 				{x:332, y:314}
 				{x:415, y:317}
-				{x:216, y:379}
+				{x:226, y:389}
 				{x:340, y:372}
 				{x:456, y:370}
 			]
@@ -101,7 +101,7 @@ class U5A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertBitmap 'instructions', 'inst', 20, 95
 		@insertBitmap 'btnRepeat', 'btnRepeat', 598, 245
 		@insertBitmap 'btnFinished', 'btnFinished', 598, 292
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
@@ -114,17 +114,21 @@ class U5A1 extends Oda
 		cal.y = 0	
 		@insertBitmap 'propCalendar', 'propCalendar', 60, 128
 		for i in [1..12]
-			v = @createBitmap "cal#{calendar}Final#{i}", "cal#{calendar}Final#{i}", @game.finales[i-1].x, @game.finales[i-1].y
+			hit = new createjs.Shape()
+			hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55)
+			c = new createjs.Container()
+			c.name = "cal#{calendar}Final#{i}"
+			c.x = @game.finales[i-1].x
+			c.y = @game.finales[i-1].y
+			v = @createBitmap "", "cal#{calendar}Final#{i}", 0, 0
 			if calendar is 1
 				if i isnt 2 and i isnt 6 and i isnt 9 and i isnt 11
-					v.hitArea = new createjs.Shape new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50)
 					v.visible = off
-			else
-				if i isnt 6 and i isnt 8 and i isnt 10 and i isnt 12
-					v.hitArea = new createjs.Shape new createjs.Graphics().beginFill('#000').drawRect(-10, -10, 80, 50)
-					v.visible = off
-			cal.addChild v
-			@addToLibrary v
+					c.addChild v, hit
+				else
+					c.addChild v
+			cal.addChild c
+			@addToLibrary c
 		for i in [1..8]
 			v = new Draggable "cal#{calendar}Dragble#{i}", (@preload.getResult "cal#{calendar}Dragble#{i}"), i, @game.drags[i-1].x, @game.drags[i-1].y
 			v.onInitEvaluation()
@@ -154,7 +158,7 @@ class U5A1 extends Oda
 				if drop.id is @answer.name
 					dropped = on
 					@answer.visible = false;
-					@library[drop.tgt].visible = true
+					@library[drop.tgt].children[0].visible = true
 				else
 					@warning()
 					@answer.returnToPlace()

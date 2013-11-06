@@ -255,7 +255,7 @@ class U2A3 extends Oda
 		if hit.hitTest pt.x, pt.y
 			hpt = hit.parent.localToGlobal hit.x, hit.y
 			htt = @answer.parent.globalToLocal hpt.x, hpt.y
-			@wordcompleter = new WordCompleter 'dropper', @pieces[@answer.index].texta, '', @pieces[@answer.index].textb, '#FFF', '#E90E2C', 150, 560, 90, 30
+			@wordcompleter = new AfterBeforeWord 'dropper', @pieces[@answer.index].texta, '', @pieces[@answer.index].textb, '#FFF', '#E90E2C', 150, 560, 110, 30
 			
 			@wordcompleter.x = stageSize.w / 2 - @wordcompleter.width / 2
 			
@@ -268,7 +268,7 @@ class U2A3 extends Oda
 			@answer.putInPlace( htt )
 			@initListeners()
 		else
-			@answer.returnToPlace()
+			@answer.returnToPlace(@answer.alpha, @answer.scaleX, @answer.scaleY)
 	evaluateLocation: (e) =>
 		name = e.target.name
 		name = 'next to' if name is 'next' 
@@ -293,5 +293,8 @@ class U2A3 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenLite.to @library['dragpieces'], 1, {alpha:0, y:@y - 20}
+		TweenLite.to @library['puzzle'], 1, {alpha:0, y:@y - 20}
+		TweenMax.to [@library['p1'], @library['p2'], @library['p3'], @library['behind'], @library['in'], @library['under'], @library['next'],@library['on'], @library['above']], 1, {alpha:0, y:stageSize.h}
 		super
 	window.U2A3 = U2A3

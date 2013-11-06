@@ -263,6 +263,21 @@
           src: 'sandwich/number_5.png'
         }
       ];
+      sounds = [
+        {
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
+          src: 'sounds/boing.mp3',
+          id: 'boing'
+        }, {
+          src: 'sounds/TU2_U3_A3_instructions.mp3',
+          id: 'instructions'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'swrong'
+        }
+      ];
       this.salad = {
         drags: [
           {
@@ -287,15 +302,15 @@
             x: '294',
             y: '456'
           }, {
-            t: 'Mix the fruit.',
+            t: '  Mix the fruit.  ',
             x: '430',
             y: '487'
           }, {
-            t: 'Serve and eat!',
+            t: '  Serve and eat!  ',
             x: '553',
             y: '456'
           }, {
-            t: 'Cut the fruit.',
+            t: '  Cut the fruit.  ',
             x: '696',
             y: '487'
           }
@@ -393,21 +408,6 @@
           y: 131
         }
       };
-      sounds = [
-        {
-          src: 'sounds/good.mp3',
-          id: 'good'
-        }, {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
-        }, {
-          src: 'sounds/TU2_U3_A3_instructions.mp3',
-          id: 'instructions'
-        }, {
-          src: 'sounds/wrong.mp3',
-          id: 'wrong'
-        }
-      ];
       this.answers = {
         sandwich: [
           {
@@ -647,14 +647,14 @@
           this.answer.putInPlace({
             x: hit.x,
             y: hit.y
-          });
+          }, 1, this.answer.scaleX, this.answer.scaleY);
           dropped = true;
         } else {
           i++;
         }
       }
       if (!dropped) {
-        return this.answer.returnToPlace();
+        return this.answer.returnToPlace(1, this.answer.scaleX, this.answer.scaleY);
       }
     };
 
@@ -671,13 +671,13 @@
             this.answer.putInPlace({
               x: hit.x + hit.width / 2,
               y: hit.y + 10
-            });
+            }, 1, this.answer.scaleX, this.answer.scaleY);
           }
           if (this.current === 'salad') {
             this.answer.putInPlace({
               x: hit.x + hit.width / 2,
               y: hit.y + 7
-            });
+            }, 1, this.answer.scaleX, this.answer.scaleY);
           }
           dropped = true;
         } else {
@@ -685,7 +685,7 @@
         }
       }
       if (!dropped) {
-        return this.answer.returnToPlace();
+        return this.answer.returnToPlace(1, this.answer.scaleX, this.answer.scaleY);
       }
     };
 

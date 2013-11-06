@@ -265,28 +265,28 @@
           id: 'instructions'
         }, {
           src: 'sounds/TU2_U5_A4_summer_jennifer.mp3',
-          id: 'summerchildjennifer'
+          id: 'ssummerchildjennifer'
         }, {
           src: 'sounds/TU2_U5_A4_summer_mike.mp3',
-          id: 'summerchildmike'
+          id: 'ssummerchildmike'
         }, {
           src: 'sounds/TU2_U5_A4_summer_rachel.mp3',
-          id: 'summerchildrachel'
+          id: 'ssummerchildrachel'
         }, {
           src: 'sounds/TU2_U5_A4_summer_tyler.mp3',
-          id: 'summerchildtyler'
+          id: 'ssummerchildtyler'
         }, {
           src: 'sounds/TU2_U5_A4_winter_jennifer.mp3',
-          id: 'winterchildjennifer'
+          id: 'swinterchildjennifer'
         }, {
           src: 'sounds/TU2_U5_A4_winter_mike.mp3',
-          id: 'winterchildmike'
+          id: 'swinterchildmike'
         }, {
           src: 'sounds/TU2_U5_A4_winter_rachel.mp3',
-          id: 'winterchildrachel'
+          id: 'swinterchildrachel'
         }, {
           src: 'sounds/TU2_U5_A4_winter_tyler.mp3',
-          id: 'winterchildtyler'
+          id: 'swinterchildtyler'
         }
       ];
       this.game = {
@@ -463,7 +463,7 @@
     };
 
     U5A4.prototype.setKids = function(station) {
-      var asset, boton, current, i, j, kids, _i, _j, _k, _ref;
+      var asset, boton, current, hit, i, j, kids, _i, _j, _k, _ref;
       kids = new createjs.Container();
       kids.name = 'kids';
       kids.x = 160;
@@ -483,7 +483,10 @@
           if (j > 0) {
             asset.visible = false;
           } else {
+            hit = new createjs.Shape();
+            hit.graphics.beginFill('#000').drawRect(-5, -3, asset.width + 20, asset.height + 10);
             asset.index = i;
+            asset.hitArea = hit;
           }
           this.addToLibrary(asset);
           kids.addChild(asset);
@@ -520,27 +523,27 @@
         kid = _ref1[_j];
         this.blink(this.library[kid[0]]);
       }
-      TweenLite.from(this.library['header'], 1, {
-        y: -this.library['header'].height
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
       });
-      TweenLite.from(this.library['instructions'], 1, {
+      TweenLite.from(this.library.instructions, 1, {
         alpha: 0,
         x: 0,
         delay: 0.5
       });
-      TweenLite.from(this.library['bg'], 1, {
+      TweenLite.from(this.library.bg, 1, {
         alpha: 0,
-        y: this.library['bg'].y + 20,
+        y: this.library.bg.y + 20,
         delay: 1
       });
-      TweenLite.from(this.library['kids'], 1, {
+      TweenLite.from(this.library.kids, 1, {
         alpha: 0,
-        y: this.library['kids'].y + 20,
+        y: this.library.kids.y + 20,
         delay: 1
       });
-      return TweenLite.from(this.library['ropas'], 1, {
+      return TweenLite.from(this.library.ropas, 1, {
         alpha: 0,
-        y: this.library['ropas'].y + 20,
+        y: this.library.ropas.y + 20,
         delay: 1.5,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -571,7 +574,7 @@
       for (i = _j = 0, _ref1 = this.game[this.station].positions.length - 1; _j <= _ref1; i = _j += 1) {
         this.library["r" + i].addEventListener('drop', this.evaluateAnswer);
       }
-      createjs.Sound.play(this.selected.name);
+      createjs.Sound.play("s" + this.selected.name);
       this.library["repeat" + this.selected.name].visible = true;
       this.library["repeat" + this.selected.name].addEventListener('click', this.repeatSound);
       return this.observer.notify('init_kid_evaluation');
@@ -605,7 +608,7 @@
           return;
         }
       }
-      this.library['score'].plusOne();
+      this.library.score.plusOne();
       this.library["repeat" + this.selected.name].removeEventListener('click', this.repeatSound);
       return TweenLite.to(this.library["repeat" + this.selected.name], 1, {
         y: this.library["repeat" + this.selected.name] + 50,
@@ -646,10 +649,19 @@
     };
 
     U5A4.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.selected.name);
+      createjs.Sound.stop();
+      return createjs.Sound.play("s" + this.selected.name);
     };
 
     U5A4.prototype.finish = function() {
+      TweenLite.to(this.library.bg, 1, {
+        alpha: 0,
+        y: this.library.bg.y + 20
+      });
+      TweenLite.to(this.library.kids, 1, {
+        alpha: 0,
+        y: this.library.kids.y + 20
+      });
       return U5A4.__super__.finish.apply(this, arguments);
     };
 

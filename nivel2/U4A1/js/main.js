@@ -183,121 +183,121 @@
           src: 'sounds/TU2_U4_A1_instructions.mp3',
           id: 'instructions'
         }, {
-          id: 'beak',
+          id: 'sbeak',
           src: 'sounds/beak.mp3'
         }, {
-          id: 'bear',
+          id: 'sbear',
           src: 'sounds/bear.mp3'
         }, {
-          id: 'camel',
+          id: 'scamel',
           src: 'sounds/camel.mp3'
         }, {
-          id: 'chimpanzee',
+          id: 'schimpanzee',
           src: 'sounds/chimpanzee.mp3'
         }, {
-          id: 'claws',
+          id: 'sclaws',
           src: 'sounds/claws.mp3'
         }, {
-          id: 'crocodile',
+          id: 'scrocodile',
           src: 'sounds/crocodile.mp3'
         }, {
-          id: 'dolphin',
+          id: 'sdolphin',
           src: 'sounds/dolphin.mp3'
         }, {
-          id: 'eagle',
+          id: 'seagle',
           src: 'sounds/eagle.mp3'
         }, {
-          id: 'elephant',
+          id: 'selephant',
           src: 'sounds/elephant.mp3'
         }, {
-          id: 'feathers',
+          id: 'sfeathers',
           src: 'sounds/feathers.mp3'
         }, {
-          id: 'fins',
+          id: 'sfins',
           src: 'sounds/fins.mp3'
         }, {
-          id: 'fish',
+          id: 'sfish',
           src: 'sounds/fish.mp3'
         }, {
-          id: 'fox',
+          id: 'sfox',
           src: 'sounds/fox.mp3'
         }, {
-          id: 'frog',
+          id: 'sfrog',
           src: 'sounds/frog.mp3'
         }, {
-          id: 'fur',
+          id: 'sfur',
           src: 'sounds/fur.mp3'
         }, {
-          id: 'giraffe',
+          id: 'sgiraffe',
           src: 'sounds/giraffe.mp3'
         }, {
-          id: 'gorilla',
+          id: 'sgorilla',
           src: 'sounds/gorilla.mp3'
         }, {
-          id: 'jaguar',
+          id: 'sjaguar',
           src: 'sounds/jaguar.mp3'
         }, {
-          id: 'lion',
+          id: 'slion',
           src: 'sounds/lion.mp3'
         }, {
-          id: 'monkey',
+          id: 'smonkey',
           src: 'sounds/monkey.mp3'
         }, {
-          id: 'octopus',
+          id: 'soctopus',
           src: 'sounds/octopus.mp3'
         }, {
-          id: 'owl',
+          id: 'sowl',
           src: 'sounds/owl.mp3'
         }, {
-          id: 'panda',
+          id: 'spanda',
           src: 'sounds/panda.mp3'
         }, {
-          id: 'parrot',
+          id: 'sparrot',
           src: 'sounds/parrot.mp3'
         }, {
-          id: 'paws',
+          id: 'spaws',
           src: 'sounds/paws.mp3'
         }, {
-          id: 'penguin',
+          id: 'spenguin',
           src: 'sounds/penguin.mp3'
         }, {
-          id: 'polarbear',
+          id: 'spolarbear',
           src: 'sounds/polar-bear.mp3'
         }, {
-          id: 'python',
+          id: 'spython',
           src: 'sounds/python.mp3'
         }, {
-          id: 'rhino',
+          id: 'srhino',
           src: 'sounds/rhino.mp3'
         }, {
-          id: 'scales',
+          id: 'sscales',
           src: 'sounds/scales.mp3'
         }, {
-          id: 'seaturtle',
+          id: 'sseaturtle',
           src: 'sounds/sea-turtle.mp3'
         }, {
-          id: 'shark',
+          id: 'sshark',
           src: 'sounds/shark.mp3'
         }, {
-          id: 'snake',
+          id: 'ssnake',
           src: 'sounds/snake.mp3'
         }, {
-          id: 'tail',
+          id: 'stail',
           src: 'sounds/tail.mp3'
         }, {
-          id: 'tiger',
+          id: 'stiger',
           src: 'sounds/tiger.mp3'
         }, {
-          id: 'whale',
+          id: 'swhale',
           src: 'sounds/whale.mp3'
         }, {
-          id: 'whiskers',
+          id: 'swhiskers',
           src: 'sounds/whiskers.mp3'
         }, {
-          id: 'wings',
+          id: 'swings',
           src: 'sounds/wings.mp3'
         }, {
-          id: 'zebra',
+          id: 'szebra',
           src: 'sounds/zebra.mp3'
         }, {
           src: 'sounds/wrong.mp3',
@@ -402,8 +402,8 @@
       this.insertBitmap('scoreComputer', 'scoreComputer', 19, 463);
       this.insertBitmap('scoreYou', 'scoreYou', 19, 370);
       this.insertBitmap('repeatbtn', 'repeatbtn', 395, 536);
-      this.insertText('pcCount', this.game.pc, '24px Arial', '#ffffff', 41, 487, 'center');
-      this.insertText('youCount', this.game.you, '24px Arial', '#ffffff', 41, 397, 'center');
+      this.insertText('pcCount', this.game.pc, '24px Quicksand', '#ffffff', 41, 487, 'center');
+      this.insertText('youCount', this.game.you, '24px Quicksand', '#ffffff', 41, 397, 'center');
       return this.setCardsYou().setCardsPc().introEvaluation();
     };
 
@@ -414,7 +414,7 @@
       cartas.x = 100;
       cartas.y = 145;
       cartas.name = 'cartas';
-      texto = this.createText('', 'You', '22px Arial', '#333', 150, -25);
+      texto = this.createText('', 'You', '22px Quicksand', '#333', 150, -25);
       cartas.addChild(texto);
       for (h = _i = 0; _i <= 2; h = ++_i) {
         for (i = _j = 0; _j <= 2; i = ++_j) {
@@ -443,7 +443,7 @@
       cartaspc.x = 449;
       cartaspc.y = 145;
       cartaspc.name = 'cartaspc';
-      texto = this.createText('', 'Computer', '22px Arial', '#333', 117, -25);
+      texto = this.createText('', 'Computer', '22px Quicksand', '#333', 117, -25);
       cartaspc.addChild(texto);
       for (h = _i = 0; _i <= 2; h = ++_i) {
         for (i = _j = 0; _j <= 2; i = ++_j) {
@@ -496,7 +496,7 @@
         this.library["cartay" + i].addEventListener('click', this.evaluateClick);
       }
       this.library['repeatbtn'].addEventListener('click', this.repeatSound);
-      createjs.Sound.play(this.game.animals[this.index].id);
+      createjs.Sound.play("s" + this.game.animals[this.index].id);
       return this.interval = setInterval(this.nextEvaluation, 5 * 1000);
     };
 
@@ -535,28 +535,28 @@
       if (this.library["cartay2"].getChildByName('borde').currentFrame === 1 && this.library["cartay4"].getChildByName('borde').currentFrame === 1 && this.library["cartay6"].getChildByName('borde').currentFrame === 1) {
         this.finish();
       }
-      if (this.library["cartac0"].getChildByName('borde').currentFrame === 1 && this.library["cartac1"].getChildByName('borde').currentFrame === 1 && this.library["cartac2"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac0"].getChildByName('borde').currentFrame === 2 && this.library["cartac1"].getChildByName('borde').currentFrame === 2 && this.library["cartac2"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
-      if (this.library["cartac3"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac5"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac3"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac5"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
-      if (this.library["cartac6"].getChildByName('borde').currentFrame === 1 && this.library["cartac7"].getChildByName('borde').currentFrame === 1 && this.library["cartac8"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac6"].getChildByName('borde').currentFrame === 2 && this.library["cartac7"].getChildByName('borde').currentFrame === 2 && this.library["cartac8"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
-      if (this.library["cartac0"].getChildByName('borde').currentFrame === 1 && this.library["cartac3"].getChildByName('borde').currentFrame === 1 && this.library["cartac6"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac0"].getChildByName('borde').currentFrame === 2 && this.library["cartac3"].getChildByName('borde').currentFrame === 2 && this.library["cartac6"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
-      if (this.library["cartac1"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac7"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac1"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac7"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
-      if (this.library["cartac2"].getChildByName('borde').currentFrame === 1 && this.library["cartac5"].getChildByName('borde').currentFrame === 1 && this.library["cartac8"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac2"].getChildByName('borde').currentFrame === 2 && this.library["cartac5"].getChildByName('borde').currentFrame === 2 && this.library["cartac8"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
-      if (this.library["cartac0"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac8"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac0"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac8"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
-      if (this.library["cartac2"].getChildByName('borde').currentFrame === 1 && this.library["cartac4"].getChildByName('borde').currentFrame === 1 && this.library["cartac6"].getChildByName('borde').currentFrame === 1) {
+      if (this.library["cartac2"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac6"].getChildByName('borde').currentFrame === 2) {
         this.finish();
       }
       return this;
@@ -576,19 +576,30 @@
       }
       this.index++;
       if (this.index < this.game.animals.length) {
-        return createjs.Sound.play(this.game.animals[this.index].id);
+        return createjs.Sound.play("s" + this.game.animals[this.index].id);
       } else {
         return this.finish();
       }
     };
 
     U4A1.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.game.animals[this.index].id);
+      return createjs.Sound.play("s" + this.game.animals[this.index].id);
     };
 
     U4A1.prototype.finish = function() {
-      U4A1.__super__.finish.apply(this, arguments);
-      return clearInterval(this.interval);
+      clearInterval(this.interval);
+      TweenLite.to(this.library.repeatbtn, 1, {
+        alpha: 0
+      });
+      TweenLite.to(this.library.cartas, 1, {
+        alpha: 0,
+        y: this.library.cartas.y - 50
+      });
+      TweenLite.to(this.library.cartaspc, 1, {
+        alpha: 0,
+        y: this.library.cartaspc.y - 50
+      });
+      return U4A1.__super__.finish.apply(this, arguments);
     };
 
     window.U4A1 = U4A1;

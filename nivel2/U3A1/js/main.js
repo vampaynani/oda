@@ -852,220 +852,221 @@
               y: '525'
             }
           ]
+        },
+        answers: {
+          m1: [
+            {
+              sound: 'm1b',
+              values: [
+                {
+                  index: 'm1c1',
+                  r: false
+                }, {
+                  index: 'm1c2',
+                  r: false
+                }, {
+                  index: 'm1c4',
+                  r: false
+                }
+              ],
+              target: 'menubreakfast',
+              r: false
+            }, {
+              sound: 'm1l',
+              values: [
+                {
+                  index: 'm1c6',
+                  r: false
+                }, {
+                  index: 'm1c7',
+                  r: false
+                }, {
+                  index: 'm1c14',
+                  r: false
+                }
+              ],
+              target: 'menulunch',
+              r: false
+            }, {
+              sound: 'm1d',
+              values: [
+                {
+                  index: 'm1c9',
+                  r: false
+                }, {
+                  index: 'm1c10',
+                  r: false
+                }, {
+                  index: 'm1c13',
+                  r: false
+                }
+              ],
+              target: 'menudinner',
+              r: false
+            }
+          ],
+          m2: [
+            {
+              sound: 'm2b',
+              values: [
+                {
+                  index: 'm2c3',
+                  r: false
+                }, {
+                  index: 'm2c9',
+                  r: false
+                }, {
+                  index: 'm2c12',
+                  r: false
+                }
+              ],
+              target: 'menubreakfast',
+              r: false
+            }, {
+              sound: 'm2l',
+              values: [
+                {
+                  index: 'm2c5',
+                  r: false
+                }, {
+                  index: 'm2c10',
+                  r: false
+                }, {
+                  index: 'm2c13',
+                  r: false
+                }
+              ],
+              target: 'menulunch',
+              r: false
+            }, {
+              sound: 'm2d',
+              values: [
+                {
+                  index: 'm2c1',
+                  r: false
+                }, {
+                  index: 'm2c4',
+                  r: false
+                }, {
+                  index: 'm2c7',
+                  r: false
+                }
+              ],
+              target: 'menudinner',
+              r: false
+            }
+          ],
+          m3: [
+            {
+              sound: 'm3b',
+              values: [
+                {
+                  index: 'm3c2',
+                  r: false
+                }, {
+                  index: 'm3c4',
+                  r: false
+                }, {
+                  index: 'm3c5',
+                  r: false
+                }
+              ],
+              target: 'menubreakfast',
+              r: false
+            }, {
+              sound: 'm3l',
+              values: [
+                {
+                  index: 'm3c8',
+                  r: false
+                }, {
+                  index: 'm3c10',
+                  r: false
+                }, {
+                  index: 'm3c14',
+                  r: false
+                }
+              ],
+              target: 'menulunch',
+              r: false
+            }, {
+              sound: 'm3d',
+              values: [
+                {
+                  index: 'm3c9',
+                  r: false
+                }, {
+                  index: 'm3c11',
+                  r: false
+                }, {
+                  index: 'm3c12',
+                  r: false
+                }
+              ],
+              target: 'menudinner',
+              r: false
+            }
+          ],
+          m4: [
+            {
+              sound: 'm4b',
+              values: [
+                {
+                  index: 'm4c1',
+                  r: false
+                }, {
+                  index: 'm4c2',
+                  r: false
+                }, {
+                  index: 'm4c4',
+                  r: false
+                }
+              ],
+              target: 'menubreakfast',
+              r: false
+            }, {
+              sound: 'm4l',
+              values: [
+                {
+                  index: 'm4c3',
+                  r: false
+                }, {
+                  index: 'm4c5',
+                  r: false
+                }, {
+                  index: 'm4c10',
+                  r: false
+                }
+              ],
+              target: 'menulunch',
+              r: false
+            }, {
+              sound: 'm4d',
+              values: [
+                {
+                  index: 'm4c8',
+                  r: false
+                }, {
+                  index: 'm4c9',
+                  r: false
+                }, {
+                  index: 'm4c12',
+                  r: false
+                }
+              ],
+              target: 'menudinner',
+              r: false
+            }
+          ],
+          total: 4
         }
-      };
-      this.answers = {
-        m1: [
-          {
-            sound: 'm1b',
-            values: [
-              {
-                index: 'm1c1',
-                r: false
-              }, {
-                index: 'm1c2',
-                r: false
-              }, {
-                index: 'm1c4',
-                r: false
-              }
-            ],
-            target: 'menubreakfast',
-            r: false
-          }, {
-            sound: 'm1l',
-            values: [
-              {
-                index: 'm1c6',
-                r: false
-              }, {
-                index: 'm1c7',
-                r: false
-              }, {
-                index: 'm1c14',
-                r: false
-              }
-            ],
-            target: 'menulunch',
-            r: false
-          }, {
-            sound: 'm1d',
-            values: [
-              {
-                index: 'm1c9',
-                r: false
-              }, {
-                index: 'm1c10',
-                r: false
-              }, {
-                index: 'm1c13',
-                r: false
-              }
-            ],
-            target: 'menudinner',
-            r: false
-          }
-        ],
-        m2: [
-          {
-            sound: 'm2b',
-            values: [
-              {
-                index: 'm2c3',
-                r: false
-              }, {
-                index: 'm2c9',
-                r: false
-              }, {
-                index: 'm2c12',
-                r: false
-              }
-            ],
-            target: 'menubreakfast',
-            r: false
-          }, {
-            sound: 'm2l',
-            values: [
-              {
-                index: 'm2c5',
-                r: false
-              }, {
-                index: 'm2c10',
-                r: false
-              }, {
-                index: 'm2c13',
-                r: false
-              }
-            ],
-            target: 'menulunch',
-            r: false
-          }, {
-            sound: 'm2d',
-            values: [
-              {
-                index: 'm2c1',
-                r: false
-              }, {
-                index: 'm2c4',
-                r: false
-              }, {
-                index: 'm2c7',
-                r: false
-              }
-            ],
-            target: 'menudinner',
-            r: false
-          }
-        ],
-        m3: [
-          {
-            sound: 'm3b',
-            values: [
-              {
-                index: 'm3c2',
-                r: false
-              }, {
-                index: 'm3c4',
-                r: false
-              }, {
-                index: 'm3c5',
-                r: false
-              }
-            ],
-            target: 'menubreakfast',
-            r: false
-          }, {
-            sound: 'm3l',
-            values: [
-              {
-                index: 'm3c8',
-                r: false
-              }, {
-                index: 'm3c10',
-                r: false
-              }, {
-                index: 'm3c14',
-                r: false
-              }
-            ],
-            target: 'menulunch',
-            r: false
-          }, {
-            sound: 'm3d',
-            values: [
-              {
-                index: 'm3c9',
-                r: false
-              }, {
-                index: 'm3c11',
-                r: false
-              }, {
-                index: 'm3c12',
-                r: false
-              }
-            ],
-            target: 'menudinner',
-            r: false
-          }
-        ],
-        m4: [
-          {
-            sound: 'm4b',
-            values: [
-              {
-                index: 'm4c1',
-                r: false
-              }, {
-                index: 'm4c2',
-                r: false
-              }, {
-                index: 'm4c4',
-                r: false
-              }
-            ],
-            target: 'menubreakfast',
-            r: false
-          }, {
-            sound: 'm4l',
-            values: [
-              {
-                index: 'm4c3',
-                r: false
-              }, {
-                index: 'm4c5',
-                r: false
-              }, {
-                index: 'm4c10',
-                r: false
-              }
-            ],
-            target: 'menulunch',
-            r: false
-          }, {
-            sound: 'm4d',
-            values: [
-              {
-                index: 'm4c8',
-                r: false
-              }, {
-                index: 'm4c9',
-                r: false
-              }, {
-                index: 'm4c12',
-                r: false
-              }
-            ],
-            target: 'menudinner',
-            r: false
-          }
-        ],
-        total: 4
       };
       U3A1.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U3A1.prototype.setStage = function() {
       U3A1.__super__.setStage.apply(this, arguments);
+      this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
@@ -1222,6 +1223,18 @@
     };
 
     U3A1.prototype.finish = function() {
+      TweenLite.to(this.library['common'], 1, {
+        alpha: 0,
+        x: 0
+      });
+      TweenLite.to(this.library['repeat'], 1, {
+        alpha: 0,
+        y: this.library['repeat'].y + 20
+      });
+      TweenLite.to(this.library['menu'], 1, {
+        alpha: 0,
+        y: this.library['menu'].y + 20
+      });
       return U3A1.__super__.finish.apply(this, arguments);
     };
 

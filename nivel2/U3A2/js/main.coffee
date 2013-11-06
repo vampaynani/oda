@@ -200,5 +200,7 @@ class U3A2 extends Oda
 		else
 			@finish()
 	finish: ->
+		TweenLite.to @library['common'], 1, {alpha:0, y: @library['common'].y - 20}
+		TweenLite.to @library['menu'], 1, {alpha :0, y: @library['menu'].y - 20}
 		super
 	window.U3A2 = U3A2

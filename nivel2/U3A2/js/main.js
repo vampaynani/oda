@@ -482,6 +482,14 @@
     };
 
     U3A2.prototype.finish = function() {
+      TweenLite.to(this.library['common'], 1, {
+        alpha: 0,
+        y: this.library['common'].y - 20
+      });
+      TweenLite.to(this.library['menu'], 1, {
+        alpha: 0,
+        y: this.library['menu'].y - 20
+      });
       return U3A2.__super__.finish.apply(this, arguments);
     };
 

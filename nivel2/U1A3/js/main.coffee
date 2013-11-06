@@ -41,13 +41,13 @@ class U1A3 extends Oda
 	setGrupo1: ->
 		group1 = new createjs.Container()
 		group1.x = 565
-		group1.y = 132
+		group1.y = 70
 		group1.name = 'group1'
 		word1 = new ClickableText 'w11', 'We read books', 1, 0, 0
-		word2 = new ClickableText 'w12', 'We do exercise', 2, 0, 18
-		word3 = new ClickableText 'w13', 'We paint', 3, 0, 36
-		word4 = new ClickableText 'w14', 'We eat lunch', 4, 0, 54
-		word5 = new ClickableText 'w15', 'We watch movies', 5, 0, 72
+		word2 = new ClickableText 'w12', 'We do exercise', 2, 0, 25
+		word3 = new ClickableText 'w13', 'We paint', 3, 0, 50
+		word4 = new ClickableText 'w14', 'We eat lunch', 4, 0, 75
+		word5 = new ClickableText 'w15', 'We watch movies', 5, 0, 100
 
 		group1.addChild word1, word2, word3, word4, word5
 		@addToLibrary word1, word2, word3, word4, word5
@@ -56,13 +56,13 @@ class U1A3 extends Oda
 	setGrupo2: ->
 		group2 = new createjs.Container()
 		group2.x = 565
-		group2.y = 247
+		group2.y = 210
 		group2.name = 'group2'
 		word1 = new ClickableText 'w21', 'in the gym', 1, 0, 0
-		word2 = new ClickableText 'w22', 'in the cafeteria', 2, 0, 18
-		word3 = new ClickableText 'w23', 'in the library', 3, 0, 36
-		word4 = new ClickableText 'w24', 'in the auditorium', 4, 0, 54
-		word5 = new ClickableText 'w25', 'in the art room', 5, 0, 72
+		word2 = new ClickableText 'w22', 'in the cafeteria', 2, 0, 25
+		word3 = new ClickableText 'w23', 'in the library', 3, 0, 50
+		word4 = new ClickableText 'w24', 'in the auditorium', 4, 0, 75
+		word5 = new ClickableText 'w25', 'in the art room', 5, 0, 100
 
 		group2.addChild word1, word2, word3, word4, word5
 		@addToLibrary word1, word2, word3, word4, word5
@@ -71,13 +71,13 @@ class U1A3 extends Oda
 	setGrupo3: ->
 		group3 = new createjs.Container()
 		group3.x = 565
-		group3.y = 360
+		group3.y = 350
 		group3.name = 'group3'
 		word1 = new ClickableText 'w31', 'on Monday and Friday.', 1, 0, 0
-		word2 = new ClickableText 'w32', 'on Tuesday and Thursday.', 2, 0, 18
-		word3 = new ClickableText 'w33', 'on Thursday and Friday.', 3, 0, 36
-		word4 = new ClickableText 'w34', 'on Tuesday and Friday.', 4, 0, 54
-		word5 = new ClickableText 'w35', 'on Monday and Wednesday.', 5, 0, 72
+		word2 = new ClickableText 'w32', 'on Tuesday and Thursday.', 2, 0, 25
+		word3 = new ClickableText 'w33', 'on Thursday and Friday.', 3, 0, 50
+		word4 = new ClickableText 'w34', 'on Tuesday and Friday.', 4, 0, 75
+		word5 = new ClickableText 'w35', 'on Monday and Wednesday.', 5, 0, 100
 
 		group3.addChild word1, word2, word3, word4, word5
 		@addToLibrary word1, word2, word3, word4, word5

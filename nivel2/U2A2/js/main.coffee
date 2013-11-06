@@ -26,21 +26,21 @@ class U2A2 extends Oda
 			{src:'sounds/TU2_U2_A2_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'kitchen'}
-		    {src:'sounds/TU2_U2_A2_feedTheCat.mp3', id:'cat'}
-		    {src:'sounds/TU2_U2_A2_feedTheDog.mp3', id:'dog'}
-		    {src:'sounds/TU2_U2_A2_feedTheFish.mp3', id:'fish'}
-		    {src:'sounds/TU2_U2_A2_makeYourBed.mp3', id:'bed'}
-		    {src:'sounds/TU2_U2_A2_pickUpYourRoom.mp3', id:'doll'}
-		    {src:'sounds/TU2_U2_A2_putAwayYourToys.mp3', id:'toys'}
-		    {src:'sounds/TU2_U2_A2_setTheTable.mp3', id:'soup'}
-		    {src:'sounds/TU2_U2_A2_sweepTheFloor.mp3', id:'swipe'}
-		    {src:'sounds/TU2_U2_A2_sweepTheKitchen.mp3', id:'kitchen1'}
-		    {src:'sounds/TU2_U2_A2_takeOutTheBroom.mp3', id:'broom'}
-		    {src:'sounds/TU2_U2_A2_takeOutTheTrash.mp3', id:'garbage'}
-		    {src:'sounds/TU2_U2_A2_walkTheDog.mp3', id:'walkdog'}
-		    {src:'sounds/TU2_U2_A2_washTheDishes.mp3', id:'dishes'}
-		    {src:'sounds/TU2_U2_A2_waterThePlants.mp3', id:'plants'}
+		    {src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'skitchen'}
+		    {src:'sounds/TU2_U2_A2_feedTheCat.mp3', id:'scat'}
+		    {src:'sounds/TU2_U2_A2_feedTheDog.mp3', id:'sdog'}
+		    {src:'sounds/TU2_U2_A2_feedTheFish.mp3', id:'sfish'}
+		    {src:'sounds/TU2_U2_A2_makeYourBed.mp3', id:'sbed'}
+		    {src:'sounds/TU2_U2_A2_pickUpYourRoom.mp3', id:'sdoll'}
+		    {src:'sounds/TU2_U2_A2_putAwayYourToys.mp3', id:'stoys'}
+		    {src:'sounds/TU2_U2_A2_setTheTable.mp3', id:'ssoup'}
+		    {src:'sounds/TU2_U2_A2_sweepTheFloor.mp3', id:'sswipe'}
+		    {src:'sounds/TU2_U2_A2_sweepTheKitchen.mp3', id:'skitchen1'}
+		    {src:'sounds/TU2_U2_A2_takeOutTheBroom.mp3', id:'sbroom'}
+		    {src:'sounds/TU2_U2_A2_takeOutTheTrash.mp3', id:'sgarbage'}
+		    {src:'sounds/TU2_U2_A2_walkTheDog.mp3', id:'swalkdog'}
+		    {src:'sounds/TU2_U2_A2_washTheDishes.mp3', id:'sdishes'}
+		    {src:'sounds/TU2_U2_A2_waterThePlants.mp3', id:'splants'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [
@@ -64,7 +64,7 @@ class U2A2 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@insertBitmap 'teacher', 'lady', 250, 124
+		@insertBitmap 'teacher', 'lady', 250, 134
 		@insertBitmap 'repeat', 'repeat', 441, 210
 		@insertSprite 'choose1', ['kitchen','cat','dog','fish','bed','doll','toys','soup','swipe','broom','garbage','walkdog','dishes','plants'], {'kitchen':0,'cat':1,'dog':2,'fish':3,'bed':4,'doll':5,'toys':6,'soup':7,'swipe':8,'broom':9,'garbage':10,'walkdog':11,'dishes':12,'plants':13}, 270, 452, 'mc'
 		@insertSprite 'choose2', ['kitchen','cat','dog','fish','bed','doll','toys','soup','swipe','broom','garbage','walkdog','dishes','plants'], {'kitchen':0,'cat':1,'dog':2,'fish':3,'bed':4,'doll':5,'toys':6,'soup':7,'swipe':8,'broom':9,'garbage':10,'walkdog':11,'dishes':12,'plants':13}, 591, 452, 'mc'
@@ -116,7 +116,7 @@ class U2A2 extends Oda
 		fake = Math.floor Math.random() * others.length
 		@library['choose' + rand].gotoAndStop @phrase.id
 		@library['choose' + other].gotoAndStop others[fake].id
-		createjs.Sound.play @phrase.id
+		createjs.Sound.play "s#{@phrase.id}"
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 1, scaleX: 1, scaleY: 1, ease:Elastic.easeOut}
 	getPhrase: ->
 		possible = @answers.filter (answer) ->
@@ -124,7 +124,7 @@ class U2A2 extends Oda
 		id = Math.floor Math.random() * possible.length
 		possible[id]
 	repeat: (e) =>
-		createjs.Sound.play @phrase.id
+		createjs.Sound.play "s#{@phrase.id}"
 	shuffle: (a) ->
 		for i in [a.length..1]
 			j = Math.floor Math.random() * ( i + 1 )
@@ -134,5 +134,7 @@ class U2A2 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenLite.to @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 50}
+		TweenLite.to @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50}
 		super
 	window.U2A2 = U2A2

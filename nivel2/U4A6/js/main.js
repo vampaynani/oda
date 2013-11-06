@@ -98,9 +98,6 @@
           id: 'lion',
           src: 'lion.png'
         }, {
-          id: 'lista',
-          src: 'lista.txt'
-        }, {
           id: 'lizard',
           src: 'lizard.png'
         }, {
@@ -140,6 +137,9 @@
       ];
       sounds = [
         {
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
@@ -150,204 +150,206 @@
           id: 'wrong'
         }
       ];
-      this.preguntas = [
-        {
-          tipo: 'texto',
-          imagen: 'toastMilkJuice',
-          pregunta: "What's for breakfast?",
-          opcionUno: 'Cereal. milk and juice',
-          opcionDos: 'Toast, milk and juice',
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: 'zebras',
-          pregunta: 'Do zebras live in the grasslands?',
-          opcionUno: 'Yes, they do.',
-          opcionDos: "No, they don't.",
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'imagen',
-          pregunta: 'It has fins and scales. What is it?',
-          opcionUno: 'fish',
-          opcionDos: 'parrot',
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'imagen',
-          pregunta: 'This animal is endangered',
-          opcionUno: 'rhino',
-          opcionDos: 'snake',
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: 'closet',
-          pregunta: 'Where is the broom?',
-          opcionUno: "It's in the drawer",
-          opcionDos: "It's in the closet",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: 'girlWashing',
-          pregunta: "What's she doing?",
-          opcionUno: "She's setting the table",
-          opcionDos: "She's washing the dishes",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: 'turtle',
-          pregunta: "Do turtles have a tail?",
-          opcionUno: "Yes, they do",
-          opcionDos: "No, they don't",
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: 'girlPlayingFlute',
-          pregunta: "What's she playing?",
-          opcionUno: "A trumpet",
-          opcionDos: "A flute",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: 'lion',
-          pregunta: "What does lion eat?",
-          opcionUno: "Plants",
-          opcionDos: "Meat",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: "polarBearSwim",
-          pregunta: "Can polar bears swim?",
-          opcionUno: "Yes, they can",
-          opcionDos: "No, they can't",
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: "chart",
-          pregunta: "We work on computers on Wednesday",
-          opcionUno: "True",
-          opcionDos: "False",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'imagen',
-          pregunta: "I like ham, rice and brocoli",
-          opcionUno: 'hamRice',
-          opcionDos: 'chickenRice',
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: "desk",
-          pregunta: "Where is it?",
-          opcionUno: "It's behind the desk.",
-          opcionDos: "It's under the desk.",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: 'childrensDrawing',
-          pregunta: "What are they doing?",
-          opcionUno: "They're drawing.",
-          opcionDos: "They're painting.",
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: "applepieicecream",
-          pregunta: "What's for dessert?",
-          opcionUno: "Cake and ice cream.",
-          opcionDos: "Apple pie and ice cream.",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: "sixthirty",
-          pregunta: "What time does she wake up?",
-          opcionUno: "Six Thirty.",
-          opcionDos: "Seven Thirty.",
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: "dogEmptyBowl",
-          pregunta: "",
-          opcionUno: "Feed the dogs.",
-          opcionDos: "Take out the dog.",
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: "houseAttic",
-          pregunta: "",
-          opcionUno: "There's an attic.",
-          opcionDos: "There isn't an attic.",
-          respuesta: "opcionUno"
-        }, {
-          tipo: 'texto',
-          imagen: "fireTruck",
-          pregunta: "Where's the fire truck?",
-          opcionUno: "It's under the garage",
-          opcionDos: "It's in the garage",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: "girlPlayingGuitar",
-          pregunta: "Is she playing the Violin?",
-          opcionUno: "Yes, she is",
-          opcionDos: "No, she isn't",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: "likePancakes",
-          pregunta: "Do they like pancakes",
-          opcionUno: "Yes, they do.",
-          opcionDos: "No, they don't",
-          respuesta: "opcionUno"
-        }, {
-          tipo: "texto",
-          imagen: "polarBear",
-          pregunta: "Where do the polar bears live?",
-          opcionUno: "In the forest",
-          opcionDos: "On the ice",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: "monkeys",
-          pregunta: "Do monkeys have fins?",
-          opcionUno: "Yes, they do",
-          opcionDos: "No, they don't",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'imagen',
-          pregunta: "It lives in the desert. It can carry water in it's humps",
-          opcionUno: "camel",
-          opcionDos: "lizard",
-          respuesta: "opcionUno"
-        }, {
-          tipo: "texto",
-          imagen: "childrenSport",
-          pregunta: "We excercise in the",
-          opcionUno: "auditorium",
-          opcionDos: "gym",
-          respuesta: "opcionDos"
-        }, {
-          tipo: "texto",
-          imagen: "cherries",
-          pregunta: "cherries",
-          pregunta: "",
-          opcionUno: "These are strawberries",
-          opcionDos: "These are cherries",
-          respuesta: "opcionDos"
-        }, {
-          tipo: 'texto',
-          imagen: "frogelephant",
-          pregunta: "It can't jump",
-          opcionUno: "Frog",
-          opcionDos: "Elephant",
-          respuesta: 'opcionDos'
-        }
-      ];
-      this.answers = [];
+      this.game = {
+        preguntas: [
+          {
+            tipo: 'texto',
+            imagen: 'toastMilkJuice',
+            pregunta: "What's for breakfast?",
+            opcionUno: 'Cereal. milk and juice.',
+            opcionDos: 'Toast, milk and juice.',
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: 'zebras',
+            pregunta: 'Do zebras live in the grasslands?',
+            opcionUno: 'Yes, they do.',
+            opcionDos: "No, they don't.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'imagen',
+            pregunta: 'It has fins and scales. What is it?',
+            opcionUno: 'fish',
+            opcionDos: 'parrot',
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'imagen',
+            pregunta: 'This animal is endangered',
+            opcionUno: 'rhino',
+            opcionDos: 'snake',
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: 'closet',
+            pregunta: 'Where is the broom?',
+            opcionUno: "It's in the drawer.",
+            opcionDos: "It's in the closet.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: 'girlWashing',
+            pregunta: "What's she doing?",
+            opcionUno: "She's setting the table.",
+            opcionDos: "She's washing the dishes.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: 'turtle',
+            pregunta: "Do turtles have a tail?",
+            opcionUno: "Yes, they do.",
+            opcionDos: "No, they don't.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: 'girlPlayingFlute',
+            pregunta: "What's she playing?",
+            opcionUno: "A trumpet.",
+            opcionDos: "A flute.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: 'lion',
+            pregunta: "What does lion eat?",
+            opcionUno: "Plants.",
+            opcionDos: "Meat.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: "polarBearSwim",
+            pregunta: "Can polar bears swim?",
+            opcionUno: "Yes, they can.",
+            opcionDos: "No, they can't.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: "chart",
+            pregunta: "We work on computers on Wednesday",
+            opcionUno: "True.",
+            opcionDos: "False.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'imagen',
+            pregunta: "I like ham, rice and brocoli",
+            opcionUno: 'hamRice',
+            opcionDos: 'chickenRice',
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: "desk",
+            pregunta: "Where is it?",
+            opcionUno: "It's behind the desk.",
+            opcionDos: "It's under the desk.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: 'childrensDrawing',
+            pregunta: "What are they doing?",
+            opcionUno: "They're drawing.",
+            opcionDos: "They're painting.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: "applepieicecream",
+            pregunta: "What's for dessert?",
+            opcionUno: "Cake and ice cream.",
+            opcionDos: "Apple pie and ice cream.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: "sixthirty",
+            pregunta: "What time does she wake up?",
+            opcionUno: "Six Thirty.",
+            opcionDos: "Seven Thirty.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: "dogEmptyBowl",
+            pregunta: "",
+            opcionUno: "Feed the dogs.",
+            opcionDos: "Take out the dog.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: "houseAttic",
+            pregunta: "",
+            opcionUno: "There's an attic.",
+            opcionDos: "There isn't an attic.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: 'texto',
+            imagen: "fireTruck",
+            pregunta: "Where's the fire truck?",
+            opcionUno: "It's under the garage.",
+            opcionDos: "It's in the garage.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: "girlPlayingGuitar",
+            pregunta: "Is she playing the Violin?",
+            opcionUno: "Yes, she is.",
+            opcionDos: "No, she isn't.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: "likePancakes",
+            pregunta: "Do they like pancakes",
+            opcionUno: "Yes, they do.",
+            opcionDos: "No, they don't.",
+            respuesta: "opcionUno"
+          }, {
+            tipo: "texto",
+            imagen: "polarBear",
+            pregunta: "Where do the polar bears live?",
+            opcionUno: "In the forest.",
+            opcionDos: "On the ice.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: "monkeys",
+            pregunta: "Do monkeys have fins?",
+            opcionUno: "Yes, they do.",
+            opcionDos: "No, they don't.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'imagen',
+            pregunta: "It lives in the desert. It can carry water in it's humps",
+            opcionUno: "camel",
+            opcionDos: "lizard",
+            respuesta: "opcionUno"
+          }, {
+            tipo: "texto",
+            imagen: "childrenSport",
+            pregunta: "We excercise in the",
+            opcionUno: "Auditorium.",
+            opcionDos: "Gym.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: "texto",
+            imagen: "cherries",
+            pregunta: "cherries",
+            pregunta: "",
+            opcionUno: "These are strawberries.",
+            opcionDos: "These are cherries.",
+            respuesta: "opcionDos"
+          }, {
+            tipo: 'texto',
+            imagen: "frogelephant",
+            pregunta: "It can't jump",
+            opcionUno: "Frog.",
+            opcionDos: "Elephant.",
+            respuesta: 'opcionDos'
+          }
+        ]
+      };
       U4A6.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U4A6.prototype.setStage = function() {
       U4A6.__super__.setStage.apply(this, arguments);
+      this.preguntas = this.shuffleNoRepeat(this.game.preguntas, 16);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 27, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setQuestion(0).introEvaluation();
     };
 
@@ -362,7 +364,7 @@
         v.scaleX = v.scaleY = 0.5;
         question.addChild(v);
         this.addToLibrary(v);
-        text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
+        text = new createjs.Text(this.preguntas[i].pregunta, '24px Quicksand', '#333');
         text.name = 'titulo';
         text.x = stageSize.w / 2;
         text.y = 140;
@@ -373,13 +375,13 @@
         uno = new ClickableText(this.preguntas[i].opcionUno, this.preguntas[i].opcionUno, i, 0, 0);
         opciones.addChild(uno);
         this.addToLibrary(uno);
-        diagonal = new createjs.Text(' / ', '24px Arial', '#333');
+        diagonal = new createjs.Text('/', '16px Quicksand', '#333');
         diagonal.name = 'diagonal';
         diagonal.x = uno.x + uno.width;
         diagonal.y = 0;
         opciones.addChild(diagonal);
         this.addToLibrary(diagonal);
-        dos = new ClickableText(this.preguntas[i].opcionDos, this.preguntas[i].opcionDos, i, diagonal.x + 24, 0);
+        dos = new ClickableText(this.preguntas[i].opcionDos, this.preguntas[i].opcionDos, i, diagonal.x + 10, 0);
         opciones.addChild(dos);
         this.addToLibrary(dos);
         total = uno.width + dos.width + 20;
@@ -387,7 +389,7 @@
         opciones.y = 490;
         question.addChild(opciones);
       } else if (this.preguntas[i].tipo === 'imagen') {
-        text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
+        text = new createjs.Text(this.preguntas[i].pregunta, '24px Quicksand', '#333');
         text.name = 'titulo';
         text.x = 200;
         text.y = 140;

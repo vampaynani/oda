@@ -253,7 +253,7 @@
       meg.addChild(m1, m2, m3, m4, m5, m6);
       for (i = _i = 1; _i <= 6; i = _i += 1) {
         sh = new createjs.Shape();
-        sh.graphics.beginFill('#FFF').beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10);
+        sh.graphics.beginFill('#FFF').setStrokeStyle(2).beginStroke('#333').drawRoundRect(0, 0, 66, 42, 10);
         sh.x = drops[i - 1].x;
         sh.y = drops[i - 1].y;
         sh.name = 'sh' + i;
@@ -327,7 +327,7 @@
       jim.addChild(j1, j2, j3, j4, j5, j6);
       for (i = _i = 1; _i <= 6; i = _i += 1) {
         sh = new createjs.Shape();
-        sh.graphics.beginFill('#FFF').beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10);
+        sh.graphics.beginFill('#FFF').setStrokeStyle(2).beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10);
         sh.x = drops[i - 1].x;
         sh.y = drops[i - 1].y;
         sh.name = 'sh' + i;
@@ -454,6 +454,18 @@
     };
 
     U2A4.prototype.finish = function() {
+      TweenLite.to(this.library['repeat'], 1, {
+        alpha: 0,
+        x: this.x + 20
+      });
+      TweenLite.to(this.library['finish'], 1, {
+        alpha: 0,
+        x: this.x + 20
+      });
+      TweenLite.to(this.library['jim'], 1, {
+        alpha: 0,
+        x: this.library['jim'].x + 50
+      });
       return U2A4.__super__.finish.apply(this, arguments);
     };
 

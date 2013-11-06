@@ -106,7 +106,7 @@ class U2A4 extends Oda
 
 		for i in [1..6] by 1
 			sh = new createjs.Shape()
-			sh.graphics.beginFill('#FFF').beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10)
+			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#333').drawRoundRect(0, 0, 66, 42, 10)
 			sh.x = drops[i - 1].x
 			sh.y = drops[i - 1].y
 			sh.name = 'sh'+i
@@ -152,7 +152,7 @@ class U2A4 extends Oda
 
 		for i in [1..6] by 1
 			sh = new createjs.Shape()
-			sh.graphics.beginFill('#FFF').beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10)
+			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10)
 			sh.x = drops[i - 1].x
 			sh.y = drops[i - 1].y
 			sh.name = 'sh'+i
@@ -224,5 +224,8 @@ class U2A4 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenLite.to @library['repeat'], 1, {alpha: 0, x: @x + 20}
+		TweenLite.to @library['finish'], 1, {alpha: 0, x: @x + 20}
+		TweenLite.to @library['jim'], 1, {alpha: 0, x: @library['jim'].x + 50}
 		super
 	window.U2A4 = U2A4

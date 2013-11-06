@@ -71,7 +71,7 @@ class U2A6 extends Oda
 			@random.push rand
 			count++
 		
-		@insertBitmap 'background', 'background', 0, 0
+		@insertBitmap 'background', 'background', 0, 50
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'l1', 'level1Btn', 731, 436
@@ -80,14 +80,14 @@ class U2A6 extends Oda
 		
 		for i in [0..5] by 1
 			c = new createjs.Container()
-			#n = @bucketName @random[i]
-			t = new createjs.Text "#{@random[i]}", '16px Arial', '#FF0000'
+			n = @bucketName @random[i]
+			t = new createjs.Text "#{n}", '16px Quicksand', '#FF0000'
 			b = @createBitmap "b#{i}", 'bucket', 0, 0
 			c.name = "b#{i}"
 			c.index = @random[i]
 			t.textAlign = 'center'
 			#t.x = b.width / 2 - t.getMeasuredWidth() / 2 + 20
-			t.x = b.width / 2 - t.getMeasuredWidth() / 2
+			t.x = b.width / 2 - 15
 			t.y = b.height / 2
 			c.x = @buckets[i].x
 			c.y = @buckets[i].y
@@ -142,12 +142,15 @@ class U2A6 extends Oda
 			when 'l3'
 				@initRaindrops 3, 500
 	initRaindrops: (level, interval) ->
+		@raindrops = new createjs.Container()
+		@raindrops.name = 'raindrops'
 		@level = level
 		@rnum = 0
 		@time = 90
 		@timer = setInterval @updateCounter, 1000
 		@rinterval = setInterval @makeRaindropr, interval
 		@binterval = setInterval @makeRaindropb, 2000
+		@addToMain @raindrops
 	updateCounter: =>
 		@time--
 		@library['score'].updateTotal @time
@@ -160,12 +163,12 @@ class U2A6 extends Oda
 		@makeRaindrop @random[rbase]
 	makeRaindrop: (num) =>
 		d = new Draggable 'd' + @rnum, @preload.getResult('raindrop'), num, Math.random() * (700 - 100) + 100, @library['header'].height
-		t = new createjs.Text "#{num}", '16px Arial', '#000099'
+		t = new createjs.Text "#{num}", '16px Quicksand', '#000099'
 		t.textAlign = 'center'
 		t.x = d.width / 2
 		t.y = d.height / 2
 		d.addChild t
-		@addToMain d
+		@raindrops.addChild d
 		
 		d.addEventListener 'drop', @evaluateAnswer
 		d.initDragListener()
@@ -180,7 +183,7 @@ class U2A6 extends Oda
 				TweenLite.to d, 5, {y: 390, ease: Linear.easeNone, onComplete: @killThis, onCompleteParams: [d]}
 	killThis: (object) =>
 		TweenLite.killTweensOf object
-		@mainContainer.removeChild object
+		@raindrops.removeChild object
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		dropped = off
@@ -214,5 +217,7 @@ class U2A6 extends Oda
 		clearInterval @timer
 		clearInterval @rinterval
 		clearInterval @binterval
+		TweenLite.to [@library['background'], @library['box'], @library['raindrops']], 0.5, {alpha:0}
+		TweenMax.to [@library['l1'], @library['l2'], @library['l3']], 1, {alpha:0, y:stageSize.h}
 		super
 	window.U2A6 = U2A6

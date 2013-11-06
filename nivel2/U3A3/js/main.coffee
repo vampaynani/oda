@@ -91,6 +91,12 @@ class U3A3 extends Oda
 			{id:'sandwichnumber4', src: 'sandwich/number_4.png'}
 			{id:'sandwichnumber5', src: 'sandwich/number_5.png'}
 		]
+		sounds = [
+			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/boing.mp3', id:'boing'}
+		    {src:'sounds/TU2_U3_A3_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'swrong'}
+		]
 		@salad = 
 			drags:[
 				{id:'saladStart1Final5'}
@@ -102,9 +108,9 @@ class U3A3 extends Oda
 			texts:[
 				{t:'Wash the fruit.',x:'165',y:'487'}
 				{t:'Wash your hands.',x:'294',y:'456'}
-				{t:'Mix the fruit.',x:'430',y:'487'}
-				{t:'Serve and eat!',x:'553',y:'456'}
-				{t:'Cut the fruit.',x:'696',y:'487'}
+				{t:'  Mix the fruit.  ',x:'430',y:'487'}
+				{t:'  Serve and eat!  ',x:'553',y:'456'}
+				{t:'  Cut the fruit.  ',x:'696',y:'487'}
 			]
 		@sandwich =
 			drags:[
@@ -140,12 +146,6 @@ class U3A3 extends Oda
 			start: {x:284,y:539}
 			score: {x:86,y:191}
 			titulo: {x:410,y:131}
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U3_A3_instructions.mp3', id:'instructions'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
-		]
 		@answers =
 			sandwich: [
 				{t:'sandwichstep1', d:'d2'}
@@ -313,12 +313,12 @@ class U3A3 extends Oda
 			hit = @library["#{@current}step#{i}"]
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 			if hit.hitTest pt.x, pt.y
-				@answer.putInPlace {x: hit.x, y: hit.y}
+				@answer.putInPlace {x: hit.x, y: hit.y}, 1, @answer.scaleX, @answer.scaleY
 				dropped = on
 			else
 				i++
 		if not dropped
-			@answer.returnToPlace()
+			@answer.returnToPlace 1, @answer.scaleX, @answer.scaleY
 	evaluateTextDrop: (e) =>
 		@answer = e.target
 		dropped = off
@@ -328,14 +328,14 @@ class U3A3 extends Oda
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 			if hit.hitTest pt.x, pt.y
 				if @current is 'sandwich'
-					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 10}
+					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 10}, 1, @answer.scaleX, @answer.scaleY
 				if @current is 'salad'
-					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 7}
+					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 7}, 1, @answer.scaleX, @answer.scaleY
 				dropped = on
 			else
 				i++
 		if not dropped
-			@answer.returnToPlace()
+			@answer.returnToPlace 1, @answer.scaleX, @answer.scaleY
 	evaluateAnswer: (e) =>
 		@complete = on
 		@library.btnready.removeEventListener 'click', @evaluateAnswer
@@ -344,9 +344,9 @@ class U3A3 extends Oda
 		for value in @answers[@current]
 			pt = @library[value.t].localToLocal 5, 5, @library[value.d]
 			if @library[value.t].name.length > 3
-				npt = @library[value.t].localToLocal 0,0, @mainContainer
+				npt = @library[value.t].localToLocal 0, 0, @mainContainer
 			else
-				npt = @library[value.d].localToLocal 0,0, @mainContainer
+				npt = @library[value.d].localToLocal 0, 0, @mainContainer
 			if @library[value.t].hitTest pt.x, pt.y
 				@library.score.plusOne()
 				r = @createBitmap 'correct'+value.t.name, 'correct', npt.x, npt.y
