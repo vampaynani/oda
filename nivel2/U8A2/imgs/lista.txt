@@ -1,0 +1,5 @@
+{id: 'question', src:'question.png'}
+{id: 'scenebrazil', src:'scenebrazil.png'}
+{id: 'scenechina', src:'scenechina.png'}
+{id: 'sceneindia', src:'sceneindia.png'}
+{id: 'verb', src:'verb.png'}
