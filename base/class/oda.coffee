@@ -22,6 +22,9 @@ Array::unique = ->
 	value for key, value of output
 
 class Oda
+	# ====================
+	# Base
+	# ====================
 	constructor: ( @imgurl = 'imgs/', manifest, sounds ) ->
 		def_manifest = [
 			{id: 'sg', src: "#{ @imgurl }start_game.png"},
@@ -89,6 +92,66 @@ class Oda
 		@setStage()
 	showBar: (name) ->
 		TweenLite.to (@loaderBar.getChildByName name), 2.5, (alpha: 1, ease: Quart.easeOut)
+	setStage: ->
+		@index = 0
+		@observer = new Observer()
+	introEvaluation: ->
+		if @library.score
+			@library.score.reset() if @library['score']
+	playInstructions: (oda) ->
+		if dealersjs.mobile.isIOS() or dealersjs.mobile.isAndroid()
+			oda.insertBitmap 'start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc'
+			oda.library['start'].addEventListener 'click', oda.initMobileInstructions
+			TweenLite.from oda.library['start'], 0.3, { alpha: 0, y: oda.library['start'].y + 20 }
+		else
+			inst = createjs.Sound.play 'instructions'
+			inst.addEventListener 'complete', oda.initEvaluation
+	initMobileInstructions: (e) =>
+		e.target.removeEventListener 'click', @initMobileInstructions
+		createjs.Sound.stop()
+		inst = createjs.Sound.play 'instructions'
+		inst.addEventListener 'complete', @initEvaluation
+		TweenLite.to @library['start'], 0.3, { alpha: 0, y: @library['start'].y + 20, onComplete: @removeMobileInstructions, onCompleteParams: [@] }
+	removeMobileInstructions: (oda) ->
+		oda.mainContainer.removeChild(oda.library['start']);
+	initEvaluation: (e) =>
+		@observer.notify 'init_evaluation'
+	finish: ->
+		@insertBitmap 'play_again', 'pa', stageSize.w / 2, stageSize.h / 2, 'mc'
+		@library['play_again'].addEventListener 'click', @handlePlayAgain
+		TweenLite.from @library['play_again'], 0.5, { alpha: 0, y: @library['play_again'].y - 20 }
+	handlePlayAgain: (e) =>
+		@library['play_again'].removeEventListener 'click', @handlePlayAgain
+		TweenLite.to @library['play_again'], 0.5, { alpha: 0, y: @library['play_again'].y - 20, onComplete: @playAgain }
+	playAgain: =>
+    	@mainContainer.removeAllChildren()
+    	@setStage()
+	warning: ->
+		createjs.Sound.play 'wrong'
+		TweenMax.to @mainContainer, 0.1, (x: @mainContainer.x + 10, repeat: 6, yoyo: true, onComplete:@warningComplete)
+		@
+	warningComplete: =>
+		@mainContainer.x = @stage.canvas.width / 2
+	resize: ->
+		w = window.innerWidth
+		h = window.innerHeight
+		stageSize.r = Math.min w / stageSize.w, h / stageSize.h
+		@mainContainer.scaleX = stageSize.r
+		@mainContainer.scaleY = stageSize.r
+
+		$('#oda').width w
+		@stage.canvas.width = w
+		@stage.canvas.height = h
+
+		@mainContainer.x = @stage.canvas.width / 2
+		@mainContainer.y = @stage.canvas.height / 2
+		@
+	tick: ->
+		@stage.update()
+
+	# ====================
+	# Helpers
+	# ====================
 	createBitmap: (name, id, x, y, position = 'tl') ->
 		img = @preload.getResult(id)
 		bmp = new createjs.Bitmap img
@@ -151,20 +214,6 @@ class Oda
 		text = @createText name, t, f, c, x, y, align
 		@addToMain text
 		text
-	shuffleNoRepeat: (a, len) ->
-		copy = a[..]
-		shuffle = Array()
-		for i in [1..len]
-			rand = Math.round Math.random() * (copy.length - 1)
-			shuffle.push copy[rand]
-			copy.splice rand, 1
-		shuffle
-	shuffle: (a) ->
-		copy = a[..]
-		for i in [copy.length - 1..0]
-			j = Math.floor Math.random() * ( i + 1 )
-			[copy[i], copy[j]] = [copy[j], copy[i]]
-		copy
 	addToMain: (objs...) ->
 		@addToLibrary objs
 		for o in objs
@@ -180,6 +229,32 @@ class Oda
 				@assets.push o
 		@library = @assets.toDictionary 'name'
 		@library
+	setReg: (obj, regX, regY) ->
+		obj.regX = regX
+		obj.regY = regY
+		obj
+	setPosition: (obj, x, y) ->
+		obj.x = x
+		obj.y = y
+		obj
+
+	# ====================
+	# Utilites
+	# ====================
+	shuffleNoRepeat: (a, len) ->
+		copy = a[..]
+		shuffle = Array()
+		for i in [1..len]
+			rand = Math.round Math.random() * (copy.length - 1)
+			shuffle.push copy[rand]
+			copy.splice rand, 1
+		shuffle
+	shuffle: (a) ->
+		copy = a[..]
+		for i in [copy.length - 1..0]
+			j = Math.floor Math.random() * ( i + 1 )
+			[copy[i], copy[j]] = [copy[j], copy[i]]
+		copy
 	clone: (obj) ->
 		if not obj? or typeof obj isnt 'object'
 			return obj
@@ -199,14 +274,6 @@ class Oda
 	isArray: ( value ) ->
 		Array.isArray value || (value) ->
 			{}.toString.call( value ) is '[object Array]'
-	setReg: (obj, regX, regY) ->
-		obj.regX = regX
-		obj.regY = regY
-		obj
-	setPosition: (obj, x, y) ->
-		obj.x = x
-		obj.y = y
-		obj
 	debuggable: (obj) ->
 		KEYCODE_ENTER = 13;
 		KEYCODE_SPACE = 32;
@@ -223,64 +290,9 @@ class Oda
 				when KEYCODE_RIGHT then @debugged.x += 10
 			console.log @debugged.x, @debugged.y
 		obj
-	warning: ->
-		createjs.Sound.play 'wrong'
-		TweenMax.to @mainContainer, 0.1, (x: @mainContainer.x + 10, repeat: 6, yoyo: true, onComplete:@warningComplete)
-		@
-	warningComplete: =>
-		@mainContainer.x = @stage.canvas.width / 2
-	resize: ->
-		w = window.innerWidth
-		h = window.innerHeight
-		stageSize.r = Math.min w / stageSize.w, h / stageSize.h
-		@mainContainer.scaleX = stageSize.r
-		@mainContainer.scaleY = stageSize.r
-
-		$('#oda').width w
-		@stage.canvas.width = w
-		@stage.canvas.height = h
-
-		@mainContainer.x = @stage.canvas.width / 2
-		@mainContainer.y = @stage.canvas.height / 2
-		@
-	tick: ->
-		@stage.update()
 	blink: (obj, state=on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.2, repeat:-1, yoyo:true}  if state
-	playInstructions: (oda) ->
-		if dealersjs.mobile.isIOS() or dealersjs.mobile.isAndroid()
-			console.log 'mobile'
-			oda.insertBitmap 'start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc'
-			oda.library['start'].addEventListener 'click', oda.initMobileInstructions
-			TweenLite.from oda.library['start'], 0.3, { alpha: 0, y: oda.library['start'].y + 20 }
-		else
-			inst = createjs.Sound.play 'instructions'
-			inst.addEventListener 'complete', oda.initEvaluation
-	initMobileInstructions: (e) =>
-		e.target.removeEventListener 'click', @initMobileInstructions
-		createjs.Sound.stop()
-		inst = createjs.Sound.play 'instructions'
-		inst.addEventListener 'complete', @initEvaluation
-		TweenLite.to @library['start'], 0.3, { alpha: 0, y: @library['start'].y + 20, onComplete: @removeMobileInstructions, onCompleteParams: [@] }
-	removeMobileInstructions: (oda) ->
-		oda.mainContainer.removeChild(oda.library['start']);
-	setStage: ->
-		@observer = new Observer()
-	introEvaluation: ->
-		@index = 0
-		@library['score'].reset() if @library['score']
-	initEvaluation: (e) =>
-		@observer.notify 'init_evaluation'
-	finish: ->
-		@insertBitmap 'play_again', 'pa', stageSize.w / 2, stageSize.h / 2, 'mc'
-		@library['play_again'].addEventListener 'click', @handlePlayAgain
-		TweenLite.from @library['play_again'], 0.5, { alpha: 0, y: @library['play_again'].y - 20 }
-	handlePlayAgain: (e) =>
-		@library['play_again'].removeEventListener 'click', @handlePlayAgain
-		TweenLite.to @library['play_again'], 0.5, { alpha: 0, y: @library['play_again'].y - 20, onComplete: @playAgain }
-	playAgain: =>
-    	@mainContainer.removeAllChildren()
-    	@setStage()
+
 	window.Oda = Oda

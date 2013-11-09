@@ -9,7 +9,6 @@
     __extends(U5A2, _super);
 
     function U5A2() {
-      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -64,13 +63,13 @@
           id: 'instructions'
         }, {
           src: 'sounds/TU2_U5_A2_raining.mp3',
-          id: 'sraining'
+          id: 'srainy'
         }, {
           src: 'sounds/TU2_U5_A2_cloudy.mp3',
           id: 'scloudy'
         }, {
           src: 'sounds/TU2_U5_A2_snowing.mp3',
-          id: 'ssnowing'
+          id: 'ssnowy'
         }, {
           src: 'sounds/TU2_U5_A2_sunny.mp3',
           id: 'ssunny'
@@ -86,19 +85,69 @@
         steps: [
           {
             id: 'windy',
-            texts: ['my jacket.', 'my sweater.']
+            texts: [
+              {
+                p: 'I',
+                s: 1,
+                c: 'my jacket.'
+              }, {
+                p: 'I',
+                s: 1,
+                c: 'my sweater.'
+              }
+            ]
           }, {
             id: 'sunny',
-            texts: ['my swimsuit.', 'my jacket.']
+            texts: [
+              {
+                p: 'I',
+                s: 1,
+                c: 'my swimsuit.'
+              }, {
+                p: 'I',
+                s: 2,
+                c: 'my jacket.'
+              }
+            ]
           }, {
             id: 'rainy',
-            texts: ['my raincoat.', 'my umbrella.']
+            texts: [
+              {
+                p: 'I',
+                s: 1,
+                c: 'my raincoat.'
+              }, {
+                p: 'I',
+                s: 1,
+                c: 'my umbrella.'
+              }
+            ]
           }, {
             id: 'snowy',
-            texts: ['my boots.', 'my coat.']
+            texts: [
+              {
+                p: 'I',
+                s: 1,
+                c: 'my boots.'
+              }, {
+                p: 'I',
+                s: 1,
+                c: 'my coat.'
+              }
+            ]
           }, {
             id: 'cloudy',
-            texts: ['my swimsuit.', 'my jeans.']
+            texts: [
+              {
+                p: 'I',
+                s: 2,
+                c: 'my swimsuit.'
+              }, {
+                p: 'I',
+                s: 1,
+                c: 'my jeans.'
+              }
+            ]
           }
         ]
       };
@@ -110,158 +159,129 @@
     };
 
     U5A2.prototype.setStage = function() {
-      var choose, i, step, steps, stepsView;
+      var step;
       U5A2.__super__.setStage.apply(this, arguments);
-      steps = this.shuffle(this.game.steps);
-      steps = (function() {
-        var _i, _len, _results;
+      this.steps = this.shuffle(this.game.steps);
+      this.stepsid = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.steps;
         _results = [];
-        for (_i = 0, _len = steps.length; _i < _len; _i++) {
-          step = steps[_i];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          step = _ref[_i];
           _results.push(step.id);
         }
         return _results;
-      })();
-      i = 0;
-      this.selected = steps[i];
-      stepsView = steps.filter(this.filterByID);
-      stepsView = this.shuffle(stepsView);
-      choose = new ChooseBitmap('chooser', this.preload.getResult(this.selected), this.preload.getResult(stepsView[0]), 2, 0, 200);
-      choose.addEventListener('selection', function(e) {
-        return console.log(e);
-      });
-      return this.addToMain(choose);
-      /*
-      		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-      		@insertBitmap 'instructions', 'inst', 20, 100
-      
-      		v = @createSprite 'choose1', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {windy:0, sunny:1, snowing:2, raining:3, cloudy:4}, (stageSize.w / 4) + 25, 251, 'mc'
-      		v.scaleX = v.scaleY = 0.6
-      		@addToMain v
-      
-      		v = @createSprite 'choose2', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {windy:0, sunny:1, snowing:2, raining:3, cloudy:4}, (stageSize.w / 4)*3-25, 251, 'mc'
-      		v.scaleX = v.scaleY = 0.6
-      		@addToMain v
-      
-      		opciones = new createjs.Container()
-      
-      
-      		sujeto = new createjs.Text 'I ','24px Arial','#333'
-      		opciones.addChild sujeto
-      
-      		uno = new ClickableText 'want', 'want', 1, sujeto.x + sujeto.getMeasuredWidth(), 0
-      		uno.setFont '24px Arial'
-      		opciones.addChild uno
-      
-      		diagonal = new createjs.Text ' / ','24px Arial','#333'
-      		diagonal.x = uno.x + uno.width
-      		opciones.addChild diagonal
-      
-      		dos = new ClickableText " don't want","don't want ", 2,  diagonal.x + 24, 0
-      		dos.setFont '24px Arial'
-      		opciones.addChild dos
-      
-      		frase = new createjs.Text @textos[0],'24px Arial','#333'
-      		frase.x = dos.x + dos.width
-      		opciones.addChild frase
-      
-      		total = uno.width + dos.width + 12 + sujeto.getMeasuredWidth() + frase.getMeasuredWidth() + diagonal.getMeasuredWidth()
-      		
-      		opciones.x = (stageSize.w / 2) - total / 2
-      		opciones.y = 400;
-      		@addToMain opciones
-      
-      		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-      		@introEvaluation()
-      */
+      }).call(this);
+      this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
+      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      return this.setStep().introEvaluation();
+    };
 
+    U5A2.prototype.setStep = function() {
+      var choose, img1, img2, stepsView,
+        _this = this;
+      this.selected = this.stepsid[this.index];
+      stepsView = this.stepsid.filter(this.filterByID);
+      stepsView = this.shuffle(stepsView);
+      img1 = this.preload.getResult(this.selected);
+      img2 = this.preload.getResult(stepsView[0]);
+      choose = new ChooseBitmap('chooseImg', img1, img2, 1, stageSize.w / 2, 70);
+      choose.scaleX = choose.scaleY = 0.6;
+      choose.setDistance(550, 300);
+      choose.addEventListener('selection', function(e) {
+        _this.tindex = 0;
+        if (e.success === false) {
+          return _this.warning();
+        } else {
+          return _this.showText();
+        }
+      });
+      this.addToMain(choose);
+      TweenLite.from(choose, 1, {
+        alpha: 0,
+        y: this.library.chooseImg.y + 50,
+        delay: 1
+      });
+      return this;
     };
 
     U5A2.prototype.introEvaluation = function() {
-      return U5A2.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
+      U5A2.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library['header'].height
+      });
+      return TweenLite.from(this.library.instructions, 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U5A2.prototype.initEvaluation = function(e) {
       U5A2.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
+      this.library.chooseImg.initListeners();
+      return createjs.Sound.play("s" + this.stepsid[this.index]);
+    };
+
+    U5A2.prototype.showText = function() {
+      var choosetxt, text,
+        _this = this;
+      text = this.steps[this.index].texts[this.tindex];
+      choosetxt = new ChooseText('chooseTxt', text.p, "want", "don't want", text.c, text.s, 0, 450);
+      choosetxt.x = stageSize.w / 2 - choosetxt.width / 2;
+      choosetxt.addEventListener('selection', function(e) {
+        if (e.success === false) {
+          return _this.warning();
+        } else {
+          return _this.evaluateAnswer();
+        }
       });
+      return this.addToMain(choosetxt);
     };
 
     U5A2.prototype.evaluateAnswer = function(e) {
-      var pt;
-      this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
+      this.tindex++;
+      if (this.tindex < this.steps[this.index].texts.length) {
+        TweenLite.to(this.library.chooseTxt, 0.5, {
+          y: this.library.chooseTxt.y - 50,
+          alpha: 0
+        });
+        return this.showText();
       } else {
-        return this.answer.returnToPlace();
+        return this.finishEvaluation();
       }
     };
 
     U5A2.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
+      TweenLite.to(this.library.chooseTxt, 0.5, {
+        y: this.library.chooseTxt.y - 50,
+        alpha: 0
+      });
+      return TweenLite.to(this.library.chooseImg, 0.5, {
         alpha: 0,
-        y: -200,
+        y: this.library.chooseImg.y - 50,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
       });
-      return this.answer.returnToPlace();
     };
 
     U5A2.prototype.nextEvaluation = function() {
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
+      this.library.score.plusOne();
+      if (this.index < this.steps.length) {
+        this.setStep();
+        this.library.chooseImg.initListeners();
+        return createjs.Sound.play("s" + this.stepsid[this.index]);
       } else {
         return this.finish();
       }
     };
 
-    U5A2.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
-    };
-
     U5A2.prototype.finish = function() {
-      var i, _i, _results;
-      U5A2.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      return U5A2.__super__.finish.apply(this, arguments);
     };
 
     window.U5A2 = U5A2;

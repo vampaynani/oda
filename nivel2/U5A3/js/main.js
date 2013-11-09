@@ -379,12 +379,12 @@
         y: this.library[this.answers[this.index].img].y - 20,
         ease: Back.easeOut
       });
-      TweenLite.to(this.library['letras'], 1, {
+      TweenLite.to(this.library.letras, 1, {
         alpha: 0,
         y: this.library['letras'].y - 20,
         ease: Back.easeOut
       });
-      return TweenLite.to(this.library['palabra'], 1, {
+      return TweenLite.to(this.library.palabra, 1, {
         alpha: 0,
         y: this.library['palabra'].y - 20,
         ease: Back.easeOut,
@@ -394,8 +394,8 @@
 
     U5A3.prototype.nextEvaluation = function() {
       this.index++;
+      this.library.score.plusOne();
       if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
         return this.setQuestion(this.index);
       } else {
         return this.finish();

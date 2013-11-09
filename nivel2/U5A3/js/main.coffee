@@ -152,12 +152,12 @@ class U5A3 extends Oda
 					return
 		createjs.Sound.play 'good'
 		TweenLite.to @library[@answers[@index].img], 1, {alpha: 0, y: @library[@answers[@index].img].y - 20, ease: Back.easeOut}
-		TweenLite.to @library['letras'], 1, {alpha: 0, y: @library['letras'].y - 20, ease: Back.easeOut}
-		TweenLite.to @library['palabra'], 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
+		TweenLite.to @library.letras, 1, {alpha: 0, y: @library['letras'].y - 20, ease: Back.easeOut}
+		TweenLite.to @library.palabra, 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
+		@library.score.plusOne()
 		if @index < @answers.length
-			@library['score'].updateCount @index
 			@setQuestion @index
 		else
 			@finish()

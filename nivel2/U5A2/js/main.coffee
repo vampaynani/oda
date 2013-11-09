@@ -17,9 +17,9 @@ class U5A2 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U5_A2_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU2_U5_A2_raining.mp3', id:'sraining'}
+		    {src:'sounds/TU2_U5_A2_raining.mp3', id:'srainy'}
 		    {src:'sounds/TU2_U5_A2_cloudy.mp3', id:'scloudy'}
-		    {src:'sounds/TU2_U5_A2_snowing.mp3', id:'ssnowing'}
+		    {src:'sounds/TU2_U5_A2_snowing.mp3', id:'ssnowy'}
 		    {src:'sounds/TU2_U5_A2_sunny.mp3', id:'ssunny'}
 		    {src:'sounds/TU2_U5_A2_windy.mp3', id:'swindy'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
@@ -29,36 +29,36 @@ class U5A2 extends Oda
 				{
 					id:'windy'
 					texts:[
-						'my jacket.'
-						'my sweater.'
+						{p:'I', s:1, c:'my jacket.'}
+						{p:'I', s:1, c:'my sweater.'}
 					]
 				}
 				{
 					id:'sunny'
 					texts:[
-						'my swimsuit.'
-						'my jacket.'
+						{p:'I', s:1, c:'my swimsuit.'}
+						{p:'I', s:2, c:'my jacket.'}
 					]
 				}
 				{
 					id:'rainy'
 					texts:[
-						'my raincoat.'
-						'my umbrella.'
+						{p:'I', s:1, c:'my raincoat.'}
+						{p:'I', s:1, c:'my umbrella.'}
 					]
 				}
 				{
 					id:'snowy'
 					texts:[
-						'my boots.'
-						'my coat.'
+						{p:'I', s:1, c:'my boots.'}
+						{p:'I', s:1, c:'my coat.'}
 					]
 				}
 				{
 					id:'cloudy'
 					texts:[
-						'my swimsuit.'
-						'my jeans.'
+						{p:'I', s:2, c:'my swimsuit.'}
+						{p:'I', s:1, c:'my jeans.'}
 					]
 				}
 			]
@@ -68,108 +68,61 @@ class U5A2 extends Oda
 		x isnt @selected
 	setStage: ->
 		super
-		steps = @shuffle @game.steps
-		steps = (step.id for step in steps)
-		i = 0
-		@selected = steps[i]
-		stepsView = steps.filter @filterByID
-		stepsView = @shuffle stepsView
-		choose = new ChooseBitmap 'chooser', (@preload.getResult @selected), (@preload.getResult stepsView[0]), 2, 0, 200
-		choose.addEventListener 'selection', (e)->
-			console.log e
-		@addToMain choose
-		###
+		@steps = @shuffle @game.steps
+		@stepsid = (step.id for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-
-		v = @createSprite 'choose1', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {windy:0, sunny:1, snowing:2, raining:3, cloudy:4}, (stageSize.w / 4) + 25, 251, 'mc'
-		v.scaleX = v.scaleY = 0.6
-		@addToMain v
-
-		v = @createSprite 'choose2', ['windy', 'sunny', 'snowing', 'raining', 'cloudy'], {windy:0, sunny:1, snowing:2, raining:3, cloudy:4}, (stageSize.w / 4)*3-25, 251, 'mc'
-		v.scaleX = v.scaleY = 0.6
-		@addToMain v
-
-		opciones = new createjs.Container()
-
-
-		sujeto = new createjs.Text 'I ','24px Arial','#333'
-		opciones.addChild sujeto
-
-		uno = new ClickableText 'want', 'want', 1, sujeto.x + sujeto.getMeasuredWidth(), 0
-		uno.setFont '24px Arial'
-		opciones.addChild uno
-
-		diagonal = new createjs.Text ' / ','24px Arial','#333'
-		diagonal.x = uno.x + uno.width
-		opciones.addChild diagonal
-
-		dos = new ClickableText " don't want","don't want ", 2,  diagonal.x + 24, 0
-		dos.setFont '24px Arial'
-		opciones.addChild dos
-
-		frase = new createjs.Text @textos[0],'24px Arial','#333'
-		frase.x = dos.x + dos.width
-		opciones.addChild frase
-
-		total = uno.width + dos.width + 12 + sujeto.getMeasuredWidth() + frase.getMeasuredWidth() + diagonal.getMeasuredWidth()
-		
-		opciones.x = (stageSize.w / 2) - total / 2
-		opciones.y = 400;
-		@addToMain opciones
-
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@introEvaluation()
-		###
+		@setStep().introEvaluation()
+	setStep: ->
+		@selected = @stepsid[@index]
+		stepsView = @stepsid.filter @filterByID
+		stepsView = @shuffle stepsView
+		img1 = @preload.getResult @selected
+		img2 = @preload.getResult stepsView[0]
+		choose = new ChooseBitmap 'chooseImg', img1, img2, 1, stageSize.w / 2, 70
+		choose.scaleX = choose.scaleY = 0.6
+		choose.setDistance 550, 300
+		choose.addEventListener 'selection', (e)=>
+			@tindex = 0
+			if e.success is false then @warning() else @showText()
+		@addToMain choose
+		TweenLite.from choose, 1, {alpha: 0, y: @library.chooseImg.y + 50, delay: 1}
+		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library.header, 1, {y:-@library['header'].height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		@library.chooseImg.initListeners()
+		createjs.Sound.play "s#{@stepsid[@index]}"
+	showText: () ->
+		text = @steps[@index].texts[@tindex]
+		choosetxt = new ChooseText 'chooseTxt', text.p, "want", "don't want", text.c, text.s, 0, 450
+		choosetxt.x = stageSize.w / 2 -  choosetxt.width / 2
+		choosetxt.addEventListener 'selection', (e)=>
+			if e.success is false then @warning() else @evaluateAnswer()
+		@addToMain choosetxt
 	evaluateAnswer: (e) =>
-		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
+		@tindex++
+		if @tindex < @steps[@index].texts.length
+			TweenLite.to @library.chooseTxt, 0.5, {y:@library.chooseTxt.y - 50, alpha:0}
+			@showText()
 		else
-			@answer.returnToPlace()
+			@finishEvaluation()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		TweenLite.to @library.chooseTxt, 0.5, {y:@library.chooseTxt.y - 50, alpha:0}
+		TweenLite.to @library.chooseImg, 0.5, {alpha: 0, y: @library.chooseImg.y - 50, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		@library.score.plusOne()
+		if @index < @steps.length
+			@setStep()
+			@library.chooseImg.initListeners()
+			createjs.Sound.play "s#{@stepsid[@index]}"
 		else
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U5A2 = U5A2

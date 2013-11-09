@@ -51,7 +51,7 @@
 
   ChooseBitmap = (function() {
     function ChooseBitmap(name, img1, img2, success, x, y) {
-      this._dispatchEvent = __bind(this._dispatchEvent, this);
+      this._dispatchSelection = __bind(this._dispatchSelection, this);
       this.initialize(name, img1, img2, success, x, y);
     }
 
@@ -69,6 +69,29 @@
         y: y
       };
       this.success = success;
+      this.rand = Math.random() > 0.5 ? 1 : 2;
+      this.firstOption = new createjs.Bitmap(img1);
+      this.firstOption.width = img1.width;
+      this.firstOption.index = 1;
+      this.secondOption = new createjs.Bitmap(img2);
+      this.secondOption.width = img2.width;
+      this.secondOption.index = 2;
+      if (this.rand === 1) {
+        this.secondOption.x = this.firstOption.width + 20;
+      } else {
+        this.firstOption.x = this.firstOption.width + 20;
+      }
+      this.addChild(this.firstOption, this.secondOption);
+      return false;
+    };
+
+    ChooseBitmap.prototype.initListeners = function() {
+      this.firstOption.addEventListener('click', this._dispatchSelection);
+      return this.secondOption.addEventListener('click', this._dispatchSelection);
+    };
+
+    ChooseBitmap.prototype.setImages = function(img1, img2, success) {
+      this.removeAllChildren();
       this.firstOption = new createjs.Bitmap(img1);
       this.firstOption.width = img1.width;
       this.firstOption.index = 1;
@@ -76,13 +99,40 @@
       this.secondOption.width = img2.width;
       this.secondOption.x = this.firstOption.width + 20;
       this.secondOption.index = 2;
-      this.firstOption.addEventListener('click', this._dispatchEvent);
-      this.secondOption.addEventListener('click', this._dispatchEvent);
-      this.addChild(this.firstOption, this.secondOption);
-      return false;
+      return this.addChild(this.firstOption, this.secondOption);
     };
 
-    ChooseBitmap.prototype._dispatchEvent = function(e) {
+    ChooseBitmap.prototype.setDistance = function(dist, w) {
+      var width;
+      if (this.rand === 1) {
+        width = w != null ? w : this.secondOption.width;
+        this.secondOption.x = dist;
+        return this.regX = this.secondOption.x + width / 2;
+      } else {
+        width = w != null ? w : this.firstOption.width;
+        this.firstOption.x = dist;
+        return this.regX = this.firstOption.x + width / 2;
+      }
+    };
+
+    ChooseBitmap.prototype._dispatchSelection = function(e) {
+      if (e.target.index === this.success) {
+        if (e.target === this.firstOption) {
+          TweenLite.to(this.firstOption, 1, {
+            x: this.regX - this.firstOption.width / 2
+          });
+          TweenLite.to(this.secondOption, 1, {
+            alpha: 0
+          });
+        } else {
+          TweenLite.to(this.firstOption, 1, {
+            alpha: 0
+          });
+          TweenLite.to(this.secondOption, 1, {
+            x: this.regX + this.secondOption.width / 2
+          });
+        }
+      }
       return this.dispatchEvent({
         type: 'selection',
         success: e.target.index === this.success
@@ -96,16 +146,17 @@
   })();
 
   ChooseText = (function() {
-    function ChooseText(name, text1, text2, success, x, y) {
+    function ChooseText(name, prev, text1, text2, comp, success, x, y) {
       this._dispatchEvent = __bind(this._dispatchEvent, this);
-      this.initialize(name, text1, text2, success, x, y);
+      this.initialize(name, prev, text1, text2, comp, success, x, y);
     }
 
     ChooseText.prototype = new createjs.Container();
 
     ChooseText.prototype.Container_initialize = ChooseText.prototype.initialize;
 
-    ChooseText.prototype.initialize = function(name, text1, text2, success, x, y) {
+    ChooseText.prototype.initialize = function(name, prev, text1, text2, comp, success, x, y) {
+      var complement;
       this.Container_initialize();
       this.name = name;
       this.x = x;
@@ -115,13 +166,18 @@
         y: y
       };
       this.success = success;
-      this.firstOption = new ClickableText(text1, text1, 1, 0, 0);
+      this.prev = new createjs.Text(prev, '16px Quicksand', '#333333');
+      this.firstOption = new ClickableText(text1, text1, 1, this.prev.getMeasuredWidth() + 10, 0);
       this.slash = new createjs.Text('/', '16px Quicksand', '#333333');
       this.slash.x = this.firstOption.x + this.firstOption.width;
       this.secondOption = new ClickableText(text2, text2, 2, this.slash.x + this.slash.getMeasuredWidth() + 10, 0);
+      complement = comp != null ? comp : '';
+      this.complement = new createjs.Text(complement, '16px Quicksand', '#333333');
+      this.complement.x = this.secondOption.x + this.secondOption.width;
+      this.width = this.complement.x + this.complement.getMeasuredWidth() + 10;
       this.firstOption.addEventListener('click', this._dispatchEvent);
       this.secondOption.addEventListener('click', this._dispatchEvent);
-      this.addChild(this.firstOption, this.slash, this.secondOption);
+      this.addChild(this.prev, this.firstOption, this.slash, this.secondOption, this.complement);
       return false;
     };
 
@@ -784,11 +840,11 @@
     function Oda(imgurl, manifest, sounds) {
       var def_manifest, item;
       this.imgurl = imgurl != null ? imgurl : 'imgs/';
+      this.warningComplete = __bind(this.warningComplete, this);
       this.playAgain = __bind(this.playAgain, this);
       this.handlePlayAgain = __bind(this.handlePlayAgain, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       this.initMobileInstructions = __bind(this.initMobileInstructions, this);
-      this.warningComplete = __bind(this.warningComplete, this);
       this.handleComplete = __bind(this.handleComplete, this);
       this.handleProgress = __bind(this.handleProgress, this);
       def_manifest = [
@@ -895,6 +951,113 @@
         alpha: 1,
         ease: Quart.easeOut
       });
+    };
+
+    Oda.prototype.setStage = function() {
+      this.index = 0;
+      return this.observer = new Observer();
+    };
+
+    Oda.prototype.introEvaluation = function() {
+      if (this.library.score) {
+        if (this.library['score']) {
+          return this.library.score.reset();
+        }
+      }
+    };
+
+    Oda.prototype.playInstructions = function(oda) {
+      var inst;
+      if (dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()) {
+        oda.insertBitmap('start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc');
+        oda.library['start'].addEventListener('click', oda.initMobileInstructions);
+        return TweenLite.from(oda.library['start'], 0.3, {
+          alpha: 0,
+          y: oda.library['start'].y + 20
+        });
+      } else {
+        inst = createjs.Sound.play('instructions');
+        return inst.addEventListener('complete', oda.initEvaluation);
+      }
+    };
+
+    Oda.prototype.initMobileInstructions = function(e) {
+      var inst;
+      e.target.removeEventListener('click', this.initMobileInstructions);
+      createjs.Sound.stop();
+      inst = createjs.Sound.play('instructions');
+      inst.addEventListener('complete', this.initEvaluation);
+      return TweenLite.to(this.library['start'], 0.3, {
+        alpha: 0,
+        y: this.library['start'].y + 20,
+        onComplete: this.removeMobileInstructions,
+        onCompleteParams: [this]
+      });
+    };
+
+    Oda.prototype.removeMobileInstructions = function(oda) {
+      return oda.mainContainer.removeChild(oda.library['start']);
+    };
+
+    Oda.prototype.initEvaluation = function(e) {
+      return this.observer.notify('init_evaluation');
+    };
+
+    Oda.prototype.finish = function() {
+      this.insertBitmap('play_again', 'pa', stageSize.w / 2, stageSize.h / 2, 'mc');
+      this.library['play_again'].addEventListener('click', this.handlePlayAgain);
+      return TweenLite.from(this.library['play_again'], 0.5, {
+        alpha: 0,
+        y: this.library['play_again'].y - 20
+      });
+    };
+
+    Oda.prototype.handlePlayAgain = function(e) {
+      this.library['play_again'].removeEventListener('click', this.handlePlayAgain);
+      return TweenLite.to(this.library['play_again'], 0.5, {
+        alpha: 0,
+        y: this.library['play_again'].y - 20,
+        onComplete: this.playAgain
+      });
+    };
+
+    Oda.prototype.playAgain = function() {
+      this.mainContainer.removeAllChildren();
+      return this.setStage();
+    };
+
+    Oda.prototype.warning = function() {
+      createjs.Sound.play('wrong');
+      TweenMax.to(this.mainContainer, 0.1, {
+        x: this.mainContainer.x + 10,
+        repeat: 6,
+        yoyo: true,
+        onComplete: this.warningComplete
+      });
+      return this;
+    };
+
+    Oda.prototype.warningComplete = function() {
+      return this.mainContainer.x = this.stage.canvas.width / 2;
+    };
+
+    Oda.prototype.resize = function() {
+      var h, w;
+      w = window.innerWidth;
+      h = window.innerHeight;
+      stageSize.r = Math.min(w / stageSize.w, h / stageSize.h);
+      this.mainContainer.scaleX = stageSize.r;
+      this.mainContainer.scaleY = stageSize.r;
+      $('#oda').width(w);
+      this.stage.canvas.width = w;
+      this.stage.canvas.height = h;
+      this.mainContainer.x = this.stage.canvas.width / 2;
+      this.mainContainer.y = this.stage.canvas.height / 2;
+      return this;
+    };
+
+    Oda.prototype.tick = function() {
+      return this.stage.update();
     };
 
     Oda.prototype.createBitmap = function(name, id, x, y, position) {
@@ -1051,28 +1214,6 @@
       return text;
     };
 
-    Oda.prototype.shuffleNoRepeat = function(a, len) {
-      var copy, i, rand, shuffle, _i;
-      copy = a.slice(0);
-      shuffle = Array();
-      for (i = _i = 1; 1 <= len ? _i <= len : _i >= len; i = 1 <= len ? ++_i : --_i) {
-        rand = Math.round(Math.random() * (copy.length - 1));
-        shuffle.push(copy[rand]);
-        copy.splice(rand, 1);
-      }
-      return shuffle;
-    };
-
-    Oda.prototype.shuffle = function(a) {
-      var copy, i, j, _i, _ref, _ref1;
-      copy = a.slice(0);
-      for (i = _i = _ref = copy.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {
-        j = Math.floor(Math.random() * (i + 1));
-        _ref1 = [copy[j], copy[i]], copy[i] = _ref1[0], copy[j] = _ref1[1];
-      }
-      return copy;
-    };
-
     Oda.prototype.addToMain = function() {
       var o, objs, _i, _len;
       objs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -1101,6 +1242,40 @@
       }
       this.library = this.assets.toDictionary('name');
       return this.library;
+    };
+
+    Oda.prototype.setReg = function(obj, regX, regY) {
+      obj.regX = regX;
+      obj.regY = regY;
+      return obj;
+    };
+
+    Oda.prototype.setPosition = function(obj, x, y) {
+      obj.x = x;
+      obj.y = y;
+      return obj;
+    };
+
+    Oda.prototype.shuffleNoRepeat = function(a, len) {
+      var copy, i, rand, shuffle, _i;
+      copy = a.slice(0);
+      shuffle = Array();
+      for (i = _i = 1; 1 <= len ? _i <= len : _i >= len; i = 1 <= len ? ++_i : --_i) {
+        rand = Math.round(Math.random() * (copy.length - 1));
+        shuffle.push(copy[rand]);
+        copy.splice(rand, 1);
+      }
+      return shuffle;
+    };
+
+    Oda.prototype.shuffle = function(a) {
+      var copy, i, j, _i, _ref, _ref1;
+      copy = a.slice(0);
+      for (i = _i = _ref = copy.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {
+        j = Math.floor(Math.random() * (i + 1));
+        _ref1 = [copy[j], copy[i]], copy[i] = _ref1[0], copy[j] = _ref1[1];
+      }
+      return copy;
     };
 
     Oda.prototype.clone = function(obj) {
@@ -1140,18 +1315,6 @@
       });
     };
 
-    Oda.prototype.setReg = function(obj, regX, regY) {
-      obj.regX = regX;
-      obj.regY = regY;
-      return obj;
-    };
-
-    Oda.prototype.setPosition = function(obj, x, y) {
-      obj.x = x;
-      obj.y = y;
-      return obj;
-    };
-
     Oda.prototype.debuggable = function(obj) {
       var KEYCODE_DOWN, KEYCODE_ENTER, KEYCODE_LEFT, KEYCODE_RIGHT, KEYCODE_SPACE, KEYCODE_UP,
         _this = this;
@@ -1181,40 +1344,6 @@
       return obj;
     };
 
-    Oda.prototype.warning = function() {
-      createjs.Sound.play('wrong');
-      TweenMax.to(this.mainContainer, 0.1, {
-        x: this.mainContainer.x + 10,
-        repeat: 6,
-        yoyo: true,
-        onComplete: this.warningComplete
-      });
-      return this;
-    };
-
-    Oda.prototype.warningComplete = function() {
-      return this.mainContainer.x = this.stage.canvas.width / 2;
-    };
-
-    Oda.prototype.resize = function() {
-      var h, w;
-      w = window.innerWidth;
-      h = window.innerHeight;
-      stageSize.r = Math.min(w / stageSize.w, h / stageSize.h);
-      this.mainContainer.scaleX = stageSize.r;
-      this.mainContainer.scaleY = stageSize.r;
-      $('#oda').width(w);
-      this.stage.canvas.width = w;
-      this.stage.canvas.height = h;
-      this.mainContainer.x = this.stage.canvas.width / 2;
-      this.mainContainer.y = this.stage.canvas.height / 2;
-      return this;
-    };
-
-    Oda.prototype.tick = function() {
-      return this.stage.update();
-    };
-
     Oda.prototype.blink = function(obj, state) {
       if (state == null) {
         state = true;
@@ -1228,78 +1357,6 @@
           yoyo: true
         });
       }
-    };
-
-    Oda.prototype.playInstructions = function(oda) {
-      var inst;
-      if (dealersjs.mobile.isIOS() || dealersjs.mobile.isAndroid()) {
-        console.log('mobile');
-        oda.insertBitmap('start', 'sg', stageSize.w / 2, stageSize.h / 2, 'mc');
-        oda.library['start'].addEventListener('click', oda.initMobileInstructions);
-        return TweenLite.from(oda.library['start'], 0.3, {
-          alpha: 0,
-          y: oda.library['start'].y + 20
-        });
-      } else {
-        inst = createjs.Sound.play('instructions');
-        return inst.addEventListener('complete', oda.initEvaluation);
-      }
-    };
-
-    Oda.prototype.initMobileInstructions = function(e) {
-      var inst;
-      e.target.removeEventListener('click', this.initMobileInstructions);
-      createjs.Sound.stop();
-      inst = createjs.Sound.play('instructions');
-      inst.addEventListener('complete', this.initEvaluation);
-      return TweenLite.to(this.library['start'], 0.3, {
-        alpha: 0,
-        y: this.library['start'].y + 20,
-        onComplete: this.removeMobileInstructions,
-        onCompleteParams: [this]
-      });
-    };
-
-    Oda.prototype.removeMobileInstructions = function(oda) {
-      return oda.mainContainer.removeChild(oda.library['start']);
-    };
-
-    Oda.prototype.setStage = function() {
-      return this.observer = new Observer();
-    };
-
-    Oda.prototype.introEvaluation = function() {
-      this.index = 0;
-      if (this.library['score']) {
-        return this.library['score'].reset();
-      }
-    };
-
-    Oda.prototype.initEvaluation = function(e) {
-      return this.observer.notify('init_evaluation');
-    };
-
-    Oda.prototype.finish = function() {
-      this.insertBitmap('play_again', 'pa', stageSize.w / 2, stageSize.h / 2, 'mc');
-      this.library['play_again'].addEventListener('click', this.handlePlayAgain);
-      return TweenLite.from(this.library['play_again'], 0.5, {
-        alpha: 0,
-        y: this.library['play_again'].y - 20
-      });
-    };
-
-    Oda.prototype.handlePlayAgain = function(e) {
-      this.library['play_again'].removeEventListener('click', this.handlePlayAgain);
-      return TweenLite.to(this.library['play_again'], 0.5, {
-        alpha: 0,
-        y: this.library['play_again'].y - 20,
-        onComplete: this.playAgain
-      });
-    };
-
-    Oda.prototype.playAgain = function() {
-      this.mainContainer.removeAllChildren();
-      return this.setStage();
     };
 
     window.Oda = Oda;
