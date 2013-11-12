@@ -1,0 +1,10 @@
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\btn_repeat.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_daniel.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_gemma.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_hudson.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_keira.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_magda.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_mia.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_nate.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\kid_ricky.png
+D:\xampp2\htdocs\oda\nivel3\U3A2\imgs\lista.txt
