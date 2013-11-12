@@ -1,7 +1,0 @@
-{id: 'btnfinished', src: 'btn_finished.png'}
-{id: 'btnrepeat', src: 'btn_repeat.png'}
-{id: 'dragbledontlike', src: 'dragble_dontlike.png'}
-{id: 'dragblehate', src: 'dragble_hate.png'}
-{id: 'dragblelike', src: 'dragble_like.png'}
-{id: 'dragblelove', src: 'dragble_love.png'}
-{id: 'fondo', src: 'fondo.png'}

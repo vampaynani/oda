@@ -1,6 +1,0 @@
-
-{id:'windy.png', src:'windy_image.png'}
-{id:'sunny.png', src:'sunny_image.png'}
-{id:'snowing.png', src:'snowing_image.png'}
-{id:'raining.png', src:'raining_image.png'}
-{id:'cloudy.png', src:'cloudy_image.png'}

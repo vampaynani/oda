@@ -1,1 +1,0 @@
-{id:'propbg', src:'prop_bg.png'}

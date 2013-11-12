@@ -1,8 +1,0 @@
-C:\xampp\htdocs\oda\U2A6\imgs\background.png
-C:\xampp\htdocs\oda\U2A6\imgs\bucket.png
-C:\xampp\htdocs\oda\U2A6\imgs\circle.png
-C:\xampp\htdocs\oda\U2A6\imgs\guia.png
-C:\xampp\htdocs\oda\U2A6\imgs\level1-btn.png
-C:\xampp\htdocs\oda\U2A6\imgs\level2-btn.png
-C:\xampp\htdocs\oda\U2A6\imgs\level3-btn.png
-C:\xampp\htdocs\oda\U2A6\imgs\lista.txt
