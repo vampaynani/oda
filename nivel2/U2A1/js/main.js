@@ -62,40 +62,40 @@
       this.answers = [
         {
           id: 2,
-          text: 'a cake on the dining room table'
+          text: 'a cake on the dining room table.'
         }, {
           id: 0,
-          text: 'a cake in the kitchen table'
+          text: 'a cake in the kitchen table.'
         }, {
           id: 0,
-          text: 'a dresser in the bedroom'
+          text: 'a dresser in the bedroom.'
         }, {
           id: 3,
-          text: 'two bedrooms'
+          text: 'two bedrooms.'
         }, {
           id: 2,
-          text: 'a clock in the bedroom'
+          text: 'a clock in the bedroom.'
         }, {
           id: 1,
-          text: 'six windows'
+          text: 'six windows.'
         }, {
           id: 1,
-          text: 'some books'
+          text: 'some books.'
         }, {
           id: 1,
-          text: 'three people in the house'
+          text: 'three people in the house.'
         }, {
           id: 0,
-          text: 'a fridge'
+          text: 'a fridge.'
         }, {
           id: 3,
-          text: 'two dresses in the closet'
+          text: 'two dresses in the closet.'
         }, {
           id: 0,
-          text: 'a lamp in the hallway'
+          text: 'a lamp in the hallway.'
         }, {
           id: 2,
-          text: 'a cell phone on the dresser'
+          text: 'a cell phone on the dresser.'
         }
       ];
       U2A1.__super__.constructor.call(this, null, manifest, sounds);

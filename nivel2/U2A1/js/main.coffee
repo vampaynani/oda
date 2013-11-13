@@ -18,18 +18,18 @@ class U2A1 extends Oda
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@answers = [
-			{id:2, text:'a cake on the dining room table'}
-			{id:0, text:'a cake in the kitchen table' }
-			{id:0, text:'a dresser in the bedroom'}
-		    {id:3, text:'two bedrooms' }
-		    {id:2, text:'a clock in the bedroom'}
-		    {id:1, text:'six windows' }
-		    {id:1, text:'some books' }
-		    {id:1, text:'three people in the house' }
-		    {id:0, text:'a fridge' }
-		    {id:3, text:'two dresses in the closet' }
-		    {id:0, text:'a lamp in the hallway' }
-		    {id:2, text:'a cell phone on the dresser' }
+			{id:2, text:'a cake on the dining room table.' }
+			{id:0, text:'a cake in the kitchen table.' }
+			{id:0, text:'a dresser in the bedroom.' }
+		    {id:3, text:'two bedrooms.' }
+		    {id:2, text:'a clock in the bedroom.' }
+		    {id:1, text:'six windows.' }
+		    {id:1, text:'some books.' }
+		    {id:1, text:'three people in the house.' }
+		    {id:0, text:'a fridge.' }
+		    {id:3, text:'two dresses in the closet.' }
+		    {id:0, text:'a lamp in the hallway.' }
+		    {id:2, text:'a cell phone on the dresser.' }
 		]
 		super null, manifest, sounds
 	setStage: ->

@@ -178,10 +178,10 @@ class U1A1 extends Oda
 				createjs.Sound.play 'good'
 				for i in [1..4] by 1
 					@library['p'+i+'n2'].removeEventListener 'drop', @evaluateAnswer2
-					@library['p'+i+'n2'].removeDragListener()
+					@library['p'+i+'n2'].endDragListener()
 				for i in [1..5] by 1
 					@library['p'+i+'n3'].removeEventListener 'drop', @evaluateAnswer3
-					@library['p'+i+'n3'].removeDragListener()
+					@library['p'+i+'n3'].endDragListener()
 			else
 				@warning()
 				@answer.returnToPlace()

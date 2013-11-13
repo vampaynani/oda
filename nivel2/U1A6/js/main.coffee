@@ -65,6 +65,16 @@ class U1A6 extends Oda
 		    {src:'sounds/wrong.mp3', id:'wrong'}	
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+		@numbers = [
+			{id:'1', x:5, y:-1}
+			{id:'2', x:7, y:-1}
+			{id:'3', x:-1, y:2}
+			{id:'4', x:0, y:1}
+			{id:'5', x:10, y:3}
+			{id:'6', x:2, y:4}
+			{id:'7', x:-1, y:6}
+			{id:'8', x:1, y:8}
+		]
 		@containers = [
 			{id:'d', x:5, y:0, a:true}
 			{id:'r', x:5, y:1}
@@ -173,6 +183,11 @@ class U1A6 extends Oda
 			drop.id = @containers[i].id
 			@addToLibrary drop
 			crosswords.addChild drop
+		for i in [0..7]
+			t = new createjs.Text @numbers[i].id,'14px Arial','#333'
+			t.x = @numbers[i].x*23 + 6
+			t.y = @numbers[i].y*23 + 4
+			crosswords.addChild t
 		crosswords.cache -23, -23, 276, 230
 		@addToMain crosswords
 	introEvaluation: ->
@@ -215,27 +230,32 @@ class U1A6 extends Oda
 			@library[letter].addEventListener 'drop', @evaluateAnswer
 	evaluateAnswer: (e) =>
 		@answer = e.target
+		dropped = false
+		hitdrop = null
 		for i in [0..@containers.length - 1] by 1
 			hit = @library['h'+i]
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 			if hit.hitTest pt.x, pt.y
 				if hit.id is @answer.index
-					hit.changeText hit.id
-					@answer.x = @answer.pos.x
-					@answer.y = @answer.pos.y
-					@evaluate 'drum'
-					@evaluate 'guitar'
-					@evaluate 'tambourine'
-					@evaluate 'trumpet'
-					@evaluate 'flute'
-					@evaluate 'bass'
-					@evaluate 'piano'
-					@evaluate 'saxophone'
-					@library.crosswords.cache -23, -23, 276, 230
-				else
-					@warning()
+					dropped = true
+					hitdrop = hit
 			else
 				@answer.returnToPlace()
+		if dropped is true
+			hitdrop.changeText hitdrop.id
+			@answer.x = @answer.pos.x
+			@answer.y = @answer.pos.y
+			@evaluate 'drum'
+			@evaluate 'guitar'
+			@evaluate 'tambourine'
+			@evaluate 'trumpet'
+			@evaluate 'flute'
+			@evaluate 'bass'
+			@evaluate 'piano'
+			@evaluate 'saxophone'
+			@library.crosswords.cache -23, -23, 276, 230
+		else
+			@warning()
 	evaluate: (instrument) ->
 		ready = true
 		if not @answers[instrument].r

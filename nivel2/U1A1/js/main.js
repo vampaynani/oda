@@ -326,12 +326,12 @@
           createjs.Sound.play('good');
           for (i = _i = 1; _i <= 4; i = _i += 1) {
             this.library['p' + i + 'n2'].removeEventListener('drop', this.evaluateAnswer2);
-            this.library['p' + i + 'n2'].removeDragListener();
+            this.library['p' + i + 'n2'].endDragListener();
           }
           _results = [];
           for (i = _j = 1; _j <= 5; i = _j += 1) {
             this.library['p' + i + 'n3'].removeEventListener('drop', this.evaluateAnswer3);
-            _results.push(this.library['p' + i + 'n3'].removeDragListener());
+            _results.push(this.library['p' + i + 'n3'].endDragListener());
           }
           return _results;
         } else {

@@ -202,6 +202,41 @@
         }
       ];
       this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      this.numbers = [
+        {
+          id: '1',
+          x: 5,
+          y: -1
+        }, {
+          id: '2',
+          x: 7,
+          y: -1
+        }, {
+          id: '3',
+          x: -1,
+          y: 2
+        }, {
+          id: '4',
+          x: 0,
+          y: 1
+        }, {
+          id: '5',
+          x: 10,
+          y: 3
+        }, {
+          id: '6',
+          x: 2,
+          y: 4
+        }, {
+          id: '7',
+          x: -1,
+          y: 6
+        }, {
+          id: '8',
+          x: 1,
+          y: 8
+        }
+      ];
       this.containers = [
         {
           id: 'd',
@@ -471,7 +506,7 @@
     };
 
     U1A6.prototype.createDroppers = function() {
-      var crosswords, drop, i, _i, _ref;
+      var crosswords, drop, i, t, _i, _j, _ref;
       crosswords = new createjs.Container();
       crosswords.x = 305;
       crosswords.y = 216;
@@ -483,6 +518,12 @@
         drop.id = this.containers[i].id;
         this.addToLibrary(drop);
         crosswords.addChild(drop);
+      }
+      for (i = _j = 0; _j <= 7; i = ++_j) {
+        t = new createjs.Text(this.numbers[i].id, '14px Arial', '#333');
+        t.x = this.numbers[i].x * 23 + 6;
+        t.y = this.numbers[i].y * 23 + 4;
+        crosswords.addChild(t);
       }
       crosswords.cache(-23, -23, 276, 230);
       return this.addToMain(crosswords);
@@ -562,34 +603,38 @@
     };
 
     U1A6.prototype.evaluateAnswer = function(e) {
-      var hit, i, pt, _i, _ref, _results;
+      var dropped, hit, hitdrop, i, pt, _i, _ref;
       this.answer = e.target;
-      _results = [];
+      dropped = false;
+      hitdrop = null;
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
         hit = this.library['h' + i];
         pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
         if (hit.hitTest(pt.x, pt.y)) {
           if (hit.id === this.answer.index) {
-            hit.changeText(hit.id);
-            this.answer.x = this.answer.pos.x;
-            this.answer.y = this.answer.pos.y;
-            this.evaluate('drum');
-            this.evaluate('guitar');
-            this.evaluate('tambourine');
-            this.evaluate('trumpet');
-            this.evaluate('flute');
-            this.evaluate('bass');
-            this.evaluate('piano');
-            this.evaluate('saxophone');
-            _results.push(this.library.crosswords.cache(-23, -23, 276, 230));
-          } else {
-            _results.push(this.warning());
+            dropped = true;
+            hitdrop = hit;
           }
         } else {
-          _results.push(this.answer.returnToPlace());
+          this.answer.returnToPlace();
         }
       }
-      return _results;
+      if (dropped === true) {
+        hitdrop.changeText(hitdrop.id);
+        this.answer.x = this.answer.pos.x;
+        this.answer.y = this.answer.pos.y;
+        this.evaluate('drum');
+        this.evaluate('guitar');
+        this.evaluate('tambourine');
+        this.evaluate('trumpet');
+        this.evaluate('flute');
+        this.evaluate('bass');
+        this.evaluate('piano');
+        this.evaluate('saxophone');
+        return this.library.crosswords.cache(-23, -23, 276, 230);
+      } else {
+        return this.warning();
+      }
     };
 
     U1A6.prototype.evaluate = function(instrument) {

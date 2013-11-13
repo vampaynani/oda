@@ -114,7 +114,6 @@ class U1A2 extends Oda
 		if @library['dropname'].hitTest pt.x, pt.y
 			if @answer.index is @answers[@index].id
 				createjs.Sound.play 'good'
-				@answer.blink off
 				setTimeout @finishEvaluation, 1 * 1000
 			else
 				@warning()
@@ -123,7 +122,7 @@ class U1A2 extends Oda
 			@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 	finishEvaluation: =>
 		@library['score'].plusOne()
-		@answer.returnToPlace()
+		@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, delay:0.5, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++

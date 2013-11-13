@@ -241,7 +241,6 @@
       if (this.library['dropname'].hitTest(pt.x, pt.y)) {
         if (this.answer.index === this.answers[this.index].id) {
           createjs.Sound.play('good');
-          this.answer.blink(false);
           return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {
           this.warning();
@@ -254,7 +253,7 @@
 
     U1A2.prototype.finishEvaluation = function() {
       this.library['score'].plusOne();
-      this.answer.returnToPlace();
+      this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
       return TweenLite.to(this.library['characters'], 0.5, {
         alpha: 0,
         y: -200,
