@@ -84,6 +84,9 @@
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
+        }, {
+          src: 'sounds/good.mp3',
+          id: 'good'
         }
       ];
       this.answers = [
@@ -193,16 +196,10 @@
     };
 
     U1A1.prototype.introEvaluation = function() {
-      var i, _i, _j, _k;
+      var i, _i;
       U1A1.__super__.introEvaluation.apply(this, arguments);
       for (i = _i = 1; _i <= 2; i = _i += 1) {
-        this.observer.subscribe('init_evaluation', this.library['p' + i + 'n1'].onInitEvaluation);
-      }
-      for (i = _j = 1; _j <= 4; i = _j += 1) {
-        this.observer.subscribe('init_evaluation', this.library['p' + i + 'n2'].onInitEvaluation);
-      }
-      for (i = _k = 1; _k <= 5; i = _k += 1) {
-        this.observer.subscribe('init_evaluation', this.library['p' + i + 'n3'].onInitEvaluation);
+        this.library['p' + i + 'n1'].initDragListener();
       }
       this.library['characters'].currentFrame = this.index;
       this.library['characters'].scaleX = 1;
@@ -257,7 +254,7 @@
     };
 
     U1A1.prototype.evaluateAnswer1 = function(e) {
-      var i, pt, _i;
+      var i, pt, _i, _j;
       this.answer = e.target;
       pt = this.library['h1'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
       if (this.library['h1'].hitTest(pt.x, pt.y)) {
@@ -268,7 +265,11 @@
           this.blink(this.library['backNube1'], false);
           this.library['h2'].blink();
           this.blink(this.library['backNube2']);
+          createjs.Sound.play('good');
           for (i = _i = 1; _i <= 4; i = _i += 1) {
+            this.library['p' + i + 'n2'].initDragListener();
+          }
+          for (i = _j = 1; _j <= 4; i = _j += 1) {
             this.library['p' + i + 'n2'].addEventListener('drop', this.evaluateAnswer2);
           }
           return false;
@@ -282,7 +283,7 @@
     };
 
     U1A1.prototype.evaluateAnswer2 = function(e) {
-      var i, pt, _i, _results;
+      var i, pt, _i, _j, _results;
       this.answer = e.target;
       pt = this.library['h2'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
       if (this.library['h2'].hitTest(pt.x, pt.y)) {
@@ -293,8 +294,12 @@
           this.blink(this.library['backNube2'], false);
           this.library['h3'].blink();
           this.blink(this.library['backNube3']);
-          _results = [];
+          createjs.Sound.play('good');
           for (i = _i = 1; _i <= 5; i = _i += 1) {
+            this.library['p' + i + 'n3'].initDragListener();
+          }
+          _results = [];
+          for (i = _j = 1; _j <= 5; i = _j += 1) {
             _results.push(this.library['p' + i + 'n3'].addEventListener('drop', this.evaluateAnswer3));
           }
           return _results;
@@ -308,7 +313,7 @@
     };
 
     U1A1.prototype.evaluateAnswer3 = function(e) {
-      var pt;
+      var i, pt, _i, _j, _results;
       this.answer = e.target;
       pt = this.library['h3'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
       if (this.library['h3'].hitTest(pt.x, pt.y)) {
@@ -317,7 +322,18 @@
           this.library['h3'].changeText(this.answer.text.text);
           this.library['h3'].blink(false);
           this.blink(this.library['backNube3'], false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+          setTimeout(this.finishEvaluation, 1 * 1000);
+          createjs.Sound.play('good');
+          for (i = _i = 1; _i <= 4; i = _i += 1) {
+            this.library['p' + i + 'n2'].removeEventListener('drop', this.evaluateAnswer2);
+            this.library['p' + i + 'n2'].removeDragListener();
+          }
+          _results = [];
+          for (i = _j = 1; _j <= 5; i = _j += 1) {
+            this.library['p' + i + 'n3'].removeEventListener('drop', this.evaluateAnswer3);
+            _results.push(this.library['p' + i + 'n3'].removeDragListener());
+          }
+          return _results;
         } else {
           this.warning();
           return this.answer.returnToPlace();

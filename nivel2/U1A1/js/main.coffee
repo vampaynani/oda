@@ -24,6 +24,7 @@ class U1A1 extends Oda
 		    {src:'sounds/TU2_U1_A1_Were_singing_song.mp3', id:'song'}
 		    {src:'sounds/TU2_U1_A1_Were_studying_english.mp3', id:'english'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
+			{src:'sounds/good.mp3', id:'good'}
 		]
 		@answers = [
 			{w1:1, w2:2, w3:2, sound:'song' }
@@ -97,11 +98,9 @@ class U1A1 extends Oda
 	introEvaluation: ->
 		super
 		for i in [1..2] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n1'].onInitEvaluation
-		for i in [1..4] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n2'].onInitEvaluation
-		for i in [1..5] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n3'].onInitEvaluation
+			@library['p'+i+'n1'].initDragListener()
+
+
 		
 		@library['characters'].currentFrame = @index
 		@library['characters'].scaleX = 1
@@ -133,6 +132,10 @@ class U1A1 extends Oda
 				@blink @library['backNube1'], off
 				@library['h2'].blink()
 				@blink @library['backNube2']
+				createjs.Sound.play 'good'
+				for i in [1..4] by 1
+					@library['p'+i+'n2'].initDragListener()
+
 				for i in [1..4] by 1
 					@library['p'+i+'n2'].addEventListener 'drop', @evaluateAnswer2
 				false
@@ -152,6 +155,9 @@ class U1A1 extends Oda
 				@blink @library['backNube2'], off
 				@library['h3'].blink()
 				@blink @library['backNube3']
+				createjs.Sound.play 'good'
+				for i in [1..5] by 1
+					@library['p'+i+'n3'].initDragListener()
 				for i in [1..5] by 1
 					@library['p'+i+'n3'].addEventListener 'drop', @evaluateAnswer3
 			else
@@ -169,6 +175,13 @@ class U1A1 extends Oda
 				@library['h3'].blink off
 				@blink @library['backNube3'], off
 				setTimeout @finishEvaluation, 1 * 1000
+				createjs.Sound.play 'good'
+				for i in [1..4] by 1
+					@library['p'+i+'n2'].removeEventListener 'drop', @evaluateAnswer2
+					@library['p'+i+'n2'].removeDragListener()
+				for i in [1..5] by 1
+					@library['p'+i+'n3'].removeEventListener 'drop', @evaluateAnswer3
+					@library['p'+i+'n3'].removeDragListener()
 			else
 				@warning()
 				@answer.returnToPlace()
