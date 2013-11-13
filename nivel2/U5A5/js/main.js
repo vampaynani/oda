@@ -246,6 +246,7 @@
     U5A5.prototype.initEvaluation = function(e) {
       var i, _i, _ref, _results;
       U5A5.__super__.initEvaluation.apply(this, arguments);
+      createjs.Sound.play("scene" + this.scene);
       _results = [];
       for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
         _results.push(this.library["t" + i].addEventListener('click', this.evaluateAnswer));
@@ -302,6 +303,7 @@
     U5A5.prototype.nextEvaluation = function() {
       var i, _i, _ref, _results;
       this.index++;
+      createjs.Sound.stop();
       if (this.index < this.game.length) {
         TweenLite.to(this.library['btnnext'], 1, {
           alpha: 0,
@@ -312,6 +314,7 @@
           y: this.library['cuento'].y + 10
         });
         this.setCuento(this.index + 1);
+        createjs.Sound.play("scene" + this.scene);
         TweenLite.from(this.library['cuento'], 1, {
           alpha: 0,
           y: this.library['cuento'].y + 10

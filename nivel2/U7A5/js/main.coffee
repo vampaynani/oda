@@ -1,8 +1,8 @@
-class U5A5 extends Oda
+class U7A5 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -28,133 +28,130 @@ class U5A5 extends Oda
 			{id: 'btn', src:'btn.png'}	
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
+		    {src:'sounds/TU2_U7_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U7_A5_scene1.mp3', id:'scene1'}
+		    {src:'sounds/TU2_U7_A5_scene2.mp3', id:'scene2'}
 		]
-		@answers = [	
+		@game = [
+			{
+				texts:[
+					{idx:3, t:"Matty and Jill put up the tent."}
+					{idx:1, t:"Can Rusty come with us?"}
+					{idx:2, t:"Look! There's a fox behind that bush!"}
+					{idx:4, t:"Then they sit around the fire and roast marshmallows."}
+				]
+				positions:[
+					{x:'101', y:'160'}
+					{x:'335', y:'171'}
+					{x:'106', y:'375'}
+					{x:'320', y:'373'}
+				]
+			}
+			{
+				texts:[
+					{idx:8, t:"It's Rusty, the camp dog!"}
+					{idx:7, t:"The girls stand up and start running towards the tent."}
+					{idx:5, t:"The girls sit closer together."}
+					{idx:6, t:"She can't see anything."}
+				]
+				positions:[
+					{x:'101', y:'160'}
+					{x:'335', y:'171'}
+					{x:'106', y:'375'}
+					{x:'320', y:'373'}	
+				]
+			}
 		]
-		@preguntas = [
-			{tipo:'texto', imagen:'toastMilkJuice', pregunta:"What's for breakfast?", opcionUno:'Cereal. milk and juice', opcionDos:'Toast, milk and juice'}
-			{tipo:'texto', imagen:'zebras', pregunta:'Do zebras live in the grasslands?', opcionUno:'Yes, they do.', opcionDos:"No, they don't."}
-			{tipo:'imagen', pregunta:'It has fins and scales. What is it?', opcionUno:'fish', opcionDos:'parrot'}
-			{tipo:'imagen', pregunta:'This animal is endangered', opcionUno:'rhino', opcionDos:'snake'}
-		]
-		@positions = 
-			p1:[
-				{x:'231', y:'260'}
-				{x:'445', y:'261'}
-				{x:'227', y:'473'}
-				{x:'447', y:'462'}
-			
-				{x:'237', y:'260'}
-				{x:'452', y:'265'}
-				{x:'235', y:'468'}
-				{x:'450', y:'465'}
-			]
-		
-		@texto = 
-			t1:[
-				{uno:"Phil and his mom call out for Bo."}
-				{uno:'Suddenly, Bo starts barking and pulling hard.'}
-				{uno:"Everyone is worried. Where's Jack?"}
-				{uno:"Phil's mom puts on her coat and boots."}
-			]
-			t2:[
-				{uno:"He wants to interview Phil and his mom about Jack's amazing rescue."}
-				{uno:'They take Jack to the hospital in an ambulance.'}
-				{uno:'He is sitting in the snow next to Jack!'}
-				{uno:'Phil and his mom follow the sound of Bo barking.'}
-			]
-
+		@answers = []
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@insertBitmap 'title1', 'title1', 350, 120, 'tc'
-		@insertBitmap 'btn', 'btn', 760, 520, 'tc'
-	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setCuento().introEvaluation()
-	setCuento:  ->
+		@insertBitmap 'title', 'title1', 350, 125, 'tc'
+		@insertBitmap 'btnnext', 'btn', 760, 520, 'tc'
+		@library['btnnext'].visible = off
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@setCuento(1).introEvaluation()
+	setCuento: (scene) ->
 		cuento = new createjs.Container()
-		
-		t = new createjs.Text 'Part','14px Arial','#333'
-		t.x = 530
-		t.y = 140
-		cuento.addChild t
-
-		for i in [1..4]
-			m = @createSprite i+'imagen', [i, i+'b'],null, @positions.p1[i-1].x, @positions.p1[i-1].y, 'mc'
+		cuento.name = 'cuento'
+		@scene = scene
+		for i in [1..@game[scene - 1].positions.length] by 1
+			m = @createSprite "sc#{i}", ["#{(scene - 1) * 4 + i}", "#{(scene - 1) * 4 + i}b"],null, @game[scene - 1].positions[i - 1].x, @game[scene - 1].positions[i - 1].y
+			m.index = (scene - 1) * 4 + i
 			cuento.addChild m
 			@addToLibrary m
-
-		c = 1
-		
-		for i in [1..4]
-			text = new DraggableText @texto.t1[i-1].uno, @texto.t1[i-1].uno,i,620, (i*60)+200
-			cuento.addChild text
-
-		for i in [5..8]
-			m = @createSprite i+'imagen', [i, i+'b'],null, @positions.p1[i-1].x, @positions.p1[i-1].y, 'mc'
-			cuento.addChild m
-			@addToLibrary m
-
-		for i in [1..4]
-			text = new DraggableText @texto.t2[i-1].uno, @texto.t2[i-1].uno,i,620, (i*60)+200
-			cuento.addChild text
-
+		for i in [1..@game[scene - 1].texts.length] by 1
+			t = new DraggableText "t#{i}", @game[scene - 1].texts[i-1].t, @game[scene - 1].texts[i-1].idx, 700, i * 60 + 200
+			t.text.lineHeight = 20
+			t.text.lineWidth = 200
+			t.text.textAlign = 'center'
+			t.setHitArea()
+			@addToLibrary t
+			cuento.addChild t
 		@addToMain cuento
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		for i in [1..@game[@scene - 1].texts.length] by 1
+			@observer.subscribe 'init_evaluation', @library["t#{i}"].onInitEvaluation
+		TweenLite.from @library['header'], 1, {y: -@library['header'].height}
+		TweenLite.from @library['instructions'], 1, {alpha: 0, x: 0, delay: 0.5}
+		TweenLite.from @library['title'], 1, {alpha: 0, y: @library['title'].y + 20, delay: 1}
+		TweenLite.from @library['cuento'], 1, {alpha: 0, y: @library['cuento'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		createjs.Sound.play "scene#{@scene}"
+		for i in [1..@game[@scene - 1].texts.length] by 1
+			@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
+		dropped = off
+		for i in [1..@game[@scene - 1].positions.length] by 1
+			pt = @library["sc#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
+			if @library["sc#{i}"].hitTest pt.x, pt.y
+				if @answer.index is @library["sc#{i}"].index
+					@library["sc#{i}"].currentFrame = 1
+					@answer.visible = off
+					createjs.Sound.play 'good'
+					@library['score'].plusOne()
+					@finishEvaluation()
+				else
+					@warning()
+					@answer.returnToPlace()
 			else
-				@warning()
 				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		for i in [1..@game[@scene - 1].positions.length] by 1
+			if @library["sc#{i}"].currentFrame is 0
+				return
+		if @scene < 2
+			@library['btnnext'].visible = on
+			@library['btnnext'].alpha = 1
+			@library['btnnext'].y = 520
+			TweenLite.from @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
+			@library['btnnext'].addEventListener 'click', @nextEvaluation
+		else
+			@nextEvaluation()
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		createjs.Sound.stop()
+		if @index < @game.length
+			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
+			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
+			@setCuento @index + 1
+			createjs.Sound.play "scene#{@scene}"
+			TweenLite.from @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
+			for i in [1..@game[@scene - 1].texts.length] by 1
+				@library["t#{i}"].onInitEvaluation()
+				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
-			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
-	finish: ->
+			setTimeout @finish, 2 * 1000
+	finish: =>
+		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
+		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
-	window.U5A5 = U5A5
+	window.U7A5 = U7A5

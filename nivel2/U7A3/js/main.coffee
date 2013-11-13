@@ -1,8 +1,8 @@
-class U4A6 extends Oda
+class U7A3 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -43,17 +43,34 @@ class U4A6 extends Oda
 			{id: 'summerR', src:'summer/r.png'}
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
+		    {src:'sounds/TU2_U7_A3_instructions.mp3', id:'instructions'}
 		]
 		@positions = 
+			summertexts:[
+				{t:'1.They are hiking mountains', l:'summerS'}
+				{t:'2.They are hiking mountains', l:'summerU'}
+				{t:'3.They are hiking mountains', l:'summerM'}
+				{t:'4.They are hiking mountains', l:'summerM2'}
+				{t:'5.They are hiking mountains', l:'summerE'}
+				{t:'6.They are hiking mountains', l:'summerR'}
+			]
 			summerletras:[
 				{letra:'summerS', x:'366', y:'185'}
 				{letra:'summerU', x:'201', y:'172'} #24 y 10
-				{letra:'summerM', x:'428', y:'281'}
-				{letra:'summerM2', x:'85', y:'175'}
+				{letra:'summerM', x:'85', y:'175'}
+				{letra:'summerM2', x:'428', y:'281'}
 				{letra:'summerE', x:'162', y:'291'}
 				{letra:'summerR', x:'211', y:'98'}
+			]
+			greentexts:[
+				'1.They are hiking mountains'
+				'2.They are hiking mountains'
+				'3.They are hiking mountains'
+				'4.They are hiking mountains'
+				'5.They are hiking mountains'
+				'6.They are hiking mountains'
 			]
 			greenletras:[
 				{letra:'greenB', x:'187', y:'119'} # 36 y 20
@@ -72,153 +89,87 @@ class U4A6 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setScene().setFinal().introEvaluation()
-	setScene: ->
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 6, 0
+		@setScene(1).introEvaluation()
+	setScene: (scene) ->
 		escena = new createjs.Container()
 		escena.x = 116
 		escena.y = 160
-		es = 'green'
-
-		fondo = @createBitmap es+'bg', es+'bg', 24,11
+		escena.name = 'escena'
 		
-		text = new createjs.Text '6.They are hiking mountains','24px Arial','#333'
-		text.x = stageSize.w / 2
-		text.y = 140
-		text.textAlign = 'center'
-		@addToMain text
+		if scene is 1
+			es = 'summer'
+		else
+			es = 'green'
 
+		fondo = @createBitmap "#{es}bg", "#{es}bg", 24,11
+		
+		@texts = @positions["#{es}texts"]
+
+		@insertText 'label', @texts[@index].t,'24px Quicksand','#333', stageSize.w / 2, 140, 'center'
 		escena.addChild fondo
-		if es == 'green'
-			for i in [0..6]
-				letra = @createBitmap @positions.greenletras[i].letra,@positions.greenletras[i].letra, @positions.greenletras[i].x, @positions.greenletras[i].y, 'mc'
-				letra.scaleX = letra.scaleY = 0.43
-				drop =  @createBitmap 'dropArea'+@positions.greenletras[i].letra, 'dropArea'+@positions.greenletras[i].letra, (i*75)+25, 430, 'bc'
+
+		@letras = @positions["#{es}letras"]
+		for i in [0..@letras.length - 1]
+			word = @letras[i]
+			if scene is 1
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*75 + 85, 430, 'bc'
+			if scene is 2
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*85 + 65, 430, 'bc'
 				if i >= 2
 					drop.x = drop.x + 30
-				letrafinal = @createBitmap @positions.greenletras[i].letra, @positions.greenletras[i].letra, drop.x, drop.y-7, 'bc'
-				if i == 6
-					letrafinal.x = letrafinal.x-10
-				escena.addChild letra, drop, letrafinal
-		else
-			for i in [0..5]
-				letra = @createBitmap @positions.summerletras[i].letra,@positions.summerletras[i].letra, @positions.summerletras[i].x, @positions.summerletras[i].y, 'mc'
-				letra.scaleX = letra.scaleY = 0.43
-				drop =  @createBitmap 'dropArea'+@positions.summerletras[i].letra, 'dropArea'+@positions.summerletras[i].letra, (i*85)+65, 430, 'bc'
-				letrafinal = @createBitmap @positions.summerletras[i].letra, @positions.summerletras[i].letra, drop.x, drop.y-7, 'bc'
-				escena.addChild letra, drop, letrafinal
-
-
+			hit = new createjs.Shape()
+			hit.graphics.beginFill('rgba(255,255,255,1)').drawRect(0, 0, drop.width, drop.height)
+			hit.x = drop.x - drop.width / 2
+			hit.y = drop.y - drop.height
+			hit.name = "dropArea#{word.letra}"
+			letra = new Droppable word.letra, (@preload.getResult word.letra), i, word.x, word.y, @stage, [hit]
+			letra.scaleX = letra.scaleY = 0.43
+			letrafinal = @createBitmap "f#{@letras[i].letra}", @letras[i].letra, drop.x, drop.y-7, 'bc'
+			letrafinal.visible = off
+			@addToLibrary letra, letrafinal
+			escena.addChild hit, drop, letra, letrafinal
 		@addToMain escena
 		@
 	setFinal: =>
+		###
 		es = 'green'
-
 		@insertBitmap es+'screen', es+'screen', stageSize.w / 2, stageSize.h /2, 'mc'
-		@
-	setQuestion:  ->
-		question = new createjs.Container()
-		question.x = 0
-		question.y = 0	
-
-		for i in [1..1]
-			if @preguntas[i].tipo == 'texto'
-				v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'
-				v.scaleX = v.scaleY = 0.5
-				question.addChild v
-				@addToLibrary v
-
-				text = new createjs.Text @preguntas[i].pregunta,'24px Arial','#333'
-				text.x = stageSize.w / 2
-				text.y = 140
-				text.textAlign = 'center'
-				question.addChild text
-
-				opciones = new createjs.Container()
-
-				uno = new ClickableText @preguntas[i].opcionUno, @preguntas[i].opcionUno, i, 0, 0
-				opciones.addChild uno
-
-				diagonal = new createjs.Text ' / ','24px Arial','#333'
-				diagonal.x = uno.x + uno.width
-				diagonal.y = 0
-				opciones.addChild diagonal
-
-				dos = new ClickableText @preguntas[i].opcionDos, @preguntas[i].opcionDos, i,  diagonal.x + 24, 0
-				opciones.addChild dos
-
-				total = uno.width + dos.width + 20
-
-				opciones.x = stageSize.w / 2 - total / 2;
-				opciones.y = 490;
-				question.addChild opciones
-			else if @preguntas[i].tipo = 'imagen'
-				text = new createjs.Text @preguntas[i].pregunta,'24px Arial','#333'
-				text.x = 0
-				text.y = 140
-				question.addChild text
-
-				v = @createBitmap @preguntas[i].opcionUno, @preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2+30, 'mc'
-				v.scaleX = v.scaleY = 0.3
-				question.addChild v
-				@addToLibrary v
-				v = @createBitmap @preguntas[i].opcionDos, @preguntas[i].opcionDos, (stageSize.w / 4)*3, stageSize.h / 2+30, 'mc'
-				v.scaleX = v.scaleY = 0.3
-				question.addChild v
-				@addToLibrary v
-
-		@addToMain question
+		###
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from @library.label, 1, {alpha :0, y: @library.label.y + 10, delay: 1}
+		TweenLite.from @library.escena, 1, {alpha: 0, y: @library.escena.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		for i in [0..@letras.length - 1]
+			@library["#{@letras[i].letra}"].initDragListener()
+			@library["#{@letras[i].letra}"].addEventListener 'dropped', @evaluateAnswer
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
+		@drop = e.drop
+		if "dropArea#{@answer.name}" is @drop.name
+			if @answer.name is @texts[@index].l
+				@library["f#{@answer.name}"].visible = on
+				@answer.visible = off
+				@finishEvaluation()
 			else
+				@answer.returnToPlace 1, 0.43, 0.43
 				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		TweenLite.to @library.label, 0.5, {alpha: 0, y: @library.label.y + 10, ease: Quart.easeOut, onComplete:@nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		@library['score'].plusOne()
+		if @index < @texts.length
+			@library.label.text = @texts[@index].t
+			TweenLite.to @library.label, 0.5, {alpha: 1, y: @library.label.y - 10, ease: Quart.easeOut}
 		else
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
+		TweenLite.to @library.escena, 1, {alpha: 0, y: @library.escena.y + 20}
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
-	window.U4A6 = U4A6
+	window.U7A3 = U7A3

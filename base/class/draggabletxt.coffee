@@ -33,6 +33,8 @@ class DraggableText
 		@text.hitArea = @hit
 	initDragListener: =>
 		@addEventListener 'mousedown', @handleMouseDown
+	endDragListener: =>
+		@removeEventListener 'mousedown', @handleMouseDown
 	onInitEvaluation: =>
 		@addEventListener 'mousedown', @handleMouseDown
 	handleMouseDown: (e) =>

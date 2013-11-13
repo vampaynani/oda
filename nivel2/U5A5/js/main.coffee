@@ -104,6 +104,7 @@ class U5A5 extends Oda
 		TweenLite.from @library['cuento'], 1, {alpha: 0, y: @library['cuento'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
+		createjs.Sound.play "scene#{@scene}"
 		for i in [1..@game[@scene - 1].texts.length] by 1
 			@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 	evaluateAnswer: (e) =>
@@ -137,10 +138,12 @@ class U5A5 extends Oda
 			@nextEvaluation()
 	nextEvaluation: =>
 		@index++
+		createjs.Sound.stop()
 		if @index < @game.length
 			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
 			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
 			@setCuento @index + 1
+			createjs.Sound.play "scene#{@scene}"
 			TweenLite.from @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
 			for i in [1..@game[@scene - 1].texts.length] by 1
 				@library["t#{i}"].onInitEvaluation()

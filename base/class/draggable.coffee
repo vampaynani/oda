@@ -24,6 +24,8 @@ class Draggable
 		@removeEventListener 'mousedown', @handleMouseDown
 	initDragListener: =>
 		@addEventListener 'mousedown', @handleMouseDown
+	endDragListener: =>
+		@removeEventListener 'mousedown', @handleMouseDown
 	handleMouseDown: (e) =>
 		TweenMax.killTweensOf @
 		TweenLite.killTweensOf @

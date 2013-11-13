@@ -208,7 +208,7 @@ class Oda
 		text.name = name
 		text.x = x
 		text.y = y
-		text.align = align
+		text.textAlign = align
 		text
 	insertText: (name, t, f, c, x, y, align = 'left') ->
 		text = @createText name, t, f, c, x, y, align

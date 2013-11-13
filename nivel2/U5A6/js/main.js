@@ -9,11 +9,11 @@
     __extends(U5A6, _super);
 
     function U5A6() {
-      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
+      this.setCards = __bind(this.setCards, this);
       var manifest, sounds;
       manifest = [
         {
@@ -57,52 +57,52 @@
           src: 'game3_btn.png'
         }, {
           id: 'game1cloudy',
-          src: 'game1/cloudy.PNG'
+          src: 'game1/cloudy.png'
         }, {
           id: 'game1cold',
-          src: 'game1/cold.PNG'
+          src: 'game1/cold.png'
         }, {
           id: 'game1hot',
-          src: 'game1/hot.PNG'
+          src: 'game1/hot.png'
         }, {
           id: 'game1itscloudy',
-          src: 'game1/its_cloudy.PNG'
+          src: 'game1/its_cloudy.png'
         }, {
           id: 'game1itscold',
-          src: 'game1/its_cold.PNG'
+          src: 'game1/its_cold.png'
         }, {
           id: 'game1itshot',
           src: 'game1/its_hot.png'
         }, {
           id: 'game1itsraining',
-          src: 'game1/its_raining.PNG'
+          src: 'game1/its_raining.png'
         }, {
           id: 'game1itssunny',
-          src: 'game1/its_sunny.PNG'
+          src: 'game1/its_sunny.png'
         }, {
-          id: 'game1itsswing',
-          src: 'game1/its_swing.PNG'
+          id: 'game1itssnowing',
+          src: 'game1/its_swing.png'
         }, {
           id: 'game1itswindy',
-          src: 'game1/its_windy.PNG'
+          src: 'game1/its_windy.png'
         }, {
           id: 'game1lookitsarainbow',
           src: 'game1/look_its_a_rainbow.png'
         }, {
           id: 'game1rainbow',
-          src: 'game1/rainbow.PNG'
+          src: 'game1/rainbow.png'
         }, {
           id: 'game1raining',
-          src: 'game1/raining.PNG'
+          src: 'game1/raining.png'
         }, {
           id: 'game1snowing',
-          src: 'game1/snowing.PNG'
+          src: 'game1/snowing.png'
         }, {
           id: 'game1sunny',
-          src: 'game1/sunny.PNG'
+          src: 'game1/sunny.png'
         }, {
           id: 'game1windy',
-          src: 'game1/windy.PNG'
+          src: 'game1/windy.png'
         }, {
           id: 'game2butterflies',
           src: 'game2/butterflies.png'
@@ -203,133 +203,300 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/TU2_U5_A6_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }
       ];
-      this.answers = [];
+      this.game = [
+        [
+          {
+            id: 'game1cloudy',
+            i: 1
+          }, {
+            id: 'game1cold',
+            i: 2
+          }, {
+            id: 'game1hot',
+            i: 3
+          }, {
+            id: 'game1raining',
+            i: 4
+          }, {
+            id: 'game1sunny',
+            i: 5
+          }, {
+            id: 'game1snowing',
+            i: 6
+          }, {
+            id: 'game1windy',
+            i: 7
+          }, {
+            id: 'game1rainbow',
+            i: 8
+          }, {
+            id: 'game1itscloudy',
+            i: 1
+          }, {
+            id: 'game1itscold',
+            i: 2
+          }, {
+            id: 'game1itshot',
+            i: 3
+          }, {
+            id: 'game1itsraining',
+            i: 4
+          }, {
+            id: 'game1itssunny',
+            i: 5
+          }, {
+            id: 'game1itssnowing',
+            i: 6
+          }, {
+            id: 'game1itswindy',
+            i: 7
+          }, {
+            id: 'game1lookitsarainbow',
+            i: 8
+          }
+        ], [
+          {
+            id: 'game2butterflies',
+            i: 1
+          }, {
+            id: 'game2easter',
+            i: 2
+          }, {
+            id: 'game2flowers',
+            i: 3
+          }, {
+            id: 'game2leaves',
+            i: 4
+          }, {
+            id: 'game2scooter',
+            i: 5
+          }, {
+            id: 'game2sledding',
+            i: 6
+          }, {
+            id: 'game2snowman',
+            i: 7
+          }, {
+            id: 'game2swimming',
+            i: 8
+          }, {
+            id: 'game2ichasebutterflies',
+            i: 1
+          }, {
+            id: 'game2icelebrateeaster',
+            i: 2
+          }, {
+            id: 'game2ipickflowers',
+            i: 3
+          }, {
+            id: 'game2Iraketheleaves',
+            i: 4
+          }, {
+            id: 'game2irideascooter',
+            i: 5
+          }, {
+            id: 'game2igosledding',
+            i: 6
+          }, {
+            id: 'game2ibuildasnowman',
+            i: 7
+          }, {
+            id: 'game2igoswimming',
+            i: 8
+          }
+        ], [
+          {
+            id: 'game3cold',
+            i: 1
+          }, {
+            id: 'game3hot',
+            i: 2
+          }, {
+            id: 'game3hungry',
+            i: 3
+          }, {
+            id: 'game3mourn',
+            i: 4
+          }, {
+            id: 'game3nap',
+            i: 5
+          }, {
+            id: 'game3sick',
+            i: 6
+          }, {
+            id: 'game3thirsty',
+            i: 7
+          }, {
+            id: 'game3tired',
+            i: 8
+          }, {
+            id: 'game3shescold',
+            i: 1
+          }, {
+            id: 'game3sheshot',
+            i: 2
+          }, {
+            id: 'game3shehungry',
+            i: 3
+          }, {
+            id: 'game3shessad',
+            i: 4
+          }, {
+            id: 'game3shestakinganap',
+            i: 5
+          }, {
+            id: 'game3shessick',
+            i: 6
+          }, {
+            id: 'game3shesthirsty',
+            i: 7
+          }, {
+            id: 'game3shestired',
+            i: 8
+          }
+        ]
+      ];
       U5A6.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U5A6.prototype.setStage = function() {
+      var b1, b2, b3;
       U5A6.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('game1btn', 'game1btn', 753, 460);
-      this.insertBitmap('game2btn', 'game2btn', 753, 505);
-      this.insertBitmap('game3btn', 'game3btn', 753, 550);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setCards().introEvaluation();
+      b1 = new Button('game1btn', this.preload.getResult('game1btn'), 1, 753, 460);
+      b2 = new Button('game2btn', this.preload.getResult('game2btn'), 2, 753, 505);
+      b3 = new Button('game3btn', this.preload.getResult('game3btn'), 3, 753, 550);
+      this.addToMain(b1, b2, b3);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      return this.introEvaluation();
     };
 
-    U5A6.prototype.setCards = function() {
-      var c, game, h, i, juego, _i, _j;
+    U5A6.prototype.setCards = function(e) {
+      var b, c, game, h, i, j, juego, _i, _j;
+      j = 0;
+      game = e.target.index;
       juego = new createjs.Container();
       juego.x = 200;
       juego.y = 180;
-      game = 1;
+      juego.name = 'juego';
+      this.clearButtons();
+      this.selected = new Array();
+      this.cards = this.shuffle(this.game[game - 1]);
       for (h = _i = 0; _i <= 3; h = ++_i) {
         for (i = _j = 0; _j <= 3; i = ++_j) {
-          c = this.createBitmap('carta' + game, 'carta' + game, i * 130, h * 110, 'mc');
-          juego.addChild(c);
-          this.addToLibrary(c);
+          c = this.createBitmap("carta" + game, "carta" + game, i * 130, h * 110, 'mc');
+          b = this.createBitmap("cartab" + game, this.cards[j].id, i * 130, h * 110, 'mc');
+          b.scaleX = b.scaleY = 0.6;
+          c.index = this.cards[j].i;
+          c.addEventListener('click', this.evaluateAnswer);
+          juego.addChild(b, c);
+          this.addToLibrary(b, c);
+          j++;
         }
       }
       this.addToMain(juego);
+      TweenLite.from(juego, 0.5, {
+        alpha: 0,
+        y: juego.y - 20
+      });
       return this;
     };
 
     U5A6.prototype.introEvaluation = function() {
-      return U5A6.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
+      U5A6.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
+      });
+      TweenLite.from(this.library.instructions, 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      return TweenLite.from([this.library.game1btn, this.library.game2btn, this.library.game3btn], 1, {
+        alpha: 0,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U5A6.prototype.initEvaluation = function(e) {
       U5A6.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      this.library.game1btn.blink();
+      this.library.game2btn.blink();
+      this.library.game3btn.blink();
+      this.library.game1btn.addEventListener('click', this.setCards);
+      this.library.game2btn.addEventListener('click', this.setCards);
+      return this.library.game3btn.addEventListener('click', this.setCards);
+    };
+
+    U5A6.prototype.clearButtons = function() {
+      this.library.game1btn.blink(false);
+      this.library.game2btn.blink(false);
+      this.library.game3btn.blink(false);
+      this.library.game1btn.removeEventListener('click', this.setCards);
+      this.library.game2btn.removeEventListener('click', this.setCards);
+      return this.library.game3btn.removeEventListener('click', this.setCards);
     };
 
     U5A6.prototype.evaluateAnswer = function(e) {
-      var pt;
-      this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
-      } else {
-        return this.answer.returnToPlace();
+      if (this.selected.length < 2) {
+        this.selected.push(e.target);
+        TweenLite.to(e.target, 0.5, {
+          alpha: 0
+        });
+      }
+      if (this.selected.length === 2) {
+        return setTimeout(this.finishEvaluation, 1 * 1000);
       }
     };
 
     U5A6.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
+      if (this.selected[0].index === this.selected[1].index) {
+        return this.nextEvaluation();
+      } else {
+        TweenLite.to(this.selected[0], 0.5, {
+          alpha: 1
+        });
+        TweenLite.to(this.selected[1], 0.5, {
+          alpha: 1
+        });
+        this.selected = new Array();
+        return this.warning();
+      }
     };
 
     U5A6.prototype.nextEvaluation = function() {
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
+      this.library.score.plusOne();
+      if (this.index < this.cards.length / 2) {
+        this.selected = new Array();
+        return createjs.Sound.play('good');
       } else {
         return this.finish();
       }
     };
 
-    U5A6.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
-    };
-
     U5A6.prototype.finish = function() {
-      var i, _i, _results;
-      U5A6.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      TweenLite.to([this.library.game1btn, this.library.game2btn, this.library.game3btn], 1, {
+        alpha: 0
+      });
+      TweenLite.to(this.library.juego, 1, {
+        alpha: 0,
+        y: this.library.juego.y - 20
+      });
+      return U5A6.__super__.finish.apply(this, arguments);
     };
 
     window.U5A6 = U5A6;

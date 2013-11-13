@@ -55,7 +55,10 @@ class U1A2 extends Oda
 		myname.y = stageSize.h - 70
 		myname.name = 'dropname'
 		question = @createBitmap 'question', 'q', 0, 0
-		h1 = new Droppable 'h1', '#FFFFFF', 250, 0, 120, 22
+		h1 = new createjs.Shape new createjs.Graphics().beginFill( '#FFF' ).drawRect( 0, 0, 130, 30 )
+		h1.x = 250
+		h1.y = -7
+		h1.name = 'h1'
 		myname.addChild question, h1
 		@addToLibrary h1
 		@addToMain myname

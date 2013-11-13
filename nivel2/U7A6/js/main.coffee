@@ -79,7 +79,7 @@ class U3A6 extends Oda
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U3_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U7_A6_instructions.mp3', id:'instructions'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
@@ -148,9 +148,9 @@ class U3A6 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		p = @createBitmap @imagenes[0], @imagenes[0], (stageSize.w / 2)-80, 150, 'tc'
-		p.scaleX = p.scaleY = 0.3
-		@addToMain p
+		#p = @createBitmap @imagenes[0], @imagenes[0], (stageSize.w / 2)-80, 150, 'tc'
+		#p.scaleX = p.scaleY = 0.3
+		#@addToMain p
 
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
 		@setChango().createAlphabet().introEvaluation()
@@ -170,7 +170,7 @@ class U3A6 extends Oda
 				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i - 395, 34
 			else
 				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i - 750, 68
-			letterObj.text.font = '20px Arial'
+			letterObj.text.font = '20px Quicksand'
 			@addToLibrary letterObj
 			alphabet.addChild letterObj
 		@addToMain alphabet
@@ -194,7 +194,7 @@ class U3A6 extends Oda
 			@library["l#{i}"].addEventListener 'click', @evaluateAnswer
 		
 		for i in [1..@col.length]
-			if @col[i] isnt ''
+			if @col[i - 1] isnt ' '
 				wc = new WordContainer "w#{i}", '', '#fff', '#0098d7', 30 * i, 0, 26, 26
 				wc.index = @col[i - 1]
 				@addToLibrary wc
@@ -204,30 +204,53 @@ class U3A6 extends Oda
 		@answer = e.target
 		@answer.visible = false
 		check = off
+		complete = on
 		for i in [1..@col.length]
-			if @answer.index is @library["w#{i}"].index
-				@library["w#{i}"].changeText @answer.index
-				check = on
+			if @col[i - 1] isnt ' '
+				if @answer.index is @library["w#{i}"].index
+					@library["w#{i}"].changeText @answer.index
+					check = on
 		if not check
-			current = @library["chango"].currentFrame
+			current = @library.chango.currentFrame
 			current++
-			@library["chango"].gotoAndStop current
-		
-			setTimeout @finishEvaluation, 1 * 1000
+			@library.chango.gotoAndStop current
+		if @library.chango.currentFrame is @library.chango.spriteSheet._numFrames
+			@finish()
+		for i in [1..@col.length]
+			if @col[i - 1] isnt ' '
+				wc = @library["w#{i}"]
+				if wc.text.text isnt wc.index
+					complete = off
+		if complete then setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
 		@library['score'].plusOne()
 		createjs.Sound.play 'good'
-		TweenLite.to @library['dropper'], 0.5, {alpha: 0, y: stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
+		for i in [1..@col.length]
+			if @col[i] isnt ' '
+				TweenLite.to @library['wordContainers'], 0.5, {alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library['dropper'].y = 525
-			@library['dropper'].x = 150 + 50
-			@library['dropper'].changeText ''
-			@library['dropper'].changeLabel @answers[@index].text
-			TweenLite.to @library['dropper'], 0.5, {alpha: 1, x: 150, ease: Quart.easeOut}
+			word = @answers[@index]
+			@col = word.split('')
+			@library.chango.currentFrame = 0
+			@library.wordContainers.removeAllChildren()
+			@library.wordContainers.x = (@library['alphabet'].x + 177) - @col.length * 30 / 2
+			for i in [0..@abc.length - 1]
+				@library["l#{i}"].visible = on
+		
+			for i in [1..@col.length]
+				if @col[i - 1] isnt ' '
+					wc = new WordContainer "w#{i}", '', '#fff', '#0098d7', 30 * i, 0, 26, 26
+					wc.index = @col[i - 1]
+					@addToLibrary wc
+					@library.wordContainers.addChild wc
+			TweenLite.to @library.wordContainers, 0.5, {alpha: 1, ease: Quart.easeOut}
 		else
 			@finish()
 	finish: ->
+		TweenLite.to @library.wordContainers, 0.5, {alpha: 0, ease: Quart.easeOut}
+		TweenLite.to @library.alphabet, 1, {alpha: 0, ease: Quart.easeOut}
+		TweenLite.to @library.chango, 1, {alpha: 0, ease: Quart.easeOut}
 		super
 	window.U3A6 = U3A6

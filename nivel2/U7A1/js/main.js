@@ -12,9 +12,7 @@
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.clearEvaluation = __bind(this.clearEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
-      this.evaluateAnswer3 = __bind(this.evaluateAnswer3, this);
-      this.evaluateAnswer2 = __bind(this.evaluateAnswer2, this);
-      this.evaluateAnswer1 = __bind(this.evaluateAnswer1, this);
+      this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -62,81 +60,81 @@
       this.escenas = [
         {
           id: 'hersToothpaste',
-          p1: 'hers',
+          p1: 8,
           x1: '527',
           y1: '389',
           l1: '60',
-          p2: 'toothpaste',
+          p2: 7,
           x2: '295',
           y2: '168',
           l2: '104'
         }, {
           id: 'hersWhose',
-          p1: 'hers',
+          p1: 8,
           x1: '485',
           y1: '378',
           l1: '57',
-          p2: 'Whose',
+          p2: 1,
           x2: '277',
           y2: '168',
           l2: '70'
         }, {
           id: 'hisTowel',
-          p1: 'his',
+          p1: 5,
           x1: '582',
           y1: '372',
           l1: '57',
-          p2: 'towel',
+          p2: 4,
           x2: '301',
           y2: '168',
           l2: '110'
         }, {
           id: 'hisWhose',
-          p1: 'his',
+          p1: 5,
           x1: '529',
           y1: '390',
           l1: '55',
-          p2: 'Whose',
+          p2: 1,
           x2: '228',
           y2: '168',
           l2: '70'
         }, {
           id: 'mineBackpack',
-          p1: 'mine',
+          p1: 0,
           x1: '580',
           y1: '372',
           l1: '55',
-          p2: 'backpack',
+          p2: 3,
           x2: '348',
           y2: '168',
           l2: '110'
         }, {
           id: 'mineSwimsuit',
-          p1: 'mine',
+          p1: 0,
           x1: '445',
           y1: '394',
           l1: '55',
-          p2: 'swimsuit',
+          p2: 6,
           x2: '298',
           y2: '168',
           l2: '110'
         }, {
           id: 'mineWhose',
-          p1: 'mine',
+          p1: 0,
           x1: '421',
           y1: '384',
           l1: '57',
-          p2: 'Whose',
+          p2: 1,
           x2: '227',
           y2: '168',
           l2: '70'
         }, {
           id: 'yoursWhose',
-          p1: 'yours',
+          p1: 2,
           x1: '535',
           y1: '372',
           l1: '56',
-          p2: 'whose',
+          p2: 1,
           x2: '284',
           y2: '168',
           l2: '70'
@@ -144,10 +142,10 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
         }, {
-          src: 'sounds/TU2_U1_A1_Instructions.mp3',
+          src: 'sounds/TU2_U7_A1_Instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
@@ -161,161 +159,124 @@
       U1A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setEscena().setNube().introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      return this.setEscena(1).setNube().introEvaluation();
     };
 
-    U1A1.prototype.setEscena = function() {
-      var esc, i, im, p1, p2;
-      i = 7;
-      esc = new createjs.Container();
-      esc.x = 0;
-      esc.y = 0;
+    U1A1.prototype.setEscena = function(scene) {
+      var esc, i, im, p1, p2, _i;
+      if (!this.library.scene) {
+        esc = new createjs.Container();
+        esc.name = 'scene';
+        this.addToMain(esc);
+      } else {
+        this.library.scene.removeAllChildren();
+        esc = this.library.scene;
+      }
+      i = scene - 1;
       im = this.createBitmap(this.escenas[i].id, this.escenas[i].id, stageSize.w / 2, stageSize.h / 2, 'mc');
-      p1 = new WordContainer('p1', '', '#fef2e7', '#f39234', this.escenas[i].x1, this.escenas[i].y1, this.escenas[i].l1, 30);
-      p2 = new WordContainer('p2', '', '#fef2e7', '#f39234', this.escenas[i].x2, this.escenas[i].y2, this.escenas[i].l2, 30);
+      p1 = new WordContainer('p1', '', '#eff9fe', '#0098d7', this.escenas[i].x1, this.escenas[i].y1, this.escenas[i].l1, 30);
+      p2 = new WordContainer('p2', '', '#eff9fe', '#0098d7', this.escenas[i].x2, this.escenas[i].y2, this.escenas[i].l2, 30);
+      p1.text.font = p2.text.font = '20px Quicksand';
       esc.addChild(im, p1, p2);
       this.addToLibrary(p1, p2);
-      this.addToMain(esc);
+      for (i = _i = 1; _i <= 9; i = _i += 1) {
+        if (this.library["p" + i + "n"]) {
+          this.library["p" + i + "n"].updateDrops(this.library.p1, this.library.p2);
+        }
+      }
       return this;
     };
 
     U1A1.prototype.setNube = function() {
-      var back, container, p1n, p2n, p3n, p4n, p5n, p6n, p7n, p8n, p9n;
+      var back, container, i, p1n, p2n, p3n, p4n, p5n, p6n, p7n, p8n, p9n, _i;
       container = new createjs.Container();
       container.x = -20;
       container.y = 25;
       container.name = 'nube1';
       back = this.createBitmap('cloud', 'cloud', 238, 412);
-      p1n = new DraggableText('p1n', 'mine', 0, 284, 473);
-      p2n = new DraggableText('p2n', 'Whose', 1, 261, 521);
-      p3n = new DraggableText('p3n', 'yours', 2, 347, 454);
-      p4n = new DraggableText('p4n', 'backpack', 3, 347, 506);
-      p5n = new DraggableText('p5n', 'towel', 4, 418, 431);
-      p6n = new DraggableText('p6n', 'his', 5, 500, 441);
-      p7n = new DraggableText('p7n', 'swimsuit', 6, 452, 473);
-      p8n = new DraggableText('p8n', 'toothpaste', 7, 451, 527);
-      p9n = new DraggableText('p9n', 'hers', 8, 542, 498);
+      p1n = new DroppableText('p1n', 'mine', 0, 284, 473, this.stage, [this.library.p1, this.library.p2]);
+      p2n = new DroppableText('p2n', 'Whose', 1, 261, 521, this.stage, [this.library.p1, this.library.p2]);
+      p3n = new DroppableText('p3n', 'yours', 2, 347, 454, this.stage, [this.library.p1, this.library.p2]);
+      p4n = new DroppableText('p4n', 'backpack', 3, 347, 506, this.stage, [this.library.p1, this.library.p2]);
+      p5n = new DroppableText('p5n', 'towel', 4, 418, 431, this.stage, [this.library.p1, this.library.p2]);
+      p6n = new DroppableText('p6n', 'his', 5, 500, 441, this.stage, [this.library.p1, this.library.p2]);
+      p7n = new DroppableText('p7n', 'swimsuit', 6, 452, 473, this.stage, [this.library.p1, this.library.p2]);
+      p8n = new DroppableText('p8n', 'toothpaste', 7, 451, 527, this.stage, [this.library.p1, this.library.p2]);
+      p9n = new DroppableText('p9n', 'hers', 8, 542, 498, this.stage, [this.library.p1, this.library.p2]);
       container.addChild(back, p1n, p2n, p3n, p4n, p5n, p6n, p7n, p8n, p9n);
       this.addToLibrary(back, p1n, p2n, p3n, p4n, p5n, p6n, p7n, p8n, p9n);
       this.addToMain(container);
+      for (i = _i = 1; _i <= 9; i = _i += 1) {
+        this.library["p" + i + "n"].addEventListener('dropped', this.evaluateAnswer);
+      }
       return this;
     };
 
     U1A1.prototype.introEvaluation = function() {
       U1A1.__super__.introEvaluation.apply(this, arguments);
-      return this;
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
+      });
+      TweenLite.from(this.library.instructions, 1, {
+        alpha: 0,
+        x: 0
+      });
+      TweenLite.from(this.library.scene, 1, {
+        alpha: 0,
+        y: this.library.scene.y - 10
+      });
+      return TweenLite.from(this.library.nube1, 1, {
+        alpha: 0,
+        y: this.library.nube1.y - 10,
+        ease: Quart.easeOut,
+        delay: 0.5,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U1A1.prototype.initEvaluation = function(e) {
-      var i, _i;
+      var i, _i, _results;
       U1A1.__super__.initEvaluation.apply(this, arguments);
-      this.library['h1'].blink();
-      this.blink(this.library['backNube1']);
-      for (i = _i = 1; _i <= 2; i = _i += 1) {
-        this.library['p' + i + 'n1'].addEventListener('drop', this.evaluateAnswer1);
+      _results = [];
+      for (i = _i = 1; _i <= 9; i = _i += 1) {
+        _results.push(this.library["p" + i + "n"].initDragListener());
       }
-      return false;
+      return _results;
     };
 
-    U1A1.prototype.evaluateAnswer1 = function(e) {
-      var i, pt, _i;
+    U1A1.prototype.evaluateAnswer = function(e) {
       this.answer = e.target;
-      pt = this.library['h1'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['h1'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].w1) {
-          this.answer.visible = false;
-          this.library['h1'].changeText(this.answer.text.text);
-          this.library['h1'].blink(false);
-          this.blink(this.library['backNube1'], false);
-          this.library['h2'].blink();
-          this.blink(this.library['backNube2']);
-          for (i = _i = 1; _i <= 4; i = _i += 1) {
-            this.library['p' + i + 'n2'].addEventListener('drop', this.evaluateAnswer2);
-          }
-          return false;
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
+      this.drop = e.drop;
+      if (this.answer.index === this.escenas[this.index][e.drop.name]) {
+        this.answer.visible = false;
+        this.drop.changeText(this.answer.text.text);
+        return this.finishEvaluation();
       } else {
-        return this.answer.returnToPlace();
-      }
-    };
-
-    U1A1.prototype.evaluateAnswer2 = function(e) {
-      var i, pt, _i, _results;
-      this.answer = e.target;
-      pt = this.library['h2'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['h2'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].w2) {
-          this.answer.visible = false;
-          this.library['h2'].changeText(this.answer.text.text);
-          this.library['h2'].blink(false);
-          this.blink(this.library['backNube2'], false);
-          this.library['h3'].blink();
-          this.blink(this.library['backNube3']);
-          _results = [];
-          for (i = _i = 1; _i <= 5; i = _i += 1) {
-            _results.push(this.library['p' + i + 'n3'].addEventListener('drop', this.evaluateAnswer3));
-          }
-          return _results;
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
-      } else {
-        return this.answer.returnToPlace();
-      }
-    };
-
-    U1A1.prototype.evaluateAnswer3 = function(e) {
-      var pt;
-      this.answer = e.target;
-      pt = this.library['h3'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['h3'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].w3) {
-          this.answer.visible = false;
-          this.library['h3'].changeText(this.answer.text.text);
-          this.library['h3'].blink(false);
-          this.blink(this.library['backNube3'], false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
-      } else {
+        this.warning();
         return this.answer.returnToPlace();
       }
     };
 
     U1A1.prototype.finishEvaluation = function() {
-      var song;
-      this.library['score'].plusOne();
-      song = createjs.Sound.play(this.answers[this.index].sound);
-      return song.addEventListener('complete', this.clearEvaluation);
+      if (this.library.p1.text.text === '' || this.library.p2.text.text === '') {
+
+      } else {
+        this.library['score'].plusOne();
+        return setTimeout(this.clearEvaluation, 1 * 1000);
+      }
     };
 
     U1A1.prototype.clearEvaluation = function(e) {
-      var i, _i, _j, _k, _l;
-      for (i = _i = 1; _i <= 2; i = _i += 1) {
-        this.library['p' + i + 'n1'].visible = true;
-        this.library['p' + i + 'n1'].returnToPlace();
+      var i, _i;
+      for (i = _i = 1; _i <= 9; i = _i += 1) {
+        this.library["p" + i + "n"].visible = true;
+        this.library["p" + i + "n"].returnToPlace();
       }
-      for (i = _j = 1; _j <= 4; i = _j += 1) {
-        this.library['p' + i + 'n2'].visible = true;
-        this.library['p' + i + 'n2'].returnToPlace();
-      }
-      for (i = _k = 1; _k <= 5; i = _k += 1) {
-        this.library['p' + i + 'n3'].visible = true;
-        this.library['p' + i + 'n3'].returnToPlace();
-      }
-      for (i = _l = 1; _l <= 3; i = _l += 1) {
-        this.library['h' + i].changeText('');
-      }
-      return TweenLite.to(this.library['characters'], 0.5, {
-        scaleX: 1.5,
-        scaleY: 1.5,
+      this.library.p1.changeText('');
+      this.library.p2.changeText('');
+      return TweenLite.to(this.library.scene, 0.5, {
         alpha: 0,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
@@ -323,63 +284,23 @@
     };
 
     U1A1.prototype.nextEvaluation = function() {
-      var i, _i, _results;
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['characters'].currentFrame = this.index;
-        this.library['h1'].blink();
-        this.blink(this.library['backNube1']);
-        TweenLite.to(this.library['characters'], 0.5, {
-          scaleX: 1,
-          scaleY: 1,
+      if (this.index < this.escenas.length) {
+        this.setEscena(this.index + 1);
+        return TweenLite.to(this.library.scene, 0.5, {
           alpha: 1,
           ease: Back.easeOut
         });
-        _results = [];
-        for (i = _i = 1; _i <= 2; i = _i += 1) {
-          _results.push(this.library['p' + i + 'n1'].addEventListener('drop', this.evaluateAnswer1));
-        }
-        return _results;
       } else {
         return this.finish();
       }
     };
 
-    U1A1.prototype.blink = function(obj, state) {
-      if (state == null) {
-        state = true;
-      }
-      TweenMax.killTweensOf(obj);
-      obj.alpha = 1;
-      if (state) {
-        return TweenMax.to(obj, 0.5, {
-          alpha: .5,
-          repeat: -1,
-          yoyo: true
-        });
-      }
-    };
-
     U1A1.prototype.finish = function() {
-      TweenLite.to(this.library['dropper'], 1, {
+      TweenLite.to(this.library.nube1, 1, {
         alpha: 0,
-        y: this.library['dropper'].y + 20,
-        delay: 0.2
-      });
-      TweenLite.to(this.library['nube1'], 1, {
-        alpha: 0,
-        y: this.library['nube1'].y + 20,
-        delay: 0.1
-      });
-      TweenLite.to(this.library['nube2'], 1, {
-        alpha: 0,
-        y: this.library['nube2'].y + 20,
-        delay: 0.1
-      });
-      TweenLite.to(this.library['nube3'], 1, {
-        alpha: 0,
-        y: this.library['nube3'].y + 20,
-        delay: 0.1
+        y: this.library.nube1.y - 10,
+        ease: Quart.easeOut
       });
       return U1A1.__super__.finish.apply(this, arguments);
     };

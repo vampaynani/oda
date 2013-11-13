@@ -1,4 +1,4 @@
-class U1A1 extends Oda
+class U6A3 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca.png'}
@@ -25,6 +25,8 @@ class U1A1 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
+			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U4_A6_Instructions.mp3', id:'instructions'}
 		]
 		
@@ -248,4 +250,4 @@ class U1A1 extends Oda
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
 		super
-	window.U1A1 = U1A1
+	window.U6A3 = U6A3

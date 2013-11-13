@@ -1,8 +1,8 @@
-class U2A3 extends Oda
+class U6A1 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			
@@ -59,11 +59,14 @@ class U2A3 extends Oda
 		    {id: 'p2p11back', src: 'puzzle2-11-back.png'}
 		    {id: 'p2p12', src: 'puzzle2-12.png'}
 		    {id: 'p2p12back', src: 'puzzle2-12-back.png'}
+		    {id: 'btnfalse', src: 'false-btn.png'}
+		    {id: 'btntrue', src: 'true-btn.png'}
 		]
 		sounds = [
-			{src:'sounds/TU2_U2_A3_instructions.mp3', id:'instructions'}
+			{src:'sounds/TU2_U6_A1_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		super null, manifest, sounds
 	setStage: ->
@@ -88,6 +91,9 @@ class U2A3 extends Oda
 		for i in [1..2] by 1
 			@blink @library["p#{i}"], off
 			@library['p'+i].removeEventListener 'click', @selectPuzzle
+
+		@insertBitmap 'btntrue','btntrue', 300, 540
+		@insertBitmap 'btnfalse','btnfalse', 420, 540
 
 		switch e.target.name
 			when 'p1'
@@ -122,13 +128,13 @@ class U2A3 extends Oda
 					p2p12: {x: 408, y: 256, text:'A salesclerk works at a museum.', label:'false', back: on}
 				@answers = 8
 				@setPuzzle 2
-			
+
+		TweenLite.from @library.btntrue, 1, {alpha:0, y:@library.btntrue.y - 20}
+		TweenLite.from @library.btnfalse, 1, {alpha:0, y:@library.btnfalse.y - 20, delay: 0.2}
 	setPuzzle: (num) ->
 		@num = num
 		puzzle = new createjs.Container()
-		puzzle.x = switch num
-			when 1 then 75
-			when 2 then 240
+		puzzle.x = 75
 		puzzle.y = 148
 		puzzle.name = 'puzzle'
 
@@ -172,7 +178,11 @@ class U2A3 extends Oda
 	initDrag: =>
 		@observer.notify 'init_drag'
 	initListeners: ->
+		@library.btntrue.addEventListener 'click', @evaluateLocation
+		@library.btnfalse.addEventListener 'click', @evaluateLocation
 	stopListeners: ->
+		@library.btntrue.removeEventListener 'click', @evaluateLocation
+		@library.btnfalse.removeEventListener 'click', @evaluateLocation
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		hit = @library[@answer.index+'b']
@@ -181,25 +191,17 @@ class U2A3 extends Oda
 		if hit.hitTest pt.x, pt.y
 			hpt = hit.parent.localToGlobal hit.x, hit.y
 			htt = @answer.parent.globalToLocal hpt.x, hpt.y
-			@wordcompleter = new WordCompleter 'dropper', @pieces[@answer.index].texta, '', @pieces[@answer.index].textb, '#FFF', '#E90E2C', 150, 560, 90, 30
-			
-			@wordcompleter.x = stageSize.w / 2 - @wordcompleter.width / 2
-			
-			if @library['dropper']
-				@mainContainer.removeChild @library['dropper']
-			@addToMain @wordcompleter
+			@insertText 'dropper', @pieces[@answer.index].text,'24px Quicksand','#333', stageSize.w / 2, 510, 'center'
 
 			@observer.notify 'stop_drag'
 			
-			@answer.putInPlace( htt )
+			@answer.putInPlace htt 
 			@initListeners()
 		else
-			@answer.returnToPlace()
+			@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY
 	evaluateLocation: (e) =>
 		name = e.target.name
-		name = 'next to' if name is 'next' 
-		if name is @pieces[@answer.index].label
-			@wordcompleter.changeText @pieces[@answer.index].label
+		if name is "btn#{@pieces[@answer.index].label}"
 			@stopListeners()
 			createjs.Sound.play 'good'
 			setTimeout @finishEvaluation, 1 * 1000
@@ -219,5 +221,8 @@ class U2A3 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenLite.to @library.dragpieces, 1, {alpha:0, y:@y - 20}
+		TweenLite.to @library.puzzle, 1, {alpha:0, y:@y - 20}
+		TweenMax.to [@library.p1, @library.p2, @library.btntrue, @library.btnfalse], 1, {alpha:0, y:stageSize.h}
 		super
-	window.U2A3 = U2A3
+	window.U6A1 = U6A1

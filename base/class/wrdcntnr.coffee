@@ -12,7 +12,7 @@ class WordContainer
 		@shape = new createjs.Shape(new createjs.Graphics().beginFill( bgcolor ).drawRect( 0, 0, w, h ).setStrokeStyle(3).beginStroke( stcolor ).moveTo( 0, h ).lineTo( w, h ));
 
 		@text.x = w / 2
-
+		@text.y = h - @text.getMeasuredHeight()
 		@addChild @shape, @text
 		false
 	setRectShape: (bgcolor, stcolor, thin, w, h) ->
