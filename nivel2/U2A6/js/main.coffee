@@ -198,7 +198,11 @@ class U2A6 extends Oda
 				dropped = on
 				@answer.putInPlace app
 				@library['score'].plusOne()
+				createjs.Sound.play 'good'
+
 				setTimeout @finishEvaluation, 2 * 1000
+			else
+				createjs.Sound.play 'wrong'
 		@answer.takeMeOut() if not dropped
 	finishEvaluation: =>
 		@nextEvaluation()

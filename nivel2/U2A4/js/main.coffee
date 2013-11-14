@@ -32,6 +32,8 @@ class U2A4 extends Oda
 		    {id:'j4', src: 'jim-bus.png'}
 		    {id:'j5', src: 'jim-cat.png'}
 		    {id:'j6', src: 'jim-tv.png'}
+		    {id:'imgwrong', src: 'wrong.png'}
+		    {id:'imgcorrect', src: 'correct.png'}
 		]
 		sounds = [
 			{src:'sounds/TU2_U2_A4_instructions.mp3', id:'instructions'}
@@ -65,6 +67,22 @@ class U2A4 extends Oda
 				]
 			}
 		]
+		@clocks = [
+			{x: 485, y: 13}
+			{x: 527, y: 79}
+			{x: 485, y: 145}
+			{x: 527, y: 211}
+			{x: 485, y: 276}
+			{x: 527, y: 343}
+		]
+		@drops = [
+			{x: 12, y: 5}
+			{x: 220, y: 5}
+			{x: 12, y: 153}
+			{x: 220, y: 153}
+			{x: 12, y: 305}
+			{x: 220, y: 305}
+		]
 		super null, manifest, sounds
 	setStage: ->
 		super
@@ -80,22 +98,7 @@ class U2A4 extends Oda
 		meg.x = 117;
 		meg.y = 124;
 		meg.name = 'meg'
-		clocks = [
-			{x: 485, y: 13}
-			{x: 527, y: 79}
-			{x: 485, y: 145}
-			{x: 527, y: 211}
-			{x: 485, y: 276}
-			{x: 527, y: 343}
-		]
-		drops = [
-			{x: 12, y: 5}
-			{x: 220, y: 5}
-			{x: 12, y: 153}
-			{x: 220, y: 153}
-			{x: 12, y: 305}
-			{x: 220, y: 305}
-		]
+		
 		m1 = @createBitmap 'megWakes', 'm1', 15, 13
 		m2 = @createBitmap 'megBreakfast', 'm2', 223, 13
 		m3 = @createBitmap 'megLeaves', 'm3', 15, 161
@@ -107,14 +110,16 @@ class U2A4 extends Oda
 		for i in [1..6] by 1
 			sh = new createjs.Shape()
 			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#333').drawRoundRect(0, 0, 66, 42, 10)
-			sh.x = drops[i - 1].x
-			sh.y = drops[i - 1].y
+			sh.x = @drops[i - 1].x
+			sh.y = @drops[i - 1].y
 			sh.name = 'sh'+i
 			@addToLibrary sh
 			meg.addChild sh
-		
+
+			
+
 		for i in [1..6] by 1
-			mc = new Draggable 'mc'+i, @preload.getResult('mc'+i), i, clocks[i - 1].x, clocks[i - 1].y
+			mc = new Draggable 'mc'+i, @preload.getResult('mc'+i), i, @clocks[i - 1].x, @clocks[i - 1].y
 			mc.addEventListener 'drop', @evaluateDrop
 			@observer.subscribe 'init_meg_evaluation', mc.onInitEvaluation
 			@addToLibrary mc
@@ -126,22 +131,8 @@ class U2A4 extends Oda
 		jim.x = 117;
 		jim.y = 124;
 		jim.name = 'jim'
-		clocks = [
-			{x: 485, y: 13}
-			{x: 527, y: 79}
-			{x: 485, y: 145}
-			{x: 527, y: 211}
-			{x: 485, y: 276}
-			{x: 527, y: 343}
-		]
-		drops = [
-			{x: 12, y: 5}
-			{x: 220, y: 5}
-			{x: 12, y: 153}
-			{x: 220, y: 153}
-			{x: 12, y: 305}
-			{x: 220, y: 305}
-		]
+		
+		
 		j1 = @createBitmap 'jimShower', 'j1', 15, 13
 		j2 = @createBitmap 'jimBreakfast', 'j2', 223, 13
 		j3 = @createBitmap 'jimLeaves', 'j3', 15, 161
@@ -153,14 +144,14 @@ class U2A4 extends Oda
 		for i in [1..6] by 1
 			sh = new createjs.Shape()
 			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10)
-			sh.x = drops[i - 1].x
-			sh.y = drops[i - 1].y
+			sh.x = @drops[i - 1].x
+			sh.y = @drops[i - 1].y
 			sh.name = 'sh'+i
 			@addToLibrary sh
 			jim.addChild sh
 		
 		for i in [1..6] by 1
-			jc = new Draggable 'jc'+i, @preload.getResult('jc'+i), i, clocks[i - 1].x, clocks[i - 1].y
+			jc = new Draggable 'jc'+i, @preload.getResult('jc'+i), i, @clocks[i - 1].x, @clocks[i - 1].y
 			jc.addEventListener 'drop', @evaluateDrop
 			@observer.subscribe 'init_jim_evaluation', jc.onInitEvaluation
 			@addToLibrary jc
@@ -199,12 +190,17 @@ class U2A4 extends Oda
 		@library['repeat'].removeEventListener 'click', @playSound
 		@library['finish'].removeEventListener 'click', @evaluateAnswer
 		for i in [1..6] by 1
+			res = @createSprite 'resultado', ['imgwrong', 'imgcorrect'], null, (@drops[i - 1].x) + 75, @drops[i - 1].y
 			answer = @answers[@index].values[i - 1]
 			if @library[answer.q].x is @library[answer.a].x and @library[answer.q].y is @library[answer.a].y
-				#insert paloma
+				res.currentFrame = 1
 				@library['score'].plusOne()
+
 			else
+				res.currentFrame = 0
 				#insert tache
+			@addToMain	res
+
 		setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
 		createjs.Sound.stop @sound

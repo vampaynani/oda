@@ -110,6 +110,12 @@
         }, {
           id: 'j6',
           src: 'jim-tv.png'
+        }, {
+          id: 'imgwrong',
+          src: 'wrong.png'
+        }, {
+          id: 'imgcorrect',
+          src: 'correct.png'
         }
       ];
       sounds = [
@@ -182,6 +188,48 @@
           ]
         }
       ];
+      this.clocks = [
+        {
+          x: 485,
+          y: 13
+        }, {
+          x: 527,
+          y: 79
+        }, {
+          x: 485,
+          y: 145
+        }, {
+          x: 527,
+          y: 211
+        }, {
+          x: 485,
+          y: 276
+        }, {
+          x: 527,
+          y: 343
+        }
+      ];
+      this.drops = [
+        {
+          x: 12,
+          y: 5
+        }, {
+          x: 220,
+          y: 5
+        }, {
+          x: 12,
+          y: 153
+        }, {
+          x: 220,
+          y: 153
+        }, {
+          x: 12,
+          y: 305
+        }, {
+          x: 220,
+          y: 305
+        }
+      ];
       U2A4.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -197,53 +245,11 @@
     };
 
     U2A4.prototype.setMeg = function() {
-      var clocks, drops, i, m1, m2, m3, m4, m5, m6, mc, meg, sh, _i, _j;
+      var i, m1, m2, m3, m4, m5, m6, mc, meg, sh, _i, _j;
       meg = new createjs.Container();
       meg.x = 117;
       meg.y = 124;
       meg.name = 'meg';
-      clocks = [
-        {
-          x: 485,
-          y: 13
-        }, {
-          x: 527,
-          y: 79
-        }, {
-          x: 485,
-          y: 145
-        }, {
-          x: 527,
-          y: 211
-        }, {
-          x: 485,
-          y: 276
-        }, {
-          x: 527,
-          y: 343
-        }
-      ];
-      drops = [
-        {
-          x: 12,
-          y: 5
-        }, {
-          x: 220,
-          y: 5
-        }, {
-          x: 12,
-          y: 153
-        }, {
-          x: 220,
-          y: 153
-        }, {
-          x: 12,
-          y: 305
-        }, {
-          x: 220,
-          y: 305
-        }
-      ];
       m1 = this.createBitmap('megWakes', 'm1', 15, 13);
       m2 = this.createBitmap('megBreakfast', 'm2', 223, 13);
       m3 = this.createBitmap('megLeaves', 'm3', 15, 161);
@@ -254,14 +260,14 @@
       for (i = _i = 1; _i <= 6; i = _i += 1) {
         sh = new createjs.Shape();
         sh.graphics.beginFill('#FFF').setStrokeStyle(2).beginStroke('#333').drawRoundRect(0, 0, 66, 42, 10);
-        sh.x = drops[i - 1].x;
-        sh.y = drops[i - 1].y;
+        sh.x = this.drops[i - 1].x;
+        sh.y = this.drops[i - 1].y;
         sh.name = 'sh' + i;
         this.addToLibrary(sh);
         meg.addChild(sh);
       }
       for (i = _j = 1; _j <= 6; i = _j += 1) {
-        mc = new Draggable('mc' + i, this.preload.getResult('mc' + i), i, clocks[i - 1].x, clocks[i - 1].y);
+        mc = new Draggable('mc' + i, this.preload.getResult('mc' + i), i, this.clocks[i - 1].x, this.clocks[i - 1].y);
         mc.addEventListener('drop', this.evaluateDrop);
         this.observer.subscribe('init_meg_evaluation', mc.onInitEvaluation);
         this.addToLibrary(mc);
@@ -271,53 +277,11 @@
     };
 
     U2A4.prototype.setJim = function() {
-      var clocks, drops, i, j1, j2, j3, j4, j5, j6, jc, jim, sh, _i, _j;
+      var i, j1, j2, j3, j4, j5, j6, jc, jim, sh, _i, _j;
       jim = new createjs.Container();
       jim.x = 117;
       jim.y = 124;
       jim.name = 'jim';
-      clocks = [
-        {
-          x: 485,
-          y: 13
-        }, {
-          x: 527,
-          y: 79
-        }, {
-          x: 485,
-          y: 145
-        }, {
-          x: 527,
-          y: 211
-        }, {
-          x: 485,
-          y: 276
-        }, {
-          x: 527,
-          y: 343
-        }
-      ];
-      drops = [
-        {
-          x: 12,
-          y: 5
-        }, {
-          x: 220,
-          y: 5
-        }, {
-          x: 12,
-          y: 153
-        }, {
-          x: 220,
-          y: 153
-        }, {
-          x: 12,
-          y: 305
-        }, {
-          x: 220,
-          y: 305
-        }
-      ];
       j1 = this.createBitmap('jimShower', 'j1', 15, 13);
       j2 = this.createBitmap('jimBreakfast', 'j2', 223, 13);
       j3 = this.createBitmap('jimLeaves', 'j3', 15, 161);
@@ -328,14 +292,14 @@
       for (i = _i = 1; _i <= 6; i = _i += 1) {
         sh = new createjs.Shape();
         sh.graphics.beginFill('#FFF').setStrokeStyle(2).beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10);
-        sh.x = drops[i - 1].x;
-        sh.y = drops[i - 1].y;
+        sh.x = this.drops[i - 1].x;
+        sh.y = this.drops[i - 1].y;
         sh.name = 'sh' + i;
         this.addToLibrary(sh);
         jim.addChild(sh);
       }
       for (i = _j = 1; _j <= 6; i = _j += 1) {
-        jc = new Draggable('jc' + i, this.preload.getResult('jc' + i), i, clocks[i - 1].x, clocks[i - 1].y);
+        jc = new Draggable('jc' + i, this.preload.getResult('jc' + i), i, this.clocks[i - 1].x, this.clocks[i - 1].y);
         jc.addEventListener('drop', this.evaluateDrop);
         this.observer.subscribe('init_jim_evaluation', jc.onInitEvaluation);
         this.addToLibrary(jc);
@@ -394,16 +358,19 @@
     };
 
     U2A4.prototype.evaluateAnswer = function(e) {
-      var answer, i, _i;
+      var answer, i, res, _i;
       this.library['repeat'].removeEventListener('click', this.playSound);
       this.library['finish'].removeEventListener('click', this.evaluateAnswer);
       for (i = _i = 1; _i <= 6; i = _i += 1) {
+        res = this.createSprite('resultado', ['imgwrong', 'imgcorrect'], null, this.drops[i - 1].x + 75, this.drops[i - 1].y);
         answer = this.answers[this.index].values[i - 1];
         if (this.library[answer.q].x === this.library[answer.a].x && this.library[answer.q].y === this.library[answer.a].y) {
+          res.currentFrame = 1;
           this.library['score'].plusOne();
         } else {
-
+          res.currentFrame = 0;
         }
+        this.addToMain(res);
       }
       return setTimeout(this.finishEvaluation, 1 * 1000);
     };

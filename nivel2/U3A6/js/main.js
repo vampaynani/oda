@@ -76,6 +76,12 @@
           id: 'ch16',
           src: 'chango0016.png'
         }, {
+          id: 'bubble1',
+          src: 'bubble1.png'
+        }, {
+          id: 'bubble2',
+          src: 'bubble2.png'
+        }, {
           id: 'aLetra',
           src: 'a.png'
         }, {
@@ -153,6 +159,102 @@
         }, {
           id: 'zLetra',
           src: 'z.png'
+        }, {
+          id: 'applepie',
+          src: 'apple-pie.png'
+        }, {
+          id: 'bananas',
+          src: 'bananas.png'
+        }, {
+          id: 'bread',
+          src: 'bread.png'
+        }, {
+          id: 'breakfast',
+          src: 'breakfast.png'
+        }, {
+          id: 'broccoli',
+          src: 'broccoli.png'
+        }, {
+          id: 'cheese',
+          src: 'cheese.png'
+        }, {
+          id: 'cherries',
+          src: 'cherries.png'
+        }, {
+          id: 'chicken',
+          src: 'chicken.png'
+        }, {
+          id: 'chocolatecake',
+          src: 'chocolate-cake.png'
+        }, {
+          id: 'cookies',
+          src: 'cookies.png'
+        }, {
+          id: 'cutthefruit',
+          src: 'cut-the-fruit.png'
+        }, {
+          id: 'dessert',
+          src: 'dessert.png'
+        }, {
+          id: 'dinner',
+          src: 'dinner.png'
+        }, {
+          id: 'grapefruit',
+          src: 'grapefruit.png'
+        }, {
+          id: 'grapes',
+          src: 'grapes.png'
+        }, {
+          id: 'icecream',
+          src: 'ice-cream.png'
+        }, {
+          id: 'lunch',
+          src: 'lunch.png'
+        }, {
+          id: 'mashedpotatoes',
+          src: 'mashed-potatoes.png'
+        }, {
+          id: 'mixthefruit',
+          src: 'mix-the-fruit.png'
+        }, {
+          id: 'orangejuice',
+          src: 'orange-juice.png'
+        }, {
+          id: 'pancakes',
+          src: 'pancakes.png'
+        }, {
+          id: 'pasta',
+          src: 'pasta.png'
+        }, {
+          id: 'peach',
+          src: 'peach.png'
+        }, {
+          id: 'peas',
+          src: 'peas.png'
+        }, {
+          id: 'pineapple',
+          src: 'pineapple.png'
+        }, {
+          id: 'salad',
+          src: 'salad.png'
+        }, {
+          id: 'spinach',
+          src: 'spinach.png'
+        }, {
+          id: 'tomato',
+          src: 'tomato.png'
+        }, {
+          id: 'turkey',
+          src: 'turkey.png'
+        }, {
+          id: 'washthefruit',
+          src: 'wash-the-fruit.png'
+        }, {
+          id: 'washyourhands',
+          src: 'wash-your-hands.png'
+        }, {
+          id: 'yogurt',
+          src: 'yogurt.png'
         }
       ];
       this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -171,12 +273,113 @@
           id: 'wrong'
         }
       ];
-      this.answers = ['broccoli', 'cherries', 'bread', 'pancakes', 'chocolate cake', 'cheese', 'chicken', 'cut the fruit', 'breakfast', 'mashed potatoes'];
+      this.game = {
+        answers: [
+          {
+            t: 'apple pie',
+            i: 'applepie'
+          }, {
+            t: 'bananas',
+            i: 'bananas'
+          }, {
+            t: 'bread',
+            i: 'bread'
+          }, {
+            t: 'breakfast',
+            i: 'breakfast'
+          }, {
+            t: 'broccoli',
+            i: 'broccoli'
+          }, {
+            t: 'cheese',
+            i: 'cheese'
+          }, {
+            t: 'cherries',
+            i: 'cherries'
+          }, {
+            t: 'chicken',
+            i: 'chicken'
+          }, {
+            t: 'chocolate cake',
+            i: 'chocolatecake'
+          }, {
+            t: 'cookies',
+            i: 'cookies'
+          }, {
+            t: 'cut the fruit',
+            i: 'cutthefruit'
+          }, {
+            t: 'dessert',
+            i: 'dessert'
+          }, {
+            t: 'dinner',
+            i: 'dinner'
+          }, {
+            t: 'grapefruit',
+            i: 'grapefruit'
+          }, {
+            t: 'grapes',
+            i: 'grapes'
+          }, {
+            t: 'ice cream',
+            i: 'icecream'
+          }, {
+            t: 'lunch',
+            i: 'lunch'
+          }, {
+            t: 'mashed potatoes',
+            i: 'mashedpotatoes'
+          }, {
+            t: 'mix the fruit',
+            i: 'mixthefruit'
+          }, {
+            t: 'orange juice',
+            i: 'orangejuice'
+          }, {
+            t: 'pancakes',
+            i: 'pancakes'
+          }, {
+            t: 'pasta',
+            i: 'pasta'
+          }, {
+            t: 'peach',
+            i: 'peach'
+          }, {
+            t: 'peas',
+            i: 'peas'
+          }, {
+            t: 'pineapple',
+            i: 'pineapple'
+          }, {
+            t: 'salad',
+            i: 'salad'
+          }, {
+            t: 'spinach',
+            i: 'spinach'
+          }, {
+            t: 'tomato',
+            i: 'tomato'
+          }, {
+            t: 'turkey',
+            i: 'turkey'
+          }, {
+            t: 'wash the fruit',
+            i: 'washthefruit'
+          }, {
+            t: 'wash your hands',
+            i: 'washyourhands'
+          }, {
+            t: 'yogurt',
+            i: 'yogurt'
+          }
+        ]
+      };
       U3A6.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U3A6.prototype.setStage = function() {
       U3A6.__super__.setStage.apply(this, arguments);
+      this.answers = this.shuffleNoRepeat(this.game.answers, 10);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
@@ -184,7 +387,13 @@
     };
 
     U3A6.prototype.setChango = function() {
+      var burbuja;
       this.insertSprite('chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 549, 150, 'tl');
+      burbuja = new createjs.Container();
+      burbuja.name = 'burbuja';
+      burbuja.y = 149;
+      burbuja.x = 550;
+      this.addToMain(burbuja);
       return this;
     };
 
@@ -237,14 +446,21 @@
     };
 
     U3A6.prototype.initEvaluation = function(e) {
-      var i, wc, word, wordContainers, _i, _j, _ref, _ref1;
+      var comidas, i, imagen, wc, word, wordContainers, _i, _j, _ref, _ref1;
       U3A6.__super__.initEvaluation.apply(this, arguments);
-      word = this.answers[this.index];
+      word = this.answers[this.index].t;
       this.col = word.split('');
+      comidas = new createjs.Container();
+      comidas.name = 'comidas';
+      comidas.y = 250;
+      comidas.x = 300;
+      imagen = this.createBitmap(this.answers[this.index].i, this.answers[this.index].i, 0, 0, 'mc');
+      imagen.scaleX = imagen.scaleY = 0.4;
+      comidas.addChild(imagen);
       wordContainers = new createjs.Container();
       wordContainers.name = 'wordContainers';
       wordContainers.y = 400;
-      wordContainers.x = (this.library['alphabet'].x + 177) - this.col.length * 30 / 2;
+      wordContainers.x = (this.library['alphabet'].x + 157) - this.col.length * 30 / 2;
       for (i = _i = 0, _ref = this.abc.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         this.library["l" + i].addEventListener('click', this.evaluateAnswer);
       }
@@ -256,11 +472,12 @@
           wordContainers.addChild(wc);
         }
       }
-      return this.addToMain(wordContainers);
+      this.addToMain(wordContainers);
+      return this.addToMain(comidas);
     };
 
     U3A6.prototype.evaluateAnswer = function(e) {
-      var check, complete, current, i, wc, _i, _j, _ref, _ref1;
+      var b, check, complete, current, i, wc, _i, _j, _ref, _ref1;
       this.answer = e.target;
       this.answer.visible = false;
       check = false;
@@ -270,6 +487,7 @@
           if (this.answer.index === this.library["w" + i].index) {
             this.library["w" + i].changeText(this.answer.index);
             check = true;
+            console.log('letra');
           }
         }
       }
@@ -279,7 +497,13 @@
         this.library.chango.gotoAndStop(current);
       }
       if (this.library.chango.currentFrame === this.library.chango.spriteSheet._numFrames) {
-        this.finish();
+        b = this.createBitmap('bubble2', 'bubble2', 0, 0);
+        this.library.burbuja.addChild(b);
+        current--;
+        this.library.chango.gotoAndStop(current);
+        setTimeout(this.finishEvaluation, 3 * 1000);
+        console.log('perdiste');
+        return;
       }
       for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
         if (this.col[i - 1] !== ' ') {
@@ -290,14 +514,21 @@
         }
       }
       if (complete) {
-        return setTimeout(this.finishEvaluation, 1 * 1000);
+        b = this.createBitmap('bubble1', 'bubble1', 0, 0);
+        this.library.burbuja.addChild(b);
+        this.library['score'].plusOne();
+        createjs.Sound.play('good');
+        setTimeout(this.finishEvaluation, 3 * 1000);
+        return console.log('ganaste');
       }
     };
 
     U3A6.prototype.finishEvaluation = function() {
       var i, _i, _ref, _results;
-      this.library['score'].plusOne();
-      createjs.Sound.play('good');
+      TweenLite.to(this.library['comidas'], 0.5, {
+        alpha: 0,
+        ease: Back.easeOut
+      });
       _results = [];
       for (i = _i = 1, _ref = this.col.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
         if (this.col[i] !== ' ') {
@@ -314,18 +545,36 @@
     };
 
     U3A6.prototype.nextEvaluation = function() {
-      var i, wc, word, _i, _j, _ref, _ref1;
+      var i, imagen, wc, word, _i, _j, _k, _ref, _ref1, _ref2;
+      for (i = _i = 1, _ref = this.col.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        if (this.col[i] !== ' ') {
+          TweenLite.to(this.library['wordContainers'], 0.5, {
+            alpha: 0,
+            ease: Back.easeOut,
+            onComplete: this.nextEvaluation
+          });
+        }
+      }
+      TweenLite.to(this.library['comidas'], 0.5, {
+        alpha: 0,
+        ease: Back.easeOut
+      });
       this.index++;
       if (this.index < this.answers.length) {
-        word = this.answers[this.index];
+        word = this.answers[this.index].t;
         this.col = word.split('');
+        this.library.comidas.removeAllChildren();
+        this.library.burbuja.removeAllChildren();
         this.library.chango.currentFrame = 0;
+        imagen = this.createBitmap(this.answers[this.index].i, this.answers[this.index].i, 0, 0, 'mc');
+        imagen.scaleX = imagen.scaleY = 0.4;
+        this.library.comidas.addChild(imagen);
         this.library.wordContainers.removeAllChildren();
         this.library.wordContainers.x = (this.library['alphabet'].x + 177) - this.col.length * 30 / 2;
-        for (i = _i = 0, _ref = this.abc.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        for (i = _j = 0, _ref1 = this.abc.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
           this.library["l" + i].visible = true;
         }
-        for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
+        for (i = _k = 1, _ref2 = this.col.length; 1 <= _ref2 ? _k <= _ref2 : _k >= _ref2; i = 1 <= _ref2 ? ++_k : --_k) {
           if (this.col[i - 1] !== ' ') {
             wc = new WordContainer("w" + i, '', '#fff', '#0098d7', 30 * i, 0, 26, 26);
             wc.index = this.col[i - 1];
@@ -333,7 +582,11 @@
             this.library.wordContainers.addChild(wc);
           }
         }
-        return TweenLite.to(this.library.wordContainers, 0.5, {
+        TweenLite.to(this.library.wordContainers, 0.5, {
+          alpha: 1,
+          ease: Quart.easeOut
+        });
+        return TweenLite.to(this.library.comidas, 0.5, {
           alpha: 1,
           ease: Quart.easeOut
         });
@@ -352,6 +605,14 @@
         ease: Quart.easeOut
       });
       TweenLite.to(this.library.chango, 1, {
+        alpha: 0,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.comidas, 0.5, {
+        alpha: 0,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.burbuja, 0.5, {
         alpha: 0,
         ease: Quart.easeOut
       });

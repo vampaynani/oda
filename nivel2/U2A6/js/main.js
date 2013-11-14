@@ -339,7 +339,10 @@
           dropped = true;
           this.answer.putInPlace(app);
           this.library['score'].plusOne();
+          createjs.Sound.play('good');
           setTimeout(this.finishEvaluation, 2 * 1000);
+        } else {
+          createjs.Sound.play('wrong');
         }
       }
       if (!dropped) {
