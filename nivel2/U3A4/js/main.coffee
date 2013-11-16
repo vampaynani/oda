@@ -119,6 +119,10 @@ class U3A4 extends Oda
 		@addToMain new WordContainer 'dropper1', '', '#FFF', '#F59743', 170, 541, 188, 30
 		@addToMain new WordContainer 'dropper2', '', '#FFF', '#F59743', 373, 541, 158, 30
 		@addToMain new WordContainer 'dropper3', '', '#FFF', '#F59743', 544, 541, 136, 30
+		text = new createjs.Text '.', '24px Arial', '#000'
+		text.x = 685
+		text.y = 545
+		@addToMain text
 		@
 	setTable: (table) ->
 		if not @library.smileys
@@ -241,11 +245,7 @@ class U3A4 extends Oda
 	introEvaluation: ->
 		super
 		for i in [1..3] by 1
-			@observer.subscribe 'init_evaluation', @library["t#{i}n1"].onInitEvaluation
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library["t#{i}n2"].onInitEvaluation
-		for i in [1..4] by 1
-			@observer.subscribe 'init_evaluation', @library["t#{i}n3"].onInitEvaluation
+			@library["t#{i}n1"].initDragListener()
 
 		TweenLite.from @library.header, 1, {y:-@library['header'].height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
@@ -270,6 +270,9 @@ class U3A4 extends Oda
 					@answer.y = @answer.pos.y
 					@library.dropper1.changeText @answer.text.text
 					for i in [1..6] by 1
+						@library["t#{i}n2"].initDragListener()
+
+					for i in [1..6] by 1
 						@library["t#{i}n2"].addEventListener 'drop', @evaluateAnswer2
 		if not dropped 
 			@answer.returnToPlace()
@@ -291,6 +294,8 @@ class U3A4 extends Oda
 					@library.dropper2.changeText @answer.text.text
 					success = on
 					for i in [1..4] by 1
+						@library["t#{i}n3"].initDragListener()
+					for i in [1..4] by 1
 						@library["t#{i}n3"].addEventListener 'drop', @evaluateAnswer3
 		if not dropped 
 			@answer.returnToPlace()
@@ -311,10 +316,15 @@ class U3A4 extends Oda
 					@answer.y = @answer.pos.y
 					@library.dropper3.changeText @answer.text.text
 					success = on
+
 		if not dropped 
 			@answer.returnToPlace()
 		else
 			if success
+				for i in [1..6] by 1
+					@library["t#{i}n2"].endDragListener()
+				for i in [1..4] by 1
+					@library["t#{i}n3"].endDragListener()
 				setTimeout @finishEvaluation, 1 * 1000
 			else
 				@answer.returnToPlace()

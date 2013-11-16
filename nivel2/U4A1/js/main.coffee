@@ -14,7 +14,7 @@ class U4A1 extends Oda
 			{id: 'borde1', src:'border0001.png'}
 			{id: 'borde2', src:'border0002.png'}
 			{id: 'borde3', src:'border0003.png'}
- 			{id: 'beak', src:'beak.png'}
+			{id: 'beak', src:'beak.png'}
 			{id: 'bear', src:'bear.png'}
 			{id: 'camel', src:'camel.png'}
 			{id: 'chimpanzee', src:'chimpanzee.png'}
@@ -57,8 +57,8 @@ class U4A1 extends Oda
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U4_A1_instructions.mp3', id:'instructions'}
-		    {id:'sbeak', src:'sounds/beak.mp3'}
+			{src:'sounds/TU2_U4_A1_instructions.mp3', id:'instructions'}
+			{id:'sbeak', src:'sounds/beak.mp3'}
 			{id:'sbear', src:'sounds/bear.mp3'}
 			{id:'scamel', src:'sounds/camel.mp3'}
 			{id:'schimpanzee', src:'sounds/chimpanzee.mp3'}
@@ -147,11 +147,13 @@ class U4A1 extends Oda
 		}
 		super null, manifest, sounds
 	setStage: ->
+		@round = 0
+		console.log 'ronda '+(@round+1)
 		super
 		@youcards = @shuffleNoRepeat @animals, 9
 		@pccards = @shuffleNoRepeat @animals, 9
 		@game.animals = @shuffle @animals
- 		@round = 0
+
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'scoreComputer', 'scoreComputer', 19, 463
@@ -162,10 +164,22 @@ class U4A1 extends Oda
 		@setCardsYou().setCardsPc().introEvaluation()
 	jug: ->
 		@game.you++
+		createjs.Sound.play 'good'
 		@library['youCount'].text = @game.you
 		@
+	compu: ->
+		@game.pc++
+		createjs.Sound.play  'wrong'
+		@library['pcCount'].text = @game.pc
+		@
 	nuevaRonda: ->
+		#console.log 'indice '+@index
+
+		@index = 0
 		@round++
+		#console.log 'indice '+@index
+		console.log 'ronda '+(@round+1)
+
 		TweenLite.to @library.cartas, 1, {alpha: 0, y: @library.cartas.y - 50}
 		TweenLite.to @library.cartaspc, 1, {alpha: 0, y: @library.cartaspc.y - 50}
 		clearInterval @interval
@@ -173,8 +187,10 @@ class U4A1 extends Oda
 		@youcards = @shuffleNoRepeat @animals, 9
 		@pccards = @shuffleNoRepeat @animals, 9
 		@game.animals = @shuffle @animals
-
-		@setCardsYou().setCardsPc().introEvaluation()
+		if @round <= 5
+			@setCardsYou().setCardsPc().introEvaluation()
+		else
+			@finish()
 	setCardsYou: ->
 		j = 0
 		cartas = new createjs.Container()
@@ -234,11 +250,10 @@ class U4A1 extends Oda
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenLite.from @library['cartas'], 1, {alpha: 0, y: @library['cartas'].y - 50, delay: 1}
-		TweenLite.from @library['cartaspc'], 1, {alpha: 0, y: @library['cartaspc'].y - 50, delay: 1, onComplete: @instrucciones}
-	instrucciones: ->
 		if @round is 0
-			@playInstructions
-		console.log @index
+			TweenLite.from @library['cartaspc'], 1, {alpha: 0, y: @library['cartaspc'].y - 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		else	
+			TweenLite.from @library['cartaspc'], 1, {alpha: 0, y: @library['cartaspc'].y - 50, delay: 1, onComplete: @initEvaluation, onCompleteParams: [@]}	
 
 	initEvaluation: (e) =>
 		super
@@ -250,8 +265,8 @@ class U4A1 extends Oda
 	evaluateClick: (e) =>
 		@answer = e.target
 		if @answer.index is @game.animals[@index].id
-				@answer.getChildByName('borde').currentFrame = 1
-				@evaluateRows()
+			@answer.getChildByName('borde').currentFrame = 1
+			@evaluateRows()
 	evaluateRows: (e) =>
 		if @library["cartay0"].getChildByName('borde').currentFrame is 1 and @library["cartay1"].getChildByName('borde').currentFrame is 1 and @library["cartay2"].getChildByName('borde').currentFrame is 1 then @jug().nuevaRonda()
 		if @library["cartay3"].getChildByName('borde').currentFrame is 1 and @library["cartay4"].getChildByName('borde').currentFrame is 1 and @library["cartay5"].getChildByName('borde').currentFrame is 1 then @jug().nuevaRonda()
@@ -261,21 +276,20 @@ class U4A1 extends Oda
 		if @library["cartay2"].getChildByName('borde').currentFrame is 1 and @library["cartay5"].getChildByName('borde').currentFrame is 1 and @library["cartay8"].getChildByName('borde').currentFrame is 1 then @jug().nuevaRonda()
 		if @library["cartay0"].getChildByName('borde').currentFrame is 1 and @library["cartay4"].getChildByName('borde').currentFrame is 1 and @library["cartay8"].getChildByName('borde').currentFrame is 1 then @jug().nuevaRonda()
 		if @library["cartay2"].getChildByName('borde').currentFrame is 1 and @library["cartay4"].getChildByName('borde').currentFrame is 1 and @library["cartay6"].getChildByName('borde').currentFrame is 1 then @jug().nuevaRonda()
-		if @library["cartac0"].getChildByName('borde').currentFrame is 2 and @library["cartac1"].getChildByName('borde').currentFrame is 2 and @library["cartac2"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
-		if @library["cartac3"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac5"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
-		if @library["cartac6"].getChildByName('borde').currentFrame is 2 and @library["cartac7"].getChildByName('borde').currentFrame is 2 and @library["cartac8"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
-		if @library["cartac0"].getChildByName('borde').currentFrame is 2 and @library["cartac3"].getChildByName('borde').currentFrame is 2 and @library["cartac6"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
-		if @library["cartac1"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac7"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
-		if @library["cartac2"].getChildByName('borde').currentFrame is 2 and @library["cartac5"].getChildByName('borde').currentFrame is 2 and @library["cartac8"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
-		if @library["cartac0"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac8"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
-		if @library["cartac2"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac6"].getChildByName('borde').currentFrame is 2 then @nuevaRonda()
+
+		if @library["cartac0"].getChildByName('borde').currentFrame is 2 and @library["cartac1"].getChildByName('borde').currentFrame is 2 and @library["cartac2"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
+		if @library["cartac3"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac5"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
+		if @library["cartac6"].getChildByName('borde').currentFrame is 2 and @library["cartac7"].getChildByName('borde').currentFrame is 2 and @library["cartac8"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
+		if @library["cartac0"].getChildByName('borde').currentFrame is 2 and @library["cartac3"].getChildByName('borde').currentFrame is 2 and @library["cartac6"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
+		if @library["cartac1"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac7"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
+		if @library["cartac2"].getChildByName('borde').currentFrame is 2 and @library["cartac5"].getChildByName('borde').currentFrame is 2 and @library["cartac8"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
+		if @library["cartac0"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac8"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
+		if @library["cartac2"].getChildByName('borde').currentFrame is 2 and @library["cartac4"].getChildByName('borde').currentFrame is 2 and @library["cartac6"].getChildByName('borde').currentFrame is 2 then @compu().nuevaRonda()
 		@
 	finishEvaluation: =>
 	nextEvaluation: =>
 		for i in [0..8]
 			if @library["cartac#{i}"].index is @game.animals[@index].id
-				@game.pc++
-				@library['pcCount'].text = @game.pc
 				@library["cartac#{i}"].getChildByName('borde').currentFrame = 2
 				@evaluateRows()
 		@index++

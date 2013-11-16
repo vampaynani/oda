@@ -394,6 +394,8 @@
     }
 
     U4A1.prototype.setStage = function() {
+      this.round = 0;
+      console.log('ronda ' + (this.round + 1));
       U4A1.__super__.setStage.apply(this, arguments);
       this.youcards = this.shuffleNoRepeat(this.animals, 9);
       this.pccards = this.shuffleNoRepeat(this.animals, 9);
@@ -410,11 +412,22 @@
 
     U4A1.prototype.jug = function() {
       this.game.you++;
-      return this.library['youCount'].text = this.game.you;
+      createjs.Sound.play('good');
+      this.library['youCount'].text = this.game.you;
+      return this;
+    };
+
+    U4A1.prototype.compu = function() {
+      this.game.pc++;
+      createjs.Sound.play('wrong');
+      this.library['pcCount'].text = this.game.pc;
+      return this;
     };
 
     U4A1.prototype.nuevaRonda = function() {
-      this.index++;
+      this.index = 0;
+      this.round++;
+      console.log('ronda ' + (this.round + 1));
       TweenLite.to(this.library.cartas, 1, {
         alpha: 0,
         y: this.library.cartas.y - 50
@@ -427,7 +440,11 @@
       this.youcards = this.shuffleNoRepeat(this.animals, 9);
       this.pccards = this.shuffleNoRepeat(this.animals, 9);
       this.game.animals = this.shuffle(this.animals);
-      return this.setCardsYou().setCardsPc().introEvaluation();
+      if (this.round <= 5) {
+        return this.setCardsYou().setCardsPc().introEvaluation();
+      } else {
+        return this.finish();
+      }
     };
 
     U4A1.prototype.setCardsYou = function() {
@@ -503,20 +520,23 @@
         y: this.library['cartas'].y - 50,
         delay: 1
       });
-      return TweenLite.from(this.library['cartaspc'], 1, {
-        alpha: 0,
-        y: this.library['cartaspc'].y - 50,
-        delay: 1,
-        onComplete: this.playInstructions,
-        onCompleteParams: [this]
-      });
-    };
-
-    U4A1.prototype.instrucciones = function() {
-      if (this.index === 1) {
-        this.playInstructions;
+      if (this.round === 0) {
+        return TweenLite.from(this.library['cartaspc'], 1, {
+          alpha: 0,
+          y: this.library['cartaspc'].y - 50,
+          delay: 1,
+          onComplete: this.playInstructions,
+          onCompleteParams: [this]
+        });
+      } else {
+        return TweenLite.from(this.library['cartaspc'], 1, {
+          alpha: 0,
+          y: this.library['cartaspc'].y - 50,
+          delay: 1,
+          onComplete: this.initEvaluation,
+          onCompleteParams: [this]
+        });
       }
-      return console.log(this.index);
     };
 
     U4A1.prototype.initEvaluation = function(e) {
@@ -564,28 +584,28 @@
         this.jug().nuevaRonda();
       }
       if (this.library["cartac0"].getChildByName('borde').currentFrame === 2 && this.library["cartac1"].getChildByName('borde').currentFrame === 2 && this.library["cartac2"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       if (this.library["cartac3"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac5"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       if (this.library["cartac6"].getChildByName('borde').currentFrame === 2 && this.library["cartac7"].getChildByName('borde').currentFrame === 2 && this.library["cartac8"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       if (this.library["cartac0"].getChildByName('borde').currentFrame === 2 && this.library["cartac3"].getChildByName('borde').currentFrame === 2 && this.library["cartac6"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       if (this.library["cartac1"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac7"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       if (this.library["cartac2"].getChildByName('borde').currentFrame === 2 && this.library["cartac5"].getChildByName('borde').currentFrame === 2 && this.library["cartac8"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       if (this.library["cartac0"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac8"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       if (this.library["cartac2"].getChildByName('borde').currentFrame === 2 && this.library["cartac4"].getChildByName('borde').currentFrame === 2 && this.library["cartac6"].getChildByName('borde').currentFrame === 2) {
-        this.nuevaRonda();
+        this.compu().nuevaRonda();
       }
       return this;
     };
@@ -596,8 +616,6 @@
       var i, _i;
       for (i = _i = 0; _i <= 8; i = ++_i) {
         if (this.library["cartac" + i].index === this.game.animals[this.index].id) {
-          this.game.pc++;
-          this.library['pcCount'].text = this.game.pc;
           this.library["cartac" + i].getChildByName('borde').currentFrame = 2;
           this.evaluateRows();
         }

@@ -249,7 +249,7 @@
       meg = new createjs.Container();
       meg.x = 117;
       meg.y = 124;
-      meg.name = 'meg';
+      this.current = meg.name = 'meg';
       m1 = this.createBitmap('megWakes', 'm1', 15, 13);
       m2 = this.createBitmap('megBreakfast', 'm2', 223, 13);
       m3 = this.createBitmap('megLeaves', 'm3', 15, 161);
@@ -281,7 +281,7 @@
       jim = new createjs.Container();
       jim.x = 117;
       jim.y = 124;
-      jim.name = 'jim';
+      this.current = jim.name = 'jim';
       j1 = this.createBitmap('jimShower', 'j1', 15, 13);
       j2 = this.createBitmap('jimBreakfast', 'j2', 223, 13);
       j3 = this.createBitmap('jimLeaves', 'j3', 15, 161);
@@ -365,12 +365,12 @@
         res = this.createSprite('resultado', ['imgwrong', 'imgcorrect'], null, this.drops[i - 1].x + 75, this.drops[i - 1].y);
         answer = this.answers[this.index].values[i - 1];
         if (this.library[answer.q].x === this.library[answer.a].x && this.library[answer.q].y === this.library[answer.a].y) {
-          res.currentFrame = 1;
           this.library['score'].plusOne();
+          res.currentFrame = 1;
         } else {
           res.currentFrame = 0;
         }
-        this.addToMain(res);
+        this.library[this.current].addChild(res);
       }
       return setTimeout(this.finishEvaluation, 1 * 1000);
     };

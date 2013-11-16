@@ -349,10 +349,10 @@ class U3A3 extends Oda
 				npt = @library[value.d].localToLocal 0, 0, @mainContainer
 			if @library[value.t].hitTest pt.x, pt.y
 				@library.score.plusOne()
-				r = @createBitmap 'correct'+value.t.name, 'correct', npt.x, npt.y
+				r = @createBitmap 'correct', 'correct', npt.x, npt.y
 			else
 				@complete = off
-				r = @createBitmap 'wrong'+value.t.name, 'wrong', npt.x, npt.y
+				r = @createBitmap 'wrong', 'wrong', npt.x, npt.y
 			@library[@current].addChild r
 		setTimeout @finishEvaluation, 2 * 1000
 	endGame: (e) =>
