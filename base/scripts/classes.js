@@ -1741,7 +1741,29 @@
         }
         return console.log(_this.debugged.x, _this.debugged.y);
       });
-      return obj;
+      this.debugged.addEventListener('mousedown', function(e) {
+        var offset, posX, posY;
+        posX = e.stageX / stageSize.r;
+        posY = e.stageY / stageSize.r;
+        offset = {
+          x: posX - _this.debugged.x,
+          y: posY - _this.debugged.y
+        };
+        _this.debugged.x = posX - offset.x;
+        _this.debugged.y = posY - offset.y;
+        e.addEventListener('mousemove', function(ev) {
+          posX = ev.stageX / stageSize.r;
+          posY = ev.stageY / stageSize.r;
+          _this.debugged.x = posX - offset.x;
+          _this.debugged.y = posY - offset.y;
+          return false;
+        });
+        e.addEventListener('mouseup', function(ev) {
+          return console.log(_this.debugged);
+        });
+        return _this.debugged;
+      });
+      return this.debugged;
     };
 
     Oda.prototype.blink = function(obj, state) {

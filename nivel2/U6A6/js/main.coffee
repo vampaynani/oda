@@ -1,4 +1,4 @@
-class U1A6 extends Oda
+class U6A6 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -300,4 +300,4 @@ class U1A6 extends Oda
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: =>
 		super
-	window.U1A6 = U1A6
+	window.U6A6 = U6A6

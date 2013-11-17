@@ -289,7 +289,22 @@ class Oda
 				when KEYCODE_LEFT then @debugged.x -= 10
 				when KEYCODE_RIGHT then @debugged.x += 10
 			console.log @debugged.x, @debugged.y
-		obj
+		@debugged.addEventListener 'mousedown', (e) =>
+			posX = e.stageX / stageSize.r
+			posY = e.stageY / stageSize.r
+			offset = x: posX - @debugged.x, y: posY - @debugged.y
+			@debugged.x = posX - offset.x
+			@debugged.y = posY - offset.y
+			e.addEventListener 'mousemove', (ev) =>
+				posX = ev.stageX / stageSize.r
+				posY = ev.stageY / stageSize.r
+				@debugged.x = posX - offset.x
+				@debugged.y = posY - offset.y
+				false
+			e.addEventListener 'mouseup', (ev) =>
+				console.log @debugged
+			@debugged
+		@debugged
 	blink: (obj, state=on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1
