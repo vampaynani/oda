@@ -177,14 +177,14 @@ class U1A6 extends Oda
 		crosswords.y = 216
 		crosswords.name = 'crosswords'
 		for i in [0..@containers.length - 1] by 1
-			drop = new WordContainer 'h'+i, '', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
+			drop = new WordContainer "h#{i}", '', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
 			drop.setRectShape '#FFF', '#999', 2, 23, 23
 			drop.text.y -= 3
 			drop.id = @containers[i].id
 			@addToLibrary drop
 			crosswords.addChild drop
 		for i in [0..7]
-			t = new createjs.Text @numbers[i].id,'14px Arial','#333'
+			t = new createjs.Text @numbers[i].id,'14px Quicksand','#333'
 			t.x = @numbers[i].x*23 + 6
 			t.y = @numbers[i].y*23 + 4
 			crosswords.addChild t
@@ -233,29 +233,30 @@ class U1A6 extends Oda
 		dropped = false
 		hitdrop = null
 		for i in [0..@containers.length - 1] by 1
-			hit = @library['h'+i]
+			hit = @library["h#{i}"]
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 			if hit.hitTest pt.x, pt.y
+				dropped = true
 				if hit.id is @answer.index
-					dropped = true
 					hitdrop = hit
 			else
 				@answer.returnToPlace()
 		if dropped is true
-			hitdrop.changeText hitdrop.id
-			@answer.x = @answer.pos.x
-			@answer.y = @answer.pos.y
-			@evaluate 'drum'
-			@evaluate 'guitar'
-			@evaluate 'tambourine'
-			@evaluate 'trumpet'
-			@evaluate 'flute'
-			@evaluate 'bass'
-			@evaluate 'piano'
-			@evaluate 'saxophone'
-			@library.crosswords.cache -23, -23, 276, 230
-		else
-			@warning()
+			if hitdrop isnt null
+				hitdrop.changeText hitdrop.id
+				@answer.x = @answer.pos.x
+				@answer.y = @answer.pos.y
+				@evaluate 'drum'
+				@evaluate 'guitar'
+				@evaluate 'tambourine'
+				@evaluate 'trumpet'
+				@evaluate 'flute'
+				@evaluate 'bass'
+				@evaluate 'piano'
+				@evaluate 'saxophone'
+				@library.crosswords.cache -23, -23, 276, 230
+			else
+				@warning()
 	evaluate: (instrument) ->
 		ready = true
 		if not @answers[instrument].r

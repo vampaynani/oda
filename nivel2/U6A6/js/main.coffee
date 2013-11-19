@@ -60,18 +60,9 @@ class U6A6 extends Oda
 			{id: 'zLetra', src: 'z.png'}
 		]
 		sounds = [
-			{src:'sounds/TU2_U1_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/TU2_U6_A6_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U1_A6_bass.mp3', id:'bass'}
-		    {src:'sounds/TU2_U1_A6_drum.mp3', id:'drum'}
-		    {src:'sounds/TU2_U1_A6_flute.mp3', id:'flute'}
-		    {src:'sounds/TU2_U1_A6_guitar.mp3', id:'guitar'}
-		    {src:'sounds/TU2_U1_A6_piano.mp3', id:'piano'}
-		    {src:'sounds/TU2_U1_A6_saxophone.mp3', id:'saxophone'}
-		    {src:'sounds/TU2_U1_A6_tambourine.mp3', id:'tambourine'}
-		    {src:'sounds/TU2_U1_A6_trumpet.mp3', id:'trumpet'}
-		    {src:'sounds/TU2_U1_A6_violin.mp3', id:'violin'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}	
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
@@ -143,24 +134,24 @@ class U6A6 extends Oda
 			
 		]
 		@helps = [
-			'He / She helpssick animals'
-			'He / She helpssick animals'
-			'He / She helpssick animals'
-			'He / She helpssick animals'
-			'He / She helpssick animals'
-			'He / She helpssick animals'
-			'He / She helpssick animals'
-			'He / She helpssick animals'
+			'He / She helps sick people.'
+			'He / She fixes cars.'
+			'He / She makes food.'
+			'He / She sells things.'
+			'He / She serves food.'
+			'He / She protects people.'
+			'He / She helps sick animals.'
+			'He / She puts out fires.'
 		]
 		@answers = 
-			drum: r: off, c: [0, 1, 2, 3]
-			guitar: r: off, c:[4, 5, 6, 7, 8, 9]
-			tambourine: r: off, c:[10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
-			trumpet: r: off, c:[10, 18, 19, 20, 21, 22, 23]
-			flute: r: off, c:[24, 25, 26, 27, 28]
-			bass: r: off, c:[29, 30, 31, 32]
-			piano: r: off, c:[21,33,30,34,35]
-			saxophone: r: off, c:[32,36,37,38,39,40,41,42,28]
+			doctor: r: off, c: [0, 1, 2, 3, 4, 5]
+			mechanic: r: off, c:[6, 7, 8, 9, 10, 11, 12, 13]
+			chef: r: off, c:[14, 15, 16, 17]
+			salesclerk: r: off, c:[18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+			waiter: r: off, c:[28, 29, 30, 31, 32, 33]
+			police: r: off, c:[34, 4, 35, 36, 37, 7, 38, 17, 39, 40, 23, 41, 33]
+			vet: r: off, c:[42, 43, 44]
+			firefighter: r: off, c:[45, 46, 47, 48, 49, 12, 50, 51, 44, 52, 53]
 		super null, manifest, sounds
 	setStage: ->
 		super
@@ -193,13 +184,22 @@ class U6A6 extends Oda
 		@createAlphabet()
 		@introEvaluation()
 	createHelp: ->
-		@insertBitmap 'prophelper', 'prophelper', '130', '514'
+		help = new createjs.Container()
+		help.x = 127
+		help.y = 510
+		help.name = 'helper'
+		p = @createBitmap 'prophelper', 'prophelper', 0, 0
+		help.addChild p
 		for i in [1..8]
-			@insertBitmap 'btn'+i, 'btn'+i, (i*40)+110, '534'
-			t = new createjs.Text @helps[i-1],'14px Arial','#333'
-			t.x = 480
-			t.y = 540
-			@addToMain t
+			b = @createBitmap "btn#{i}", "btn#{i}", (i-1)*40 + 10, 20
+			b.index = i
+			b.addEventListener 'click', @showHelper
+			@addToLibrary b
+			help.addChild b
+		t = @createText 'helpertxt', @helps[0], '14px Quicksand', '#333', 330, 25
+		@addToLibrary t
+		help.addChild t
+		@addToMain help
 	createAlphabet: ->
 		alphabet = new createjs.Container()
 		alphabet.x = 115
@@ -218,86 +218,116 @@ class U6A6 extends Oda
 	createDroppers: ->
 		crosswords = new createjs.Container()
 		crosswords.x = 245
-		crosswords.y = 216
 		crosswords.name = 'crosswords'
 		for i in [0..@containers.length - 1] by 1
-			drop = new WordContainer 'h'+i, '#ccc', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
+			drop = new WordContainer 'h'+i, '', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
+			drop.setRectShape '#FFF', '#999', 2, 23, 23
+			drop.text.y -= 3
 			drop.id = @containers[i].id
 			@addToLibrary drop
 			crosswords.addChild drop
 		for i in [0..7]
-			t = new createjs.Text @numbers[i].id,'14px Arial','#333'
+			t = new createjs.Text @numbers[i].id,'14px Quicksand','#333'
 			t.x = @numbers[i].x*23 + 6
 			t.y = @numbers[i].y*23 + 4
 			crosswords.addChild t
+		crosswords.cache -23, -23, 360, 335
 		@addToMain crosswords
 	introEvaluation: ->
 		super
-		@library['crosswords'].y = 135
-		@library['crosswords'].alpha = 1
-		@library['alphabet'].y = 430
-		@library['alphabet'].alpha = 1
-		
+		@library.crosswords.y = 145
+		@library.crosswords.alpha = 1
+		@library.alphabet.y = 430
+		@library.alphabet.alpha = 1
+		@library.persondoctor.alpha = 1
+		@library.personfirefighter.alpha = 1
+		@library.personvet.alpha = 1
+		@library.personpolice.alpha = 1
+		@library.personwaiter.alpha = 1
+		@library.personsalesclerk.alpha = 1
+		@library.personchef.alpha = 1
+		@library.personmechanic.alpha = 1
+		@library.numberdoctor.alpha = 1
+		@library.numberfirefighter.alpha = 1
+		@library.numbervet.alpha = 1
+		@library.numberpolice.alpha = 1
+		@library.numberwaiter.alpha = 1
+		@library.numbersalesclerk.alpha = 1
+		@library.numberchef.alpha = 1
+		@library.numbermechanic.alpha = 1
 		for i in [0..@containers.length - 1] by 1
 			if(@containers[i].a)
-				@library['h'+i].changeText @containers[i].id
+				@library["h#{i}"].changeText @containers[i].id
 			else
-				@library['h'+i].changeText ''
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['alphabet'], 1, {alpha: 0, y: @library['alphabet'].y + 50, delay: 1.5}
-		TweenLite.from @library['crosswords'], 1, {alpha: 0, y: @library['crosswords'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+				@library["h#{i}"].changeText ''
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenMax.allFrom [@library.persondoctor, @library.personfirefighter, @library.personvet, @library.personpolice, @library.personwaiter, @library.personsalesclerk, @library.personchef, @library.personmechanic], 1, {alpha:0, delay:1.5}, 0.2
+		TweenMax.allFrom [@library.numberdoctor, @library.numberfirefighter, @library.numbervet, @library.numberpolice, @library.numberwaiter, @library.numbersalesclerk, @library.numberchef, @library.numbermechanic], 1, {alpha:0, delay:1.5}, 0.2
+		TweenLite.from @library.alphabet, 1, {alpha: 0, y: @library.alphabet.y + 20, delay: 1.5}
+		TweenLite.from @library.helper, 1, {alpha: 0, y: @library.helper.y + 20, delay: 1.5}
+		TweenLite.from @library.crosswords, 1, {alpha: 0, y: @library.crosswords.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
  	initEvaluation: (e) =>
 		super
 		for letter in @abc
 			@library[letter].addEventListener 'drop', @evaluateAnswer
+		@library.crosswords.cache -23, -23, 360, 335
+	showHelper: (e) =>
+		@library.helpertxt.text = @helps[e.target.index - 1]
 	evaluateAnswer: (e) =>
 		@answer = e.target
+		dropped = false
+		hitdrop = null
 		for i in [0..@containers.length - 1] by 1
-			hit = @library['h'+i]
+			hit = @library["h#{i}"]
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 			if hit.hitTest pt.x, pt.y
+				dropped = true
 				if hit.id is @answer.index
-					hit.changeText hit.id
-					@answer.x = @answer.pos.x
-					@answer.y = @answer.pos.y
-					@evaluate 'drum'
-					@evaluate 'guitar'
-					@evaluate 'tambourine'
-					@evaluate 'trumpet'
-					@evaluate 'flute'
-					@evaluate 'bass'
-					@evaluate 'piano'
-					@evaluate 'saxophone'
-				else
-					@warning()
+					hitdrop = hit
 			else
 				@answer.returnToPlace()
-	evaluate: (instrument) ->
+		if dropped is true
+			if hitdrop isnt null
+				hitdrop.changeText hitdrop.id
+				@answer.x = @answer.pos.x
+				@answer.y = @answer.pos.y
+				@evaluate 'doctor'
+				@evaluate 'mechanic'
+				@evaluate 'chef'
+				@evaluate 'salesclerk'
+				@evaluate 'waiter'
+				@evaluate 'police'
+				@evaluate 'vet'
+				@evaluate 'firefighter'
+				@library.crosswords.cache -23, -23, 360, 335
+			else
+				@warning()
+	evaluate: (obj) ->
 		ready = true
-		if not @answers[instrument].r
-			for box in @answers[instrument].c
-				if @library['h'+box].text.text is ''
+		if not @answers[obj].r
+			for box in @answers[obj].c
+				if @library["h#{box}"].text.text is ''
 					ready = false
 			if ready
-				@instrument = instrument
-				snd = createjs.Sound.play instrument
-				snd.addEventListener 'complete', @finishEvaluation
-				@answers[instrument].r = on
+				@robj = obj
+				@answers[obj].r = on
 				@library['score'].plusOne()
+				@finishEvaluation()
 	finishEvaluation: =>
-		TweenMax.allTo [@library[@instrument],@library[@instrument+'No']], 1, {alpha:0, ease:Quart.easeOut, onComplete: @nextEvaluation}
+		TweenMax.allTo [@library["person#{@robj}"],@library["number#{@robj}"]], 1, {alpha:0, ease:Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		complete = on
-		for instrument of @answers
-			if @answers[instrument].r is off
+		for obj of @answers
+			if @answers[obj].r is off
 				complete = off
-		TweenLite.to @library['alphabet'], 0.5, {alpha:0, y: @library['alphabet'].y - 100, ease:Quart.easeOut} if complete
-		TweenLite.to @library['crosswords'], 0.5, {alpha:0, y: @library['crosswords'].y - 100, ease:Quart.easeOut, onComplete: @finish} if complete
+		TweenLite.to @library.crosswords, 0.5, {alpha:0, y: @library.crosswords.y - 100, ease:Quart.easeOut, onComplete: @finish} if complete
 	blink: (obj, state = on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: =>
+		TweenLite.to @library.alphabet, 0.5, {alpha:0, y: @library.alphabet.y - 100, ease:Quart.easeOut}
+		TweenLite.from @library.helper, 1, {alpha: 0, y: @library.helper.y + 20}
 		super
 	window.U6A6 = U6A6

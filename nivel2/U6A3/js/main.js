@@ -12,18 +12,16 @@
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.clearEvaluation = __bind(this.clearEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
-      this.evaluateAnswer3 = __bind(this.evaluateAnswer3, this);
-      this.evaluateAnswer2 = __bind(this.evaluateAnswer2, this);
-      this.evaluateAnswer1 = __bind(this.evaluateAnswer1, this);
+      this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
         {
           id: 'head',
-          src: 'pleca.png'
+          src: 'pleca1.png'
         }, {
           id: 'inst',
-          src: 'texto_look.png'
+          src: 'inst.png'
         }, {
           id: 'c1',
           src: 'circle1.png'
@@ -94,326 +92,383 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U4_A6_Instructions.mp3',
+          src: 'sounds/TU2_U6_A3_Instructions.mp3',
           id: 'instructions'
         }
       ];
-      this.info = [
-        {
-          img: 'cafe',
-          frase: ''
-        }, {
-          img: 'stop',
-          frase: 'I need to take a bus.'
-        }, {
-          img: 'library',
-          frase: ''
-        }, {
-          img: 'grocery',
-          frase: 'I need some groceries.'
-        }, {
-          img: 'police',
-          frase: 'I have a problem! I need some help!'
-        }, {
-          img: 'candy',
-          frase: 'I want a box of chocolates.'
-        }, {
-          img: 'post',
-          frase: 'I need to send a postcard.'
-        }, {
-          img: 'animal',
-          frase: ''
-        }, {
-          img: 'bus',
-          frase: ''
-        }, {
-          img: 'theater',
-          frase: 'I want to watch a movie.'
-        }, {
-          img: 'pet',
-          frase: 'I need some dog food.'
-        }, {
-          img: 'shoe',
-          frase: 'I need some sandals.'
-        }, {
-          img: 'gas',
-          frase: 'I need some gas.'
-        }, {
-          img: 'station',
-          frase: ''
-        }, {
-          img: 'store',
-          frase: ''
-        }, {
-          img: 'hospital',
-          frase: ''
-        }, {
-          img: 'bank',
-          frase: ''
-        }, {
-          img: 'internet',
-          frase: 'I need to send an e-mail.'
-        }, {
-          img: 'movie',
-          frase: ''
-        }, {
-          img: 'office',
-          frase: ''
-        }
-      ];
+      this.game = {
+        steps: [
+          {
+            img: 'aBank',
+            frase: 'I need some money',
+            targets: ['a', 'bank']
+          }, {
+            img: 'aBusstop',
+            frase: 'I need to take a bus.',
+            targets: ['a', 'bus', 'stop']
+          }, {
+            img: 'aCandystore',
+            frase: 'I want a box of chocolates.',
+            targets: ['a', 'candy', 'store']
+          }, {
+            img: 'aGasstation',
+            frase: 'I need some gas.',
+            targets: ['a', 'gas', 'station']
+          }, {
+            img: 'aGrocerystore',
+            frase: 'I need some groceries.',
+            targets: ['a', 'grocery', 'store']
+          }, {
+            img: 'aHospital',
+            frase: 'I need a doctor',
+            targets: ['a', 'hospital']
+          }, {
+            img: 'aLibrary',
+            frase: 'I need a book',
+            targets: ['a', 'library']
+          }, {
+            img: 'aMovietheater',
+            frase: 'I want to watch a movie.',
+            targets: ['a', 'movie', 'theater']
+          }, {
+            img: 'aPetstore',
+            frase: 'I need some dog food.',
+            targets: ['a', 'pet', 'store']
+          }, {
+            img: 'aPolicestation',
+            frase: 'I have a problem! I need some help!',
+            targets: ['a', 'police', 'station']
+          }, {
+            img: 'aPostoffice',
+            frase: 'I need to send a postcard.',
+            targets: ['a', 'post', 'office']
+          }, {
+            img: 'aShoestore',
+            frase: 'I need some sandals.',
+            targets: ['a', 'shoe', 'store']
+          }, {
+            img: 'anInternetcafe',
+            frase: 'I need to send an e-mail.',
+            targets: ['an', 'Internet', 'cafe']
+          }
+        ],
+        opt1: [
+          {
+            i: 1,
+            t: 'a',
+            x: 26,
+            y: 15
+          }, {
+            i: 2,
+            t: 'an',
+            x: 44,
+            y: 30
+          }
+        ],
+        opt2: [
+          {
+            i: 1,
+            t: 'cafe',
+            x: 20,
+            y: 25
+          }, {
+            i: 2,
+            t: 'stop',
+            x: 24,
+            y: 70
+          }, {
+            i: 3,
+            t: 'library',
+            x: 65,
+            y: 45
+          }, {
+            i: 4,
+            t: 'grocery',
+            x: 74,
+            y: 85
+          }, {
+            i: 5,
+            t: 'police',
+            x: 56,
+            y: 107
+          }, {
+            i: 6,
+            t: 'candy',
+            x: 124,
+            y: 26
+          }, {
+            i: 7,
+            t: 'post',
+            x: 141,
+            y: 60
+          }, {
+            i: 8,
+            t: 'animal',
+            x: 152,
+            y: 105
+          }, {
+            i: 9,
+            t: 'bus',
+            x: 200,
+            y: 21
+          }, {
+            i: 10,
+            t: 'theater',
+            x: 189,
+            y: 66
+          }, {
+            i: 11,
+            t: 'pet',
+            x: 253,
+            y: 33
+          }, {
+            i: 12,
+            t: 'shoe',
+            x: 240,
+            y: 100
+          }, {
+            i: 13,
+            t: 'gas',
+            x: 303,
+            y: 25
+          }, {
+            i: 14,
+            t: 'station',
+            x: 273,
+            y: 71
+          }, {
+            i: 15,
+            t: 'store',
+            x: 327,
+            y: 46
+          }, {
+            i: 16,
+            t: 'hospital',
+            x: 305,
+            y: 104
+          }, {
+            i: 17,
+            t: 'bank',
+            x: 378,
+            y: 25
+          }, {
+            i: 18,
+            t: 'internet',
+            x: 363,
+            y: 75
+          }, {
+            i: 19,
+            t: 'movie',
+            x: 383,
+            y: 111
+          }, {
+            i: 20,
+            t: 'office',
+            x: 418,
+            y: 48
+          }
+        ]
+      };
       U6A3.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U6A3.prototype.setStage = function() {
-      var Imgs;
+      var imgs, step, stepsimg;
       U6A3.__super__.setStage.apply(this, arguments);
+      this.steps = this.shuffleNoRepeat(this.game.steps, 11);
+      stepsimg = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.steps;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          step = _ref[_i];
+          _results.push(step.img);
+        }
+        return _results;
+      }).call(this);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      Imgs = this.createSprite('images', ['aBank', 'aBusstop', 'aCandystore', 'aGasstation', 'aGrocerystore', 'aHospital', 'aLibrary', 'aMovietheater', 'aPetstore', 'aPolicestation', 'aPostoffice', 'aRestaurant', 'aShoestore', 'anAnimalhospital', 'anInternetcafe'], null, stageSize.w / 2, 215, 'mc');
-      Imgs.scaleX = Imgs.scaleY = 0.3;
-      this.addToMain(Imgs);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setDropper().setNube1().setNube2().introEvaluation();
+      imgs = this.createSprite('images', stepsimg, null, stageSize.w / 2, 235, 'mc');
+      imgs.scaleX = imgs.scaleY = 0.3;
+      this.addToMain(imgs);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 11, 0));
+      return this.setDropper(1).setNube1().setNube2().introEvaluation();
     };
 
-    U6A3.prototype.setDropper = function() {
-      var dropper, frase, h1, h2, h3, isThere, question;
-      dropper = new createjs.Container();
-      dropper.x = stageSize.w / 2 - 160;
-      dropper.y = this.library['images'].y + 10;
-      dropper.name = 'dropper';
-      frase = new createjs.Text(this.info[1].frase, '24px Arial', '#333');
-      frase.x = 160;
-      frase.y = 110;
-      frase.textAlign = 'center';
+    U6A3.prototype.setDropper = function(step) {
+      var dropper, frase, h, i, isThere, question, _i, _ref;
+      this.step = step;
+      if (this.library.dropper) {
+        dropper = this.library.dropper;
+      } else {
+        dropper = new createjs.Container();
+        dropper.y = this.library.images.y + 10;
+        dropper.name = 'dropper';
+        this.addToMain(dropper);
+      }
+      dropper.removeAllChildren();
+      frase = this.createText('frase', this.steps[step - 1].frase, '24px Quicksand', '#333', 190, 110, 'center');
+      this.addToLibrary(frase);
       dropper.addChild(frase);
-      isThere = new createjs.Text('Is there', '24px Arial', '#333');
-      isThere.x = 0;
-      isThere.y = 140;
+      isThere = this.createText('isThere', 'Is there', '24px Quicksand', '#333', 0, 150);
       dropper.addChild(isThere);
-      h1 = new WordContainer('h1', '', '', '#f00', 90, 145, 40, 22);
-      h2 = new WordContainer('h2', '', '', '#f00', 140, 145, 90, 22);
-      h3 = new WordContainer('h3', '', '', '#f00', 240, 145, 55, 22);
-      question = new createjs.Text('?', '24px Arial', '#333');
-      question.x = 300;
-      question.y = 140;
+      for (i = _i = 0, _ref = this.steps[step - 1].targets.length - 1; _i <= _ref; i = _i += 1) {
+        h = new WordContainer("h" + i, '', '#FFF', '#F00', 110 * i + isThere.getMeasuredWidth() + 10, 155, 100, 22);
+        h.index = i;
+        dropper.addChild(h);
+        this.addToLibrary(h);
+      }
+      question = this.createText('q', '?', '24px Quicksand', '#333', this.steps[step - 1].targets.length * 115 + isThere.getMeasuredWidth() - 10, 150);
       dropper.addChild(question);
-      dropper.addChild(h1, h2, h3);
-      this.addToLibrary(h1, h2, h3);
-      this.addToMain(dropper);
+      dropper.x = stageSize.w / 2 - (question.x + question.getMeasuredWidth()) / 2;
       return this;
     };
 
     U6A3.prototype.setNube1 = function() {
-      var back, container, p1n1, p2n1;
+      var back, container, d, opt, _i, _len, _ref;
       container = new createjs.Container();
-      container.x = 100;
-      container.y = this.library['dropper'].y + 180;
+      container.x = 150;
+      container.y = this.library.dropper.y + 200;
       container.name = 'nube1';
       back = this.createBitmap('backNube1', 'n1', 0, 0);
-      p1n1 = new DraggableText('p1n1', "a", 0, 26, 15);
-      p2n1 = new DraggableText('p2n1', "an", 1, 44, 30);
-      container.addChild(back, p1n1, p2n1);
-      this.addToLibrary(back, p1n1, p2n1);
+      container.addChild(back);
+      _ref = this.game.opt1;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        opt = _ref[_i];
+        d = new DroppableText("n1d" + opt.i, opt.t, opt.t, opt.x, opt.y, this.stage);
+        container.addChild(d);
+        this.addToLibrary(d);
+      }
       this.addToMain(container);
       return this;
     };
 
     U6A3.prototype.setNube2 = function() {
-      var back, container, p10n2, p11n2, p12n2, p13n2, p14n2, p15n2, p16n2, p17n2, p18n2, p19n2, p1n2, p20n2, p2n2, p3n2, p4n2, p5n2, p6n2, p7n2, p8n2, p9n2;
+      var back, container, d, opt, _i, _len, _ref;
       container = new createjs.Container();
       container.x = 250;
-      container.y = this.library['dropper'].y + 180;
+      container.y = this.library.dropper.y + 200;
       container.name = 'nube2';
       back = this.createBitmap('backNube2', 'n2', 0, 0);
-      p1n2 = new DraggableText('p1n2', "cafe", 0, 20, 25);
-      p2n2 = new DraggableText('p2n2', "stop", 1, 24, 70);
-      p3n2 = new DraggableText('p3n2', "library", 2, 65, 45);
-      p4n2 = new DraggableText('p4n2', "grocery", 3, 74, 85);
-      p5n2 = new DraggableText('p5n2', "police", 4, 56, 107);
-      p6n2 = new DraggableText('p6n2', "candy", 5, 124, 26);
-      p7n2 = new DraggableText('p7n2', "post", 6, 141, 60);
-      p8n2 = new DraggableText('p8n2', "animal", 7, 152, 105);
-      p9n2 = new DraggableText('p9n2', "bus", 8, 200, 21);
-      p10n2 = new DraggableText('p10n2', "theater", 9, 189, 66);
-      p11n2 = new DraggableText('p11n2', "pet", 10, 253, 33);
-      p12n2 = new DraggableText('p12n2', "shoe", 11, 240, 100);
-      p13n2 = new DraggableText('p13n2', "gas", 12, 303, 25);
-      p14n2 = new DraggableText('p14n2', "station", 13, 273, 71);
-      p15n2 = new DraggableText('p15n2', "store", 14, 327, 46);
-      p16n2 = new DraggableText('p16n2', "hospital", 15, 305, 104);
-      p17n2 = new DraggableText('p17n2', "bank", 16, 378, 25);
-      p18n2 = new DraggableText('p18n2', "internet", 17, 363, 75);
-      p19n2 = new DraggableText('p19n2', "movie", 18, 383, 111);
-      p20n2 = new DraggableText('p20n2', "office", 19, 418, 48);
-      container.addChild(back, p1n2, p2n2, p3n2, p4n2, p5n2, p6n2, p7n2, p8n2, p9n2, p10n2, p11n2, p12n2, p13n2, p14n2, p15n2, p16n2, p17n2, p18n2, p19n2, p20n2);
-      this.addToLibrary(back, p1n2, p2n2, p3n2, p4n2, p5n2, p6n2, p7n2, p8n2, p9n2, p10n2, p11n2, p12n2, p13n2, p14n2, p15n2, p16n2, p17n2, p18n2, p19n2, p20n2);
+      container.addChild(back);
+      _ref = this.game.opt2;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        opt = _ref[_i];
+        d = new DroppableText("n2d" + opt.i, opt.t, opt.t, opt.x, opt.y, this.stage);
+        container.addChild(d);
+        this.addToLibrary(d);
+      }
       this.addToMain(container);
       return this;
     };
 
     U6A3.prototype.introEvaluation = function() {
-      var i, _i, _j, _k;
       U6A3.__super__.introEvaluation.apply(this, arguments);
-      for (i = _i = 1; _i <= 2; i = _i += 1) {
-        this.observer.subscribe('init_evaluation', this.library['p' + i + 'n1'].onInitEvaluation);
-      }
-      for (i = _j = 1; _j <= 4; i = _j += 1) {
-        this.observer.subscribe('init_evaluation', this.library['p' + i + 'n2'].onInitEvaluation);
-      }
-      for (i = _k = 1; _k <= 5; i = _k += 1) {
-        this.observer.subscribe('init_evaluation', this.library['p' + i + 'n3'].onInitEvaluation);
-      }
-      this.library['characters'].currentFrame = this.index;
-      this.library['characters'].scaleX = 1;
-      this.library['characters'].scaleY = 1;
-      this.library['characters'].alpha = 1;
-      TweenLite.from(this.library['header'], 1, {
-        y: -this.library['header'].height
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
       });
-      TweenLite.from(this.library['instructions'], 1, {
+      TweenLite.from(this.library.instructions, 1, {
         alpha: 0,
         x: 0,
         delay: 0.5
       });
-      TweenLite.from(this.library['characters'], 1, {
+      TweenLite.from(this.library.dropper, 1, {
         alpha: 0,
-        y: this.library['characters'].y + 50,
-        delay: 1
+        y: this.library.dropper.y + 20,
+        delay: 0.7
       });
-      TweenLite.from(this.library['dropper'], 1, {
+      TweenLite.from(this.library.images, 1, {
         alpha: 0,
-        y: this.library['dropper'].y + 20,
-        delay: 1.2
+        y: this.library.images.y + 20,
+        delay: 0.7
       });
-      TweenLite.from(this.library['nube1'], 1, {
+      TweenLite.from(this.library.nube1, 1, {
         alpha: 0,
-        y: this.library['nube1'].y + 20,
-        delay: 1.4
+        y: this.library.nube1.y + 20,
+        delay: 0.9
       });
-      TweenLite.from(this.library['nube2'], 1, {
+      return TweenLite.from(this.library.nube2, 1, {
         alpha: 0,
-        y: this.library['nube2'].y + 20,
-        delay: 1.5
-      });
-      return TweenLite.from(this.library['nube3'], 1, {
-        alpha: 0,
-        y: this.library['nube3'].y + 20,
-        delay: 1.6,
+        y: this.library.nube2.y + 20,
+        delay: 1.1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
       });
     };
 
     U6A3.prototype.initEvaluation = function(e) {
-      var i, _i;
+      var opt, _i, _j, _len, _len1, _ref, _ref1, _results;
       U6A3.__super__.initEvaluation.apply(this, arguments);
-      this.library['h1'].blink();
-      this.blink(this.library['backNube1']);
-      for (i = _i = 1; _i <= 2; i = _i += 1) {
-        this.library['p' + i + 'n1'].addEventListener('drop', this.evaluateAnswer1);
+      _ref = this.game.opt1;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        opt = _ref[_i];
+        this.library["n1d" + opt.i].updateDrops(this.library.h0);
+        this.library["n1d" + opt.i].addEventListener('dropped', this.evaluateAnswer);
+        this.library["n1d" + opt.i].initDragListener();
       }
-      return false;
+      _ref1 = this.game.opt2;
+      _results = [];
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        opt = _ref1[_j];
+        if (this.steps[this.step - 1].targets.length === 3) {
+          this.library["n2d" + opt.i].updateDrops(this.library.h1, this.library.h2);
+        } else {
+          this.library["n2d" + opt.i].updateDrops(this.library.h1);
+        }
+        this.library["n2d" + opt.i].addEventListener('dropped', this.evaluateAnswer);
+        _results.push(this.library["n2d" + opt.i].initDragListener());
+      }
+      return _results;
     };
 
-    U6A3.prototype.evaluateAnswer1 = function(e) {
-      var i, pt, _i;
+    U6A3.prototype.evaluateAnswer = function(e) {
       this.answer = e.target;
-      pt = this.library['h1'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['h1'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].w1) {
-          this.answer.visible = false;
-          this.library['h1'].changeText(this.answer.text.text);
-          this.library['h1'].blink(false);
-          this.blink(this.library['backNube1'], false);
-          this.library['h2'].blink();
-          this.blink(this.library['backNube2']);
-          for (i = _i = 1; _i <= 4; i = _i += 1) {
-            this.library['p' + i + 'n2'].addEventListener('drop', this.evaluateAnswer2);
-          }
-          return false;
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
+      this.drop = e.drop;
+      if (this.answer.index === this.steps[this.step - 1].targets[this.drop.index]) {
+        this.answer.visible = false;
+        this.drop.changeText(this.answer.index);
+        return this.finishEvaluation();
       } else {
-        return this.answer.returnToPlace();
-      }
-    };
-
-    U6A3.prototype.evaluateAnswer2 = function(e) {
-      var i, pt, _i, _results;
-      this.answer = e.target;
-      pt = this.library['h2'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['h2'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].w2) {
-          this.answer.visible = false;
-          this.library['h2'].changeText(this.answer.text.text);
-          this.library['h2'].blink(false);
-          this.blink(this.library['backNube2'], false);
-          this.library['h3'].blink();
-          this.blink(this.library['backNube3']);
-          _results = [];
-          for (i = _i = 1; _i <= 5; i = _i += 1) {
-            _results.push(this.library['p' + i + 'n3'].addEventListener('drop', this.evaluateAnswer3));
-          }
-          return _results;
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
-      } else {
-        return this.answer.returnToPlace();
-      }
-    };
-
-    U6A3.prototype.evaluateAnswer3 = function(e) {
-      var pt;
-      this.answer = e.target;
-      pt = this.library['h3'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['h3'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].w3) {
-          this.answer.visible = false;
-          this.library['h3'].changeText(this.answer.text.text);
-          this.library['h3'].blink(false);
-          this.blink(this.library['backNube3'], false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
-        } else {
-          this.warning();
-          return this.answer.returnToPlace();
-        }
-      } else {
+        this.warning();
         return this.answer.returnToPlace();
       }
     };
 
     U6A3.prototype.finishEvaluation = function() {
-      var song;
+      if (this.steps[this.step - 1].targets.length === 3) {
+        if (this.library.h0.text.text === '' || this.library.h1.text.text === '' || this.library.h2.text.text === '') {
+          return;
+        }
+      } else {
+        if (this.library.h0.text.text === '' || this.library.h1.text.text === '') {
+          return;
+        }
+      }
       this.library['score'].plusOne();
-      song = createjs.Sound.play(this.answers[this.index].sound);
-      return song.addEventListener('complete', this.clearEvaluation);
+      return setTimeout(this.clearEvaluation, 1 * 1000);
     };
 
     U6A3.prototype.clearEvaluation = function(e) {
-      var i, _i, _j, _k, _l;
-      for (i = _i = 1; _i <= 2; i = _i += 1) {
-        this.library['p' + i + 'n1'].visible = true;
-        this.library['p' + i + 'n1'].returnToPlace();
+      var opt, _i, _j, _len, _len1, _ref, _ref1;
+      _ref = this.game.opt1;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        opt = _ref[_i];
+        this.library["n1d" + opt.i].visible = true;
+        this.library["n1d" + opt.i].returnToPlace();
       }
-      for (i = _j = 1; _j <= 4; i = _j += 1) {
-        this.library['p' + i + 'n2'].visible = true;
-        this.library['p' + i + 'n2'].returnToPlace();
+      _ref1 = this.game.opt2;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        opt = _ref1[_j];
+        this.library["n2d" + opt.i].visible = true;
+        this.library["n2d" + opt.i].returnToPlace();
       }
-      for (i = _k = 1; _k <= 5; i = _k += 1) {
-        this.library['p' + i + 'n3'].visible = true;
-        this.library['p' + i + 'n3'].returnToPlace();
-      }
-      for (i = _l = 1; _l <= 3; i = _l += 1) {
-        this.library['h' + i].changeText('');
-      }
-      return TweenLite.to(this.library['characters'], 0.5, {
-        scaleX: 1.5,
-        scaleY: 1.5,
+      TweenLite.to(this.library.dropper, 0.5, {
+        alpha: 0,
+        y: this.library.dropper.y + 20
+      });
+      return TweenLite.to(this.library.images, 0.5, {
+        scaleX: 1,
+        scaleY: 1,
         alpha: 0,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
@@ -421,21 +476,35 @@
     };
 
     U6A3.prototype.nextEvaluation = function() {
-      var i, _i, _results;
+      var opt, _i, _j, _len, _len1, _ref, _ref1, _results;
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['characters'].currentFrame = this.index;
-        this.library['h1'].blink();
-        this.blink(this.library['backNube1']);
-        TweenLite.to(this.library['characters'], 0.5, {
-          scaleX: 1,
-          scaleY: 1,
+      if (this.index < this.steps.length) {
+        this.library.images.currentFrame = this.index;
+        this.setDropper(this.index + 1);
+        TweenLite.to(this.library.dropper, 0.5, {
+          alpha: 1,
+          y: this.library.images.y + 10
+        });
+        TweenLite.to(this.library.images, 0.5, {
+          scaleX: 0.3,
+          scaleY: 0.3,
           alpha: 1,
           ease: Back.easeOut
         });
+        _ref = this.game.opt1;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          opt = _ref[_i];
+          this.library["n1d" + opt.i].updateDrops(this.library.h0);
+        }
+        _ref1 = this.game.opt2;
         _results = [];
-        for (i = _i = 1; _i <= 2; i = _i += 1) {
-          _results.push(this.library['p' + i + 'n1'].addEventListener('drop', this.evaluateAnswer1));
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          opt = _ref1[_j];
+          if (this.steps[this.step - 1].targets.length === 3) {
+            _results.push(this.library["n2d" + opt.i].updateDrops(this.library.h1, this.library.h2));
+          } else {
+            _results.push(this.library["n2d" + opt.i].updateDrops(this.library.h1));
+          }
         }
         return _results;
       } else {
@@ -443,22 +512,15 @@
       }
     };
 
-    U6A3.prototype.blink = function(obj, state) {
-      if (state == null) {
-        state = true;
-      }
-      TweenMax.killTweensOf(obj);
-      obj.alpha = 1;
-      if (state) {
-        return TweenMax.to(obj, 0.5, {
-          alpha: .5,
-          repeat: -1,
-          yoyo: true
-        });
-      }
-    };
-
     U6A3.prototype.finish = function() {
+      TweenLite.to(this.library.nube1, 1, {
+        alpha: 0,
+        y: this.library.nube1.y + 20
+      });
+      TweenLite.to(this.library.nube2, 1, {
+        alpha: 0,
+        y: this.library.nube2.y + 20
+      });
       return U6A3.__super__.finish.apply(this, arguments);
     };
 

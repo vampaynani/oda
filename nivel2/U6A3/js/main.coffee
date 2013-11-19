@@ -1,8 +1,8 @@
 class U6A3 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-		    {id: 'inst' , src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
+		    {id: 'inst' , src: 'inst.png'}
 		    {id: 'c1' , src: 'circle1.png'}
 		    {id: 'c2' , src: 'circle2.png'}
 		    {id: 'aBank', src:'a-bank.png'}
@@ -27,227 +27,190 @@ class U6A3 extends Oda
 			{src:'sounds/boing.mp3', id:'boing'}
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU2_U4_A6_Instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U6_A3_Instructions.mp3', id:'instructions'}
 		]
-		
-		@info = [ ##no se como tengan que organizarse cada imagen tiene una frase que debe mostrar. Falta completar aqui las frases
-			{img:'cafe', frase:''}
-			{img:'stop', frase:'I need to take a bus.'}
-			{img:'library', frase:''}
-			{img:'grocery', frase:'I need some groceries.'}
-			{img:'police', frase:'I have a problem! I need some help!'}
-			{img:'candy', frase:'I want a box of chocolates.'}
-			{img:'post', frase:'I need to send a postcard.'}
-			{img:'animal', frase:''}
-			{img:'bus', frase:''}
-			{img:'theater', frase:'I want to watch a movie.'}
-			{img:'pet', frase:'I need some dog food.'}
-			{img:'shoe', frase:'I need some sandals.'}
-			{img:'gas', frase:'I need some gas.'}
-			{img:'station', frase:''}
-			{img:'store', frase:''}
-			{img:'hospital', frase:''}
-			{img:'bank', frase:''}
-			{img:'internet', frase:'I need to send an e-mail.'}
-			{img:'movie', frase:''}
-			{img:'office', frase:''}
-
-		]
+		@game =
+			steps : [ ##no se como tengan que organizarse cada imagen tiene una frase que debe mostrar. Falta completar aqui las frases
+				{img:'aBank', frase:'I need some money', targets: ['a','bank']}
+				{img:'aBusstop', frase:'I need to take a bus.', targets: ['a','bus','stop']}
+				{img:'aCandystore', frase:'I want a box of chocolates.', targets: ['a','candy','store']}
+				{img:'aGasstation', frase:'I need some gas.', targets: ['a','gas','station']}
+				{img:'aGrocerystore', frase:'I need some groceries.', targets: ['a','grocery','store']}
+				{img:'aHospital', frase:'I need a doctor', targets: ['a','hospital']}
+				{img:'aLibrary', frase:'I need a book', targets: ['a','library']}
+				{img:'aMovietheater', frase:'I want to watch a movie.', targets: ['a','movie','theater']}
+				{img:'aPetstore', frase:'I need some dog food.', targets: ['a','pet','store']}
+				{img:'aPolicestation', frase:'I have a problem! I need some help!', targets: ['a','police','station']}
+				{img:'aPostoffice', frase:'I need to send a postcard.', targets: ['a','post','office']}
+				{img:'aShoestore', frase:'I need some sandals.', targets: ['a','shoe','store']}
+				{img:'anInternetcafe', frase:'I need to send an e-mail.', targets: ['an','Internet','cafe']}
+			]
+			opt1:[
+				{i:1, t:'a', x:26, y:15}
+				{i:2, t:'an', x:44, y:30}
+			]
+			opt2:[
+				{i:1, t:'cafe', x:20, y:25}
+				{i:2, t:'stop', x:24, y:70}
+				{i:3, t:'library', x:65, y:45}
+				{i:4, t:'grocery', x:74, y:85}
+				{i:5, t:'police', x:56, y:107}
+				{i:6, t:'candy', x:124, y:26}
+				{i:7, t:'post', x:141, y:60}
+				{i:8, t:'animal', x:152, y:105}
+				{i:9, t:'bus', x:200, y:21}
+				{i:10, t:'theater', x:189, y:66}
+				{i:11, t:'pet', x:253, y:33}
+				{i:12, t:'shoe', x:240, y:100}
+				{i:13, t:'gas', x:303, y:25}
+				{i:14, t:'station', x:273, y:71}
+				{i:15, t:'store', x:327, y:46}
+				{i:16, t:'hospital', x:305, y:104}
+				{i:17, t:'bank', x:378, y:25}
+				{i:18, t:'internet', x:363, y:75}
+				{i:19, t:'movie', x:383, y:111}
+				{i:20, t:'office', x:418, y:48}
+			]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@steps = @shuffleNoRepeat @game.steps, 11
+		stepsimg = (step.img for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		Imgs = @createSprite 'images', ['aBank' , 'aBusstop' , 'aCandystore' , 'aGasstation' , 'aGrocerystore' , 'aHospital' , 'aLibrary' , 'aMovietheater' , 'aPetstore' , 'aPolicestation' , 'aPostoffice' , 'aRestaurant' , 'aShoestore' , 'anAnimalhospital' , 'anInternetcafe'], null, stageSize.w / 2, 215, 'mc'
-		Imgs.scaleX = Imgs.scaleY = 0.3
-		@addToMain Imgs
+		imgs = @createSprite 'images', stepsimg, null, stageSize.w / 2, 235, 'mc'
+		imgs.scaleX = imgs.scaleY = 0.3
+		@addToMain imgs
 
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setDropper().setNube1().setNube2().introEvaluation()
-	setDropper: ->
-		dropper = new createjs.Container()
-		dropper.x = stageSize.w / 2 - 160
-		dropper.y = @library['images'].y + 10
-		dropper.name = 'dropper'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 11, 0
+		@setDropper(1).setNube1().setNube2().introEvaluation()
+	setDropper: (step) ->
+		@step = step
+		if @library.dropper
+			dropper = @library.dropper
+		else
+			dropper = new createjs.Container()
+			dropper.y = @library.images.y + 10
+			dropper.name = 'dropper'
+			@addToMain dropper
+		dropper.removeAllChildren()
 
-		frase = new createjs.Text @info[1].frase,'24px Arial','#333'
-		frase.x = 160
-		frase.y = 110
-		frase.textAlign = 'center'
+		frase = @createText 'frase', @steps[step - 1].frase,'24px Quicksand','#333', 190, 110, 'center'
+		@addToLibrary frase
 		dropper.addChild frase
 
-		isThere = new createjs.Text 'Is there','24px Arial','#333'
-		isThere.x = 0
-		isThere.y = 140
+		isThere = @createText 'isThere', 'Is there','24px Quicksand','#333', 0, 150
 		dropper.addChild isThere
-		h1 = new WordContainer 'h1', '', '', '#f00', 90, 145, 40, 22
-		h2 = new WordContainer 'h2', '', '', '#f00', 140, 145, 90, 22
-		h3 = new WordContainer 'h3', '', '', '#f00', 240, 145, 55, 22
-		question = new createjs.Text '?','24px Arial','#333'
-		question.x = 300
-		question.y = 140
+
+		for i in [0..@steps[step - 1].targets.length - 1] by 1
+			h = new WordContainer "h#{i}", '', '#FFF', '#F00', 110*i + isThere.getMeasuredWidth() + 10, 155, 100, 22
+			h.index = i
+			dropper.addChild h
+			@addToLibrary h
+		question = @createText 'q', '?','24px Quicksand','#333', @steps[step - 1].targets.length*115 + isThere.getMeasuredWidth() - 10, 150
 		dropper.addChild question
 
-		dropper.addChild  h1, h2, h3
-		@addToLibrary h1, h2, h3
-		@addToMain dropper
+		dropper.x = stageSize.w / 2 - (question.x + question.getMeasuredWidth()) / 2
 		@
 	setNube1: ->
 		container = new createjs.Container()
-		container.x = 100
-		container.y = @library['dropper'].y + 180
+		container.x = 150
+		container.y = @library.dropper.y + 200
 		container.name = 'nube1'
+		
 		back = @createBitmap 'backNube1', 'n1', 0, 0
-		p1n1 = new DraggableText 'p1n1', "a", 0, 26,15
-		p2n1 = new DraggableText 'p2n1', "an", 1, 44, 30
-		container.addChild back, p1n1, p2n1
-		@addToLibrary back, p1n1, p2n1
+		container.addChild back
+
+		for opt in @game.opt1
+			d = new DroppableText "n1d#{opt.i}", opt.t, opt.t, opt.x, opt.y, @stage
+			container.addChild d
+			@addToLibrary d
+		
 		@addToMain container
 		@
 	setNube2: ->
 		container = new createjs.Container()
 		container.x = 250
-		container.y = @library['dropper'].y + 180
+		container.y = @library.dropper.y + 200
 		container.name = 'nube2'
+		
 		back = @createBitmap 'backNube2', 'n2', 0, 0
+		container.addChild back
 
-		p1n2 = new DraggableText 'p1n2', "cafe", 0, 20,25 
-		p2n2 = new DraggableText 'p2n2', "stop", 1, 24,70 
-		p3n2 = new DraggableText 'p3n2', "library", 2, 65,45 
-		p4n2 = new DraggableText 'p4n2', "grocery", 3, 74,85 
-		p5n2 = new DraggableText 'p5n2', "police", 4, 56,107
-		p6n2 = new DraggableText 'p6n2', "candy", 5, 124,26 
-		p7n2 = new DraggableText 'p7n2', "post", 6, 141,60 
-		p8n2 = new DraggableText 'p8n2', "animal", 7, 152,105 
-		p9n2 = new DraggableText 'p9n2', "bus", 8, 200,21
-		p10n2 = new DraggableText 'p10n2', "theater", 9, 189,66 
-		p11n2 = new DraggableText 'p11n2', "pet", 10, 253,33 
-		p12n2 = new DraggableText 'p12n2', "shoe", 11, 240,100 
-		p13n2 = new DraggableText 'p13n2', "gas", 12, 303,25 
-		p14n2 = new DraggableText 'p14n2', "station", 13, 273,71 
-		p15n2 = new DraggableText 'p15n2', "store", 14, 327,46 
-		p16n2 = new DraggableText 'p16n2', "hospital", 15, 305,104 
-		p17n2 = new DraggableText 'p17n2', "bank", 16, 378,25 
-		p18n2 = new DraggableText 'p18n2', "internet", 17, 363,75 
-		p19n2 = new DraggableText 'p19n2', "movie", 18, 383,111 
-		p20n2 = new DraggableText 'p20n2', "office", 19, 418,48 
-
-		container.addChild back, p1n2, p2n2, p3n2, p4n2, p5n2, p6n2, p7n2, p8n2, p9n2, p10n2, p11n2, p12n2, p13n2, p14n2, p15n2, p16n2, p17n2, p18n2, p19n2, p20n2
-		@addToLibrary back, p1n2, p2n2, p3n2, p4n2, p5n2, p6n2, p7n2, p8n2, p9n2, p10n2, p11n2, p12n2, p13n2, p14n2, p15n2, p16n2, p17n2, p18n2, p19n2, p20n2
+		for opt in @game.opt2
+			d = new DroppableText "n2d#{opt.i}", opt.t, opt.t, opt.x, opt.y, @stage
+			container.addChild d
+			@addToLibrary d
+		
 		@addToMain container
 		@
 	introEvaluation: ->
 		super
-		for i in [1..2] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n1'].onInitEvaluation
-		for i in [1..4] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n2'].onInitEvaluation
-		for i in [1..5] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n3'].onInitEvaluation
-		
-		@library['characters'].currentFrame = @index
-		@library['characters'].scaleX = 1
-		@library['characters'].scaleY = 1
-		@library['characters'].alpha = 1
-		
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 50, delay: 1}
-		TweenLite.from @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 1.2}
-		TweenLite.from @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 20, delay: 1.4}
-		TweenLite.from @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 20, delay: 1.5}
-		TweenLite.from @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 20, delay: 1.6, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 20, delay: 0.7}
+		TweenLite.from @library.images, 1, {alpha: 0, y: @library.images.y + 20, delay: 0.7}
+		TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20, delay: 0.9}
+		TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20, delay: 1.1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['h1'].blink()
-		@blink @library['backNube1']
-		for i in [1..2] by 1
-			@library['p'+i+'n1'].addEventListener 'drop', @evaluateAnswer1
-		false
-	evaluateAnswer1: (e) =>
+		for opt in @game.opt1
+			@library["n1d#{opt.i}"].updateDrops @library.h0
+			@library["n1d#{opt.i}"].addEventListener 'dropped', @evaluateAnswer
+			@library["n1d#{opt.i}"].initDragListener()
+		for opt in @game.opt2
+			if @steps[@step - 1].targets.length is 3
+				@library["n2d#{opt.i}"].updateDrops @library.h1, @library.h2
+			else
+				@library["n2d#{opt.i}"].updateDrops @library.h1
+			@library["n2d#{opt.i}"].addEventListener 'dropped', @evaluateAnswer
+			@library["n2d#{opt.i}"].initDragListener()
+	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['h1'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['h1'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].w1
-				@answer.visible = false
-				@library['h1'].changeText @answer.text.text
-				@library['h1'].blink off
-				@blink @library['backNube1'], off
-				@library['h2'].blink()
-				@blink @library['backNube2']
-				for i in [1..4] by 1
-					@library['p'+i+'n2'].addEventListener 'drop', @evaluateAnswer2
-				false
-			else
-				@warning()
-				@answer.returnToPlace()
+		@drop = e.drop
+		if @answer.index is @steps[@step - 1].targets[@drop.index]
+			@answer.visible = false
+			@drop.changeText @answer.index
+			@finishEvaluation()
 		else
-			@answer.returnToPlace()
-	evaluateAnswer2: (e) =>
-		@answer = e.target
-		pt = @library['h2'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['h2'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].w2
-				@answer.visible = false
-				@library['h2'].changeText @answer.text.text
-				@library['h2'].blink off
-				@blink @library['backNube2'], off
-				@library['h3'].blink()
-				@blink @library['backNube3']
-				for i in [1..5] by 1
-					@library['p'+i+'n3'].addEventListener 'drop', @evaluateAnswer3
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
-	evaluateAnswer3:(e) =>
-		@answer = e.target;
-		pt = @library['h3'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['h3'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].w3
-				@answer.visible = false
-				@library['h3'].changeText @answer.text.text
-				@library['h3'].blink off
-				@blink @library['backNube3'], off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
+			@warning()
 			@answer.returnToPlace()
 	finishEvaluation: =>
+		if @steps[@step - 1].targets.length is 3
+			if @library.h0.text.text is '' or @library.h1.text.text is '' or @library.h2.text.text is ''
+				return
+		else
+			if @library.h0.text.text is '' or @library.h1.text.text is ''
+				return
 		@library['score'].plusOne()
-		song = createjs.Sound.play @answers[@index].sound
-		song.addEventListener 'complete', @clearEvaluation
+		setTimeout @clearEvaluation, 1 * 1000
 	clearEvaluation: (e) =>
-		for i in [1..2] by 1
-			@library['p'+i+'n1'].visible = true
-			@library['p'+i+'n1'].returnToPlace()
-		for i in [1..4] by 1
-			@library['p'+i+'n2'].visible = true
-			@library['p'+i+'n2'].returnToPlace()
-		for i in [1..5] by 1
-			@library['p'+i+'n3'].visible = true
-			@library['p'+i+'n3'].returnToPlace()
-		for i in [1..3] by 1
-			@library['h'+i].changeText ''
-		TweenLite.to @library['characters'], 0.5, {scaleX: 1.5, scaleY: 1.5, alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
+		for opt in @game.opt1
+			@library["n1d#{opt.i}"].visible = true
+			@library["n1d#{opt.i}"].returnToPlace()
+		for opt in @game.opt2
+			@library["n2d#{opt.i}"].visible = true
+			@library["n2d#{opt.i}"].returnToPlace()
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 20}
+		TweenLite.to @library.images, 0.5, {scaleX: 1, scaleY: 1, alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['characters'].currentFrame = @index
-			@library['h1'].blink()
-			@blink @library['backNube1']
-			TweenLite.to @library['characters'], 0.5, {scaleX: 1, scaleY: 1, alpha: 1, ease: Back.easeOut}
-			for i in [1..2] by 1
-				@library['p'+i+'n1'].addEventListener 'drop', @evaluateAnswer1
+		if @index < @steps.length
+			@library.images.currentFrame = @index
+			@setDropper @index + 1
+			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: @library.images.y + 10}
+			TweenLite.to @library.images, 0.5, {scaleX: 0.3, scaleY: 0.3, alpha: 1, ease: Back.easeOut}
+			for opt in @game.opt1
+				@library["n1d#{opt.i}"].updateDrops @library.h0
+			for opt in @game.opt2
+				if @steps[@step - 1].targets.length is 3
+					@library["n2d#{opt.i}"].updateDrops @library.h1, @library.h2
+				else
+					@library["n2d#{opt.i}"].updateDrops @library.h1
 		else
 			@finish()
-	blink: (obj, state = on) ->
-		TweenMax.killTweensOf obj
-		obj.alpha = 1
-		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
+		TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
 		super
 	window.U6A3 = U6A3

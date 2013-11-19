@@ -260,6 +260,27 @@
       return false;
     };
 
+    ClickableText.prototype.setLineWidth = function(width) {
+      var h, hit, w;
+      this.text.lineWidth = width;
+      h = this.text.getMeasuredHeight() + 6;
+      w = this.width > width ? width + 10 : this.width;
+      hit = new createjs.Shape();
+      switch (this.text.textAlign) {
+        case 'left':
+          hit.graphics.c().beginFill('rgba(0,0,0,0.1)').drawRect(0, 0, w, h);
+          break;
+        case 'center':
+          hit.graphics.c().beginFill('rgba(0,0,0,0.1)').drawRect(-w / 2, 0, w, h);
+          break;
+        case 'right':
+          hit.graphics.c().beginFill('rgba(0,0,0,0.1)').drawRect(-w, 0, w, h);
+      }
+      this.text.hitArea = hit;
+      this.width = w;
+      return false;
+    };
+
     window.ClickableText = ClickableText;
 
     return ClickableText;
