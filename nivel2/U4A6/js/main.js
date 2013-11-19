@@ -447,7 +447,8 @@
         this.library['score'].plusOne();
         return this.finishEvaluation();
       } else {
-        return this.warning();
+        this.warning();
+        return this.finishEvaluation();
       }
     };
 

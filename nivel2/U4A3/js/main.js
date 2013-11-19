@@ -112,6 +112,9 @@
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
+        }, {
+          src: 'sounds/good.mp3',
+          id: 'good'
         }
       ];
       this.letra = ['Animals, animals everywhere!', 'Some have wings and fly through the air,', 'Some have feathers. Some have scales.', 'Some have fur, and some have tails!', 'Some have whiskers. Some have claws.', 'Some have fins, and some have paws.', 'Some have beaks, and some can speak!', 'Animals, animals everywhere!'];
@@ -139,7 +142,7 @@
             y: 18
           }, {
             w: 'scales',
-            x: 214.5,
+            x: 215,
             y: 36
           }, {
             w: 'paws',
@@ -147,7 +150,7 @@
             y: 90
           }, {
             w: 'tails',
-            x: 205.5,
+            x: 206,
             y: 54
           }, {
             w: 'claws',
@@ -278,7 +281,7 @@
         cancion.addChild(text);
       }
       for (i = _j = 0, _ref1 = this.answers.words.length - 1; _j <= _ref1; i = _j += 1) {
-        text = new createjs.Text(this.answers.words[i].w, '13px Quicksand', '#000');
+        text = new createjs.Text(this.answers.words[i].w, '13px Quicksand', '#EB198E');
         text.name = "t" + i;
         text.x = this.answers.words[i].x;
         text.y = this.answers.words[i].y;
@@ -333,7 +336,9 @@
         createjs.Sound.play('good');
         return setTimeout(this.finishEvaluation, 0.5 * 1000);
       } else {
-        return this.warning();
+        this.warning();
+        this.blink(this.library["t" + this.index], false);
+        return this.nextEvaluation();
       }
     };
 

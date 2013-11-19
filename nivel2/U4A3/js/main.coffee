@@ -34,6 +34,7 @@ class U4A3 extends Oda
 		    {src:'sounds/TU2_U4_A3_instructions.mp3', id:'instructions'}
 		    {src:'sounds/TU2_U4_A3_animals.mp3', id:'animals'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
+			{src:'sounds/good.mp3', id:'good'}
 		]
 		@letra = [
 			'Animals, animals everywhere!',	
@@ -52,9 +53,9 @@ class U4A3 extends Oda
 				{w:'fins',x:77,y:90}
 				{w:'beaks',x:77,y:108}
 				{w:'wings',x:77,y:18}
-				{w:'scales',x:214.5,y:36}
+				{w:'scales',x:215,y:36}
 				{w:'paws',x:210,y:90}
-				{w:'tails',x:205.5,y:54}
+				{w:'tails',x:206,y:54}
 				{w:'claws',x:217,y:72}
 				{w:'feathers',x:77,y:36}
 			]
@@ -108,7 +109,7 @@ class U4A3 extends Oda
 			text.y = i * 18
 			cancion.addChild text
 		for i in [0..@answers.words.length - 1] by 1
-			text = new createjs.Text @answers.words[i].w, '13px Quicksand', '#000'
+			text = new createjs.Text @answers.words[i].w, '13px Quicksand', '#EB198E'
 			text.name = "t#{i}"
 			text.x = @answers.words[i].x
 			text.y = @answers.words[i].y
@@ -135,6 +136,8 @@ class U4A3 extends Oda
 			setTimeout @finishEvaluation, 0.5 * 1000
 		else
 			@warning()
+			@blink @library["t#{@index}"], off
+			@nextEvaluation()
 	finishEvaluation: =>
 		@blink @library["t#{@index}"], off
 		@library.score.plusOne()

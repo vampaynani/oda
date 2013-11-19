@@ -167,6 +167,7 @@ class U4A6 extends Oda
 			@finishEvaluation()
 		else
 			@warning()
+			@finishEvaluation()
 	finishEvaluation: =>
 		if @preguntas[@index].tipo is 'texto'			
 			TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
