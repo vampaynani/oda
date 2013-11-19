@@ -18,4 +18,16 @@ class ClickableText
 		@text.hitArea = hit
 		@addChild @text
 		false
+	setLineWidth: (width) ->
+		@text.lineWidth = width
+		h = @text.getMeasuredHeight() + 6
+		w = if @width > width then width + 10 else @width 
+		hit = new createjs.Shape()
+		switch @text.textAlign
+			when 'left' then hit.graphics.c().beginFill('rgba(0,0,0,0.1)').drawRect(0, 0, w, h)
+			when 'center' then hit.graphics.c().beginFill('rgba(0,0,0,0.1)').drawRect(-w/2, 0, w, h)
+			when 'right' then hit.graphics.c().beginFill('rgba(0,0,0,0.1)').drawRect(-w, 0, w, h)
+		@text.hitArea = hit
+		@width = w
+		false
 	window.ClickableText = ClickableText

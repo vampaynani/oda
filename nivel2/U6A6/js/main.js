@@ -13,6 +13,7 @@
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.showHelper = __bind(this.showHelper, this);
       var manifest, sounds;
       manifest = [
         {
@@ -187,7 +188,7 @@
       ];
       sounds = [
         {
-          src: 'sounds/TU2_U1_A6_instructions.mp3',
+          src: 'sounds/TU2_U6_A6_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/boing.mp3',
@@ -195,33 +196,6 @@
         }, {
           src: 'sounds/good.mp3',
           id: 'good'
-        }, {
-          src: 'sounds/TU2_U1_A6_bass.mp3',
-          id: 'bass'
-        }, {
-          src: 'sounds/TU2_U1_A6_drum.mp3',
-          id: 'drum'
-        }, {
-          src: 'sounds/TU2_U1_A6_flute.mp3',
-          id: 'flute'
-        }, {
-          src: 'sounds/TU2_U1_A6_guitar.mp3',
-          id: 'guitar'
-        }, {
-          src: 'sounds/TU2_U1_A6_piano.mp3',
-          id: 'piano'
-        }, {
-          src: 'sounds/TU2_U1_A6_saxophone.mp3',
-          id: 'saxophone'
-        }, {
-          src: 'sounds/TU2_U1_A6_tambourine.mp3',
-          id: 'tambourine'
-        }, {
-          src: 'sounds/TU2_U1_A6_trumpet.mp3',
-          id: 'trumpet'
-        }, {
-          src: 'sounds/TU2_U1_A6_violin.mp3',
-          id: 'violin'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
@@ -490,39 +464,39 @@
           y: 10
         }
       ];
-      this.helps = ['He / She helpssick animals', 'He / She helpssick animals', 'He / She helpssick animals', 'He / She helpssick animals', 'He / She helpssick animals', 'He / She helpssick animals', 'He / She helpssick animals', 'He / She helpssick animals'];
+      this.helps = ['He / She helps sick people.', 'He / She fixes cars.', 'He / She makes food.', 'He / She sells things.', 'He / She serves food.', 'He / She protects people.', 'He / She helps sick animals.', 'He / She puts out fires.'];
       this.answers = {
-        drum: {
+        doctor: {
           r: false,
-          c: [0, 1, 2, 3]
+          c: [0, 1, 2, 3, 4, 5]
         },
-        guitar: {
+        mechanic: {
           r: false,
-          c: [4, 5, 6, 7, 8, 9]
+          c: [6, 7, 8, 9, 10, 11, 12, 13]
         },
-        tambourine: {
+        chef: {
           r: false,
-          c: [10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
+          c: [14, 15, 16, 17]
         },
-        trumpet: {
+        salesclerk: {
           r: false,
-          c: [10, 18, 19, 20, 21, 22, 23]
+          c: [18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
         },
-        flute: {
+        waiter: {
           r: false,
-          c: [24, 25, 26, 27, 28]
+          c: [28, 29, 30, 31, 32, 33]
         },
-        bass: {
+        police: {
           r: false,
-          c: [29, 30, 31, 32]
+          c: [34, 4, 35, 36, 37, 7, 38, 17, 39, 40, 23, 41, 33]
         },
-        piano: {
+        vet: {
           r: false,
-          c: [21, 33, 30, 34, 35]
+          c: [42, 43, 44]
         },
-        saxophone: {
+        firefighter: {
           r: false,
-          c: [32, 36, 37, 38, 39, 40, 41, 42, 28]
+          c: [45, 46, 47, 48, 49, 12, 50, 51, 44, 52, 53]
         }
       };
       U6A6.__super__.constructor.call(this, null, manifest, sounds);
@@ -559,17 +533,24 @@
     };
 
     U6A6.prototype.createHelp = function() {
-      var i, t, _i, _results;
-      this.insertBitmap('prophelper', 'prophelper', '130', '514');
-      _results = [];
+      var b, help, i, p, t, _i;
+      help = new createjs.Container();
+      help.x = 127;
+      help.y = 510;
+      help.name = 'helper';
+      p = this.createBitmap('prophelper', 'prophelper', 0, 0);
+      help.addChild(p);
       for (i = _i = 1; _i <= 8; i = ++_i) {
-        this.insertBitmap('btn' + i, 'btn' + i, (i * 40) + 110, '534');
-        t = new createjs.Text(this.helps[i - 1], '14px Arial', '#333');
-        t.x = 480;
-        t.y = 540;
-        _results.push(this.addToMain(t));
+        b = this.createBitmap("btn" + i, "btn" + i, (i - 1) * 40 + 10, 20);
+        b.index = i;
+        b.addEventListener('click', this.showHelper);
+        this.addToLibrary(b);
+        help.addChild(b);
       }
-      return _results;
+      t = this.createText('helpertxt', this.helps[0], '14px Quicksand', '#333', 330, 25);
+      this.addToLibrary(t);
+      help.addChild(t);
+      return this.addToMain(help);
     };
 
     U6A6.prototype.createAlphabet = function() {
@@ -596,54 +577,85 @@
       var crosswords, drop, i, t, _i, _j, _ref;
       crosswords = new createjs.Container();
       crosswords.x = 245;
-      crosswords.y = 216;
       crosswords.name = 'crosswords';
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
-        drop = new WordContainer('h' + i, '#ccc', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
+        drop = new WordContainer('h' + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
+        drop.setRectShape('#FFF', '#999', 2, 23, 23);
+        drop.text.y -= 3;
         drop.id = this.containers[i].id;
         this.addToLibrary(drop);
         crosswords.addChild(drop);
       }
       for (i = _j = 0; _j <= 7; i = ++_j) {
-        t = new createjs.Text(this.numbers[i].id, '14px Arial', '#333');
+        t = new createjs.Text(this.numbers[i].id, '14px Quicksand', '#333');
         t.x = this.numbers[i].x * 23 + 6;
         t.y = this.numbers[i].y * 23 + 4;
         crosswords.addChild(t);
       }
+      crosswords.cache(-23, -23, 360, 335);
       return this.addToMain(crosswords);
     };
 
     U6A6.prototype.introEvaluation = function() {
-      var i, letter, _i, _j, _len, _ref, _ref1, _results,
+      var i, letter, _i, _j, _len, _ref, _ref1,
         _this = this;
       U6A6.__super__.introEvaluation.apply(this, arguments);
-      this.library['crosswords'].y = 135;
-      this.library['crosswords'].alpha = 1;
-      this.library['alphabet'].y = 430;
-      this.library['alphabet'].alpha = 1;
+      this.library.crosswords.y = 145;
+      this.library.crosswords.alpha = 1;
+      this.library.alphabet.y = 430;
+      this.library.alphabet.alpha = 1;
+      this.library.persondoctor.alpha = 1;
+      this.library.personfirefighter.alpha = 1;
+      this.library.personvet.alpha = 1;
+      this.library.personpolice.alpha = 1;
+      this.library.personwaiter.alpha = 1;
+      this.library.personsalesclerk.alpha = 1;
+      this.library.personchef.alpha = 1;
+      this.library.personmechanic.alpha = 1;
+      this.library.numberdoctor.alpha = 1;
+      this.library.numberfirefighter.alpha = 1;
+      this.library.numbervet.alpha = 1;
+      this.library.numberpolice.alpha = 1;
+      this.library.numberwaiter.alpha = 1;
+      this.library.numbersalesclerk.alpha = 1;
+      this.library.numberchef.alpha = 1;
+      this.library.numbermechanic.alpha = 1;
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
         if (this.containers[i].a) {
-          this.library['h' + i].changeText(this.containers[i].id);
+          this.library["h" + i].changeText(this.containers[i].id);
         } else {
-          this.library['h' + i].changeText('');
+          this.library["h" + i].changeText('');
         }
       }
-      TweenLite.from(this.library['header'], 1, {
-        y: -this.library['header'].height
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
       });
-      TweenLite.from(this.library['instructions'], 1, {
+      TweenLite.from(this.library.instructions, 1, {
         alpha: 0,
         x: 0,
         delay: 0.5
       });
-      TweenLite.from(this.library['alphabet'], 1, {
+      TweenMax.allFrom([this.library.persondoctor, this.library.personfirefighter, this.library.personvet, this.library.personpolice, this.library.personwaiter, this.library.personsalesclerk, this.library.personchef, this.library.personmechanic], 1, {
         alpha: 0,
-        y: this.library['alphabet'].y + 50,
+        delay: 1.5
+      }, 0.2);
+      TweenMax.allFrom([this.library.numberdoctor, this.library.numberfirefighter, this.library.numbervet, this.library.numberpolice, this.library.numberwaiter, this.library.numbersalesclerk, this.library.numberchef, this.library.numbermechanic], 1, {
+        alpha: 0,
+        delay: 1.5
+      }, 0.2);
+      TweenLite.from(this.library.alphabet, 1, {
+        alpha: 0,
+        y: this.library.alphabet.y + 20,
         delay: 1.5
       });
-      TweenLite.from(this.library['crosswords'], 1, {
+      TweenLite.from(this.library.helper, 1, {
         alpha: 0,
-        y: this.library['crosswords'].y + 50,
+        y: this.library.helper.y + 20,
+        delay: 1.5
+      });
+      TweenLite.from(this.library.crosswords, 1, {
+        alpha: 0,
+        y: this.library.crosswords.y + 20,
         delay: 1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -653,67 +665,76 @@
       });
       U6A6.__super__.introEvaluation.apply(this, arguments);
       _ref1 = this.abc;
-      _results = [];
       for (_j = 0, _len = _ref1.length; _j < _len; _j++) {
         letter = _ref1[_j];
-        _results.push(this.library[letter].addEventListener('drop', this.evaluateAnswer));
+        this.library[letter].addEventListener('drop', this.evaluateAnswer);
       }
-      return _results;
+      return this.library.crosswords.cache(-23, -23, 360, 335);
+    };
+
+    U6A6.prototype.showHelper = function(e) {
+      return this.library.helpertxt.text = this.helps[e.target.index - 1];
     };
 
     U6A6.prototype.evaluateAnswer = function(e) {
-      var hit, i, pt, _i, _ref, _results;
+      var dropped, hit, hitdrop, i, pt, _i, _ref;
       this.answer = e.target;
-      _results = [];
+      dropped = false;
+      hitdrop = null;
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
-        hit = this.library['h' + i];
+        hit = this.library["h" + i];
         pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
         if (hit.hitTest(pt.x, pt.y)) {
+          dropped = true;
           if (hit.id === this.answer.index) {
-            hit.changeText(hit.id);
-            this.answer.x = this.answer.pos.x;
-            this.answer.y = this.answer.pos.y;
-            this.evaluate('drum');
-            this.evaluate('guitar');
-            this.evaluate('tambourine');
-            this.evaluate('trumpet');
-            this.evaluate('flute');
-            this.evaluate('bass');
-            this.evaluate('piano');
-            _results.push(this.evaluate('saxophone'));
-          } else {
-            _results.push(this.warning());
+            hitdrop = hit;
           }
         } else {
-          _results.push(this.answer.returnToPlace());
+          this.answer.returnToPlace();
         }
       }
-      return _results;
+      if (dropped === true) {
+        if (hitdrop !== null) {
+          hitdrop.changeText(hitdrop.id);
+          this.answer.x = this.answer.pos.x;
+          this.answer.y = this.answer.pos.y;
+          this.evaluate('doctor');
+          this.evaluate('mechanic');
+          this.evaluate('chef');
+          this.evaluate('salesclerk');
+          this.evaluate('waiter');
+          this.evaluate('police');
+          this.evaluate('vet');
+          this.evaluate('firefighter');
+          return this.library.crosswords.cache(-23, -23, 360, 335);
+        } else {
+          return this.warning();
+        }
+      }
     };
 
-    U6A6.prototype.evaluate = function(instrument) {
-      var box, ready, snd, _i, _len, _ref;
+    U6A6.prototype.evaluate = function(obj) {
+      var box, ready, _i, _len, _ref;
       ready = true;
-      if (!this.answers[instrument].r) {
-        _ref = this.answers[instrument].c;
+      if (!this.answers[obj].r) {
+        _ref = this.answers[obj].c;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           box = _ref[_i];
-          if (this.library['h' + box].text.text === '') {
+          if (this.library["h" + box].text.text === '') {
             ready = false;
           }
         }
         if (ready) {
-          this.instrument = instrument;
-          snd = createjs.Sound.play(instrument);
-          snd.addEventListener('complete', this.finishEvaluation);
-          this.answers[instrument].r = true;
-          return this.library['score'].plusOne();
+          this.robj = obj;
+          this.answers[obj].r = true;
+          this.library['score'].plusOne();
+          return this.finishEvaluation();
         }
       }
     };
 
     U6A6.prototype.finishEvaluation = function() {
-      return TweenMax.allTo([this.library[this.instrument], this.library[this.instrument + 'No']], 1, {
+      return TweenMax.allTo([this.library["person" + this.robj], this.library["number" + this.robj]], 1, {
         alpha: 0,
         ease: Quart.easeOut,
         onComplete: this.nextEvaluation
@@ -721,24 +742,17 @@
     };
 
     U6A6.prototype.nextEvaluation = function() {
-      var complete, instrument;
+      var complete, obj;
       complete = true;
-      for (instrument in this.answers) {
-        if (this.answers[instrument].r === false) {
+      for (obj in this.answers) {
+        if (this.answers[obj].r === false) {
           complete = false;
         }
       }
       if (complete) {
-        TweenLite.to(this.library['alphabet'], 0.5, {
+        return TweenLite.to(this.library.crosswords, 0.5, {
           alpha: 0,
-          y: this.library['alphabet'].y - 100,
-          ease: Quart.easeOut
-        });
-      }
-      if (complete) {
-        return TweenLite.to(this.library['crosswords'], 0.5, {
-          alpha: 0,
-          y: this.library['crosswords'].y - 100,
+          y: this.library.crosswords.y - 100,
           ease: Quart.easeOut,
           onComplete: this.finish
         });
@@ -761,6 +775,15 @@
     };
 
     U6A6.prototype.finish = function() {
+      TweenLite.to(this.library.alphabet, 0.5, {
+        alpha: 0,
+        y: this.library.alphabet.y - 100,
+        ease: Quart.easeOut
+      });
+      TweenLite.from(this.library.helper, 1, {
+        alpha: 0,
+        y: this.library.helper.y + 20
+      });
       return U6A6.__super__.finish.apply(this, arguments);
     };
 

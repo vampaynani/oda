@@ -1,4 +1,4 @@
-class U5A6 extends Oda
+class U8A1 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -29,9 +29,10 @@ class U5A6 extends Oda
 			{id:'game1Mask2', src:'game1/mask2.png'}
 			{id:'game1Necklace2', src:'game1/necklace2.png'}
 			{id:'game1Puppet', src:'game1/puppet.png'}
-			{id:'game1Treasure box', src:'game1/treasure-box.png'}
-			{id:'game1Wooden puppet', src:'game1/wooden-puppet.png'}
+			{id:'game1Box2', src:'game1/treasure-box.png'}
+			{id:'game1Puppet2', src:'game1/wooden-puppet.png'}
 			{id:'game1Necklace', src:'game1/Necklace.png'}
+			
 			{id:'game2Australia2', src:'game2/australia2.png'}
 			{id:'game2Australia', src:'game2/australia.png'}
 			{id:'game2Brazil ', src:'game2/brazil.png'}
@@ -48,6 +49,7 @@ class U5A6 extends Oda
 			{id:'game2India', src:'game2/india.png'}
 			{id:'game2Mexico ', src:'game2/mexico.png'}
 			{id:'game2Mexico2', src:'game2/mexico2.png'}
+			
 			{id:'game3035', src:'game3/0-35.png'}
 			{id:'game3050', src:'game3/0-50.png'}
 			{id:'game3n1160', src:'game3/11-60.png'}
@@ -68,11 +70,65 @@ class U5A6 extends Oda
 
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/TU2_U8_A1_instructions.mp3', id:'instructions'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@answers = [	
+		@game = [
+			[
+				{id:'game1Box', i:1}
+				{id:'game1Chopsticks', i:2}
+				{id:'game1Cookie', i:3}
+				{id:'game1Doll', i:4}
+				{id:'game1Fan', i:5}
+				{id:'game1Mask', i:6}
+				{id:'game1Puppet', i:7}
+				{id:'game1Necklace', i:8}
+				{id:'game1Box2', i:1}
+				{id:'game1Chopsticks2', i:2}
+				{id:'game1Fourtunecookie', i:3}
+				{id:'game1Doll2', i:4}
+				{id:'game1Fan2', i:5}
+				{id:'game1Mask2', i:6}
+				{id:'game1Puppet2', i:7}
+				{id:'game1Necklace2', i:8}
+			]
+			[
+				{id:'game2butterflies', i:1}
+				{id:'game2easter', i:2}
+				{id:'game2flowers', i:3}
+				{id:'game2leaves', i:4}
+				{id:'game2scooter', i:5}
+				{id:'game2sledding', i:6}
+				{id:'game2snowman', i:7}
+				{id:'game2swimming', i:8}
+				{id:'game2ichasebutterflies', i:1}
+				{id:'game2icelebrateeaster', i:2}
+				{id:'game2ipickflowers', i:3}
+				{id:'game2Iraketheleaves', i:4}
+				{id:'game2irideascooter', i:5}
+				{id:'game2igosledding', i:6}
+				{id:'game2ibuildasnowman', i:7}
+				{id:'game2igoswimming', i:8}
+			]
+			[
+				{id:'game3cold', i:1}
+				{id:'game3hot', i:2}
+				{id:'game3hungry', i:3}
+				{id:'game3mourn', i:4}
+				{id:'game3nap', i:5}
+				{id:'game3sick', i:6}
+				{id:'game3thirsty', i:7}
+				{id:'game3tired', i:8}
+				{id:'game3shescold', i:1}
+				{id:'game3sheshot', i:2}
+				{id:'game3shehungry', i:3}
+				{id:'game3shessad', i:4}
+				{id:'game3shestakinganap', i:5}
+				{id:'game3shessick', i:6}
+				{id:'game3shesthirsty', i:7}
+				{id:'game3shestired', i:8}
+			]
 		]
 
 
@@ -81,74 +137,80 @@ class U5A6 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@insertBitmap 'game1btn', 'game1btn', 753, 460
-		@insertBitmap 'game2btn', 'game2btn', 753, 505
-		@insertBitmap 'game3btn', 'game3btn', 753, 550
-	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setCards().introEvaluation()
-	setCards:  ->
+		b1 = new Button 'game1btn', (@preload.getResult 'game1btn'), 1, 753, 460
+		b2 = new Button 'game2btn', (@preload.getResult 'game2btn'), 2, 753, 505
+		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
+		@addToMain b1, b2, b3
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@introEvaluation()
+	setCards: (e) =>
+		j = 0
+		game = e.target.index
 		juego = new createjs.Container()
 		juego.x = 200
-		juego.y = 180	
-		game = 1
+		juego.y = 180
+		juego.name = 'juego'
+		@clearButtons()
+		@selected = new Array()
+		@cards = @shuffle @game[game - 1]
 		for h in [0..3]
 			for i in [0..3]
-				c = @createBitmap 'carta'+game, 'carta'+game, i*130, h*110, 'mc'
+				c = @createBitmap "carta#{game}", "carta#{game}", i*130, h*110, 'mc'
+				b = @createBitmap "cartab#{game}", @cards[j].id, i*130, h*110, 'mc'
+				b.scaleX = b.scaleY = 0.6
 				c.scaleX = c.scaleY = 0.6
-				juego.addChild c
-				@addToLibrary c
+				c.index = @cards[j].i
+				c.addEventListener 'click', @evaluateAnswer
+				juego.addChild b, c
+				@addToLibrary b, c
+				j++
 		@addToMain juego
+		TweenLite.from juego, 0.5, {alpha:0, y:juego.y - 20}
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from [@library.game1btn, @library.game2btn, @library.game3btn], 1, {alpha: 0, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		@library.game1btn.blink()
+		@library.game2btn.blink()
+		@library.game3btn.blink()
+		@library.game1btn.addEventListener 'click', @setCards
+		@library.game2btn.addEventListener 'click', @setCards
+		@library.game3btn.addEventListener 'click', @setCards
+	clearButtons: ->
+		@library.game1btn.blink off
+		@library.game2btn.blink off
+		@library.game3btn.blink off
+		@library.game1btn.removeEventListener 'click', @setCards
+		@library.game2btn.removeEventListener 'click', @setCards
+		@library.game3btn.removeEventListener 'click', @setCards
 	evaluateAnswer: (e) =>
-		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
+		if @selected.length < 2
+			@selected.push e.target
+			TweenLite.to e.target, 0.5, {alpha:0}
+		if @selected.length is 2
+			setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		if @selected[0].index is @selected[1].index
+			@nextEvaluation()
+		else
+			TweenLite.to @selected[0], 0.5, {alpha:1}
+			TweenLite.to @selected[1], 0.5, {alpha:1}
+			@selected = new Array()
+			@warning()
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		@library.score.plusOne()
+		if @index < @cards.length / 2
+			@selected = new Array()
+			createjs.Sound.play 'good'
 		else
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
+		TweenLite.to [@library.game1btn, @library.game2btn, @library.game3btn], 1, {alpha: 0}
+		TweenLite.to @library.juego, 1, {alpha:0, y:@library.juego.y - 20}
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
-	window.U5A6 = U5A6
+	window.U8A1 = U8A1

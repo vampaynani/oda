@@ -512,7 +512,7 @@
       crosswords.y = 216;
       crosswords.name = 'crosswords';
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
-        drop = new WordContainer('h' + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
+        drop = new WordContainer("h" + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
         drop.setRectShape('#FFF', '#999', 2, 23, 23);
         drop.text.y -= 3;
         drop.id = this.containers[i].id;
@@ -520,7 +520,7 @@
         crosswords.addChild(drop);
       }
       for (i = _j = 0; _j <= 7; i = ++_j) {
-        t = new createjs.Text(this.numbers[i].id, '14px Arial', '#333');
+        t = new createjs.Text(this.numbers[i].id, '14px Quicksand', '#333');
         t.x = this.numbers[i].x * 23 + 6;
         t.y = this.numbers[i].y * 23 + 4;
         crosswords.addChild(t);
@@ -608,11 +608,11 @@
       dropped = false;
       hitdrop = null;
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
-        hit = this.library['h' + i];
+        hit = this.library["h" + i];
         pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
         if (hit.hitTest(pt.x, pt.y)) {
+          dropped = true;
           if (hit.id === this.answer.index) {
-            dropped = true;
             hitdrop = hit;
           }
         } else {
@@ -620,20 +620,22 @@
         }
       }
       if (dropped === true) {
-        hitdrop.changeText(hitdrop.id);
-        this.answer.x = this.answer.pos.x;
-        this.answer.y = this.answer.pos.y;
-        this.evaluate('drum');
-        this.evaluate('guitar');
-        this.evaluate('tambourine');
-        this.evaluate('trumpet');
-        this.evaluate('flute');
-        this.evaluate('bass');
-        this.evaluate('piano');
-        this.evaluate('saxophone');
-        return this.library.crosswords.cache(-23, -23, 276, 230);
-      } else {
-        return this.warning();
+        if (hitdrop !== null) {
+          hitdrop.changeText(hitdrop.id);
+          this.answer.x = this.answer.pos.x;
+          this.answer.y = this.answer.pos.y;
+          this.evaluate('drum');
+          this.evaluate('guitar');
+          this.evaluate('tambourine');
+          this.evaluate('trumpet');
+          this.evaluate('flute');
+          this.evaluate('bass');
+          this.evaluate('piano');
+          this.evaluate('saxophone');
+          return this.library.crosswords.cache(-23, -23, 276, 230);
+        } else {
+          return this.warning();
+        }
       }
     };
 
