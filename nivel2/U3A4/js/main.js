@@ -325,9 +325,14 @@
     };
 
     U3A4.prototype.setDropper = function() {
+      var text;
       this.addToMain(new WordContainer('dropper1', '', '#FFF', '#F59743', 170, 541, 188, 30));
       this.addToMain(new WordContainer('dropper2', '', '#FFF', '#F59743', 373, 541, 158, 30));
       this.addToMain(new WordContainer('dropper3', '', '#FFF', '#F59743', 544, 541, 136, 30));
+      text = new createjs.Text('.', '24px Arial', '#000');
+      text.x = 685;
+      text.y = 545;
+      this.addToMain(text);
       return this;
     };
 
@@ -455,16 +460,10 @@
     };
 
     U3A4.prototype.introEvaluation = function() {
-      var i, _i, _j, _k;
+      var i, _i;
       U3A4.__super__.introEvaluation.apply(this, arguments);
       for (i = _i = 1; _i <= 3; i = _i += 1) {
-        this.observer.subscribe('init_evaluation', this.library["t" + i + "n1"].onInitEvaluation);
-      }
-      for (i = _j = 1; _j <= 6; i = _j += 1) {
-        this.observer.subscribe('init_evaluation', this.library["t" + i + "n2"].onInitEvaluation);
-      }
-      for (i = _k = 1; _k <= 4; i = _k += 1) {
-        this.observer.subscribe('init_evaluation', this.library["t" + i + "n3"].onInitEvaluation);
+        this.library["t" + i + "n1"].initDragListener();
       }
       TweenLite.from(this.library.header, 1, {
         y: -this.library['header'].height
@@ -493,7 +492,7 @@
     };
 
     U3A4.prototype.evaluateAnswer1 = function(e) {
-      var dropped, i, pt, success, _i, _j;
+      var dropped, i, pt, success, _i, _j, _k;
       this.answer = e.target;
       success = false;
       dropped = false;
@@ -507,6 +506,9 @@
             this.answer.y = this.answer.pos.y;
             this.library.dropper1.changeText(this.answer.text.text);
             for (i = _j = 1; _j <= 6; i = _j += 1) {
+              this.library["t" + i + "n2"].initDragListener();
+            }
+            for (i = _k = 1; _k <= 6; i = _k += 1) {
               this.library["t" + i + "n2"].addEventListener('drop', this.evaluateAnswer2);
             }
           }
@@ -523,7 +525,7 @@
     };
 
     U3A4.prototype.evaluateAnswer2 = function(e) {
-      var dropped, i, pt, success, _i, _j;
+      var dropped, i, pt, success, _i, _j, _k;
       this.answer = e.target;
       success = false;
       dropped = false;
@@ -537,6 +539,9 @@
             this.library.dropper2.changeText(this.answer.text.text);
             success = true;
             for (i = _j = 1; _j <= 4; i = _j += 1) {
+              this.library["t" + i + "n3"].initDragListener();
+            }
+            for (i = _k = 1; _k <= 4; i = _k += 1) {
               this.library["t" + i + "n3"].addEventListener('drop', this.evaluateAnswer3);
             }
           }
@@ -553,7 +558,7 @@
     };
 
     U3A4.prototype.evaluateAnswer3 = function(e) {
-      var dropped, i, pt, success, _i;
+      var dropped, i, pt, success, _i, _j, _k;
       this.answer = e.target;
       dropped = false;
       success = false;
@@ -573,6 +578,12 @@
         return this.answer.returnToPlace();
       } else {
         if (success) {
+          for (i = _j = 1; _j <= 6; i = _j += 1) {
+            this.library["t" + i + "n2"].endDragListener();
+          }
+          for (i = _k = 1; _k <= 4; i = _k += 1) {
+            this.library["t" + i + "n3"].endDragListener();
+          }
           return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {
           this.answer.returnToPlace();

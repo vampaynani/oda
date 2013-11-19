@@ -97,7 +97,7 @@ class U2A4 extends Oda
 		meg = new createjs.Container()
 		meg.x = 117;
 		meg.y = 124;
-		meg.name = 'meg'
+		@current = meg.name = 'meg'
 		
 		m1 = @createBitmap 'megWakes', 'm1', 15, 13
 		m2 = @createBitmap 'megBreakfast', 'm2', 223, 13
@@ -130,7 +130,7 @@ class U2A4 extends Oda
 		jim = new createjs.Container()
 		jim.x = 117;
 		jim.y = 124;
-		jim.name = 'jim'
+		@current = jim.name = 'jim'
 		
 		
 		j1 = @createBitmap 'jimShower', 'j1', 15, 13
@@ -193,13 +193,15 @@ class U2A4 extends Oda
 			res = @createSprite 'resultado', ['imgwrong', 'imgcorrect'], null, (@drops[i - 1].x) + 75, @drops[i - 1].y
 			answer = @answers[@index].values[i - 1]
 			if @library[answer.q].x is @library[answer.a].x and @library[answer.q].y is @library[answer.a].y
-				res.currentFrame = 1
 				@library['score'].plusOne()
-
+				res.currentFrame = 1
+				#r = @createBitmap 'correct', 'correct', (@drops[i - 1].x) + 75, @drops[i - 1].y
 			else
 				res.currentFrame = 0
 				#insert tache
-			@addToMain	res
+				#r = @createBitmap 'wrong', 'wrong', (@drops[i - 1].x) + 75, @drops[i - 1].y
+			@library[@current].addChild res
+			
 
 		setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
