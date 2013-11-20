@@ -1,8 +1,8 @@
-class U4A6 extends Oda
+class U8A4 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -51,7 +51,7 @@ class U4A6 extends Oda
 		@insertBitmap 'btnrepeat', 'btnrepeat', 264, 541
 	
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setKids().introEvaluation()
+		#@setKids().introEvaluation()
 	setKids: ->
 		caras = new createjs.Container()
 		caras.x = 90
@@ -171,4 +171,4 @@ class U4A6 extends Oda
 		super
 		for i in [1..6] by 1
 			@library['name'+i].blink off
-	window.U4A6 = U4A6
+	window.U8A4 = U8A4

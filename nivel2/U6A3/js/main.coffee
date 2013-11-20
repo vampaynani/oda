@@ -176,6 +176,7 @@ class U6A3 extends Oda
 			@warning()
 			@answer.returnToPlace()
 	finishEvaluation: =>
+		createjs.Sound.play 'good'
 		if @steps[@step - 1].targets.length is 3
 			if @library.h0.text.text is '' or @library.h1.text.text is '' or @library.h2.text.text is ''
 				return

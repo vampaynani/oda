@@ -1,8 +1,8 @@
-class U4A6 extends Oda
+class U8A3 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -16,53 +16,31 @@ class U4A6 extends Oda
 
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/TU2_U8_A3_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@textos =
-			pasaporte1:[
-				'Eric Schmidt'
-				'Germany'
-				'blue'
-				'brown'
-				'1 m 10 cm'
+		@game =
+			passports:[
+				{x: 130, y: 130, values: ['Eric Schmidt', 'Germany', 'blue', 'brown', '1m 10cm']}
+				{x: 430, y: 135, values: ['Melanie Murphy', 'Ireland', 'green', 'red', '1m 7cm']}
+				{x: 130, y: 304, values: ['Cassandra Wang', 'China', 'dark brown', 'black', '1m 15cm']}
+				{x: 434, y: 304, values: ['Saul Peterson', 'Canada', 'light brown', 'blonde', '1m 14cm']}
 			]
-			nino1:{
-				linea1:[
-					'I have'
-					'blue'
-					'eyes. I have straight'
-					'brown'
-					"hair. I'm"
-					'1 m 10 cm'
-					'tall.'  
+			steps:[
+				{pattern:["I have", "#wc", "eyes. I have straight", "#wc", "hair. I'm", "#wc", "tall.", "#br", "My name's", "#wc", "I'm from Germany."], targets:['blue','brown', '1m 10cm', 'Eric Schmidth']}
+				[
+					{pattern:["I have #wc eyes. I have straight #wc hair. I'm #wc tall."], targets:['blue','brown', '1m 10cm']}
+					{pattern:["My name's #wc I'm from Germany"], targets:['Eric Schmidth']}
 				]
-				linea2:[
-					"My name's"
-					'Eric Schmidt'
-					"I'm from Germany."
+				[
+					{pattern:["I have #wc eyes. I have straight #wc hair. I'm #wc tall."], targets:['blue','brown', '1m 10cm']}
+					{pattern:["My name's #wc I'm from Germany"], targets:['Eric Schmidth']}
 				]
-			}
-			pasaporte2:[
-				'Melanie Murphy'
-				'Ireland'
-				'green'
-				'red'
-				'1 m 7 cm'
-			]
-			pasaporte3:[
-				'Cassandra Wang'
-				'China'
-				'dark brown'
-				'black'
-				'1 m 15 cm'
-			]
-			pasaporte4:[
-				'Saul Peterson'
-				'Canada'
-				'light brown'
-				'blonde'
-				'1 m 14 cm'
+				[
+					{pattern:["I have #wc eyes. I have straight #wc hair. I'm #wc tall."], targets:['blue','brown', '1m 10cm']}
+					{pattern:["My name's #wc I'm from Germany"], targets:['Eric Schmidth']}
+				]
 			]
 			positions:[
 				{x:'65', y:'22'}
@@ -76,129 +54,86 @@ class U4A6 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@steps = @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setPassports().setTexto().introEvaluation()
+		@setPassports().setDropper( 1 ).introEvaluation()
 	setPassports: ->
-		p1 = new createjs.Container()
-		p2 = new createjs.Container()	
-		p3 = new createjs.Container()	
-		p4 = new createjs.Container()
-
-		p1.x = 130
-		p1.y = 130
-		p2.y = 135
-		p2.x = 430
-		p3.x = 130
-		p3.y = 304
-		p4.x = 434
-		p4.y = 304
-
-		fondo1 = @createBitmap 'pas1', 'pas1', 0, 1
-		p1.addChild fondo1
-		for i in [0..4]
-			t = new DraggableText @textos.pasaporte1[i], @textos.pasaporte1[i], i, @textos.positions[i].x,  @textos.positions[i].y
-			p1.addChild t
-		fondo2 = @createBitmap 'pas2', 'pas2', 0, -4
-		p2.addChild fondo2
-		for i in [0..4]
-			t = new DraggableText @textos.pasaporte2[i], @textos.pasaporte2[i], i, @textos.positions[i].x,  @textos.positions[i].y
-			p2.addChild t
-		fondo3 = @createBitmap 'pas3', 'pas3', 0, 1
-		p3.addChild fondo3
-		for i in [0..4]
-			t = new DraggableText @textos.pasaporte3[i], @textos.pasaporte3[i], i, @textos.positions[i].x,  @textos.positions[i].y
-			p3.addChild t
-		fondo4 = @createBitmap 'pas4', 'pas4', -3, 3
-		p4.addChild fondo4
-		for i in [0..4]
-			t = new DraggableText @textos.pasaporte4[i], @textos.pasaporte4[i], i, @textos.positions[i].x,  @textos.positions[i].y
-			p4.addChild t
-
-		@addToMain p1
-		@addToMain p2
-		@addToMain p3
-		@addToMain p4
+		i = 1
+		for passport in @game.passports
+			p = new createjs.Container()
+			p.x = passport.x
+			p.y = passport.y
+			p.name = "pass#{i}"
+			f = @createBitmap "p#{i}", "pas#{i}", 0, 0
+			p.addChild f
+			@addToMain p
+			for j in [0..passport.values.length - 1] by 1
+				n = new DroppableText "p#{i}v#{j}", passport.values[j], passport.values[j], @game.positions[j].x,  @game.positions[j].y, @stage
+				@addToLibrary n
+				p.addChild n
+			i++
 		@
-	setTexto:->
-		l1 = new  createjs.Container()
-		l1.x = 0
-		l1.y = 520
-		todo = 0
-		for i in [0..@textos.nino1.linea1.length-1]
-			if ( i % 2 == 0 )
-				txt = new createjs.Text @textos.nino1.linea1[i],'24px Arial','#333'
-				console.log 'impar'
-				txt.x = todo
-				todo = txt.getMeasuredWidth() + 8 + txt.x
-			else
-				txt = new WordContainer 'q1', @textos.nino1.linea1[i], '', '#f00', 30, 0, 10, 10
-				console.log 'par'
-				txt.x = todo
-				todo = txt.w + 15 + txt.x
-			console.log todo
-			l1.addChild txt
-		l1.x = (( 800 - todo ) / 2 )+35
-		l2 = new  createjs.Container()
-		l2.x = 0
-		l2.y = 550
-		todo = 0
-		for i in [0..@textos.nino1.linea2.length-1]
-			if ( i % 2 == 0 )
-				txt = new createjs.Text @textos.nino1.linea2[i],'24px Arial','#333'
-				console.log 'impar'
-				txt.x = todo
-				todo = txt.getMeasuredWidth() + 8 + txt.x
-			else
-				txt = new WordContainer 'q1', @textos.nino1.linea2[i], '', '#f00', 30, 0, 10, 10
-				console.log 'par'
-				txt.x = todo
-				todo = txt.w + 15 + txt.x
-			console.log todo
-			l2.addChild txt
-		l2.x = (( 800 - todo ) / 2 )+35
+	setDropper: (step) ->
+		@step = step
+		if @library.dropper
+			dropper = @library.dropper
+		else
+			dropper = new createjs.Container()
+			dropper.x = 120
+			dropper.y = 500
+			dropper.name = 'dropper'
+			@addToMain dropper
+		dropper.removeAllChildren()
 
-		@addToMain l1
-		@addToMain l2
+		i = 0
+		j = 0
+		npos = 0
+		for t in @steps[step - 1].pattern
+			ny = j * 30 + 5
+			if t is '#br'
+				npos = 0
+				j++
+			else if t is '#wc'
+				h = new WordContainer "h#{i}", '', '#FFF', '#F00', npos, ny, 100, 22
+				h.text.font = '20px Quicksand'
+				h.index = i
+				dropper.addChild h
+				@addToLibrary h
+				npos += 110
+				i++
+			else
+				h = @createText '', t,'20px Quicksand','#333', npos, ny
+				dropper.addChild h
+				npos += h.getMeasuredWidth() + 20
 		@
- 
- 
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from [@library.pass1, @library.pass2, @library.pass3, @library.pass4], 1, {alpha: 0, delay: 1}
+		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		for i in [1..@game.passports.length] by 1
+			for j in [0..@game.passports[i - 1].values.length - 1] by 1
+				@library["p#{i}v#{j}"].updateDrops @library.h0
+				@library["p#{i}v#{j}"].addEventListener 'dropped', @evaluateAnswer
+				@library["p#{i}v#{j}"].initDragListener()
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
+		@drop = e.drop
+		if @answer.index is @steps[@step - 1].targets[@drop.index]
+			@answer.visible = false
+			@drop.changeText @answer.index
+			@finishEvaluation()
 		else
+			@warning()
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		#TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
+		#@answer.returnToPlace()
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
@@ -216,4 +151,4 @@ class U4A6 extends Oda
 		super
 		for i in [1..6] by 1
 			@library['name'+i].blink off
-	window.U4A6 = U4A6
+	window.U8A3 = U8A3

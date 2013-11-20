@@ -1,4 +1,4 @@
-class U5A5 extends Oda
+class U8A5 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -151,4 +151,4 @@ class U5A5 extends Oda
 		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
 		super
-	window.U5A5 = U5A5
+	window.U8A5 = U8A5

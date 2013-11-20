@@ -435,6 +435,7 @@
     };
 
     U6A3.prototype.finishEvaluation = function() {
+      createjs.Sound.play('good');
       if (this.steps[this.step - 1].targets.length === 3) {
         if (this.library.h0.text.text === '' || this.library.h1.text.text === '' || this.library.h2.text.text === '') {
           return;

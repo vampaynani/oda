@@ -1,8 +1,8 @@
-class U4A6 extends Oda
+class U8A2 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -16,150 +16,201 @@ class U4A6 extends Oda
 
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+		    {src:'sounds/TU2_U8_A2_instructions.mp3', id:'instructions'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@textos =
-			esc1:{
-				nube1:[
-					{p:'When', x:'25', y:'35'}
-					{p:'What', x:'90', y:'22'}
-					{p:'Where', x:'70', y:'70'}
-				]
-				nube2:[
-					{p:'celebrate', x:'26', y:'20'}
-					{p:'do', x:'50', y:'72'}
-					{p:'wear', x:'85', y:'58'}
-				]
-				preguntas:[
-					{question1:'Where', frase1:'do they ', question2:'celebrate', frase2:'Reveillon?', answer:'In Brazil.'}
-					{question1:'When', frase1:'do they ', question2:'celebrate', frase2:'Reveillon?', answer:'On January 1st.'}
-					{question1:'What', frase1:'do they ', question2:'wear', frase2:'?', answer:'White clothes.'}
-				]
-			}
-
-
+		@game =
+			scenes : [
+				{	
+					steps: [
+						{frase:'In Brazil.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['Where','celebrate']}
+						{frase:'On January 1st.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['When','celebrate']}
+						{frase:'White clothes.', pattern:['#wc','do they','#wc','?'], targets: ['What','wear']}
+						{frase:'They float boats with flowers and candles in the sea.', pattern:['#wc','do they','#wc','?'], targets: ['What','do']}
+					]	
+					opt1:[
+						{i:1, t:'When', x:25, y:35}
+						{i:2, t:'What', x:90, y:22}
+						{i:3, t:'Where', x:70, y:70}
+					]
+					opt2:[
+						{i:1, t:'celebrate', x:26, y:20}
+						{i:2, t:'do', x:50, y:72}
+						{i:3, t:'wear', x:85, y:58}
+					]
+				}
+				{
+					steps: [
+						{frase:'Moon cakes and pomelos.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['What','eat']}
+						{frase:'In September.', texts:['do they', 'Reveillon?'], targets: ['When','celebrate']}
+						{frase:'Family and friends.', texts:['do they',], targets: ['Who','visit']}
+						{frase:'Lanterns.', targets: ['What','carry']}	
+					]
+					opt1:[
+						{i:1, t:'When', x:25, y:35}
+						{i:2, t:'What', x:90, y:22}
+						{i:3, t:'Who', x:70, y:70}
+						{i:3, t:'Where', x:70, y:70}
+					]
+					opt2:[
+						{i:1, t:'visit', x:26, y:20}
+						{i:2, t:'eat', x:50, y:72}
+						{i:3, t:'celebrate', x:85, y:58}
+						{i:3, t:'carry', x:85, y:58}
+					]
+				}
+				{
+					steps: [
+						{frase:'Beautiful jewelry.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['What','wear']}
+						{frase:'In India.', targets: ['Where','celebrate']}
+						{frase:'In October or November.', targets: ['When','celebrate']}
+						{frase:'They watch fireworks and light candles for good luck.', targets: ['What','do']}	
+					]
+					opt1:[
+						{i:1, t:'When', x:25, y:35}
+						{i:2, t:'What', x:90, y:22}
+						{i:3, t:'Who', x:70, y:70}
+						{i:3, t:'Where', x:70, y:70}
+					]
+					opt2:[
+						{i:1, t:'wear', x:26, y:20}
+						{i:2, t:'do', x:50, y:72}
+						{i:3, t:'celebrate', x:85, y:58}
+					]
+				}
+			]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setScene().setQuestion().introEvaluation()
-	setScene: ->
-		escena = 1
-		@insertBitmap 'scene'+escena, 'scene'+escena, stageSize.w / 2, 150, 'tc'
-
-		nube1 = new createjs.Container()
-		nube1.x = 210
-		nube1.y = 480
-		n1 = @createBitmap 'n1', 'n1', 0, 0
-		t1n1 = new DraggableText 't1n1', @textos.esc1.nube1[0].p, 0, @textos.esc1.nube1[0].x, @textos.esc1.nube1[0].y 
-		t2n1 = new DraggableText 't2n1', @textos.esc1.nube1[1].p, 1, @textos.esc1.nube1[1].x, @textos.esc1.nube1[1].y
-		t3n1 = new DraggableText 't3n1', @textos.esc1.nube1[2].p, 2, @textos.esc1.nube1[2].x, @textos.esc1.nube1[2].y
-		#t4n1 = new DraggableText 't3n1', "There are", 3, 15, 25 
-		nube1.addChild n1, t1n1, t2n1, t3n1#, t4n1
-
-		nube2 = new createjs.Container()
-		nube2.x = 440
-		nube2.y = 480
-		n2 = @createBitmap 'n2', 'n2', 0, 0
-		t1n2 = new DraggableText 't0n2', @textos.esc1.nube2[0].p, 0, @textos.esc1.nube2[0].x, @textos.esc1.nube2[0].y 
-		t2n2 = new DraggableText 't1n2', @textos.esc1.nube2[1].p, 1, @textos.esc1.nube2[1].x, @textos.esc1.nube2[1].y
-		t3n2 = new DraggableText 't2n2', @textos.esc1.nube2[2].p, 2, @textos.esc1.nube2[2].x, @textos.esc1.nube2[2].y
-		#t4n2 = new DraggableText 't3n2', "There are", 3, 15, 25 
-		nube2.addChild n2, t1n2, t2n2, t3n2#, t4n2
-
-
-		@addToMain nube1
-		@addToMain nube2
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 4, 0
+		@setScene( 1 ).setDropper( 1 ).setNube1().setNube2().introEvaluation()
+	setScene: (scene) ->
+		@scene = @game.scenes[scene - 1]
+		@insertBitmap "scene", "scene#{scene}", stageSize.w / 2, 150, 'tc'
 		@
-	setQuestion:  ->
-		question = new createjs.Container()
-		question.x = 0
-		question.y = 410	
+	setDropper: (step) ->
+		@step = step
+		if @library.dropper
+			dropper = @library.dropper
+		else
+			dropper = new createjs.Container()
+			dropper.y = 390
+			dropper.name = 'dropper'
+			@addToMain dropper
+		dropper.removeAllChildren()
 
-		for i in [2..2]
-			txt1 = new createjs.Text 'Q: ','24px Arial','#333'
-			txt1.x = 0
+		q = @createText 'q', 'Q:','24px Quicksand','#333', 120, 0
+		dropper.addChild q
 
-			q1 = new WordContainer 'q1',@textos.esc1.preguntas[i].question1, '#ccc', '#f00', 30, 0, 10, 10
-			q1.x = 30
+		i = 0
+		npos = q.x + q.getMeasuredWidth() + 10
+		for t in @scene.steps[step - 1].pattern
+			if t is '#wc'
+				h = new WordContainer "h#{i}", '', '#FFF', '#F00', npos, 5, 120, 22
+				h.index = i
+				dropper.addChild h
+				@addToLibrary h
+				npos += 130
+				i++
+			else
+				h = @createText '', t,'24px Quicksand','#333', npos, 0
+				dropper.addChild h
+				npos += h.getMeasuredWidth() + 20
 
-			txt2 = new createjs.Text @textos.esc1.preguntas[i].frase1,'24px Arial','#333'
-			txt2.x = q1.w + q1.x + 20
+		a = @createText 'a', "A: #{@scene.steps[@step - 1].frase}",'24px Quicksand','#333', 120, 40
+		dropper.addChild a
+		@
+	setNube1: ->
+		container = new createjs.Container()
+		container.x = 210
+		container.y = 480
+		container.name = 'nube1'
+		
+		back = @createBitmap 'backNube1', 'n1', 0, 0
+		container.addChild back
 
-			q2 = new WordContainer 'q2',@textos.esc1.preguntas[i].question2, '#ccc', '#f00', 30, 0, 10, 10
-			q2.x = txt2.x + txt2.getMeasuredWidth()
+		for opt in @scene.opt1
+			d = new DroppableText "n1d#{opt.i}", opt.t, opt.t, opt.x, opt.y, @stage
+			container.addChild d
+			@addToLibrary d
+		
+		@addToMain container
+		@
+	setNube2: ->
+		container = new createjs.Container()
+		container.x = 440
+		container.y = 480
+		container.name = 'nube2'
+		
+		back = @createBitmap 'backNube2', 'n2', 0, 0
+		container.addChild back
 
-			txt3 = new createjs.Text @textos.esc1.preguntas[i].frase2,'24px Arial','#333'
-			txt3.x = q2.w + q2.x + 20
-
-
-			txt4 = new createjs.Text 'A: ','24px Arial','#333'
-			txt4.x = 0
-
-			txt5 = new createjs.Text @textos.esc1.preguntas[i].answer,'24px Arial','#333'
-			txt5.x = 30
-			txt4.y = txt5.y = 30
-
-			question.addChild txt1, q1, txt2, q2, txt3, txt4, txt5
-
-			todo = txt3.x + txt3.getMeasuredWidth()
-			question.x = (800 - todo) /2
-			console.log todo
-		@addToMain question
+		for opt in @scene.opt2
+			d = new DroppableText "n2d#{opt.i}", opt.t, opt.t, opt.x, opt.y, @stage
+			container.addChild d
+			@addToLibrary d
+		
+		@addToMain container
 		@
 	introEvaluation: ->
 		super
-		###
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha: 0, x: 0, delay: 0.5}
+		TweenLite.from @library.scene, 1, {alpha: 0, y: @library.scene.y + 20, delay: 1}
+		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 20, delay: 1}
+		TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20, delay: 1.5}
+		TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		for opt in @scene.opt1
+			@library["n1d#{opt.i}"].updateDrops @library.h0
+			@library["n1d#{opt.i}"].addEventListener 'dropped', @evaluateAnswer
+			@library["n1d#{opt.i}"].initDragListener()
+		for opt in @scene.opt2
+			@library["n2d#{opt.i}"].updateDrops @library.h1
+			@library["n2d#{opt.i}"].addEventListener 'dropped', @evaluateAnswer
+			@library["n2d#{opt.i}"].initDragListener()
 	evaluateAnswer: (e) =>
 		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
+		@drop = e.drop
+		if @answer.index is @scene.steps[@step - 1].targets[@drop.index]
+			@answer.visible = false
+			@drop.changeText @answer.index
+			@finishEvaluation()
 		else
+			@warning()
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
+		createjs.Sound.play 'good'
+		if @library.h0.text.text is '' or @library.h1.text.text is ''
+			return
+		@library['score'].plusOne()
+		setTimeout @clearEvaluation, 1 * 1000
+	clearEvaluation: (e) =>
+		for opt in @scene.opt1
+			@library["n1d#{opt.i}"].visible = true
+			@library["n1d#{opt.i}"].returnToPlace()
+		for opt in @scene.opt2
+			@library["n2d#{opt.i}"].visible = true
+			@library["n2d#{opt.i}"].returnToPlace()
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 20, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		if @index < @scene.steps.length
+			@setDropper @index + 1
+			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 390}
+			for opt in @scene.opt1
+				@library["n1d#{opt.i}"].updateDrops @library.h0
+			for opt in @scene.opt2
+				@library["n2d#{opt.i}"].updateDrops @library.h1
 		else
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
+		TweenLite.to @library.scene, 1, {alpha: 0, y: @library.scene.y + 20}
+		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
+		TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
-	window.U4A6 = U4A6
+	window.U8A2 = U8A2

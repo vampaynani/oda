@@ -261,10 +261,10 @@
 
     U8A6.prototype.setStage = function() {
       U8A6.__super__.setStage.apply(this, arguments);
-      this.preguntas = this.shuffleNoRepeat(this.game.preguntas, 20);
+      this.preguntas = this.shuffleNoRepeat(this.game.preguntas, 11);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 20, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 11, 0));
       return this.setQuestion(0).introEvaluation();
     };
 
