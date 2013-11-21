@@ -9,8 +9,8 @@
     __extends(U8A3, _super);
 
     function U8A3() {
-      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
+      this.clearEvaluation = __bind(this.clearEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
@@ -86,32 +86,17 @@
         steps: [
           {
             pattern: ["I have", "#wc", "eyes. I have straight", "#wc", "hair. I'm", "#wc", "tall.", "#br", "My name's", "#wc", "I'm from Germany."],
-            targets: ['blue', 'brown', '1m 10cm', 'Eric Schmidth']
-          }, [
-            {
-              pattern: ["I have #wc eyes. I have straight #wc hair. I'm #wc tall."],
-              targets: ['blue', 'brown', '1m 10cm']
-            }, {
-              pattern: ["My name's #wc I'm from Germany"],
-              targets: ['Eric Schmidth']
-            }
-          ], [
-            {
-              pattern: ["I have #wc eyes. I have straight #wc hair. I'm #wc tall."],
-              targets: ['blue', 'brown', '1m 10cm']
-            }, {
-              pattern: ["My name's #wc I'm from Germany"],
-              targets: ['Eric Schmidth']
-            }
-          ], [
-            {
-              pattern: ["I have #wc eyes. I have straight #wc hair. I'm #wc tall."],
-              targets: ['blue', 'brown', '1m 10cm']
-            }, {
-              pattern: ["My name's #wc I'm from Germany"],
-              targets: ['Eric Schmidth']
-            }
-          ]
+            targets: ['blue', 'brown', '1m 10cm', 'Eric Schmidt']
+          }, {
+            pattern: ["I'm", "#wc", ". I'm from", "#wc", ". I have", "#wc", "eyes.", "#br", "I have curly", "#wc", "hair. I'm 1m 7cm tall."],
+            targets: ['Melanie Murphy', 'Ireland', 'green', 'red']
+          }, {
+            pattern: ["I have", "#wc", "eyes. I have curly blonde hair.", "#br", "I'm", "#wc", ". I'm from", "#wc", ". I'm", "#wc", "tall."],
+            targets: ['light brown', 'Saul Peterson', 'Canada', '1m 14cm']
+          }, {
+            pattern: ["I'm from", "#wc", ". I have dark brown eyes. I have long", "#wc", "hair.", "#br", "I'm", "#wc", "tall. My name's", "#wc"],
+            targets: ['China', 'black', '1m 15cm', 'Cassandra Wang']
+          }
         ],
         positions: [
           {
@@ -137,11 +122,11 @@
 
     U8A3.prototype.setStage = function() {
       U8A3.__super__.setStage.apply(this, arguments);
-      this.steps = this.game.steps;
+      this.steps = this.shuffle(this.game.steps);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setPassports().setDropper(1).introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 4, 0));
+      return this.setDropper(1).setPassports().introEvaluation();
     };
 
     U8A3.prototype.setPassports = function() {
@@ -168,9 +153,9 @@
     };
 
     U8A3.prototype.setDropper = function(step) {
-      var dropper, h, i, j, npos, ny, t, _i, _len, _ref;
+      var dropper, h, i, j, npos, ny, t, txt, _i, _len, _ref;
       this.step = step;
-      if (this.library.dropper) {
+      if (this.library.dropper && this.mainContainer.contains(this.library.dropper)) {
         dropper = this.library.dropper;
       } else {
         dropper = new createjs.Container();
@@ -183,25 +168,28 @@
       i = 0;
       j = 0;
       npos = 0;
+      this.targets = new Array();
       _ref = this.steps[step - 1].pattern;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         t = _ref[_i];
-        ny = j * 30 + 5;
+        ny = j * 30 + 7;
         if (t === '#br') {
           npos = 0;
           j++;
         } else if (t === '#wc') {
-          h = new WordContainer("h" + i, '', '#FFF', '#F00', npos, ny, 100, 22);
+          txt = this.steps[step - 1].targets[i];
+          h = new WordContainer("h" + i, "" + txt, '#FFF', '#F00', npos, ny);
           h.text.font = '20px Quicksand';
           h.index = i;
           dropper.addChild(h);
           this.addToLibrary(h);
-          npos += 110;
+          this.targets.push(h);
+          npos += h.width + 7;
           i++;
         } else {
           h = this.createText('', t, '20px Quicksand', '#333', npos, ny);
           dropper.addChild(h);
-          npos += h.getMeasuredWidth() + 20;
+          npos += h.getMeasuredWidth() + 12;
         }
       }
       return this;
@@ -239,7 +227,7 @@
           var _j, _ref1, _results1;
           _results1 = [];
           for (j = _j = 0, _ref1 = this.game.passports[i - 1].values.length - 1; _j <= _ref1; j = _j += 1) {
-            this.library["p" + i + "v" + j].updateDrops(this.library.h0);
+            this.library["p" + i + "v" + j].updateDrops(this.targets);
             this.library["p" + i + "v" + j].addEventListener('dropped', this.evaluateAnswer);
             _results1.push(this.library["p" + i + "v" + j].initDragListener());
           }
@@ -262,38 +250,59 @@
       }
     };
 
-    U8A3.prototype.finishEvaluation = function() {};
+    U8A3.prototype.finishEvaluation = function() {
+      var target, _i, _len, _ref;
+      createjs.Sound.play('good');
+      _ref = this.targets;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        target = _ref[_i];
+        if (target.text.text === '') {
+          return;
+        }
+      }
+      this.library['score'].plusOne();
+      return setTimeout(this.clearEvaluation, 1 * 1000);
+    };
+
+    U8A3.prototype.clearEvaluation = function(e) {
+      var i, j, _i, _j, _ref, _ref1;
+      for (i = _i = 1, _ref = this.game.passports.length; _i <= _ref; i = _i += 1) {
+        for (j = _j = 0, _ref1 = this.game.passports[i - 1].values.length - 1; _j <= _ref1; j = _j += 1) {
+          this.library["p" + i + "v" + j].visible = true;
+          this.library["p" + i + "v" + j].returnToPlace();
+        }
+      }
+      return TweenLite.to(this.library.dropper, 0.5, {
+        alpha: 0,
+        y: this.library.dropper.y + 20,
+        onComplete: this.nextEvaluation
+      });
+    };
 
     U8A3.prototype.nextEvaluation = function() {
+      var i, j, _i, _j, _ref, _ref1;
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
+      if (this.index < this.steps.length) {
+        this.setDropper(this.index + 1);
+        for (i = _i = 1, _ref = this.game.passports.length; _i <= _ref; i = _i += 1) {
+          for (j = _j = 0, _ref1 = this.game.passports[i - 1].values.length - 1; _j <= _ref1; j = _j += 1) {
+            this.library["p" + i + "v" + j].updateDrops(this.targets);
+          }
+        }
+        return TweenLite.to(this.library.dropper, 0.5, {
+          alpha: 1,
+          y: 500
         });
       } else {
         return this.finish();
       }
     };
 
-    U8A3.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
-    };
-
     U8A3.prototype.finish = function() {
-      var i, _i, _results;
-      U8A3.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      TweenLite.to([this.library.pass1, this.library.pass2, this.library.pass3, this.library.pass4], 1, {
+        alpha: 0
+      });
+      return U8A3.__super__.finish.apply(this, arguments);
     };
 
     window.U8A3 = U8A3;

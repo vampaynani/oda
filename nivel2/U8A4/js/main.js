@@ -9,10 +9,12 @@
     __extends(U8A4, _super);
 
     function U8A4() {
+      this.finish = __bind(this.finish, this);
       this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.evaluateDrop = __bind(this.evaluateDrop, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -93,213 +95,228 @@
           src: 'image_start.png'
         }, {
           id: 'correct',
-          src: 'Mark0001.png'
+          src: 'correct.png'
         }, {
-          id: 'wrong',
-          src: 'Mark0002.png'
+          id: 'incorrect',
+          src: 'wrong.png'
         }
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
+        }, {
+          src: 'sounds/TU2_U8_A4_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU2_U8_A4_bella.mp3',
+          id: 'sbella'
+        }, {
+          src: 'sounds/TU2_U8_A4_benny.mp3',
+          id: 'sbenny'
+        }, {
+          src: 'sounds/TU2_U8_A4_hana.mp3',
+          id: 'shana'
+        }, {
+          src: 'sounds/TU2_U8_A4_julia.mp3',
+          id: 'sjulia'
+        }, {
+          src: 'sounds/TU2_U8_A4_oliver.mp3',
+          id: 'soliver'
+        }, {
+          src: 'sounds/TU2_U8_A4_phillip.mp3',
+          id: 'sphillip'
+        }, {
+          src: 'sounds/TU2_U8_A4_renee.mp3',
+          id: 'srenee'
+        }, {
+          src: 'sounds/TU2_U8_A4_stuart.mp3',
+          id: 'sstuart'
         }
       ];
-      this.answers = [];
-      this.preguntas = [
-        {
-          tipo: 'texto',
-          imagen: 'toastMilkJuice',
-          pregunta: "What's for breakfast?",
-          opcionUno: 'Cereal. milk and juice',
-          opcionDos: 'Toast, milk and juice'
-        }, {
-          tipo: 'texto',
-          imagen: 'zebras',
-          pregunta: 'Do zebras live in the grasslands?',
-          opcionUno: 'Yes, they do.',
-          opcionDos: "No, they don't."
-        }, {
-          tipo: 'imagen',
-          pregunta: 'It has fins and scales. What is it?',
-          opcionUno: 'fish',
-          opcionDos: 'parrot'
-        }, {
-          tipo: 'imagen',
-          pregunta: 'This animal is endangered',
-          opcionUno: 'rhino',
-          opcionDos: 'snake'
-        }
-      ];
+      this.game = {
+        steps: [
+          {
+            sound: 'sbella',
+            drp: 2,
+            tgt: 6
+          }, {
+            sound: 'sbenny',
+            drp: 3,
+            tgt: 4
+          }, {
+            sound: 'shana',
+            drp: 1,
+            tgt: 5
+          }, {
+            sound: 'sjulia',
+            drp: 8,
+            tgt: 2
+          }, {
+            sound: 'soliver',
+            drp: 7,
+            tgt: 1
+          }, {
+            sound: 'sphillip',
+            drp: 4,
+            tgt: 3
+          }, {
+            sound: 'srenee',
+            drp: 5,
+            tgt: 8
+          }, {
+            sound: 'sstuart',
+            drp: 6,
+            tgt: 7
+          }
+        ]
+      };
       U8A4.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U8A4.prototype.setStage = function() {
       U8A4.__super__.setStage.apply(this, arguments);
+      this.steps = this.shuffle(this.game.steps);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('btnfinished', 'btnfinished', 387, 541);
-      this.insertBitmap('btnrepeat', 'btnrepeat', 264, 541);
-      return this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.insertBitmap('finish', 'btnfinished', 387, 541);
+      this.insertBitmap('repeat', 'btnrepeat', 264, 541);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      return this.setKids().introEvaluation();
     };
 
     U8A4.prototype.setKids = function() {
-      var c, caras, d, i, _i, _j, _k;
+      var c, caras, d, i, _i, _j;
       caras = new createjs.Container();
       caras.x = 90;
       caras.y = 150;
-      for (i = _i = 1; _i <= 4; i = ++_i) {
-        c = this.createBitmap('image' + i, 'image' + i, (145 * i) - 145, 0);
+      caras.name = 'caras';
+      this.targets = new Array();
+      for (i = _i = 1; _i <= 8; i = ++_i) {
+        if (i < 5) {
+          c = this.createBitmap("image" + i, "image" + i, (145 * i) - 145, 0);
+        } else {
+          c = this.createBitmap("image" + i, "image" + i, (145 * i) - 145 * 5, 190);
+        }
+        this.targets.push(c);
+        this.addToLibrary(c);
         caras.addChild(c);
       }
-      for (i = _j = 5; _j <= 8; i = ++_j) {
-        c = this.createBitmap('image' + i, 'image' + i, (145 * i) - 145 * 5, 190);
-        caras.addChild(c);
-      }
-      for (i = _k = 1; _k <= 8; i = ++_k) {
-        d = this.createBitmap('dragble' + i, 'dragble' + i, 630, i * 37, 'tc');
+      for (i = _j = 1; _j <= 8; i = _j += 1) {
+        d = new Droppable("dragble" + i, this.preload.getResult("dragble" + i), i, 630, i * 37, this.stage);
+        this.setReg(d, d.width / 2, d.height / 2);
+        this.addToLibrary(d);
         caras.addChild(d);
       }
       this.addToMain(caras);
       return this;
     };
 
-    U8A4.prototype.setQuestion = function() {
-      var diagonal, dos, i, opciones, question, text, total, uno, v, _i;
-      question = new createjs.Container();
-      question.x = 0;
-      question.y = 0;
-      for (i = _i = 1; _i <= 1; i = ++_i) {
-        if (this.preguntas[i].tipo === 'texto') {
-          v = this.createBitmap(this.preguntas[i].imagen, this.preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2 + 30, 'mc');
-          v.scaleX = v.scaleY = 0.5;
-          question.addChild(v);
-          this.addToLibrary(v);
-          text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
-          text.x = stageSize.w / 2;
-          text.y = 140;
-          text.textAlign = 'center';
-          question.addChild(text);
-          opciones = new createjs.Container();
-          uno = new ClickableText(this.preguntas[i].opcionUno, this.preguntas[i].opcionUno, i, 0, 0);
-          opciones.addChild(uno);
-          diagonal = new createjs.Text(' / ', '24px Arial', '#333');
-          diagonal.x = uno.x + uno.width;
-          diagonal.y = 0;
-          opciones.addChild(diagonal);
-          dos = new ClickableText(this.preguntas[i].opcionDos, this.preguntas[i].opcionDos, i, diagonal.x + 24, 0);
-          opciones.addChild(dos);
-          total = uno.width + dos.width + 20;
-          opciones.x = stageSize.w / 2 - total / 2;
-          opciones.y = 490;
-          question.addChild(opciones);
-        } else if (this.preguntas[i].tipo = 'imagen') {
-          text = new createjs.Text(this.preguntas[i].pregunta, '24px Arial', '#333');
-          text.x = 0;
-          text.y = 140;
-          question.addChild(text);
-          v = this.createBitmap(this.preguntas[i].opcionUno, this.preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2 + 30, 'mc');
-          v.scaleX = v.scaleY = 0.3;
-          question.addChild(v);
-          this.addToLibrary(v);
-          v = this.createBitmap(this.preguntas[i].opcionDos, this.preguntas[i].opcionDos, (stageSize.w / 4) * 3, stageSize.h / 2 + 30, 'mc');
-          v.scaleX = v.scaleY = 0.3;
-          question.addChild(v);
-          this.addToLibrary(v);
-        }
-      }
-      this.addToMain(question);
-      return this;
-    };
-
     U8A4.prototype.introEvaluation = function() {
-      return U8A4.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
+      U8A4.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
+      });
+      TweenLite.from(this.library.instructions, 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      TweenLite.from(this.library.finish, 1, {
+        alpha: 0,
+        y: this.library.finish.y + 10,
+        delay: 0.7
+      });
+      TweenLite.from(this.library.repeat, 1, {
+        alpha: 0,
+        y: this.library.repeat.y + 10,
+        delay: 0.7
+      });
+      return TweenLite.from(this.library.caras, 1, {
+        alpha: 0,
+        y: this.library.caras.y + 20,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U8A4.prototype.initEvaluation = function(e) {
+      var i, _i, _results;
       U8A4.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
+      createjs.Sound.play(this.steps[this.index].sound);
+      this.library.repeat.addEventListener('click', this.playSound);
+      this.library.finish.addEventListener('click', this.evaluateAnswer);
+      _results = [];
+      for (i = _i = 1; _i <= 8; i = _i += 1) {
+        this.library["dragble" + i].updateDrops(this.targets);
+        this.library["dragble" + i].addEventListener('dropped', this.evaluateDrop);
+        _results.push(this.library["dragble" + i].initDragListener());
+      }
+      return _results;
+    };
+
+    U8A4.prototype.evaluateDrop = function(e) {
+      this.answer = e.target;
+      this.drop = e.drop;
+      this.answer.putInPlace({
+        x: this.drop.x + 65,
+        y: this.drop.y + 150
       });
+      return setTimeout(this.finishEvaluation, 1 * 1000);
     };
 
     U8A4.prototype.evaluateAnswer = function(e) {
-      var pt;
-      this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+      var i, res, step, _i;
+      this.library.repeat.removeEventListener('click', this.playSound);
+      this.library.finish.removeEventListener('click', this.evaluateAnswer);
+      for (i = _i = 1; _i <= 8; i = _i += 1) {
+        step = this.steps[i - 1];
+        res = this.createSprite('resultado', ['incorrect', 'correct'], null, this.library["image" + step.tgt].x, this.library["image" + step.tgt].y);
+        if (this.library["dragble" + step.drp].x === this.library["image" + step.tgt].x + 65) {
+          this.library.score.plusOne();
+          res.currentFrame = 1;
         } else {
-          this.warning();
-          return this.answer.returnToPlace();
+          res.currentFrame = 0;
         }
-      } else {
-        return this.answer.returnToPlace();
+        this.library.caras.addChild(res);
       }
+      return setTimeout(this.finish, 2 * 1000);
     };
 
     U8A4.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
+      return this.nextEvaluation();
     };
 
     U8A4.prototype.nextEvaluation = function() {
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
-      } else {
-        return this.finish();
+      if (this.index < this.steps.length) {
+        return createjs.Sound.play(this.steps[this.index].sound);
       }
     };
 
     U8A4.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
+      createjs.Sound.stop();
+      return createjs.Sound.play(this.steps[this.index].sound);
     };
 
     U8A4.prototype.finish = function() {
-      var i, _i, _results;
-      U8A4.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      TweenLite.to(this.library.finish, 1, {
+        alpha: 0,
+        y: this.library.finish.y + 10
+      });
+      TweenLite.to(this.library.repeat, 1, {
+        alpha: 0,
+        y: this.library.repeat.y + 10
+      });
+      TweenLite.to(this.library.caras, 1, {
+        alpha: 0,
+        y: this.library.caras.y + 20
+      });
+      return U8A4.__super__.finish.apply(this, arguments);
     };
 
     window.U8A4 = U8A4;

@@ -9,8 +9,12 @@ class WordContainer
 		@x = x
 		@y = y
 		@text = new createjs.Text text,'24px Quicksand','#333'
+		if text isnt ''
+			w = @text.getMeasuredWidth() + 10
+		@width = w
+		@height = h
 		@shape = new createjs.Shape(new createjs.Graphics().beginFill( bgcolor ).drawRect( 0, 0, w, h ).setStrokeStyle(3).beginStroke( stcolor ).moveTo( 0, h ).lineTo( w, h ));
-
+		@text.text = ''
 		@text.x = w / 2
 		@text.y = h - @text.getMeasuredHeight()
 		@addChild @shape, @text

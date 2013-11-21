@@ -128,7 +128,7 @@
             steps: [
               {
                 frase: 'Moon cakes and pomelos.',
-                texts: ['do they', 'Reveillon?'],
+                pattern: ['#wc', 'do they', '#wc', 'Reveillon?'],
                 targets: ['What', 'eat']
               }, {
                 frase: 'In September.',
@@ -193,6 +193,7 @@
             steps: [
               {
                 frase: 'Beautiful jewelry.',
+                pattern: ['#wc', 'do they', '#wc', 'Reveillon?'],
                 targets: ['What', 'wear']
               }, {
                 frase: 'In India.',
@@ -267,7 +268,7 @@
     };
 
     U8A2.prototype.setDropper = function(step) {
-      var a, dropper, h, i, npos, q, t, _i, _len, _ref;
+      var a, dropper, h, i, npos, q, t, txt, _i, _len, _ref;
       this.step = step;
       if (this.library.dropper) {
         dropper = this.library.dropper;
@@ -286,11 +287,12 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         t = _ref[_i];
         if (t === '#wc') {
-          h = new WordContainer("h" + i, '', '#FFF', '#F00', npos, 5, 120, 22);
+          txt = this.scene.steps[step - 1].targets[i];
+          h = new WordContainer("h" + i, "" + txt, '#FFF', '#F00', npos, 5);
           h.index = i;
           dropper.addChild(h);
           this.addToLibrary(h);
-          npos += 130;
+          npos += h.width + 10;
           i++;
         } else {
           h = this.createText('', t, '24px Quicksand', '#333', npos, 0);

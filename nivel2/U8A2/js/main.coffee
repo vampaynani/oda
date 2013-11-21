@@ -109,11 +109,12 @@ class U8A2 extends Oda
 		npos = q.x + q.getMeasuredWidth() + 10
 		for t in @scene.steps[step - 1].pattern
 			if t is '#wc'
-				h = new WordContainer "h#{i}", '', '#FFF', '#F00', npos, 5, 120, 22
+				txt = @scene.steps[step - 1].targets[i]
+				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#F00', npos, 5
 				h.index = i
 				dropper.addChild h
 				@addToLibrary h
-				npos += 130
+				npos += h.width + 10
 				i++
 			else
 				h = @createText '', t,'24px Quicksand','#333', npos, 0

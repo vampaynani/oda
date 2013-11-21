@@ -201,8 +201,6 @@ class U2A4 extends Oda
 				#insert tache
 				#r = @createBitmap 'wrong', 'wrong', (@drops[i - 1].x) + 75, @drops[i - 1].y
 			@library[@current].addChild res
-			
-
 		setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
 		createjs.Sound.stop @sound

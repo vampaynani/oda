@@ -726,6 +726,31 @@
       return this.addChild(this.bitmap);
     };
 
+    Droppable.prototype.updateDrops = function() {
+      var drop, drops, o, _i, _j, _len, _len1;
+      drop = arguments[0], drops = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      this.drops = [];
+      if (this.isArray(drop)) {
+        for (_i = 0, _len = drop.length; _i < _len; _i++) {
+          o = drop[_i];
+          this.drops.push(o);
+        }
+      } else {
+        this.drops.push(drop);
+        for (_j = 0, _len1 = drops.length; _j < _len1; _j++) {
+          o = drops[_j];
+          this.drops.push(o);
+        }
+      }
+      return this.drops;
+    };
+
+    Droppable.prototype.isArray = function(value) {
+      return Array.isArray(value || function(value) {
+        return {}.toString.call(value) === '[object Array]';
+      });
+    };
+
     Droppable.prototype.onInitEvaluation = function() {
       return this.addEventListener('mousedown', this.handleMouseDown);
     };
@@ -963,9 +988,28 @@
     };
 
     DroppableText.prototype.updateDrops = function() {
-      var drops;
-      drops = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      return this.drops = drops;
+      var drop, drops, o, _i, _j, _len, _len1;
+      drop = arguments[0], drops = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      this.drops = [];
+      if (this.isArray(drop)) {
+        for (_i = 0, _len = drop.length; _i < _len; _i++) {
+          o = drop[_i];
+          this.drops.push(o);
+        }
+      } else {
+        this.drops.push(drop);
+        for (_j = 0, _len1 = drops.length; _j < _len1; _j++) {
+          o = drops[_j];
+          this.drops.push(o);
+        }
+      }
+      return this.drops;
+    };
+
+    DroppableText.prototype.isArray = function(value) {
+      return Array.isArray(value || function(value) {
+        return {}.toString.call(value) === '[object Array]';
+      });
     };
 
     DroppableText.prototype.initDragListener = function() {
@@ -1947,7 +1991,13 @@
       this.x = x;
       this.y = y;
       this.text = new createjs.Text(text, '24px Quicksand', '#333');
+      if (text !== '') {
+        w = this.text.getMeasuredWidth() + 10;
+      }
+      this.width = w;
+      this.height = h;
       this.shape = new createjs.Shape(new createjs.Graphics().beginFill(bgcolor).drawRect(0, 0, w, h).setStrokeStyle(3).beginStroke(stcolor).moveTo(0, h).lineTo(w, h));
+      this.text.text = '';
       this.text.x = w / 2;
       this.text.y = h - this.text.getMeasuredHeight();
       this.addChild(this.shape, this.text);

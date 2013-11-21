@@ -33,8 +33,19 @@ class DroppableText
 			when 'center' then @hit.graphics.c().beginFill('#000').drawRect(-w/2, 0, w, h)
 			when 'right' then @hit.graphics.c().beginFill('#000').drawRect(-w, 0, w, h)
 		@text.hitArea = @hit
-	updateDrops: (drops...) ->
-		@drops = drops
+	updateDrops: (drop, drops...) ->
+		@drops = []
+		if @isArray drop
+			for o in drop
+				@drops.push o
+		else
+			@drops.push drop
+			for o in drops
+				@drops.push o
+		@drops
+	isArray: ( value ) ->
+		Array.isArray value || (value) ->
+			{}.toString.call( value ) is '[object Array]'
 	initDragListener: =>
 		@addEventListener 'mousedown', @handleMouseDown
 	endDragListener: =>

@@ -20,6 +20,19 @@ class Droppable
 		@hitArea = hit
 		@inPlace = off
 		@addChild @bitmap
+	updateDrops: (drop, drops...) ->
+		@drops = []
+		if @isArray drop
+			for o in drop
+				@drops.push o
+		else
+			@drops.push drop
+			for o in drops
+				@drops.push o
+		@drops
+	isArray: ( value ) ->
+		Array.isArray value || (value) ->
+			{}.toString.call( value ) is '[object Array]'
 	onInitEvaluation: =>
 		@addEventListener 'mousedown', @handleMouseDown
 	onStopEvaluation: =>

@@ -28,19 +28,10 @@ class U8A3 extends Oda
 				{x: 434, y: 304, values: ['Saul Peterson', 'Canada', 'light brown', 'blonde', '1m 14cm']}
 			]
 			steps:[
-				{pattern:["I have", "#wc", "eyes. I have straight", "#wc", "hair. I'm", "#wc", "tall.", "#br", "My name's", "#wc", "I'm from Germany."], targets:['blue','brown', '1m 10cm', 'Eric Schmidth']}
-				[
-					{pattern:["I have #wc eyes. I have straight #wc hair. I'm #wc tall."], targets:['blue','brown', '1m 10cm']}
-					{pattern:["My name's #wc I'm from Germany"], targets:['Eric Schmidth']}
-				]
-				[
-					{pattern:["I have #wc eyes. I have straight #wc hair. I'm #wc tall."], targets:['blue','brown', '1m 10cm']}
-					{pattern:["My name's #wc I'm from Germany"], targets:['Eric Schmidth']}
-				]
-				[
-					{pattern:["I have #wc eyes. I have straight #wc hair. I'm #wc tall."], targets:['blue','brown', '1m 10cm']}
-					{pattern:["My name's #wc I'm from Germany"], targets:['Eric Schmidth']}
-				]
+				{pattern:["I have", "#wc", "eyes. I have straight", "#wc", "hair. I'm", "#wc", "tall.", "#br", "My name's", "#wc", "I'm from Germany."], targets:['blue','brown', '1m 10cm', 'Eric Schmidt']}
+				{pattern:["I'm", "#wc", ". I'm from", "#wc", ". I have", "#wc", "eyes.", "#br", "I have curly", "#wc", "hair. I'm 1m 7cm tall."], targets:['Melanie Murphy','Ireland', 'green', 'red']}
+				{pattern:["I have", "#wc", "eyes. I have curly blonde hair.", "#br", "I'm", "#wc", ". I'm from", "#wc", ". I'm", "#wc", "tall."], targets:['light brown','Saul Peterson', 'Canada', '1m 14cm']}
+				{pattern:["I'm from", "#wc", ". I have dark brown eyes. I have long", "#wc", "hair.", "#br", "I'm", "#wc", "tall. My name's", "#wc"], targets:['China','black', '1m 15cm', 'Cassandra Wang']}
 			]
 			positions:[
 				{x:'65', y:'22'}
@@ -54,11 +45,11 @@ class U8A3 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
-		@steps = @game.steps
+		@steps = @shuffle @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setPassports().setDropper( 1 ).introEvaluation()
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 4, 0
+		@setDropper( 1 ).setPassports().introEvaluation()
 	setPassports: ->
 		i = 1
 		for passport in @game.passports
@@ -77,7 +68,7 @@ class U8A3 extends Oda
 		@
 	setDropper: (step) ->
 		@step = step
-		if @library.dropper
+		if @library.dropper and @mainContainer.contains @library.dropper
 			dropper = @library.dropper
 		else
 			dropper = new createjs.Container()
@@ -86,27 +77,30 @@ class U8A3 extends Oda
 			dropper.name = 'dropper'
 			@addToMain dropper
 		dropper.removeAllChildren()
-
+		
 		i = 0
 		j = 0
 		npos = 0
+		@targets = new Array()
 		for t in @steps[step - 1].pattern
-			ny = j * 30 + 5
+			ny = j * 30 + 7
 			if t is '#br'
 				npos = 0
 				j++
 			else if t is '#wc'
-				h = new WordContainer "h#{i}", '', '#FFF', '#F00', npos, ny, 100, 22
+				txt = @steps[step - 1].targets[i]
+				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#F00', npos, ny
 				h.text.font = '20px Quicksand'
 				h.index = i
 				dropper.addChild h
 				@addToLibrary h
-				npos += 110
+				@targets.push h
+				npos += h.width + 7
 				i++
 			else
 				h = @createText '', t,'20px Quicksand','#333', npos, ny
 				dropper.addChild h
-				npos += h.getMeasuredWidth() + 20
+				npos += h.getMeasuredWidth() + 12
 		@
 	introEvaluation: ->
 		super
@@ -117,8 +111,8 @@ class U8A3 extends Oda
 	initEvaluation: (e) =>
 		super
 		for i in [1..@game.passports.length] by 1
-			for j in [0..@game.passports[i - 1].values.length - 1] by 1
-				@library["p#{i}v#{j}"].updateDrops @library.h0
+			for j in [0..@game.passports[i - 1].values.length - 1] by 1 
+				@library["p#{i}v#{j}"].updateDrops @targets
 				@library["p#{i}v#{j}"].addEventListener 'dropped', @evaluateAnswer
 				@library["p#{i}v#{j}"].initDragListener()
 	evaluateAnswer: (e) =>
@@ -132,23 +126,29 @@ class U8A3 extends Oda
 			@warning()
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		#TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		#@answer.returnToPlace()
+		createjs.Sound.play 'good'
+		for target in @targets
+			if target.text.text is ''
+				return
+		@library['score'].plusOne()
+		setTimeout @clearEvaluation, 1 * 1000
+	clearEvaluation: (e) =>
+		for i in [1..@game.passports.length] by 1
+			for j in [0..@game.passports[i - 1].values.length - 1] by 1 
+				@library["p#{i}v#{j}"].visible = true
+				@library["p#{i}v#{j}"].returnToPlace()
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 20, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		if @index < @steps.length
+			@setDropper @index + 1
+			for i in [1..@game.passports.length] by 1
+				for j in [0..@game.passports[i - 1].values.length - 1] by 1 
+					@library["p#{i}v#{j}"].updateDrops @targets
+			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 500}
 		else
 			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
 	finish: ->
+		TweenLite.to [@library.pass1, @library.pass2, @library.pass3, @library.pass4], 1, {alpha: 0}
 		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
 	window.U8A3 = U8A3
