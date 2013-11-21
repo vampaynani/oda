@@ -116,62 +116,62 @@
           texts: [
             {
               idx: 3,
-              t: "Outside it's snowing hard!"
-            }, {
-              idx: 4,
-              t: 'She is watching the weather report on TV'
+              t: "But finally Hare agrees to the race."
             }, {
               idx: 1,
-              t: 'He is drinking hot chocolate and petting his dog, Bo.'
+              t: 'Every day Hare teases Tortoise.'
+            }, {
+              idx: 4,
+              t: 'Many animals arrive to watch.'
             }, {
               idx: 2,
-              t: "Its windy and cold, but it isn't snowing"
+              t: "I run so fast!"
             }
           ],
           positions: [
             {
-              x: '101',
+              x: '111',
               y: '160'
             }, {
-              x: '335',
-              y: '171'
+              x: '330',
+              y: '165'
             }, {
-              x: '106',
+              x: '112',
               y: '375'
             }, {
-              x: '320',
-              y: '373'
+              x: '326',
+              y: '363'
             }
           ]
         }, {
           texts: [
             {
-              idx: 8,
-              t: "Phil and Bo sit in the living room."
+              idx: 6,
+              t: "He stops to rest under the tree."
             }, {
-              idx: 7,
-              t: 'He puts on his snow pants, sweater, coat and boats.'
+              idx: 8,
+              t: "He's the winner."
             }, {
               idx: 5,
-              t: 'Phil jumps up and down and claps his hands.'
+              t: 'He runs ahead of Tortoise.'
             }, {
-              idx: 6,
-              t: "Phil calls his friend Jack on the phone"
+              idx: 7,
+              t: "Hare is taking a nap!"
             }
           ],
           positions: [
             {
-              x: '101',
+              x: '111',
               y: '160'
             }, {
-              x: '335',
-              y: '171'
+              x: '325',
+              y: '165'
             }, {
-              x: '106',
-              y: '375'
+              x: '115',
+              y: '365'
             }, {
-              x: '320',
-              y: '373'
+              x: '330',
+              y: '357'
             }
           ]
         }
@@ -181,10 +181,13 @@
     }
 
     U5A5.prototype.setStage = function() {
+      var ti;
       U5A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('title', 'title1', 350, 125, 'tc');
+      ti = this.createBitmap('title', 'title1', 350, 135, 'tc');
+      ti.scaleX = ti.scaleY = 0.8;
+      this.addToMain(ti);
       this.insertBitmap('btnnext', 'btn', 760, 520, 'tc');
       this.library['btnnext'].visible = false;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
@@ -199,6 +202,7 @@
       for (i = _i = 1, _ref = this.game[scene - 1].positions.length; _i <= _ref; i = _i += 1) {
         m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i), "" + ((scene - 1) * 4 + i) + "b"], null, this.game[scene - 1].positions[i - 1].x, this.game[scene - 1].positions[i - 1].y);
         m.index = (scene - 1) * 4 + i;
+        m.scaleX = m.scaleY = 0.8;
         cuento.addChild(m);
         this.addToLibrary(m);
       }

@@ -37,30 +37,30 @@ class U5A5 extends Oda
 		@game = [
 			{
 				texts:[
-					{idx:3, t:"Outside it's snowing hard!"}
-					{idx:4, t:'She is watching the weather report on TV'}
-					{idx:1, t:'He is drinking hot chocolate and petting his dog, Bo.'}
-					{idx:2, t:"Its windy and cold, but it isn't snowing"}
+					{idx:3, t:"But finally Hare agrees to the race."}
+					{idx:1, t:'Every day Hare teases Tortoise.'}
+					{idx:4, t:'Many animals arrive to watch.'}
+					{idx:2, t:"I run so fast!"}
 				]
 				positions:[
-					{x:'101', y:'160'}
-					{x:'335', y:'171'}
-					{x:'106', y:'375'}
-					{x:'320', y:'373'}
+					{x:'111', y:'160'}
+					{x:'330', y:'165'}
+					{x:'112', y:'375'}
+					{x:'326', y:'363'}
 				]
 			}
 			{
 				texts:[
-					{idx:8, t:"Phil and Bo sit in the living room."}
-					{idx:7, t:'He puts on his snow pants, sweater, coat and boats.'}
-					{idx:5, t:'Phil jumps up and down and claps his hands.'}
-					{idx:6, t:"Phil calls his friend Jack on the phone"}
+					{idx:6, t:"He stops to rest under the tree."}
+					{idx:8, t:"He's the winner."}
+					{idx:5, t:'He runs ahead of Tortoise.'}
+					{idx:7, t:"Hare is taking a nap!"}
 				]
 				positions:[
-					{x:'101', y:'160'}
-					{x:'335', y:'171'}
-					{x:'106', y:'375'}
-					{x:'320', y:'373'}	
+					{x:'111', y:'160'}
+					{x:'325', y:'165'}
+					{x:'115', y:'365'}
+					{x:'330', y:'357'}	
 				]
 			}
 		]
@@ -70,7 +70,9 @@ class U5A5 extends Oda
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@insertBitmap 'title', 'title1', 350, 125, 'tc'
+		ti = @createBitmap 'title', 'title1', 350, 135, 'tc'
+		ti.scaleX = ti.scaleY = 0.8
+		@addToMain ti
 		@insertBitmap 'btnnext', 'btn', 760, 520, 'tc'
 		@library['btnnext'].visible = off
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
@@ -82,6 +84,7 @@ class U5A5 extends Oda
 		for i in [1..@game[scene - 1].positions.length] by 1
 			m = @createSprite "sc#{i}", ["#{(scene - 1) * 4 + i}", "#{(scene - 1) * 4 + i}b"],null, @game[scene - 1].positions[i - 1].x, @game[scene - 1].positions[i - 1].y
 			m.index = (scene - 1) * 4 + i
+			m.scaleX = m.scaleY = 0.8
 			cuento.addChild m
 			@addToLibrary m
 		for i in [1..@game[scene - 1].texts.length] by 1
