@@ -1361,12 +1361,12 @@
     };
 
     Oda.prototype.initPreloader = function() {
-      var bgBar, i, _i;
+      var bgBar, i, _i, _ref;
       this.preload = new createjs.LoadQueue(false);
       this.loadStep = 0;
       this.barHeight = 7;
       this.barWidth = 35;
-      this.loaderColor = '#E62922';
+      this.loaderColor = (_ref = $('#oda').data('loadercolor')) != null ? _ref : '#E62922';
       this.loaderBar = new createjs.Container();
       this.loaderBar.x = stageSize.w / 2;
       this.loaderBar.y = stageSize.h / 2;

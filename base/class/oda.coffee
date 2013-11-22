@@ -57,7 +57,7 @@ class Oda
 		@loadStep = 0
 		@barHeight = 7
 		@barWidth = 35
-		@loaderColor = '#E62922'
+		@loaderColor = $('#oda').data('loadercolor') ? '#E62922';
 
 		@loaderBar = new createjs.Container()
 		@loaderBar.x = stageSize.w / 2
