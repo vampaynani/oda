@@ -142,6 +142,7 @@ class U6A6 extends Oda
 			'He / She protects people.'
 			'He / She helps sick animals.'
 			'He / She puts out fires.'
+			''
 		]
 		@answers = 
 			doctor: r: off, c: [0, 1, 2, 3, 4, 5]
@@ -190,14 +191,37 @@ class U6A6 extends Oda
 		help.name = 'helper'
 		p = @createBitmap 'prophelper', 'prophelper', 0, 0
 		help.addChild p
-		for i in [1..8]
-			b = @createBitmap "btn#{i}", "btn#{i}", (i-1)*40 + 10, 20
-			b.index = i
-			b.addEventListener 'click', @showHelper
-			@addToLibrary b
-			help.addChild b
-		t = @createText 'helpertxt', @helps[0], '14px Quicksand', '#333', 330, 25
+
+		t = @createText 'helpertxt', @helps[8], '14px Quicksand', '#333', 330, 25
 		@addToLibrary t
+
+		a = @createBitmap "btndoctor", "btn1", (0)*40 + 10, 20
+		a.index = 1
+		a.addEventListener 'click', @showHelper
+		b = @createBitmap "btnmechanic", "btn2", (1)*40 + 10, 20
+		b.index = 2
+		b.addEventListener 'click', @showHelper
+		c = @createBitmap "btnchef", "btn3", (2)*40 + 10, 20
+		c.index = 3
+		c.addEventListener 'click', @showHelper
+		d = @createBitmap "btnsalesclerk", "btn4", (3)*40 + 10, 20
+		d.index = 4
+		d.addEventListener 'click', @showHelper
+		e = @createBitmap "btnwaiter", "btn5", (4)*40 + 10, 20
+		e.index = 5
+		e.addEventListener 'click', @showHelper
+		f = @createBitmap "btnpolice", "btn6", (5)*40 + 10, 20
+		f.index = 6
+		f.addEventListener 'click', @showHelper
+		g = @createBitmap "btnvet", "btn7", (6)*40 + 10, 20
+		g.index = 7
+		g.addEventListener 'click', @showHelper
+		h = @createBitmap "btnfirefighter", "btn8", (7)*40 + 10, 20
+		h.index = 8
+		h.addEventListener 'click', @showHelper
+
+		@addToLibrary a, b, c, d, e, f, g, h
+		help.addChild a, b, c, d, e, f, g, h
 		help.addChild t
 		@addToMain help
 	createAlphabet: ->
@@ -313,9 +337,12 @@ class U6A6 extends Oda
 				@robj = obj
 				@answers[obj].r = on
 				@library['score'].plusOne()
+				createjs.Sound.play 'good'
+				@library.helpertxt.text = @helps[8]
+
 				@finishEvaluation()
 	finishEvaluation: =>
-		TweenMax.allTo [@library["person#{@robj}"],@library["number#{@robj}"]], 1, {alpha:0, ease:Quart.easeOut, onComplete: @nextEvaluation}
+		TweenMax.allTo [@library["btn#{@robj}"],@library["person#{@robj}"],@library["number#{@robj}"]], 1, {alpha:0, ease:Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		complete = on
 		for obj of @answers

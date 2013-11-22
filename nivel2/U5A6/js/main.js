@@ -13,6 +13,7 @@
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
+      this.updateCounter = __bind(this.updateCounter, this);
       this.setCards = __bind(this.setCards, this);
       var manifest, sounds;
       manifest = [
@@ -378,12 +379,14 @@
       b2 = new Button('game2btn', this.preload.getResult('game2btn'), 2, 753, 505);
       b3 = new Button('game3btn', this.preload.getResult('game3btn'), 3, 753, 550);
       this.addToMain(b1, b2, b3);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 100, 0));
       return this.introEvaluation();
     };
 
     U5A6.prototype.setCards = function(e) {
       var b, c, game, h, i, j, juego, _i, _j;
+      this.time = 100;
+      this.timer = setInterval(this.updateCounter, 1000);
       j = 0;
       game = e.target.index;
       juego = new createjs.Container();
@@ -411,6 +414,14 @@
         y: juego.y - 20
       });
       return this;
+    };
+
+    U5A6.prototype.updateCounter = function() {
+      this.time--;
+      this.library['score'].updateTotal(this.time);
+      if (this.time === 0) {
+        return this.finish();
+      }
     };
 
     U5A6.prototype.introEvaluation = function() {
@@ -472,8 +483,7 @@
         TweenLite.to(this.selected[1], 0.5, {
           alpha: 1
         });
-        this.selected = new Array();
-        return this.warning();
+        return this.selected = new Array();
       }
     };
 
@@ -489,6 +499,7 @@
     };
 
     U5A6.prototype.finish = function() {
+      clearInterval(this.timer);
       TweenLite.to([this.library.game1btn, this.library.game2btn, this.library.game3btn], 1, {
         alpha: 0
       });

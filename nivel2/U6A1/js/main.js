@@ -207,6 +207,9 @@
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
+        }, {
+          src: 'sounds/bell_cow_3.mp3',
+          id: 'bell'
         }
       ];
       U6A1.__super__.constructor.call(this, null, manifest, sounds);
@@ -503,6 +506,7 @@
         hpt = hit.parent.localToGlobal(hit.x, hit.y);
         htt = this.answer.parent.globalToLocal(hpt.x, hpt.y);
         this.insertText('dropper', this.pieces[this.answer.index].text, '24px Quicksand', '#333', stageSize.w / 2, 510, 'center');
+        createjs.Sound.play('bell');
         this.observer.notify('stop_drag');
         this.answer.putInPlace(htt);
         return this.initListeners();
@@ -517,14 +521,15 @@
       if (name === ("btn" + this.pieces[this.answer.index].label)) {
         this.stopListeners();
         createjs.Sound.play('good');
+        this.library['score'].plusOne();
         return setTimeout(this.finishEvaluation, 1 * 1000);
       } else {
-        return this.warning();
+        this.warning();
+        return setTimeout(this.finishEvaluation, 1 * 1000);
       }
     };
 
     U6A1.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
       return TweenLite.to(this.library['dropper'], 0.5, {
         alpha: 0,
         y: stageSize.h,

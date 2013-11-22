@@ -75,6 +75,7 @@ class U6A3 extends Oda
 	setStage: ->
 		super
 		@steps = @shuffleNoRepeat @game.steps, 11
+		@intento = 0
 		stepsimg = (step.img for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
@@ -82,7 +83,7 @@ class U6A3 extends Oda
 		imgs.scaleX = imgs.scaleY = 0.3
 		@addToMain imgs
 
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 11, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@setDropper(1).setNube1().setNube2().introEvaluation()
 	setDropper: (step) ->
 		@step = step
@@ -171,19 +172,25 @@ class U6A3 extends Oda
 		if @answer.index is @steps[@step - 1].targets[@drop.index]
 			@answer.visible = false
 			@drop.changeText @answer.index
-			@finishEvaluation()
+			createjs.Sound.play 'good'
+			@finishEvaluation() 
 		else
 			@warning()
+			@intento++
+			console.log @intento
 			@answer.returnToPlace()
+			if @intento is 2
+				@intento = 0			
+				@clearEvaluation() 
 	finishEvaluation: =>
-		createjs.Sound.play 'good'
 		if @steps[@step - 1].targets.length is 3
 			if @library.h0.text.text is '' or @library.h1.text.text is '' or @library.h2.text.text is ''
 				return
 		else
 			if @library.h0.text.text is '' or @library.h1.text.text is ''
 				return
-		@library['score'].plusOne()
+		@library['score'].plusOne()	
+		@intento = 0			
 		setTimeout @clearEvaluation, 1 * 1000
 	clearEvaluation: (e) =>
 		for opt in @game.opt1

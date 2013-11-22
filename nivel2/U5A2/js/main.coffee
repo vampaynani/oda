@@ -72,10 +72,12 @@ class U5A2 extends Oda
 		@stepsid = (step.id for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 15, 0
 		@setStep().introEvaluation()
 	setStep: ->
 		@selected = @stepsid[@index]
+		intento = 0
+
 		stepsView = @stepsid.filter @filterByID
 		stepsView = @shuffle stepsView
 		img1 = @preload.getResult @selected
@@ -85,7 +87,14 @@ class U5A2 extends Oda
 		choose.setDistance 550, 300
 		choose.addEventListener 'selection', (e)=>
 			@tindex = 0
-			if e.success is false then @warning() else @showText()
+			if e.success is false 
+				@warning() 
+				intento = 1
+			else 
+				if intento is 0
+					@library.score.plusOne()
+					createjs.Sound.play "good"
+				@showText()
 		@addToMain choose
 		TweenLite.from choose, 1, {alpha: 0, y: @library.chooseImg.y + 50, delay: 1}
 		@
@@ -99,10 +108,19 @@ class U5A2 extends Oda
 		createjs.Sound.play "s#{@stepsid[@index]}"
 	showText: () ->
 		text = @steps[@index].texts[@tindex]
+		intento = 0
 		choosetxt = new ChooseText 'chooseTxt', text.p, "want", "don't want", text.c, text.s, 0, 450
 		choosetxt.x = stageSize.w / 2 -  choosetxt.width / 2
 		choosetxt.addEventListener 'selection', (e)=>
-			if e.success is false then @warning() else @evaluateAnswer()
+			if e.success is false 
+				@warning() 
+				intento = 1
+				
+			else 
+				if intento is 0
+					@library.score.plusOne()
+					createjs.Sound.play "good"
+				@evaluateAnswer() 
 		@addToMain choosetxt
 	evaluateAnswer: (e) =>
 		@tindex++
@@ -116,7 +134,9 @@ class U5A2 extends Oda
 		TweenLite.to @library.chooseImg, 0.5, {alpha: 0, y: @library.chooseImg.y - 50, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		@library.score.plusOne()
+		createjs.Sound.stop()
+
+		#@library.score.plusOne()
 		if @index < @steps.length
 			@setStep()
 			@library.chooseImg.initListeners()

@@ -174,14 +174,15 @@
       }).call(this);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 15, 0));
       return this.setStep().introEvaluation();
     };
 
     U5A2.prototype.setStep = function() {
-      var choose, img1, img2, stepsView,
+      var choose, img1, img2, intento, stepsView,
         _this = this;
       this.selected = this.stepsid[this.index];
+      intento = 0;
       stepsView = this.stepsid.filter(this.filterByID);
       stepsView = this.shuffle(stepsView);
       img1 = this.preload.getResult(this.selected);
@@ -192,8 +193,13 @@
       choose.addEventListener('selection', function(e) {
         _this.tindex = 0;
         if (e.success === false) {
-          return _this.warning();
+          _this.warning();
+          return intento = 1;
         } else {
+          if (intento === 0) {
+            _this.library.score.plusOne();
+            createjs.Sound.play("good");
+          }
           return _this.showText();
         }
       });
@@ -227,15 +233,21 @@
     };
 
     U5A2.prototype.showText = function() {
-      var choosetxt, text,
+      var choosetxt, intento, text,
         _this = this;
       text = this.steps[this.index].texts[this.tindex];
+      intento = 0;
       choosetxt = new ChooseText('chooseTxt', text.p, "want", "don't want", text.c, text.s, 0, 450);
       choosetxt.x = stageSize.w / 2 - choosetxt.width / 2;
       choosetxt.addEventListener('selection', function(e) {
         if (e.success === false) {
-          return _this.warning();
+          _this.warning();
+          return intento = 1;
         } else {
+          if (intento === 0) {
+            _this.library.score.plusOne();
+            createjs.Sound.play("good");
+          }
           return _this.evaluateAnswer();
         }
       });
@@ -270,7 +282,7 @@
 
     U5A2.prototype.nextEvaluation = function() {
       this.index++;
-      this.library.score.plusOne();
+      createjs.Sound.stop();
       if (this.index < this.steps.length) {
         this.setStep();
         this.library.chooseImg.initListeners();

@@ -261,6 +261,7 @@
 
     U5A3.prototype.setStage = function() {
       U5A3.__super__.setStage.apply(this, arguments);
+      this.success = 1;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 20, 0));
@@ -347,12 +348,10 @@
         if (this.library["l" + i]) {
           pt = this.library["l" + i].globalToLocal(this.stage.mouseX, this.stage.mouseY);
           if (this.library["l" + i].hitTest(pt.x, pt.y)) {
-            if (this.answer.index === this.library["l" + i].index) {
+            if (this.library["l" + i].text.text === '') {
               this.answer.visible = false;
-              this.library["l" + i].changeText(this.library["l" + i].index);
+              this.library["l" + i].changeText(this.answer.index);
               dropped = true;
-            } else {
-              this.warning();
             }
           }
         }
@@ -365,7 +364,8 @@
     };
 
     U5A3.prototype.finishEvaluation = function() {
-      var i, _i, _ref;
+      var col, i, _i, _j, _k, _ref, _ref1, _ref2;
+      col = this.answers[this.index].txt.split('');
       for (i = _i = 1, _ref = this.scrambled.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
         if (this.library["l" + i]) {
           if (this.library["l" + i].text.text === '') {
@@ -373,7 +373,27 @@
           }
         }
       }
-      createjs.Sound.play('good');
+      for (i = _j = 1, _ref1 = this.scrambled.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
+        if (this.library["l" + i]) {
+          if (this.library["l" + i].text.text !== col[i - 1]) {
+            this.success = 0;
+          }
+        }
+      }
+      if (this.success === 1) {
+        createjs.Sound.play('good');
+        this.library.score.plusOne();
+      } else {
+        createjs.Sound.play('wrong');
+        this.success = 1;
+        for (i = _k = 1, _ref2 = this.scrambled.length; 1 <= _ref2 ? _k <= _ref2 : _k >= _ref2; i = 1 <= _ref2 ? ++_k : --_k) {
+          this.library["l" + i].text.text = col[i - 1];
+        }
+      }
+      return setTimeout(this.nextEvaluation, 2 * 1000);
+    };
+
+    U5A3.prototype.nextEvaluation = function() {
       TweenLite.to(this.library[this.answers[this.index].img], 1, {
         alpha: 0,
         y: this.library[this.answers[this.index].img].y - 20,
@@ -384,17 +404,12 @@
         y: this.library['letras'].y - 20,
         ease: Back.easeOut
       });
-      return TweenLite.to(this.library.palabra, 1, {
+      TweenLite.to(this.library.palabra, 1, {
         alpha: 0,
         y: this.library['palabra'].y - 20,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
+        ease: Back.easeOut
       });
-    };
-
-    U5A3.prototype.nextEvaluation = function() {
       this.index++;
-      this.library.score.plusOne();
       if (this.index < this.answers.length) {
         return this.setQuestion(this.index);
       } else {

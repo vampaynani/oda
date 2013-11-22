@@ -81,6 +81,7 @@ class U5A3 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@success = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
@@ -138,25 +139,39 @@ class U5A3 extends Oda
 			if @library["l#{i}"]
 				pt = @library["l#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
 				if @library["l#{i}"].hitTest pt.x, pt.y
-					if @answer.index is @library["l#{i}"].index
+					#if @answer.index is @library["l#{i}"].index
+					if @library["l#{i}"].text.text is ''
 						@answer.visible = off
-						@library["l#{i}"].changeText @library["l#{i}"].index
+						@library["l#{i}"].changeText @answer.index#@library["l#{i}"].index
 						dropped = on
-					else
-						@warning()
+					
 		if not dropped then @answer.returnToPlace() else @finishEvaluation()
 	finishEvaluation: =>
+		col = @answers[@index].txt.split ''
 		for i in [1..@scrambled.length]
 			if @library["l#{i}"]
 				if @library["l#{i}"].text.text is ''
 					return
-		createjs.Sound.play 'good'
+		for i in [1..@scrambled.length]
+			if @library["l#{i}"]
+				if @library["l#{i}"].text.text isnt col[i-1]
+					@success = 0
+		if @success is 1
+			createjs.Sound.play 'good'
+			@library.score.plusOne()
+		else
+			createjs.Sound.play 'wrong'
+			@success = 1
+			for i in [1..@scrambled.length]
+				@library["l#{i}"].text.text = col[i-1]
+		setTimeout @nextEvaluation, 2 * 1000
+
+
+	nextEvaluation: =>
 		TweenLite.to @library[@answers[@index].img], 1, {alpha: 0, y: @library[@answers[@index].img].y - 20, ease: Back.easeOut}
 		TweenLite.to @library.letras, 1, {alpha: 0, y: @library['letras'].y - 20, ease: Back.easeOut}
-		TweenLite.to @library.palabra, 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
-	nextEvaluation: =>
+		TweenLite.to @library.palabra, 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut}
 		@index++
-		@library.score.plusOne()
 		if @index < @answers.length
 			@setQuestion @index
 		else

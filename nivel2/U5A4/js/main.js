@@ -317,8 +317,8 @@
           positions: [
             {
               id: 'summerJenifferdressclothdrag',
-              x: '713',
-              y: '490'
+              x: '733',
+              y: '460'
             }, {
               id: 'summerJenifferhatclothdrag',
               x: '146',
@@ -345,7 +345,7 @@
               y: '555'
             }, {
               id: 'summerMIkeswimsuitclothdrag',
-              x: '590',
+              x: '615',
               y: '500'
             }, {
               id: 'summerMIketennisclothdrag',
@@ -361,8 +361,8 @@
               y: '544'
             }, {
               id: 'summerRachelswimsuitclothdrag',
-              x: '421',
-              y: '461'
+              x: '461',
+              y: '441'
             }, {
               id: 'summerTylercapclothdrag',
               x: '303',
@@ -373,7 +373,7 @@
               y: '535'
             }, {
               id: 'summerTylerswimsuitclothdrag',
-              x: '177',
+              x: '187',
               y: '516'
             }
           ]
@@ -458,7 +458,7 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.insertBitmap('bg', 'bg', 85, 300);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 4, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setKids('summer').setRopa().introEvaluation();
     };
 
@@ -574,6 +574,7 @@
       for (i = _j = 0, _ref1 = this.game[this.station].positions.length - 1; _j <= _ref1; i = _j += 1) {
         this.library["r" + i].addEventListener('drop', this.evaluateAnswer);
       }
+      this.intento = 0;
       createjs.Sound.play("s" + this.selected.name);
       this.library["repeat" + this.selected.name].visible = true;
       this.library["repeat" + this.selected.name].addEventListener('click', this.repeatSound);
@@ -587,10 +588,16 @@
       if (this.selected.hitTest(pt.x, pt.y)) {
         drops = this.game[this.station].drops[this.selected.index];
         if (drops[this.answer.index]) {
+          if (this.intento === 0) {
+            this.library.score.plusOne();
+          }
           this.library[drops[this.answer.index]].visible = true;
           this.answer.visible = false;
-          return this.finishEvaluation();
+          this.finishEvaluation();
+          this.intento = 0;
+          return createjs.Sound.play('good');
         } else {
+          this.intento = 1;
           this.answer.returnToPlace();
           return this.warning();
         }
@@ -608,7 +615,6 @@
           return;
         }
       }
-      this.library.score.plusOne();
       this.library["repeat" + this.selected.name].removeEventListener('click', this.repeatSound);
       return TweenLite.to(this.library["repeat" + this.selected.name], 1, {
         y: this.library["repeat" + this.selected.name] + 50,

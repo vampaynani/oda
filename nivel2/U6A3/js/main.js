@@ -276,6 +276,7 @@
       var imgs, step, stepsimg;
       U6A3.__super__.setStage.apply(this, arguments);
       this.steps = this.shuffleNoRepeat(this.game.steps, 11);
+      this.intento = 0;
       stepsimg = (function() {
         var _i, _len, _ref, _results;
         _ref = this.steps;
@@ -291,7 +292,7 @@
       imgs = this.createSprite('images', stepsimg, null, stageSize.w / 2, 235, 'mc');
       imgs.scaleX = imgs.scaleY = 0.3;
       this.addToMain(imgs);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 11, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setDropper(1).setNube1().setNube2().introEvaluation();
     };
 
@@ -427,15 +428,21 @@
       if (this.answer.index === this.steps[this.step - 1].targets[this.drop.index]) {
         this.answer.visible = false;
         this.drop.changeText(this.answer.index);
+        createjs.Sound.play('good');
         return this.finishEvaluation();
       } else {
         this.warning();
-        return this.answer.returnToPlace();
+        this.intento++;
+        console.log(this.intento);
+        this.answer.returnToPlace();
+        if (this.intento === 2) {
+          this.intento = 0;
+          return this.clearEvaluation();
+        }
       }
     };
 
     U6A3.prototype.finishEvaluation = function() {
-      createjs.Sound.play('good');
       if (this.steps[this.step - 1].targets.length === 3) {
         if (this.library.h0.text.text === '' || this.library.h1.text.text === '' || this.library.h2.text.text === '') {
           return;
@@ -446,6 +453,7 @@
         }
       }
       this.library['score'].plusOne();
+      this.intento = 0;
       return setTimeout(this.clearEvaluation, 1 * 1000);
     };
 

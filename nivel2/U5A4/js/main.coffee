@@ -132,21 +132,21 @@ class U5A4 extends Oda
 					}
 				]
 				positions: [
-					{id: 'summerJenifferdressclothdrag', x:'713', y:'490'}
+					{id: 'summerJenifferdressclothdrag', x:'733', y:'460'}
 					{id: 'summerJenifferhatclothdrag', x:'146', y:'432'}
 					{id: 'summerJeniffersandalsclothdrag', x:'717', y:'405'}
 					{id: 'summerJeniffersunglassesclothdrag', x:'247', y:'432'}
 					{id: 'summerMIkecapclothdrag', x:'632', y:'439'}
 					{id: 'summerMIkeshirtclothdrag', x:'504', y:'450'}
 					{id: 'summerMIkesunglassesclothdrag', x:'695', y:'555'}
-					{id: 'summerMIkeswimsuitclothdrag', x:'590', y:'500'}
+					{id: 'summerMIkeswimsuitclothdrag', x:'615', y:'500'}
 					{id: 'summerMIketennisclothdrag', x:'422', y:'518'}
 					{id: 'summerRachelhatclothdrag', x:'348', y:'427'}
 					{id: 'summerRachelsandalsclothdrag', x:'503', y:'544'}
-					{id: 'summerRachelswimsuitclothdrag',x:'421', y:'461'}
+					{id: 'summerRachelswimsuitclothdrag',x:'461', y:'441'}
 					{id: 'summerTylercapclothdrag', x:'303', y:'490'}
 					{id: 'summerTylersandalsclothdrag', x:'291', y:'535'}
-					{id: 'summerTylerswimsuitclothdrag', x:'177', y:'516'}
+					{id: 'summerTylerswimsuitclothdrag', x:'187', y:'516'}
 				]
 			winter:
 				kids: [
@@ -180,7 +180,7 @@ class U5A4 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'bg', 'bg', 85, 300
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 4, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
 		@setKids('summer').setRopa().introEvaluation()
 	setKids: (station) ->
 		kids = new createjs.Container()
@@ -246,6 +246,7 @@ class U5A4 extends Oda
 		
 		for i in [0..@game[@station].positions.length - 1] by 1
 			@library["r#{i}"].addEventListener 'drop', @evaluateAnswer
+		@intento = 0
 
 		createjs.Sound.play "s#{@selected.name}"
 		@library["repeat#{@selected.name}"].visible = on
@@ -257,10 +258,16 @@ class U5A4 extends Oda
 		if @selected.hitTest pt.x, pt.y
 			drops = @game[@station].drops[@selected.index]
 			if drops[@answer.index]
+				if @intento is 0
+					@library.score.plusOne()
 				@library[drops[@answer.index]].visible = on
 				@answer.visible = off
 				@finishEvaluation()
+				@intento = 0
+				createjs.Sound.play 'good'
+
 			else
+				@intento = 1
 				@answer.returnToPlace()
 				@warning()
 		else
@@ -269,7 +276,6 @@ class U5A4 extends Oda
 		for asset in @game[@station].kids[@selected.index]
 			if @library[asset].visible is off
 				return
-		@library.score.plusOne()
 		@library["repeat#{@selected.name}"].removeEventListener 'click', @repeatSound
 		TweenLite.to @library["repeat#{@selected.name}"], 1, {y: @library["repeat#{@selected.name}"] + 50, alpha: 0, onComplete: @nextEvaluation}
 	nextEvaluation: =>

@@ -464,7 +464,7 @@
           y: 10
         }
       ];
-      this.helps = ['He / She helps sick people.', 'He / She fixes cars.', 'He / She makes food.', 'He / She sells things.', 'He / She serves food.', 'He / She protects people.', 'He / She helps sick animals.', 'He / She puts out fires.'];
+      this.helps = ['He / She helps sick people.', 'He / She fixes cars.', 'He / She makes food.', 'He / She sells things.', 'He / She serves food.', 'He / She protects people.', 'He / She helps sick animals.', 'He / She puts out fires.', ''];
       this.answers = {
         doctor: {
           r: false,
@@ -533,22 +533,41 @@
     };
 
     U6A6.prototype.createHelp = function() {
-      var b, help, i, p, t, _i;
+      var a, b, c, d, e, f, g, h, help, p, t;
       help = new createjs.Container();
       help.x = 127;
       help.y = 510;
       help.name = 'helper';
       p = this.createBitmap('prophelper', 'prophelper', 0, 0);
       help.addChild(p);
-      for (i = _i = 1; _i <= 8; i = ++_i) {
-        b = this.createBitmap("btn" + i, "btn" + i, (i - 1) * 40 + 10, 20);
-        b.index = i;
-        b.addEventListener('click', this.showHelper);
-        this.addToLibrary(b);
-        help.addChild(b);
-      }
-      t = this.createText('helpertxt', this.helps[0], '14px Quicksand', '#333', 330, 25);
+      t = this.createText('helpertxt', this.helps[8], '14px Quicksand', '#333', 330, 25);
       this.addToLibrary(t);
+      a = this.createBitmap("btndoctor", "btn1", 0. * 40 + 10, 20);
+      a.index = 1;
+      a.addEventListener('click', this.showHelper);
+      b = this.createBitmap("btnmechanic", "btn2", 1. * 40 + 10, 20);
+      b.index = 2;
+      b.addEventListener('click', this.showHelper);
+      c = this.createBitmap("btnchef", "btn3", 2. * 40 + 10, 20);
+      c.index = 3;
+      c.addEventListener('click', this.showHelper);
+      d = this.createBitmap("btnsalesclerk", "btn4", 3. * 40 + 10, 20);
+      d.index = 4;
+      d.addEventListener('click', this.showHelper);
+      e = this.createBitmap("btnwaiter", "btn5", 4. * 40 + 10, 20);
+      e.index = 5;
+      e.addEventListener('click', this.showHelper);
+      f = this.createBitmap("btnpolice", "btn6", 5. * 40 + 10, 20);
+      f.index = 6;
+      f.addEventListener('click', this.showHelper);
+      g = this.createBitmap("btnvet", "btn7", 6. * 40 + 10, 20);
+      g.index = 7;
+      g.addEventListener('click', this.showHelper);
+      h = this.createBitmap("btnfirefighter", "btn8", 7. * 40 + 10, 20);
+      h.index = 8;
+      h.addEventListener('click', this.showHelper);
+      this.addToLibrary(a, b, c, d, e, f, g, h);
+      help.addChild(a, b, c, d, e, f, g, h);
       help.addChild(t);
       return this.addToMain(help);
     };
@@ -728,13 +747,15 @@
           this.robj = obj;
           this.answers[obj].r = true;
           this.library['score'].plusOne();
+          createjs.Sound.play('good');
+          this.library.helpertxt.text = this.helps[8];
           return this.finishEvaluation();
         }
       }
     };
 
     U6A6.prototype.finishEvaluation = function() {
-      return TweenMax.allTo([this.library["person" + this.robj], this.library["number" + this.robj]], 1, {
+      return TweenMax.allTo([this.library["btn" + this.robj], this.library["person" + this.robj], this.library["number" + this.robj]], 1, {
         alpha: 0,
         ease: Quart.easeOut,
         onComplete: this.nextEvaluation

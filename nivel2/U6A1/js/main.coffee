@@ -22,7 +22,7 @@ class U6A1 extends Oda
 		    {id: 'p1p5', src: 'puzzle1-5.png'}
 		    {id: 'p1p5back', src: 'puzzle1-5-back.png'}
 		    {id: 'p1p6', src: 'puzzle1-6.png'}
-		    {id: 'p1p6back', src: 'puzzle1-6-back.png'}
+		    {id: 'p1p6back', 		src: 'puzzle1-6-back.png'}
 		    {id: 'p1p7', src: 'puzzle1-7.png'}
 		    {id: 'p1p7back', src: 'puzzle1-7-back.png'}
 		    {id: 'p1p8', src: 'puzzle1-8.png'}
@@ -67,6 +67,7 @@ class U6A1 extends Oda
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
+		    {src:'sounds/bell_cow_3.mp3', id:'bell'}
 		]
 		super null, manifest, sounds
 	setStage: ->
@@ -192,6 +193,7 @@ class U6A1 extends Oda
 			hpt = hit.parent.localToGlobal hit.x, hit.y
 			htt = @answer.parent.globalToLocal hpt.x, hpt.y
 			@insertText 'dropper', @pieces[@answer.index].text,'24px Quicksand','#333', stageSize.w / 2, 510, 'center'
+			createjs.Sound.play 'bell'
 
 			@observer.notify 'stop_drag'
 			
@@ -204,11 +206,13 @@ class U6A1 extends Oda
 		if name is "btn#{@pieces[@answer.index].label}"
 			@stopListeners()
 			createjs.Sound.play 'good'
+			@library['score'].plusOne()
 			setTimeout @finishEvaluation, 1 * 1000
 		else
 			@warning()
+			setTimeout @finishEvaluation, 1 * 1000
+
 	finishEvaluation: =>
-		@library['score'].plusOne()
 		TweenLite.to @library['dropper'], 0.5, {alpha: 0, y: stageSize.h, ease:Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
