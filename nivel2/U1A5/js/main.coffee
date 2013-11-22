@@ -34,17 +34,17 @@ class U1A5 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU2_U5_A5_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU2_U5_A5_scene1.mp3', id:'scene1'}
-		    {src:'sounds/TU2_U5_A5_scene2.mp3', id:'scene2'}
+		    {src:'sounds/TU2_U1_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U1_A5_scene1.mp3', id:'scene1'}
+		    {src:'sounds/TU2_U1_A5_scene2.mp3', id:'scene2'}
 		]
 		@game = [
 			{
 				texts:[
-					{idx:2, t:"Sam", im:'face1'}
-					{idx:1, t:'Kara', im:'face2'}
-					{idx:3, t:"Mrs. Smith", im:'face3'}
-					{idx:4, t:"Lily", im:'face4'}
+					{idx:2, t:"Sam", im:'face1', x:700, y:110}
+					{idx:1, t:'Kara', im:'face2', x:700, y:220}
+					{idx:3, t:"Mrs. Smith", im:'face3', x:700, y:330}
+					{idx:4, t:"Lily", im:'face4', x:700, y:440}
 				]
 				positions:[
 					{x:'111', y:'144'}
@@ -55,9 +55,10 @@ class U1A5 extends Oda
 			}
 			{
 				texts:[
-					{idx:5, t:"Sam", im:'face1'}
-					{idx:7, t:'Kara', im:'face2'}
-					{idx:6, t:'Lily', im:'face4'}
+					{idx:5, t:"Sam", im:'face1', x:700, y:110}
+					{idx:7, t:'Kara', im:'face2', x:700, y:220}
+					{idx:[6,8], t:'Lily', im:'face4', x:700, y:330}
+					{idx:[6,8], t:'Lily', im:'face4', x:700, y:330}
 				]
 				positions:[
 					{x:'101', y:'160'}
@@ -72,7 +73,7 @@ class U1A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read and drag the sentences to complete the story.', 40, 100
+		@insertInstructions 'instructions', 'Read and drag the names to complete the story.', 40, 100
 		ti = @createBitmap 'title', 'title1', 350, 135, 'tc'
 		ti.scaleX = ti.scaleY = 0.72
 		@addToMain ti
@@ -84,26 +85,28 @@ class U1A5 extends Oda
 		cuento = new createjs.Container()
 		cuento.name = 'cuento'
 		@scene = scene
-		for i in [1..@game[scene - 1].positions.length] by 1
-			m = @createSprite "sc#{i}", ["#{(scene - 1) * 4 + i}", "#{(scene - 1) * 4 + i}b"],null, @game[scene - 1].positions[i - 1].x, @game[scene - 1].positions[i - 1].y
+		scn = @game[scene - 1]
+		for i in [1..scn.positions.length] by 1
+			m = @createSprite "sc#{i}", ["#{(scene - 1) * 4 + i}", "#{(scene - 1) * 4 + i}b"],null, scn.positions[i - 1].x, scn.positions[i - 1].y
 			m.index = (scene - 1) * 4 + i
 			m.scaleX = m.scaleY = 0.73
 			cuento.addChild m
 			@addToLibrary m
-		for i in [1..@game[scene - 1].texts.length] by 1
-			if scene is 1 
-				ye = 100
-			else
-				ye = 150
-			t = new DraggableText "t#{i}", @game[scene - 1].texts[i-1].t, @game[scene - 1].texts[i-1].idx, 700, i * 110 + ye
+
+		for i in [1..scn.texts.length] by 1
+			y = if scene is 1 then 100 else 150
+			f = @createBitmap scn.texts[i - 1].im, scn.texts[i - 1].im, scn.texts[i - 1].x, scn.texts[i - 1].y + y, 'bc'
+			f.scaleX = f.scaleY = 0.73
+			@addToLibrary f
+			cuento.addChild f
+			t = new DraggableText "t#{i}", scn.texts[i - 1].t, scn.texts[i - 1].idx, scn.texts[i - 1].x, scn.texts[i - 1].y + y
 			t.text.lineHeight = 20
 			t.text.lineWidth = 200
 			t.text.textAlign = 'center'
 			t.setHitArea()
-			f = @createBitmap @game[scene - 1].texts[i-1].im,  @game[scene - 1].texts[i-1].im, 700, i * 110 + ye , 'bc'
-			f.scaleX = f.scaleY = 0.73
-			@addToLibrary t, f
-			cuento.addChild t, f
+			@addToLibrary t
+			cuento.addChild t
+		
 		@addToMain cuento
 		@
 	introEvaluation: ->
@@ -125,15 +128,30 @@ class U1A5 extends Oda
 		for i in [1..@game[@scene - 1].positions.length] by 1
 			pt = @library["sc#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
 			if @library["sc#{i}"].hitTest pt.x, pt.y
-				if @answer.index is @library["sc#{i}"].index
-					@library["sc#{i}"].currentFrame = 1
-					@answer.visible = off
-					createjs.Sound.play 'good'
-					@library['score'].plusOne()
-					@finishEvaluation()
+				if not @isArray @answer.index 
+					if @answer.index is @library["sc#{i}"].index
+						@library["sc#{i}"].currentFrame = 1
+						@answer.visible = off
+						createjs.Sound.play 'good'
+						@library['score'].plusOne()
+						@finishEvaluation()
+					else
+						@warning()
+						@answer.returnToPlace()
 				else
-					@warning()
-					@answer.returnToPlace()
+					hit = false
+					for ans in @answer.index
+						if ans is @library["sc#{i}"].index
+							hit = true	
+					if hit
+						@library["sc#{i}"].currentFrame = 1
+						@answer.visible = off
+						createjs.Sound.play 'good'
+						@library['score'].plusOne()
+						@finishEvaluation()
+					else
+						@warning()
+						@answer.returnToPlace()
 			else
 				@answer.returnToPlace()
 	finishEvaluation: =>

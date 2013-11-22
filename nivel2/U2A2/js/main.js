@@ -139,58 +139,67 @@
           id: 'wrong'
         }
       ];
-      this.answers = [
-        {
-          id: 'kitchen',
-          a: false
-        }, {
-          id: 'cat',
-          a: false
-        }, {
-          id: 'dog',
-          a: false
-        }, {
-          id: 'fish',
-          a: false
-        }, {
-          id: 'bed',
-          a: false
-        }, {
-          id: 'doll',
-          a: false
-        }, {
-          id: 'toys',
-          a: false
-        }, {
-          id: 'soup',
-          a: false
-        }, {
-          id: 'swipe',
-          a: false
-        }, {
-          id: 'broom',
-          a: false
-        }, {
-          id: 'garbage',
-          a: false
-        }, {
-          id: 'walkdog',
-          a: false
-        }, {
-          id: 'dishes',
-          a: false
-        }, {
-          id: 'plants',
-          a: false
-        }
-      ];
+      this.game = {
+        answers: [
+          {
+            id: 'kitchen',
+            a: false
+          }, {
+            id: 'cat',
+            a: false
+          }, {
+            id: 'dog',
+            a: false
+          }, {
+            id: 'fish',
+            a: false
+          }, {
+            id: 'bed',
+            a: false
+          }, {
+            id: 'doll',
+            a: false
+          }, {
+            id: 'toys',
+            a: false
+          }, {
+            id: 'soup',
+            a: false
+          }, {
+            id: 'swipe',
+            a: false
+          }, {
+            id: 'broom',
+            a: false
+          }, {
+            id: 'garbage',
+            a: false
+          }, {
+            id: 'walkdog',
+            a: false
+          }, {
+            id: 'dishes',
+            a: false
+          }, {
+            id: 'plants',
+            a: false
+          }
+        ]
+      };
       U2A2.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U2A2.prototype.setStage = function() {
+      var answer, _i, _len, _ref;
       U2A2.__super__.setStage.apply(this, arguments);
+      this.answers = this.game.answers.slice(0);
+      _ref = this.answers;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        answer = _ref[_i];
+        answer.a = false;
+      }
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and click on the correct picture.', 40, 100);
       this.insertBitmap('teacher', 'lady', 250, 134);
       this.insertBitmap('repeat', 'repeat', 441, 210);
       this.insertSprite('choose1', ['kitchen', 'cat', 'dog', 'fish', 'bed', 'doll', 'toys', 'soup', 'swipe', 'broom', 'garbage', 'walkdog', 'dishes', 'plants'], {
@@ -258,13 +267,7 @@
     };
 
     U2A2.prototype.initEvaluation = function(e) {
-      var answer, _i, _len, _ref;
       U2A2.__super__.initEvaluation.apply(this, arguments);
-      _ref = this.answers;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        answer = _ref[_i];
-        answer.a = false;
-      }
       this.showPhrase();
       this.library['choose1'].addEventListener('click', this.evaluateAnswer);
       this.library['choose2'].addEventListener('click', this.evaluateAnswer);

@@ -30,9 +30,9 @@ class U4A5 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU2_U5_A5_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU2_U5_A5_scene1.mp3', id:'scene1'}
-		    {src:'sounds/TU2_U5_A5_scene2.mp3', id:'scene2'}
+		    {src:'sounds/TU2_U4_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U4_A5_scene1.mp3', id:'scene1'}
+		    {src:'sounds/TU2_U4_A5_scene2.mp3', id:'scene2'}
 		]
 		@game = [
 			{
@@ -69,7 +69,7 @@ class U4A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Read and drag the sentences to complete the story.', 40, 100
 		ti = @createBitmap 'title', 'title1', 350, 135, 'tc'
 		ti.scaleX = ti.scaleY = 0.8
 		@addToMain ti

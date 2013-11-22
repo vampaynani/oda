@@ -1,4 +1,4 @@
-class U5A5 extends Oda
+class U3A5 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -40,19 +40,19 @@ class U5A5 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU2_U5_A5_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU2_U5_A5_scene1.mp3', id:'scene1'}
-		    {src:'sounds/TU2_U5_A5_scene2.mp3', id:'scene2'}
+		    {src:'sounds/TU2_U3_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU2_U3_A5_scene1.mp3', id:'scene1'}
+		    {src:'sounds/TU2_U3_A5_scene2.mp3', id:'scene2'}
 		]
 		@game = [
 			{
 				texts:[
 					{idx:3, t:"flashlight"}
-					{idx:4, t:'presents'}
-					{idx:1, t:"candles"}
+					{idx:4, t:'presents', p:'p1'}
+					{idx:1, t:"candles", p:'p1'}
 					{idx:2, t:"cake"}
-					{idx:1, t:"kitchen"}
-					{idx:4, t:"soccer ball"}
+					{idx:1, t:"kitchen", p:'p2'}
+					{idx:4, t:"soccer ball", p:'p2'}
 				]
 				positions:[
 					{x:'112', y:'166'}
@@ -64,11 +64,11 @@ class U5A5 extends Oda
 			{
 				texts:[
 					{idx:8, t:"father"}
-					{idx:5, t:'quiet'}
-					{idx:5, t:'eyes'}
+					{idx:5, t:'quiet', p:'p2'}
+					{idx:5, t:'eyes', p:'p1'}
 					{idx:7, t:"door"}
-					{idx:6, t:"storm"}
-					{idx:6, t:"grandpa"}
+					{idx:6, t:"storm", p:'p1'}
+					{idx:6, t:"grandpa", p:'p2'}
 				]
 				positions:[
 					{x:'103', y:'170'}
@@ -83,7 +83,7 @@ class U5A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Read and drag the words to complete the story.', 40, 100
 		ti = @createBitmap 'title', 'title1', 350, 135, 'tc'
 		ti.scaleX = ti.scaleY = 0.8
 		@addToMain ti
@@ -117,6 +117,8 @@ class U5A5 extends Oda
 			t.text.lineWidth = 200
 			t.text.textAlign = 'center'
 			t.setHitArea()
+			if @game[scene - 1].texts[i-1].p
+				t.p = @game[scene - 1].texts[i-1].p
 			@addToLibrary t
 			cuento.addChild t
 		@addToMain cuento
@@ -141,10 +143,19 @@ class U5A5 extends Oda
 			pt = @library["sc#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
 			if @library["sc#{i}"].hitTest pt.x, pt.y
 				if @answer.index is @library["sc#{i}"].index
-					@library["sc#{i}"].currentFrame = 1
+					if @answer.p
+						if @library["sc#{i}"].currentFrame in [1,2]
+							@library["sc#{i}"].currentFrame = 3
+							@library['score'].plusOne()
+						else if @answer.p is 'p1'
+							@library["sc#{i}"].currentFrame = 1
+						else
+							@library["sc#{i}"].currentFrame = 2
+					else
+						@library["sc#{i}"].currentFrame = 1
+						@library['score'].plusOne()
 					@answer.visible = off
 					createjs.Sound.play 'good'
-					@library['score'].plusOne()
 					@finishEvaluation()
 				else
 					@warning()
@@ -153,7 +164,7 @@ class U5A5 extends Oda
 				@answer.returnToPlace()
 	finishEvaluation: =>
 		for i in [1..@game[@scene - 1].positions.length] by 1
-			if @library["sc#{i}"].currentFrame is 0
+			if @library["sc#{i}"].currentFrame isnt @library["sc#{i}"].spriteSheet._frames.length - 1
 				return
 		if @scene < 2
 			@library['btnnext'].visible = on
@@ -181,4 +192,4 @@ class U5A5 extends Oda
 		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
 		super
-	window.U5A5 = U5A5
+	window.U3A5 = U3A5

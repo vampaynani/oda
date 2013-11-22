@@ -15,7 +15,7 @@ Array::where = (query) ->
 		match = 0
 		for key, val of query
 			match += 1 if item[key] is val
-			if match is hit then true else false
+		if match is hit then true else false
 Array::unique = ->
 	output = {}
 	output[@[key]] = @[key] for key in [0...@length]

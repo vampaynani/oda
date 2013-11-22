@@ -43,27 +43,31 @@ class U2A2 extends Oda
 		    {src:'sounds/TU2_U2_A2_waterThePlants.mp3', id:'splants'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@answers = [
-			{id:'kitchen', a: false}
-			{id:'cat', a: false}
-			{id:'dog', a: false}
-			{id:'fish', a: false}
-			{id:'bed', a: false}
-			{id:'doll', a: false}
-			{id:'toys', a: false}
-			{id:'soup', a: false}
-			{id:'swipe', a: false}
-			{id:'broom', a: false}
-			{id:'garbage', a: false}
-			{id:'walkdog', a: false}
-			{id:'dishes', a: false}
-			{id:'plants', a: false}
-		]
+		@game =
+			answers: [
+				{id:'kitchen', a: false}
+				{id:'cat', a: false}
+				{id:'dog', a: false}
+				{id:'fish', a: false}
+				{id:'bed', a: false}
+				{id:'doll', a: false}
+				{id:'toys', a: false}
+				{id:'soup', a: false}
+				{id:'swipe', a: false}
+				{id:'broom', a: false}
+				{id:'garbage', a: false}
+				{id:'walkdog', a: false}
+				{id:'dishes', a: false}
+				{id:'plants', a: false}
+			]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@answers = @game.answers[..]
+		for answer in @answers
+			answer.a = false
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 40, 100
 		@insertBitmap 'teacher', 'lady', 250, 134
 		@insertBitmap 'repeat', 'repeat', 441, 210
 		@insertSprite 'choose1', ['kitchen','cat','dog','fish','bed','doll','toys','soup','swipe','broom','garbage','walkdog','dishes','plants'], {'kitchen':0,'cat':1,'dog':2,'fish':3,'bed':4,'doll':5,'toys':6,'soup':7,'swipe':8,'broom':9,'garbage':10,'walkdog':11,'dishes':12,'plants':13}, 270, 452, 'mc'
@@ -82,8 +86,6 @@ class U2A2 extends Oda
 		TweenLite.from @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		for answer in @answers
-			answer.a = off
 		@showPhrase()
 		@library['choose1'].addEventListener 'click', @evaluateAnswer
 		@library['choose2'].addEventListener 'click', @evaluateAnswer
@@ -91,7 +93,7 @@ class U2A2 extends Oda
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		if @phrase.id is @answer.currentAnimation
-			selection = @answers.where id:@phrase.id
+			selection = @answers.where id: @phrase.id
 			selection[0].a = on
 			createjs.Sound.play 'good'
 			setTimeout @finishEvaluation, 1 * 1000

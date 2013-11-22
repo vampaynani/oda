@@ -118,47 +118,56 @@
           id: 'wrong'
         }
       ];
-      this.answers = [
-        {
-          id: 'arrive',
-          a: false
-        }, {
-          id: 'quiet',
-          a: false
-        }, {
-          id: 'bus',
-          a: false
-        }, {
-          id: 'eat',
-          a: false
-        }, {
-          id: 'aud',
-          a: false
-        }, {
-          id: 'run',
-          a: false
-        }, {
-          id: 'cafe',
-          a: false
-        }, {
-          id: 'library',
-          a: false
-        }, {
-          id: 'movies',
-          a: false
-        }, {
-          id: 'trash',
-          a: false
-        }, {
-          id: 'walk',
-          a: false
-        }
-      ];
+      this.game = {
+        answers: [
+          {
+            id: 'arrive',
+            a: false
+          }, {
+            id: 'quiet',
+            a: false
+          }, {
+            id: 'bus',
+            a: false
+          }, {
+            id: 'eat',
+            a: false
+          }, {
+            id: 'aud',
+            a: false
+          }, {
+            id: 'run',
+            a: false
+          }, {
+            id: 'cafe',
+            a: false
+          }, {
+            id: 'library',
+            a: false
+          }, {
+            id: 'movies',
+            a: false
+          }, {
+            id: 'trash',
+            a: false
+          }, {
+            id: 'walk',
+            a: false
+          }
+        ]
+      };
       U1A4.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U1A4.prototype.setStage = function() {
+      var answer, _i, _len, _ref;
       U1A4.__super__.setStage.apply(this, arguments);
+      this.answers = this.game.answers.slice(0);
+      _ref = this.answers;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        answer = _ref[_i];
+        answer.a = false;
+      }
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Listen and click on the correct picture.', 40, 100);
       this.insertBitmap('teacher', 'teacher', 250, 134);
@@ -222,13 +231,7 @@
     };
 
     U1A4.prototype.initEvaluation = function(e) {
-      var answer, _i, _len, _ref;
       U1A4.__super__.initEvaluation.apply(this, arguments);
-      _ref = this.answers;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        answer = _ref[_i];
-        answer.a = false;
-      }
       this.showPhrase();
       this.library['choose1'].addEventListener('click', this.evaluateAnswer);
       this.library['choose2'].addEventListener('click', this.evaluateAnswer);

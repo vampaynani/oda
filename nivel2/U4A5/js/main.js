@@ -101,13 +101,13 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U5_A5_instructions.mp3',
+          src: 'sounds/TU2_U4_A5_instructions.mp3',
           id: 'instructions'
         }, {
-          src: 'sounds/TU2_U5_A5_scene1.mp3',
+          src: 'sounds/TU2_U4_A5_scene1.mp3',
           id: 'scene1'
         }, {
-          src: 'sounds/TU2_U5_A5_scene2.mp3',
+          src: 'sounds/TU2_U4_A5_scene2.mp3',
           id: 'scene2'
         }
       ];
@@ -184,7 +184,7 @@
       var ti;
       U4A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read and drag the sentences to complete the story.', 40, 100);
       ti = this.createBitmap('title', 'title1', 350, 135, 'tc');
       ti.scaleX = ti.scaleY = 0.8;
       this.addToMain(ti);

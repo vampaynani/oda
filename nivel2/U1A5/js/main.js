@@ -113,13 +113,13 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U5_A5_instructions.mp3',
+          src: 'sounds/TU2_U1_A5_instructions.mp3',
           id: 'instructions'
         }, {
-          src: 'sounds/TU2_U5_A5_scene1.mp3',
+          src: 'sounds/TU2_U1_A5_scene1.mp3',
           id: 'scene1'
         }, {
-          src: 'sounds/TU2_U5_A5_scene2.mp3',
+          src: 'sounds/TU2_U1_A5_scene2.mp3',
           id: 'scene2'
         }
       ];
@@ -129,19 +129,27 @@
             {
               idx: 2,
               t: "Sam",
-              im: 'face1'
+              im: 'face1',
+              x: 700,
+              y: 110
             }, {
               idx: 1,
               t: 'Kara',
-              im: 'face2'
+              im: 'face2',
+              x: 700,
+              y: 220
             }, {
               idx: 3,
               t: "Mrs. Smith",
-              im: 'face3'
+              im: 'face3',
+              x: 700,
+              y: 330
             }, {
               idx: 4,
               t: "Lily",
-              im: 'face4'
+              im: 'face4',
+              x: 700,
+              y: 440
             }
           ],
           positions: [
@@ -164,15 +172,27 @@
             {
               idx: 5,
               t: "Sam",
-              im: 'face1'
+              im: 'face1',
+              x: 700,
+              y: 110
             }, {
               idx: 7,
               t: 'Kara',
-              im: 'face2'
+              im: 'face2',
+              x: 700,
+              y: 220
             }, {
-              idx: 6,
+              idx: [6, 8],
               t: 'Lily',
-              im: 'face4'
+              im: 'face4',
+              x: 700,
+              y: 330
+            }, {
+              idx: [6, 8],
+              t: 'Lily',
+              im: 'face4',
+              x: 700,
+              y: 330
             }
           ],
           positions: [
@@ -200,7 +220,7 @@
       var ti;
       U1A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Read and drag the sentences to complete the story.', 40, 100);
+      this.insertInstructions('instructions', 'Read and drag the names to complete the story.', 40, 100);
       ti = this.createBitmap('title', 'title1', 350, 135, 'tc');
       ti.scaleX = ti.scaleY = 0.72;
       this.addToMain(ti);
@@ -211,32 +231,31 @@
     };
 
     U1A5.prototype.setCuento = function(scene) {
-      var cuento, f, i, m, t, ye, _i, _j, _ref, _ref1;
+      var cuento, f, i, m, scn, t, y, _i, _j, _ref, _ref1;
       cuento = new createjs.Container();
       cuento.name = 'cuento';
       this.scene = scene;
-      for (i = _i = 1, _ref = this.game[scene - 1].positions.length; _i <= _ref; i = _i += 1) {
-        m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i), "" + ((scene - 1) * 4 + i) + "b"], null, this.game[scene - 1].positions[i - 1].x, this.game[scene - 1].positions[i - 1].y);
+      scn = this.game[scene - 1];
+      for (i = _i = 1, _ref = scn.positions.length; _i <= _ref; i = _i += 1) {
+        m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i), "" + ((scene - 1) * 4 + i) + "b"], null, scn.positions[i - 1].x, scn.positions[i - 1].y);
         m.index = (scene - 1) * 4 + i;
         m.scaleX = m.scaleY = 0.73;
         cuento.addChild(m);
         this.addToLibrary(m);
       }
-      for (i = _j = 1, _ref1 = this.game[scene - 1].texts.length; _j <= _ref1; i = _j += 1) {
-        if (scene === 1) {
-          ye = 100;
-        } else {
-          ye = 150;
-        }
-        t = new DraggableText("t" + i, this.game[scene - 1].texts[i - 1].t, this.game[scene - 1].texts[i - 1].idx, 700, i * 110 + ye);
+      for (i = _j = 1, _ref1 = scn.texts.length; _j <= _ref1; i = _j += 1) {
+        y = scene === 1 ? 100 : 150;
+        f = this.createBitmap(scn.texts[i - 1].im, scn.texts[i - 1].im, scn.texts[i - 1].x, scn.texts[i - 1].y + y, 'bc');
+        f.scaleX = f.scaleY = 0.73;
+        this.addToLibrary(f);
+        cuento.addChild(f);
+        t = new DraggableText("t" + i, scn.texts[i - 1].t, scn.texts[i - 1].idx, scn.texts[i - 1].x, scn.texts[i - 1].y + y);
         t.text.lineHeight = 20;
         t.text.lineWidth = 200;
         t.text.textAlign = 'center';
         t.setHitArea();
-        f = this.createBitmap(this.game[scene - 1].texts[i - 1].im, this.game[scene - 1].texts[i - 1].im, 700, i * 110 + ye, 'bc');
-        f.scaleX = f.scaleY = 0.73;
-        this.addToLibrary(t, f);
-        cuento.addChild(t, f);
+        this.addToLibrary(t);
+        cuento.addChild(t);
       }
       this.addToMain(cuento);
       return this;
@@ -282,22 +301,43 @@
     };
 
     U1A5.prototype.evaluateAnswer = function(e) {
-      var dropped, i, pt, _i, _ref, _results;
+      var ans, dropped, hit, i, pt, _i, _j, _len, _ref, _ref1, _results;
       this.answer = e.target;
       dropped = false;
       _results = [];
       for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
         pt = this.library["sc" + i].globalToLocal(this.stage.mouseX, this.stage.mouseY);
         if (this.library["sc" + i].hitTest(pt.x, pt.y)) {
-          if (this.answer.index === this.library["sc" + i].index) {
-            this.library["sc" + i].currentFrame = 1;
-            this.answer.visible = false;
-            createjs.Sound.play('good');
-            this.library['score'].plusOne();
-            _results.push(this.finishEvaluation());
+          if (!this.isArray(this.answer.index)) {
+            if (this.answer.index === this.library["sc" + i].index) {
+              this.library["sc" + i].currentFrame = 1;
+              this.answer.visible = false;
+              createjs.Sound.play('good');
+              this.library['score'].plusOne();
+              _results.push(this.finishEvaluation());
+            } else {
+              this.warning();
+              _results.push(this.answer.returnToPlace());
+            }
           } else {
-            this.warning();
-            _results.push(this.answer.returnToPlace());
+            hit = false;
+            _ref1 = this.answer.index;
+            for (_j = 0, _len = _ref1.length; _j < _len; _j++) {
+              ans = _ref1[_j];
+              if (ans === this.library["sc" + i].index) {
+                hit = true;
+              }
+            }
+            if (hit) {
+              this.library["sc" + i].currentFrame = 1;
+              this.answer.visible = false;
+              createjs.Sound.play('good');
+              this.library['score'].plusOne();
+              _results.push(this.finishEvaluation());
+            } else {
+              this.warning();
+              _results.push(this.answer.returnToPlace());
+            }
           }
         } else {
           _results.push(this.answer.returnToPlace());

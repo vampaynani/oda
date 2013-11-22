@@ -1269,21 +1269,19 @@
     }
     hit = Object.keys(query).length;
     return this.filter(function(item) {
-      var key, match, val, _results;
+      var key, match, val;
       match = 0;
-      _results = [];
       for (key in query) {
         val = query[key];
         if (item[key] === val) {
           match += 1;
         }
-        if (match === hit) {
-          _results.push(true);
-        } else {
-          _results.push(false);
-        }
       }
-      return _results;
+      if (match === hit) {
+        return true;
+      } else {
+        return false;
+      }
     });
   };
 

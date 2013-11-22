@@ -36,22 +36,26 @@ class U1A4 extends Oda
 		    {src:'sounds/TU2_U1_A4_walkHall.mp3', id:'swalk'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@answers = [
-			{id:'arrive', a: false}
-			{id:'quiet', a: false}
-			{id:'bus', a: false}
-			{id:'eat', a: false}
-			{id:'aud', a: false}
-			{id:'run', a: false}
-			{id:'cafe', a: false}
-			{id:'library', a: false}
-			{id:'movies', a: false}
-			{id:'trash', a: false}
-			{id:'walk', a: false}
-		]
+		@game = 
+			answers: [
+				{id:'arrive', a: false}
+				{id:'quiet', a: false}
+				{id:'bus', a: false}
+				{id:'eat', a: false}
+				{id:'aud', a: false}
+				{id:'run', a: false}
+				{id:'cafe', a: false}
+				{id:'library', a: false}
+				{id:'movies', a: false}
+				{id:'trash', a: false}
+				{id:'walk', a: false}
+			]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@answers = @game.answers[..]
+		for answer in @answers
+			answer.a = false
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 40, 100
 		@insertBitmap 'teacher', 'teacher', 250, 134
@@ -72,8 +76,6 @@ class U1A4 extends Oda
 		TweenLite.from @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		for answer in @answers
-			answer.a = off
 		@showPhrase()
 		@library['choose1'].addEventListener 'click', @evaluateAnswer
 		@library['choose2'].addEventListener 'click', @evaluateAnswer
