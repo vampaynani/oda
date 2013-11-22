@@ -160,7 +160,7 @@
     U1A4.prototype.setStage = function() {
       U1A4.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and click on the correct picture.', 40, 100);
       this.insertBitmap('teacher', 'teacher', 250, 134);
       this.insertBitmap('repeat', 'repeat', 441, 210);
       this.insertSprite('choose1', ['arrive', 'quiet', 'bus', 'eat', 'aud', 'run', 'cafe', 'library', 'movies', 'trash', 'walk'], {

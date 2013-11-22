@@ -29,7 +29,7 @@ class U1A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Look at the schedule and click on the phrases to make sentences.', 40, 100
 		@insertBitmap 'calendar', 'cal', 0, 130
 		@insertBitmap 'iconGym', 'gym', 375, 210
 		@insertBitmap 'iconArt', 'art', 194, 199

@@ -98,7 +98,7 @@
     U1A3.prototype.setStage = function() {
       U1A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Look at the schedule and click on the phrases to make sentences.', 40, 100);
       this.insertBitmap('calendar', 'cal', 0, 130);
       this.insertBitmap('iconGym', 'gym', 375, 210);
       this.insertBitmap('iconArt', 'art', 194, 199);

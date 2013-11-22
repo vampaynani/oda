@@ -123,7 +123,7 @@
     U1A1.prototype.setStage = function() {
       U1A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
       this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5'], null, stageSize.w / 2, 235, 'mc');
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       return this.setDropper().setNube1().setNube2().setNube3().introEvaluation();

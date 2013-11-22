@@ -152,6 +152,17 @@ class Oda
 	# ====================
 	# Helpers
 	# ====================
+	insertInstructions: (name, text, x, y) ->
+		inst = new createjs.Container()
+		inst.name = name
+		inst.x = x
+		inst.y = y
+		triangle = new createjs.Shape()
+		triangle.graphics.beginFill('#bcd748').moveTo(0,0).lineTo(8,5).lineTo(0,10)
+		triangle.y = 5
+		text = @createText 'insttext', text, '16px Roboto', '#000', 14, 0
+		inst.addChild triangle, text
+		@addToMain inst
 	createBitmap: (name, id, x, y, position = 'tl') ->
 		img = @preload.getResult(id)
 		bmp = new createjs.Bitmap img

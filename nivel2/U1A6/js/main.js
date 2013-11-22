@@ -462,7 +462,7 @@
       U1A6.__super__.setStage.apply(this, arguments);
       this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 95);
+      this.insertInstructions('instructions', 'Look and drag the letters to complete the crossword puzzle.', 30, 100);
       this.insertBitmap('saxophone', 'sax', 341, 123);
       this.insertBitmap('saxophoneNo', 'sax_number', 346, 135);
       this.insertBitmap('drum', 'drum', 99, 125);

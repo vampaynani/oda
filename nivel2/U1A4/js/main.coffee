@@ -53,7 +53,7 @@ class U1A4 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 40, 100
 		@insertBitmap 'teacher', 'teacher', 250, 134
 		@insertBitmap 'repeat', 'repeat', 441, 210
 		@insertSprite 'choose1', ['arrive','quiet','bus','eat','aud','run','cafe','library','movies','trash','walk'], {arrive:0, quiet:1, bus:2, eat:3, aud:4, run:5, cafe:6, library:7, movies:8, trash:9, walk:10}, 270, 452, 'mc'

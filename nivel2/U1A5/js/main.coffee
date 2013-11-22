@@ -1,4 +1,4 @@
-class U5A5 extends Oda
+class U1A5 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -72,7 +72,7 @@ class U5A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Read and drag the sentences to complete the story.', 40, 100
 		ti = @createBitmap 'title', 'title1', 350, 135, 'tc'
 		ti.scaleX = ti.scaleY = 0.72
 		@addToMain ti
@@ -166,4 +166,4 @@ class U5A5 extends Oda
 		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
 		super
-	window.U5A5 = U5A5
+	window.U1A5 = U1A5
