@@ -8,8 +8,8 @@ class U7A4 extends Oda
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
 			{id: 'playagain', src:'play_again.png'}
 			{id: 'startgame', src:'start_game.png'}
-			{id: 'boy', src:'boy.png'}
-			{id: 'girl', src:'girl.png'}
+			{id: 'nino1', src:'boy.png'}
+			{id: 'nino2', src:'girl.png'}
 			{id: 'btnFalse', src:'btn_False.png'}
 			{id: 'btnTrue', src:'btn_True.png'}
 		]
@@ -19,25 +19,42 @@ class U7A4 extends Oda
 		    {src:'sounds/TU2_U7_A4_instructions.mp3', id:'instructions'}
 		]
 		@game =
-			answers: [
-				{text:"I always watch TV.", respuestas:off}
-				{text:"I sometimes take a shower.", respuestas:on}
-				{text:"I sometimes read.", respuestas:on}
-				{text:"I never ride my bike.", respuestas:off}
-				{text:"I never take a bath.", respuestas:on}
-				{text:"I always floss my teeth.", respuestas:on}
-				{text:"I sometimes play baseball on Wednesday.", respuestas:off}
+			scenes : [
+				{	
+					answers: [
+						{text:"I always watch TV.", respuestas:off}
+						{text:"I sometimes take a shower.", respuestas:on}
+						{text:"I sometimes read.", respuestas:on}
+						{text:"I never ride my bike.", respuestas:off}
+						{text:"I never take a bath.", respuestas:on}
+						{text:"I always floss my teeth.", respuestas:on}
+						{text:"I sometimes play baseball on Wednesday.", respuestas:off}
+					]
+				}
+				{
+					answers: [
+						{text:"aI always watch TV.", respuestas:off}
+						{text:"aI sometimes take a shower.", respuestas:on}
+						{text:"aI sometimes read.", respuestas:on}
+						{text:"aI never ride my bike.", respuestas:off}
+						{text:"aI never take a bath.", respuestas:on}
+						{text:"aI always floss my teeth.", respuestas:on}
+						{text:"aI sometimes play baseball on Wednesday.", respuestas:off}
+					]
+				}
 			]
 		super null, manifest, sounds
 	setStage: ->
 		super
-		@answers = @shuffleNoRepeat @game.answers, 7
+		@escena = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 7, 0
-		@setBoy().setClick().introEvaluation()
-	setBoy: ->
-		@insertBitmap 'boy', 'boy',  111,  158
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 14, 0
+		@setScene(1).setClick().introEvaluation()
+	setScene: (scene) ->
+		@scene = @game.scenes[scene - 1]
+		@answers = @shuffleNoRepeat @scene.answers, 7
+		@insertBitmap 'boy', "nino#{scene}",  111,  158
 		@library.boy.scaleX = @library.boy.scaleY = 0.9
 		@
 	setClick:  ->
@@ -75,7 +92,16 @@ class U7A4 extends Oda
 			@library.frases.text = @answers[@index].text
 			TweenLite.to @library.frases, 0.5, {alpha: 1, y: @library.frases.y + 20, ease: Back.easeOut}
 		else
-			@finish()
+			if @escena is 1
+				@index = 0
+				@escena = 2
+				TweenLite.to @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 10, ease: Quart.easeOut}
+				TweenLite.to @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut}
+				TweenLite.to @library.boy, 1, {alpha: 0, y: @library.boy.y - 10, ease: Quart.easeOut}
+				TweenLite.to @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
+				@setScene(2).setClick().initEvaluation()
+			else
+				@finish()
 	finish: ->
 		super
 		TweenLite.to @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 10, ease: Quart.easeOut}

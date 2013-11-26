@@ -114,6 +114,8 @@ class U7A3 extends Oda
 		@escena.addChild fondo
 
 		@letras = @positions["#{es}letras"]
+		hits = new Array()
+
 		for i in [0..@letras.length - 1]
 			word = @letras[i]
 			if scene is 1
@@ -127,12 +129,24 @@ class U7A3 extends Oda
 			hit.x = drop.x - drop.width / 2
 			hit.y = drop.y - drop.height
 			hit.name = "dropArea#{word.letra}"
-			letra = new Droppable word.letra, (@preload.getResult word.letra), i, word.x-10	, word.y-10, @stage, [hit]
+			hits.push hit
+			@escena.addChild hit, drop
+
+
+		for i in [0..@letras.length - 1]
+			word = @letras[i]
+			if scene is 1
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*75 + 85, 430, 'bc'
+			if scene is 2
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*75 + 55, 430, 'bc'
+				if i >= 2
+					drop.x = drop.x + 30
+			letra = new Droppable word.letra, (@preload.getResult word.letra), i, word.x-10	, word.y-10, @stage, hits
 			letra.scaleX = letra.scaleY = 0.43
 			letrafinal = @createBitmap "f#{@letras[i].letra}", @letras[i].letra, drop.x, drop.y-7, 'bc'
 			letrafinal.visible = off
 			@addToLibrary letra, letrafinal
-			@escena.addChild hit, drop, letra, letrafinal
+			@escena.addChild letra, letrafinal
 		@addToMain @escena
 		@
 	setFinal: =>
@@ -142,6 +156,7 @@ class U7A3 extends Oda
 			es = 'green'
 		
 		@index = 0
+		TweenLite.to @library.label, 0.5, {alpha: 0}
 
 		final = new createjs.Container()
 		final.name = 'final'
@@ -150,14 +165,17 @@ class U7A3 extends Oda
 		@addToLibrary final
 		@addToMain final
 
-		TweenLite.from @library.final, 1, {alpha: 0, delay: 0}
+		TweenLite.to @library.final, 1, {alpha: 1, delay: 0}
 		TweenLite.to @library.final, 1, {alpha: 0, delay: 2}
 
 		if @esc is 1
 			@setScene(2).initEvaluation()
 			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 20, delay: 4}
+			TweenLite.from @library.label, 0.5, {alpha: 0, delay: 4}
+
 		else
 			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 20, delay: 4, onComplete: @finish()}	
+
 		#@initEvaluation()
 		@
 	introEvaluation: ->
@@ -189,6 +207,9 @@ class U7A3 extends Oda
 				@intento = 1
 				@warning()
 				console.log 'fail'
+		else
+			@answer.returnToPlace 1, 0.43, 0.43
+			@warning()
 	finishEvaluation: =>
 		TweenLite.to @library.label, 0.5, {alpha: 0, y: @library.label.y + 10, ease: Quart.easeOut, onComplete:@nextEvaluation}
 	nextEvaluation: =>
@@ -202,6 +223,8 @@ class U7A3 extends Oda
 			@setFinal()
 
 	finish: ->
+		TweenLite.to @library.instructions, 1, {alpha :0}
+
 		TweenLite.to @library.escena, 1, {alpha: 0, y: @library.escena.y + 20}
 		super
 	window.U7A3 = U7A3

@@ -72,7 +72,7 @@
             steps: [
               {
                 frase: 'In Brazil.',
-                pattern: ['#wc', 'do they', '#wc', 'Reveillon?'],
+                pattern: ['#wc', 'do they ', '#wc', ' Reveillon?'],
                 targets: ['Where', 'celebrate']
               }, {
                 frase: 'On January 1st.',
@@ -128,18 +128,19 @@
             steps: [
               {
                 frase: 'Moon cakes and pomelos.',
-                pattern: ['#wc', 'do they', '#wc', 'Reveillon?'],
+                pattern: ['#wc', 'do they', '#wc', '?'],
                 targets: ['What', 'eat']
               }, {
                 frase: 'In September.',
-                texts: ['do they', 'Reveillon?'],
+                pattern: ['#wc', 'do they', '#wc', '?'],
                 targets: ['When', 'celebrate']
               }, {
                 frase: 'Family and friends.',
-                texts: ['do they'],
+                pattern: ['#wc', 'do they', '#wc', '?'],
                 targets: ['Who', 'visit']
               }, {
                 frase: 'Lanterns.',
+                pattern: ['#wc', 'do they', '#wc', '?'],
                 targets: ['What', 'carry']
               }
             ],
@@ -157,10 +158,10 @@
               }, {
                 i: 3,
                 t: 'Who',
-                x: 70,
-                y: 70
+                x: 90,
+                y: 45
               }, {
-                i: 3,
+                i: 4,
                 t: 'Where',
                 x: 70,
                 y: 70
@@ -180,10 +181,10 @@
               }, {
                 i: 3,
                 t: 'celebrate',
-                x: 85,
-                y: 58
+                x: 80,
+                y: 28
               }, {
-                i: 3,
+                i: 4,
                 t: 'carry',
                 x: 85,
                 y: 58
@@ -193,16 +194,19 @@
             steps: [
               {
                 frase: 'Beautiful jewelry.',
-                pattern: ['#wc', 'do they', '#wc', 'Reveillon?'],
+                pattern: ['#wc', 'do the women', '#wc', '?'],
                 targets: ['What', 'wear']
               }, {
                 frase: 'In India.',
+                pattern: ['#wc', 'do they', '#wc', ' Diwali?'],
                 targets: ['Where', 'celebrate']
               }, {
                 frase: 'In October or November.',
+                pattern: ['#wc', 'do they', '#wc', ' Diwali?'],
                 targets: ['When', 'celebrate']
               }, {
                 frase: 'They watch fireworks and light candles for good luck.',
+                pattern: ['#wc', 'do they', '#wc', '?'],
                 targets: ['What', 'do']
               }
             ],
@@ -220,10 +224,10 @@
               }, {
                 i: 3,
                 t: 'Who',
-                x: 70,
-                y: 70
+                x: 90,
+                y: 45
               }, {
-                i: 3,
+                i: 4,
                 t: 'Where',
                 x: 70,
                 y: 70
@@ -265,7 +269,8 @@
     U8A2.prototype.setScene = function(scene) {
       this.scene = this.game.scenes[scene - 1];
       this.intento = 0;
-      this.insertBitmap("scene", "scene" + scene, stageSize.w / 2, 150, 'tc');
+      this.sc = this.createBitmap("scene", "scene" + scene, stageSize.w / 2, 150, 'tc');
+      this.addToMain(this.sc);
       return this;
     };
 
@@ -284,7 +289,7 @@
       q = this.createText('q', 'Q:', '24px Quicksand', '#333', 120, 0);
       dropper.addChild(q);
       i = 0;
-      npos = q.x + q.getMeasuredWidth() + 10;
+      npos = q.x + q.getMeasuredWidth() + 15;
       _ref = this.scene.steps[step - 1].pattern;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         t = _ref[_i];
@@ -313,6 +318,7 @@
       container.x = 210;
       container.y = 480;
       container.name = 'nube1';
+      container.removeAllChildren();
       back = this.createBitmap('backNube1', 'n1', 0, 0);
       container.addChild(back);
       _ref = this.scene.opt1;
@@ -332,6 +338,7 @@
       container.x = 440;
       container.y = 480;
       container.name = 'nube2';
+      container.removeAllChildren();
       back = this.createBitmap('backNube2', 'n2', 0, 0);
       container.addChild(back);
       _ref = this.scene.opt2;
@@ -472,7 +479,28 @@
         if (this.escena !== 3) {
           this.escena++;
           this.index = 0;
-          return this.setScene(this.escena).setDropper(1).setNube1().setNube2().introEvaluation();
+          this.mainContainer.removeChild(this.sc);
+          TweenLite.to(this.library.nube1, 1, {
+            alpha: 0,
+            y: this.library.nube1.y + 20
+          });
+          TweenLite.to(this.library.nube2, 1, {
+            alpha: 0,
+            y: this.library.nube2.y + 20
+          });
+          this.setScene(this.escena).setDropper(1).setNube1().setNube2().initEvaluation();
+          TweenLite.from(this.library.nube1, 1, {
+            alpha: 0,
+            y: this.library.nube1.y + 20
+          });
+          TweenLite.from(this.library.nube2, 1, {
+            alpha: 0,
+            y: this.library.nube2.y + 20
+          });
+          return TweenLite.to(this.library.dropper, 0.5, {
+            alpha: 1,
+            y: 390
+          });
         } else {
           return this.finish();
         }
@@ -491,6 +519,10 @@
       TweenLite.to(this.library.nube2, 1, {
         alpha: 0,
         y: this.library.nube2.y + 20
+      });
+      TweenLite.to(this.library.dropper, 0.5, {
+        alpha: 0,
+        y: 390
       });
       return U8A2.__super__.finish.apply(this, arguments);
     };

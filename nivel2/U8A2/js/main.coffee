@@ -24,7 +24,7 @@ class U8A2 extends Oda
 			scenes : [
 				{	
 					steps: [
-						{frase:'In Brazil.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['Where','celebrate']}
+						{frase:'In Brazil.', pattern:['#wc','do they ','#wc',' Reveillon?'], targets: ['Where','celebrate']}
 						{frase:'On January 1st.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['When','celebrate']}
 						{frase:'White clothes.', pattern:['#wc','do they','#wc','?'], targets: ['What','wear']}
 						{frase:'They float boats with flowers and candles in the sea.', pattern:['#wc','do they','#wc','?'], targets: ['What','do']}
@@ -42,36 +42,36 @@ class U8A2 extends Oda
 				}
 				{
 					steps: [
-						{frase:'Moon cakes and pomelos.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['What','eat']}
-						{frase:'In September.', texts:['do they', 'Reveillon?'], targets: ['When','celebrate']}
-						{frase:'Family and friends.', texts:['do they',], targets: ['Who','visit']}
-						{frase:'Lanterns.', targets: ['What','carry']}	
+						{frase:'Moon cakes and pomelos.', pattern:['#wc','do they','#wc','?'], targets: ['What','eat']}
+						{frase:'In September.', pattern:['#wc','do they','#wc','?'], targets: ['When','celebrate']}
+						{frase:'Family and friends.', pattern:['#wc','do they','#wc','?'], targets: ['Who','visit']}
+						{frase:'Lanterns.', pattern:['#wc','do they','#wc','?'], targets: ['What','carry']}	
 					]
 					opt1:[
 						{i:1, t:'When', x:25, y:35}
 						{i:2, t:'What', x:90, y:22}
-						{i:3, t:'Who', x:70, y:70}
-						{i:3, t:'Where', x:70, y:70}
+						{i:3, t:'Who', x:90, y:45}
+						{i:4, t:'Where', x:70, y:70}
 					]
 					opt2:[
 						{i:1, t:'visit', x:26, y:20}
 						{i:2, t:'eat', x:50, y:72}
-						{i:3, t:'celebrate', x:85, y:58}
-						{i:3, t:'carry', x:85, y:58}
+						{i:3, t:'celebrate', x:80, y:28}
+						{i:4, t:'carry', x:85, y:58}
 					]
 				}
 				{
 					steps: [
-						{frase:'Beautiful jewelry.', pattern:['#wc','do they','#wc','Reveillon?'], targets: ['What','wear']}
-						{frase:'In India.', targets: ['Where','celebrate']}
-						{frase:'In October or November.', targets: ['When','celebrate']}
-						{frase:'They watch fireworks and light candles for good luck.', targets: ['What','do']}	
+						{frase:'Beautiful jewelry.', pattern:['#wc','do the women','#wc','?'], targets: ['What','wear']}
+						{frase:'In India.',  pattern:['#wc','do they','#wc',' Diwali?'], targets: ['Where','celebrate']}
+						{frase:'In October or November.', pattern:['#wc','do they','#wc',' Diwali?'], targets: ['When','celebrate']}
+						{frase:'They watch fireworks and light candles for good luck.',  pattern:['#wc','do they','#wc','?'],targets: ['What','do']}	
 					]
 					opt1:[
 						{i:1, t:'When', x:25, y:35}
 						{i:2, t:'What', x:90, y:22}
-						{i:3, t:'Who', x:70, y:70}
-						{i:3, t:'Where', x:70, y:70}
+						{i:3, t:'Who', x:90, y:45}
+						{i:4, t:'Where', x:70, y:70}
 					]
 					opt2:[
 						{i:1, t:'wear', x:26, y:20}
@@ -91,7 +91,8 @@ class U8A2 extends Oda
 	setScene: (scene) ->
 		@scene = @game.scenes[scene - 1]
 		@intento = 0
-		@insertBitmap "scene", "scene#{scene}", stageSize.w / 2, 150, 'tc'
+		@sc = @createBitmap "scene", "scene#{scene}", stageSize.w / 2, 150, 'tc'
+		@addToMain @sc
 		@
 	setDropper: (step) ->
 		@step = step
@@ -108,7 +109,7 @@ class U8A2 extends Oda
 		dropper.addChild q
 
 		i = 0
-		npos = q.x + q.getMeasuredWidth() + 10
+		npos = q.x + q.getMeasuredWidth() + 15
 		for t in @scene.steps[step - 1].pattern
 			if t is '#wc'
 				txt = @scene.steps[step - 1].targets[i]
@@ -131,7 +132,8 @@ class U8A2 extends Oda
 		container.x = 210
 		container.y = 480
 		container.name = 'nube1'
-		
+		container.removeAllChildren()
+
 		back = @createBitmap 'backNube1', 'n1', 0, 0
 		container.addChild back
 
@@ -147,7 +149,7 @@ class U8A2 extends Oda
 		container.x = 440
 		container.y = 480
 		container.name = 'nube2'
-		
+		container.removeAllChildren()
 		back = @createBitmap 'backNube2', 'n2', 0, 0
 		container.addChild back
 
@@ -216,12 +218,20 @@ class U8A2 extends Oda
 			if @escena isnt 3
 				@escena++
 				@index = 0
-				@setScene( @escena ).setDropper( 1 ).setNube1().setNube2().introEvaluation()
+				#TweenLite.to @library.sc, 0.5, {alpha: 0, y: @library.dropper.y + 20}
+				@mainContainer.removeChild @sc
+				TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
+				TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
+				@setScene( @escena ).setDropper(1).setNube1().setNube2().initEvaluation()
+				TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
+				TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
+				TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 390}
 			else
 				@finish()
 	finish: ->
 		TweenLite.to @library.scene, 1, {alpha: 0, y: @library.scene.y + 20}
 		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
 		TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: 390}
 		super
 	window.U8A2 = U8A2

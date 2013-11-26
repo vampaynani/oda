@@ -1,0 +1,15 @@
+{img:'imagetoothache', frase:'i have a' , txt:'toothache'}
+{img:'imagecutmyfinger', frase:'i' , txt:'cut my finger'}
+{img:'imagerunnynose', frase:'I have a' , txt:'runny nose'}
+{img:'imagecutmyknee', frase:'i' , txt:'cut my knee'}
+{img:'imagefever', frase:'i have a' , txt:'fever'}
+{img:'imagesorethroat', frase:'i have a' , txt:'sore throat'}
+{img:'imagebugbite', frase:'i have a' , txt:'bug bite'}
+{img:'imagestomachache', frase:'i have a' , txt:'stomach ache'}
+{img:'imageearache', frase:'i have a ' , txt:'earache'}
+{img:'imagecold', frase:'i have a' , txt:'cold '}
+{img:'imagehiccups', frase:'i have the' , txt:'hiccups'}
+{img:'imagechickenpox', frase:'i have' , txt:'chicken pox'}
+{img:'imagesunburn', frase:'i have a' , txt:'sunburn'}
+{img:'imageheadache', frase:'i have a' , txt:'headache'}
+{img:'imagecough', frase:'i have a' , txt:'cough'}

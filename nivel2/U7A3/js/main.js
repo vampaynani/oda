@@ -259,7 +259,7 @@
     };
 
     U7A3.prototype.setScene = function(scene) {
-      var drop, es, fondo, hit, i, letra, letrafinal, word, _i, _ref;
+      var drop, es, fondo, hit, hits, i, letra, letrafinal, word, _i, _j, _ref, _ref1;
       this.escena = new createjs.Container();
       this.escena.x = 116;
       this.escena.y = 160;
@@ -276,6 +276,7 @@
       this.insertText('label', this.texts[this.index].t, '24px Quicksand', '#333', stageSize.w / 2, 140, 'center');
       this.escena.addChild(fondo);
       this.letras = this.positions["" + es + "letras"];
+      hits = new Array();
       for (i = _i = 0, _ref = this.letras.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         word = this.letras[i];
         if (scene === 1) {
@@ -292,12 +293,26 @@
         hit.x = drop.x - drop.width / 2;
         hit.y = drop.y - drop.height;
         hit.name = "dropArea" + word.letra;
-        letra = new Droppable(word.letra, this.preload.getResult(word.letra), i, word.x - 10, word.y - 10, this.stage, [hit]);
+        hits.push(hit);
+        this.escena.addChild(hit, drop);
+      }
+      for (i = _j = 0, _ref1 = this.letras.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
+        word = this.letras[i];
+        if (scene === 1) {
+          drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 75 + 85, 430, 'bc');
+        }
+        if (scene === 2) {
+          drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 75 + 55, 430, 'bc');
+          if (i >= 2) {
+            drop.x = drop.x + 30;
+          }
+        }
+        letra = new Droppable(word.letra, this.preload.getResult(word.letra), i, word.x - 10, word.y - 10, this.stage, hits);
         letra.scaleX = letra.scaleY = 0.43;
         letrafinal = this.createBitmap("f" + this.letras[i].letra, this.letras[i].letra, drop.x, drop.y - 7, 'bc');
         letrafinal.visible = false;
         this.addToLibrary(letra, letrafinal);
-        this.escena.addChild(hit, drop, letra, letrafinal);
+        this.escena.addChild(letra, letrafinal);
       }
       this.addToMain(this.escena);
       return this;
@@ -311,14 +326,17 @@
         es = 'green';
       }
       this.index = 0;
+      TweenLite.to(this.library.label, 0.5, {
+        alpha: 0
+      });
       final = new createjs.Container();
       final.name = 'final';
       fin = this.createBitmap(es + 'screen', es + 'screen', stageSize.w / 2, stageSize.h / 2, 'mc');
       final.addChild(fin);
       this.addToLibrary(final);
       this.addToMain(final);
-      TweenLite.from(this.library.final, 1, {
-        alpha: 0,
+      TweenLite.to(this.library.final, 1, {
+        alpha: 1,
         delay: 0
       });
       TweenLite.to(this.library.final, 1, {
@@ -330,6 +348,10 @@
         TweenLite.from(this.library.escena, 2, {
           alpha: 0,
           y: this.library.escena.y + 20,
+          delay: 4
+        });
+        TweenLite.from(this.library.label, 0.5, {
+          alpha: 0,
           delay: 4
         });
       } else {
@@ -397,6 +419,9 @@
           this.warning();
           return console.log('fail');
         }
+      } else {
+        this.answer.returnToPlace(1, 0.43, 0.43);
+        return this.warning();
       }
     };
 
@@ -426,6 +451,9 @@
     };
 
     U7A3.prototype.finish = function() {
+      TweenLite.to(this.library.instructions, 1, {
+        alpha: 0
+      });
       TweenLite.to(this.library.escena, 1, {
         alpha: 0,
         y: this.library.escena.y + 20

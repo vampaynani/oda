@@ -37,10 +37,10 @@
           id: 'startgame',
           src: 'start_game.png'
         }, {
-          id: 'boy',
+          id: 'nino1',
           src: 'boy.png'
         }, {
-          id: 'girl',
+          id: 'nino2',
           src: 'girl.png'
         }, {
           id: 'btnFalse',
@@ -63,28 +63,57 @@
         }
       ];
       this.game = {
-        answers: [
+        scenes: [
           {
-            text: "I always watch TV.",
-            respuestas: false
+            answers: [
+              {
+                text: "I always watch TV.",
+                respuestas: false
+              }, {
+                text: "I sometimes take a shower.",
+                respuestas: true
+              }, {
+                text: "I sometimes read.",
+                respuestas: true
+              }, {
+                text: "I never ride my bike.",
+                respuestas: false
+              }, {
+                text: "I never take a bath.",
+                respuestas: true
+              }, {
+                text: "I always floss my teeth.",
+                respuestas: true
+              }, {
+                text: "I sometimes play baseball on Wednesday.",
+                respuestas: false
+              }
+            ]
           }, {
-            text: "I sometimes take a shower.",
-            respuestas: true
-          }, {
-            text: "I sometimes read.",
-            respuestas: true
-          }, {
-            text: "I never ride my bike.",
-            respuestas: false
-          }, {
-            text: "I never take a bath.",
-            respuestas: true
-          }, {
-            text: "I always floss my teeth.",
-            respuestas: true
-          }, {
-            text: "I sometimes play baseball on Wednesday.",
-            respuestas: false
+            answers: [
+              {
+                text: "aI always watch TV.",
+                respuestas: false
+              }, {
+                text: "aI sometimes take a shower.",
+                respuestas: true
+              }, {
+                text: "aI sometimes read.",
+                respuestas: true
+              }, {
+                text: "aI never ride my bike.",
+                respuestas: false
+              }, {
+                text: "aI never take a bath.",
+                respuestas: true
+              }, {
+                text: "aI always floss my teeth.",
+                respuestas: true
+              }, {
+                text: "aI sometimes play baseball on Wednesday.",
+                respuestas: false
+              }
+            ]
           }
         ]
       };
@@ -93,15 +122,17 @@
 
     U7A4.prototype.setStage = function() {
       U7A4.__super__.setStage.apply(this, arguments);
-      this.answers = this.shuffleNoRepeat(this.game.answers, 7);
+      this.escena = 1;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 7, 0));
-      return this.setBoy().setClick().introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 14, 0));
+      return this.setScene(1).setClick().introEvaluation();
     };
 
-    U7A4.prototype.setBoy = function() {
-      this.insertBitmap('boy', 'boy', 111, 158);
+    U7A4.prototype.setScene = function(scene) {
+      this.scene = this.game.scenes[scene - 1];
+      this.answers = this.shuffleNoRepeat(this.scene.answers, 7);
+      this.insertBitmap('boy', "nino" + scene, 111, 158);
       this.library.boy.scaleX = this.library.boy.scaleY = 0.9;
       return this;
     };
@@ -186,7 +217,33 @@
           ease: Back.easeOut
         });
       } else {
-        return this.finish();
+        if (this.escena === 1) {
+          this.index = 0;
+          this.escena = 2;
+          TweenLite.to(this.library.btnfalse, 1, {
+            alpha: 0,
+            y: this.library.btnfalse.y - 10,
+            ease: Quart.easeOut
+          });
+          TweenLite.to(this.library.btntrue, 1, {
+            alpha: 0,
+            y: this.library.btntrue.y - 10,
+            ease: Quart.easeOut
+          });
+          TweenLite.to(this.library.boy, 1, {
+            alpha: 0,
+            y: this.library.boy.y - 10,
+            ease: Quart.easeOut
+          });
+          TweenLite.to(this.library.frases, 0.5, {
+            alpha: 0,
+            y: this.library.frases - 10,
+            ease: Quart.easeOut
+          });
+          return this.setScene(2).setClick().initEvaluation();
+        } else {
+          return this.finish();
+        }
       }
     };
 

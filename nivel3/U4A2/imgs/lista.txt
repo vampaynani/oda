@@ -1,0 +1,7 @@
+balloon_1.png
+balloon_2.png
+balloon_3.png
+btn_repeat.png
+doc_question.png
+doc_right.png
+doc_wrong.png
