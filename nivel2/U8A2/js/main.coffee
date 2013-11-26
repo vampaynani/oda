@@ -83,12 +83,14 @@ class U8A2 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@escena = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 4, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 24, 0
 		@setScene( 1 ).setDropper( 1 ).setNube1().setNube2().introEvaluation()
 	setScene: (scene) ->
 		@scene = @game.scenes[scene - 1]
+		@intento = 0
 		@insertBitmap "scene", "scene#{scene}", stageSize.w / 2, 150, 'tc'
 		@
 	setDropper: (step) ->
@@ -180,15 +182,18 @@ class U8A2 extends Oda
 		if @answer.index is @scene.steps[@step - 1].targets[@drop.index]
 			@answer.visible = false
 			@drop.changeText @answer.index
+			if @intento is 0
+				@library['score'].plusOne()
+			@intento = 0
+			createjs.Sound.play 'good'
 			@finishEvaluation()
 		else
 			@warning()
+			@intento = 1
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		createjs.Sound.play 'good'
 		if @library.h0.text.text is '' or @library.h1.text.text is ''
 			return
-		@library['score'].plusOne()
 		setTimeout @clearEvaluation, 1 * 1000
 	clearEvaluation: (e) =>
 		for opt in @scene.opt1
@@ -208,7 +213,12 @@ class U8A2 extends Oda
 			for opt in @scene.opt2
 				@library["n2d#{opt.i}"].updateDrops @library.h1
 		else
-			@finish()
+			if @escena isnt 3
+				@escena++
+				@index = 0
+				@setScene( @escena ).setDropper( 1 ).setNube1().setNube2().introEvaluation()
+			else
+				@finish()
 	finish: ->
 		TweenLite.to @library.scene, 1, {alpha: 0, y: @library.scene.y + 20}
 		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}

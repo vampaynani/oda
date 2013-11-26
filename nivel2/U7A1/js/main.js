@@ -157,9 +157,10 @@
 
     U7A1.prototype.setStage = function() {
       U7A1.__super__.setStage.apply(this, arguments);
+      this.intento = 0;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setEscena(1).setNube().introEvaluation();
     };
 
@@ -252,9 +253,15 @@
       if (this.answer.index === this.escenas[this.index][e.drop.name]) {
         this.answer.visible = false;
         this.drop.changeText(this.answer.text.text);
-        return this.finishEvaluation();
+        this.finishEvaluation();
+        createjs.Sound.play('good');
+        if (this.intento === 0) {
+          this.library['score'].plusOne();
+        }
+        return this.intento = 0;
       } else {
         this.warning();
+        this.intento = 1;
         return this.answer.returnToPlace();
       }
     };
@@ -263,7 +270,6 @@
       if (this.library.p1.text.text === '' || this.library.p2.text.text === '') {
 
       } else {
-        this.library['score'].plusOne();
         return setTimeout(this.clearEvaluation, 1 * 1000);
       }
     };
@@ -285,6 +291,7 @@
 
     U7A1.prototype.nextEvaluation = function() {
       this.index++;
+      this.intento = 0;
       if (this.index < this.escenas.length) {
         this.setEscena(this.index + 1);
         return TweenLite.to(this.library.scene, 0.5, {

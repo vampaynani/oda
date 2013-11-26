@@ -261,10 +261,11 @@
 
     U8A6.prototype.setStage = function() {
       U8A6.__super__.setStage.apply(this, arguments);
+      this.intento = 0;
       this.preguntas = this.shuffleNoRepeat(this.game.preguntas, 11);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 11, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setQuestion(0).introEvaluation();
     };
 
@@ -351,9 +352,13 @@
       this.answer = e.target;
       if (this.answer.index === this.preguntas[this.index].respuesta) {
         createjs.Sound.play('good');
-        this.library['score'].plusOne();
-        return this.finishEvaluation();
+        if (this.intento === 0) {
+          this.library['score'].plusOne();
+        }
+        this.finishEvaluation();
+        return this.intento = 0;
       } else {
+        this.intento = 1;
         return this.warning();
       }
     };

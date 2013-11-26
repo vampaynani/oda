@@ -141,9 +141,11 @@ class U8A1 extends Oda
 		b2 = new Button 'game2btn', (@preload.getResult 'game2btn'), 2, 753, 505
 		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
 		@addToMain b1, b2, b3
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 100, 0
 		@introEvaluation()
 	setCards: (e) =>
+		@time = 100
+		@timer = setInterval @updateCounter, 1000
 		j = 0
 		game = e.target.index
 		juego = new createjs.Container()
@@ -167,6 +169,10 @@ class U8A1 extends Oda
 		@addToMain juego
 		TweenLite.from juego, 0.5, {alpha:0, y:juego.y - 20}
 		@
+	updateCounter: =>
+		@time--
+		@library['score'].updateTotal @time
+		@finish() if @time is 0
 	introEvaluation: ->
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
@@ -200,7 +206,7 @@ class U8A1 extends Oda
 			TweenLite.to @selected[0], 0.5, {alpha:1}
 			TweenLite.to @selected[1], 0.5, {alpha:1}
 			@selected = new Array()
-			@warning()
+			#@warning()
 	nextEvaluation: =>
 		@index++
 		@library.score.plusOne()
@@ -210,6 +216,8 @@ class U8A1 extends Oda
 		else
 			@finish()
 	finish: ->
+		clearInterval @timer
+
 		TweenLite.to [@library.game1btn, @library.game2btn, @library.game3btn], 1, {alpha: 0}
 		TweenLite.to @library.juego, 1, {alpha:0, y:@library.juego.y - 20}
 		super

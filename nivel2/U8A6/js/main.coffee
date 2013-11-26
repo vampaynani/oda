@@ -60,10 +60,11 @@ class U8A6 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@intento = 0
 		@preguntas = @shuffleNoRepeat @game.preguntas, 11
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 11, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@setQuestion(0).introEvaluation()
 	setQuestion: (i) ->
 		question = new createjs.Container()
@@ -134,9 +135,12 @@ class U8A6 extends Oda
 		@answer = e.target
 		if @answer.index is @preguntas[@index].respuesta
 			createjs.Sound.play 'good'
-			@library['score'].plusOne()
+			if @intento is 0
+				@library['score'].plusOne()
 			@finishEvaluation()
+			@intento = 0
 		else
+			@intento = 1
 			@warning()
 	finishEvaluation: =>
 		if @preguntas[@index].tipo is 'texto'			

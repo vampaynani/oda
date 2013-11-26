@@ -21,6 +21,8 @@ class U3A6 extends Oda
 			{id:'ch14', src:'chango0014.png'}
 			{id:'ch15', src:'chango0015.png'}
 			{id:'ch16', src:'chango0016.png'}
+			{id:'bubble1', src:'bubble1.png'}
+			{id:'bubble2', src:'bubble2.png'}
 			{id: 'aLetra', src: 'a.png'}
 			{id: 'bLetra', src: 'b.png'}
 			{id: 'cLetra', src: 'c.png'}
@@ -59,7 +61,7 @@ class U3A6 extends Oda
 			{id: 'flossmyteeth', src:'floss-my-teeth.png'}
 			{id: 'forest', src:'forest.png'}
 			{id: 'hiking', src:'hiking.png'}
-			{id: 'horseback-riding', src:'horseback-riding.png'}
+			{id: 'horsebackriding', src:'horseback-riding.png'}
 			{id: 'lake', src:'lake.png'}
 			{id: 'mountainbiking', src:'mountain-biking.png'}
 			{id: 'mountains', src:'mountains.png'}
@@ -83,79 +85,53 @@ class U3A6 extends Oda
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-		@answers = [
-			'backpack'
-			'baseball'
-			'brush my hair'
-			'cabin'
-			'canoeing'
-			'comb'
-			'field'
-			'fishing'
-			'flashlight'
-			'floss my teeth'
-			'forest'
-			'hiking'
-			'horseback riding'
-			'lake'
-			'mountain biking'
-			'mountains'
-			'plant trees'
-			'pool'
-			'recycle bottles'
-			'soap'
-			'sunscreen'
-			'swimming'
-			'swimsuit'
-			'toothbrush'
-			'toothpaste'
-			'towels'
-			'volleyball'
-			'wash my face'
-		]
-		@imagenes = [
-			'backpack'
-			'baseball'
-			'brush-my-hair'
-			'cabin'
-			'canoeing'
-			'comb'
-			'field'
-			'fishing'
-			'flashlight'
-			'floss-my-teeth'
-			'forest'
-			'hiking'
-			'horseback-riding'
-			'lake'
-			'mountain-biking'
-			'mountains'
-			'plant-trees'
-			'pool'
-			'recycle-bottles'
-			'soap'
-			'sunscreen'
-			'swimming'
-			'swimsuit'
-			'toothbrush'
-			'toothpaste'
-			'towels'
-			'volleyball'
-			'wash-my-face'
-		]
+		@game =
+			answers:[
+				{t: 'backpack', i:'backpack'}
+				{t: 'baseball', i:'baseball'}
+				{t: 'brush my hair', i:'brushmyhair'}
+				{t: 'cabin', i:'cabin'}
+				{t: 'canoeing', i:'canoeing'}
+				{t: 'comb', i:'comb'}
+				{t: 'field', i:'field'}
+				{t: 'fishing', i:'fishing'}
+				{t: 'flashlight', i:'flashlight'}
+				{t: 'floss my teeth', i:'flossmyteeth'}
+				{t: 'forest', i:'forest'}
+				{t: 'hiking', i:'hiking'}
+				{t: 'horseback riding', i:'horsebackriding'}
+				{t: 'lake', i:'lake'}
+				{t: 'mountain biking', i:'mountainbiking'}
+				{t: 'mountains', i:'mountains'}
+				{t: 'plant trees', i:'planttrees'}
+				{t: 'pool', i:'pool'}
+				{t: 'recycle bottles', i:'recyclebottles'}
+				{t: 'soap', i:'soap'}
+				{t: 'sunscreen', i:'sunscreen'}
+				{t: 'swimming', i:'swimming'}
+				{t: 'swimsuit', i:'swimsuit'}
+				{t: 'toothbrush', i:'toothbrush'}
+				{t: 'toothpaste', i:'toothpaste'}
+				{t: 'towels', i:'towels'}
+				{t: 'volleyball', i:'volleyball'}
+				{t: 'wash my face', i:'washmyface'}
+			]
+	
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@answers = @shuffleNoRepeat @game.answers, 10
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		#p = @createBitmap @imagenes[0], @imagenes[0], (stageSize.w / 2)-80, 150, 'tc'
-		#p.scaleX = p.scaleY = 0.3
-		#@addToMain p
-
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@setChango().createAlphabet().introEvaluation()
 	setChango: ->
 		@insertSprite 'chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 549, 150, 'tl'
+		burbuja = new createjs.Container()
+		burbuja.name = 'burbuja'
+		burbuja.y = 149
+		burbuja.x = 550
+		@addToMain burbuja
 		@
 	createAlphabet: ->
 		alphabet = new createjs.Container()
@@ -165,15 +141,16 @@ class U3A6 extends Oda
 		for i in [0..@abc.length - 1] by 1
 			letter = @abc[i]
 			if i <= 9
-				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i, 0
+				letterObj = new ClickableLetter "l#{i}", letter, letter, 41.5 * i, 0
 			else if i <= 18
-				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i - 395, 34
+				letterObj = new ClickableLetter "l#{i}", letter, letter, 41.5 * i - 395, 34
 			else
-				letterObj = new ClickableText "l#{i}", letter, letter, 41.5 * i - 750, 68
+				letterObj = new ClickableLetter "l#{i}", letter, letter, 41.5 * i - 750, 68
 			letterObj.text.font = '20px Quicksand'
 			@addToLibrary letterObj
 			alphabet.addChild letterObj
 		@addToMain alphabet
+		
 		@
 	introEvaluation: ->
 		super
@@ -183,12 +160,22 @@ class U3A6 extends Oda
 		TweenMax.from @library['alphabet'], 1, {alpha: 0, y: stageSize.h, delay: 2, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		word = @answers[@index]
+		word = @answers[@index].t
 		@col = word.split('')
+		
+		comidas = new createjs.Container()
+		comidas.name = 'comidas'
+		comidas.y = 250
+		comidas.x = 300
+
+		imagen = @createBitmap @answers[@index].i, @answers[@index].i, 0, 0, 'mc'
+		imagen.scaleX = imagen.scaleY = 0.4
+		comidas.addChild imagen
+
 		wordContainers = new createjs.Container()
 		wordContainers.name = 'wordContainers'
 		wordContainers.y = 400
-		wordContainers.x = (@library['alphabet'].x + 177) - @col.length * 30 / 2
+		wordContainers.x = (@library['alphabet'].x + 157) - @col.length * 30 / 2
 		
 		for i in [0..@abc.length - 1]
 			@library["l#{i}"].addEventListener 'click', @evaluateAnswer
@@ -199,7 +186,8 @@ class U3A6 extends Oda
 				wc.index = @col[i - 1]
 				@addToLibrary wc
 				wordContainers.addChild wc
-		@addToMain wordContainers
+		@addToMain wordContainers 
+		@addToMain comidas
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		@answer.visible = false
@@ -210,30 +198,57 @@ class U3A6 extends Oda
 				if @answer.index is @library["w#{i}"].index
 					@library["w#{i}"].changeText @answer.index
 					check = on
+					console.log 'letra'
+
 		if not check
 			current = @library.chango.currentFrame
 			current++
 			@library.chango.gotoAndStop current
-		if @library.chango.currentFrame is @library.chango.spriteSheet._numFrames
-			@finish()
+		if @library.chango.currentFrame is @library.chango.spriteSheet._numFrames		
+			b = @createBitmap 'bubble2', 'bubble2', 0,0
+			@library.burbuja.addChild b
+			current--
+			@library.chango.gotoAndStop current
+			setTimeout @finishEvaluation, 3 * 1000			
+			console.log 'perdiste'
+			return
+			#@finish()
 		for i in [1..@col.length]
 			if @col[i - 1] isnt ' '
 				wc = @library["w#{i}"]
 				if wc.text.text isnt wc.index
 					complete = off
-		if complete then setTimeout @finishEvaluation, 1 * 1000
+		if complete 
+			b = @createBitmap 'bubble1', 'bubble1', 0, 0
+			@library.burbuja.addChild b
+			@library['score'].plusOne()
+			createjs.Sound.play 'good'
+			setTimeout @finishEvaluation, 3 * 1000
+			console.log 'ganaste'
+
 	finishEvaluation: =>
-		@library['score'].plusOne()
-		createjs.Sound.play 'good'
+		TweenLite.to @library['comidas'], 0.5, {alpha: 0, ease: Back.easeOut}
 		for i in [1..@col.length]
 			if @col[i] isnt ' '
 				TweenLite.to @library['wordContainers'], 0.5, {alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
+		for i in [1..@col.length]
+			if @col[i] isnt ' '
+				TweenLite.to @library['wordContainers'], 0.5, {alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
+		TweenLite.to @library['comidas'], 0.5, {alpha: 0, ease: Back.easeOut}
+
 		@index++
 		if @index < @answers.length
-			word = @answers[@index]
+			word = @answers[@index].t
 			@col = word.split('')
+			
+			@library.comidas.removeAllChildren()
+			@library.burbuja.removeAllChildren()
 			@library.chango.currentFrame = 0
+			imagen = @createBitmap @answers[@index].i, @answers[@index].i, 0, 0, 'mc'
+			imagen.scaleX = imagen.scaleY = 0.4
+			@library.comidas.addChild imagen
+	
 			@library.wordContainers.removeAllChildren()
 			@library.wordContainers.x = (@library['alphabet'].x + 177) - @col.length * 30 / 2
 			for i in [0..@abc.length - 1]
@@ -245,12 +260,17 @@ class U3A6 extends Oda
 					wc.index = @col[i - 1]
 					@addToLibrary wc
 					@library.wordContainers.addChild wc
+			
 			TweenLite.to @library.wordContainers, 0.5, {alpha: 1, ease: Quart.easeOut}
+			TweenLite.to @library.comidas, 0.5, {alpha: 1, ease: Quart.easeOut}
 		else
 			@finish()
 	finish: ->
 		TweenLite.to @library.wordContainers, 0.5, {alpha: 0, ease: Quart.easeOut}
 		TweenLite.to @library.alphabet, 1, {alpha: 0, ease: Quart.easeOut}
 		TweenLite.to @library.chango, 1, {alpha: 0, ease: Quart.easeOut}
+		TweenLite.to @library.comidas, 0.5, {alpha: 0, ease: Quart.easeOut}
+		TweenLite.to @library.burbuja, 0.5, {alpha: 0, ease: Quart.easeOut}
+
 		super
 	window.U3A6 = U3A6

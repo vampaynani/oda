@@ -45,10 +45,11 @@ class U8A3 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@intento = 0
 		@steps = @shuffle @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 4, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
 		@setDropper( 1 ).setPassports().introEvaluation()
 	setPassports: ->
 		i = 1
@@ -122,15 +123,19 @@ class U8A3 extends Oda
 			@answer.visible = false
 			@drop.changeText @answer.index
 			@finishEvaluation()
+			if @intento is 0 
+				@library['score'].plusOne()
+			@intento = 0
+
 		else
 			@warning()
+			@intento = 1
 			@answer.returnToPlace()
 	finishEvaluation: =>
 		createjs.Sound.play 'good'
 		for target in @targets
 			if target.text.text is ''
 				return
-		@library['score'].plusOne()
 		setTimeout @clearEvaluation, 1 * 1000
 	clearEvaluation: (e) =>
 		for i in [1..@game.passports.length] by 1

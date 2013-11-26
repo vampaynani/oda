@@ -66,10 +66,11 @@ class U7A1 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@intento = 0
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
 		@setEscena(1).setNube().introEvaluation()
 	setEscena: (scene) ->
 		if not @library.scene
@@ -131,14 +132,18 @@ class U7A1 extends Oda
 			@answer.visible = false
 			@drop.changeText @answer.text.text
 			@finishEvaluation()
+			createjs.Sound.play 'good'
+			if @intento is 0
+				@library['score'].plusOne()
+			@intento = 0
 		else
 			@warning()
+			@intento = 1
 			@answer.returnToPlace()
 	finishEvaluation: =>
 		if @library.p1.text.text is '' or @library.p2.text.text is ''
 			return
 		else
-			@library['score'].plusOne()
 			setTimeout @clearEvaluation, 1 * 1000
 	clearEvaluation: (e) =>
 		for i in [1..9] by 1
@@ -149,6 +154,7 @@ class U7A1 extends Oda
 		TweenLite.to @library.scene, 0.5, {alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
+		@intento = 0
 		if @index < @escenas.length
 			@setEscena @index + 1
 			TweenLite.to @library.scene, 0.5, {alpha: 1, ease: Back.easeOut}

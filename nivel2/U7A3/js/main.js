@@ -174,11 +174,11 @@
             y: '172'
           }, {
             letra: 'summerM',
-            x: '85',
+            x: '80',
             y: '175'
           }, {
             letra: 'summerM2',
-            x: '428',
+            x: '423',
             y: '281'
           }, {
             letra: 'summerE',
@@ -190,7 +190,30 @@
             y: '98'
           }
         ],
-        greentexts: ['1.They are hiking mountains', '2.They are hiking mountains', '3.They are hiking mountains', '4.They are hiking mountains', '5.They are hiking mountains', '6.They are hiking mountains'],
+        greentexts: [
+          {
+            t: '1.They are hiking mountains',
+            l: 'greenB'
+          }, {
+            t: '2.They are hiking mountains',
+            l: 'greenE'
+          }, {
+            t: '3.They are hiking mountains',
+            l: 'greenG'
+          }, {
+            t: '4.They are hiking mountains',
+            l: 'greenR'
+          }, {
+            t: '5.They are hiking mountains',
+            l: 'greenE2'
+          }, {
+            t: '6.They are hiking mountains',
+            l: 'greenE3'
+          }, {
+            t: '7.They are hiking mountains',
+            l: 'greenN'
+          }
+        ],
         greenletras: [
           {
             letra: 'greenB',
@@ -228,27 +251,30 @@
 
     U7A3.prototype.setStage = function() {
       U7A3.__super__.setStage.apply(this, arguments);
+      this.intento = 0;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 6, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 13, 0));
       return this.setScene(1).introEvaluation();
     };
 
     U7A3.prototype.setScene = function(scene) {
-      var drop, es, escena, fondo, hit, i, letra, letrafinal, word, _i, _ref;
-      escena = new createjs.Container();
-      escena.x = 116;
-      escena.y = 160;
-      escena.name = 'escena';
+      var drop, es, fondo, hit, i, letra, letrafinal, word, _i, _ref;
+      this.escena = new createjs.Container();
+      this.escena.x = 116;
+      this.escena.y = 160;
+      this.escena.name = 'escena';
       if (scene === 1) {
         es = 'summer';
+        this.esc = 1;
       } else {
         es = 'green';
+        this.esc = 2;
       }
       fondo = this.createBitmap("" + es + "bg", "" + es + "bg", 24, 11);
       this.texts = this.positions["" + es + "texts"];
       this.insertText('label', this.texts[this.index].t, '24px Quicksand', '#333', stageSize.w / 2, 140, 'center');
-      escena.addChild(fondo);
+      this.escena.addChild(fondo);
       this.letras = this.positions["" + es + "letras"];
       for (i = _i = 0, _ref = this.letras.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         word = this.letras[i];
@@ -256,7 +282,7 @@
           drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 75 + 85, 430, 'bc');
         }
         if (scene === 2) {
-          drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 85 + 65, 430, 'bc');
+          drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 75 + 55, 430, 'bc');
           if (i >= 2) {
             drop.x = drop.x + 30;
           }
@@ -266,23 +292,54 @@
         hit.x = drop.x - drop.width / 2;
         hit.y = drop.y - drop.height;
         hit.name = "dropArea" + word.letra;
-        letra = new Droppable(word.letra, this.preload.getResult(word.letra), i, word.x, word.y, this.stage, [hit]);
+        letra = new Droppable(word.letra, this.preload.getResult(word.letra), i, word.x - 10, word.y - 10, this.stage, [hit]);
         letra.scaleX = letra.scaleY = 0.43;
         letrafinal = this.createBitmap("f" + this.letras[i].letra, this.letras[i].letra, drop.x, drop.y - 7, 'bc');
         letrafinal.visible = false;
         this.addToLibrary(letra, letrafinal);
-        escena.addChild(hit, drop, letra, letrafinal);
+        this.escena.addChild(hit, drop, letra, letrafinal);
       }
-      this.addToMain(escena);
+      this.addToMain(this.escena);
       return this;
     };
 
     U7A3.prototype.setFinal = function() {
-      /*
-      		es = 'green'
-      		@insertBitmap es+'screen', es+'screen', stageSize.w / 2, stageSize.h /2, 'mc'
-      */
-
+      var es, fin, final;
+      if (this.esc === 1) {
+        es = 'summer';
+      } else {
+        es = 'green';
+      }
+      this.index = 0;
+      final = new createjs.Container();
+      final.name = 'final';
+      fin = this.createBitmap(es + 'screen', es + 'screen', stageSize.w / 2, stageSize.h / 2, 'mc');
+      final.addChild(fin);
+      this.addToLibrary(final);
+      this.addToMain(final);
+      TweenLite.from(this.library.final, 1, {
+        alpha: 0,
+        delay: 0
+      });
+      TweenLite.to(this.library.final, 1, {
+        alpha: 0,
+        delay: 2
+      });
+      if (this.esc === 1) {
+        this.setScene(2).initEvaluation();
+        TweenLite.from(this.library.escena, 2, {
+          alpha: 0,
+          y: this.library.escena.y + 20,
+          delay: 4
+        });
+      } else {
+        TweenLite.from(this.library.escena, 2, {
+          alpha: 0,
+          y: this.library.escena.y + 20,
+          delay: 4,
+          onComplete: this.finish()
+        });
+      }
       return this;
     };
 
@@ -328,10 +385,17 @@
         if (this.answer.name === this.texts[this.index].l) {
           this.library["f" + this.answer.name].visible = true;
           this.answer.visible = false;
-          return this.finishEvaluation();
+          if (this.intento === 0) {
+            this.library['score'].plusOne();
+          }
+          this.finishEvaluation();
+          createjs.Sound.play('good');
+          return this.intento = 0;
         } else {
           this.answer.returnToPlace(1, 0.43, 0.43);
-          return this.warning();
+          this.intento = 1;
+          this.warning();
+          return console.log('fail');
         }
       }
     };
@@ -347,7 +411,6 @@
 
     U7A3.prototype.nextEvaluation = function() {
       this.index++;
-      this.library['score'].plusOne();
       if (this.index < this.texts.length) {
         this.library.label.text = this.texts[this.index].t;
         return TweenLite.to(this.library.label, 0.5, {
@@ -356,7 +419,9 @@
           ease: Quart.easeOut
         });
       } else {
-        return this.finish();
+        this.escena.removeAllChildren();
+        this.mainContainer.removeChild(this.escena);
+        return this.setFinal();
       }
     };
 

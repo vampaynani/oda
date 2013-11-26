@@ -76,6 +76,12 @@
           id: 'ch16',
           src: 'chango0016.png'
         }, {
+          id: 'bubble1',
+          src: 'bubble1.png'
+        }, {
+          id: 'bubble2',
+          src: 'bubble2.png'
+        }, {
           id: 'aLetra',
           src: 'a.png'
         }, {
@@ -190,7 +196,7 @@
           id: 'hiking',
           src: 'hiking.png'
         }, {
-          id: 'horseback-riding',
+          id: 'horsebackriding',
           src: 'horseback-riding.png'
         }, {
           id: 'lake',
@@ -255,21 +261,115 @@
         }
       ];
       this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-      this.answers = ['backpack', 'baseball', 'brush my hair', 'cabin', 'canoeing', 'comb', 'field', 'fishing', 'flashlight', 'floss my teeth', 'forest', 'hiking', 'horseback riding', 'lake', 'mountain biking', 'mountains', 'plant trees', 'pool', 'recycle bottles', 'soap', 'sunscreen', 'swimming', 'swimsuit', 'toothbrush', 'toothpaste', 'towels', 'volleyball', 'wash my face'];
-      this.imagenes = ['backpack', 'baseball', 'brush-my-hair', 'cabin', 'canoeing', 'comb', 'field', 'fishing', 'flashlight', 'floss-my-teeth', 'forest', 'hiking', 'horseback-riding', 'lake', 'mountain-biking', 'mountains', 'plant-trees', 'pool', 'recycle-bottles', 'soap', 'sunscreen', 'swimming', 'swimsuit', 'toothbrush', 'toothpaste', 'towels', 'volleyball', 'wash-my-face'];
+      this.game = {
+        answers: [
+          {
+            t: 'backpack',
+            i: 'backpack'
+          }, {
+            t: 'baseball',
+            i: 'baseball'
+          }, {
+            t: 'brush my hair',
+            i: 'brushmyhair'
+          }, {
+            t: 'cabin',
+            i: 'cabin'
+          }, {
+            t: 'canoeing',
+            i: 'canoeing'
+          }, {
+            t: 'comb',
+            i: 'comb'
+          }, {
+            t: 'field',
+            i: 'field'
+          }, {
+            t: 'fishing',
+            i: 'fishing'
+          }, {
+            t: 'flashlight',
+            i: 'flashlight'
+          }, {
+            t: 'floss my teeth',
+            i: 'flossmyteeth'
+          }, {
+            t: 'forest',
+            i: 'forest'
+          }, {
+            t: 'hiking',
+            i: 'hiking'
+          }, {
+            t: 'horseback riding',
+            i: 'horsebackriding'
+          }, {
+            t: 'lake',
+            i: 'lake'
+          }, {
+            t: 'mountain biking',
+            i: 'mountainbiking'
+          }, {
+            t: 'mountains',
+            i: 'mountains'
+          }, {
+            t: 'plant trees',
+            i: 'planttrees'
+          }, {
+            t: 'pool',
+            i: 'pool'
+          }, {
+            t: 'recycle bottles',
+            i: 'recyclebottles'
+          }, {
+            t: 'soap',
+            i: 'soap'
+          }, {
+            t: 'sunscreen',
+            i: 'sunscreen'
+          }, {
+            t: 'swimming',
+            i: 'swimming'
+          }, {
+            t: 'swimsuit',
+            i: 'swimsuit'
+          }, {
+            t: 'toothbrush',
+            i: 'toothbrush'
+          }, {
+            t: 'toothpaste',
+            i: 'toothpaste'
+          }, {
+            t: 'towels',
+            i: 'towels'
+          }, {
+            t: 'volleyball',
+            i: 'volleyball'
+          }, {
+            t: 'wash my face',
+            i: 'washmyface'
+          }
+        ]
+      };
       U3A6.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U3A6.prototype.setStage = function() {
       U3A6.__super__.setStage.apply(this, arguments);
+      this.answers = this.shuffleNoRepeat(this.game.answers, 10);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setChango().createAlphabet().introEvaluation();
     };
 
     U3A6.prototype.setChango = function() {
+      var burbuja;
       this.insertSprite('chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 549, 150, 'tl');
+      burbuja = new createjs.Container();
+      burbuja.name = 'burbuja';
+      burbuja.y = 149;
+      burbuja.x = 550;
+      this.addToMain(burbuja);
       return this;
     };
 
@@ -282,11 +382,11 @@
       for (i = _i = 0, _ref = this.abc.length - 1; _i <= _ref; i = _i += 1) {
         letter = this.abc[i];
         if (i <= 9) {
-          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i, 0);
+          letterObj = new ClickableLetter("l" + i, letter, letter, 41.5 * i, 0);
         } else if (i <= 18) {
-          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i - 395, 34);
+          letterObj = new ClickableLetter("l" + i, letter, letter, 41.5 * i - 395, 34);
         } else {
-          letterObj = new ClickableText("l" + i, letter, letter, 41.5 * i - 750, 68);
+          letterObj = new ClickableLetter("l" + i, letter, letter, 41.5 * i - 750, 68);
         }
         letterObj.text.font = '20px Quicksand';
         this.addToLibrary(letterObj);
@@ -322,14 +422,21 @@
     };
 
     U3A6.prototype.initEvaluation = function(e) {
-      var i, wc, word, wordContainers, _i, _j, _ref, _ref1;
+      var comidas, i, imagen, wc, word, wordContainers, _i, _j, _ref, _ref1;
       U3A6.__super__.initEvaluation.apply(this, arguments);
-      word = this.answers[this.index];
+      word = this.answers[this.index].t;
       this.col = word.split('');
+      comidas = new createjs.Container();
+      comidas.name = 'comidas';
+      comidas.y = 250;
+      comidas.x = 300;
+      imagen = this.createBitmap(this.answers[this.index].i, this.answers[this.index].i, 0, 0, 'mc');
+      imagen.scaleX = imagen.scaleY = 0.4;
+      comidas.addChild(imagen);
       wordContainers = new createjs.Container();
       wordContainers.name = 'wordContainers';
       wordContainers.y = 400;
-      wordContainers.x = (this.library['alphabet'].x + 177) - this.col.length * 30 / 2;
+      wordContainers.x = (this.library['alphabet'].x + 157) - this.col.length * 30 / 2;
       for (i = _i = 0, _ref = this.abc.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         this.library["l" + i].addEventListener('click', this.evaluateAnswer);
       }
@@ -341,11 +448,12 @@
           wordContainers.addChild(wc);
         }
       }
-      return this.addToMain(wordContainers);
+      this.addToMain(wordContainers);
+      return this.addToMain(comidas);
     };
 
     U3A6.prototype.evaluateAnswer = function(e) {
-      var check, complete, current, i, wc, _i, _j, _ref, _ref1;
+      var b, check, complete, current, i, wc, _i, _j, _ref, _ref1;
       this.answer = e.target;
       this.answer.visible = false;
       check = false;
@@ -355,6 +463,7 @@
           if (this.answer.index === this.library["w" + i].index) {
             this.library["w" + i].changeText(this.answer.index);
             check = true;
+            console.log('letra');
           }
         }
       }
@@ -364,7 +473,13 @@
         this.library.chango.gotoAndStop(current);
       }
       if (this.library.chango.currentFrame === this.library.chango.spriteSheet._numFrames) {
-        this.finish();
+        b = this.createBitmap('bubble2', 'bubble2', 0, 0);
+        this.library.burbuja.addChild(b);
+        current--;
+        this.library.chango.gotoAndStop(current);
+        setTimeout(this.finishEvaluation, 3 * 1000);
+        console.log('perdiste');
+        return;
       }
       for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
         if (this.col[i - 1] !== ' ') {
@@ -375,14 +490,21 @@
         }
       }
       if (complete) {
-        return setTimeout(this.finishEvaluation, 1 * 1000);
+        b = this.createBitmap('bubble1', 'bubble1', 0, 0);
+        this.library.burbuja.addChild(b);
+        this.library['score'].plusOne();
+        createjs.Sound.play('good');
+        setTimeout(this.finishEvaluation, 3 * 1000);
+        return console.log('ganaste');
       }
     };
 
     U3A6.prototype.finishEvaluation = function() {
       var i, _i, _ref, _results;
-      this.library['score'].plusOne();
-      createjs.Sound.play('good');
+      TweenLite.to(this.library['comidas'], 0.5, {
+        alpha: 0,
+        ease: Back.easeOut
+      });
       _results = [];
       for (i = _i = 1, _ref = this.col.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
         if (this.col[i] !== ' ') {
@@ -399,18 +521,36 @@
     };
 
     U3A6.prototype.nextEvaluation = function() {
-      var i, wc, word, _i, _j, _ref, _ref1;
+      var i, imagen, wc, word, _i, _j, _k, _ref, _ref1, _ref2;
+      for (i = _i = 1, _ref = this.col.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        if (this.col[i] !== ' ') {
+          TweenLite.to(this.library['wordContainers'], 0.5, {
+            alpha: 0,
+            ease: Back.easeOut,
+            onComplete: this.nextEvaluation
+          });
+        }
+      }
+      TweenLite.to(this.library['comidas'], 0.5, {
+        alpha: 0,
+        ease: Back.easeOut
+      });
       this.index++;
       if (this.index < this.answers.length) {
-        word = this.answers[this.index];
+        word = this.answers[this.index].t;
         this.col = word.split('');
+        this.library.comidas.removeAllChildren();
+        this.library.burbuja.removeAllChildren();
         this.library.chango.currentFrame = 0;
+        imagen = this.createBitmap(this.answers[this.index].i, this.answers[this.index].i, 0, 0, 'mc');
+        imagen.scaleX = imagen.scaleY = 0.4;
+        this.library.comidas.addChild(imagen);
         this.library.wordContainers.removeAllChildren();
         this.library.wordContainers.x = (this.library['alphabet'].x + 177) - this.col.length * 30 / 2;
-        for (i = _i = 0, _ref = this.abc.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        for (i = _j = 0, _ref1 = this.abc.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
           this.library["l" + i].visible = true;
         }
-        for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
+        for (i = _k = 1, _ref2 = this.col.length; 1 <= _ref2 ? _k <= _ref2 : _k >= _ref2; i = 1 <= _ref2 ? ++_k : --_k) {
           if (this.col[i - 1] !== ' ') {
             wc = new WordContainer("w" + i, '', '#fff', '#0098d7', 30 * i, 0, 26, 26);
             wc.index = this.col[i - 1];
@@ -418,7 +558,11 @@
             this.library.wordContainers.addChild(wc);
           }
         }
-        return TweenLite.to(this.library.wordContainers, 0.5, {
+        TweenLite.to(this.library.wordContainers, 0.5, {
+          alpha: 1,
+          ease: Quart.easeOut
+        });
+        return TweenLite.to(this.library.comidas, 0.5, {
           alpha: 1,
           ease: Quart.easeOut
         });
@@ -437,6 +581,14 @@
         ease: Quart.easeOut
       });
       TweenLite.to(this.library.chango, 1, {
+        alpha: 0,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.comidas, 0.5, {
+        alpha: 0,
+        ease: Quart.easeOut
+      });
+      TweenLite.to(this.library.burbuja, 0.5, {
         alpha: 0,
         ease: Quart.easeOut
       });

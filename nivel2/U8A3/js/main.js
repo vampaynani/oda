@@ -122,10 +122,11 @@
 
     U8A3.prototype.setStage = function() {
       U8A3.__super__.setStage.apply(this, arguments);
+      this.intento = 0;
       this.steps = this.shuffle(this.game.steps);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 4, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setDropper(1).setPassports().introEvaluation();
     };
 
@@ -243,9 +244,14 @@
       if (this.answer.index === this.steps[this.step - 1].targets[this.drop.index]) {
         this.answer.visible = false;
         this.drop.changeText(this.answer.index);
-        return this.finishEvaluation();
+        this.finishEvaluation();
+        if (this.intento === 0) {
+          this.library['score'].plusOne();
+        }
+        return this.intento = 0;
       } else {
         this.warning();
+        this.intento = 1;
         return this.answer.returnToPlace();
       }
     };
@@ -260,7 +266,6 @@
           return;
         }
       }
-      this.library['score'].plusOne();
       return setTimeout(this.clearEvaluation, 1 * 1000);
     };
 
