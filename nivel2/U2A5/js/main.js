@@ -10,6 +10,7 @@
 
     function U2A5() {
       this.finish = __bind(this.finish, this);
+      this.storyTale = __bind(this.storyTale, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -220,6 +221,7 @@
           ]
         }
       ];
+      this.answers = [];
       U2A5.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -227,11 +229,11 @@
       var ti;
       U2A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Read and drag the words to complete the story.', 40, 100);
+      this.insertInstructions('instructions', 'Read and drag the names to complete the story.', 40, 100);
       ti = this.createBitmap('title', 'title1', 350, 135, 'tc');
-      ti.scaleX = ti.scaleY = 0.8;
+      ti.scaleX = ti.scaleY = 0.72;
       this.addToMain(ti);
-      this.insertBitmap('btnnext', 'btn', 760, 520, 'tc');
+      this.insertBitmap('btnnext', 'btn', 760, 589, 'tc');
       this.library['btnnext'].visible = false;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
       return this.setCuento(1).introEvaluation();
@@ -278,6 +280,21 @@
       return this;
     };
 
+    U2A5.prototype.setCuentoFinal = function(scene) {
+      var cuento, i, m, scn, _i, _ref;
+      cuento = new createjs.Container();
+      cuento.name = 'cuento';
+      this.scene = scene;
+      scn = this.game[scene - 1];
+      for (i = _i = 1, _ref = scn.positions.length; _i <= _ref; i = _i += 1) {
+        m = this.createBitmap("" + ((scene - 1) * 4 + i) + "b", "" + ((scene - 1) * 4 + i) + "b", scn.positions[i - 1].x, scn.positions[i - 1].y);
+        m.scaleX = m.scaleY = 0.8;
+        cuento.addChild(m);
+        this.addToLibrary(m);
+      }
+      return this.addToMain(cuento);
+    };
+
     U2A5.prototype.introEvaluation = function() {
       var i, _i, _ref;
       U2A5.__super__.introEvaluation.apply(this, arguments);
@@ -309,7 +326,6 @@
     U2A5.prototype.initEvaluation = function(e) {
       var i, _i, _ref, _results;
       U2A5.__super__.initEvaluation.apply(this, arguments);
-      createjs.Sound.play("scene" + this.scene);
       _results = [];
       for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
         _results.push(this.library["t" + i].addEventListener('click', this.evaluateAnswer));
@@ -388,7 +404,6 @@
           y: this.library['cuento'].y + 10
         });
         this.setCuento(this.index + 1);
-        createjs.Sound.play("scene" + this.scene);
         TweenLite.from(this.library['cuento'], 1, {
           alpha: 0,
           y: this.library['cuento'].y + 10
@@ -400,19 +415,36 @@
         }
         return _results;
       } else {
-        return setTimeout(this.finish, 2 * 1000);
+        this.finalscene = 0;
+        TweenLite.to(this.library['title'], 1, {
+          alpha: 0,
+          y: this.library['title'].y + 20
+        });
+        return setTimeout(this.storyTale, 2 * 1000);
       }
     };
 
-    U2A5.prototype.finish = function() {
-      TweenLite.to(this.library['title'], 1, {
-        alpha: 0,
-        y: this.library['title'].y + 20
-      });
+    U2A5.prototype.storyTale = function() {
+      var s;
       TweenLite.to(this.library['cuento'], 1, {
         alpha: 0,
         y: this.library['cuento'].y - 50
       });
+      if (this.finalscene < this.game.length) {
+        this.setCuentoFinal(this.finalscene + 1);
+        s = createjs.Sound.play("scene" + this.scene);
+        s.addEventListener('complete', this.storyTale);
+        TweenLite.to(this.library['cuento'], 1, {
+          alpha: 1,
+          y: this.library['cuento'].y + 10
+        });
+        return this.finalscene++;
+      } else {
+        return this.finish();
+      }
+    };
+
+    U2A5.prototype.finish = function() {
       return U2A5.__super__.finish.apply(this, arguments);
     };
 

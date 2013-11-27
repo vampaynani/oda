@@ -123,6 +123,18 @@ class U3A5 extends Oda
 			cuento.addChild t
 		@addToMain cuento
 		@
+	setCuentoFinal: (scene) ->
+		cuento = new createjs.Container()
+		cuento.name = 'cuento'
+		@scene = scene
+		scn = @game[scene - 1]
+		for i in [1..scn.positions.length] by 1
+			m = @createBitmap "#{(scene - 1) * 4 + i}b", "#{(scene - 1) * 4 + i}b", scn.positions[i - 1].x, scn.positions[i - 1].y
+			m.scaleX = m.scaleY = 0.8
+			cuento.addChild m
+			@addToLibrary m
+
+		@addToMain cuento
 	introEvaluation: ->
 		super
 		for i in [1..@game[@scene - 1].texts.length] by 1
@@ -133,7 +145,6 @@ class U3A5 extends Oda
 		TweenLite.from @library['cuento'], 1, {alpha: 0, y: @library['cuento'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		createjs.Sound.play "scene#{@scene}"
 		for i in [1..@game[@scene - 1].texts.length] by 1
 			@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 	evaluateAnswer: (e) =>
@@ -181,15 +192,24 @@ class U3A5 extends Oda
 			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
 			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
 			@setCuento @index + 1
-			createjs.Sound.play "scene#{@scene}"
 			TweenLite.from @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
 			for i in [1..@game[@scene - 1].texts.length] by 1
 				@library["t#{i}"].onInitEvaluation()
 				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
-			setTimeout @finish, 2 * 1000
-	finish: =>
-		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
+			@finalscene = 0
+			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
+			setTimeout @storyTale, 2 * 1000
+	storyTale: =>
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
+		if @finalscene < @game.length
+			@setCuentoFinal @finalscene + 1
+			s = createjs.Sound.play "scene#{@scene}"
+			s.addEventListener 'complete', @storyTale
+			TweenLite.to @library['cuento'], 1, {alpha:1, y:@library['cuento'].y + 10}
+			@finalscene++
+		else
+			@finish()
+	finish: =>
 		super
 	window.U3A5 = U3A5

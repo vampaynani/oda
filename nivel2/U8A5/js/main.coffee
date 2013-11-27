@@ -94,6 +94,17 @@ class U8A5 extends Oda
 			cuento.addChild t
 		@addToMain cuento
 		@
+	setCuentoFinal: (scene) ->
+		cuento = new createjs.Container()
+		cuento.name = 'cuento'
+		@scene = scene
+		scn = @game[scene - 1]
+		for i in [1..scn.positions.length] by 1
+			m = @createBitmap "#{(scene - 1) * 4 + i}b", "#{(scene - 1) * 4 + i}b", scn.positions[i - 1].x, scn.positions[i - 1].y
+			cuento.addChild m
+			@addToLibrary m
+
+		@addToMain cuento
 	introEvaluation: ->
 		super
 		for i in [1..@game[@scene - 1].texts.length] by 1
@@ -112,15 +123,34 @@ class U8A5 extends Oda
 		for i in [1..@game[@scene - 1].positions.length] by 1
 			pt = @library["sc#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
 			if @library["sc#{i}"].hitTest pt.x, pt.y
-				if @answer.index is @library["sc#{i}"].index
-					@library["sc#{i}"].currentFrame = 1
-					@answer.visible = off
-					createjs.Sound.play 'good'
-					@library['score'].plusOne()
-					@finishEvaluation()
+				if not @isArray @answer.index 
+					if @answer.index is @library["sc#{i}"].index
+						@library["sc#{i}"].currentFrame = 1
+						@answer.visible = off
+						createjs.Sound.play 'good'
+						if not @library["sc#{i}"].failed
+							@library['score'].plusOne()
+						@finishEvaluation()
+					else
+						@library["sc#{i}"].failed = on
+						@warning()
+						@answer.returnToPlace()
 				else
-					@warning()
-					@answer.returnToPlace()
+					hit = false
+					for ans in @answer.index
+						if ans is @library["sc#{i}"].index
+							hit = true	
+					if hit
+						@library["sc#{i}"].currentFrame = 1
+						@answer.visible = off
+						createjs.Sound.play 'good'
+						if not @library["sc#{i}"].failed
+							@library['score'].plusOne()
+						@finishEvaluation()
+					else
+						@library["sc#{i}"].failed = on
+						@warning()
+						@answer.returnToPlace()
 			else
 				@answer.returnToPlace()
 	finishEvaluation: =>
@@ -130,13 +160,14 @@ class U8A5 extends Oda
 		if @scene < 2
 			@library['btnnext'].visible = on
 			@library['btnnext'].alpha = 1
-			@library['btnnext'].y = 520
+			@library['btnnext'].y = 560
 			TweenLite.from @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
 			@library['btnnext'].addEventListener 'click', @nextEvaluation
 		else
 			@nextEvaluation()
 	nextEvaluation: =>
 		@index++
+		createjs.Sound.stop()
 		if @index < @game.length
 			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
 			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
@@ -146,9 +177,19 @@ class U8A5 extends Oda
 				@library["t#{i}"].onInitEvaluation()
 				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
-			setTimeout @finish, 2 * 1000
-	finish: =>
-		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
+			@finalscene = 0
+			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
+			setTimeout @storyTale, 2 * 1000
+	storyTale: =>
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
+		if @finalscene < @game.length
+			@setCuentoFinal @finalscene + 1
+			s = createjs.Sound.play "scene#{@scene}"
+			s.addEventListener 'complete', @storyTale
+			TweenLite.to @library['cuento'], 1, {alpha:1, y:@library['cuento'].y + 10}
+			@finalscene++
+		else
+			@finish()
+	finish: =>
 		super
 	window.U8A5 = U8A5
