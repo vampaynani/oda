@@ -49,12 +49,12 @@ class U7A3 extends Oda
 		]
 		@positions = 
 			summertexts:[
-				{t:'1.They are hiking mountains', l:'summerS'}
-				{t:'2.They are hiking mountains', l:'summerU'}
-				{t:'3.They are hiking mountains', l:'summerM'}
-				{t:'4.They are hiking mountains', l:'summerM2'}
-				{t:'5.They are hiking mountains', l:'summerE'}
-				{t:'6.They are hiking mountains', l:'summerR'}
+				{t:'1. They are horse backriding.', l:'summerS'}
+				{t:'2. She is fishing at the lake.', l:'summerU'}
+				{t:'3. He is canoeing in the lake.', l:'summerM'}
+				{t:'4. She is playing soccer.', l:'summerM2'}
+				{t:'5. He is resting in the cabin.', l:'summerE'}
+				{t:'6. They are hiking mountains.', l:'summerR'}
 			]
 			summerletras:[
 				{letra:'summerS', x:'366', y:'185'}
@@ -65,13 +65,13 @@ class U7A3 extends Oda
 				{letra:'summerR', x:'211', y:'98'}
 			]
 			greentexts:[
-				{t:'1.They are hiking mountains', l:'greenB'}
-				{t:'2.They are hiking mountains', l:'greenE'}
-				{t:'3.They are hiking mountains', l:'greenG'}
-				{t:'4.They are hiking mountains', l:'greenR'}
-				{t:'5.They are hiking mountains', l:'greenE2'}
-				{t:'6.They are hiking mountains', l:'greenE3'}
-				{t:'7.They are hiking mountains', l:'greenN'}
+				{t:'1. She is planting trees.', l:'greenB'}
+				{t:'2. He is protecting endangered animals.', l:'greenE'}
+				{t:'3. She is riding her bike.', l:'greenG'}
+				{t:'4. He is conserving water.', l:'greenR'}
+				{t:'5. She is picking up trash.', l:'greenE2'}
+				{t:'6. She is turning off lights.', l:'greenE3'}
+				{t:'7. He is recycling bottles and cans.', l:'greenN'}
 			]
 			greenletras:[
 				{letra:'greenB', x:'187', y:'119'} # 36 y 20
@@ -80,7 +80,7 @@ class U7A3 extends Oda
 				{letra:'greenR', x:'428', y:'178'}
 				{letra:'greenE2', x:'314', y:'220'}
 				{letra:'greenE3', x:'470', y:'119'}
-				{letra:'greenN', x:'418', y:'245'}
+				{letra:'greenN', x:'413', y:'245'}
 			]
 
 		

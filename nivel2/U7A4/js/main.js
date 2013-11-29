@@ -92,25 +92,25 @@
           }, {
             answers: [
               {
-                text: "aI always watch TV.",
+                text: "I always eat cereal.",
                 respuestas: false
               }, {
-                text: "aI sometimes take a shower.",
+                text: "I always brush my teeth.",
                 respuestas: true
               }, {
-                text: "aI sometimes read.",
+                text: "I sometimes go to bed late.",
                 respuestas: true
               }, {
-                text: "aI never ride my bike.",
+                text: "I never go horseback riding.",
                 respuestas: false
               }, {
-                text: "aI never take a bath.",
+                text: "I always play soccer.",
+                respuestas: false
+              }, {
+                text: "I sometimes watch TV.",
                 respuestas: true
               }, {
-                text: "aI always floss my teeth.",
-                respuestas: true
-              }, {
-                text: "aI sometimes play baseball on Wednesday.",
+                text: "I sometimes eat eggs for breakfast.",
                 respuestas: false
               }
             ]

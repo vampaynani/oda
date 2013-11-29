@@ -37,10 +37,10 @@ class U6A5 extends Oda
 		@game = [
 			{
 				texts:[
-					{idx:3, t:"Outside it's snowing hard!"}
-					{idx:4, t:'She is watching the weather report on TV'}
-					{idx:1, t:'He is drinking hot chocolate and petting his dog, Bo.'}
-					{idx:2, t:"Its windy and cold, but it isn't snowing"}
+					{idx:4, t:"Phil and his mom call out for Bo."}
+					{idx:3, t:'Suddenly, Bo starts barking and pulling hard.'}
+					{idx:1, t:"Everyone is worried. Where's Jack?."}
+					{idx:2, t:"Phil's mom puts on her coat and boats."}
 				]
 				positions:[
 					{x:'101', y:'160'}
@@ -51,10 +51,10 @@ class U6A5 extends Oda
 			}
 			{
 				texts:[
-					{idx:8, t:"Phil and Bo sit in the living room."}
-					{idx:7, t:'He puts on his snow pants, sweater, coat and boats.'}
-					{idx:5, t:'Phil jumps up and down and claps his hands.'}
-					{idx:6, t:"Phil calls his friend Jack on the phone"}
+					{idx:8, t:"He wants to interview Phil and his mom about Jack's amazing rescue."}
+					{idx:7, t:'They take Jack to the hospital in an ambulance.'}
+					{idx:6, t:'He is sitting in the snow next to Jack!'}
+					{idx:5, t:"Phil and his mom follow the sound of Bo barking."}
 				]
 				positions:[
 					{x:'101', y:'160'}

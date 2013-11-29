@@ -144,22 +144,22 @@
       this.positions = {
         summertexts: [
           {
-            t: '1.They are hiking mountains',
+            t: '1. They are horse backriding.',
             l: 'summerS'
           }, {
-            t: '2.They are hiking mountains',
+            t: '2. She is fishing at the lake.',
             l: 'summerU'
           }, {
-            t: '3.They are hiking mountains',
+            t: '3. He is canoeing in the lake.',
             l: 'summerM'
           }, {
-            t: '4.They are hiking mountains',
+            t: '4. She is playing soccer.',
             l: 'summerM2'
           }, {
-            t: '5.They are hiking mountains',
+            t: '5. He is resting in the cabin.',
             l: 'summerE'
           }, {
-            t: '6.They are hiking mountains',
+            t: '6. They are hiking mountains.',
             l: 'summerR'
           }
         ],
@@ -192,25 +192,25 @@
         ],
         greentexts: [
           {
-            t: '1.They are hiking mountains',
+            t: '1. She is planting trees.',
             l: 'greenB'
           }, {
-            t: '2.They are hiking mountains',
+            t: '2. He is protecting endangered animals.',
             l: 'greenE'
           }, {
-            t: '3.They are hiking mountains',
+            t: '3. She is riding her bike.',
             l: 'greenG'
           }, {
-            t: '4.They are hiking mountains',
+            t: '4. He is conserving water.',
             l: 'greenR'
           }, {
-            t: '5.They are hiking mountains',
+            t: '5. She is picking up trash.',
             l: 'greenE2'
           }, {
-            t: '6.They are hiking mountains',
+            t: '6. She is turning off lights.',
             l: 'greenE3'
           }, {
-            t: '7.They are hiking mountains',
+            t: '7. He is recycling bottles and cans.',
             l: 'greenN'
           }
         ],
@@ -241,7 +241,7 @@
             y: '119'
           }, {
             letra: 'greenN',
-            x: '418',
+            x: '413',
             y: '245'
           }
         ]
