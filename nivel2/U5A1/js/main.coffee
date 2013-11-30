@@ -163,7 +163,7 @@ class U5A1 extends Oda
 					c.addChild v
 				else
 					hit = new createjs.Shape()
-					hit.graphics.beginFill('rgba(0,0,0,0.1)').drawRect(-25, -25, 90, 55)
+					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55)
 					c.addChild hit
 			else if calendar is 2
 				if i in [6, 8, 10, 12]
@@ -171,7 +171,7 @@ class U5A1 extends Oda
 					c.addChild v
 				else
 					hit = new createjs.Shape()
-					hit.graphics.beginFill('rgba(0,0,0,0.1)').drawRect(-25, -25, 90, 55)
+					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55)
 					c.addChild hit
 			cal.addChild c
 			@addToLibrary c

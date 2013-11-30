@@ -45,12 +45,14 @@ class U6A2 extends Oda
 					{i:'restaurant', x:58, y:243, w:95, h:95}
 				]
 				[
-					[{x:10,y:12, w:20, h:20},{x:10,y:12, w:20, h:20},{x:10,y:12, w:20, h:20}]
-					['bus', 'museum', 'school']
+					{i:'bus', x:58, y:92, w:95, h:95}
+					{i:'museum', x:309, y:105, w:180, h:95}
+					{i:'school', x:150, y:-42, w:95, h:95}
 				]
 				[
-					[{x:10,y:12, w:20, h:20},{x:10,y:12, w:20, h:20},{x:10,y:12, w:20, h:20}]
-					['library', 'cafe', 'pet']
+					{i:'library', x:-42, y:102, w:95, h:95}
+					{i:'cafe', x:65, y:-37, w:95, h:95}
+					{i:'pet', x:400, y:-37, w:95, h:95}
 				]
 			]
 		super null, manifest, sounds
@@ -59,7 +61,7 @@ class U6A2 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'btnRepeat', 'repeatbtn',  stageSize.w / 2, 570, 'mc'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 3, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
 		@setMap( 1 ).introEvaluation()
 	setMap: (map) ->
 		mapa = new createjs.Container()
@@ -76,7 +78,7 @@ class U6A2 extends Oda
 		for drop in @current
 			s = new createjs.Shape()
 			s.name = "#{drop.i}"
-			s.graphics.beginFill('rgba(250,250,250,0.1)').drawRect(0, 0, drop.w, drop.h)
+			s.graphics.beginFill('rgba(0,0,0,0.1)').drawRect(0, 0, drop.w, drop.h)
 			s.x = drop.x
 			s.y = drop.y
 			drops.push s
@@ -121,31 +123,29 @@ class U6A2 extends Oda
 	finishEvaluation: =>
 		@mindex++
 		@library.score.plusOne()
+		createjs.Sound.stop()
 		if @mindex < @current.length
-			createjs.Sound.stop()
 			createjs.Sound.play "s#{@current[@mindex].i}"
 		else
 			@mindex = 0
 			setTimeout @nextEvaluation, 2 * 1000
+			@library.btnRepeat.removeEventListener 'click', @repeatSound
 	nextEvaluation: =>
-		###
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		TweenLite.to @library.mapa, 1, {alpha: 0, y: @library.mapa.y + 20}
+		if @index < @game.length
+			@setMap @index + 1
+			createjs.Sound.play "s#{@current[@mindex].i}"
+			@library.btnRepeat.addEventListener 'click', @repeatSound
+			for i in [1..3] by 1
+				@library["d#{i}"].initDragListener()
 		else
-		###
-		@finish()
+			@finish()
 	repeatSound: =>
 		createjs.Sound.stop()
 		createjs.Sound.play "s#{@current[@mindex].i}"
 	finish: ->
 		createjs.Sound.stop()
 		TweenLite.to @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 10}
-		TweenLite.to @library.mapa, 1, {alpha: 0, y: @library.mapa.y + 20}
 		super
 	window.U6A2 = U6A2

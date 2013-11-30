@@ -410,7 +410,7 @@
             c.addChild(v);
           } else {
             hit = new createjs.Shape();
-            hit.graphics.beginFill('rgba(0,0,0,0.1)').drawRect(-25, -25, 90, 55);
+            hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
             c.addChild(hit);
           }
         } else if (calendar === 2) {
@@ -419,7 +419,7 @@
             c.addChild(v);
           } else {
             hit = new createjs.Shape();
-            hit.graphics.beginFill('rgba(0,0,0,0.1)').drawRect(-25, -25, 90, 55);
+            hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
             c.addChild(hit);
           }
         }

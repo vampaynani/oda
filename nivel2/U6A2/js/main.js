@@ -142,43 +142,45 @@
             h: 95
           }
         ], [
-          [
-            {
-              x: 10,
-              y: 12,
-              w: 20,
-              h: 20
-            }, {
-              x: 10,
-              y: 12,
-              w: 20,
-              h: 20
-            }, {
-              x: 10,
-              y: 12,
-              w: 20,
-              h: 20
-            }
-          ], ['bus', 'museum', 'school']
+          {
+            i: 'bus',
+            x: 58,
+            y: 92,
+            w: 95,
+            h: 95
+          }, {
+            i: 'museum',
+            x: 309,
+            y: 105,
+            w: 180,
+            h: 95
+          }, {
+            i: 'school',
+            x: 150,
+            y: -42,
+            w: 95,
+            h: 95
+          }
         ], [
-          [
-            {
-              x: 10,
-              y: 12,
-              w: 20,
-              h: 20
-            }, {
-              x: 10,
-              y: 12,
-              w: 20,
-              h: 20
-            }, {
-              x: 10,
-              y: 12,
-              w: 20,
-              h: 20
-            }
-          ], ['library', 'cafe', 'pet']
+          {
+            i: 'library',
+            x: -42,
+            y: 102,
+            w: 95,
+            h: 95
+          }, {
+            i: 'cafe',
+            x: 65,
+            y: -37,
+            w: 95,
+            h: 95
+          }, {
+            i: 'pet',
+            x: 400,
+            y: -37,
+            w: 95,
+            h: 95
+          }
         ]
       ];
       U6A2.__super__.constructor.call(this, null, manifest, sounds);
@@ -189,7 +191,7 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.insertBitmap('btnRepeat', 'repeatbtn', stageSize.w / 2, 570, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 3, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 9, 0));
       return this.setMap(1).introEvaluation();
     };
 
@@ -209,7 +211,7 @@
         drop = _ref[_i];
         s = new createjs.Shape();
         s.name = "" + drop.i;
-        s.graphics.beginFill('rgba(250,250,250,0.1)').drawRect(0, 0, drop.w, drop.h);
+        s.graphics.beginFill('rgba(0,0,0,0.1)').drawRect(0, 0, drop.w, drop.h);
         s.x = drop.x;
         s.y = drop.y;
         drops.push(s);
@@ -285,29 +287,35 @@
     U6A2.prototype.finishEvaluation = function() {
       this.mindex++;
       this.library.score.plusOne();
+      createjs.Sound.stop();
       if (this.mindex < this.current.length) {
-        createjs.Sound.stop();
         return createjs.Sound.play("s" + this.current[this.mindex].i);
       } else {
         this.mindex = 0;
-        return setTimeout(this.nextEvaluation, 2 * 1000);
+        setTimeout(this.nextEvaluation, 2 * 1000);
+        return this.library.btnRepeat.removeEventListener('click', this.repeatSound);
       }
     };
 
     U6A2.prototype.nextEvaluation = function() {
-      /*
-      		@index++
-      		if @index < @answers.length
-      			@library['score'].updateCount( @index )
-      			@library['characters'].alpha = 1
-      			@library['characters'].y = stageSize.h - 180
-      			@library['characters'].currentFrame = @answers[@index].id
-      			createjs.Sound.play @answers[@index].sound
-      			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
-      		else
-      */
-
-      return this.finish();
+      var i, _i, _results;
+      this.index++;
+      TweenLite.to(this.library.mapa, 1, {
+        alpha: 0,
+        y: this.library.mapa.y + 20
+      });
+      if (this.index < this.game.length) {
+        this.setMap(this.index + 1);
+        createjs.Sound.play("s" + this.current[this.mindex].i);
+        this.library.btnRepeat.addEventListener('click', this.repeatSound);
+        _results = [];
+        for (i = _i = 1; _i <= 3; i = _i += 1) {
+          _results.push(this.library["d" + i].initDragListener());
+        }
+        return _results;
+      } else {
+        return this.finish();
+      }
     };
 
     U6A2.prototype.repeatSound = function() {
@@ -320,10 +328,6 @@
       TweenLite.to(this.library.btnRepeat, 1, {
         alpha: 0,
         y: this.library.btnRepeat.y + 10
-      });
-      TweenLite.to(this.library.mapa, 1, {
-        alpha: 0,
-        y: this.library.mapa.y + 20
       });
       return U6A2.__super__.finish.apply(this, arguments);
     };
