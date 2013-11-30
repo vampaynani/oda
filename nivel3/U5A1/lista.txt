@@ -1,0 +1,6 @@
+C:\xampp\htdocs\oda\nivel3\U5A1\1610.png
+C:\xampp\htdocs\oda\nivel3\U5A1\1940.png
+C:\xampp\htdocs\oda\nivel3\U5A1\btn_1610.png
+C:\xampp\htdocs\oda\nivel3\U5A1\btn_1940.png
+C:\xampp\htdocs\oda\nivel3\U5A1\btn_start.png
+C:\xampp\htdocs\oda\nivel3\U5A1\lista.txt
