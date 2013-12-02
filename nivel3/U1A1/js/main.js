@@ -100,41 +100,50 @@
           id: 'boing'
         }
       ];
-      this.answers = [
-        {
-          id: 'animals',
-          a: false
-        }, {
-          id: 'art',
-          a: false
-        }, {
-          id: 'cellphone',
-          a: false
-        }, {
-          id: 'drink',
-          a: false
-        }, {
-          id: 'fish',
-          a: false
-        }, {
-          id: 'line',
-          a: false
-        }, {
-          id: 'pictures',
-          a: false
-        }, {
-          id: 'run',
-          a: false
-        }, {
-          id: 'trash',
-          a: false
-        }
-      ];
+      this.game = {
+        answers: [
+          {
+            id: 'animals',
+            a: false
+          }, {
+            id: 'art',
+            a: false
+          }, {
+            id: 'cellphone',
+            a: false
+          }, {
+            id: 'drink',
+            a: false
+          }, {
+            id: 'fish',
+            a: false
+          }, {
+            id: 'line',
+            a: false
+          }, {
+            id: 'pictures',
+            a: false
+          }, {
+            id: 'run',
+            a: false
+          }, {
+            id: 'trash',
+            a: false
+          }
+        ]
+      };
       U1A1.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U1A1.prototype.setStage = function() {
+      var answer, _i, _len, _ref;
       U1A1.__super__.setStage.apply(this, arguments);
+      this.answers = this.game.answers.slice(0);
+      _ref = this.answers;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        answer = _ref[_i];
+        answer.a = false;
+      }
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.insertBitmap('teacher', 'teacher', stageSize.w / 2, 124, 'tc');
@@ -161,7 +170,7 @@
         run: 7,
         trash: 8
       }, 520, 452, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 11, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.introEvaluation();
     };
 
@@ -194,13 +203,7 @@
     };
 
     U1A1.prototype.initEvaluation = function(e) {
-      var answer, _i, _len, _ref;
       U1A1.__super__.initEvaluation.apply(this, arguments);
-      _ref = this.answers;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        answer = _ref[_i];
-        answer.a = false;
-      }
       this.showPhrase();
       this.library['choose1'].addEventListener('click', this.evaluateAnswer);
       this.library['choose2'].addEventListener('click', this.evaluateAnswer);
@@ -216,6 +219,8 @@
         });
         selection[0].a = true;
         createjs.Sound.play('good');
+        this.library['choose1'].removeEventListener('click', this.evaluateAnswer);
+        this.library['choose2'].removeEventListener('click', this.evaluateAnswer);
         return setTimeout(this.finishEvaluation, 1 * 1000);
       } else {
         TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
@@ -259,9 +264,11 @@
         return answer.id !== _this.phrase.id;
       });
       fake = Math.floor(Math.random() * others.length);
-      this.library['choose' + rand].gotoAndStop(this.phrase.id);
-      this.library['choose' + other].gotoAndStop(others[fake].id);
-      createjs.Sound.play(this.phrase.id);
+      this.library["choose" + rand].gotoAndStop(this.phrase.id);
+      this.library["choose" + other].gotoAndStop(others[fake].id);
+      createjs.Sound.play("s" + this.phrase.id);
+      this.library['choose1'].addEventListener('click', this.evaluateAnswer);
+      this.library['choose2'].addEventListener('click', this.evaluateAnswer);
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 1,
         scaleX: 1,
@@ -280,7 +287,8 @@
     };
 
     U1A1.prototype.repeat = function(e) {
-      return createjs.Sound.play(this.answers[this.index].id);
+      createjs.Sound.stop();
+      return createjs.Sound.play("s" + this.phrase.id);
     };
 
     U1A1.prototype.shuffle = function(a) {
@@ -309,6 +317,16 @@
     };
 
     U1A1.prototype.finish = function() {
+      TweenLite.to(this.library['teacher'], 1, {
+        alpha: 0,
+        y: this.library['teacher'].y + 50,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['repeat'], 1, {
+        alpha: 0,
+        y: this.library['repeat'].y + 50,
+        delay: 0.1
+      });
       return U1A1.__super__.finish.apply(this, arguments);
     };
 

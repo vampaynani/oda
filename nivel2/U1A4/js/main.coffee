@@ -62,7 +62,7 @@ class U1A4 extends Oda
 		@insertBitmap 'repeat', 'repeat', 441, 210
 		@insertSprite 'choose1', ['arrive','quiet','bus','eat','aud','run','cafe','library','movies','trash','walk'], {arrive:0, quiet:1, bus:2, eat:3, aud:4, run:5, cafe:6, library:7, movies:8, trash:9, walk:10}, 270, 452, 'mc'
 		@insertSprite 'choose2', ['arrive','quiet','bus','eat','aud','run','cafe','library','movies','trash','walk'], {arrive:0, quiet:1, bus:2, eat:3, aud:4, run:5, cafe:6, library:7, movies:8, trash:9, walk:10}, 591, 452, 'mc'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 11, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@introEvaluation()
 	introEvaluation: ->
 		super
@@ -86,6 +86,8 @@ class U1A4 extends Oda
 			selection = @answers.where id:@phrase.id
 			selection[0].a = on
 			createjs.Sound.play 'good'
+			@library['choose1'].removeEventListener 'click', @evaluateAnswer
+			@library['choose2'].removeEventListener 'click', @evaluateAnswer
 			setTimeout @finishEvaluation, 1 * 1000
 		else
 			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @showPhrase}
@@ -108,6 +110,8 @@ class U1A4 extends Oda
 		fake = Math.floor Math.random() * others.length
 		@library["choose#{rand}"].gotoAndStop @phrase.id
 		@library["choose#{other}"].gotoAndStop others[fake].id
+		@library['choose1'].addEventListener 'click', @evaluateAnswer
+		@library['choose2'].addEventListener 'click', @evaluateAnswer
 		createjs.Sound.play "s#{@phrase.id}"
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 1, scaleX: 1, scaleY: 1, ease:Elastic.easeOut}
 	getPhrase: ->

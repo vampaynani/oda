@@ -198,7 +198,7 @@
         trash: 9,
         walk: 10
       }, 591, 452, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 11, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.introEvaluation();
     };
 
@@ -247,6 +247,8 @@
         });
         selection[0].a = true;
         createjs.Sound.play('good');
+        this.library['choose1'].removeEventListener('click', this.evaluateAnswer);
+        this.library['choose2'].removeEventListener('click', this.evaluateAnswer);
         return setTimeout(this.finishEvaluation, 1 * 1000);
       } else {
         TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
@@ -292,6 +294,8 @@
       fake = Math.floor(Math.random() * others.length);
       this.library["choose" + rand].gotoAndStop(this.phrase.id);
       this.library["choose" + other].gotoAndStop(others[fake].id);
+      this.library['choose1'].addEventListener('click', this.evaluateAnswer);
+      this.library['choose2'].addEventListener('click', this.evaluateAnswer);
       createjs.Sound.play("s" + this.phrase.id);
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 1,

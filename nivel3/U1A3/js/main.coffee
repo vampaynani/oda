@@ -8,76 +8,122 @@ class U1A3 extends Oda
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
 			{id: 'playagain', src:'play_again.png'}
 			{id: 'startgame', src:'start_game.png'}
- 			{id:'btnfalse' , src:'btn_false.png'}
-			{id:'btntrue' , src:'btn_true.png'}
-			{id:'aqLabelAllison' , src:'aquarium/label_Allison.png'}
-			{id:'aqLabelCarl' , src:'aquarium/label_Carl.png'}
-			{id:'aqLabelDana' , src:'aquarium/label_Dana.png'}
-			{id:'aqLabelDave' , src:'aquarium/label_Dave.png'}
-			{id:'aqLabelDoris' , src:'aquarium/label_Doris.png'}
-			{id:'aqLabelEmma' , src:'aquarium/label_Emma.png'}
-			{id:'aqLabelJake' , src:'aquarium/label_Jake.png'}
-			{id:'aqLabelJohn' , src:'aquarium/label_John.png'}
-			{id:'aqLabelMitch' , src:'aquarium/label_Mitch.png'}
-			{id:'aqLabelStella' , src:'aquarium/label_Stella.png'}
-			{id:'aqPropbg' , src:'aquarium/prop_bg.png'}
-			{id:'smLabelAva' , src:'space_museum/label_Ava.png'}
-			{id:'smLabelJoshAndDiana' , src:'space_museum/label_JoshAndDiana.png'}
-			{id:'smLabelKatie' , src:'space_museum/label_Katie.png'}
-			{id:'smLabelKyle' , src:'space_museum/label_Kyle.png'}
-			{id:'smLabelLindsey' , src:'space_museum/label_Lindsey.png'}
-			{id:'smLabelPhilAndArthur' , src:'space_museum/label_PhilAndArthur.png'}
-			{id:'smLabelSpot' , src:'space_museum/label_Spot.png'}
-			{id:'smLabelZoe' , src:'space_museum/label_Zoe.png'}
-			{id:'smPropbg' , src:'space_museum/prop_bg.png'}
+ 			{id:'btnFalse' , src:'btn_false.png'}
+			{id:'btnTrue' , src:'btn_true.png'}
+			{id:'lugar1' , src:'aquarium.png'}
+			{id:'lugar2' , src:'museum.png'}
 
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/good.mp3', id:'good'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@answers = [	
-		]
-		@personaje = 
-			aquarium:[
-				{id:'aqLabelAllison', x:'356', y:'162'}
-				{id:'aqLabelCarl', x:'487', y:'202'}
-				{id:'aqLabelDana', x:'59', y:'333'}
-				{id:'aqLabelDave', x:'312', y:'97'}
-				{id:'aqLabelDoris', x:'416', y:'359'}
-				{id:'aqLabelEmma', x:'521', y:'254'}
-				{id:'aqLabelJake', x:'170', y:'364'}
-				{id:'aqLabelJohn', x:'179', y:'172'}
-				{id:'aqLabelMitch', x:'337', y:'315'}
-				{id:'aqLabelStella', x:'280', y:'364'}
-			]
-			museum:[
-				{id:'smLabelAva' , x:'251', y:'89'}
-				{id:'smLabelJoshAndDiana', x:'400', y:'270'}
-				{id:'smLabelKatie', x:'183', y:'192'}
-				{id:'smLabelKyle', x:'124', y:'315'}
-				{id:'smLabelLindsey', x:'118', y:'91'}
-				{id:'smLabelPhilAndArthur', x:'330', y:'397'}
-				{id:'smLabelSpot', x:'294', y:'199'}
-				{id:'smLabelZoe', x:'438', y:'140'}
-			]
-		@preguntas = 
-			aquarium: [
-				{statement:'frase pregunta aquario'}
-			]
-			museum: [
-				{statement:'frase pregunta museo'}
+		@game =
+			scenes : [
+				{	
+					answers: [
+						{text:"Dana and Jake aren't watching a movie.", respuestas:off}
+						{text:"Dave and John are swimming with the dolphins.", respuestas:on}
+						{text:"Emma and Doris aren't feeding the elephants.", respuestas:on}
+						{text:"Alison isn't taking a nap.", respuestas:off}
+						{text:"Dave and John aren't feeding the dolphins.", respuestas:on}
+						{text:"Alison is eating a hamburger.", respuestas:off}
+						{text:"Carl is taking a photograph.", respuestas:off}
+						{text:"Mitch is eating a hamburger.", respuestas:on}
+						{text:"Mitch and Stella are eating a snack.", respuestas:on}
+						{text:"Stella isn't eating a banana.", respuestas:on}
+						{text:"Emma and Doris aren't feeding the turtles.", respuestas:off}
+						{text:"Carl is talking on his cell phone.", respuestas:on}
+					]
+				}
+				{
+					answers: [
+						{text:"Spot is taking a picture.", respuestas:off}
+						{text:"Diana is explaining the exhibit.", respuestas:on}
+						{text:"Kyle is buying a snack.", respuestas:off}
+						{text:"Katie isn't sitting down.", respuestas:on}
+						{text:"Spot is posing for a picture.", respuestas:on}
+						{text:"Ava isn't posing for a picture.", respuestas:on}
+						{text:"Ava isn't listening to the guide.", respuestas:on}
+						{text:"Katie isn't taking a nap.", respuestas:off}
+						{text:"Zoe isn't watching the performance.", respuestas:off}
+						{text:"Phil and Arthur aren't eating popcorn.", respuestas:on}
+						{text:"Diana is listening to the guide.", respuestas:off}
+						{text:"Lindsey is looking for souvenirs.", respuestas:on}
+					]
+				}
 			]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@escena = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
-		@insertBitmap 'btnfalse', 'btnfalse', 457, 541
-		@insertBitmap 'btntrue', 'btntrue', 330, 541
+		#@insertBitmap 'btnfalse', 'btnfalse', 457, 541
+		#@insertBitmap 'btntrue', 'btntrue', 330, 541
 	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setAquarium().setMuseum().introEvaluation()
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 14, 0
+		@setScene(1).setClick().introEvaluation()
+	setScene: (scene) ->
+		@scene = @game.scenes[scene - 1]
+		@answers = @shuffleNoRepeat @scene.answers, 7
+		@insertBitmap 'boy', "lugar#{scene}",  stageSize.w / 2, 490, 'bc'
+
+		@
+	setClick:  ->
+		@insertBitmap 'btnfalse', 'btnFalse',407, 571
+		@insertBitmap 'btntrue', 'btnTrue',  280, 571
+		@library.btnfalse.index = off
+		@library.btntrue.index = on
+		@library.btntrue.addEventListener 'click', @evaluateAnswer
+		@library.btnfalse.addEventListener 'click', @evaluateAnswer
+		@
+	introEvaluation: ->
+		super
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0}
+		TweenLite.from @library.boy, 1, {alpha: 0, y: @library.boy.y - 10, ease: Quart.easeOut}
+		TweenLite.from @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 10, ease: Quart.easeOut, delay: 0.5}
+		TweenLite.from @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut, delay:0.5, onComplete: @playInstructions, onCompleteParams: [@]}
+	initEvaluation: (e) =>
+		super
+		@insertText 'frases', @answers[@index].text, '20px Quicksand', '#333', stageSize.w / 2, 520, 'center'
+		TweenLite.from @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
+	evaluateAnswer: (e) =>
+		@answer = e.target
+		if @answer.index is @answers[@index].respuestas
+			@library.score.plusOne()
+			createjs.Sound.play 'good'
+		else
+			@warning()
+		@finishEvaluation()	
+	finishEvaluation: =>
+		TweenLite.to @library.frases, 0.5, {alpha: 0, y: @library.frases.y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
+	nextEvaluation: =>
+		@index++
+		if @index < @answers.length
+			@library.frases.text = @answers[@index].text
+			TweenLite.to @library.frases, 0.5, {alpha: 1, y: @library.frases.y + 20, ease: Back.easeOut}
+		else
+			if @escena is 1
+				@index = 0
+				@escena = 2
+				TweenLite.to @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 10, ease: Quart.easeOut}
+				TweenLite.to @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut}
+				TweenLite.to @library.boy, 1, {alpha: 0, y: @library.boy.y - 10, ease: Quart.easeOut}
+				TweenLite.to @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
+				@setScene(2).setClick().initEvaluation()
+			else
+				@finish()
+	finish: ->
+		super
+		TweenLite.to @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 10, ease: Quart.easeOut}
+		TweenLite.to @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut}
+		TweenLite.to @library.boy, 1, {alpha: 0, y: @library.boy.y - 10, ease: Quart.easeOut}
+		TweenLite.to @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
+	###	
 	setAquarium:  ->
 		aquarium = new createjs.Container()
 		aquarium.x = 120
@@ -126,7 +172,7 @@ class U1A3 extends Oda
 		@
 	introEvaluation: ->
 		super
-		###
+		
 		for i in [1..6] by 1
 			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
 
@@ -137,7 +183,7 @@ class U1A3 extends Oda
 		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
 		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
 		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		###
+		
 	initEvaluation: (e) =>
 		super
 		@library['characters'].currentFrame = @answers[@index].id
@@ -175,4 +221,5 @@ class U1A3 extends Oda
 		super
 		for i in [1..6] by 1
 			@library['name'+i].blink off
+	###
 	window.U1A3 = U1A3

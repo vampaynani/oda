@@ -31,28 +31,31 @@ class U1A1 extends Oda
 			{src:'sounds/boing.mp3', id:'boing'}
 		    ##{src:'sounds/good.mp3', id:'good'}
 		]
-		@answers = [
-			{id:'animals', a: false}
-			{id:'art', a: false}
-			{id:'cellphone', a: false}
-			{id:'drink', a: false}
-			{id:'fish', a: false}
-			{id:'line', a: false}
-			{id:'pictures', a: false}
-			{id:'run', a: false}
-			{id:'trash', a: false}
-		]
+		@game = 
+			answers: [
+				{id:'animals', a: false}
+				{id:'art', a: false}
+				{id:'cellphone', a: false}
+				{id:'drink', a: false}
+				{id:'fish', a: false}
+				{id:'line', a: false}
+				{id:'pictures', a: false}
+				{id:'run', a: false}
+				{id:'trash', a: false}
+			]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@answers = @game.answers[..]
+		for answer in @answers
+			answer.a = false
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'teacher', 'teacher', stageSize.w / 2, 124, 'tc'
 		@insertBitmap 'repeat', 'repeat', stageSize.w / 2, 310, 'tc'
 		@insertSprite 'choose1', ['animals1', 'art1', 'cellphone1', 'drink1', 'fish1', 'line1', 'pictures1', 'run1', 'trash1'], {animals:0, art:1, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 285, 452, 'mc'
 		@insertSprite 'choose2', ['animals2', 'art2', 'cellphone2', 'drink2', 'fish2', 'line2', 'pictures2', 'run2', 'trash2'], {animals:0, art:2, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 520, 452, 'mc'
-		
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 11, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@introEvaluation()
 	introEvaluation: ->
 		super
@@ -66,8 +69,6 @@ class U1A1 extends Oda
 		TweenLite.from @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		for answer in @answers
-			answer.a = off
 		@showPhrase()
 		@library['choose1'].addEventListener 'click', @evaluateAnswer
 		@library['choose2'].addEventListener 'click', @evaluateAnswer
@@ -78,6 +79,8 @@ class U1A1 extends Oda
 			selection = @answers.where id:@phrase.id
 			selection[0].a = on
 			createjs.Sound.play 'good'
+			@library['choose1'].removeEventListener 'click', @evaluateAnswer
+			@library['choose2'].removeEventListener 'click', @evaluateAnswer
 			setTimeout @finishEvaluation, 1 * 1000
 		else
 			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @showPhrase}
@@ -98,9 +101,11 @@ class U1A1 extends Oda
 		others = @answers.filter (answer) =>
 			answer.id isnt @phrase.id
 		fake = Math.floor Math.random() * others.length
-		@library['choose' + rand].gotoAndStop @phrase.id
-		@library['choose' + other].gotoAndStop others[fake].id
-		createjs.Sound.play @phrase.id
+		@library["choose#{rand}"].gotoAndStop @phrase.id
+		@library["choose#{other}"].gotoAndStop others[fake].id
+		createjs.Sound.play "s#{@phrase.id}"
+		@library['choose1'].addEventListener 'click', @evaluateAnswer
+		@library['choose2'].addEventListener 'click', @evaluateAnswer
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 1, scaleX: 1, scaleY: 1, ease:Elastic.easeOut}
 	getPhrase: ->
 		possible = @answers.filter (answer) ->
@@ -108,7 +113,8 @@ class U1A1 extends Oda
 		id = Math.floor Math.random() * possible.length
 		possible[id]
 	repeat: (e) =>
-		createjs.Sound.play @answers[@index].id
+		createjs.Sound.stop()
+		createjs.Sound.play "s#{@phrase.id}"
 	shuffle: (a) ->
 		for i in [a.length..1]
 			j = Math.floor Math.random() * ( i + 1 )
@@ -118,5 +124,7 @@ class U1A1 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		TweenLite.to @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 50, delay: 0.1}
+		TweenLite.to @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 0.1}
 		super
 	window.U1A1 = U1A1
