@@ -187,101 +187,197 @@
           id: 'cal2'
         }
       ];
-      this.game = {
-        finales: [
-          {
-            x: 190,
-            y: 186
-          }, {
-            x: 294,
-            y: 200
-          }, {
-            x: 395,
-            y: 208
-          }, {
-            x: 200,
-            y: 248
-          }, {
-            x: 310,
-            y: 250
-          }, {
-            x: 397,
-            y: 263
-          }, {
-            x: 218,
-            y: 316
-          }, {
-            x: 332,
-            y: 314
-          }, {
-            x: 415,
-            y: 317
-          }, {
-            x: 216,
-            y: 380
-          }, {
-            x: 340,
-            y: 372
-          }, {
-            x: 456,
-            y: 370
-          }
-        ],
-        drags: [
-          {
-            x: '70',
-            y: '508'
-          }, {
-            x: '157',
-            y: '527'
-          }, {
-            x: '228',
-            y: '505'
-          }, {
-            x: '302',
-            y: '513'
-          }, {
-            x: '389',
-            y: '503'
-          }, {
-            x: '465',
-            y: '514'
-          }, {
-            x: '539',
-            y: '512'
-          }, {
-            x: '635',
-            y: '521'
-          }
-        ],
-        drops: [
-          {
-            id: 'cal1Dragble8',
-            tgt: 'cal1Final3'
-          }, {
-            id: 'cal1Dragble4',
-            tgt: 'cal1Final4'
-          }, {
-            id: 'cal1Dragble6',
-            tgt: 'cal1Final10'
-          }, {
-            id: 'cal1Dragble7',
-            tgt: 'cal1Final7'
-          }, {
-            id: 'cal1Dragble1',
-            tgt: 'cal1Final12'
-          }, {
-            id: 'cal1Dragble5',
-            tgt: 'cal1Final5'
-          }, {
-            id: 'cal1Dragble2',
-            tgt: 'cal1Final1'
-          }, {
-            id: 'cal1Dragble3',
-            tgt: 'cal1Final8'
-          }
-        ]
-      };
+      this.game = [
+        {
+          finales: [
+            {
+              x: 180,
+              y: 193
+            }, {
+              x: 294,
+              y: 200
+            }, {
+              x: 388,
+              y: 210
+            }, {
+              x: 195,
+              y: 255
+            }, {
+              x: 306,
+              y: 257
+            }, {
+              x: 397,
+              y: 263
+            }, {
+              x: 207,
+              y: 323
+            }, {
+              x: 325,
+              y: 321
+            }, {
+              x: 415,
+              y: 317
+            }, {
+              x: 223,
+              y: 387
+            }, {
+              x: 340,
+              y: 372
+            }, {
+              x: 445,
+              y: 375
+            }
+          ],
+          drags: [
+            {
+              x: 70,
+              y: 508
+            }, {
+              x: 157,
+              y: 527
+            }, {
+              x: 228,
+              y: 505
+            }, {
+              x: 302,
+              y: 513
+            }, {
+              x: 389,
+              y: 503
+            }, {
+              x: 465,
+              y: 514
+            }, {
+              x: 539,
+              y: 512
+            }, {
+              x: 635,
+              y: 521
+            }
+          ],
+          drops: [
+            {
+              id: 'cal1Dragble2',
+              tgt: 'cal1Final1'
+            }, {
+              id: 'cal1Dragble8',
+              tgt: 'cal1Final3'
+            }, {
+              id: 'cal1Dragble4',
+              tgt: 'cal1Final4'
+            }, {
+              id: 'cal1Dragble5',
+              tgt: 'cal1Final5'
+            }, {
+              id: 'cal1Dragble7',
+              tgt: 'cal1Final7'
+            }, {
+              id: 'cal1Dragble3',
+              tgt: 'cal1Final8'
+            }, {
+              id: 'cal1Dragble6',
+              tgt: 'cal1Final10'
+            }, {
+              id: 'cal1Dragble1',
+              tgt: 'cal1Final12'
+            }
+          ]
+        }, {
+          finales: [
+            {
+              x: 181,
+              y: 193
+            }, {
+              x: 292,
+              y: 202
+            }, {
+              x: 388,
+              y: 212
+            }, {
+              x: 193,
+              y: 255
+            }, {
+              x: 308,
+              y: 259
+            }, {
+              x: 397,
+              y: 263
+            }, {
+              x: 209,
+              y: 320
+            }, {
+              x: 316,
+              y: 318
+            }, {
+              x: 424,
+              y: 317
+            }, {
+              x: 216,
+              y: 385
+            }, {
+              x: 342,
+              y: 383
+            }, {
+              x: 458,
+              y: 368
+            }
+          ],
+          drags: [
+            {
+              x: 70,
+              y: 508
+            }, {
+              x: 157,
+              y: 527
+            }, {
+              x: 228,
+              y: 505
+            }, {
+              x: 302,
+              y: 513
+            }, {
+              x: 349,
+              y: 503
+            }, {
+              x: 445,
+              y: 514
+            }, {
+              x: 539,
+              y: 512
+            }, {
+              x: 615,
+              y: 521
+            }
+          ],
+          drops: [
+            {
+              id: 'cal2Dragble3',
+              tgt: 'cal2Final1'
+            }, {
+              id: 'cal2Dragble7',
+              tgt: 'cal2Final2'
+            }, {
+              id: 'cal2Dragble6',
+              tgt: 'cal2Final3'
+            }, {
+              id: 'cal2Dragble5',
+              tgt: 'cal2Final4'
+            }, {
+              id: 'cal2Dragble8',
+              tgt: 'cal2Final5'
+            }, {
+              id: 'cal2Dragble1',
+              tgt: 'cal2Final7'
+            }, {
+              id: 'cal2Dragble2',
+              tgt: 'cal2Final9'
+            }, {
+              id: 'cal2Dragble4',
+              tgt: 'cal2Final11'
+            }
+          ]
+        }
+      ];
       U5A1.__super__.constructor.call(this, null, manifest, sounds);
     }
 
@@ -291,7 +387,7 @@
       this.insertBitmap('instructions', 'inst', 20, 95);
       this.insertBitmap('btnRepeat', 'btnRepeat', 598, 245);
       this.insertBitmap('btnFinished', 'btnFinished', 598, 292);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setCalendar(1).introEvaluation();
     };
 
@@ -304,52 +400,64 @@
       cal.y = 0;
       this.insertBitmap('propCalendar', 'propCalendar', 60, 128);
       for (i = _i = 1; _i <= 12; i = ++_i) {
-        hit = new createjs.Shape();
-        hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
         c = new createjs.Container();
         c.name = "cal" + calendar + "Final" + i;
-        c.x = this.game.finales[i - 1].x;
-        c.y = this.game.finales[i - 1].y;
-        v = this.createBitmap("", "cal" + calendar + "Final" + i, 0, 0);
+        c.x = this.game[calendar - 1].finales[i - 1].x;
+        c.y = this.game[calendar - 1].finales[i - 1].y;
         if (calendar === 1) {
-          if (i !== 2 && i !== 6 && i !== 9 && i !== 11) {
-            v.visible = false;
-            c.addChild(v, hit);
-          } else {
+          if (i === 2 || i === 6 || i === 9 || i === 11) {
+            v = this.createBitmap("", "cal" + calendar + "Final" + i, 0, 0);
             c.addChild(v);
+          } else {
+            hit = new createjs.Shape();
+            hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
+            c.addChild(hit);
+          }
+        } else if (calendar === 2) {
+          if (i === 6 || i === 8 || i === 10 || i === 12) {
+            v = this.createBitmap("", "cal" + calendar + "Final" + i, 0, 0);
+            c.addChild(v);
+          } else {
+            hit = new createjs.Shape();
+            hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
+            c.addChild(hit);
           }
         }
         cal.addChild(c);
         this.addToLibrary(c);
       }
       for (i = _j = 1; _j <= 8; i = ++_j) {
-        v = new Draggable("cal" + calendar + "Dragble" + i, this.preload.getResult("cal" + calendar + "Dragble" + i), i, this.game.drags[i - 1].x, this.game.drags[i - 1].y);
+        v = new Draggable("cal" + calendar + "Dragble" + i, this.preload.getResult("cal" + calendar + "Dragble" + i), "cal" + calendar + "Final" + i, this.game[calendar - 1].drags[i - 1].x, this.game[calendar - 1].drags[i - 1].y);
         v.onInitEvaluation();
         cal.addChild(v);
         this.addToLibrary(v);
       }
       this.addToMain(cal);
+      TweenLite.to(cal, 1, {
+        alpha: 1,
+        y: 0
+      });
       return this;
     };
 
     U5A1.prototype.introEvaluation = function() {
       U5A1.__super__.introEvaluation.apply(this, arguments);
-      TweenLite.from(this.library['header'], 1, {
-        y: -this.library['header'].height
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
       });
-      TweenLite.from(this.library['instructions'], 1, {
+      TweenLite.from(this.library.instructions, 1, {
         alpha: 0,
         x: 0,
         delay: 0.5
       });
-      TweenLite.from(this.library['btnRepeat'], 1, {
+      TweenLite.from(this.library.btnRepeat, 1, {
         alpha: 0,
-        y: this.library['btnRepeat'].y + 20,
+        y: this.library.btnRepeat.y + 20,
         delay: 0.5
       });
-      return TweenLite.from(this.library['btnFinished'], 1, {
+      return TweenLite.from(this.library.btnFinished, 1, {
         alpha: 0,
-        y: this.library['btnFinished'].y + 20,
+        y: this.library.btnFinished.y + 20,
         delay: 1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -362,28 +470,28 @@
       for (i = _i = 1; _i <= 8; i = ++_i) {
         this.library["cal" + this.calendar + "Dragble" + i].addEventListener('drop', this.evaluateDrop);
       }
-      this.library['btnRepeat'].addEventListener('click', this.repeatSound);
-      this.library['btnFinished'].addEventListener('click', this.evaluateAnswer);
+      this.library.btnRepeat.addEventListener('click', this.repeatSound);
+      this.library.btnFinished.addEventListener('click', this.evaluateAnswer);
       return createjs.Sound.play("cal" + this.calendar);
     };
 
     U5A1.prototype.evaluateDrop = function(e) {
-      var drop, dropped, pt, _i, _len, _ref;
+      var drop, dropped, pt, relation, v, _i, _len, _ref;
       this.answer = e.target;
       dropped = false;
-      _ref = this.game.drops;
+      _ref = this.game[this.calendar - 1].drops;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         drop = _ref[_i];
         pt = this.library[drop.tgt].globalToLocal(this.stage.mouseX, this.stage.mouseY);
         if (this.library[drop.tgt].hitTest(pt.x, pt.y)) {
-          if (drop.id === this.answer.name) {
-            dropped = true;
-            this.answer.visible = false;
-            this.library[drop.tgt].children[0].visible = true;
-          } else {
-            this.warning();
-            this.answer.returnToPlace();
-          }
+          dropped = true;
+          this.answer.visible = false;
+          relation = this.game[this.calendar - 1].drops.where({
+            id: this.answer.name
+          });
+          v = this.createBitmap(relation[0].id, relation[0].tgt, 22.5, 12.5);
+          this.setReg(v, v.width / 2, v.height / 2);
+          this.library[drop.tgt].addChild(v);
         }
       }
       if (!dropped) {
@@ -392,13 +500,20 @@
     };
 
     U5A1.prototype.evaluateAnswer = function(e) {
-      var i, _i;
-      for (i = _i = 1; _i <= 8; i = ++_i) {
-        if (this.library["cal" + this.calendar + "Dragble" + i].visible === false) {
-          this.library.score.plusOne();
+      var answers, i, _i, _ref;
+      this.library.btnRepeat.removeEventListener('click', this.repeatSound);
+      this.library.btnFinished.removeEventListener('click', this.evaluateAnswer);
+      createjs.Sound.stop();
+      answers = this.game[this.calendar - 1].drops;
+      for (i = _i = 1, _ref = answers.length; _i <= _ref; i = _i += 1) {
+        if (this.library[answers[i - 1].tgt].children.length > 1) {
+          if (this.library[answers[i - 1].tgt].children[1].name === answers[i - 1].id) {
+            this.blink(this.library[answers[i - 1].tgt]);
+            this.library.score.plusOne();
+          }
         }
       }
-      return this.finishEvaluation();
+      return setTimeout(this.finishEvaluation, 4 * 1000);
     };
 
     U5A1.prototype.finishEvaluation = function() {
@@ -414,20 +529,20 @@
     };
 
     U5A1.prototype.nextEvaluation = function() {
-      /*
-      		@index++
-      		if @index < @game.drops.length
-      			@setCalendar @index + 1
-      			for i in [1..8]
-      				@library["cal#{@calendar}Dragble#{i}"].addEventListener 'drop', @evaluateDrop
-      				@library['btnRepeat'].addEventListener 'click', @repeatSound
-      				@library['btnFinished'].addEventListener 'click', @evaluateAnswer
-      				createjs.Sound.stop()
-      				createjs.Sound.play "cal#{@calendar}"
-      		else
-      */
-
-      return this.finish();
+      var i, _i;
+      this.index++;
+      if (this.index < this.game.length) {
+        this.setCalendar(this.index + 1);
+        for (i = _i = 1; _i <= 8; i = ++_i) {
+          this.library["cal" + this.calendar + "Dragble" + i].addEventListener('drop', this.evaluateDrop);
+        }
+        this.library.btnRepeat.addEventListener('click', this.repeatSound);
+        this.library.btnFinished.addEventListener('click', this.evaluateAnswer);
+        createjs.Sound.stop();
+        return createjs.Sound.play("cal" + this.calendar);
+      } else {
+        return this.finish();
+      }
     };
 
     U5A1.prototype.repeatSound = function() {
@@ -437,13 +552,13 @@
 
     U5A1.prototype.finish = function() {
       createjs.Sound.stop();
-      TweenLite.to(this.library['btnRepeat'], 1, {
+      TweenLite.to(this.library.btnRepeat, 1, {
         alpha: 0,
-        y: this.library['btnRepeat'].y + 20
+        y: this.library.btnRepeat.y + 20
       });
-      TweenLite.to(this.library['btnFinished'], 1, {
+      TweenLite.to(this.library.btnFinished, 1, {
         alpha: 0,
-        y: this.library['btnFinished'].y + 20
+        y: this.library.btnFinished.y + 20
       });
       return U5A1.__super__.finish.apply(this, arguments);
     };
