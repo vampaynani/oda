@@ -116,17 +116,17 @@
         {
           texts: [
             {
-              idx: 3,
-              t: "Outside it's snowing hard!"
-            }, {
               idx: 4,
-              t: 'She is watching the weather report on TV'
+              t: "Phil and his mom call out for Bo."
+            }, {
+              idx: 3,
+              t: 'Suddenly, Bo starts barking and pulling hard.'
             }, {
               idx: 1,
-              t: 'He is drinking hot chocolate and petting his dog, Bo.'
+              t: "Everyone is worried. Where's Jack?."
             }, {
               idx: 2,
-              t: "Its windy and cold, but it isn't snowing"
+              t: "Phil's mom puts on her coat and boats."
             }
           ],
           positions: [

@@ -8,7 +8,6 @@ class U5A3 extends Oda
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
 			{id: 'playagain', src:'play_again.png'}
 			{id: 'startgame', src:'start_game.png'}
-			{id:'image', src:'image.png'}
 			{id:'imagebugbite', src:'image_bugbite.png'}
 			{id:'imagechickenpox', src:'image_chickenpox.png'}
 			{id:'imagecold', src:'image_cold.png'}
@@ -32,21 +31,21 @@ class U5A3 extends Oda
 		    {src:'sounds/TU2_U5_A3_instructions.mp3', id:'instructions'}
 		]
 		@imagenes = [
-			{id:'imagebugbite', x:'100', y:'100'}
-			{id:'imagechickenpox', x:'100', y:'100'}
-			{id:'imagecold', x:'100', y:'100'}
-			{id:'imagecough', x:'100', y:'100'}
-			{id:'imagecutmyfinger', x:'100', y:'100'}
-			{id:'imagecutmyknee', x:'100', y:'100'}
-			{id:'imageearache', x:'100', y:'100'}
-			{id:'imagefever', x:'100', y:'100'}
-			{id:'imageheadache', x:'100', y:'100'}
-			{id:'imagehiccups', x:'100', y:'100'}
-			{id:'imagerunnynose', x:'100', y:'100'}
-			{id:'imagesorethroat', x:'100', y:'100'}
-			{id:'imagestomachache', x:'100', y:'100'}
-			{id:'imagesunburn', x:'100', y:'100'}
-			{id:'imagetoothache', x:'100', y:'100'}
+			{id:'imagebugbite', x:'686', y:'161'}
+			{id:'imagechickenpox', x:'395', y:'136'}
+			{id:'imagecold', x:'474', y:'171'}
+			{id:'imagecough', x:'290', y:'161'}
+			{id:'imagecutmyfinger', x:'96', y:'400'}
+			{id:'imagecutmyknee', x:'29', y:'282'}
+			{id:'imageearache', x:'180', y:'458'}
+			{id:'imagefever', x:'60', y:'168'}
+			{id:'imageheadache', x:'650', y:'282'}
+			{id:'imagehiccups', x:'284', y:'472'}
+			{id:'imagerunnynose', x:'525', y:'428'}
+			{id:'imagesorethroat', x:'658', y:'427'}
+			{id:'imagestomachache', x:'186', y:'131'}
+			{id:'imagesunburn', x:'422', y:'466'}
+			{id:'imagetoothache', x:'585', y:'132'}
 		]
 		@answers = [
 			{img:'imagetoothache', frase:'i have a' , txt:'toothache'}
@@ -71,9 +70,7 @@ class U5A3 extends Oda
 		super
 		@success = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		x = @createBitmap 'image', 'image', stageSize.w / 2, 20, 'tc'
-		x.scaleX = x.scaleY = 1.1
-		@addToMain x
+
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 15, 500, 20, 0
 		@setSeasons().introEvaluation()
@@ -81,8 +78,8 @@ class U5A3 extends Oda
 		seasons = new createjs.Container()
 		seasons.name = 'seasons'
 		for i in [0..14]
-			img = @createBitmap @imagenes[i].id, @imagenes[i].id, @imagenes[i].x, @imagenes[i].y, 'mc'
-			#img.scaleX = img.scaleY = 0.5
+			img = @createBitmap @imagenes[i].id, @imagenes[i].id, @imagenes[i].x, @imagenes[i].y, 'tl'
+			img.scaleX = img.scaleY = 0.9
 			@addToLibrary img
 			seasons.addChild img
 		@addToMain seasons

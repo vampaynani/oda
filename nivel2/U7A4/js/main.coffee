@@ -33,13 +33,13 @@ class U7A4 extends Oda
 				}
 				{
 					answers: [
-						{text:"aI always watch TV.", respuestas:off}
-						{text:"aI sometimes take a shower.", respuestas:on}
-						{text:"aI sometimes read.", respuestas:on}
-						{text:"aI never ride my bike.", respuestas:off}
-						{text:"aI never take a bath.", respuestas:on}
-						{text:"aI always floss my teeth.", respuestas:on}
-						{text:"aI sometimes play baseball on Wednesday.", respuestas:off}
+						{text:"I always eat cereal.", respuestas:off}
+						{text:"I always brush my teeth.", respuestas:on}
+						{text:"I sometimes go to bed late.", respuestas:on}
+						{text:"I never go horseback riding.", respuestas:off}
+						{text:"I always play soccer.", respuestas:off}
+						{text:"I sometimes watch TV.", respuestas:on}
+						{text:"I sometimes eat eggs for breakfast.", respuestas:off}
 					]
 				}
 			]

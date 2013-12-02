@@ -1,0 +1,15 @@
+{id: 'btnconfused', src:'btn_confused.png'}
+{id: 'btndirty', src:'btn_dirty.png'}
+{id: 'btnenergetic', src:'btn_energetic.png'}
+{id: 'btnhot', src:'btn_hot.png'}
+{id: 'btnsick', src:'btn_sick.png'}
+{id: 'btntired', src:'btn_tired.png'}
+{id: 'faceconfused', src:'face_confused.png'}
+{id: 'facedirty', src:'face_dirty.png'}
+{id: 'faceenergetic', src:'face_energetic.png'}
+{id: 'facehot', src:'face_hot.png'}
+{id: 'facesick', src:'face_sick.png'}
+{id: 'facetired', src:'face_tired.png'}
+{id: 'taganswer', src:'tag_answer.png'}
+{id: 'tagpronoun', src:'tag_pronoun.png'}
+{id: 'tagverb', src:'tag_verb.png'}

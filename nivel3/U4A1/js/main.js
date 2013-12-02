@@ -37,9 +37,6 @@
           id: 'startgame',
           src: 'start_game.png'
         }, {
-          id: 'image',
-          src: 'image.png'
-        }, {
           id: 'imagebugbite',
           src: 'image_bugbite.png'
         }, {
@@ -101,64 +98,64 @@
       this.imagenes = [
         {
           id: 'imagebugbite',
-          x: '100',
-          y: '100'
+          x: '686',
+          y: '161'
         }, {
           id: 'imagechickenpox',
-          x: '100',
-          y: '100'
+          x: '395',
+          y: '136'
         }, {
           id: 'imagecold',
-          x: '100',
-          y: '100'
+          x: '474',
+          y: '171'
         }, {
           id: 'imagecough',
-          x: '100',
-          y: '100'
+          x: '290',
+          y: '161'
         }, {
           id: 'imagecutmyfinger',
-          x: '100',
-          y: '100'
+          x: '96',
+          y: '400'
         }, {
           id: 'imagecutmyknee',
-          x: '100',
-          y: '100'
+          x: '29',
+          y: '282'
         }, {
           id: 'imageearache',
-          x: '100',
-          y: '100'
+          x: '180',
+          y: '458'
         }, {
           id: 'imagefever',
-          x: '100',
-          y: '100'
+          x: '60',
+          y: '168'
         }, {
           id: 'imageheadache',
-          x: '100',
-          y: '100'
+          x: '650',
+          y: '282'
         }, {
           id: 'imagehiccups',
-          x: '100',
-          y: '100'
+          x: '284',
+          y: '472'
         }, {
           id: 'imagerunnynose',
-          x: '100',
-          y: '100'
+          x: '525',
+          y: '428'
         }, {
           id: 'imagesorethroat',
-          x: '100',
-          y: '100'
+          x: '658',
+          y: '427'
         }, {
           id: 'imagestomachache',
-          x: '100',
-          y: '100'
+          x: '186',
+          y: '131'
         }, {
           id: 'imagesunburn',
-          x: '100',
-          y: '100'
+          x: '422',
+          y: '466'
         }, {
           id: 'imagetoothache',
-          x: '100',
-          y: '100'
+          x: '585',
+          y: '132'
         }
       ];
       this.answers = [
@@ -228,13 +225,9 @@
     }
 
     U5A3.prototype.setStage = function() {
-      var x;
       U5A3.__super__.setStage.apply(this, arguments);
       this.success = 1;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      x = this.createBitmap('image', 'image', stageSize.w / 2, 20, 'tc');
-      x.scaleX = x.scaleY = 1.1;
-      this.addToMain(x);
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 15, 500, 20, 0));
       return this.setSeasons().introEvaluation();
@@ -245,7 +238,8 @@
       seasons = new createjs.Container();
       seasons.name = 'seasons';
       for (i = _i = 0; _i <= 14; i = ++_i) {
-        img = this.createBitmap(this.imagenes[i].id, this.imagenes[i].id, this.imagenes[i].x, this.imagenes[i].y, 'mc');
+        img = this.createBitmap(this.imagenes[i].id, this.imagenes[i].id, this.imagenes[i].x, this.imagenes[i].y, 'tl');
+        img.scaleX = img.scaleY = 0.9;
         this.addToLibrary(img);
         seasons.addChild(img);
       }
