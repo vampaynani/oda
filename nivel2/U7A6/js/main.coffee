@@ -1,4 +1,4 @@
-class U3A6 extends Oda
+class U7A6 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -273,4 +273,4 @@ class U3A6 extends Oda
 		TweenLite.to @library.burbuja, 0.5, {alpha: 0, ease: Quart.easeOut}
 
 		super
-	window.U3A6 = U3A6
+	window.U7A6 = U7A6
