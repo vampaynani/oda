@@ -151,12 +151,12 @@
       this.insertBitmap('instructions', 'inst', 20, 100);
       this.insertBitmap('btnRepeat', 'btnrepeat', 650, 367);
       this.insertBitmap('btnFinished', 'btnfinished', 650, 414);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 6, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
       return this.setPizarra(1).introEvaluation();
     };
 
     U7A2.prototype.setPizarra = function(schedule) {
-      var a, actividades, board, c, child, drops, i, j, pizarra, _i, _j, _ref, _ref1;
+      var a, actividades, board, c, child, drops, hit, i, pizarra, _i, _j, _ref, _ref1;
       this.schedule = schedule;
       pizarra = new createjs.Container();
       pizarra.name = 'pizarra';
@@ -176,26 +176,48 @@
       actividades.name = 'actividades';
       actividades.x = 359;
       actividades.y = 113;
+      this.addToLibrary(actividades);
       for (i = _i = 0, _ref = drops.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        c = new createjs.Container();
+        c.name = "cont" + i;
         if (i < 5) {
-          a = this.createBitmap(drops[i], drops[i], 0, i * 49, 'tc');
+          c.y = i * 49;
         } else {
-          j = i - 5;
-          a = this.createBitmap(drops[i], drops[i], 135, j * 49, 'tc');
+          c.x = 135;
+          c.y = (i - 5) * 49;
         }
-        a.scaleX = a.scaleY = 40 / a.image.height;
-        if (i === 0 || i === 1 || i === 2 || i === 4 || i === 7 || i === 8) {
-          a.visible = false;
+        if (schedule === 1) {
+          if (i === 0 || i === 1 || i === 2 || i === 4 || i === 7 || i === 8) {
+            hit = new createjs.Shape();
+            hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
+            this.setReg(hit, 20, -20);
+            c.addChild(hit);
+          } else {
+            a = this.createBitmap(drops[i], drops[i], 0, 0, 'tc');
+            a.scaleX = a.scaleY = 40 / a.image.height;
+            c.addChild(a);
+          }
+        } else {
+          if (i === 1 || i === 2 || i === 5 || i === 7 || i === 8 || i === 9) {
+            hit = new createjs.Shape();
+            hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55);
+            this.setReg(hit, 20, -20);
+            c.addChild(hit);
+          } else {
+            a = this.createBitmap(drops[i], drops[i], 0, 0, 'tc');
+            a.scaleX = a.scaleY = 40 / a.image.height;
+            c.addChild(a);
+          }
         }
-        this.addToLibrary(a);
-        actividades.addChild(a);
+        this.addToLibrary(c);
+        actividades.addChild(c);
       }
       pizarra.addChild(board, child, actividades);
       for (i = _j = 0, _ref1 = this.drags.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
         if (i % 2 === 0) {
-          c = new Droppable("dr" + this.drags[i], this.preload.getResult(this.drags[i]), i, 100 * i + 50, 440, this.stage, actividades.children);
+          c = new Droppable("" + this.drags[i], this.preload.getResult(this.drags[i]), i, 100 * i + 50, 440, this.stage, actividades.children);
         } else {
-          c = new Droppable("dr" + this.drags[i], this.preload.getResult(this.drags[i]), i, 100 * i + 50, 400, this.stage, actividades.children);
+          c = new Droppable("" + this.drags[i], this.preload.getResult(this.drags[i]), i, 100 * i + 50, 400, this.stage, actividades.children);
         }
         c.scaleX = c.scaleY = 0.9;
         this.addToLibrary(c);
@@ -238,8 +260,8 @@
       var i, _i, _ref;
       U7A2.__super__.initEvaluation.apply(this, arguments);
       for (i = _i = 0, _ref = this.drags.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-        this.library["dr" + this.drags[i]].initDragListener();
-        this.library["dr" + this.drags[i]].addEventListener('dropped', this.evaluateDrop);
+        this.library["" + this.drags[i]].initDragListener();
+        this.library["" + this.drags[i]].addEventListener('dropped', this.evaluateDrop);
       }
       this.library.btnRepeat.addEventListener('click', this.repeatSound);
       this.library.btnFinished.addEventListener('click', this.evaluateAnswer);
@@ -247,29 +269,38 @@
     };
 
     U7A2.prototype.evaluateDrop = function(e) {
+      var v;
       this.answer = e.target;
       this.drop = e.drop;
-      if (this.answer.name === ("dr" + this.drop.name)) {
-        this.drop.visible = true;
-        return this.answer.visible = false;
-      } else {
-        this.answer.returnToPlace(1, 0.9, 0.9);
-        return this.warning();
-      }
+      this.answer.visible = false;
+      v = this.createBitmap(this.answer.name, this.answer.name, 0, 20);
+      v.scaleX = v.scaleY = 0.6;
+      this.setReg(v, v.width / 2, v.height / 2);
+      return this.drop.addChild(v);
     };
 
     U7A2.prototype.evaluateAnswer = function(e) {
-      var i, _i, _ref;
-      for (i = _i = 0, _ref = this.drags.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-        if (this.library[this.drags[i]].visible === true) {
-          this.library.score.plusOne();
+      var answers, i, _i, _ref;
+      this.library.btnRepeat.removeEventListener('click', this.repeatSound);
+      this.library.btnFinished.removeEventListener('click', this.evaluateAnswer);
+      createjs.Sound.stop();
+      if (this.schedule === 1) {
+        answers = this.actividades.girl;
+      } else {
+        answers = this.actividades.boy;
+      }
+      for (i = _i = 0, _ref = answers.length - 1; _i <= _ref; i = _i += 1) {
+        if (this.library["cont" + i].children.length > 1) {
+          if (this.library["cont" + i].children[1].name === answers[i]) {
+            this.blink(this.library["cont" + i]);
+            this.library.score.plusOne();
+          }
         }
       }
-      return this.finishEvaluation();
+      return setTimeout(this.finishEvaluation, 4 * 1000);
     };
 
     U7A2.prototype.finishEvaluation = function() {
-      createjs.Sound.stop();
       return TweenLite.to(this.library.pizarra, 1, {
         alpha: 0,
         y: this.library.pizarra.y + 20,
@@ -278,19 +309,21 @@
     };
 
     U7A2.prototype.nextEvaluation = function() {
-      /*
-      		@index++
-      		if @index < @answers.length
-      			@library['score'].updateCount( @index )
-      			@library['characters'].alpha = 1
-      			@library['characters'].y = stageSize.h - 180
-      			@library['characters'].currentFrame = @answers[@index].id
-      			createjs.Sound.play @answers[@index].sound
-      			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
-      		else
-      */
-
-      return this.finish();
+      var i, _i, _ref;
+      this.index++;
+      if (this.index < 2) {
+        this.setPizarra(this.index + 1);
+        for (i = _i = 0, _ref = this.drags.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+          this.library["" + this.drags[i]].initDragListener();
+          this.library["" + this.drags[i]].addEventListener('dropped', this.evaluateDrop);
+        }
+        this.library.btnRepeat.addEventListener('click', this.repeatSound);
+        this.library.btnFinished.addEventListener('click', this.evaluateAnswer);
+        createjs.Sound.stop();
+        return createjs.Sound.play("sche" + this.schedule);
+      } else {
+        return this.finish();
+      }
     };
 
     U7A2.prototype.repeatSound = function() {

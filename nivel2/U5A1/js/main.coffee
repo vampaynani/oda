@@ -222,8 +222,7 @@ class U5A1 extends Oda
 		setTimeout @finishEvaluation, 4 * 1000
 	finishEvaluation: =>
 		TweenLite.to @library.calendar, 1, {alpha:0, y:@library.calendar.y - 20}
-		TweenLite.to @library.propCalendar, 1, {alpha:0, y:@library.propCalendar.y - 20}
-		@nextEvaluation()
+		TweenLite.to @library.propCalendar, 1, {alpha:0, y:@library.propCalendar.y - 20, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @game.length

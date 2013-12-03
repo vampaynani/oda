@@ -521,11 +521,11 @@
         alpha: 0,
         y: this.library.calendar.y - 20
       });
-      TweenLite.to(this.library.propCalendar, 1, {
+      return TweenLite.to(this.library.propCalendar, 1, {
         alpha: 0,
-        y: this.library.propCalendar.y - 20
+        y: this.library.propCalendar.y - 20,
+        onComplete: this.nextEvaluation
       });
-      return this.nextEvaluation();
     };
 
     U5A1.prototype.nextEvaluation = function() {
