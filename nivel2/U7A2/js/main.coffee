@@ -55,7 +55,7 @@ class U7A2 extends Oda
 		@insertBitmap 'instructions', 'inst', 20, 100
 		@insertBitmap 'btnRepeat', 'btnrepeat', 650, 367
 		@insertBitmap 'btnFinished', 'btnfinished', 650, 414
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 6, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
 		@setPizarra(1).introEvaluation()
 	setPizarra: (schedule) ->
 		@schedule = schedule
@@ -79,25 +79,45 @@ class U7A2 extends Oda
 		actividades.name = 'actividades'
 		actividades.x = 359
 		actividades.y = 113
-
+		@addToLibrary actividades
+		
 		for i in [0..drops.length - 1]
+			c = new createjs.Container()
+			c.name = "cont#{i}"
 			if i < 5
-				a = @createBitmap drops[i], drops[i], 0, i*49, 'tc'
+				c.y = i * 49
 			else
-				j = i - 5
-				a = @createBitmap drops[i], drops[i], 135, j*49, 'tc'
-			a.scaleX = a.scaleY = 40 / a.image.height
-			if i in [0, 1, 2, 4, 7, 8]
-				a.visible = off
-			@addToLibrary a
-			actividades.addChild a
+				c.x = 135
+				c.y = (i - 5) * 49
+			if schedule is 1
+				if i in [0, 1, 2, 4, 7, 8]
+					hit = new createjs.Shape()
+					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55)
+					@setReg hit, 20, -20
+					c.addChild hit
+				else
+					a = @createBitmap drops[i], drops[i], 0, 0, 'tc'
+					a.scaleX = a.scaleY = 40 / a.image.height
+					c.addChild a
+			else
+				if i in [1, 2, 5, 7, 8, 9]
+					hit = new createjs.Shape()
+					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55)
+					@setReg hit, 20, -20
+					c.addChild hit
+				else
+					a = @createBitmap drops[i], drops[i], 0, 0, 'tc'
+					a.scaleX = a.scaleY = 40 / a.image.height
+					c.addChild a
+			@addToLibrary c
+			actividades.addChild c
 		pizarra.addChild board, child, actividades
 
 		for i in [0..@drags.length - 1]
 			if i % 2 is 0
-				c = new Droppable "dr#{@drags[i]}", (@preload.getResult @drags[i]), i, 100*i + 50, 440, @stage, actividades.children
+				c = new Droppable "#{@drags[i]}", (@preload.getResult @drags[i]), i, 100*i + 50, 440, @stage, actividades.children
 			else
-				c = new Droppable "dr#{@drags[i]}", (@preload.getResult @drags[i]), i, 100*i + 50, 400, @stage, actividades.children	
+				c = new Droppable "#{@drags[i]}", (@preload.getResult @drags[i]), i, 100*i + 50, 400, @stage, actividades.children	
 			c.scaleX = c.scaleY = 0.9
 			@addToLibrary c
 			pizarra.addChild c
@@ -114,41 +134,49 @@ class U7A2 extends Oda
 	initEvaluation: (e) =>
 		super
 		for i in [0..@drags.length - 1]
-			@library["dr#{@drags[i]}"].initDragListener()
-			@library["dr#{@drags[i]}"].addEventListener 'dropped', @evaluateDrop
+			@library["#{@drags[i]}"].initDragListener()
+			@library["#{@drags[i]}"].addEventListener 'dropped', @evaluateDrop
 		@library.btnRepeat.addEventListener 'click', @repeatSound
 		@library.btnFinished.addEventListener 'click', @evaluateAnswer
 		createjs.Sound.play "sche#{@schedule}"
 	evaluateDrop: (e) =>
 		@answer = e.target
 		@drop = e.drop
-		if @answer.name is "dr#{@drop.name}"
-			@drop.visible = on
-			@answer.visible = off
-		else
-			@answer.returnToPlace 1, 0.9, 0.9
-			@warning()
+
+		@answer.visible = off
+		v = @createBitmap @answer.name, @answer.name, 0, 20
+		v.scaleX = v.scaleY = 0.6
+		@setReg v, v.width / 2, v.height / 2
+		@drop.addChild v
 	evaluateAnswer: (e) =>
-		for i in [0..@drags.length - 1]
-			if @library[@drags[i]].visible is on
-				@library.score.plusOne()
-		@finishEvaluation()
-	finishEvaluation: =>
+		@library.btnRepeat.removeEventListener 'click', @repeatSound
+		@library.btnFinished.removeEventListener 'click', @evaluateAnswer
 		createjs.Sound.stop()
+		if @schedule is 1
+			answers = @actividades.girl
+		else
+			answers = @actividades.boy
+		for i in [0..answers.length - 1] by 1
+			if @library["cont#{i}"].children.length > 1
+				if @library["cont#{i}"].children[1].name is answers[i]
+					@blink @library["cont#{i}"]
+					@library.score.plusOne()
+		setTimeout @finishEvaluation, 4 * 1000
+	finishEvaluation: =>
 		TweenLite.to @library.pizarra, 1, {alpha: 0, y: @library.pizarra.y + 20, onComplete: @nextEvaluation}
 	nextEvaluation: =>
-		###
 		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
+		if @index < 2
+			@setPizarra @index + 1
+			for i in [0..@drags.length - 1]
+				@library["#{@drags[i]}"].initDragListener()
+				@library["#{@drags[i]}"].addEventListener 'dropped', @evaluateDrop
+			@library.btnRepeat.addEventListener 'click', @repeatSound
+			@library.btnFinished.addEventListener 'click', @evaluateAnswer
+			createjs.Sound.stop()
+			createjs.Sound.play "sche#{@schedule}"
 		else
-		###
-		@finish()
+			@finish()
 	repeatSound: =>
 		createjs.Sound.stop()
 		createjs.Sound.play "sche#{@schedule}"
