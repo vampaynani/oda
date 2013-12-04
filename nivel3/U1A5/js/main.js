@@ -9,8 +9,7 @@
     __extends(U1A5, _super);
 
     function U1A5() {
-      this.repeatSound = __bind(this.repeatSound, this);
-      this.nextEvaluation = __bind(this.nextEvaluation, this);
+      this.finish = __bind(this.finish, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
@@ -18,10 +17,7 @@
       manifest = [
         {
           id: 'head',
-          src: 'pleca.png'
-        }, {
-          id: 'inst',
-          src: 'texto_look.png'
+          src: 'pleca1.png'
         }, {
           id: 'c1',
           src: 'circle1.png'
@@ -40,177 +36,243 @@
         }, {
           id: 'bg',
           src: 'bg.png'
+        }, {
+          id: '1',
+          src: '1.png'
+        }, {
+          id: '2',
+          src: '2.png'
+        }, {
+          id: '3',
+          src: '3.png'
+        }, {
+          id: '4',
+          src: '4.png'
+        }, {
+          id: '1b',
+          src: '1.png'
+        }, {
+          id: '2b',
+          src: '2b.png'
+        }, {
+          id: '3b',
+          src: '3b.png'
+        }, {
+          id: '4b',
+          src: '4b.png'
+        }, {
+          id: '2p1',
+          src: '2p1.png'
+        }, {
+          id: '2p2',
+          src: '2p2.png'
+        }, {
+          id: '3p1',
+          src: '3p1.png'
+        }, {
+          id: '3p2',
+          src: '3p2.png'
         }
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
+        }, {
+          src: 'sounds/TU2_U3_A5_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU2_U3_A5_scene1.mp3',
+          id: 'scene1'
+        }
+      ];
+      this.game = [
+        {
+          texts: [
+            {
+              idx: 3,
+              t: "Follow me,",
+              p: 'p1'
+            }, {
+              idx: 3,
+              t: "It's the Magic Rain Book.",
+              p: 'p2'
+            }, {
+              idx: 2,
+              t: "We're looking for a book about rain,",
+              p: 'p2'
+            }, {
+              idx: 2,
+              t: "Are you looking for a particular book?",
+              p: 'p1'
+            }, {
+              idx: 4,
+              t: "Thank you,"
+            }
+          ],
+          positions: [
+            {
+              x: 140,
+              y: 186
+            }, {
+              x: 140,
+              y: 265
+            }, {
+              x: 140,
+              y: 325
+            }, {
+              x: 412,
+              y: 186
+            }
+          ]
         }
       ];
       this.answers = [];
-      this.textos = {
-        positions: [
-          {
-            x: '121',
-            y: '189'
-          }, {
-            x: '121',
-            y: '286'
-          }, {
-            x: '121',
-            y: '324'
-          }, {
-            x: '410',
-            y: '189'
-          }, {
-            x: '410',
-            y: '272'
-          }
-        ],
-        parrafo1: ['"Can I help you?" asks a voice. Megan and', 'Paul turn around and see a thin old man with', "thick glasses. The man isn't wearing shoes", "but he's wearing bright yellow and orange", 'socks. The kids laugh.'],
-        parrafo2: ['the mas asks. "Um, yes," Paul replies,'],
-        parrafo3: ['                   says the old man, as he opens', 'the tent. The kids follow him inside. There are', 'books everywhere. "Here you are," says the', 'man.'],
-        parrafo4: ['He gives a heavy purple book to paul. It smells', 'old. Paul and Megan say                     but then', 'they notice that the old man is no longer there.', 'They look at each other, surprised. Paul opens the', 'book, and a purple light comes out of the pages.'],
-        parrafo5: ['Suddenly, Paul and Megan are riding on the back', 'of a beautiful purple dragon. They are flying', 'high in the air. Below they see rivers, lakes', 'and forests.'],
-        drags: ["Are you looking for a particular book?", "We're looking for a book about rain,", "Follow me,", "It's the Magic Rain Book.", "Thank you,"]
-      };
       U1A5.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U1A5.prototype.setStage = function() {
       U1A5.__super__.setStage.apply(this, arguments);
+      this.intento = 0;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
-      this.insertBitmap('bg', 'bg', 0, 0);
+      this.insertInstructions('instructions', 'Read and drag the words to complete the story.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setCuento().setDropper().introEvaluation();
+      return this.setCuento(1).introEvaluation();
     };
 
-    U1A5.prototype.setCuento = function() {
-      var i, j, text, _i, _j, _ref;
-      text = new createjs.Text('Episode 1', '13px Arial', '#333');
-      text.x = 641;
-      text.y = 146;
-      this.addToMain(text);
-      for (i = _i = 1; _i <= 5; i = _i += 1) {
-        for (j = _j = 0, _ref = this.textos["parrafo" + i].length; 0 <= _ref ? _j <= _ref : _j >= _ref; j = 0 <= _ref ? ++_j : --_j) {
-          text = new createjs.Text(this.textos["parrafo" + i][j], '13px Arial', '#333');
-          text.x = this.textos.positions[i - 1].x;
-          text.y = this.textos.positions[i - 1].y - (-j * 15);
-          this.addToMain(text);
+    U1A5.prototype.setCuento = function(scene) {
+      var b, cuento, hit, i, m, t, _i, _j, _ref, _ref1;
+      cuento = new createjs.Container();
+      cuento.name = 'cuento';
+      this.scene = scene;
+      b = this.createBitmap('bg', 'bg', 0, 0);
+      cuento.addChild(b);
+      for (i = _i = 1, _ref = this.game[scene - 1].positions.length; _i <= _ref; i = _i += 1) {
+        if (i === 1) {
+          m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i) + "b"], null, this.game[scene - 1].positions[i - 1].x, this.game[scene - 1].positions[i - 1].y);
+        } else if (i === 4) {
+          m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i), "" + ((scene - 1) * 4 + i) + "b"], null, this.game[scene - 1].positions[i - 1].x, this.game[scene - 1].positions[i - 1].y);
+        } else {
+          m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i), "" + ((scene - 1) * 4 + i) + "p1", "" + ((scene - 1) * 4 + i) + "p2", "" + ((scene - 1) * 4 + i) + "b"], null, this.game[scene - 1].positions[i - 1].x, this.game[scene - 1].positions[i - 1].y);
         }
-        text = new DraggableText(this.textos.drags[i - 1], '"' + this.textos.drags[i - 1] + '"', i, 643, 349 + 35 * i);
-        this.addToMain(text);
+        hit = new createjs.Shape();
+        hit.graphics.beginFill("rgba(255,255, 255, 0.1)").drawRect(0, 0, m.width, m.height);
+        hit.name = "hsc" + i;
+        hit.x = this.game[scene - 1].positions[i - 1].x;
+        hit.y = this.game[scene - 1].positions[i - 1].y;
+        cuento.addChild(hit);
+        hit.index = (scene - 1) * 4 + i;
+        cuento.addChild(hit, m);
+        this.addToLibrary(hit, m);
       }
-      return this;
-    };
-
-    U1A5.prototype.setDropper = function() {
-      var dropper, h1, h2, h3, h4, h5;
-      dropper = new createjs.Container();
-      dropper.x = 0;
-      dropper.y = 0;
-      dropper.name = 'dropper';
-      h1 = new WordContainer('h1', '', '', '#f39234', 120, 271, 231, 13);
-      h2 = new WordContainer('h2', '', '', '#f39234', 120, 302, 210, 13);
-      h3 = new WordContainer('h3', '', '', '#f39234', 120, 325, 70, 13);
-      h4 = new WordContainer('h4', '', '', '#f39234', 152, 370, 144, 13);
-      h5 = new WordContainer('h5', '', '', '#f39234', 558, 206, 75, 13);
-      dropper.addChild(h1, h2, h3, h4, h5);
-      this.addToLibrary(h1, h2, h3, h4, h5);
-      this.addToMain(dropper);
+      for (i = _j = 1, _ref1 = this.game[scene - 1].texts.length; _j <= _ref1; i = _j += 1) {
+        t = new DraggableText("t" + i, this.game[scene - 1].texts[i - 1].t, this.game[scene - 1].texts[i - 1].idx, 680, i * 30 + 350);
+        t.text.textAlign = 'center';
+        t.setHitArea();
+        if (this.game[scene - 1].texts[i - 1].p) {
+          t.p = this.game[scene - 1].texts[i - 1].p;
+        }
+        this.addToLibrary(t);
+        cuento.addChild(t);
+      }
+      this.addToMain(cuento);
       return this;
     };
 
     U1A5.prototype.introEvaluation = function() {
-      return U1A5.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
-
+      var i, _i, _ref;
+      U1A5.__super__.introEvaluation.apply(this, arguments);
+      for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
+        this.observer.subscribe('init_evaluation', this.library["t" + i].onInitEvaluation);
+      }
+      TweenLite.from(this.library['header'], 1, {
+        y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      return TweenLite.from(this.library['cuento'], 1, {
+        alpha: 0,
+        y: this.library['cuento'].y + 20,
+        delay: 1,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U1A5.prototype.initEvaluation = function(e) {
+      var i, _i, _ref, _results;
       U1A5.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      createjs.Sound.play("scene" + this.scene);
+      _results = [];
+      for (i = _i = 2, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
+        _results.push(this.library["t" + i].addEventListener('click', this.evaluateAnswer));
+      }
+      return _results;
     };
 
     U1A5.prototype.evaluateAnswer = function(e) {
-      var pt;
+      var dropped, i, pt, _i, _ref, _ref1, _results;
       this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+      dropped = false;
+      _results = [];
+      for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
+        pt = this.library["hsc" + i].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+        if (this.library["hsc" + i].hitTest(pt.x, pt.y)) {
+          if (this.answer.index === this.library["hsc" + i].index) {
+            if (this.answer.p) {
+              if ((_ref1 = this.library["sc" + i].currentFrame) === 1 || _ref1 === 2) {
+                this.library["sc" + i].currentFrame = 3;
+              } else if (this.answer.p === 'p1') {
+                this.library["sc" + i].currentFrame = 1;
+              } else {
+                this.library["sc" + i].currentFrame = 2;
+              }
+            } else {
+              this.library["sc" + i].currentFrame = 1;
+            }
+            this.answer.visible = false;
+            createjs.Sound.play('good');
+            if (this.intento === 0) {
+              this.library['score'].plusOne();
+              this.intento = 0;
+            }
+            _results.push(this.finishEvaluation());
+          } else {
+            this.intento = 1;
+            this.warning();
+            _results.push(this.answer.returnToPlace());
+          }
         } else {
-          this.warning();
-          return this.answer.returnToPlace();
+          _results.push(this.answer.returnToPlace());
         }
-      } else {
-        return this.answer.returnToPlace();
       }
+      return _results;
     };
 
     U1A5.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
-    };
-
-    U1A5.prototype.nextEvaluation = function() {
-      this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
-          alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
-        });
-      } else {
-        return this.finish();
+      var i, _i, _ref;
+      for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
+        if (this.library["sc" + i].currentFrame !== this.library["sc" + i].spriteSheet._frames.length - 1) {
+          return;
+        }
       }
-    };
-
-    U1A5.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
+      return this.finish();
     };
 
     U1A5.prototype.finish = function() {
-      var i, _i, _results;
-      U1A5.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      createjs.Sound.stop();
+      createjs.Sound.play('good');
+      TweenLite.to(this.library['cuento'], 1, {
+        alpha: 0,
+        y: this.library['cuento'].y + 10
+      });
+      return U1A5.__super__.finish.apply(this, arguments);
     };
 
     window.U1A5 = U1A5;
