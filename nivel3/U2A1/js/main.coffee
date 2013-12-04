@@ -1,10 +1,10 @@
-class U1A1 extends Oda
+class U2A1 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-		    {id: 'inst' , src: 'texto_look.png'}
-		    {id: 'c1' , src: 'circle1.png'}
-		    {id: 'c2' , src: 'circle2.png'}
+			{id: 'head', src: 'pleca1.png'}
+			{id: 'c1', src: 'circle1.png'}
+			{id: 'c2', src: 'circle2.png'}
+
 			{id: 'propblueberries', src:'prop_blueberries.png'}
 			{id: 'propcheese', src:'prop_cheese.png'}
 			{id: 'propcorn', src:'prop_corn.png'}
@@ -24,61 +24,108 @@ class U1A1 extends Oda
 			{id: 'propyogurt', src:'prop_yogurt.png'}
 			{id: 'n3', src:'tag_food.png'}
 			{id: 'n2', src:'tag_pronoun.png'}
-			{id: 'n1', src:'tag_verb.png'}
+			{id: 'n1', src:'tag_verb.png'}			
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/TU2_U1_A1_Instructions.mp3', id:'instructions'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		@answers = [
-			{w1:1, w2:2, w3:2, sound:'song' }
-		    {w1:1, w2:1, w3:4, sound:'outside' }
-		    {w1:0, w2:0, w3:0, sound:'picture'}
-		    {w1:1, w2:3, w3:1, sound:'english' }
-		    {w1:0, w2:1, w3:3, sound:'flute'}
+		@game = [
+			[
+				{id:'propstrawberryJelly', x:310, y:106, a1:1, a2:1, a3:1}
+				{id:'propPeanutButter', x:467, y:120, a1:1, a2:1, a3:1}
+				{id:'propcorn', x:223, y:167, a1:1, a2:1, a3:1}
+				{id:'propgreenPeppers', x:294, y:186, a1:1, a2:1, a3:1}
+				{id:'propmushrooms', x:370, y:185, a1:1, a2:1, a3:1}
+				{id:'propblueberries', x:440, y:172, a1:1, a2:1, a3:1}
+				{id:'proppeaches', x:530, y:172, a1:1, a2:1, a3:1}
+				{id:'propsugar', x:322, y:273, a1:1, a2:1, a3:1}
+			]
+			[
+				{id:'propmilk', x:303, y:105, a1:1, a2:1, a3:1}
+				{id:'prophoney', x:466, y:116, a1:1, a2:1, a3:1}
+				{id:'propcheese', x:223, y:159, a1:1, a2:1, a3:1}
+				{id:'propmeat', x:310, y:160, a1:1, a2:1, a3:1}
+				{id:'propyogurt', x:370, y:181, a1:1, a2:1, a3:1}
+				{id:'propeggs', x:434, y:183, a1:1, a2:1, a3:1}
+				{id:'propraspberries', x:505, y:201, a1:1, a2:1, a3:1}
+				{id:'proppumpkins', x:405, y:270, a1:1, a2:1, a3:1}
+			]
 		]
-		@positions =
-			market2:[
-				{id:'propstrawberryJelly', x:'310', y:'106'}
-				{id:'propPeanutButter', x:'467', y:'120'}
-				{id:'propcorn', x:'223', y:'167'}
-				{id:'propgreenPeppers', x:'294', y:'186'}
-				{id:'propmushrooms', x:'370', y:'185'}
-				{id:'propblueberries', x:'440', y:'172'}
-				{id:'proppeaches', x:'530', y:'172'}
-				{id:'propsugar', x:'322', y:'273'}
-			]
-			market1:[
-				{id:'propmilk', x:'303', y:'105'}
-				{id:'prophoney', x:'466', y:'116'}
-				{id:'propcheese', x:'223', y:'159'}
-				{id:'propmeat', x:'310', y:'160'}
-				{id:'propyogurt', x:'370', y:'181'}
-				{id:'propeggs', x:'434', y:'183'}
-				{id:'propraspberries', x:'505', y:'201'}
-				{id:'proppumpkins', x:'405', y:'270'}
-			]
-
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Look and click on the words to make a sentence.', 40, 100
+
+		@insertBitmap 'propmarket', 'propmarket', 400, 235, 'mc'
 
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setDropper().setNube1().setNube2().setNube3().introEvaluation()
-	setDropper: ->
+		@setFood(1).setNube1().setNube2().setNube3().setDropper().introEvaluation()
+	setFood: (food) ->
 		scene = new createjs.Container()
 		scene.x = 88
 		scene.y = 66
-		a = @createBitmap 'propmarket', 'propmarket', 312, 169, 'mc'
-		scene.addChild a
-
-		for i in [0..7]
-			a = @createBitmap @positions.market2[i].id,  @positions.market2[i].id,  @positions.market2[i].x,  @positions.market2[i].y, 'mc'
+		@foodcollection = @game[food - 1]
+		for i in [1..@foodcollection.length]
+			a = @createBitmap @foodcollection[i-1].id,  @foodcollection[i-1].id,  @foodcollection[i-1].x,  @foodcollection[i-1].y, 'mc'
 			scene.addChild a
+			@addToLibrary a
+		@addToMain  scene
 
+		@
+	setNube1: ->
+		container = new createjs.Container()
+		container.x = 124
+		container.y = 412
+		container.name = 'nube1'
+		back = @createBitmap 'backNube1', 'n1', 0, 0
+
+		w11 = new ClickableText 'w11', 'are', 0, 25, 20
+		w12 = new ClickableText 'w12', "aren't", 1, 69, 20
+		w13 = new ClickableText 'w13', 'is', 2, 44, 47
+		w14 = new ClickableText 'w14', "isn't", 3, 79, 62
+		
+		container.addChild back, w11, w12, w13, w14
+		@addToLibrary back, w11, w12, w13, w14
+		@addToMain container
+		@
+	setNube2: ->
+		container = new createjs.Container()
+		container.x = 291
+		container.y = 432
+		container.name = 'nube2'
+		back = @createBitmap 'backNube2', 'n2', 0, 0
+		w21 = new ClickableText 'w21', 'any', 0, 33, 10
+		w22 = new ClickableText 'w22', "some", 1, 26, 35
+		container.addChild back, w21, w22
+		@addToLibrary back, w21, w22
+		@addToMain container
+		@
+	setNube3: ->
+		container = new createjs.Container()
+		container.x = 421
+		container.y = 383
+		container.name = 'nube3'
+		back = @createBitmap 'backNube3', 'n3', -6, 0
+
+		w31 = new ClickableText 'w31', 'sugar', 0, 13, 34
+		w32 = new ClickableText 'w32', "mushrooms", 1, 25, 75
+		w33 = new ClickableText 'w33', 'peaches', 2, 92, 17
+		w34 = new ClickableText 'w34', "peanut butter", 3, 67, 45
+		w35 = new ClickableText 'w35', "corn", 4, 136, 74
+		w36 = new ClickableText 'w36', "blueberries", 5, 99, 100
+		w37 = new ClickableText 'w37', "fish", 6, 178, 12
+		w38 = new ClickableText 'w38', "green peppers",7, 199, 36
+		w39 = new ClickableText 'w39', "strawberry jelly", 8, 196, 69
+		w310 = new ClickableText 'w310', "apples", 9, 212, 106
+
+		container.addChild back, w31,w32,w33,w34,w35,w36,w37,w38,w39,w310	
+		@addToLibrary back, w31,w32,w33,w34,w35,w36,w37,w38,w39,w310	
+		@addToMain container
+		@
+	setDropper: ->
 		dropper = new createjs.Container()
 		dropper.x = stageSize.w / 2 - 205
 		dropper.y = 540
@@ -89,9 +136,9 @@ class U1A1 extends Oda
 		t.y = 0
 		dropper.addChild t
 
-		h1 = new WordContainer 'h1', '', '', '#f39234', 90, 0, 60, 22
-		h2 = new WordContainer 'h2', '', '', '#f39234', 160, 0, 80, 22
-		h3 = new WordContainer 'h3', '', '', '#f39234', 250, 0, 140, 22
+		h1 = new WordContainer 'wc1', '', '', '#f39234', 90, 0, 60, 22
+		h2 = new WordContainer 'wc2', '', '', '#f39234', 160, 0, 80, 22
+		h3 = new WordContainer 'wc3', '', '', '#f39234', 250, 0, 140, 22
 		
 		t = new createjs.Text '.','24px Arial','#333'
 		t.x = 393
@@ -100,162 +147,90 @@ class U1A1 extends Oda
 
 		dropper.addChild h1, h2, h3
 		@addToLibrary h1, h2, h3
-		@addToMain dropper, scene
-		@
-	setNube1: ->
-		container = new createjs.Container()
-		container.x = 124
-		container.y = 412
-		container.name = 'nube1'
-		back = @createBitmap 'backNube1', 'n1', 0, 0
-
-		p1n1 = new ClickableText 'p1n1', 'are', 0, 25, 20
-		p2n1 = new ClickableText 'p2n1', "aren't", 1, 69, 20
-		p3n1 = new ClickableText 'p3n1', 'is', 2, 44, 47
-		p4n1 = new ClickableText 'p4n1', "isn't", 3, 79, 62
-		
-		container.addChild back, p1n1, p2n1, p3n1, p4n1
-		@addToLibrary back, p1n1, p2n1
-		@addToMain container
-		@
-	setNube2: ->
-		container = new createjs.Container()
-		container.x = 291
-		container.y = 432
-		container.name = 'nube2'
-		back = @createBitmap 'backNube2', 'n2', 0, 0
-		p1n2 = new ClickableText 'p1n2', 'any', 0, 33, 10
-		p2n2 = new ClickableText 'p2n2', "some", 1, 26, 35
-		container.addChild back, p1n2, p2n2
-		@addToLibrary back, p1n2, p2n2
-		@addToMain container
-		@
-	setNube3: ->
-		container = new createjs.Container()
-		container.x = 421
-		container.y = 383
-		container.name = 'nube3'
-		back = @createBitmap 'backNube3', 'n3', -6, 0
-
-		p1n3 = new ClickableText 'p1n3', 'sugar', 0, 13, 34
-		p2n3 = new ClickableText 'p2n3', "mushrooms", 1, 25, 75
-		p3n3 = new ClickableText 'p3n3', 'peaches', 2, 92, 17
-		p4n3 = new ClickableText 'p4n3', "peanut butter", 3, 67, 45
-		p5n3 = new ClickableText 'p5n3', "corn", 4, 136, 74
-		p6n3 = new ClickableText 'p6n3', "blueberries", 5, 99, 100
-		p7n3 = new ClickableText 'p7n3', "fish", 6, 178, 12
-		p8n3 = new ClickableText 'p8n3', "green peppers",7, 199, 36
-		p9n3 = new ClickableText 'p9n3', "strawberry jelly", 8, 196, 69
-		p10n3 = new ClickableText 'p10n3', "apples", 9, 212, 106
-
-		container.addChild back, p1n3, p2n3, p3n3, p4n3, p5n3, p6n3, p7n3, p8n3, p9n3, p10n3
-		@addToLibrary back, p1n3, p2n3, p3n3, p4n3, p5n3, p6n3, p7n3, p8n3, p9n3, p10n3
-		@addToMain container
+		@addToMain dropper
 		@
 	introEvaluation: ->
 		super
-		for i in [1..2] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n1'].onInitEvaluation
-		for i in [1..4] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n2'].onInitEvaluation
-		for i in [1..5] by 1
-			@observer.subscribe 'init_evaluation', @library['p'+i+'n3'].onInitEvaluation
-		
-		
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 1.2}
-		TweenLite.from @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 20, delay: 1.4}
-		TweenLite.from @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 20, delay: 1.5}
-		TweenLite.from @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 20, delay: 1.6, onComplete: @playInstructions, onCompleteParams: [@]}
+		#TweenMax.allFrom [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
+		TweenLite.from @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 50, delay: 1}
+		TweenLite.from @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 50, delay: 1.1}
+		TweenLite.from @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 50, delay: 1.2}
+		TweenLite.from @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['h1'].blink()
-		@blink @library['backNube1']
-		for i in [1..2] by 1
-			@library['p'+i+'n1'].addEventListener 'drop', @evaluateAnswer1
-		false
+		@blink @library[@foodcollection[@index].id]
+		@blink @library['nube1']
+		for i in [1..4] by 1
+			@library['w1'+i].addEventListener 'click', @evaluateAnswer1
 	evaluateAnswer1: (e) =>
 		@answer = e.target
-		pt = @library['h1'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['h1'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].w1
-				@answer.visible = false
-				@library['h1'].changeText @answer.text.text
-				@library['h1'].blink off
-				@blink @library['backNube1'], off
-				@library['h2'].blink()
-				@blink @library['backNube2']
-				for i in [1..4] by 1
-					@library['p'+i+'n2'].addEventListener 'drop', @evaluateAnswer2
-				false
-			else
-				@warning()
-				@answer.returnToPlace()
+		if @answer.index is @foodcollection[@index].a1
+			createjs.Sound.play 'good'
+			@blink @library['nube1'], off
+			@library['wc1'].changeText @answer.text.text
+			@blink @library['nube2']
+			for i in [1..4] by 1
+				@library['w1'+i].removeEventListener 'click', @evaluateAnswer1
+			for i in [1..2] by 1
+				@library['w2'+i].addEventListener 'click', @evaluateAnswer2
 		else
-			@answer.returnToPlace()
+			@warning()
 	evaluateAnswer2: (e) =>
 		@answer = e.target
-		pt = @library['h2'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['h2'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].w2
-				@answer.visible = false
-				@library['h2'].changeText @answer.text.text
-				@library['h2'].blink off
-				@blink @library['backNube2'], off
-				@library['h3'].blink()
-				@blink @library['backNube3']
-				for i in [1..5] by 1
-					@library['p'+i+'n3'].addEventListener 'drop', @evaluateAnswer3
-			else
-				@warning()
-				@answer.returnToPlace()
+		if @answer.index is @foodcollection[@index].a2
+			createjs.Sound.play 'good'
+			@blink @library['nube2'], off
+			@library['wc2'].changeText @answer.text.text
+			@blink @library['nube3']
+			for i in [1..2] by 1
+				@library['w2'+i].removeEventListener 'click', @evaluateAnswer2
+			for i in [1..10] by 1
+				@library['w3'+i].addEventListener 'click', @evaluateAnswer3
 		else
-			@answer.returnToPlace()
-	evaluateAnswer3:(e) =>
-		@answer = e.target;
-		pt = @library['h3'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['h3'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].w3
-				@answer.visible = false
-				@library['h3'].changeText @answer.text.text
-				@library['h3'].blink off
-				@blink @library['backNube3'], off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
+			@warning()
+	evaluateAnswer3: (e) =>
+		@answer = e.target
+		if @answer.index is @foodcollection[@index].a3
+			createjs.Sound.play 'good'
+			@blink @library['nube3'], off
+			@blink @library[@foodcollection[@index].id], off
+			@library['wc3'].changeText @answer.text.text
+			for i in [1..10] by 1
+				@library['w3'+i].removeEventListener 'click', @evaluateAnswer3
+			setTimeout @finishEvaluation, 1 * 1000
 		else
-			@answer.returnToPlace()
+			@warning()
 	finishEvaluation: =>
 		@library['score'].plusOne()
-		song = createjs.Sound.play @answers[@index].sound
-		song.addEventListener 'complete', @clearEvaluation
-	clearEvaluation: (e) =>
-		for i in [1..2] by 1
-			@library['p'+i+'n1'].visible = true
-			@library['p'+i+'n1'].returnToPlace()
-		for i in [1..4] by 1
-			@library['p'+i+'n2'].visible = true
-			@library['p'+i+'n2'].returnToPlace()
-		for i in [1..5] by 1
-			@library['p'+i+'n3'].visible = true
-			@library['p'+i+'n3'].returnToPlace()
-		for i in [1..3] by 1
-			@library['h'+i].changeText ''
+		TweenLite.to @library['dropper'], 0.5, {alpha: 0, ease: Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
-			@library['h1'].blink()
-			@blink @library['backNube1']
-			for i in [1..2] by 1
-				@library['p'+i+'n1'].addEventListener 'drop', @evaluateAnswer1
+		if @index < @foodcollection.length
+			@library['wc1'].changeText ''
+			@library['wc2'].changeText ''
+			@library['wc3'].changeText ''
+			@blink @library[@foodcollection[@index].id]
+			@blink @library['nube1']
+			for i in [1..4] by 1
+				@library['w1'+i].addEventListener 'click', @evaluateAnswer1
+			TweenLite.to @library['dropper'], 0.5, {alpha: 1, ease: Quart.easeOut}
 		else
+			@library['wc1'].changeText ''
+			@library['wc2'].changeText ''
+			@library['wc3'].changeText ''
+			TweenLite.to @library['dropper'], 0.5, {alpha: 1, ease: Quart.easeOut}
 			@finish()
 	blink: (obj, state = on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
+		#TweenMax.to [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
+		TweenLite.to @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 50, delay: 0.1}
+		TweenLite.to @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 50, delay: 0.1}
+		TweenLite.to @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 50, delay: 0.1}
+		TweenLite.to @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 0.1}
 		super
-	window.U1A1 = U1A1
+	window.U2A1 = U2A1
