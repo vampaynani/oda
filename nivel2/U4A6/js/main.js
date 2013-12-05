@@ -348,7 +348,7 @@
       U4A6.__super__.setStage.apply(this, arguments);
       this.preguntas = this.shuffleNoRepeat(this.game.preguntas, 16);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Take the review quiz! Click on the correct option.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setQuestion(0).introEvaluation();
     };

@@ -381,7 +381,7 @@
       U3A6.__super__.setStage.apply(this, arguments);
       this.answers = this.shuffleNoRepeat(this.game.answers, 10);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Click on the letters and guess the word before George is complete.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setChango().createAlphabet().introEvaluation();
     };

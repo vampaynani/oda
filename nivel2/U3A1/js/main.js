@@ -1068,7 +1068,7 @@
       U3A1.__super__.setStage.apply(this, arguments);
       this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and drag the foods and drinks to the menu.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
       return this.setDropper().setMenu(1).introEvaluation();
     };

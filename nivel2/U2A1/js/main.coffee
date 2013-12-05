@@ -35,7 +35,7 @@ class U2A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Read, look and drag the phrases to complete the sentences.', 30, 100
 		@insertBitmap 'casa', 'casa', 84, 137
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
 		@setDropper().setClouds().introEvaluation()

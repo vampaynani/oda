@@ -87,7 +87,7 @@ class U2A4 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and drag the clocks to the correct picture.', 40, 100
 		@insertBitmap 'repeat', 'repeat', 545, 539
 		@insertBitmap 'finish', 'finish', 663, 539
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0

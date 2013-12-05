@@ -482,7 +482,7 @@
     U3A3.prototype.setStage = function() {
       U3A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Drag the pictures and instructions in the correct order and click on the Ready to Eat! button.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setStart();
     };
@@ -706,10 +706,10 @@
         }
         if (this.library[value.t].hitTest(pt.x, pt.y)) {
           this.library.score.plusOne();
-          r = this.createBitmap('correct' + value.t.name, 'correct', npt.x, npt.y);
+          r = this.createBitmap('correct', 'correct', npt.x, npt.y);
         } else {
           this.complete = false;
-          r = this.createBitmap('wrong' + value.t.name, 'wrong', npt.x, npt.y);
+          r = this.createBitmap('wrong', 'wrong', npt.x, npt.y);
         }
         this.library[this.current].addChild(r);
       }

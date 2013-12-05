@@ -401,12 +401,12 @@
       this.pccards = this.shuffleNoRepeat(this.animals, 9);
       this.game.animals = this.shuffle(this.animals);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and click on the correct pictures.', 40, 100);
       this.insertBitmap('scoreComputer', 'scoreComputer', 19, 463);
       this.insertBitmap('scoreYou', 'scoreYou', 19, 370);
       this.insertBitmap('repeatbtn', 'repeatbtn', 395, 536);
-      this.insertText('pcCount', this.game.pc, '24px Quicksand', '#ffffff', 41, 487, 'center');
-      this.insertText('youCount', this.game.you, '24px Quicksand', '#ffffff', 41, 397, 'center');
+      this.insertText('pcCount', this.game.pc, '24px Quicksand', '#ffffff', 47, 487, 'center');
+      this.insertText('youCount', this.game.you, '24px Quicksand', '#ffffff', 47, 397, 'center');
       return this.setCardsYou().setCardsPc().introEvaluation();
     };
 

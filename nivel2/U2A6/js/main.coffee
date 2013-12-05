@@ -73,7 +73,7 @@ class U2A6 extends Oda
 		
 		@insertBitmap 'background', 'background', 0, 50
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Race the clock! Drag the numerals to the number words.', 40, 100
 		@insertBitmap 'l1', 'level1Btn', 731, 436
 		@insertBitmap 'l2', 'level2Btn', 731, 483
 		@insertBitmap 'l3', 'level3Btn', 731, 530

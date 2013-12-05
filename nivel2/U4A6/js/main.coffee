@@ -82,7 +82,7 @@ class U4A6 extends Oda
 		super
 		@preguntas = @shuffleNoRepeat @game.preguntas, 16
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Take the review quiz! Click on the correct option.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
 		@setQuestion(0).introEvaluation()
 	setQuestion: (i) ->

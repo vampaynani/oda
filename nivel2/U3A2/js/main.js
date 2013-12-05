@@ -344,7 +344,7 @@
     U3A2.prototype.setStage = function() {
       U3A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read, follow the lines and click on the correct answer.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 18, 0));
       return this.setCommon().setMenu(1).introEvaluation();
     };

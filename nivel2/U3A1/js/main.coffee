@@ -401,7 +401,7 @@ class U3A1 extends Oda
 		super
 		@answers = @clone @game.answers
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and drag the foods and drinks to the menu.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
 		@setDropper().setMenu(1).introEvaluation()
 	setDropper: ->

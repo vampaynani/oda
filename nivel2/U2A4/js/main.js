@@ -236,7 +236,7 @@
     U2A4.prototype.setStage = function() {
       U2A4.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and drag the clocks to the correct picture.', 40, 100);
       this.insertBitmap('repeat', 'repeat', 545, 539);
       this.insertBitmap('finish', 'finish', 663, 539);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));

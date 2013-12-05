@@ -155,12 +155,12 @@ class U4A1 extends Oda
 		@game.animals = @shuffle @animals
 
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and click on the correct pictures.', 40, 100
 		@insertBitmap 'scoreComputer', 'scoreComputer', 19, 463
 		@insertBitmap 'scoreYou', 'scoreYou', 19, 370
 		@insertBitmap 'repeatbtn', 'repeatbtn', 395, 536
-		@insertText 'pcCount',@game.pc,'24px Quicksand', '#ffffff',41,487,'center'
-		@insertText 'youCount',@game.you,'24px Quicksand', '#ffffff',41,397,'center'
+		@insertText 'pcCount',@game.pc,'24px Quicksand', '#ffffff',47,487,'center'
+		@insertText 'youCount',@game.you,'24px Quicksand', '#ffffff',47,397,'center'
 		@setCardsYou().setCardsPc().introEvaluation()
 	jug: ->
 		@game.you++

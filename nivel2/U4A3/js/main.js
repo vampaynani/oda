@@ -232,7 +232,7 @@
     U4A3.prototype.setStage = function() {
       U4A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Look and click on the corresponding picture.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setParts().setAnimals().setText().introEvaluation();
     };

@@ -100,7 +100,7 @@ class U2A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Drag the puzzle pieces, read and click on the correct answers.', 40, 100
 		@insertBitmap 'p1', 'p1', 731, 436
 		@insertBitmap 'p2', 'p2', 731, 483
 		@insertBitmap 'p3', 'p3', 731, 530

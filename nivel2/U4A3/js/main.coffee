@@ -75,7 +75,7 @@ class U4A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Look and click on the corresponding picture.', 40, 100
 	
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@setParts().setAnimals().setText().introEvaluation()

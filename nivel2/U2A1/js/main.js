@@ -104,7 +104,7 @@
     U2A1.prototype.setStage = function() {
       U2A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read, look and drag the phrases to complete the sentences.', 30, 100);
       this.insertBitmap('casa', 'casa', 84, 137);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
       return this.setDropper().setClouds().introEvaluation();

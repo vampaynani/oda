@@ -305,7 +305,7 @@
     U2A3.prototype.setStage = function() {
       U2A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Drag the puzzle pieces, read and click on the correct answers.', 40, 100);
       this.insertBitmap('p1', 'p1', 731, 436);
       this.insertBitmap('p2', 'p2', 731, 483);
       this.insertBitmap('p3', 'p3', 731, 530);

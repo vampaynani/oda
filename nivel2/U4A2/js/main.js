@@ -117,7 +117,7 @@
     U4A2.prototype.setStage = function() {
       U4A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Find the words and drag the cursor.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 9, 0));
       return this.setAnimals().setSopa().introEvaluation();
     };

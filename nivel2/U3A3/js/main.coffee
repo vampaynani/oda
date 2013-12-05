@@ -175,8 +175,7 @@ class U3A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-	
+		@insertInstructions 'instructions', 'Drag the pictures and instructions in the correct order and click on the Ready to Eat! button.', 40, 100		
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@setStart()
 	setStart:  ->
