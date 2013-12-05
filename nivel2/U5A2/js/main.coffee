@@ -71,7 +71,7 @@ class U5A2 extends Oda
 		@steps = @shuffle @game.steps
 		@stepsid = (step.id for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and click on the correct option.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 15, 0
 		@setStep().introEvaluation()
 	setStep: ->

@@ -69,7 +69,7 @@ class U6A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Read and drag the sentences to complete the story.', 40, 100
 		@insertBitmap 'title', 'title1', 350, 125, 'tc'
 		@insertBitmap 'btnnext', 'btn', 760, 520, 'tc'
 		@library['btnnext'].visible = off

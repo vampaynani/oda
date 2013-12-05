@@ -90,7 +90,7 @@ class U7A3 extends Oda
 		super
 		@intento = 0
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Read, drag the letters and complete the mystery word.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 13, 0
 		@setScene(1).introEvaluation()
 	setScene: (scene) ->

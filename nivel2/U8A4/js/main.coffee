@@ -58,7 +58,7 @@ class U8A4 extends Oda
 		super
 		@steps = @shuffle @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and drag the name to the corresponding person.', 40, 100
 		@insertBitmap 'finish', 'btnfinished', 387, 541
 		@insertBitmap 'repeat', 'btnrepeat', 264, 541
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0

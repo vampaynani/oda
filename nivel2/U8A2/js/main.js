@@ -261,7 +261,7 @@
       U8A2.__super__.setStage.apply(this, arguments);
       this.escena = 1;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Drag the words to form a question.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 24, 0));
       return this.setScene(1).setDropper(1).setNube1().setNube2().introEvaluation();
     };

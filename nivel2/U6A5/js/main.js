@@ -148,16 +148,16 @@
           texts: [
             {
               idx: 8,
-              t: "Phil and Bo sit in the living room."
+              t: "He wants to interview Phil and his mom about Jack's amazing rescue."
             }, {
               idx: 7,
-              t: 'He puts on his snow pants, sweater, coat and boats.'
-            }, {
-              idx: 5,
-              t: 'Phil jumps up and down and claps his hands.'
+              t: 'They take Jack to the hospital in an ambulance.'
             }, {
               idx: 6,
-              t: "Phil calls his friend Jack on the phone"
+              t: 'He is sitting in the snow next to Jack!'
+            }, {
+              idx: 5,
+              t: "Phil and his mom follow the sound of Bo barking."
             }
           ],
           positions: [
@@ -184,7 +184,7 @@
     U6A5.prototype.setStage = function() {
       U6A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read and drag the sentences to complete the story.', 40, 100);
       this.insertBitmap('title', 'title1', 350, 125, 'tc');
       this.insertBitmap('btnnext', 'btn', 760, 520, 'tc');
       this.library['btnnext'].visible = false;

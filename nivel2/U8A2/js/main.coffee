@@ -85,7 +85,7 @@ class U8A2 extends Oda
 		super
 		@escena = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Drag the words to form a question.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 24, 0
 		@setScene( 1 ).setDropper( 1 ).setNube1().setNube2().introEvaluation()
 	setScene: (scene) ->

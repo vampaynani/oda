@@ -456,7 +456,7 @@
     U5A4.prototype.setStage = function() {
       U5A4.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Click on the models, listen and dress them up.', 40, 100);
       this.insertBitmap('bg', 'bg', 85, 300);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setKids('summer').setRopa().introEvaluation();

@@ -140,7 +140,7 @@ class U5A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 95
+		@insertInstructions 'instructions', 'Listen and drag the pictures to the correct month on the calendar.', 40, 100
 		@insertBitmap 'btnRepeat', 'btnRepeat', 598, 245
 		@insertBitmap 'btnFinished', 'btnFinished', 598, 292
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0

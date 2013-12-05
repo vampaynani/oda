@@ -125,7 +125,7 @@
       this.intento = 0;
       this.steps = this.shuffle(this.game.steps);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Look at the passports, read and drag the words to complete the text.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setDropper(1).setPassports().introEvaluation();
     };

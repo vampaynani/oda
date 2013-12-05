@@ -83,7 +83,7 @@ class U5A3 extends Oda
 		super
 		@success = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Unscramble the seasons, months of the year and holidays.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
 		@setSeasons().introEvaluation()
 	setSeasons: ->

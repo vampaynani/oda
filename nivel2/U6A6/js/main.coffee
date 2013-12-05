@@ -157,8 +157,7 @@ class U6A6 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-		#@insertBitmap 'crosswordsBack', 'crossWords', 227, 120
+		@insertInstructions 'instructions', 'Look and drag the letters to complete the crossword puzzle.', 40, 100
 		doc = @createBitmap 'persondoctor', 'persondoctor', '77', '121'
 		mec = @createBitmap 'personmechanic', 'personmechanic', '137', '194'
 		chef = @createBitmap 'personchef', 'personchef', '27', '208'

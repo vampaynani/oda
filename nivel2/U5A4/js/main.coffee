@@ -178,7 +178,7 @@ class U5A4 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Click on the models, listen and dress them up.', 40, 100
 		@insertBitmap 'bg', 'bg', 85, 300
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
 		@setKids('summer').setRopa().introEvaluation()

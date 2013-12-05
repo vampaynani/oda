@@ -52,7 +52,7 @@ class U7A2 extends Oda
 		super
 		@actividades = @game.actividades
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Listen and drag the icons to the correct place on the schedule.', 40, 100
 		@insertBitmap 'btnRepeat', 'btnrepeat', 650, 367
 		@insertBitmap 'btnFinished', 'btnfinished', 650, 414
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0

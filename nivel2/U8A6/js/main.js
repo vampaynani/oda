@@ -264,7 +264,7 @@
       this.intento = 0;
       this.preguntas = this.shuffleNoRepeat(this.game.preguntas, 11);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Take the review quiz! Look and click on the correct option.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setQuestion(0).introEvaluation();
     };

@@ -189,7 +189,7 @@
     U6A2.prototype.setStage = function() {
       U6A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and drag the buildings to the correct place on the map.', 40, 100);
       this.insertBitmap('btnRepeat', 'repeatbtn', stageSize.w / 2, 570, 'mc');
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 9, 0));
       return this.setMap(1).introEvaluation();
@@ -211,7 +211,7 @@
         drop = _ref[_i];
         s = new createjs.Shape();
         s.name = "" + drop.i;
-        s.graphics.beginFill('rgba(0,0,0,0.1)').drawRect(0, 0, drop.w, drop.h);
+        s.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(0, 0, drop.w, drop.h);
         s.x = drop.x;
         s.y = drop.y;
         drops.push(s);
@@ -234,7 +234,7 @@
     U6A2.prototype.introEvaluation = function() {
       U6A2.__super__.introEvaluation.apply(this, arguments);
       TweenLite.from(this.library.header, 1, {
-        y: -this.library['header'].height
+        y: -this.library.header.height
       });
       TweenLite.from(this.library.instructions, 1, {
         alpha: 0,

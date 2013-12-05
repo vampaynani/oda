@@ -288,7 +288,7 @@
         return _results;
       }).call(this);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read and drag the words to make questions.', 40, 100);
       imgs = this.createSprite('images', stepsimg, null, stageSize.w / 2, 235, 'mc');
       imgs.scaleX = imgs.scaleY = 0.3;
       this.addToMain(imgs);

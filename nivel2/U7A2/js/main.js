@@ -148,7 +148,7 @@
       U7A2.__super__.setStage.apply(this, arguments);
       this.actividades = this.game.actividades;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and drag the icons to the correct place on the schedule.', 40, 100);
       this.insertBitmap('btnRepeat', 'btnrepeat', 650, 367);
       this.insertBitmap('btnFinished', 'btnfinished', 650, 414);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));

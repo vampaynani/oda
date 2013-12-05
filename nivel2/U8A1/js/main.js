@@ -374,7 +374,7 @@
       var b1, b2, b3;
       U8A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Click on two cards and see if they match.', 40, 100);
       b1 = new Button('game1btn', this.preload.getResult('game1btn'), 1, 753, 460);
       b2 = new Button('game2btn', this.preload.getResult('game2btn'), 2, 753, 505);
       b3 = new Button('game3btn', this.preload.getResult('game3btn'), 3, 753, 550);

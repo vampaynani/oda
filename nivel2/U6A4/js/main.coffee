@@ -36,14 +36,13 @@ class U6A4 extends Oda
 				{txt:'They are asking for help at the police station', img:'policestation'}
 				{txt:'He is eating dinner at a restaurant', img:'restaurant'}
 			]
-			#txt:'He is getting money at the bank', img:'waitingbus'}
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@success = 1
 		@steps = @shuffle @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Look at the pictures and unscramble the words to make sentences.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
 		@setScenario( 1 ).introEvaluation()
 	setScenario: (sce) ->

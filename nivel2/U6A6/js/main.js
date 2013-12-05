@@ -506,7 +506,7 @@
       var chef, doc, fire, mec, poli, sales, vet, wait;
       U6A6.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Look and drag the letters to complete the crossword puzzle.', 40, 100);
       doc = this.createBitmap('persondoctor', 'persondoctor', '77', '121');
       mec = this.createBitmap('personmechanic', 'personmechanic', '137', '194');
       chef = this.createBitmap('personchef', 'personchef', '27', '208');

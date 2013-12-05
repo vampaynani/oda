@@ -263,7 +263,7 @@
       U5A3.__super__.setStage.apply(this, arguments);
       this.success = 1;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Unscramble the seasons, months of the year and holidays.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 20, 0));
       return this.setSeasons().introEvaluation();
     };

@@ -253,7 +253,7 @@
       U7A3.__super__.setStage.apply(this, arguments);
       this.intento = 0;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read, drag the letters and complete the mystery word.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 13, 0));
       return this.setScene(1).introEvaluation();
     };

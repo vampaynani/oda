@@ -159,7 +159,7 @@
       U7A1.__super__.setStage.apply(this, arguments);
       this.intento = 0;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read, look and drag the words to complete the sentences.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
       return this.setEscena(1).setNube().introEvaluation();
     };

@@ -184,7 +184,7 @@
     U5A5.prototype.setStage = function() {
       U5A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read and drag the sentences to complete the story.', 40, 100);
       this.insertBitmap('title', 'title1', 350, 125, 'tc');
       this.insertBitmap('btnnext', 'btn', 760, 520, 'tc');
       this.library['btnnext'].visible = false;

@@ -181,7 +181,7 @@
       U8A4.__super__.setStage.apply(this, arguments);
       this.steps = this.shuffle(this.game.steps);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and drag the name to the corresponding person.', 40, 100);
       this.insertBitmap('finish', 'btnfinished', 387, 541);
       this.insertBitmap('repeat', 'btnrepeat', 264, 541);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));

@@ -131,7 +131,7 @@ class U5A6 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Click on two cards and see if they match.', 40, 100
 		b1 = new Button 'game1btn', (@preload.getResult 'game1btn'), 1, 753, 460
 		b2 = new Button 'game2btn', (@preload.getResult 'game2btn'), 2, 753, 505
 		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
