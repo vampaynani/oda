@@ -101,7 +101,7 @@ class U1A5 extends Oda
 	initEvaluation: (e) =>
 		super
 		createjs.Sound.play "scene#{@scene}"
-		for i in [2..@game[@scene - 1].texts.length] by 1
+		for i in [1..@game[@scene - 1].texts.length] by 1
 			@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 	evaluateAnswer: (e) =>
 		@answer = e.target
@@ -123,7 +123,7 @@ class U1A5 extends Oda
 					createjs.Sound.play 'good'
 					if @intento is 0
 						@library['score'].plusOne()
-						@intento = 0
+					@intento = 0
 					@finishEvaluation()
 				else
 					@intento = 1

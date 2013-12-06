@@ -210,7 +210,7 @@
       U1A5.__super__.initEvaluation.apply(this, arguments);
       createjs.Sound.play("scene" + this.scene);
       _results = [];
-      for (i = _i = 2, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
+      for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
         _results.push(this.library["t" + i].addEventListener('click', this.evaluateAnswer));
       }
       return _results;
@@ -240,8 +240,8 @@
             createjs.Sound.play('good');
             if (this.intento === 0) {
               this.library['score'].plusOne();
-              this.intento = 0;
             }
+            this.intento = 0;
             _results.push(this.finishEvaluation());
           } else {
             this.intento = 1;
