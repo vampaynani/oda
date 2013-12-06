@@ -1,4 +1,4 @@
-class U5A3 extends Oda
+class U2A4 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -30,23 +30,24 @@ class U5A3 extends Oda
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U5_A3_instructions.mp3', id:'instructions'}
 		]
-		@imagenes = [
-			{id: 'imageBacon', x:'118', y:'415'}
-			{id: 'imageButter', x:'95', y:'334'}
-			{id: 'imageCheese', x:'176', y:'524'}
-			{id: 'imageCream',  x:'569', y:'165'}
-			{id: 'imageHoney',  x:'717', y:'282'}
-			{id: 'imageLeather',  x:'684', y:'520'}
-			{id: 'imageMushrooms',  x:'323', y:'177'}
-			{id: 'imagePeanutbutter',  x:'540', y:'498'}
-			{id: 'imagePumpkins',  x:'168', y:'165'}
-			{id: 'imageSugar',  x:'149', y:'266'}
-			{id: 'imageTomatoes', x:'460', y:'165'}
-			{id: 'imageTurbines', x:'679', y:'163'}
-			{id: 'imageWax',  x:'402', y:'520'}
-			{id: 'imageYarn',  x:'701', y:'422'}
-			{id: 'imageYogurt',  x:'279', y:'481'}
-		]
+		@game = 
+			imagenes: [
+				{id: 'imageBacon', x:'118', y:'415', txt:'Bacon'}
+				{id: 'imageButter', x:'95', y:'334', txt:'Butter'}
+				{id: 'imageCheese', x:'176', y:'524', txt:'Cheese'}
+				{id: 'imageCream',  x:'569', y:'165', txt:'Cream'}
+				{id: 'imageHoney',  x:'717', y:'282', txt:'Honey'}
+				{id: 'imageLeather',  x:'684', y:'520', txt:'Leather'}
+				{id: 'imageMushrooms',  x:'323', y:'177', txt:'Mushrooms'}
+				{id: 'imagePeanutbutter',  x:'540', y:'498', txt:'Peanutbutter'}
+				{id: 'imagePumpkins',  x:'168', y:'165', txt:'Pumpkins'}
+				{id: 'imageSugar',  x:'149', y:'266', txt:'Sugar'}
+				{id: 'imageTomatoes', x:'460', y:'165', txt:'Tomatoes'}
+				{id: 'imageTurbines', x:'679', y:'163', txt:'Turbines'}
+				{id: 'imageWax',  x:'402', y:'520', txt:'Wax'}
+				{id: 'imageYarn',  x:'701', y:'422', txt:'Yarn'}
+				{id: 'imageYogurt',  x:'279', y:'481', txt:'Yogurt'}
+			]
 		@answers = [
 			{txt:'Bacon',img:'imageBacon'}
 			{txt:'Butter',img:'imageButter'}
@@ -68,12 +69,12 @@ class U5A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@insertInstructions 'instructions', 'Unscramble the seasons, months of the year and holidays.', 40, 100
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 15, 0
 		@setSeasons().introEvaluation()
 	setSeasons: ->
 		seasons = new createjs.Container()
+		@imagenes = @game.imagenes
 		seasons.name = 'seasons'
 		for i in [0..@imagenes.length-1]
 			img = @createBitmap @imagenes[i].id, @imagenes[i].id, @imagenes[i].x, @imagenes[i].y, 'mc'
@@ -88,7 +89,7 @@ class U5A3 extends Oda
 		TweenLite.from @library['seasons'], 0.5, {alpha: 0, y: @library['seasons'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@answers = @shuffle @answers
+		@answers = @shuffle @imagenes
 		@setQuestion @index
 	setQuestion: (question) ->
 		letras = new createjs.Container()
@@ -123,29 +124,43 @@ class U5A3 extends Oda
 			if @library["l#{i}"]
 				pt = @library["l#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
 				if @library["l#{i}"].hitTest pt.x, pt.y
-					if @answer.index is @library["l#{i}"].index
+					#if @answer.index is @library["l#{i}"].index
+					if @library["l#{i}"].text.text is ''
 						@answer.visible = off
-						@library["l#{i}"].changeText @library["l#{i}"].index
+						@library["l#{i}"].changeText @answer.index#@library["l#{i}"].index
 						dropped = on
-					else
-						@warning()
+					
 		if not dropped then @answer.returnToPlace() else @finishEvaluation()
 	finishEvaluation: =>
+		col = @answers[@index].txt.split ''
 		for i in [1..@scrambled.length]
 			if @library["l#{i}"]
 				if @library["l#{i}"].text.text is ''
 					return
-		createjs.Sound.play 'good'
-		TweenLite.to @library[@answers[@index].img], 1, {alpha: 0, y: @library[@answers[@index].img].y - 20, ease: Back.easeOut}
-		TweenLite.to @library['letras'], 1, {alpha: 0, y: @library['letras'].y - 20, ease: Back.easeOut}
-		TweenLite.to @library['palabra'], 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
+		for i in [1..@scrambled.length]
+			if @library["l#{i}"]
+				if @library["l#{i}"].text.text isnt col[i-1]
+					@success = 0
+		if @success is 1
+			createjs.Sound.play 'good'
+			@library.score.plusOne()
+		else
+			createjs.Sound.play 'wrong'
+			@success = 1
+			for i in [1..@scrambled.length]
+				@library["l#{i}"].text.text = col[i-1]
+		setTimeout @nextEvaluation, 2 * 1000
+
+
 	nextEvaluation: =>
+		TweenLite.to @library[@imagenes[@index].id], 1, {alpha: 0, y: @library[@imagenes[@index].id].y - 20, ease: Back.easeOut}
+		TweenLite.to @library.letras, 1, {alpha: 0, y: @library['letras'].y - 20, ease: Back.easeOut}
+		TweenLite.to @library.palabra, 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut}
 		@index++
 		if @index < @answers.length
-			@library['score'].updateCount @index
 			@setQuestion @index
 		else
 			@finish()
 	finish: ->
 		super
-	window.U5A3 = U5A3
+	window.U2A4 = U2A4
