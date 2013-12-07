@@ -90,11 +90,11 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
+          src: 'sounds/TU2_U1_A1_Instructions.mp3',
           id: 'instructions'
         }, {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }
       ];
       this.game = {
@@ -142,6 +142,7 @@
         answer.a = false;
       }
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
+      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
       this.insertBitmap('teacher', 'teacher', stageSize.w / 2, 124, 'tc');
       this.insertBitmap('repeat', 'repeat', stageSize.w / 2, 310, 'tc');
       this.insertSprite('choose1', ['animals1', 'art1', 'cellphone1', 'drink1', 'fish1', 'line1', 'pictures1', 'run1', 'trash1'], {
@@ -178,6 +179,11 @@
       this.library['choose2'].scaleX = this.library['choose2'].scaleY = 0.3;
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
+      });
+      TweenLite.from(this.library['instructions'], 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
       });
       TweenLite.from(this.library['teacher'], 1, {
         alpha: 0,

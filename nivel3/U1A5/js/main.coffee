@@ -135,11 +135,9 @@ class U1A5 extends Oda
 		for i in [1..@game[@scene - 1].positions.length] by 1
 			if @library["sc#{i}"].currentFrame isnt @library["sc#{i}"].spriteSheet._frames.length - 1
 				return
-		@finish()
+		setTimeout @finish, 3 * 1000
 	finish: =>
 		createjs.Sound.stop()
-		createjs.Sound.play 'good'
-
-		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
+		TweenLite.to @library.cuento, 1, {alpha:0, y:@library.cuento.y + 10}
 		super
 	window.U1A5 = U1A5

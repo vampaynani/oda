@@ -17,10 +17,7 @@
       manifest = [
         {
           id: 'head',
-          src: 'pleca.png'
-        }, {
-          id: 'inst',
-          src: 'texto_look.png'
+          src: 'pleca1.png'
         }, {
           id: 'c1',
           src: 'circle1.png'
@@ -157,7 +154,7 @@
       U1A3.__super__.setStage.apply(this, arguments);
       this.escena = 1;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 14, 0));
       return this.setScene(1).setClick().introEvaluation();
     };

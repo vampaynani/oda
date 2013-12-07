@@ -262,15 +262,14 @@
           return;
         }
       }
-      return this.finish();
+      return setTimeout(this.finish, 3 * 1000);
     };
 
     U1A5.prototype.finish = function() {
       createjs.Sound.stop();
-      createjs.Sound.play('good');
-      TweenLite.to(this.library['cuento'], 1, {
+      TweenLite.to(this.library.cuento, 1, {
         alpha: 0,
-        y: this.library['cuento'].y + 10
+        y: this.library.cuento.y + 10
       });
       return U1A5.__super__.finish.apply(this, arguments);
     };

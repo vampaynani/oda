@@ -46,7 +46,7 @@ class U1A4 extends Oda
 	
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
 		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
 		]
 
@@ -150,8 +150,7 @@ class U1A4 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-	
+		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@setmariposa()
 		@startGame

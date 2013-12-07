@@ -1,8 +1,7 @@
 class U1A2 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -37,8 +36,7 @@ class U1A2 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-	
+		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setTickets().setTicketQuestion().introEvaluation()
 	setTickets:  ->
