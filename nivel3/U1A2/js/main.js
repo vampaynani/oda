@@ -13,6 +13,7 @@
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
+      this.evaluateClick = __bind(this.evaluateClick, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
       var manifest, sounds;
       manifest = [
@@ -62,241 +63,358 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
+        }, {
+          src: 'sounds/wrong.mp3',
+          id: 'wrong'
         }, {
           src: 'sounds/TU3_U1_A2_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU3_U1_A2_instructions2.mp3',
+          id: 'instructions2'
+        }, {
+          src: 'sounds/TU3_U1_A2_art.mp3',
+          id: 'sticketArt'
+        }, {
+          src: 'sounds/TU3_U1_A2_bug.mp3',
+          id: 'sticketBug'
+        }, {
+          src: 'sounds/TU3_U1_A2_dinosaur.mp3',
+          id: 'sticketDinosaur'
+        }, {
+          src: 'sounds/TU3_U1_A2_dolphin.mp3',
+          id: 'sticketDolphin'
+        }, {
+          src: 'sounds/TU3_U1_A2_elephant.mp3',
+          id: 'sticketElephant'
+        }, {
+          src: 'sounds/TU3_U1_A2_piano.mp3',
+          id: 'sticketPiano'
+        }, {
+          src: 'sounds/TU3_U1_A2_puppet.mp3',
+          id: 'sticketPuppet'
+        }, {
+          src: 'sounds/TU3_U1_A2_space.mp3',
+          id: 'sticketSpace'
         }
       ];
-      this.answers = [];
-      this.tickets = [
-        {
-          id: 'ticketArt',
-          x: '315',
-          y: '178',
-          preguntaUno: '',
-          pUnoOpcionUno: '',
-          pUnoOpcionDos: '',
-          preguntaDos: '',
-          pDosOpcionUno: '',
-          pDosOpcionDos: ''
-        }, {
-          id: 'ticketBug',
-          x: '549',
-          y: '178',
-          preguntaUno: 'How much does it cost?',
-          pUnoOpcionUno: 'It cost nine dollars.',
-          pUnoOpcionDos: 'It cost thirty-six dollars',
-          preguntaDos: 'What time does it open',
-          pDosOpcionUno: 'It opens at three thirty.',
-          pDosOpcionDos: 'It opens at eleven thirty.'
-        }, {
-          id: 'ticketDinosaur',
-          x: '209',
-          y: '284',
-          preguntaUno: '',
-          pUnoOpcionUno: '',
-          pUnoOpcionDos: '',
-          preguntaDos: '',
-          pDosOpcionUno: '',
-          pDosOpcionDos: ''
-        }, {
-          id: 'ticketDolphin',
-          x: '425',
-          y: '319',
-          preguntaUno: '',
-          pUnoOpcionUno: '',
-          pUnoOpcionDos: '',
-          preguntaDos: '',
-          pDosOpcionUno: '',
-          pDosOpcionDos: ''
-        }, {
-          id: 'ticketElephant',
-          x: '638',
-          y: '284',
-          preguntaUno: '',
-          pUnoOpcionUno: '',
-          pUnoOpcionDos: '',
-          preguntaDos: '',
-          pDosOpcionUno: '',
-          pDosOpcionDos: ''
-        }, {
-          id: 'ticketPiano',
-          x: '205',
-          y: '414',
-          preguntaUno: '',
-          pUnoOpcionUno: '',
-          pUnoOpcionDos: '',
-          preguntaDos: '',
-          pDosOpcionUno: '',
-          pDosOpcionDos: ''
-        }, {
-          id: 'ticketPuppet',
-          x: '423',
-          y: '452',
-          preguntaUno: '',
-          pUnoOpcionUno: '',
-          pUnoOpcionDos: '',
-          preguntaDos: '',
-          pDosOpcionUno: '',
-          pDosOpcionDos: ''
-        }, {
-          id: 'ticketSpace',
-          x: '641',
-          y: '414',
-          preguntaUno: '',
-          pUnoOpcionUno: '',
-          pUnoOpcionDos: '',
-          preguntaDos: '',
-          pDosOpcionUno: '',
-          pDosOpcionDos: ''
-        }
-      ];
+      this.game = {
+        tickets: [
+          {
+            id: 'ticketArt',
+            x: 315,
+            y: 178,
+            questions: [
+              {
+                q: 'Where\'s the event?',
+                a1: 'It\'s at the Art Museum.',
+                a2: 'It\'s at the Art Gallery.',
+                s: 'a2'
+              }, {
+                q: 'What time does it start?',
+                a1: 'It starts at nine o\'clock.',
+                a2: 'It starts at one o\'clock.',
+                s: 'a1'
+              }
+            ]
+          }, {
+            id: 'ticketBug',
+            x: 549,
+            y: 178,
+            questions: [
+              {
+                q: 'How much does it cost?',
+                a1: 'It cost nine dollars.',
+                a2: 'It cost nineteen dollars.',
+                s: 'a1'
+              }, {
+                q: 'What time does it open?',
+                a1: 'It opens at three thirty.',
+                a2: 'It opens at eleven thirty.',
+                s: 'a2'
+              }
+            ]
+          }, {
+            id: 'ticketDinosaur',
+            x: 209,
+            y: 284,
+            questions: [
+              {
+                q: 'How much does it cost?',
+                a1: 'It costs twenty dollars.',
+                a2: 'It costs twelve dollars.',
+                s: 'a2'
+              }, {
+                q: 'What time does it close?',
+                a1: 'It closes at six o\'clock.',
+                a2: 'It closes at ten o\'clock.',
+                s: 'a1'
+              }
+            ]
+          }, {
+            id: 'ticketDolphin',
+            x: 425,
+            y: 319,
+            questions: [
+              {
+                q: 'How much does it cost?',
+                a1: 'It costs nine dollars.',
+                a2: 'It costs nineteen dollars.',
+                s: 'a1'
+              }, {
+                q: 'What time does it start?',
+                a1: 'It starts at three thirty.',
+                a2: 'It starts at three o\'clock.',
+                s: 'a1'
+              }
+            ]
+          }, {
+            id: 'ticketElephant',
+            x: 638,
+            y: 284,
+            questions: [
+              {
+                q: 'What time does it start?',
+                a1: 'The show starts at two o\'clock.',
+                a2: 'It starts at twelve o\'clock.',
+                s: 'a1'
+              }, {
+                q: 'How much does it cost?',
+                a1: 'It costs sixteen dollars.',
+                a2: 'It costs eight dollars.',
+                s: 'a2'
+              }
+            ]
+          }, {
+            id: 'ticketPiano',
+            x: 205,
+            y: 414,
+            questions: [
+              {
+                q: 'What time does it start?',
+                a1: 'It starts at eleven o\'clock at night.',
+                a2: 'It starts at eleven o\'clock in the morning.',
+                s: 'a2'
+              }, {
+                q: 'How much does it cost?',
+                a1: 'It costs fifty dollars.',
+                a2: 'It costs fifteen dollars.',
+                s: 'a2'
+              }
+            ]
+          }, {
+            id: 'ticketPuppet',
+            x: 423,
+            y: 452,
+            questions: [
+              {
+                q: 'Where\'s the event?',
+                a1: 'It\'s at the theater.',
+                a2: 'It\'s at the children\'s museum.',
+                s: 'a1'
+              }, {
+                q: 'What time does it start?',
+                a1: 'It starts at two o\'clock.',
+                a2: 'It starts at three o\'clock.',
+                s: 'a2'
+              }
+            ]
+          }, {
+            id: 'ticketSpace',
+            x: 641,
+            y: 414,
+            questions: [
+              {
+                q: 'Where\'s the event?',
+                a1: 'It\'s at the theater.',
+                a2: 'It\'s at the science museum.',
+                s: 'a2'
+              }, {
+                q: 'What time does it cost?',
+                a1: 'It costs fourteen dollars.',
+                a2: 'It costs forty dollars.',
+                s: 'a1'
+              }
+            ]
+          }
+        ]
+      };
       U1A2.__super__.constructor.call(this, null, manifest, sounds);
     }
 
     U1A2.prototype.setStage = function() {
       U1A2.__super__.setStage.apply(this, arguments);
+      this.current = this.shuffle(this.game.tickets);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Listen and click on the correct ticket.', 40, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setTickets().setTicketQuestion().introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
+      return this.setTickets().introEvaluation();
     };
 
     U1A2.prototype.setTickets = function() {
-      var i, tickets, v, _i;
-      tickets = new createjs.Container();
-      tickets.x = 0;
-      tickets.y = 0;
-      for (i = _i = 0; _i <= 7; i = ++_i) {
-        v = this.createBitmap(this.tickets[i].id, this.tickets[i].id, this.tickets[i].x, this.tickets[i].y, 'mc');
-        v.scaleX = v.scaleY = 0.25;
-        tickets.addChild(v);
-        this.addToLibrary(v);
+      var i, r, tickets, v, _i, _ref;
+      if (this.library.tickets) {
+        tickets = this.library.tickets;
+      } else {
+        tickets = new createjs.Container();
+        tickets.name = 'tickets';
+        for (i = _i = 0, _ref = this.current.length - 1; _i <= _ref; i = _i += 1) {
+          v = this.createBitmap(this.current[i].id, this.current[i].id, this.current[i].x, this.current[i].y, 'mc');
+          v.scaleX = v.scaleY = 0.25;
+          tickets.addChild(v);
+          this.addToLibrary(v);
+        }
+        r = this.createBitmap('repeat', 'repeatbtn', stageSize.w / 2, 530, 'tc');
+        r.addEventListener('click', this.repeatSound);
+        tickets.addChild(r);
       }
       this.addToMain(tickets);
       return this;
     };
 
     U1A2.prototype.setTicketQuestion = function() {
-      var diagonal, dos, i, opciones, text, tickets, total, uno, v, _i;
-      tickets = new createjs.Container();
-      tickets.x = 0;
-      tickets.y = 0;
-      for (i = _i = 0; _i <= 7; i = ++_i) {
-        v = this.createBitmap(this.tickets[i].id, this.tickets[i].id, stageSize.w / 2, stageSize.h / 2, 'mc');
-        v.scaleX = v.scaleY = 0.45;
-        tickets.addChild(v);
-        this.addToLibrary(v);
-        text = new createjs.Text(this.tickets[i].preguntaUno, '24px Arial', '#333');
-        text.x = stageSize.w / 2;
-        text.y = 410;
-        text.textAlign = 'center';
-        tickets.addChild(text);
-        opciones = new createjs.Container();
-        uno = new ClickableText(this.tickets[i].pUnoOpcionUno, this.tickets[i].pUnoOpcionUno, i, 0, 0);
-        opciones.addChild(uno);
-        diagonal = new createjs.Text(' / ', '24px Arial', '#333');
-        diagonal.x = uno.x + uno.width;
-        diagonal.y = 0;
-        opciones.addChild(diagonal);
-        dos = new ClickableText(this.tickets[i].pUnoOpcionDos, this.tickets[i].pUnoOpcionDos, i, diagonal.x + 24, 0);
-        opciones.addChild(dos);
-        total = uno.width + dos.width + 20;
-        opciones.x = stageSize.w / 2 - total / 2;
-        opciones.y = 450;
-        tickets.addChild(opciones);
+      var currentQuestion, diagonal, dos, opciones, question, text, total, uno, v;
+      if (this.library.question) {
+        question = this.library.question;
+        question.alpha = 1;
+      } else {
+        question = new createjs.Container();
+        question.name = 'question';
       }
-      this.addToMain(tickets);
+      question.removeAllChildren();
+      v = this.createBitmap('qticket', this.current[this.index].id, stageSize.w / 2, stageSize.h / 2 - 30, 'mc');
+      v.scaleX = v.scaleY = 0.5;
+      question.addChild(v);
+      currentQuestion = this.current[this.index].questions[this.questionIndex];
+      text = new createjs.Text(currentQuestion.q, '24px Quicksand', '#333');
+      text.x = stageSize.w / 2;
+      text.y = 400;
+      text.textAlign = 'center';
+      question.addChild(text);
+      opciones = new createjs.Container();
+      opciones.y = 430;
+      uno = new ClickableText('a1', currentQuestion.a1, 'a1', 0, 0);
+      opciones.addChild(uno);
+      diagonal = new createjs.Text('/', '16px Quicksand', '#333');
+      diagonal.x = uno.x + uno.width;
+      opciones.addChild(diagonal);
+      dos = new ClickableText('a2', currentQuestion.a2, 'a2', diagonal.x + 10, 0);
+      opciones.addChild(dos);
+      total = uno.width + dos.width + 20;
+      opciones.x = stageSize.w / 2 - total / 2;
+      question.addChild(opciones);
+      this.addToLibrary(uno, dos);
+      this.addToMain(question);
+      TweenLite.from(this.library.question, 0.5, {
+        alpha: 0,
+        y: -this.library.question.y + 20
+      });
+      TweenLite.to(this.library.tickets, 0.5, {
+        alpha: 0,
+        y: -this.library.tickets.y + 20
+      });
       return this;
     };
 
-    U1A2.prototype.introEvaluation = function() {
-      return U1A2.__super__.introEvaluation.apply(this, arguments);
-      /*
-      		for i in [1..6] by 1
-      			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-      
-      		@library['characters'].currentFrame = @answers[@index].id
-      
-      		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-      		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-      		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-      		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-      		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-      */
+    U1A2.prototype.initOptionListeners = function() {
+      this.library.a1.addEventListener('click', this.evaluateAnswer);
+      return this.library.a2.addEventListener('click', this.evaluateAnswer);
+    };
 
+    U1A2.prototype.introEvaluation = function() {
+      U1A2.__super__.introEvaluation.apply(this, arguments);
+      TweenLite.from(this.library.header, 1, {
+        y: -this.library.header.height
+      });
+      TweenLite.from(this.library.instructions, 1, {
+        alpha: 0,
+        x: 0,
+        delay: 0.5
+      });
+      return TweenLite.from(this.library.tickets, 1, {
+        alpha: 0,
+        y: this.library.tickets.y + 20,
+        delay: 0.5,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
+      });
     };
 
     U1A2.prototype.initEvaluation = function(e) {
+      var i, _i, _ref;
       U1A2.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
-      createjs.Sound.play(this.answers[this.index].sound);
-      return TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 1,
-        y: stageSize.h - 180,
-        ease: Quart.easeOut
-      });
+      for (i = _i = 0, _ref = this.current.length - 1; _i <= _ref; i = _i += 1) {
+        this.library[this.current[i].id].addEventListener('click', this.evaluateClick);
+      }
+      return createjs.Sound.play("s" + this.current[this.index].id);
     };
 
-    U1A2.prototype.evaluateAnswer = function(e) {
-      var pt;
-      this.answer = e.target;
-      pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      if (this.library['dropname'].hitTest(pt.x, pt.y)) {
-        if (this.answer.index === this.answers[this.index].id) {
-          this.answer.blink(false);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+    U1A2.prototype.evaluateClick = function(e) {
+      if (e.target.name === this.current[this.index].id) {
+        createjs.Sound.stop();
+        if (this.index < 1) {
+          createjs.Sound.play('instructions2');
         } else {
-          this.warning();
-          return this.answer.returnToPlace();
+          createjs.Sound.play('good');
         }
+        this.questionIndex = 0;
+        return this.setTicketQuestion().initOptionListeners();
       } else {
-        return this.answer.returnToPlace();
+        return this.warning();
       }
     };
 
+    U1A2.prototype.evaluateAnswer = function(e) {
+      this.answer = e.target;
+      if (this.answer.index === this.current[this.index].questions[this.questionIndex].s) {
+        createjs.Sound.play('good');
+        this.library.score.plusOne();
+      } else {
+        this.warning();
+      }
+      return setTimeout(this.finishEvaluation, 1 * 1000);
+    };
+
     U1A2.prototype.finishEvaluation = function() {
-      TweenLite.to(this.library['characters'], 0.5, {
-        alpha: 0,
-        y: -200,
-        ease: Back.easeOut,
-        onComplete: this.nextEvaluation
-      });
-      return this.answer.returnToPlace();
+      this.questionIndex++;
+      if (this.questionIndex < this.current[this.index].questions.length) {
+        return this.setTicketQuestion().initOptionListeners();
+      } else {
+        return this.nextEvaluation();
+      }
     };
 
     U1A2.prototype.nextEvaluation = function() {
       this.index++;
-      if (this.index < this.answers.length) {
-        this.library['score'].updateCount(this.index);
-        this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
-        createjs.Sound.play(this.answers[this.index].sound);
-        return TweenLite.from(this.library['characters'], 0.5, {
+      if (this.index < this.current.length) {
+        this.setTickets();
+        TweenLite.to(this.library.question, 0.5, {
           alpha: 0,
-          y: this.library['characters'].y + 20,
-          ease: Quart.easeOut
+          y: -this.library.question.y + 20
         });
+        TweenLite.to(this.library.tickets, 0.5, {
+          alpha: 1,
+          y: 0
+        });
+        return createjs.Sound.play("s" + this.current[this.index].id);
       } else {
         return this.finish();
       }
     };
 
     U1A2.prototype.repeatSound = function() {
-      return createjs.Sound.play(this.answers[this.index].sound);
+      createjs.Sound.stop();
+      return createjs.Sound.play("s" + this.current[this.index].id);
     };
 
     U1A2.prototype.finish = function() {
-      var i, _i, _results;
-      U1A2.__super__.finish.apply(this, arguments);
-      _results = [];
-      for (i = _i = 1; _i <= 6; i = _i += 1) {
-        _results.push(this.library['name' + i].blink(false));
-      }
-      return _results;
+      TweenLite.to(this.library.question, 0.5, {
+        alpha: 0,
+        y: -this.library.question.y + 20
+      });
+      return U1A2.__super__.finish.apply(this, arguments);
     };
 
     window.U1A2 = U1A2;
