@@ -117,8 +117,14 @@
       ];
       sounds = [
         {
-          src: 'sounds/TU2_U2_A4_instructions.mp3',
+          src: 'sounds/TU3_U2_A2_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU3_U2_A2_1.mp3',
+          id: 'uno'
+        }, {
+          src: 'sounds/TU3_U2_A2_2.mp3',
+          id: 'dos'
         }, {
           src: 'sounds/boing.mp3',
           id: 'boing'
@@ -132,7 +138,7 @@
       ];
       this.game = [
         {
-          name: 'mag',
+          name: 'dos',
           values: [
             {
               q: 'sh1',
@@ -155,7 +161,7 @@
             }
           ]
         }, {
-          name: 'bob',
+          name: 'uno',
           values: [
             {
               q: 'sh1',
@@ -227,7 +233,7 @@
     U2A2.prototype.setStage = function() {
       U2A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Listen and drag the clocks to the correct picture.', 40, 100);
+      this.insertInstructions('instructions', 'Listen and drag the clocks to the correct pictures.', 40, 100);
       this.insertBitmap('repeat', 'repeat', 545, 539);
       this.insertBitmap('finish', 'finish', 663, 539);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));

@@ -120,7 +120,7 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/TU3_U1_A4_instructions.mp3',
           id: 'instructions'
         }
       ];
@@ -386,7 +386,7 @@
     U1A4.prototype.setStage = function() {
       U1A4.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
+      this.insertInstructions('instructions', 'Read and place the pictures and verses in order, then click on Finished.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       this.setmariposa();
       return this.startGame;

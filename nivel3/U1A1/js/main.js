@@ -90,11 +90,14 @@
       ];
       sounds = [
         {
-          src: 'sounds/TU2_U1_A1_Instructions.mp3',
+          src: 'sounds/TU3_U1_A1_Instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
+        }, {
+          src: 'sounds/good.mp3',
+          id: 'good'
         }
       ];
       this.game = {
@@ -142,7 +145,7 @@
         answer.a = false;
       }
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
+      this.insertInstructions('instructions', 'Listen and click on the correct picture.', 40, 100);
       this.insertBitmap('teacher', 'teacher', stageSize.w / 2, 124, 'tc');
       this.insertBitmap('repeat', 'repeat', stageSize.w / 2, 310, 'tc');
       this.insertSprite('choose1', ['animals1', 'art1', 'cellphone1', 'drink1', 'fish1', 'line1', 'pictures1', 'run1', 'trash1'], {

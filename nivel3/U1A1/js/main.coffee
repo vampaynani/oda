@@ -26,8 +26,9 @@ class U1A1 extends Oda
 			{id: 'trash2', src:'trash_2.png'}
 		]
 		sounds = [
-			{src:'sounds/TU2_U1_A1_Instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U1_A1_Instructions.mp3', id:'instructions'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
+			{src:'sounds/good.mp3', id:'good'}
 		]
 		@game = 
 			answers: [
@@ -48,7 +49,7 @@ class U1A1 extends Oda
 		for answer in @answers
 			answer.a = false
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100
+		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 40, 100
 		@insertBitmap 'teacher', 'teacher', stageSize.w / 2, 124, 'tc'
 		@insertBitmap 'repeat', 'repeat', stageSize.w / 2, 310, 'tc'
 		@insertSprite 'choose1', ['animals1', 'art1', 'cellphone1', 'drink1', 'fish1', 'line1', 'pictures1', 'run1', 'trash1'], {animals:0, art:1, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 285, 452, 'mc'

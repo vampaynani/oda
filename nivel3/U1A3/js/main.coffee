@@ -15,7 +15,7 @@ class U1A3 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U1_A3_instructions.mp3', id:'instructions'}
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
@@ -59,7 +59,7 @@ class U1A3 extends Oda
 		super
 		@escena = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100
+		@insertInstructions 'instructions', 'Read, look and click on True or False.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 14, 0
 		@setScene(1).setClick().introEvaluation()
 	setScene: (scene) ->

@@ -18,7 +18,7 @@ class U1A2 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U1_A2_instructions.mp3', id:'instructions'}
 		]
 		@answers = [	
 		]
@@ -36,7 +36,7 @@ class U1A2 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100
+		@insertInstructions 'instructions', 'Listen and click on the correct ticket.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setTickets().setTicketQuestion().introEvaluation()
 	setTickets:  ->

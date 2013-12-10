@@ -91,7 +91,7 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U5_A3_instructions.mp3',
+          src: 'sounds/TU3_U2_A4_instructions.mp3',
           id: 'instructions'
         }
       ];
@@ -229,7 +229,7 @@
     U2A4.prototype.setStage = function() {
       U2A4.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Unscramble the seasons, months of the year and holidays.', 40, 100);
+      this.insertInstructions('instructions', 'Drag the letters to write a word.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 15, 0));
       return this.setSeasons().introEvaluation();
     };

@@ -65,7 +65,7 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/TU3_U1_A2_instructions.mp3',
           id: 'instructions'
         }
       ];
@@ -159,7 +159,7 @@
     U1A2.prototype.setStage = function() {
       U1A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
+      this.insertInstructions('instructions', 'Listen and click on the correct ticket.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       return this.setTickets().setTicketQuestion().introEvaluation();
     };

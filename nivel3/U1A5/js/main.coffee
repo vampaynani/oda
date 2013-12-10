@@ -29,8 +29,8 @@ class U1A5 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU2_U3_A5_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU2_U3_A5_scene1.mp3', id:'scene1'}
+		    {src:'sounds/TU3_U1_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U1_A5_scene1.mp3', id:'scene1'}
 		]
 		@game = [
 			{
@@ -55,7 +55,7 @@ class U1A5 extends Oda
 		super
 		@intento = 0
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read and drag the words to complete the story.', 40, 100
+		@insertInstructions 'instructions', 'Listen, read and drag the dialogues to the text.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setCuento(1).introEvaluation()
 	setCuento: (scene) ->

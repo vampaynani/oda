@@ -93,7 +93,7 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U1_A1_Instructions.mp3',
+          src: 'sounds/TU3_U2_A1_Instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
@@ -311,9 +311,9 @@
       t.x = 20;
       t.y = 0;
       dropper.addChild(t);
-      h1 = new WordContainer('wc1', '', '', '#f39234', 90, 0, 60, 22);
-      h2 = new WordContainer('wc2', '', '', '#f39234', 160, 0, 80, 22);
-      h3 = new WordContainer('wc3', '', '', '#f39234', 250, 0, 140, 22);
+      h1 = new WordContainer('wc1', '', '', '#eb2d3d', 90, 0, 60, 22);
+      h2 = new WordContainer('wc2', '', '', '#eb2d3d', 160, 0, 80, 22);
+      h3 = new WordContainer('wc3', '', '', '#eb2d3d', 250, 0, 140, 22);
       t = new createjs.Text('.', '24px Arial', '#333');
       t.x = 393;
       t.y = 0;

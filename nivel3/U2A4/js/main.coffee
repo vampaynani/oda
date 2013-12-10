@@ -28,7 +28,7 @@ class U2A4 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU2_U5_A3_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U2_A4_instructions.mp3', id:'instructions'}
 		]
 		@game = 
 			imagenes: [
@@ -69,7 +69,7 @@ class U2A4 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Unscramble the seasons, months of the year and holidays.', 40, 100
+		@insertInstructions 'instructions', 'Drag the letters to write a word.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 15, 0
 		@setSeasons().introEvaluation()
 	setSeasons: ->

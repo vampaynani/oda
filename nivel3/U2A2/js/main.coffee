@@ -35,15 +35,16 @@ class U2A2 extends Oda
 		    {id:'imgcorrect', src: 'correct.png'}
 		]
 		sounds = [
-			{src:'sounds/TU2_U2_A4_instructions.mp3', id:'instructions'}
-
+			{src:'sounds/TU3_U2_A2_instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U2_A2_1.mp3', id:'uno'}
+			{src:'sounds/TU3_U2_A2_2.mp3', id:'dos'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@game =[
 			{
-				name: 'mag'
+				name: 'dos'
 				values: [
 					{q: 'sh1', a: 'mc3'}
 					{q: 'sh2', a: 'mc6'}
@@ -54,7 +55,7 @@ class U2A2 extends Oda
 				]
 			}
 			{
-				name: 'bob'
+				name: 'uno'
 				values: [
 					{q: 'sh1', a: 'jc4'}
 					{q: 'sh2', a: 'jc5'}
@@ -85,7 +86,7 @@ class U2A2 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the clocks to the correct picture.', 40, 100
+		@insertInstructions 'instructions', 'Listen and drag the clocks to the correct pictures.', 40, 100
 		@insertBitmap 'repeat', 'repeat', 545, 539
 		@insertBitmap 'finish', 'finish', 663, 539
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0

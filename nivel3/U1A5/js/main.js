@@ -82,10 +82,10 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U3_A5_instructions.mp3',
+          src: 'sounds/TU3_U1_A5_instructions.mp3',
           id: 'instructions'
         }, {
-          src: 'sounds/TU2_U3_A5_scene1.mp3',
+          src: 'sounds/TU3_U1_A5_scene1.mp3',
           id: 'scene1'
         }
       ];
@@ -138,7 +138,7 @@
       U1A5.__super__.setStage.apply(this, arguments);
       this.intento = 0;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Read and drag the words to complete the story.', 40, 100);
+      this.insertInstructions('instructions', 'Listen, read and drag the dialogues to the text.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       return this.setCuento(1).introEvaluation();
     };

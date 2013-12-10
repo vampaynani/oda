@@ -52,7 +52,7 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U4_A6_instructions.mp3',
+          src: 'sounds/TU3_U1_A3_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/good.mp3',
@@ -154,7 +154,7 @@
       U1A3.__super__.setStage.apply(this, arguments);
       this.escena = 1;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
+      this.insertInstructions('instructions', 'Read, look and click on True or False.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 14, 0));
       return this.setScene(1).setClick().introEvaluation();
     };
