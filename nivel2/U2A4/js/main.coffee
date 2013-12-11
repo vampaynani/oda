@@ -190,8 +190,8 @@ class U2A4 extends Oda
 		@library['repeat'].removeEventListener 'click', @playSound
 		@library['finish'].removeEventListener 'click', @evaluateAnswer
 		for i in [1..6] by 1
-			res = @createSprite 'resultado', ['imgwrong', 'imgcorrect'], null, (@drops[i - 1].x) + 75, @drops[i - 1].y
 			answer = @answers[@index].values[i - 1]
+			res = @createSprite 'resultado', ['imgwrong', 'imgcorrect'], null, (@library[answer.a].x) + 75, @library[answer.a].y
 			if @library[answer.q].x is @library[answer.a].x and @library[answer.q].y is @library[answer.a].y
 				@library['score'].plusOne()
 				res.currentFrame = 1

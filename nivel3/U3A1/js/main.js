@@ -59,6 +59,12 @@
         }, {
           id: 'fondo',
           src: 'fondo.png'
+        }, {
+          id: 'imgwrong',
+          src: 'wrong.png'
+        }, {
+          id: 'imgcorrect',
+          src: 'correct.png'
         }
       ];
       sounds = [
@@ -102,59 +108,46 @@
       this.actividades = this.game.gustos;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Listen and drag the icons to the correct place on the schedule.', 40, 100);
-      this.insertBitmap('btnRepeat', 'btnrepeat', 650, 367);
-      this.insertBitmap('btnFinished', 'btnfinished', 650, 414);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
+      this.insertBitmap('btnRepeat', 'btnrepeat', 480, 540);
+      this.insertBitmap('btnFinished', 'btnfinished', 610, 540);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 24, 0));
+      this.insertBitmap('fondo', 'fondo', stageSize.w / 2, 130, 'tc');
       return this.setPizarra(1).introEvaluation();
     };
 
     U3A1.prototype.setPizarra = function(schedule) {
-      var actividades, c, child, drops, fondo, hit, i, pizarra, _i, _j, _ref, _ref1;
+      var actividades, c, hit, i, _i, _j, _ref;
       this.schedule = schedule;
-      pizarra = new createjs.Container();
-      pizarra.name = 'pizarra';
-      pizarra.x = 61;
-      pizarra.y = 103;
-      fondo = this.createBitmap('fondo', 'fondo', 167, 31);
-      if (schedule === 1) {
-        drops = this.actividades.chic1;
-        this.drags = this.actividades.faces;
-      } else {
-        child = this.createBitmap('boy', 'boy', 59, 380, 'bl');
-        drops = this.actividades.boy;
-        this.drags = this.actividades.boydrags;
-      }
+      this.pizarra = new createjs.Container();
+      this.pizarra.name = 'pizarra';
+      this.pizarra.x = 0;
+      this.pizarra.y = 0;
       actividades = new createjs.Container();
-      actividades.name = 'actividades';
-      actividades.x = 359;
-      actividades.y = 113;
+      this.current = actividades.name = "actividades" + schedule;
+      actividades.x = 280;
+      actividades.y = 223;
       this.addToLibrary(actividades);
-      for (i = _i = 0, _ref = drops.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      this.drops = "@actividades.chic" + this.schedule;
+      this.drags = this.actividades.faces;
+      for (i = _i = 0; _i <= 5; i = ++_i) {
         c = new createjs.Container();
         c.name = "cont" + i;
-        if (i < 5) {
-          c.y = i * 49;
-        } else {
-          c.x = 135;
-          c.y = (i - 5) * 49;
-        }
-        if (schedule === 1) {
-          hit = new createjs.Shape();
-          hit.graphics.beginFill('rgba(255,255,255,1)').drawRect(-25, -25, 90, 55);
-          this.setReg(hit, 20, -20);
-          c.addChild(hit);
-        }
+        c.y = i * 49;
+        c.x = 0 + ((schedule - 1) * 125);
+        hit = new createjs.Shape();
+        hit.graphics.beginFill('rgba(0,0,0,1)').drawRect(-25, -25, 90, 45);
+        this.setReg(hit, 20, -20);
+        c.addChild(hit);
         this.addToLibrary(c);
         actividades.addChild(c);
       }
-      pizarra.addChild(fondo, child, actividades);
-      for (i = _j = 0, _ref1 = this.drags.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
-        c = new Droppable("" + this.drags[i], this.preload.getResult(this.drags[i]), i, 100 * i + 50, 400, this.stage, actividades.children);
-        c.scaleX = c.scaleY = 0.9;
+      this.addToMain(actividades);
+      for (i = _j = 0, _ref = this.drags.length - 1; 0 <= _ref ? _j <= _ref : _j >= _ref; i = 0 <= _ref ? ++_j : --_j) {
+        c = new Droppable("" + this.drags[i], this.preload.getResult(this.drags[i]), i, 70 * i + 150, 540, this.stage, actividades.children);
         this.addToLibrary(c);
-        pizarra.addChild(c);
+        this.pizarra.addChild(c);
       }
-      this.addToMain(pizarra);
+      this.addToMain(this.pizarra);
       return this;
     };
 
@@ -203,7 +196,7 @@
       var v;
       this.answer = e.target;
       this.drop = e.drop;
-      this.answer.visible = false;
+      this.answer.returnToPlace();
       v = this.createBitmap(this.answer.name, this.answer.name, 0, 20);
       v.scaleX = v.scaleY = 0.6;
       this.setReg(v, v.width / 2, v.height / 2);
@@ -211,24 +204,33 @@
     };
 
     U3A1.prototype.evaluateAnswer = function(e) {
-      var answers, i, _i, _ref;
+      var answers, i, res, _i, _ref;
       this.library.btnRepeat.removeEventListener('click', this.repeatSound);
       this.library.btnFinished.removeEventListener('click', this.evaluateAnswer);
       createjs.Sound.stop();
       if (this.schedule === 1) {
-        answers = this.actividades.girl;
+        answers = this.actividades.chic1;
+      } else if (this.schedule === 2) {
+        answers = this.actividades.chic2;
+      } else if (this.schedule === 3) {
+        answers = this.actividades.chic3;
       } else {
-        answers = this.actividades.boy;
+        answers = this.actividades.chic4;
       }
       for (i = _i = 0, _ref = answers.length - 1; _i <= _ref; i = _i += 1) {
+        res = this.createSprite('resultado', ['imgwrong', 'imgcorrect'], null, this.library["cont" + i].x + 25, this.library["cont" + i].y);
+        res.scaleY = res.scaleX = 0.5;
         if (this.library["cont" + i].children.length > 1) {
           if (this.library["cont" + i].children[1].name === answers[i]) {
-            this.blink(this.library["cont" + i]);
             this.library.score.plusOne();
+            res.currentFrame = 1;
+          } else {
+            res.currentFrame = 0;
           }
         }
+        this.library[this.current].addChild(res);
       }
-      return setTimeout(this.finishEvaluation, 4 * 1000);
+      return setTimeout(this.nextEvaluation, 4 * 1000);
     };
 
     U3A1.prototype.finishEvaluation = function() {
@@ -242,7 +244,8 @@
     U3A1.prototype.nextEvaluation = function() {
       var i, _i, _ref;
       this.index++;
-      if (this.index < 2) {
+      if (this.index < 4) {
+        this.pizarra.removeAllChildren();
         this.setPizarra(this.index + 1);
         for (i = _i = 0, _ref = this.drags.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
           this.library["" + this.drags[i]].initDragListener();
@@ -250,8 +253,7 @@
         }
         this.library.btnRepeat.addEventListener('click', this.repeatSound);
         this.library.btnFinished.addEventListener('click', this.evaluateAnswer);
-        createjs.Sound.stop();
-        return createjs.Sound.play("sche" + this.schedule);
+        return createjs.Sound.stop();
       } else {
         return this.finish();
       }
@@ -263,6 +265,24 @@
     };
 
     U3A1.prototype.finish = function() {
+      TweenLite.to(this.library.pizarra, 1, {
+        alpha: 0
+      });
+      TweenLite.to(this.library.actividades1, 1, {
+        alpha: 0
+      });
+      TweenLite.to(this.library.actividades2, 1, {
+        alpha: 0
+      });
+      TweenLite.to(this.library.actividades3, 1, {
+        alpha: 0
+      });
+      TweenLite.to(this.library.actividades4, 1, {
+        alpha: 0
+      });
+      TweenLite.to(this.library.fondo, 1, {
+        alpha: 0
+      });
       TweenLite.to(this.library.btnRepeat, 1, {
         alpha: 0,
         y: this.library.btnRepeat.y - 5

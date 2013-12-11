@@ -2,269 +2,243 @@ class U3A4 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
-			{id: 'c1', src: 'circle1.png'}
-			{id: 'c2', src: 'circle2.png'}
-			{id: 'n1', src: 'nube1.png'}
-			{id: 'n2', src: 'nube2.png'}
-			{id: 'n3', src: 'nube3.png'}
-			{id:'caras', src:'caras.png'}
-			{id:'img01', src:'imagenes0001.png'}
-			{id:'img02', src:'imagenes0002.png'}
-			{id:'img03', src:'imagenes0003.png'}
-			{id:'img04', src:'imagenes0004.png'}
-			{id:'img05', src:'imagenes0005.png'}
-			{id:'img06', src:'imagenes0006.png'}
-			{id:'img07', src:'imagenes0007.png'}
-			{id:'img08', src:'imagenes0008.png'}
-			{id:'img09', src:'imagenes0009.png'}
-			{id:'img10', src:'imagenes0010.png'}
+		    {id:'inst' , src: 'inst.png'}
+		    {id:'c1' , src: 'circle1.png'}
+		    {id:'c2' , src: 'circle2.png'}
+		    {id: 'n1', src: 'nube1.png'}
+		    {id: 'n2', src: 'nube2.png'}
+		    {id: 'n3', src: 'nube3.png'}
+			{id: 'caras', src:'caras.png'}
+			{id: 'img01', src:'imagenes0001.png'}
+			{id: 'img02', src:'imagenes0002.png'}
+			{id: 'img03', src:'imagenes0003.png'}
+			{id: 'img04', src:'imagenes0004.png'}
+			{id: 'img05', src:'imagenes0005.png'}
+			{id: 'img06', src:'imagenes0006.png'}
+			{id: 'img07', src:'imagenes0007.png'}
+			{id: 'img08', src:'imagenes0008.png'}
+			{id: 'img09', src:'imagenes0009.png'}
+			{id: 'img10', src:'imagenes0010.png'}
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU2_U3_A4_instructions.mp3', id:'instructions'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
+			{src:'sounds/wrong.mp3', id:'wrong'}
+			{src:'sounds/good.mp3', id:'good'}
 		]
-		###
-			0:They
-			1:He
-			2:She
-			3:like
-			4:don't like
-			5:likes
-			6:doesn't likes
-			7:love
-			8:loves
-			9:milk
-			10:pancakes
-			11:eggs
-			12:beans
-			9:corn
-			10:ice cream
-			11:peaches
-			12:spinach
-			###
 		@answers = [
-			[
-				{a:'Table1num2',a1:2,a2:6,a3:10}
-				{a:'Table1num10',a1:0,a2:7,a3:10}
-				{a:'Table1num4',a1:2,a2:6,a3:12}
-				{a:'Table1num9',a1:0,a2:4,a3:9}
-				{a:'Table1num1',a1:2,a2:8,a3:9}
-				{a:'Table1num5',a1:1,a2:8,a3:9}
-			]
-			[
-				{a:'Table2num4',a1:2,a2:5,a3:12}
-				{a:'Table2num7',a1:1,a2:5,a3:11}
-				{a:'Table2num2',a1:2,a2:8,a3:10}
-				{a:'Table2num10',a1:0,a2:4,a3:10}
-				{a:'Table2num5',a1:1,a2:8,a3:9}
-				{a:'Table2num11',a1:0,a2:7,a3:11}
-			]
-		]
+			{w1:1, w2:1, w3:1}
+			{w1:0, w2:0, w3:0}
 
+		]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
-		@setDropper().setGirl().setClouds()
-	setDropper: ->
-		text = new createjs.Text 'I','26px Quicksand','#333'
-		text.x = 150
-		text.y = 541
-		@addToMain new WordContainer 'dropper1', '', '#FFF', '#F59743', 170, 541, 188, 30
-		@addToMain new WordContainer 'dropper2', '', '#FFF', '#F59743', 373, 541, 158, 30
-		@addToMain new WordContainer 'dropper3', '', '#FFF', '#F59743', 544, 541, 136, 30
-		@addToMain text
-		@
-	setGirl: ->
-		sp = @createSprite 'girl', [		'img01', 'img02', 'img03', 'img04', 'img05', 'img06', 'img07', 'img08', 'img09', 'img10'], null, stageSize.w / 2, 135, 'tc'
-		sp.scaleX = sp.scaleY = 0.9
+		@insertInstructions 'instructions', 'Look and click .', 40, 100
+		@insertSprite 'characters', ['img01','img02','img03','img04','img05','img06','img07','img08','img09','img10'], null, stageSize.w / 2, 235, 'mc'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@insertBitmap 'caras', 'caras', 670, 120
-		@addToMain sp
+		
+		@setDropper().setNube1().setNube2().setNube3().introEvaluation()
+	setDropper: ->
+		dropper = new createjs.Container()
+		dropper.x = 150
+		dropper.y = 541
+		dropper.name = 'dropper'
+		text = new createjs.Text 'I','26px Quicksand','#333'
+		h1 = new WordContainer 'h1', '', '#ccc', '#F59743', 20, 0, 188, 30
+		h2 = new WordContainer 'h2', '', '#ccc', '#F59743', 223, 0, 158, 30
+		h3 = new WordContainer 'h3', '', '#ccc', '#F59743', 396, 0, 136, 30
+		dropper.addChild text, h1, h2, h3
+		@addToLibrary h1, h2, h3
+		@addToMain dropper
 		@
-	setClouds: ->
-		if not @library.nube1
-			nube1 = new createjs.Container()
-			nube1.x = 72
-			nube1.y = 339
-			nube1.name = 'nube1'
-		else
-			nube1 = @library.nube1
-		if not @library.nube2
-			nube2 = new createjs.Container()
-			nube2.x = 241
-			nube2.y = 336
-			nube2.name = 'nube2'
-		else
-			nube2 = @library.nube2
-		if not @library.nube3
-			nube3 = new createjs.Container()
-			nube3.x = 437
-			nube3.y = 310
-			nube3.name = 'nube3'
-		else
-			nube3 = @library.nube3
-
-		nube1.alpha = 1
-		nube2.alpha = 1
-		nube3.alpha = 1
-
-		nube1.removeAllChildren()
-		nube2.removeAllChildren()
-		nube3.removeAllChildren()
+	setNube1: ->
+		nube1 = new createjs.Container()
+		nube1.x = 72
+		nube1.y = 339
+		nube1.name = 'nube1'
 		
 		n1 = @createBitmap 'n1', 'n1', 0, 0
-		n2 = @createBitmap 'n2', 'n2', 0, 0
-		n3 = @createBitmap 'n3', 'n3', 0, 0
-
-		t1n1 = new ClickableText 't1n1', "love", 0,37,21
-		t2n1 = new ClickableText 't2n1', "don't like", 1,54,51
-		t3n1 = new ClickableText 't3n1', "hate", 2, 36,79
-		t4n1 = new ClickableText 't4n1', "like", 3, 84,99
-
-		t1n2 = new ClickableText 't1n2', "going", 4,  34,21
-		t2n2 = new ClickableText 't2n2', "chatting", 5, 79,49
-		t3n2 = new ClickableText 't3n2', "doing", 6, 34,76
-		t4n2 = new ClickableText 't4n2', "playing", 7, 99,102
-		t5n2 = new ClickableText 't5n2', "taking", 8,  17,106
-		t6n2 = new ClickableText 't6n2', "learning", 9, 83,144
-
-		t1n3 = new ClickableText 't1n3', "roller skating", 10, 54,33 
-		t2n3 = new ClickableText 't2n3', "the violin", 11,  19,61 
-		t3n3 = new ClickableText 't3n3', "online with friends", 12, 43,93 
-		t4n3 = new ClickableText 't4n3', "in the school band", 13,  21,127 
-		t5n3 = new ClickableText 't4n3', "English", 14,  57,164 
-		t6n3 = new ClickableText 't4n3', "ballet class", 15,  193,28 
-		t7n3 = new ClickableText 't4n3', "computer games", 16,  164,66 
-		t8n3 = new ClickableText 't4n3', "gymnastics", 17,  208,115 
-		t9n3 = new ClickableText 't4n3', "karate lessons", 18,  174,160 
-		t10n3 = new ClickableText 't4n3', "swimming lessons", 19,  117,191 
+		t1n1 = new DraggableText 't1n1', "love", 0,37,21
+		t2n1 = new DraggableText 't2n1', "don't like", 1,54,51
+		t3n1 = new DraggableText 't3n1', "hate", 2, 36,79
+		t4n1 = new DraggableText 't4n1', "like", 3, 84,99
 
 		nube1.addChild n1, t1n1, t2n1, t3n1, t4n1
-		nube2.addChild n2, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2
-		nube3.addChild n3, t1n3, t2n3, t3n3, t4n3, t5n3, t6n3, t7n3, t8n3, t9n3, t10n3
+		@addToLibrary n1, t1n1, t2n1, t3n1, t4n1
+		@addToMain nube1
+		@
+	setNube2: ->
+		nube2 = new createjs.Container()
+		nube2.x = 241
+		nube2.y = 336
+		nube2.name = 'nube2'
 
-		@addToLibrary t1n1,t2n1,t3n1,t4n1, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2, t1n3, t2n3, t3n3, t4n3, t5n3, t6n3, t7n3, t8n3, t9n3, t10n3
-		@addToMain nube1, nube2, nube3
+		n2 = @createBitmap 'n2', 'n2', 0, 0
+		t1n2 = new DraggableText 't1n2', "going", 0,  34,21
+		t2n2 = new DraggableText 't2n2', "chatting", 1, 79,49
+		t3n2 = new DraggableText 't3n2', "doing", 2, 34,76
+		t4n2 = new DraggableText 't4n2', "playing", 3, 99,102
+		t5n2 = new DraggableText 't5n2', "taking", 4,  17,106
+		t6n2 = new DraggableText 't6n2', "learning", 5, 83,144
+
+		nube2.addChild n2, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2
+		@addToLibrary n2, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2
+		@addToMain nube2
+		@
+	setNube3: ->
+		nube3 = new createjs.Container()
+		nube3.x = 437
+		nube3.y = 310
+		nube3.name = 'nube3'
+
+		n3 = @createBitmap 'n3', 'n3', 0, 0
+		t1n3 = new DraggableText 't1n3', "roller skating", 0, 54,33 
+		t2n3 = new DraggableText 't2n3', "the violin", 1,  19,61 
+		t3n3 = new DraggableText 't3n3', "online with friends", 2, 43,93 
+		t4n3 = new DraggableText 't4n3', "in the school band", 3,  21,127 
+		t5n3 = new DraggableText 't5n3', "English", 4,  57,164 
+		t6n3 = new DraggableText 't6n3', "ballet class", 5,  193,28 
+		t7n3 = new DraggableText 't7n3', "computer games", 6,  164,66 
+		t8n3 = new DraggableText 't8n3', "gymnastics", 7,  208,115 
+		t9n3 = new DraggableText 't9n3', "karate lessons", 8,  174,160 
+		t10n3 = new DraggableText 't10n3', "swimming lessons", 9,  117,191 
+
+		nube3.addChild n3, t1n3, t2n3, t3n3, t4n3, t5n3, t6n3, t7n3, t8n3, t9n3, t10n3
+		@addToLibrary n3, t1n3, t2n3, t3n3, t4n3, t5n3, t6n3, t7n3, t8n3, t9n3, t10n3
+		@addToMain nube3
 		@
 	introEvaluation: ->
 		super
-		for i in [1..3] by 1
-			@observer.subscribe 'init_evaluation', @library["t#{i}n1"].onInitEvaluation
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library["t#{i}n2"].onInitEvaluation
 		for i in [1..4] by 1
-			@observer.subscribe 'init_evaluation', @library["t#{i}n3"].onInitEvaluation
+			@library['t'+i+'n1'].initDragListener()
 
-		TweenLite.from @library.header, 1, {y:-@library['header'].height}
-		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		TweenMax.allFrom [@library.nube1, @library.nube2, @library.nube3], 1, {alpha: 0, delay: 1}
+		@library['characters'].currentFrame = @index
+		@library['characters'].scaleX = 1
+		@library['characters'].scaleY = 1
+		@library['characters'].alpha = 1
+		
+		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
+		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 50, delay: 1}
+		TweenLite.from @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 1.2}
+		TweenLite.from @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 20, delay: 1.4}
+		TweenLite.from @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 20, delay: 1.5}
+		TweenLite.from @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 20, delay: 1.6, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@aindex = 0
-		for i in [1..3] by 1
-			@library["t#{i}n1"].addEventListener 'drop', @evaluateAnswer1
- 	evaluateAnswer1: (e) =>
+		@library['h1'].blink()
+		@blink @library['n1']
+		for i in [1..4] by 1
+			@library['t'+i+'n1'].addEventListener 'drop', @evaluateAnswer1
+		false
+	evaluateAnswer1: (e) =>
 		@answer = e.target
-		success = off
-		dropped = off
-		for i in [1..3] by 1
-			pt = @library.dropper1.globalToLocal @stage.mouseX, @stage.mouseY
-			if @library.dropper1.hitTest pt.x, pt.y
-				dropped = on
-				if @answer.index is @answers[@table - 1][@aindex].a1
-					success = on
-					@answer.x = @answer.pos.x
-					@answer.y = @answer.pos.y
-					@library.dropper1.changeText @answer.text.text
-					for i in [1..6] by 1
-						@library["t#{i}n2"].addEventListener 'drop', @evaluateAnswer2
-		if not dropped 
-			@answer.returnToPlace()
-		else
-			if not success
+		pt = @library['h1'].globalToLocal @stage.mouseX, @stage.mouseY
+		if @library['h1'].hitTest pt.x, pt.y
+			if @answer.index is @answers[@index].w1
+				@answer.visible = false
+				@library['h1'].changeText @answer.text.text
+				@library['h1'].blink off
+				@blink @library['n1'], off
+				@library['h2'].blink()
+				@blink @library['n2']
+				createjs.Sound.play 'good'
+				for i in [1..6] by 1
+					@library['t'+i+'n2'].initDragListener()
+
+				for i in [1..6] by 1
+					@library['t'+i+'n2'].addEventListener 'drop', @evaluateAnswer2
+				false
+			else
+				@warning()
 				@answer.returnToPlace()
-				@warning() 
+		else
+			@answer.returnToPlace()
 	evaluateAnswer2: (e) =>
 		@answer = e.target
-		success = off
-		dropped = off
-		for i in [1..6] by 1
-			pt = @library.dropper2.globalToLocal @stage.mouseX, @stage.mouseY
-			if @library.dropper2.hitTest pt.x, pt.y
-				dropped = on
-				if @answer.index is @answers[@table - 1][@aindex].a2
-					@answer.x = @answer.pos.x
-					@answer.y = @answer.pos.y
-					@library.dropper2.changeText @answer.text.text
-					success = on
-					for i in [1..4] by 1
-						@library["t#{i}n3"].addEventListener 'drop', @evaluateAnswer3
-		if not dropped 
-			@answer.returnToPlace()
-		else
-			if not success
-				@answer.returnToPlace()
-				@warning() 
-	evaluateAnswer3: (e) =>
-		@answer = e.target
-		dropped = off
-		success = off
-		for i in [1..6] by 1
-			pt = @library.dropper3.globalToLocal @stage.mouseX, @stage.mouseY
-			if @library.dropper3.hitTest pt.x, pt.y
-				dropped = on
-				if @answer.index is @answers[@table - 1][@aindex].a3
-					@answer.x = @answer.pos.x
-					@answer.y = @answer.pos.y
-					@library.dropper3.changeText @answer.text.text
-					success = on
-		if not dropped 
-			@answer.returnToPlace()
-		else
-			if success
-				setTimeout @finishEvaluation, 1 * 1000
+		pt = @library['h2'].globalToLocal @stage.mouseX, @stage.mouseY
+		if @library['h2'].hitTest pt.x, pt.y
+			if @answer.index is @answers[@index].w2
+				@answer.visible = false
+				@library['h2'].changeText @answer.text.text
+				@library['h2'].blink off
+				@blink @library['n2'], off
+				@library['h3'].blink()
+				@blink @library['n3']
+				createjs.Sound.play 'good'
+				for i in [1..10] by 1
+					@library['t'+i+'n3'].initDragListener()
+
+				for i in [1..10] by 1
+					@library['t'+i+'n3'].addEventListener 'drop', @evaluateAnswer3
+				false
 			else
-				@answer.returnToPlace()
 				@warning()
-	finishEvaluation: =>
-		@blink @library[@answers[@table - 1][@aindex].a], off
-		@library.score.plusOne()
-		createjs.Sound.play 'good'
-		@aindex++
-		if @aindex < @answers[@table - 1].length
-			@blink @library[@answers[@table-1][@aindex].a]
-			@library.dropper1.changeText ''
-			@library.dropper2.changeText ''
-			@library.dropper3.changeText ''
+				@answer.returnToPlace()
 		else
-			@aindex = 0
-			@nextEvaluation()
+			@answer.returnToPlace()
+	evaluateAnswer3:(e) =>
+		@answer = e.target;
+		console.log '3'
+		pt = @library['h3'].globalToLocal @stage.mouseX, @stage.mouseY
+		if @library['h3'].hitTest pt.x, pt.y
+			if @answer.index is @answers[@index].w3
+				@answer.visible = false
+				@library['h3'].changeText @answer.text.text
+				@library['h3'].blink off
+				@blink @library['n3'], off
+				setTimeout @finishEvaluation, 1 * 1000
+				createjs.Sound.play 'good'
+				for i in [1..6] by 1
+					@library['t'+i+'n2'].removeEventListener 'drop', @evaluateAnswer2
+					@library['t'+i+'n2'].endDragListener()
+				for i in [1..10] by 1
+					@library['t'+i+'n3'].removeEventListener 'drop', @evaluateAnswer3
+					@library['t'+i+'n3'].endDragListener()
+			else
+				@warning()
+				@answer.returnToPlace()
+		else
+			@answer.returnToPlace()
+	finishEvaluation: =>
+		@library['score'].plusOne()
+		@clearEvaluation()
+	clearEvaluation: (e) =>
+		for i in [1..4] by 1
+			@library['t'+i+'n1'].visible = true
+			@library['t'+i+'n1'].returnToPlace()
+		for i in [1..6] by 1
+			@library['t'+i+'n2'].visible = true
+			@library['t'+i+'n2'].returnToPlace()
+		for i in [1..10] by 1
+			@library['t'+i+'n3'].visible = true
+			@library['t'+i+'n3'].returnToPlace()
+		for i in [1..3] by 1
+			@library['h'+i].changeText ''
+		TweenLite.to @library['characters'], 0.5, {scaleX: 1.5, scaleY: 1.5, alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library.dropper1.changeText ''
-			@library.dropper2.changeText ''
-			@library.dropper3.changeText ''
-			@setTable(@index + 1).setClouds()
-			@blink @library[@answers[@table - 1][@aindex].a]
-			for i in [1..3] by 1
-				@library["t#{i}n1"].onInitEvaluation()
-			for i in [1..6] by 1
-				@library["t#{i}n2"].onInitEvaluation()
-			for i in [1..4] by 1
-				@library["t#{i}n3"].onInitEvaluation()
-			for i in [1..3] by 1
-				@library["t#{i}n1"].addEventListener 'drop', @evaluateAnswer1
+			@library['characters'].currentFrame = @index
+			@library['h1'].blink()
+			@blink @library['n1']
+			TweenLite.to @library['characters'], 0.5, {scaleX: 1, scaleY: 1, alpha: 1, ease: Back.easeOut}
+			for i in [1..2] by 1
+				@library['t'+i+'n1'].addEventListener 'drop', @evaluateAnswer1
 		else
 			@finish()
+	blink: (obj, state = on) ->
+		TweenMax.killTweensOf obj
+		obj.alpha = 1
+		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
-		TweenLite.to @library.smileys, 1, {alpha: 0, y: @library.smileys-20}
-		TweenMax.allTo [@library.nube1, @library.nube2, @library.nube3], 1, {alpha: 0}
-		TweenMax.allTo [@library.dropper1, @library.dropper2, @library.dropper3], 1, {alpha: 0}
+		TweenLite.to @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 0.2}
+		TweenLite.to @library['caras'], 1, {alpha: 0, y: @library['caras'].y + 20, delay: 0.2}
+		TweenLite.to @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 20, delay: 0.1}
+		TweenLite.to @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 20, delay: 0.1}
+		TweenLite.to @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 20, delay: 0.1,}
 		super
 	window.U3A4 = U3A4

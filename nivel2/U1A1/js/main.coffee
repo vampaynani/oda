@@ -100,8 +100,6 @@ class U1A1 extends Oda
 		for i in [1..2] by 1
 			@library['p'+i+'n1'].initDragListener()
 
-
-		
 		@library['characters'].currentFrame = @index
 		@library['characters'].scaleX = 1
 		@library['characters'].scaleY = 1
@@ -189,8 +187,7 @@ class U1A1 extends Oda
 			@answer.returnToPlace()
 	finishEvaluation: =>
 		@library['score'].plusOne()
-		song = createjs.Sound.play @answers[@index].sound
-		song.addEventListener 'complete', @clearEvaluation
+		@clearEvaluation()
 	clearEvaluation: (e) =>
 		for i in [1..2] by 1
 			@library['p'+i+'n1'].visible = true

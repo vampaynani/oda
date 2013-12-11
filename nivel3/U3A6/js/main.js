@@ -163,221 +163,269 @@
         }
       ];
       this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-      this.containers = [
+      this.numbers = [
         {
-          id: 'd',
-          x: 5,
-          y: 0,
-          a: true
+          id: '1',
+          x: 8,
+          y: -1
         }, {
-          id: 'r',
-          x: 5,
-          y: 1
-        }, {
-          id: 'u',
-          x: 5,
-          y: 2
-        }, {
-          id: 'm',
-          x: 5,
-          y: 3
-        }, {
-          id: 'g',
-          x: 7,
-          y: 0,
-          a: true
-        }, {
-          id: 'u',
-          x: 7,
-          y: 1
-        }, {
-          id: 'i',
-          x: 7,
-          y: 2
-        }, {
-          id: 't',
-          x: 7,
-          y: 3
-        }, {
-          id: 'a',
-          x: 7,
-          y: 4
-        }, {
-          id: 'r',
-          x: 7,
-          y: 5
-        }, {
-          id: 't',
-          x: 0,
-          y: 2,
-          a: true
-        }, {
-          id: 'a',
-          x: 1,
-          y: 2
-        }, {
-          id: 'm',
-          x: 2,
-          y: 2
-        }, {
-          id: 'b',
-          x: 3,
-          y: 2
-        }, {
-          id: 'o',
-          x: 4,
-          y: 2
-        }, {
-          id: 'r',
+          id: '2',
           x: 6,
           y: 2
         }, {
-          id: 'n',
+          id: '3',
+          x: 6,
+          y: 3
+        }, {
+          id: '4',
+          x: 10,
+          y: 3
+        }, {
+          id: '5',
+          x: 4,
+          y: 5
+        }, {
+          id: '6',
+          x: -1,
+          y: 9
+        }
+      ];
+      this.containers = [
+        {
+          id: 'p',
+          x: 8,
+          y: 0
+        }, {
+          id: 'l',
+          x: 8,
+          y: 1
+        }, {
+          id: 'a',
           x: 8,
           y: 2
         }, {
-          id: 'e',
-          x: 9,
-          y: 2
-        }, {
-          id: 'r',
-          x: 0,
+          id: 'y',
+          x: 8,
           y: 3
         }, {
-          id: 'u',
-          x: 0,
+          id: 'i',
+          x: 8,
           y: 4
         }, {
-          id: 'm',
-          x: 0,
-          y: 5
-        }, {
-          id: 'p',
-          x: 0,
-          y: 6,
-          a: true
-        }, {
-          id: 'e',
-          x: 0,
-          y: 7
-        }, {
-          id: 't',
-          x: 0,
-          y: 8
-        }, {
-          id: 'f',
-          x: 10,
-          y: 4,
-          a: true
-        }, {
-          id: 'l',
-          x: 10,
-          y: 5
-        }, {
-          id: 'u',
-          x: 10,
-          y: 6
-        }, {
-          id: 't',
-          x: 10,
-          y: 7
-        }, {
-          id: 'e',
-          x: 10,
-          y: 8
-        }, {
-          id: 'b',
-          x: 2,
-          y: 5,
-          a: true
-        }, {
-          id: 'a',
-          x: 2,
-          y: 6
-        }, {
-          id: 's',
-          x: 2,
-          y: 7
-        }, {
-          id: 's',
-          x: 2,
-          y: 8,
-          a: true
-        }, {
-          id: 'i',
-          x: 1,
-          y: 6
-        }, {
           id: 'n',
-          x: 3,
+          x: 8,
+          y: 5
+        }, {
+          id: 'g',
+          x: 8,
           y: 6
         }, {
-          id: 'o',
-          x: 4,
-          y: 6
-        }, {
-          id: 'a',
-          x: 3,
-          y: 8
-        }, {
-          id: 'x',
-          x: 4,
-          y: 8
-        }, {
-          id: 'o',
-          x: 5,
-          y: 8
-        }, {
-          id: 'p',
-          x: 6,
+          id: 't',
+          x: 8,
           y: 8
         }, {
           id: 'h',
-          x: 7,
-          y: 8
-        }, {
-          id: 'o',
           x: 8,
-          y: 8
+          y: 9
+        }, {
+          id: 'e',
+          x: 8,
+          y: 10
+        }, {
+          id: 'f',
+          x: 8,
+          y: 12
+        }, {
+          id: 'l',
+          x: 8,
+          y: 13
+        }, {
+          id: 'u',
+          x: 8,
+          y: 14
+        }, {
+          id: 't',
+          x: 8,
+          y: 15
+        }, {
+          id: 'e',
+          x: 8,
+          y: 16
+        }, {
+          id: 'd',
+          x: 7,
+          y: 2
         }, {
           id: 'n',
           x: 9,
+          y: 2
+        }, {
+          id: 'c',
+          x: 10,
+          y: 2
+        }, {
+          id: 'i',
+          x: 11,
+          y: 2
+        }, {
+          id: 'n',
+          x: 12,
+          y: 2
+        }, {
+          id: 'g',
+          x: 13,
+          y: 2
+        }, {
+          id: 'm',
+          x: 6,
+          y: 4
+        }, {
+          id: 'a',
+          x: 6,
+          y: 5
+        }, {
+          id: 'k',
+          x: 6,
+          y: 6
+        }, {
+          id: 'i',
+          x: 6,
+          y: 7
+        }, {
+          id: 'n',
+          x: 6,
           y: 8
+        }, {
+          id: 'g',
+          x: 6,
+          y: 9
+        }, {
+          id: 'c',
+          x: 6,
+          y: 11
+        }, {
+          id: 'r',
+          x: 6,
+          y: 12
+        }, {
+          id: 'a',
+          x: 6,
+          y: 13
+        }, {
+          id: 'f',
+          x: 6,
+          y: 14
+        }, {
+          id: 't',
+          x: 6,
+          y: 15
+        }, {
+          id: 's',
+          x: 6,
+          y: 16
+        }, {
+          id: 's',
+          x: 10,
+          y: 4
+        }, {
+          id: 'i',
+          x: 10,
+          y: 5
+        }, {
+          id: 'n',
+          x: 10,
+          y: 6
+        }, {
+          id: 'g',
+          x: 10,
+          y: 7
+        }, {
+          id: 'i',
+          x: 10,
+          y: 8
+        }, {
+          id: 'n',
+          x: 10,
+          y: 9
+        }, {
+          id: 'g',
+          x: 10,
+          y: 10
+        }, {
+          id: 'p',
+          x: 5,
+          y: 5
+        }, {
+          id: 'i',
+          x: 7,
+          y: 5
+        }, {
+          id: 'n',
+          x: 8,
+          y: 5
+        }, {
+          id: 't',
+          x: 9,
+          y: 5
+        }, {
+          id: 'n',
+          x: 11,
+          y: 5
+        }, {
+          id: 'g',
+          x: 12,
+          y: 5
+        }, {
+          id: 'c',
+          x: 0,
+          y: 9
+        }, {
+          id: 'o',
+          x: 1,
+          y: 9
+        }, {
+          id: 'o',
+          x: 2,
+          y: 9
+        }, {
+          id: 'k',
+          x: 3,
+          y: 9
+        }, {
+          id: 'i',
+          x: 4,
+          y: 9
+        }, {
+          id: 'n',
+          x: 5,
+          y: 9
         }
       ];
       this.game = {
         answers: {
-          drum: {
+          cooking: {
             r: false,
-            c: [0, 1, 2, 3]
+            c: [46, 47, 48, 49, 50, 51, 26]
           },
-          guitar: {
+          dancing: {
             r: false,
-            c: [4, 5, 6, 7, 8, 9]
+            c: [15, 2, 16, 17, 18, 19, 20]
           },
-          tambourine: {
+          making: {
             r: false,
-            c: [10, 11, 12, 13, 14, 2, 15, 6, 16, 17]
+            c: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
           },
-          trumpet: {
+          painting: {
             r: false,
-            c: [10, 18, 19, 20, 21, 22, 23]
+            c: [40, 22, 41, 42, 43, 34, 44, 45]
           },
-          flute: {
+          playing: {
             r: false,
-            c: [24, 25, 26, 27, 28]
+            c: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
           },
-          bass: {
+          singing: {
             r: false,
-            c: [29, 30, 31, 32]
-          },
-          piano: {
-            r: false,
-            c: [21, 33, 30, 34, 35]
-          },
-          saxophone: {
-            r: false,
-            c: [32, 36, 37, 38, 39, 40, 41, 42, 28]
+            c: [33, 34, 35, 36, 37, 38, 39]
           }
         }
       };
@@ -388,13 +436,13 @@
       U1A6.__super__.setStage.apply(this, arguments);
       this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 95);
-      this.insertBitmap('cooking', 'cooking', 564, 422);
-      this.insertBitmap('dancing', 'dancing', 109, 258);
-      this.insertBitmap('making', 'making', 193, 403);
-      this.insertBitmap('painting', 'painting', 688, 297);
-      this.insertBitmap('playing', 'playing', 263, 200);
-      this.insertBitmap('singing', 'singing', 708, 159);
+      this.insertInstructions('instructions', 'Look and drag the letters to complete the crossword puzzle.', 30, 100);
+      this.insertBitmap('cooking', 'cooking', 564, 422, 'mc');
+      this.insertBitmap('dancing', 'dancing', 109, 258, 'mc');
+      this.insertBitmap('making', 'making', 193, 403, 'mc');
+      this.insertBitmap('painting', 'painting', 688, 297, 'mc');
+      this.insertBitmap('playing', 'playing', 263, 200, 'mc');
+      this.insertBitmap('singing', 'singing', 708, 159, 'mc');
       this.insertBitmap('numbercooking', 'numbercooking', 547, 354);
       this.insertBitmap('numberdancing', 'numberdancing', 63, 185);
       this.insertBitmap('numbermaking', 'numbermaking', 136, 370);
@@ -428,46 +476,47 @@
     };
 
     U1A6.prototype.createDroppers = function() {
-      var crosswords, drop, i, _i, _ref;
+      var crosswords, drop, i, t, _i, _j, _ref;
       crosswords = new createjs.Container();
-      crosswords.x = 305;
-      crosswords.y = 216;
+      crosswords.x = 285;
+      crosswords.y = 56;
       crosswords.name = 'crosswords';
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
-        drop = new WordContainer('h' + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
-        drop.setRectShape('#FFF', '#999', 2, 23, 23);
+        drop = new WordContainer("h" + i, '', '#FFF', '#999', this.containers[i].x * 20, this.containers[i].y * 20, 20, 20);
+        drop.setRectShape('#FFF', '#999', 2, 20, 20);
         drop.text.y -= 3;
         drop.id = this.containers[i].id;
         this.addToLibrary(drop);
         crosswords.addChild(drop);
       }
-      crosswords.cache(-23, -23, 276, 230);
+      for (i = _j = 0; _j <= 5; i = ++_j) {
+        t = new createjs.Text(this.numbers[i].id, '14px Quicksand', '#333');
+        t.x = this.numbers[i].x * 20 + 6;
+        t.y = this.numbers[i].y * 20 + 4;
+        crosswords.addChild(t);
+      }
       return this.addToMain(crosswords);
     };
 
     U1A6.prototype.introEvaluation = function() {
       var i, _i, _ref;
       U1A6.__super__.introEvaluation.apply(this, arguments);
-      this.library['crosswords'].y = 216;
+      this.library['crosswords'].y = 146;
       this.library['crosswords'].alpha = 1;
       this.library['alphabet'].y = 510;
       this.library['alphabet'].alpha = 1;
-      this.library['saxophone'].alpha = 1;
-      this.library['saxophoneNo'].alpha = 1;
-      this.library['drum'].alpha = 1;
-      this.library['drumNo'].alpha = 1;
-      this.library['guitar'].alpha = 1;
-      this.library['guitarNo'].alpha = 1;
-      this.library['tambourine'].alpha = 1;
-      this.library['tambourineNo'].alpha = 1;
-      this.library['trumpet'].alpha = 1;
-      this.library['trumpetNo'].alpha = 1;
-      this.library['flute'].alpha = 1;
-      this.library['fluteNo'].alpha = 1;
-      this.library['bass'].alpha = 1;
-      this.library['bassNo'].alpha = 1;
-      this.library['piano'].alpha = 1;
-      this.library['pianoNo'].alpha = 1;
+      this.library['cooking'].alpha = 1;
+      this.library['numbercooking'].alpha = 1;
+      this.library['dancing'].alpha = 1;
+      this.library['numberdancing'].alpha = 1;
+      this.library['singing'].alpha = 1;
+      this.library['numbersinging'].alpha = 1;
+      this.library['making'].alpha = 1;
+      this.library['numbermaking'].alpha = 1;
+      this.library['painting'].alpha = 1;
+      this.library['numberpainting'].alpha = 1;
+      this.library['playing'].alpha = 1;
+      this.library['numberplaying'].alpha = 1;
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
         if (this.containers[i].a) {
           this.library['h' + i].changeText(this.containers[i].id);
@@ -483,11 +532,11 @@
         x: 0,
         delay: 0.5
       });
-      TweenMax.allFrom([this.library['saxophone'], this.library['drum'], this.library['guitar'], this.library['tambourine'], this.library['trumpet'], this.library['flute'], this.library['bass'], this.library['piano']], 1, {
+      TweenMax.allFrom([this.library['cooking'], this.library['dancing'], this.library['making'], this.library['painting'], this.library['playing'], this.library['singing']], 1, {
         alpha: 0,
         delay: 1.5
       }, 0.2);
-      TweenMax.allFrom([this.library['saxophoneNo'], this.library['drumNo'], this.library['guitarNo'], this.library['tambourineNo'], this.library['trumpetNo'], this.library['fluteNo'], this.library['bassNo'], this.library['pianoNo']], 1, {
+      TweenMax.allFrom([this.library['numbercooking'], this.library['numberdancing'], this.library['numbermaking'], this.library['numberpainting'], this.library['numberplaying'], this.library['numbersinging']], 1, {
         alpha: 0,
         delay: 1.5
       }, 0.2);
@@ -508,7 +557,6 @@
     U1A6.prototype.initEvaluation = function(e) {
       var letter, _i, _len, _ref, _results;
       U1A6.__super__.initEvaluation.apply(this, arguments);
-      this.library.crosswords.cache(-23, -23, 276, 230);
       _ref = this.abc;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -519,38 +567,41 @@
     };
 
     U1A6.prototype.evaluateAnswer = function(e) {
-      var hit, i, pt, _i, _ref, _results;
+      var dropped, hit, hitdrop, i, pt, _i, _ref;
       this.answer = e.target;
-      _results = [];
+      dropped = false;
+      hitdrop = null;
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
-        hit = this.library['h' + i];
+        hit = this.library["h" + i];
         pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
         if (hit.hitTest(pt.x, pt.y)) {
+          dropped = true;
           if (hit.id === this.answer.index) {
-            hit.changeText(hit.id);
-            this.answer.x = this.answer.pos.x;
-            this.answer.y = this.answer.pos.y;
-            this.evaluate('drum');
-            this.evaluate('guitar');
-            this.evaluate('tambourine');
-            this.evaluate('trumpet');
-            this.evaluate('flute');
-            this.evaluate('bass');
-            this.evaluate('piano');
-            this.evaluate('saxophone');
-            _results.push(this.library.crosswords.cache(-23, -23, 276, 230));
-          } else {
-            _results.push(this.warning());
+            hitdrop = hit;
           }
         } else {
-          _results.push(this.answer.returnToPlace());
+          this.answer.returnToPlace();
         }
       }
-      return _results;
+      if (dropped === true) {
+        if (hitdrop !== null) {
+          hitdrop.changeText(hitdrop.id);
+          this.answer.x = this.answer.pos.x;
+          this.answer.y = this.answer.pos.y;
+          this.evaluate('cooking');
+          this.evaluate('dancing');
+          this.evaluate('making');
+          this.evaluate('painting');
+          this.evaluate('playing');
+          return this.evaluate('singing');
+        } else {
+          return this.warning();
+        }
+      }
     };
 
     U1A6.prototype.evaluate = function(instrument) {
-      var box, ready, snd, _i, _len, _ref;
+      var box, ready, _i, _len, _ref;
       ready = true;
       if (!this.answers[instrument].r) {
         _ref = this.answers[instrument].c;
@@ -561,9 +612,7 @@
           }
         }
         if (ready) {
-          snd = createjs.Sound.play("s" + instrument);
-          snd.instrument = instrument;
-          snd.addEventListener('complete', this.finishEvaluation);
+          this.finishEvaluation();
           this.answers[instrument].r = true;
           return this.library['score'].plusOne();
         }
@@ -571,7 +620,7 @@
     };
 
     U1A6.prototype.finishEvaluation = function(e) {
-      return TweenMax.allTo([this.library[e.target.instrument], this.library[e.target.instrument + 'No']], 1, {
+      return TweenMax.allTo([this.library[e.target.instrument], this.library['number' + e.target.instrument]], 1, {
         alpha: 0,
         ease: Quart.easeOut,
         onComplete: this.nextEvaluation
