@@ -162,13 +162,13 @@
     U1A3.prototype.setScene = function(scene) {
       this.scene = this.game.scenes[scene - 1];
       this.answers = this.shuffleNoRepeat(this.scene.answers, 7);
-      this.insertBitmap('boy', "lugar" + scene, stageSize.w / 2, 490, 'bc');
+      this.insertBitmap('boy', "lugar" + scene, stageSize.w / 2, 450, 'bc');
       return this;
     };
 
     U1A3.prototype.setClick = function() {
-      this.insertBitmap('btnfalse', 'btnFalse', 407, 571);
-      this.insertBitmap('btntrue', 'btnTrue', 280, 571);
+      this.insertBitmap('btnfalse', 'btnFalse', 407, 541);
+      this.insertBitmap('btntrue', 'btnTrue', 280, 541);
       this.library.btnfalse.index = false;
       this.library.btntrue.index = true;
       this.library.btntrue.addEventListener('click', this.evaluateAnswer);
@@ -208,7 +208,7 @@
 
     U1A3.prototype.initEvaluation = function(e) {
       U1A3.__super__.initEvaluation.apply(this, arguments);
-      this.insertText('frases', this.answers[this.index].text, '20px Quicksand', '#333', stageSize.w / 2, 520, 'center');
+      this.insertText('frases', this.answers[this.index].text, '20px Quicksand', '#333', stageSize.w / 2, 480, 'center');
       return TweenLite.from(this.library.frases, 0.5, {
         alpha: 0,
         y: this.library.frases - 10,

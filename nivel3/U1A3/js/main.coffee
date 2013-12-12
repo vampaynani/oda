@@ -65,12 +65,11 @@ class U1A3 extends Oda
 	setScene: (scene) ->
 		@scene = @game.scenes[scene - 1]
 		@answers = @shuffleNoRepeat @scene.answers, 7
-		@insertBitmap 'boy', "lugar#{scene}",  stageSize.w / 2, 490, 'bc'
-
+		@insertBitmap 'boy', "lugar#{scene}",  stageSize.w / 2, 450, 'bc'
 		@
 	setClick:  ->
-		@insertBitmap 'btnfalse', 'btnFalse',407, 571
-		@insertBitmap 'btntrue', 'btnTrue',  280, 571
+		@insertBitmap 'btnfalse', 'btnFalse',407, 541
+		@insertBitmap 'btntrue', 'btnTrue',  280, 541
 		@library.btnfalse.index = off
 		@library.btntrue.index = on
 		@library.btntrue.addEventListener 'click', @evaluateAnswer
@@ -85,7 +84,7 @@ class U1A3 extends Oda
 		TweenLite.from @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut, delay:0.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@insertText 'frases', @answers[@index].text, '20px Quicksand', '#333', stageSize.w / 2, 520, 'center'
+		@insertText 'frases', @answers[@index].text, '20px Quicksand', '#333', stageSize.w / 2, 480, 'center'
 		TweenLite.from @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
 	evaluateAnswer: (e) =>
 		@answer = e.target

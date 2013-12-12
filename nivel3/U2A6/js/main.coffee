@@ -1,8 +1,7 @@
-class U4A6 extends Oda
+class U2A6 extends Oda
 	constructor: ->
 		manifest = [
-			{id: 'head', src: 'pleca.png'}
-			{id: 'inst', src: 'texto_look.png'}
+			{id: 'head', src: 'pleca1.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -30,7 +29,7 @@ class U4A6 extends Oda
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U4_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U2_A6_instructions.mp3', id:'instructions'}
 		]
 		@objetos = [
 			'objectBlueberries',
@@ -182,4 +181,4 @@ class U4A6 extends Oda
 		super
 		for i in [1..6] by 1
 			@library['name'+i].blink off
-	window.U4A6 = U4A6
+	window.U2A6 = U2A6
