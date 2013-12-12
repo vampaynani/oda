@@ -34,64 +34,91 @@
           src: 'repeat-btn.png'
         }, {
           id: 'animals1',
-          src: 'animals_1.png'
+          src: 'animals.png'
         }, {
           id: 'animals2',
-          src: 'animals_2.png'
+          src: 'animals.png'
         }, {
           id: 'art1',
-          src: 'art_1.png'
+          src: 'art.png'
         }, {
           id: 'art2',
-          src: 'art_2.png'
+          src: 'art.png'
         }, {
           id: 'cellphone1',
-          src: 'cellphone_1.png'
+          src: 'cellphone.png'
         }, {
           id: 'cellphone2',
-          src: 'cellphone_2.png'
+          src: 'cellphone.png'
         }, {
           id: 'drink1',
-          src: 'drink_1.png'
+          src: 'drink.png'
         }, {
           id: 'drink2',
-          src: 'drink_2.png'
+          src: 'drink.png'
         }, {
           id: 'fish1',
-          src: 'fish_1.png'
+          src: 'fish.png'
         }, {
           id: 'fish2',
-          src: 'fish_2.png'
+          src: 'fish.png'
         }, {
           id: 'line1',
-          src: 'line_1.png'
+          src: 'line.png'
         }, {
           id: 'line2',
-          src: 'line_2.png'
+          src: 'line.png'
         }, {
           id: 'pictures1',
-          src: 'pictures_1.png'
+          src: 'pictures.png'
         }, {
           id: 'pictures2',
-          src: 'pictures_2.png'
+          src: 'pictures.png'
         }, {
           id: 'run1',
-          src: 'run_1.png'
+          src: 'run.png'
         }, {
           id: 'run2',
-          src: 'run_2.png'
+          src: 'run.png'
         }, {
           id: 'trash1',
-          src: 'trash_1.png'
+          src: 'trash.png'
         }, {
           id: 'trash2',
-          src: 'trash_2.png'
+          src: 'trash.png'
         }
       ];
       sounds = [
         {
-          src: 'sounds/TU3_U1_A1_Instructions.mp3',
+          src: 'sounds/TU3_U1_A1_instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontTouch.mp3',
+          id: 'sart'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontTakePictures.mp3',
+          id: 'spictures'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontFeed.mp3',
+          id: 'sanimals'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontCut.mp3',
+          id: 'sline'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontEat.mp3',
+          id: 'sdrink'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontScare.mp3',
+          id: 'sfish'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontUseCell.mp3',
+          id: 'scellphone'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontThrow.mp3',
+          id: 'strash'
+        }, {
+          src: 'sounds/TU3_U1_A1_dontRun.mp3',
+          id: 'srun'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
@@ -161,7 +188,7 @@
       }, 285, 452, 'mc');
       this.insertSprite('choose2', ['animals2', 'art2', 'cellphone2', 'drink2', 'fish2', 'line2', 'pictures2', 'run2', 'trash2'], {
         animals: 0,
-        art: 2,
+        art: 1,
         cellphone: 2,
         drink: 3,
         fish: 4,
@@ -170,7 +197,7 @@
         run: 7,
         trash: 8
       }, 520, 452, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 9, 0));
       return this.introEvaluation();
     };
 
@@ -264,8 +291,10 @@
         return answer.id !== _this.phrase.id;
       });
       fake = Math.floor(Math.random() * others.length);
+      console.log(this.phrase.id);
       this.library["choose" + rand].gotoAndStop(this.phrase.id);
       this.library["choose" + other].gotoAndStop(others[fake].id);
+      console.log("s" + this.phrase.id);
       createjs.Sound.play("s" + this.phrase.id);
       this.library['choose1'].addEventListener('click', this.evaluateAnswer);
       this.library['choose2'].addEventListener('click', this.evaluateAnswer);

@@ -6,27 +6,36 @@ class U1A1 extends Oda
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'teacher', src:'prop_bg.png'}
 			{id: 'repeat', src: 'repeat-btn.png'}
-			{id: 'animals1', src:'animals_1.png'}
-			{id: 'animals2', src:'animals_2.png'}
-			{id: 'art1', src:'art_1.png'}
-			{id: 'art2', src:'art_2.png'}
-			{id: 'cellphone1', src:'cellphone_1.png'}
-			{id: 'cellphone2', src:'cellphone_2.png'}
-			{id: 'drink1', src:'drink_1.png'}
-			{id: 'drink2', src:'drink_2.png'}
-			{id: 'fish1', src:'fish_1.png'}
-			{id: 'fish2', src:'fish_2.png'}
-			{id: 'line1', src:'line_1.png'}
-			{id: 'line2', src:'line_2.png'}
-			{id: 'pictures1', src:'pictures_1.png'}
-			{id: 'pictures2', src:'pictures_2.png'}
-			{id: 'run1', src:'run_1.png'}
-			{id: 'run2', src:'run_2.png'}
-			{id: 'trash1', src:'trash_1.png'}
-			{id: 'trash2', src:'trash_2.png'}
+			{id: 'animals1', src:'animals.png'}
+			{id: 'animals2', src:'animals.png'}
+			{id: 'art1', src:'art.png'}
+			{id: 'art2', src:'art.png'}
+			{id: 'cellphone1', src:'cellphone.png'}
+			{id: 'cellphone2', src:'cellphone.png'}
+			{id: 'drink1', src:'drink.png'}
+			{id: 'drink2', src:'drink.png'}
+			{id: 'fish1', src:'fish.png'}
+			{id: 'fish2', src:'fish.png'}
+			{id: 'line1', src:'line.png'}
+			{id: 'line2', src:'line.png'}
+			{id: 'pictures1', src:'pictures.png'}
+			{id: 'pictures2', src:'pictures.png'}
+			{id: 'run1', src:'run.png'}
+			{id: 'run2', src:'run.png'}
+			{id: 'trash1', src:'trash.png'}
+			{id: 'trash2', src:'trash.png'}
 		]
 		sounds = [
-			{src:'sounds/TU3_U1_A1_Instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U1_A1_instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U1_A1_dontTouch.mp3', id:'sart'}
+			{src:'sounds/TU3_U1_A1_dontTakePictures.mp3', id:'spictures'}
+			{src:'sounds/TU3_U1_A1_dontFeed.mp3', id:'sanimals'}
+			{src:'sounds/TU3_U1_A1_dontCut.mp3', id:'sline'}
+			{src:'sounds/TU3_U1_A1_dontEat.mp3', id:'sdrink'}
+			{src:'sounds/TU3_U1_A1_dontScare.mp3', id:'sfish'}
+			{src:'sounds/TU3_U1_A1_dontUseCell.mp3', id:'scellphone'}
+			{src:'sounds/TU3_U1_A1_dontThrow.mp3', id:'strash'}
+			{src:'sounds/TU3_U1_A1_dontRun.mp3', id:'srun'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 			{src:'sounds/good.mp3', id:'good'}
 		]
@@ -53,8 +62,8 @@ class U1A1 extends Oda
 		@insertBitmap 'teacher', 'teacher', stageSize.w / 2, 124, 'tc'
 		@insertBitmap 'repeat', 'repeat', stageSize.w / 2, 310, 'tc'
 		@insertSprite 'choose1', ['animals1', 'art1', 'cellphone1', 'drink1', 'fish1', 'line1', 'pictures1', 'run1', 'trash1'], {animals:0, art:1, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 285, 452, 'mc'
-		@insertSprite 'choose2', ['animals2', 'art2', 'cellphone2', 'drink2', 'fish2', 'line2', 'pictures2', 'run2', 'trash2'], {animals:0, art:2, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 520, 452, 'mc'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@insertSprite 'choose2', ['animals2', 'art2', 'cellphone2', 'drink2', 'fish2', 'line2', 'pictures2', 'run2', 'trash2'], {animals:0, art:1, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 520, 452, 'mc'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
 		@introEvaluation()
 	introEvaluation: ->
 		super
@@ -100,8 +109,10 @@ class U1A1 extends Oda
 		others = @answers.filter (answer) =>
 			answer.id isnt @phrase.id
 		fake = Math.floor Math.random() * others.length
+		console.log @phrase.id
 		@library["choose#{rand}"].gotoAndStop @phrase.id
 		@library["choose#{other}"].gotoAndStop others[fake].id
+		console.log "s#{@phrase.id}"
 		createjs.Sound.play "s#{@phrase.id}"
 		@library['choose1'].addEventListener 'click', @evaluateAnswer
 		@library['choose2'].addEventListener 'click', @evaluateAnswer
