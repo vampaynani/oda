@@ -150,6 +150,7 @@ class U2A5 extends Oda
 	finish: =>
 		createjs.Sound.stop()
 		createjs.Sound.play 'good'
+		TweenLite.to @library['bg'], 1, {alpha:0}
 
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
 		super

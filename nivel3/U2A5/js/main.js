@@ -332,6 +332,9 @@
     U2A5.prototype.finish = function() {
       createjs.Sound.stop();
       createjs.Sound.play('good');
+      TweenLite.to(this.library['bg'], 1, {
+        alpha: 0
+      });
       TweenLite.to(this.library['cuento'], 1, {
         alpha: 0,
         y: this.library['cuento'].y + 10
