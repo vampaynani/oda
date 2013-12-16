@@ -26,8 +26,9 @@ class U2A3 extends Oda
 			{id:'clue', src:'text_clue.png'}
 		]
 		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
+			{src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/TU3_U2_A3_Instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U2_A3_Instructions2.mp3', id:'instructions2'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 		]
  
@@ -43,8 +44,7 @@ class U2A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
-
+		@insertInstructions 'instructions', 'Listen and drag the clocks to the correct pictures.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setMarket().setFrase().setDrags().setQuestion().setFinal().introEvaluation()
 	setMarket: ->

@@ -91,11 +91,14 @@
       ];
       sounds = [
         {
-          src: 'sounds/boing.mp3',
-          id: 'boing'
+          src: 'sounds/good.mp3',
+          id: 'good'
         }, {
           src: 'sounds/TU3_U2_A3_Instructions.mp3',
           id: 'instructions'
+        }, {
+          src: 'sounds/TU3_U2_A3_Instructions2.mp3',
+          id: 'instructions2'
         }, {
           src: 'sounds/wrong.mp3',
           id: 'wrong'
@@ -136,7 +139,7 @@
     U2A3.prototype.setStage = function() {
       U2A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Listen and drag the clocks to the correct pictures.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       return this.setMarket().setFrase().setDrags().setQuestion().setFinal().introEvaluation();
     };
