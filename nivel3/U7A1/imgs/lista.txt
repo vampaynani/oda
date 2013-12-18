@@ -1,0 +1,17 @@
+carta1
+creative
+creative2
+hardworking
+hardworking2
+intelligent
+intelligent2
+lazy
+lazy2
+popular
+popular2
+shy
+shy2
+stubborn
+stubborn2
+vain
+vain2
