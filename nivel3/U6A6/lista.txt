@@ -1,0 +1,8 @@
+{t:'people cooked with fire', i:'peoplecookedwithfire'}
+{t:'people had pet wolves', i:'peoplehadpetwolves'}
+{t:'they ate meat', i:'theyatemeat'}
+{t:'they hunted mammoths', i:'theyhuntedmammoths'}
+{t:'they lived in tents', i:'theylivedintents'}
+{t:'they made tools from bones', i:'theymadetoolsfrombones'}
+{t:'they painted pictures in caves', i:'theypaintedpicturesincaves'}
+{t:'they wore animal skins', i:'theyworeanimalskins'}
