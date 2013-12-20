@@ -1,0 +1,14 @@
+{id:'btnnext', src:'btn_next.png'}
+{id:'country', src:'country.png'}
+{id:'nationality', src:'nationality.png'}
+{id:'languages', src:'languages.png'}
+{id:'mapa0001', src:'mapa0001.png'}
+{id:'mapa0002', src:'mapa0002.png'}
+{id:'mapa0003', src:'mapa0003.png'}
+{id:'mapa0004', src:'mapa0004.png'}
+{id:'mapa0005', src:'mapa0005.png'}
+{id:'mapa0006', src:'mapa0006.png'}
+{id:'mapa0007', src:'mapa0007.png'}
+{id:'mapa0008', src:'mapa0008.png'}
+{id:'mapa0009', src:'mapa0009.png'}
+
