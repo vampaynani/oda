@@ -1,0 +1,26 @@
+
+{id:'1p1', src:'1p0001.png'}
+{id:'1p2', src:'1p0002.png'}
+{id:'2p1', src:'2p0001.png'}
+{id:'2p2', src:'2p0002.png'}
+{id:'3p1', src:'3p0001.png'}
+{id:'3p2', src:'3p0002.png'}
+{id:'4p1', src:'4p0001.png'}
+{id:'4p2', src:'4p0002.png'}
+{id:'5p1', src:'5p0001.png'}
+{id:'5p2', src:'5p0002.png'}
+{id:'6p1', src:'6p0001.png'}
+{id:'6p2', src:'6p0002.png'}
+{id:'7p1', src:'7p0001.png'}
+{id:'7p2', src:'7p0002.png'}
+{id:'8p1', src:'8p0001.png'}
+{id:'8p2', src:'8p0002.png'}
+{id:'9p1', src:'9p0001.png'}
+{id:'9p2', src:'9p0002.png'}
+{id:'10p1', src:'10p0001.png'}
+{id:'10p2', src:'10p0002.png'}
+{id:'line', src:'line.png'}
+{id:'area', src:'prop_area.png'}
+{id:'bg', src:'prop_bg.png'}
+
+
