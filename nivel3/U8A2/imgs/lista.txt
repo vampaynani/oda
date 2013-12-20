@@ -1,0 +1,48 @@
+menu:[
+	{id: 'menuAshton'}
+	{id: 'menuCarla'}
+	{id: 'menuEva'}
+	{id: 'menuJack'}
+	{id: 'menuKevin'}
+	{id: 'menuMarissa'}
+	{id: 'menuRenee'}
+	{id: 'menuSam'}
+	{id: 'menuWilson'}
+]
+
+ballons:[
+	{id: 'ballonAshtonDragble'}
+	{id: 'ballonCarlaDragble'}
+	{id: 'ballonEvaDragble'}
+	{id: 'ballonJackDragble'}
+	{id: 'ballonKevinDragble'}
+	{id: 'ballonMarissaDragble'}
+	{id: 'ballonReneeDragble'}
+	{id: 'ballonSamDragble'}
+	{id: 'ballonWilsonDragble'}
+]
+
+drags:[
+	{id: 'imageAshtonDragble', x: ,y: }
+	{id: 'imageCarlaDragble', x: ,y: }
+	{id: 'imageEvaDragble', x: ,y: }
+	{id: 'imageJackDragble', x: ,y: }
+	{id: 'imageKevinDragble', x: ,y: }
+	{id: 'imageMarissaDragble', x: ,y: }
+	{id: 'imageReneeDragble', x: ,y: }
+	{id: 'imageSamDragble', x: ,y: }
+	{id: 'imageWilsonDragble', x: ,y: }
+]
+
+sprites:[
+	{sp1: 'spAshtonBig1', sp2:'spAshtonBig2'}
+	{sp1: 'spCarlaBig1', sp2:'spCarlaBig2'}
+	{sp1: 'spEvaBig1', sp2:'spEvaBig2'}
+	{sp1: 'spJackBig1', sp2:'spJackBig2'}
+	{sp1: 'spKevinBig1', sp2:'spKevinBig2'}
+	{sp1: 'spMarissaBig1', sp2:'spMarissaBig2'}
+	{sp1: 'spReneeBig1', sp2:'spReneeBig2'}
+	{sp1: 'spSamBig1', sp2:'spSamBig2'}
+	{sp1: 'spWilsonBig1', sp2:'spWilsonBig2'}
+]
+
