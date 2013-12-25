@@ -22,9 +22,6 @@
           id: 'head',
           src: 'pleca1.png'
         }, {
-          id: 'inst',
-          src: 'inst.png'
-        }, {
           id: 'c1',
           src: 'circle1.png'
         }, {
@@ -344,10 +341,8 @@
     };
 
     U1A1.prototype.finishEvaluation = function() {
-      var song;
       this.library['score'].plusOne();
-      song = createjs.Sound.play(this.answers[this.index].sound);
-      return song.addEventListener('complete', this.clearEvaluation);
+      return this.clearEvaluation();
     };
 
     U1A1.prototype.clearEvaluation = function(e) {

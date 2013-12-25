@@ -1,8 +1,33 @@
+class ContainerFactory
+	makeContainer: (opts) ->
+		switch opts.type
+			when 'label' then new LabelContainer opts
+
+class LabelContainer
+	LabelContainer.prototype = new createjs.Container()
+	LabelContainer::Container_initialize = LabelContainer::initialize
+	LabelContainer::initialize = (opts) ->
+		@Container_initialize()
+		@name = opts.name
+		@x = opts.x
+		@y = opts.y
+		@text = new createjs.Text opts.text,opts.font,opts.color
+		@text.name = opts.name
+		@text.textAlign = opts.align ? 'left'
+		@addChild @text
+		@text
+	constructor: (opts) ->
+		@initialize opts
+	update: (txt) ->
+		@text.text = txt
+		if @text.alpha is 0 then TweenLite.to @text, 0.5, {alpha: 1, y: 0} else TweenLite.from @text, 0.5, {alpha: 0, y: @text.y + 20}
+	delete: ->
+		TweenLite.to @text, 0.5, {alpha: 0, y: @text.y + 20}
+
 class U2A3 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
-		    {id:'inst' , src: 'inst.png'}
 		    {id:'c1' , src: 'circle1.png'}
 		    {id:'c2' , src: 'circle2.png'}
 		    {id:'letraM', src:'letra_M.png'}
@@ -27,22 +52,210 @@ class U2A3 extends Oda
 		]
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU3_U2_A3_Instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U2_A3_Instructions.mp3', id:'instructions'}
 		    {src:'sounds/TU3_U2_A3_Instructions2.mp3', id:'instructions2'}
-			{src:'sounds/wrong.mp3', id:'wrong'}
+		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
- 
-		@letras = ['letraM', 'letraU', 'letraS', 'letraH', 'letraR', 'letraO', 'letraO', 'letraM', 'letraS']
-		@answers = [
-			{w1:1, w2:2, w3:2, sound:'song' }
-		    {w1:1, w2:1, w3:4, sound:'outside' }
-		    {w1:0, w2:0, w3:0, sound:'picture'}
-		    {w1:1, w2:3, w3:1, sound:'english' }
-		    {w1:0, w2:1, w3:3, sound:'flute'}
-		]
+		@game =
+			header:'head'
+			scenes:[
+				{
+					instructions: 'Read the price and click on the correct item.'
+					container: {name: 'market'}
+					background: {name: 'propbg', x: 426, y: 308, align: 'mc'}
+					components: {
+						texts: [
+						]
+						images: [
+							{imgId: 'letraM', x:501, y:407, align: 'mc'}
+							{imgId: 'letraU', x:324, y:408, align: 'mc'}
+							{imgId: 'letraS', x:563, y:323, align: 'mc'}
+							{imgId: 'letraH', x:303, y:317, align: 'mc'}
+							{imgId: 'letraR', x:314, y:213, align: 'mc'}
+							{imgId: 'letraO', x:374, y:316, align: 'mc'}
+							{name: 'letraO2', imgId: 'letraO', x:454, y:316, align: 'mc'}
+							{name: 'letraM2', imgId: 'letraM', x:576, y:163, align: 'mc'}
+							{name: 'letraS2', imgId: 'letraS', x:389, y:257, align: 'mc'}
+							{name: 'abuelita', imgId: 'propabuelita', x:554, y:254, align: 'mc', index: 15}
+						]
+						containers: [
+							{type: 'label', name: 'answerlbl', text: '', font: '15px Quicksand', color: '#333', x: 415, y: 530, align: 'center'}
+						]
+						buttons: [
+							{imgId: 'priceblueberryJam', x:521, y:404, align: 'mc', index: 'blueberry', action: 'checkPrice'}
+							{imgId: 'pricebutter', x:350, y:218, align: 'mc', index: 'butter', action: 'checkPrice'}
+							{imgId: 'pricecarrots', x:584, y:314, align: 'mc', index: 'carrots', action: 'checkPrice'}
+							{imgId: 'pricechilis', x:580, y:176, align: 'mc', index: 'chilis', action: 'checkPrice'}
+							{imgId: 'pricecream', x:416, y:253, align: 'mc', index: 'cream', action: 'checkPrice'}
+							{imgId: 'priceeggs', x:322, y:315, align: 'mc', index: 'eggs', action: 'checkPrice'}
+							{imgId: 'pricemushrooms', x:397, y:320, align: 'mc', index: 'mushrooms', action: 'checkPrice'}
+							{imgId: 'pricepeachJam', x:347, y:406, align: 'mc', index: 'peach', action: 'checkPrice'}
+							{imgId: 'pricepeppers', x:477, y:313, align: 'mc', index: 'peppers', action: 'checkPrice'}
+						]
+						drags: [
+						]
+						targets: [
+						]
+					}
+					steps: [
+						{type: 'txt', text:'It\'s three dollars and ten cents.', success: 'peach', show: 'letraU'}
+						{type: 'txt', text:'They\'re three dollars a kilo.', success: 'carrots', show: 'letraS'}
+						{type: 'txt', text:'It\'s ninety-five cents.', success: 'cream', show: 'letraS2'}
+						{type: 'txt', text:'It\'s one dollar and fifty cents.', success: 'butter', show: 'letraR'}
+						{type: 'txt', text:'They\'re two dollars and seventy-five cents.', success: 'chilis', show: 'letraM2'}
+						{type: 'txt', text:'They\'re two dollars and forty cents a kilo.', success: 'peppers', show: 'letraO2'}
+						{type: 'txt', text:'They\'re two dollars and seventy-five cents a kilo.', success: 'eggs', show: 'letraH'}
+						{type: 'txt', text:'It\'s four dollars and fifty cents.', success: 'blueberry', show: 'letraM'}
+						{type: 'txt', text:'They\'re four dollars and five cents a kilo.', success: 'mushrooms', show: 'letraO'}
+					]
+				}
+				{
+					instructions: 'Read the price and click on the correct item.'
+					container: {name: 'market'}
+					background: {name: 'propbg', x: 426, y: 308, align: 'mc'}
+					components: {
+						texts: [
+						]
+						images: [
+							{name: 'abuelita', imgId: 'propabuelita', x:554, y:254, align: 'mc', index: 15}
+						]
+						containers: [
+						]
+						buttons: [
+						]
+						drags: [
+							{type: 'img', imgId: 'letraM', x:501, y:407, align: 'mc'}
+							{type: 'img', imgId: 'letraU', x:324, y:408, align: 'mc'}
+							{type: 'img', imgId: 'letraS', x:563, y:323, align: 'mc'}
+							{type: 'img', imgId: 'letraH', x:303, y:317, align: 'mc'}
+							{type: 'img', imgId: 'letraR', x:314, y:213, align: 'mc'}
+							{type: 'img', imgId: 'letraO', x:374, y:316, align: 'mc'}
+							{type: 'img', name: 'letraO2', imgId: 'letraO', x:454, y:316, align: 'mc'}
+							{type: 'img', name: 'letraM2', imgId: 'letraM', x:576, y:163, align: 'mc'}
+							{type: 'img', name: 'letraS2', imgId: 'letraS', x:389, y:257, align: 'mc'}
+						]
+						targets:[
+						]
+					}
+					steps: [
+						{type: 'word', text:'mushrooms'}
+					]	
+				}
+			]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@scene = 0
+		totalScore = 0
+		for i in [0..@game.scenes.length - 1]
+			totalScore += @game.scenes[i].steps.length
+		@insertBitmap 'header', @game.header, stageSize.w / 2, 0, 'tc'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, totalScore, 0
+		@setScene().hideLetters().introEvaluation()
+	setScene: ->
+		currentScene = @game.scenes[@scene]
+		
+		#Create scene container
+		cname = currentScene.container.name ? 'currentContainer'
+		if @library[cname]
+			c = @library[cname]
+		else
+			c = new createjs.Container()
+			@addToMain c
+		
+		c.name = cname
+		c.x =  currentScene.container.x ? 0
+		c.y =  currentScene.container.y ? 0
+		c.removeAllChildren()
+
+		#Create background for scene container
+		bgname = currentScene.background.name ? 'background'
+		bgx = currentScene.background.x ? 0
+		bgy = currentScene.background.y ? 0
+		bga = currentScene.background.align ? ''
+		b = @createBitmap bgname, bgname, bgx, bgy, bga
+		c.addChild b
+
+		#Create images for scene container
+		for image in currentScene.components.images
+			align = image.align ? ''
+			name = image.name ? image.imgId
+			b = @createBitmap name, image.imgId, image.x, image.y, align
+			c.addChild b
+			@addToLibrary b
+		
+		#Create containers for scene container
+		factory = new ContainerFactory()
+		for container in currentScene.components.containers 
+			co = factory.makeContainer container
+			c.addChild co
+			@addToLibrary co
+
+		#Create buttons for scene container
+		for button in currentScene.components.buttons
+			align = button.align ? ''
+			name = button.name ? button.imgId
+			b = @createBitmap name, button.imgId, button.x, button.y, align
+			b.index = button.index
+			b.addEventListener 'click', @[button.action]
+			c.addChild b
+			@addToLibrary b
+
+		#Create drags for scene container
+		for drag in currentScene.components.drags
+			name = drag.name ? drag.imgId
+			
+			d = new Droppable name, (@preload.getResult drag.imgId), drag.index, drag.x, drag.y, @stage
+			@setReg d, d.width / 2, d.height / 2
+			d.addEventListener 'click', @[drag.action]
+			c.addChild d
+			@addToLibrary d
+
+		for image in currentScene.components.images
+			if image.index
+				@library[image.name].parent.setChildIndex @library[image.name], image.index 
+		
+		@insertInstructions 'instructions', @game.scenes[@scene].instructions, 40, 100
+		@
+	hideLetters: ->
+		letras = ['letraM', 'letraU', 'letraS', 'letraH', 'letraR', 'letraO', 'letraO2', 'letraM2', 'letraS2']
+		for letra in letras
+			@library[letra].visible = off
+		@
+	introEvaluation: ->
+		super
+		TweenLite.from @library.header, 1, {y:-@library.header.height}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from @library[@game.scenes[@scene].container.name], 1, {alpha :0, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+	initEvaluation: ->
+		super
+		if @game.scenes[@scene].steps.length > 0
+			currentStep = @game.scenes[@scene].steps[@index]
+			@library.answerlbl.update currentStep.text
+	checkPrice: (e) =>
+		currentAnswer = @game.scenes[@scene].steps[@index]
+		if e.target.index is currentAnswer.success
+			@library.score.plusOne()
+		else
+			@warning()
+		@library[currentAnswer.show].visible = on
+		TweenLite.to e.target, 0.5, {alpha: 0}
+		@nextStep()
+	nextStep: ->
+		@index++
+		if @index < @game.scenes[@scene].steps.length
+			currentStep = @game.scenes[@scene].steps[@index]
+			@library.answerlbl.update currentStep.text
+		else
+			@nextScene()
+	nextScene: ->
+		@scene++
+		if @scene < @game.scenes.length
+			@setScene @scene
+	###
+	setStage: ->
+		super
+		console.log window['createjs']['Bitmap']
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Listen and drag the clocks to the correct pictures.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
@@ -212,4 +425,5 @@ class U2A3 extends Oda
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
 		super
+	###
 	window.U2A3 = U2A3
