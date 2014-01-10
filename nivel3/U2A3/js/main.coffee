@@ -296,18 +296,18 @@ class Game
 		TweenLite.from lib.header, 0.5, {alpha: 0, y: lib.header.y - 20}
 		@
 	setInstructions: (instructions) ->
-		instructions = new Instructions instructions
-		lib.mainContainer.add instructions, false
-		#if instructions.steps.length > 1
-			#@observer.subscribe GameObserver.NEXT_SCENE, lib.instructions.next
-			#@observer.subscribe GameObserver.PREV_SCENE, lib.instructions.prev
+		lib.instructions = new Instructions instructions
+		lib.mainContainer.add lib.instructions, false
+		if instructions.steps.length > 1
+			@observer.subscribe GameObserver.NEXT_SCENE, lib.instructions.next
+			@observer.subscribe GameObserver.PREV_SCENE, lib.instructions.prev
 		@
 	setScenes: (scenes) ->
 		lib.scenes = new SceneStack scenes
-		lib.mainContainer.add lib.scenes, false
-		if scenes.length > 1
-			@observer.subscribe GameObserver.NEXT_SCENE, lib.scenes.next
-			@observer.subscribe GameObserver.PREV_SCENE, lib.scenes.prev
+		#lib.mainContainer.add lib.scenes, false
+		#if scenes.length > 1
+		#	@observer.subscribe GameObserver.NEXT_SCENE, lib.scenes.next
+		#	@observer.subscribe GameObserver.PREV_SCENE, lib.scenes.prev
 		@
 	start: ->
 
@@ -315,7 +315,7 @@ class Game
 		@observer.notify GameObserver.NEXT_SCENE
 	prevScene: ->
 		@observer.notify GameObserver.PREV_SCENE
-
+	window.Game = Game
 ###
 
 COMPONENTS CLASSES
@@ -363,6 +363,7 @@ class Instructions extends Component
 			TweenLite.from @, 0.5, {alpha: 0, x: @x - 20}
 		else
 			@currentStep++
+	window.Instructions = Instructions
 
 class SceneStack extends Component
 	constructor: (scenes) ->
@@ -370,13 +371,16 @@ class SceneStack extends Component
 	SceneStack::initialize = (scenes) ->
 		@stack = []
 		@currentScene = 0
-		for scene in scenes
-			sc = new Scene scene
-			sc.visible = false
+		sc = new Scene()
+		#@addChild sc
+		#for scene in scenes
+		#	console.log scene
+		#	sc = new Scene scene
+		#	sc.visible = false
 			#@addChild sc
 			#@stack.push s
 		#@stack[@currentScene].visible = true
-		TweenLite.from @, 1, {alpha: 0}
+		#TweenLite.from @, 1, {alpha: 0}
 	###
 	next: =>
 		@currentScene++
@@ -395,15 +399,17 @@ class SceneStack extends Component
 		else
 			@currentScene++
 	###
+	window.SceneStack = SceneStack
+
 class SceneObserver extends Observer
 	@NEXT_STEP: 'next_step'
 	@PREV_STEP: 'prev_step'
 	window.SceneObserver = SceneObserver
 
 class Scene extends Component
-	constructor: (scene) ->
+	constructor: (scene = null) ->
 		@initialize scene
-	Scene::initialize = (scene) ->
+	Scene::initialize = (scene = null) ->
 		@observer = new SceneObserver()
 		console.log 'initialize'
 	nexStep: ->

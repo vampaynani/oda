@@ -701,18 +701,17 @@ LIBRARY
     };
 
     Game.prototype.setInstructions = function(instructions) {
-      instructions = new Instructions(instructions);
-      lib.mainContainer.add(instructions, false);
+      lib.instructions = new Instructions(instructions);
+      lib.mainContainer.add(lib.instructions, false);
+      if (instructions.steps.length > 1) {
+        this.observer.subscribe(GameObserver.NEXT_SCENE, lib.instructions.next);
+        this.observer.subscribe(GameObserver.PREV_SCENE, lib.instructions.prev);
+      }
       return this;
     };
 
     Game.prototype.setScenes = function(scenes) {
       lib.scenes = new SceneStack(scenes);
-      lib.mainContainer.add(lib.scenes, false);
-      if (scenes.length > 1) {
-        this.observer.subscribe(GameObserver.NEXT_SCENE, lib.scenes.next);
-        this.observer.subscribe(GameObserver.PREV_SCENE, lib.scenes.prev);
-      }
       return this;
     };
 
@@ -725,6 +724,8 @@ LIBRARY
     Game.prototype.prevScene = function() {
       return this.observer.notify(GameObserver.PREV_SCENE);
     };
+
+    window.Game = Game;
 
     return Game;
 
@@ -816,6 +817,8 @@ LIBRARY
       }
     };
 
+    window.Instructions = Instructions;
+
     return Instructions;
 
   })(Component);
@@ -828,17 +831,10 @@ LIBRARY
     }
 
     SceneStack.prototype.initialize = function(scenes) {
-      var sc, scene, _i, _len;
+      var sc;
       this.stack = [];
       this.currentScene = 0;
-      for (_i = 0, _len = scenes.length; _i < _len; _i++) {
-        scene = scenes[_i];
-        sc = new Scene(scene);
-        sc.visible = false;
-      }
-      return TweenLite.from(this, 1, {
-        alpha: 0
-      });
+      return sc = new Scene();
     };
 
     /*
@@ -860,6 +856,8 @@ LIBRARY
     			@currentScene++
     */
 
+
+    window.SceneStack = SceneStack;
 
     return SceneStack;
 
@@ -887,10 +885,16 @@ LIBRARY
     __extends(Scene, _super);
 
     function Scene(scene) {
+      if (scene == null) {
+        scene = null;
+      }
       this.initialize(scene);
     }
 
     Scene.prototype.initialize = function(scene) {
+      if (scene == null) {
+        scene = null;
+      }
       this.observer = new SceneObserver();
       return console.log('initialize');
     };
