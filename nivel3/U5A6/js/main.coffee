@@ -6,15 +6,15 @@ class U5A6 extends Oda
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 
-			{id:'1', src:'1.png'}
-			{id:'2', src:'2.png'}
-			{id:'3', src:'3.png'}
-			{id:'4', src:'4.png'}
-			{id:'5', src:'5.png'}
-			{id:'6', src:'6.png'}
-			{id:'7', src:'7.png'}
-			{id:'8', src:'8.png'}
-			{id:'9', src:'9.png'}
+			{id:'q1', src:'1.png'}
+			{id:'q2', src:'2.png'}
+			{id:'q3', src:'3.png'}
+			{id:'q4', src:'4.png'}
+			{id:'q5', src:'5.png'}
+			{id:'q6', src:'6.png'}
+			{id:'q7', src:'7.png'}
+			{id:'q8', src:'8.png'}
+			{id:'q9', src:'9.png'}
 			{id:'planetearth', src:'planet_earth.png'}
 
 			{id: 'aLetra', src: 'a.png'}
@@ -45,7 +45,7 @@ class U5A6 extends Oda
 			{id: 'zLetra', src: 'z.png'}
 		]
 		sounds = [
-			{src:'sounds/TU2_U1_A6_instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U5_A6_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}	
@@ -156,17 +156,9 @@ class U5A6 extends Oda
 	setStage: ->
 		super
 		@answers = @clone @game.answers
+		@insertInstructions 'instructions', 'Click on the crossword, read the clues and write the answers.', 30, 100
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read the dialogues and solve the puzzle with past tense verbes.', 30, 100
-		@insertBitmap '1', '1', 214, 189, 'mc'
-		@insertBitmap '2', '2', 134, 320, 'mc'
-		@insertBitmap '3', '3', 133, 456, 'mc'
-		@insertBitmap '4', '4', 300, 504, 'mc'
-		@insertBitmap '5', '5', 666, 508, 'mc'
-		@insertBitmap '6', '6', 683, 407, 'mc'
-		@insertBitmap '7', '7', 670, 273, 'mc'
-		@insertBitmap '8', '8', 628, 159, 'mc'
-		@insertBitmap '9', '9', 405, 167, 'mc'
+		@insertSprite 'questions', ['q1','q2','q3','q4','q5','q6','q7','q8','q9'], null, 370, stageSize.h / 2 + 30, 'mr'
 
 		###
 		@insertBitmap '1', '1', 307, 189, 'mc'
@@ -180,8 +172,6 @@ class U5A6 extends Oda
 		@insertBitmap '9', '9', 496, 167, 'mc'
 		###
 
-		for i in [1..9]
-			@library[i].scaleY = @library[i].scaleX = 0.5
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
 		@createDroppers()
 		@createAlphabet()
@@ -189,7 +179,7 @@ class U5A6 extends Oda
 	createAlphabet: ->
 		alphabet = new createjs.Container()
 		alphabet.x = 135
-		alphabet.y = 540
+		alphabet.y = 510
 		alphabet.name = 'alphabet'
 		for i in [0..@abc.length - 1] by 1
 			letter = @abc[i]
@@ -203,8 +193,8 @@ class U5A6 extends Oda
 		@addToMain alphabet
 	createDroppers: ->
 		crosswords = new createjs.Container()
-		crosswords.x = 245
-		crosswords.y = 216
+		crosswords.x = 415
+		crosswords.y = 125
 		crosswords.name = 'crosswords'
 		for i in [0..@containers.length - 1] by 1
 			drop = new WordContainer "h#{i}", '', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
