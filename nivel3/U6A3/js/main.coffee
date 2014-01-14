@@ -54,7 +54,18 @@ class U5A6 extends Oda
 		    {src:'sounds/wrong.mp3', id:'wrong'}	
 		]
 		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-
+		@numbers = [
+			{id:'1', x:9, y:1}
+			{id:'2', x:11, y:0}
+			{id:'3', x:8, y:2}
+			{id:'4', x:7, y:3}
+			{id:'5', x:5, y:5}
+			{id:'6', x:4, y:6}
+			{id:'7', x:0, y:8}
+			{id:'8',  x:4, y:10}
+			{id:'9',  x:1, y:12}
+			{id:'10', x:0, y:14}
+		]
 		@containers = [
 			{id:'f', x:10, y:1}
 			{id:'o', x:11, y:1}
@@ -62,13 +73,16 @@ class U5A6 extends Oda
 			{id:'e', x:13, y:1}
 			{id:'s', x:14, y:1}
 			{id:'t', x:15, y:1}
+
 			{id:'c', x:11, y:2}
 			{id:'e', x:11, y:3}
 			{id:'a', x:11, y:4}
 			{id:'n', x:11, y:5}
+
 			{id:'l', x:8, y:3}
 			{id:'a', x:9, y:3}
 			{id:'k', x:10, y:3}
+
 			{id:'c', x:7, y:4}
 			{id:'o', x:7, y:5}
 			{id:'n', x:7, y:6}
@@ -78,6 +92,7 @@ class U5A6 extends Oda
 			{id:'e', x:7, y:10}
 			{id:'n', x:7, y:11}
 			{id:'t', x:7, y:12}
+
 			{id:'v', x:6, y:5}
 			{id:'l', x:8, y:5}
 			{id:'c', x:9, y:5}
@@ -159,7 +174,11 @@ class U5A6 extends Oda
 			drop.id = @containers[i].id
 			@addToLibrary drop
 			crosswords.addChild drop
-		
+		for i in [0..9]
+			t = new createjs.Text @numbers[i].id,'14px Quicksand','#333'
+			t.x = @numbers[i].x*21.9 + 6
+			t.y = @numbers[i].y*21.9 + 4
+			crosswords.addChild t
 		#crosswords.cache -23, -23, 276, 230
 		@addToMain crosswords
 	introEvaluation: ->
