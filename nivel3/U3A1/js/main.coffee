@@ -22,31 +22,35 @@ class U3A1 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU2_U7_A2_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU2_U7_A2_schedule1.mp3', id:'sche1'}
-		    {src:'sounds/TU2_U7_A2_schedule2.mp3', id:'sche2'}
+
+			{src:'sounds/TU3_U3_A1_instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U3_A1_bella.mp3', id:'sche1'}
+			{src:'sounds/TU3_U3_A1_aiden.mp3', id:'sche2'}
+			{src:'sounds/TU3_U3_A1_paisley.mp3', id:'sche3'}
+			{src:'sounds/TU3_U3_A1_jacob.mp3', id:'sche4'}
+
 		]
 		@game =
 			gustos:
-				chic1:['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove']
-				chic2:['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove']
-				chic3:['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove']
-				chic4:['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove']
+				chic1:['dragbledontlike', 'dragblelike', 'dragblelove', 'dragbledontlike', 'dragblelove', '']
+
+				chic2:['dragbledontlike','',  'dragblehate', 'dragblelike', 'dragblelike', 'dragblelove']
+
+				chic3:['dragblelove', 'dragblelove', 'dragblelike', 'dragblehate', '', 'dragblelike']
+
+				chic4:['', 'dragbledontlike', 'dragblelike', 'dragblelike', 'dragblelove', 'dragblehate']
+
 				faces:['dragblelove', 'dragblelike', 'dragbledontlike', 'dragblehate']
-			actividades:
-				boy:['boypropbaseball', 'boydragbleclean', 'boydragbleread', 'boypropbasketball', 'boyproptennis', 'boydragblecanoeing', 'boypropswimming', 'boydragbleriding', 'boydragblebiking', 'boydragblefishing']
-				boydrags:[ 'boydragbleclean', 'boydragbleread', 'boydragblecanoeing', 'boydragbleriding', 'boydragblebiking', 'boydragblefishing']
-				girl:['girldragbleswimming','girldragblehiking','girldragblesoccer','girlpropclean','girldragblecanoeing','girlpropriding','girlproprest','girldragblevolleyball','girldragblefishing','girlproptennis']
-				girldrags:['girldragbleswimming','girldragblehiking','girldragblesoccer','girldragblecanoeing','girldragblevolleyball','girldragblefishing']
+
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@actividades = @game.gustos
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the icons to the correct place on the schedule.', 40, 100
+		@insertInstructions 'instructions', 'Listen and drag the faces to the correct place on the chart.', 40, 100
 		@insertBitmap 'btnRepeat', 'btnrepeat', 480, 540
 		@insertBitmap 'btnFinished', 'btnfinished', 610, 540
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 24, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
 		
 		@insertBitmap 'fondo','fondo', stageSize.w / 2, 130, 'tc'
 		@setPizarra(1).introEvaluation()
@@ -75,7 +79,7 @@ class U3A1 extends Oda
 			c.x = 0 + ((schedule - 1) * 125)
 			
 			hit = new createjs.Shape()
-			hit.graphics.beginFill('rgba(0,0,0,1)').drawRect(-25, -25, 90, 45)
+			hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 45)
 			@setReg hit, 20, -20
 			c.addChild hit
 
@@ -138,7 +142,7 @@ class U3A1 extends Oda
 					res.currentFrame = 1
 				else
 					res.currentFrame = 0
-			@library[@current].addChild res
+				@library[@current].addChild res
 		setTimeout @nextEvaluation, 4 * 1000
 	finishEvaluation: =>
 		TweenLite.to @library.pizarra, 1, {alpha: 0, y: @library.pizarra.y + 20, onComplete: @nextEvaluation}
