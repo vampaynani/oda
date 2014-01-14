@@ -269,7 +269,7 @@
 
     U2A4.prototype.initEvaluation = function(e) {
       U2A4.__super__.initEvaluation.apply(this, arguments);
-      this.answers = this.shuffle(this.imagenes);
+      this.answers = this.imagenes;
       return this.setQuestion(this.index);
     };
 

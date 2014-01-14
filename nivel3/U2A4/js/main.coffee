@@ -89,7 +89,7 @@ class U2A4 extends Oda
 		TweenLite.from @library['seasons'], 0.5, {alpha: 0, y: @library['seasons'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@answers = @shuffle @imagenes
+		@answers = @imagenes
 		@setQuestion @index
 	setQuestion: (question) ->
 		letras = new createjs.Container()
