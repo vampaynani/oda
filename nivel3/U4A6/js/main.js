@@ -38,6 +38,15 @@
           id: 'startgame',
           src: 'start_game.png'
         }, {
+          id: 'youshouldcover',
+          src: 'youshouldcover.png'
+        }, {
+          id: 'youshoulddentist',
+          src: 'youshoulddentist.png'
+        }, {
+          id: 'souvenir',
+          src: 'souvenir.png'
+        }, {
           id: 'alotofcats',
           src: 'a-lot-of-cats.png'
         }, {
@@ -89,7 +98,7 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U8_A6_instructions.mp3',
+          src: 'sounds/TU3_U4_A6_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
@@ -109,43 +118,36 @@
             tipo: 'texto',
             imagen: 'alotofcats',
             pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
-            respuesta: 'opcionDos'
-          }, {
-            tipo: 'texto',
-            imagen: 'anap',
-            pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
+            opcionUno: "There are much",
+            opcionDos: 'a lot of cats.',
             respuesta: 'opcionDos'
           }, {
             tipo: 'texto',
             imagen: 'itakeanap',
-            pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
-            respuesta: 'opcionDos'
+            pregunta: "When I'm sleepy,",
+            opcionUno: "Itake a nap.",
+            opcionDos: 'I take a test.',
+            respuesta: 'opcionUno'
           }, {
             tipo: 'texto',
             imagen: 'itstheirs',
-            pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
+            regunta: "Whose cat is it?",
+            opcionUno: "It's his.",
+            opcionDos: "It's theirs.",
             respuesta: 'opcionDos'
           }, {
             tipo: 'texto',
             imagen: 'jointheoutdoorsclub',
             pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
+            opcionUno: "Join the Crafts Club.",
+            opcionDos: 'Join the Outdoors Club.',
             respuesta: 'opcionDos'
           }, {
             tipo: 'texto',
             imagen: 'many',
-            pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
+            pregunta: "There are a lot!",
+            opcionUno: "How much",
+            opcionDos: 'many watermelons are there?',
             respuesta: 'opcionDos'
           }, {
             tipo: 'texto',
@@ -171,9 +173,9 @@
           }, {
             tipo: 'texto',
             imagen: 'thereareafew',
-            pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
+            pregunta: "How many eggs are there?",
+            opcionUno: "There are a little.",
+            opcionDos: 'There are a few.',
             respuesta: 'opcionDos'
           }, {
             tipo: 'imagen',
@@ -184,10 +186,31 @@
             respuesta: "opcionUno"
           }, {
             tipo: 'texto',
+            imagen: 'youshoulddentist',
+            pregunta: "You should go to the dentist",
+            opcionUno: "twice a month",
+            opcionDos: 'twice a year.',
+            respuesta: 'opcionDos'
+          }, {
+            tipo: 'texto',
             imagen: 'youshould',
-            pregunta: "",
-            opcionUno: "",
-            opcionDos: '',
+            pregunta: "I cut my knee.",
+            opcionUno: "You should rest.",
+            opcionDos: 'You should wash it with soap and water.',
+            respuesta: 'opcionDos'
+          }, {
+            tipo: 'texto',
+            imagen: 'youshouldcover',
+            pregunta: "You should cover your mouth when you have",
+            opcionUno: "chicken pox",
+            opcionDos: 'a cough.',
+            respuesta: 'opcionDos'
+          }, {
+            tipo: 'texto',
+            imagen: 'souvenirs?',
+            pregunta: "Where can I buy souvenirs?",
+            opcionUno: "At the movie theater.",
+            opcionDos: 'At the gift shop.',
             respuesta: 'opcionDos'
           }
         ]
@@ -200,7 +223,7 @@
       this.intento = 0;
       this.preguntas = this.shuffleNoRepeat(this.game.preguntas, 11);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Take the review quiz! Click on the correct option.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.setQuestion(0).introEvaluation();
     };
