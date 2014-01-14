@@ -121,10 +121,10 @@
           id: 'instructions'
         }, {
           src: 'sounds/TU3_U2_A2_1.mp3',
-          id: 'uno'
+          id: 'jim'
         }, {
           src: 'sounds/TU3_U2_A2_2.mp3',
-          id: 'dos'
+          id: 'meg'
         }, {
           src: 'sounds/boing.mp3',
           id: 'boing'
@@ -136,42 +136,42 @@
           id: 'wrong'
         }
       ];
-      this.game = [
+      this.answers = [
         {
-          name: 'dos',
+          name: 'meg',
           values: [
             {
               q: 'sh1',
-              a: 'mc3'
-            }, {
-              q: 'sh2',
-              a: 'mc6'
-            }, {
-              q: 'sh3',
-              a: 'mc4'
-            }, {
-              q: 'sh4',
-              a: 'mc2'
-            }, {
-              q: 'sh5',
               a: 'mc5'
             }, {
-              q: 'sh6',
+              q: 'sh2',
+              a: 'mc4'
+            }, {
+              q: 'sh3',
+              a: 'mc6'
+            }, {
+              q: 'sh4',
+              a: 'mc3'
+            }, {
+              q: 'sh5',
               a: 'mc1'
+            }, {
+              q: 'sh6',
+              a: 'mc2'
             }
           ]
         }, {
-          name: 'uno',
+          name: 'jim',
           values: [
             {
               q: 'sh1',
-              a: 'jc4'
-            }, {
-              q: 'sh2',
               a: 'jc5'
             }, {
+              q: 'sh2',
+              a: 'jc4'
+            }, {
               q: 'sh3',
-              a: 'jc1'
+              a: 'jc3'
             }, {
               q: 'sh4',
               a: 'jc2'
@@ -180,7 +180,7 @@
               a: 'jc6'
             }, {
               q: 'sh6',
-              a: 'jc3'
+              a: 'jc1'
             }
           ]
         }
@@ -233,70 +233,76 @@
     U2A2.prototype.setStage = function() {
       U2A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Listen and drag the clocks to the correct pictures.', 40, 100);
+      this.insertInstructions('instructions', 'Listen and drag the clocks to the correct picture.', 40, 100);
       this.insertBitmap('repeat', 'repeat', 545, 539);
       this.insertBitmap('finish', 'finish', 663, 539);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
-      this.setmag();
+      this.setMeg();
       return this.introEvaluation();
     };
 
-    U2A2.prototype.setmag = function() {
-      var i, m1, m2, m3, m4, m5, m6, mag, mc, sh, _i, _j;
-      mag = new createjs.Container();
-      mag.x = 117;
-      mag.y = 124;
-      this.current = mag.name = 'mag';
-      m1 = this.createBitmap('magEggs', 'm1', 15, 13);
-      m2 = this.createBitmap('magChickens', 'm2', 223, 13);
-      m3 = this.createBitmap('magSheep', 'm3', 15, 161);
-      m4 = this.createBitmap('magButter', 'm4', 223, 161);
-      m5 = this.createBitmap('magBerries', 'm5', 15, 313);
-      m6 = this.createBitmap('magBake', 'm6', 223, 313);
-      mag.addChild(m1, m2, m3, m4, m5, m6);
+    U2A2.prototype.setMeg = function() {
+      var i, m1, m2, m3, m4, m5, m6, mc, meg, sh, _i, _j;
+      meg = new createjs.Container();
+      meg.x = 117;
+      meg.y = 124;
+      this.current = meg.name = 'meg';
+      m1 = this.createBitmap('megWakes', 'm1', 15, 13);
+      m2 = this.createBitmap('megBreakfast', 'm2', 223, 13);
+      m3 = this.createBitmap('megLeaves', 'm3', 15, 161);
+      m4 = this.createBitmap('megDishes', 'm4', 223, 161);
+      m5 = this.createBitmap('megDinner', 'm5', 15, 313);
+      m6 = this.createBitmap('megSleep', 'm6', 223, 313);
+      meg.addChild(m1, m2, m3, m4, m5, m6);
       for (i = _i = 1; _i <= 6; i = _i += 1) {
-        sh = this.createBitmap('clockbox', 'clockbox', this.drops[i - 1].x, this.drops[i - 1].y);
+        sh = new createjs.Shape();
+        sh.graphics.beginFill('#FFF').setStrokeStyle(2).beginStroke('#333').drawRoundRect(0, 0, 66, 42, 10);
+        sh.x = this.drops[i - 1].x;
+        sh.y = this.drops[i - 1].y;
         sh.name = 'sh' + i;
         this.addToLibrary(sh);
-        mag.addChild(sh);
+        meg.addChild(sh);
       }
       for (i = _j = 1; _j <= 6; i = _j += 1) {
         mc = new Draggable('mc' + i, this.preload.getResult('mc' + i), i, this.clocks[i - 1].x, this.clocks[i - 1].y);
         mc.addEventListener('drop', this.evaluateDrop);
-        this.observer.subscribe('init_mag_evaluation', mc.onInitEvaluation);
+        this.observer.subscribe('init_meg_evaluation', mc.onInitEvaluation);
         this.addToLibrary(mc);
-        mag.addChild(mc);
+        meg.addChild(mc);
       }
-      return this.addToMain(mag);
+      return this.addToMain(meg);
     };
 
-    U2A2.prototype.setbob = function() {
-      var bob, i, j1, j2, j3, j4, j5, j6, jc, sh, _i, _j;
-      bob = new createjs.Container();
-      bob.x = 117;
-      bob.y = 124;
-      this.current = bob.name = 'bob';
-      j1 = this.createBitmap('bobCow', 'j1', 15, 13);
-      j2 = this.createBitmap('bobVegetables', 'j2', 223, 13);
-      j3 = this.createBitmap('bobGo', 'j3', 15, 161);
-      j4 = this.createBitmap('bobCompost', 'j4', 223, 161);
-      j5 = this.createBitmap('bobGround', 'j5', 15, 313);
-      j6 = this.createBitmap('bobClean', 'j6', 223, 313);
-      bob.addChild(j1, j2, j3, j4, j5, j6);
+    U2A2.prototype.setJim = function() {
+      var i, j1, j2, j3, j4, j5, j6, jc, jim, sh, _i, _j;
+      jim = new createjs.Container();
+      jim.x = 117;
+      jim.y = 124;
+      this.current = jim.name = 'jim';
+      j1 = this.createBitmap('jimShower', 'j1', 15, 13);
+      j2 = this.createBitmap('jimBreakfast', 'j2', 223, 13);
+      j3 = this.createBitmap('jimLeaves', 'j3', 15, 161);
+      j4 = this.createBitmap('jimBus', 'j4', 223, 161);
+      j5 = this.createBitmap('jimCat', 'j5', 15, 313);
+      j6 = this.createBitmap('jimTv', 'j6', 223, 313);
+      jim.addChild(j1, j2, j3, j4, j5, j6);
       for (i = _i = 1; _i <= 6; i = _i += 1) {
-        sh = this.createBitmap('clockbox', 'clockbox', this.drops[i - 1].x, this.drops[i - 1].y);
+        sh = new createjs.Shape();
+        sh.graphics.beginFill('#FFF').setStrokeStyle(2).beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10);
+        sh.x = this.drops[i - 1].x;
+        sh.y = this.drops[i - 1].y;
         sh.name = 'sh' + i;
         this.addToLibrary(sh);
-        bob.addChild(sh);
+        jim.addChild(sh);
       }
       for (i = _j = 1; _j <= 6; i = _j += 1) {
         jc = new Draggable('jc' + i, this.preload.getResult('jc' + i), i, this.clocks[i - 1].x, this.clocks[i - 1].y);
         jc.addEventListener('drop', this.evaluateDrop);
-        this.observer.subscribe('init_bob_evaluation', jc.onInitEvaluation);
+        this.observer.subscribe('init_jim_evaluation', jc.onInitEvaluation);
         this.addToLibrary(jc);
-        bob.addChild(jc);
+        jim.addChild(jc);
       }
-      return this.addToMain(bob);
+      return this.addToMain(jim);
     };
 
     U2A2.prototype.introEvaluation = function() {
@@ -309,9 +315,9 @@
         x: 0,
         delay: 0.5
       });
-      return TweenMax.from(this.library['mag'], 1, {
+      return TweenMax.from(this.library['meg'], 1, {
         alpha: 0,
-        x: this.library['mag'].x + 50,
+        x: this.library['meg'].x + 50,
         delay: 1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -320,10 +326,10 @@
 
     U2A2.prototype.initEvaluation = function(e) {
       U2A2.__super__.initEvaluation.apply(this, arguments);
-      this.observer.notify('init_' + this.game[this.index].name + '_evaluation');
+      this.observer.notify('init_' + this.answers[this.index].name + '_evaluation');
       this.library['repeat'].addEventListener('click', this.playSound);
       this.library['finish'].addEventListener('click', this.evaluateAnswer);
-      this.sound = this.game[this.index].name;
+      this.sound = this.answers[this.index].name;
       return this.playSound();
     };
 
@@ -353,11 +359,11 @@
       this.library['repeat'].removeEventListener('click', this.playSound);
       this.library['finish'].removeEventListener('click', this.evaluateAnswer);
       for (i = _i = 1; _i <= 6; i = _i += 1) {
-        res = this.createSprite('resultado', ['imgwrong', 'imgcorrect'], null, this.drops[i - 1].x + 75, this.drops[i - 1].y);
-        answer = this.game[this.index].values[i - 1];
+        answer = this.answers[this.index].values[i - 1];
+        res = this.createSprite('resultado', ['imgwrong', 'imgcorrect'], null, this.library[answer.a].x + 75, this.library[answer.a].y);
         if (this.library[answer.q].x === this.library[answer.a].x && this.library[answer.q].y === this.library[answer.a].y) {
-          res.currentFrame = 1;
           this.library['score'].plusOne();
+          res.currentFrame = 1;
         } else {
           res.currentFrame = 0;
         }
@@ -368,7 +374,7 @@
 
     U2A2.prototype.finishEvaluation = function() {
       createjs.Sound.stop(this.sound);
-      return TweenLite.to(this.library[this.game[this.index].name], 0.5, {
+      return TweenLite.to(this.library[this.answers[this.index].name], 0.5, {
         alpha: 0,
         x: stageSize.w,
         ease: Quart.easeOut,
@@ -378,11 +384,11 @@
 
     U2A2.prototype.nextEvaluation = function() {
       this.index++;
-      if (this.index < this.game.length) {
-        this.setbob();
-        return TweenMax.from(this.library['bob'], 1, {
+      if (this.index < this.answers.length) {
+        this.setJim();
+        return TweenMax.from(this.library['jim'], 1, {
           alpha: 0,
-          x: this.library['bob'].x + 50,
+          x: this.library['jim'].x + 50,
           delay: 1,
           onComplete: this.initEvaluation
         });
@@ -420,9 +426,9 @@
         alpha: 0,
         x: this.x + 20
       });
-      TweenLite.to(this.library['bob'], 1, {
+      TweenLite.to(this.library['jim'], 1, {
         alpha: 0,
-        x: this.library['bob'].x + 50
+        x: this.library['jim'].x + 50
       });
       return U2A2.__super__.finish.apply(this, arguments);
     };
