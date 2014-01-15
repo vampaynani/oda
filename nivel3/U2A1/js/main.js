@@ -106,35 +106,35 @@
             id: 'propstrawberryJelly',
             x: 310,
             y: 106,
-            a1: 1,
-            a2: 1,
-            a3: 1
+            a1: 3,
+            a2: 0,
+            a3: 8
           }, {
             id: 'propPeanutButter',
             x: 467,
             y: 120,
-            a1: 1,
+            a1: 2,
             a2: 1,
-            a3: 1
+            a3: 3
           }, {
             id: 'propcorn',
             x: 223,
             y: 167,
-            a1: 1,
-            a2: 1,
-            a3: 1
+            a1: 3,
+            a2: 0,
+            a3: 4
           }, {
             id: 'propgreenPeppers',
             x: 294,
             y: 186,
-            a1: 1,
+            a1: 0,
             a2: 1,
-            a3: 1
+            a3: 7
           }, {
             id: 'propmushrooms',
             x: 370,
             y: 185,
-            a1: 1,
+            a1: 0,
             a2: 1,
             a3: 1
           }, {
@@ -142,80 +142,80 @@
             x: 440,
             y: 172,
             a1: 1,
-            a2: 1,
-            a3: 1
+            a2: 0,
+            a3: 5
           }, {
             id: 'proppeaches',
             x: 530,
             y: 172,
             a1: 1,
-            a2: 1,
-            a3: 1
+            a2: 0,
+            a3: 2
           }, {
             id: 'propsugar',
             x: 322,
             y: 273,
-            a1: 1,
+            a1: 2,
             a2: 1,
-            a3: 1
+            a3: 0
           }
         ], [
           {
             id: 'propmilk',
             x: 303,
             y: 105,
-            a1: 1,
+            a1: 2,
             a2: 1,
-            a3: 1
+            a3: 3
           }, {
             id: 'prophoney',
             x: 466,
             y: 116,
-            a1: 1,
+            a1: 2,
             a2: 1,
             a3: 1
           }, {
             id: 'propcheese',
             x: 223,
             y: 159,
-            a1: 1,
-            a2: 1,
-            a3: 1
+            a1: 3,
+            a2: 0,
+            a3: 2
           }, {
             id: 'propmeat',
             x: 310,
             y: 160,
-            a1: 1,
-            a2: 1,
-            a3: 1
+            a1: 3,
+            a2: 0,
+            a3: 0
           }, {
             id: 'propyogurt',
             x: 370,
             y: 181,
-            a1: 1,
+            a1: 2,
             a2: 1,
-            a3: 1
+            a3: 8
           }, {
             id: 'propeggs',
             x: 434,
             y: 183,
-            a1: 1,
+            a1: 0,
             a2: 1,
-            a3: 1
+            a3: 4
           }, {
             id: 'propraspberries',
             x: 505,
             y: 201,
-            a1: 1,
+            a1: 0,
             a2: 1,
-            a3: 1
+            a3: 9
           }, {
             id: 'proppumpkins',
             x: 405,
             y: 270,
-            a1: 1,
+            a1: 0,
             a2: 1,
-            a3: 1
+            a3: 5
           }
         ]
       ];
@@ -227,15 +227,23 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Look and click on the words to make a sentence.', 40, 100);
       this.insertBitmap('propmarket', 'propmarket', 400, 235, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
-      return this.setFood(1).setNube1().setNube2().setNube3().setDropper().introEvaluation();
+      this.market = 1;
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 16, 0));
+      return this.setFood(this.market).setNube1().setNube2().setNube3().setDropper().introEvaluation();
     };
 
     U2A1.prototype.setFood = function(food) {
       var a, i, scene, _i, _ref;
-      scene = new createjs.Container();
-      scene.x = 88;
-      scene.y = 66;
+      if (this.library.dropper) {
+        scene = this.library.scene;
+      } else {
+        scene = new createjs.Container();
+        scene.x = 88;
+        scene.y = 66;
+        scene.name = 'scene';
+        this.addToMain(scene);
+      }
+      scene.removeAllChildren();
       this.foodcollection = this.game[food - 1];
       for (i = _i = 1, _ref = this.foodcollection.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
         a = this.createBitmap(this.foodcollection[i - 1].id, this.foodcollection[i - 1].id, this.foodcollection[i - 1].x, this.foodcollection[i - 1].y, 'mc');
@@ -279,34 +287,59 @@
     };
 
     U2A1.prototype.setNube3 = function() {
-      var back, container, w31, w310, w32, w33, w34, w35, w36, w37, w38, w39;
-      container = new createjs.Container();
-      container.x = 421;
-      container.y = 383;
-      container.name = 'nube3';
+      var back, nube3, w31, w310, w32, w33, w34, w35, w36, w37, w38, w39;
+      if (this.library.nube3) {
+        nube3 = this.library.nube3;
+      } else {
+        nube3 = new createjs.Container();
+        nube3.x = 421;
+        nube3.y = 383;
+        nube3.name = 'nube3';
+        this.addToMain(nube3);
+      }
+      nube3.removeAllChildren();
       back = this.createBitmap('backNube3', 'n3', -6, 0);
-      w31 = new ClickableText('w31', 'sugar', 0, 13, 34);
-      w32 = new ClickableText('w32', "mushrooms", 1, 25, 75);
-      w33 = new ClickableText('w33', 'peaches', 2, 92, 17);
-      w34 = new ClickableText('w34', "peanut butter", 3, 67, 45);
-      w35 = new ClickableText('w35', "corn", 4, 136, 74);
-      w36 = new ClickableText('w36', "blueberries", 5, 99, 100);
-      w37 = new ClickableText('w37', "fish", 6, 178, 12);
-      w38 = new ClickableText('w38', "green peppers", 7, 199, 36);
-      w39 = new ClickableText('w39', "strawberry jelly", 8, 196, 69);
-      w310 = new ClickableText('w310', "apples", 9, 212, 106);
-      container.addChild(back, w31, w32, w33, w34, w35, w36, w37, w38, w39, w310);
+      if (this.market === 1) {
+        w31 = new ClickableText('w31', 'sugar', 0, 13, 34);
+        w32 = new ClickableText('w32', "mushrooms", 1, 25, 75);
+        w33 = new ClickableText('w33', 'peaches', 2, 92, 17);
+        w34 = new ClickableText('w34', "peanut butter", 3, 67, 45);
+        w35 = new ClickableText('w35', "corn", 4, 136, 74);
+        w36 = new ClickableText('w36', "blueberries", 5, 99, 100);
+        w37 = new ClickableText('w37', "fish", 6, 178, 12);
+        w38 = new ClickableText('w38', "green peppers", 7, 199, 36);
+        w39 = new ClickableText('w39', "strawberry jelly", 8, 196, 69);
+        w310 = new ClickableText('w310', "apples", 9, 212, 106);
+      } else {
+        w31 = new ClickableText('w31', 'meat', 0, 13, 34);
+        w32 = new ClickableText('w32', "honey", 1, 25, 75);
+        w33 = new ClickableText('w33', 'cheese', 2, 92, 17);
+        w34 = new ClickableText('w34', "milk", 3, 67, 45);
+        w35 = new ClickableText('w35', "eggs", 4, 136, 74);
+        w36 = new ClickableText('w36', "pumpkins", 5, 99, 100);
+        w37 = new ClickableText('w37', "bacon", 6, 178, 12);
+        w38 = new ClickableText('w38', "apples", 7, 199, 36);
+        w39 = new ClickableText('w39', "yogurt", 8, 196, 69);
+        w310 = new ClickableText('w310', "raspberries", 9, 212, 106);
+      }
+      nube3.addChild(back, w31, w32, w33, w34, w35, w36, w37, w38, w39, w310);
       this.addToLibrary(back, w31, w32, w33, w34, w35, w36, w37, w38, w39, w310);
-      this.addToMain(container);
+      this.addToMain(nube3);
       return this;
     };
 
     U2A1.prototype.setDropper = function() {
       var dropper, h1, h2, h3, t;
-      dropper = new createjs.Container();
-      dropper.x = stageSize.w / 2 - 205;
-      dropper.y = 540;
-      dropper.name = 'dropper';
+      if (this.library.dropper) {
+        dropper = this.library.dropper;
+      } else {
+        dropper = new createjs.Container();
+        dropper.x = stageSize.w / 2 - 205;
+        dropper.y = 540;
+        dropper.name = 'dropper';
+        this.addToMain(dropper);
+      }
+      dropper.removeAllChildren();
       t = new createjs.Text('There', '24px Arial', '#333');
       t.x = 20;
       t.y = 0;
@@ -462,7 +495,13 @@
           alpha: 1,
           ease: Quart.easeOut
         });
-        return this.finish();
+        if (this.market === 1) {
+          this.market = 2;
+          this.index = 0;
+          return this.setFood(this.market).setNube3().setDropper().initEvaluation();
+        } else {
+          return this.finish();
+        }
       }
     };
 
@@ -500,6 +539,16 @@
       TweenLite.to(this.library['dropper'], 1, {
         alpha: 0,
         y: this.library['dropper'].y + 20,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['propmarket'], 1, {
+        alpha: 0,
+        y: this.library['propmarket'].y + 20,
+        delay: 0.1
+      });
+      TweenLite.to(this.library['scene'], 1, {
+        alpha: 0,
+        y: this.library['scene'].y + 20,
         delay: 0.1
       });
       return U2A1.__super__.finish.apply(this, arguments);

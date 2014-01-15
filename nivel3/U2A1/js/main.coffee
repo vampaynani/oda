@@ -33,24 +33,24 @@ class U2A1 extends Oda
 		]
 		@game = [
 			[
-				{id:'propstrawberryJelly', x:310, y:106, a1:1, a2:1, a3:1}
-				{id:'propPeanutButter', x:467, y:120, a1:1, a2:1, a3:1}
-				{id:'propcorn', x:223, y:167, a1:1, a2:1, a3:1}
-				{id:'propgreenPeppers', x:294, y:186, a1:1, a2:1, a3:1}
-				{id:'propmushrooms', x:370, y:185, a1:1, a2:1, a3:1}
-				{id:'propblueberries', x:440, y:172, a1:1, a2:1, a3:1}
-				{id:'proppeaches', x:530, y:172, a1:1, a2:1, a3:1}
-				{id:'propsugar', x:322, y:273, a1:1, a2:1, a3:1}
+				{id:'propstrawberryJelly', x:310, y:106, a1:3, a2:0, a3:8}
+				{id:'propPeanutButter', x:467, y:120, a1:2, a2:1, a3:3}
+				{id:'propcorn', x:223, y:167, a1:3, a2:0, a3:4}
+				{id:'propgreenPeppers', x:294, y:186, a1:0, a2:1, a3:7}
+				{id:'propmushrooms', x:370, y:185, a1:0, a2:1, a3:1}
+				{id:'propblueberries', x:440, y:172, a1:1, a2:0, a3:5}
+				{id:'proppeaches', x:530, y:172, a1:1, a2:0, a3:2}
+				{id:'propsugar', x:322, y:273, a1:2, a2:1, a3:0}
 			]
 			[
-				{id:'propmilk', x:303, y:105, a1:1, a2:1, a3:1}
-				{id:'prophoney', x:466, y:116, a1:1, a2:1, a3:1}
-				{id:'propcheese', x:223, y:159, a1:1, a2:1, a3:1}
-				{id:'propmeat', x:310, y:160, a1:1, a2:1, a3:1}
-				{id:'propyogurt', x:370, y:181, a1:1, a2:1, a3:1}
-				{id:'propeggs', x:434, y:183, a1:1, a2:1, a3:1}
-				{id:'propraspberries', x:505, y:201, a1:1, a2:1, a3:1}
-				{id:'proppumpkins', x:405, y:270, a1:1, a2:1, a3:1}
+				{id:'propmilk', x:303, y:105, a1:2, a2:1, a3:3}
+				{id:'prophoney', x:466, y:116, a1:2, a2:1, a3:1}
+				{id:'propcheese', x:223, y:159, a1:3, a2:0, a3:2}
+				{id:'propmeat', x:310, y:160, a1:3, a2:0, a3:0}
+				{id:'propyogurt', x:370, y:181, a1:2, a2:1, a3:8}
+				{id:'propeggs', x:434, y:183, a1:0, a2:1, a3:4}
+				{id:'propraspberries', x:505, y:201, a1:0, a2:1, a3:9}
+				{id:'proppumpkins', x:405, y:270, a1:0, a2:1, a3:5}
 			]
 		]
 		super null, manifest, sounds
@@ -60,13 +60,21 @@ class U2A1 extends Oda
 		@insertInstructions 'instructions', 'Look and click on the words to make a sentence.', 40, 100
 
 		@insertBitmap 'propmarket', 'propmarket', 400, 235, 'mc'
-
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setFood(1).setNube1().setNube2().setNube3().setDropper().introEvaluation()
+		@market = 1
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
+		@setFood(@market).setNube1().setNube2().setNube3().setDropper().introEvaluation()
 	setFood: (food) ->
-		scene = new createjs.Container()
-		scene.x = 88
-		scene.y = 66
+		if @library.dropper
+			scene = @library.scene
+		else
+			scene = new createjs.Container()
+			scene.x = 88
+			scene.y = 66			
+			scene.name = 'scene'
+			@addToMain scene
+		scene.removeAllChildren()
+
+ 
 		@foodcollection = @game[food - 1]
 		for i in [1..@foodcollection.length]
 			a = @createBitmap @foodcollection[i-1].id,  @foodcollection[i-1].id,  @foodcollection[i-1].x,  @foodcollection[i-1].y, 'mc'
@@ -104,32 +112,56 @@ class U2A1 extends Oda
 		@addToMain container
 		@
 	setNube3: ->
-		container = new createjs.Container()
-		container.x = 421
-		container.y = 383
-		container.name = 'nube3'
+		if @library.nube3
+			nube3 = @library.nube3
+		else
+			nube3 = new createjs.Container()
+			nube3.x = 421
+			nube3.y = 383		
+			nube3.name = 'nube3'
+			@addToMain nube3
+		nube3.removeAllChildren()
+
+ 
 		back = @createBitmap 'backNube3', 'n3', -6, 0
+		if @market is 1
+			w31 = new ClickableText 'w31', 'sugar', 0, 13, 34
+			w32 = new ClickableText 'w32', "mushrooms", 1, 25, 75
+			w33 = new ClickableText 'w33', 'peaches', 2, 92, 17
+			w34 = new ClickableText 'w34', "peanut butter", 3, 67, 45
+			w35 = new ClickableText 'w35', "corn", 4, 136, 74
+			w36 = new ClickableText 'w36', "blueberries", 5, 99, 100
+			w37 = new ClickableText 'w37', "fish", 6, 178, 12
+			w38 = new ClickableText 'w38', "green peppers",7, 199, 36
+			w39 = new ClickableText 'w39', "strawberry jelly", 8, 196, 69
+			w310 = new ClickableText 'w310', "apples", 9, 212, 106
+		else
+			w31 = new ClickableText 'w31', 'meat', 0, 13, 34
+			w32 = new ClickableText 'w32', "honey", 1, 25, 75
+			w33 = new ClickableText 'w33', 'cheese', 2, 92, 17
+			w34 = new ClickableText 'w34', "milk", 3, 67, 45
+			w35 = new ClickableText 'w35', "eggs", 4, 136, 74
+			w36 = new ClickableText 'w36', "pumpkins", 5, 99, 100
+			w37 = new ClickableText 'w37', "bacon", 6, 178, 12
+			w38 = new ClickableText 'w38', "apples",7, 199, 36
+			w39 = new ClickableText 'w39', "yogurt", 8, 196, 69
+			w310 = new ClickableText 'w310', "raspberries", 9, 212, 106
 
-		w31 = new ClickableText 'w31', 'sugar', 0, 13, 34
-		w32 = new ClickableText 'w32', "mushrooms", 1, 25, 75
-		w33 = new ClickableText 'w33', 'peaches', 2, 92, 17
-		w34 = new ClickableText 'w34', "peanut butter", 3, 67, 45
-		w35 = new ClickableText 'w35', "corn", 4, 136, 74
-		w36 = new ClickableText 'w36', "blueberries", 5, 99, 100
-		w37 = new ClickableText 'w37', "fish", 6, 178, 12
-		w38 = new ClickableText 'w38', "green peppers",7, 199, 36
-		w39 = new ClickableText 'w39', "strawberry jelly", 8, 196, 69
-		w310 = new ClickableText 'w310', "apples", 9, 212, 106
 
-		container.addChild back, w31,w32,w33,w34,w35,w36,w37,w38,w39,w310	
+		nube3.addChild back, w31,w32,w33,w34,w35,w36,w37,w38,w39,w310	
 		@addToLibrary back, w31,w32,w33,w34,w35,w36,w37,w38,w39,w310	
-		@addToMain container
+		@addToMain nube3
 		@
 	setDropper: ->
-		dropper = new createjs.Container()
-		dropper.x = stageSize.w / 2 - 205
-		dropper.y = 540
-		dropper.name = 'dropper'
+		if @library.dropper
+			dropper = @library.dropper
+		else
+			dropper = new createjs.Container()
+			dropper.x = stageSize.w / 2 - 205
+			dropper.y = 540	
+			dropper.name = 'dropper'
+			@addToMain dropper
+		dropper.removeAllChildren()
 
 		t = new createjs.Text 'There','24px Arial','#333'
 		t.x = 20
@@ -221,7 +253,12 @@ class U2A1 extends Oda
 			@library['wc2'].changeText ''
 			@library['wc3'].changeText ''
 			TweenLite.to @library['dropper'], 0.5, {alpha: 1, ease: Quart.easeOut}
-			@finish()
+			if @market is 1
+				@market = 2
+				@index = 0
+				@setFood(@market).setNube3().setDropper().initEvaluation()
+			else
+				@finish()
 	blink: (obj, state = on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1
@@ -232,5 +269,7 @@ class U2A1 extends Oda
 		TweenLite.to @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 50, delay: 0.1}
 		TweenLite.to @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 50, delay: 0.1}
 		TweenLite.to @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 0.1}
+		TweenLite.to @library['propmarket'], 1, {alpha: 0, y: @library['propmarket'].y + 20, delay: 0.1}
+		TweenLite.to @library['scene'], 1, {alpha: 0, y: @library['scene'].y + 20, delay: 0.1}
 		super
 	window.U2A1 = U2A1
