@@ -1,4 +1,4 @@
-class U2A2 extends Oda
+class U5A3 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -35,21 +35,21 @@ class U2A2 extends Oda
 
 		]
 		sounds = [
-			{src:'sounds/TU2_U2_A2_instructions.mp3', id:'instructions'}
+			{src:'sounds/TU3_U5_A3_instructions.mp3', id:'instructions'}
 			{src:'sounds/boing.mp3', id:'boing'}
 		    {src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'selectricity1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'sgasoline1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'slights1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'splasticbags1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'spollair1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'spollwater1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'srecycle1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'sspecies1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'steeth1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'stransport1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'strash1'}
-			{src:'sounds/TU2_U2_A2_cleanUpTheKitchen.mp3', id:'swater1'}
+		    {src:'sounds/TU3_U5_A3_saveElectricity.mp3', id:'selectricity1'}
+			{src:'sounds/TU3_U5_A3_saveGasoline.mp3', id:'sgasoline1'}
+			{src:'sounds/TU3_U5_A3_turnOffLights.mp3', id:'slights1'}
+			{src:'sounds/TU3_U5_A3_reusePlastic.mp3', id:'splasticbags1'}
+			{src:'sounds/TU3_U5_A3_stopPollutingAir.mp3', id:'spollair1'}
+			{src:'sounds/TU3_U5_A3_stopPollutingWater.mp3', id:'spollwater1'}
+			{src:'sounds/TU3_U5_A3_recycle.mp3', id:'srecycle1'}
+			{src:'sounds/TU3_U5_A3_protectSpecies.mp3', id:'sspecies1'}
+			{src:'sounds/TU3_U5_A3_turnOffWaterBrushTeeth.mp3', id:'steeth1'}
+			{src:'sounds/TU3_U5_A3_usePublicTransportation.mp3', id:'stransport1'}
+			{src:'sounds/TU3_U5_A3_useTrashCan.mp3', id:'strash1'}
+			{src:'sounds/TU3_U5_A3_stopWastingWater.mp3', id:'swater1'}
 		
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
@@ -148,4 +148,4 @@ class U2A2 extends Oda
 		TweenLite.to @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 50}
 		TweenLite.to @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50}
 		super
-	window.U2A2 = U2A2
+	window.U5A3 = U5A3
