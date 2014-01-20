@@ -35,6 +35,7 @@ class U1A3 extends Oda
 		@insertBitmap 'iconWatch', 'watch', 255, 248
 		@insertBitmap 'iconRead', 'read', 320, 248
 		@insertBitmap 'iconLunch', 'lunch', 455, 328
+		@intento = 0
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setGrupo1().setGrupo2().setGrupo3().setDropper().introEvaluation()
 	setGrupo1: ->
@@ -120,6 +121,8 @@ class U1A3 extends Oda
 				@library['w1'+i].removeEventListener 'click', @evaluateAnswer1
 				@library['w2'+i].addEventListener 'click', @evaluateAnswer2
 		else
+			@intento = 1
+
 			@warning()
 	evaluateAnswer2: (e) =>
 		@answer = e.target
@@ -133,6 +136,8 @@ class U1A3 extends Oda
 				@library['w3'+i].addEventListener 'click', @evaluateAnswer3
 		else
 			@warning()
+			@intento = 1
+
 	evaluateAnswer3: (e) =>
 		@answer = e.target
 		if @answer.index is @answers[@index].a3
@@ -145,8 +150,11 @@ class U1A3 extends Oda
 			setTimeout @finishEvaluation, 1 * 1000
 		else
 			@warning()
+			@intento = 1
 	finishEvaluation: =>
-		@library['score'].plusOne()
+		if @intento is 0
+			@library['score'].plusOne()
+		@intento = 0
 		TweenLite.to @library['words'], 0.5, {alpha: 0, ease: Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++

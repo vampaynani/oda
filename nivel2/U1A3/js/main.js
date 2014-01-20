@@ -21,9 +21,6 @@
           id: 'head',
           src: 'pleca1.png'
         }, {
-          id: 'inst',
-          src: 'inst.png'
-        }, {
           id: 'c1',
           src: 'circle1.png'
         }, {
@@ -105,6 +102,7 @@
       this.insertBitmap('iconWatch', 'watch', 255, 248);
       this.insertBitmap('iconRead', 'read', 320, 248);
       this.insertBitmap('iconLunch', 'lunch', 455, 328);
+      this.intento = 0;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       return this.setGrupo1().setGrupo2().setGrupo3().setDropper().introEvaluation();
     };
@@ -240,6 +238,7 @@
         }
         return _results;
       } else {
+        this.intento = 1;
         return this.warning();
       }
     };
@@ -259,7 +258,8 @@
         }
         return _results;
       } else {
-        return this.warning();
+        this.warning();
+        return this.intento = 1;
       }
     };
 
@@ -276,12 +276,16 @@
         }
         return setTimeout(this.finishEvaluation, 1 * 1000);
       } else {
-        return this.warning();
+        this.warning();
+        return this.intento = 1;
       }
     };
 
     U1A3.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
+      if (this.intento === 0) {
+        this.library['score'].plusOne();
+      }
+      this.intento = 0;
       return TweenLite.to(this.library['words'], 0.5, {
         alpha: 0,
         ease: Quart.easeOut,

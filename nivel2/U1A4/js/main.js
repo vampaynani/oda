@@ -247,6 +247,7 @@
         });
         selection[0].a = true;
         createjs.Sound.play('good');
+        this.library['score'].plusOne();
         this.library['choose1'].removeEventListener('click', this.evaluateAnswer);
         this.library['choose2'].removeEventListener('click', this.evaluateAnswer);
         return setTimeout(this.finishEvaluation, 1 * 1000);
@@ -256,14 +257,13 @@
           scaleX: 0.3,
           scaleY: 0.3,
           ease: Elastic.easeOut,
-          onComplete: this.showPhrase
+          onComplete: this.finishEvaluation
         });
         return this.warning();
       }
     };
 
     U1A4.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 0,
         scaleX: 0.3,

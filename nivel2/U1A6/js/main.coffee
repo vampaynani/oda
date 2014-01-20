@@ -153,6 +153,8 @@ class U1A6 extends Oda
 		@insertBitmap 'piano', 'piano', 567, 77
 		@insertBitmap 'pianoNo', 'piano_number', 567, 138
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@intento = 0
+
 		@createDroppers()
 		@createAlphabet()
 		@introEvaluation()
@@ -257,6 +259,7 @@ class U1A6 extends Oda
 				@library.crosswords.cache -23, -23, 276, 230
 			else
 				@warning()
+				@intento++
 	evaluate: (instrument) ->
 		ready = true
 		if not @answers[instrument].r
@@ -268,7 +271,9 @@ class U1A6 extends Oda
 				snd.instrument = instrument
 				snd.addEventListener 'complete', @finishEvaluation
 				@answers[instrument].r = on
-				@library['score'].plusOne()
+				if @intento in [0, 1] 	
+					@library['score'].plusOne()
+				@intento = 0
 	finishEvaluation: (e) =>
 		TweenMax.allTo [@library[e.target.instrument],@library[e.target.instrument+'No']], 1, {alpha:0, ease:Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>

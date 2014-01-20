@@ -480,6 +480,7 @@
       this.insertBitmap('piano', 'piano', 567, 77);
       this.insertBitmap('pianoNo', 'piano_number', 567, 138);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.intento = 0;
       this.createDroppers();
       this.createAlphabet();
       return this.introEvaluation();
@@ -634,13 +635,14 @@
           this.evaluate('saxophone');
           return this.library.crosswords.cache(-23, -23, 276, 230);
         } else {
-          return this.warning();
+          this.warning();
+          return this.intento++;
         }
       }
     };
 
     U1A6.prototype.evaluate = function(instrument) {
-      var box, ready, snd, _i, _len, _ref;
+      var box, ready, snd, _i, _len, _ref, _ref1;
       ready = true;
       if (!this.answers[instrument].r) {
         _ref = this.answers[instrument].c;
@@ -655,7 +657,10 @@
           snd.instrument = instrument;
           snd.addEventListener('complete', this.finishEvaluation);
           this.answers[instrument].r = true;
-          return this.library['score'].plusOne();
+          if ((_ref1 = this.intento) === 0 || _ref1 === 1) {
+            this.library['score'].plusOne();
+          }
+          return this.intento = 0;
         }
       }
     };

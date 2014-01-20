@@ -123,6 +123,7 @@
       this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
       this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5'], null, stageSize.w / 2, 235, 'mc');
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.intento = 0;
       return this.setDropper().setNube1().setNube2().setNube3().introEvaluation();
     };
 
@@ -272,6 +273,7 @@
           return false;
         } else {
           this.warning();
+          this.intento = 1;
           return this.answer.returnToPlace();
         }
       } else {
@@ -302,6 +304,7 @@
           return _results;
         } else {
           this.warning();
+          this.intento = 1;
           return this.answer.returnToPlace();
         }
       } else {
@@ -333,6 +336,7 @@
           return _results;
         } else {
           this.warning();
+          this.intento = 1;
           return this.answer.returnToPlace();
         }
       } else {
@@ -341,7 +345,10 @@
     };
 
     U1A1.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
+      if (this.intento === 0) {
+        this.library['score'].plusOne();
+      }
+      this.intento = 0;
       return this.clearEvaluation();
     };
 

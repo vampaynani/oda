@@ -48,6 +48,7 @@ class U1A2 extends Oda
 		@insertInstructions 'instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 40, 100
 		@insertSprite 'characters', ['p1','p2','p3','p4','p5','p6'], null, 100, stageSize.h - 180
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 6, 0
+		@intento = 0
 		@setDropper().setNames().introEvaluation()
 	setDropper: ->
 		myname = new createjs.Container()
@@ -117,11 +118,14 @@ class U1A2 extends Oda
 				setTimeout @finishEvaluation, 1 * 1000
 			else
 				@warning()
+				@intento = 1
 				@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 		else
 			@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 	finishEvaluation: =>
-		@library['score'].plusOne()
+		if @intento is 0
+			@library['score'].plusOne()
+		@intento = 0
 		@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, delay:0.5, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
