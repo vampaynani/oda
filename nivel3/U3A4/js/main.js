@@ -79,7 +79,7 @@
           src: 'sounds/boing.mp3',
           id: 'boing'
         }, {
-          src: 'sounds/TU2_U3_A4_instructions.mp3',
+          src: 'sounds/TU3_U3_A4_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
@@ -91,13 +91,45 @@
       ];
       this.answers = [
         {
-          w1: 1,
-          w2: 1,
-          w3: 1
-        }, {
           w1: 0,
+          w2: 4,
+          w3: 5
+        }, {
+          w1: 3,
           w2: 0,
           w3: 0
+        }, {
+          w1: 3,
+          w2: 1,
+          w3: 2
+        }, {
+          w1: 1,
+          w2: 3,
+          w3: 3
+        }, {
+          w1: 0,
+          w2: 4,
+          w3: 8
+        }, {
+          w1: 0,
+          w2: 5,
+          w3: 4
+        }, {
+          w1: 2,
+          w2: 2,
+          w3: 7
+        }, {
+          w1: 1,
+          w2: 4,
+          w3: 9
+        }, {
+          w1: 3,
+          w2: 3,
+          w3: 1
+        }, {
+          w1: 2,
+          w2: 3,
+          w3: 6
         }
       ];
       U3A4.__super__.constructor.call(this, null, manifest, sounds);
@@ -106,7 +138,7 @@
     U3A4.prototype.setStage = function() {
       U3A4.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look and click .', 40, 100);
+      this.insertInstructions('instructions', 'Look and click on the word to make a sentence.', 40, 100);
       this.insertSprite('characters', ['img01', 'img02', 'img03', 'img04', 'img05', 'img06', 'img07', 'img08', 'img09', 'img10'], null, stageSize.w / 2, 235, 'mc');
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       this.insertBitmap('caras', 'caras', 670, 120);
@@ -120,9 +152,9 @@
       dropper.y = 541;
       dropper.name = 'dropper';
       text = new createjs.Text('I', '26px Quicksand', '#333');
-      h1 = new WordContainer('h1', '', '#ccc', '#F59743', 20, 0, 188, 30);
-      h2 = new WordContainer('h2', '', '#ccc', '#F59743', 223, 0, 158, 30);
-      h3 = new WordContainer('h3', '', '#ccc', '#F59743', 396, 0, 136, 30);
+      h1 = new WordContainer('h1', '', '#fff', '#F59743', 20, 0, 167, 30);
+      h2 = new WordContainer('h2', '', '#fff', '#F59743', 210, 0, 167, 30);
+      h3 = new WordContainer('h3', '', '#fff', '#F59743', 396, 0, 167, 30);
       dropper.addChild(text, h1, h2, h3);
       this.addToLibrary(h1, h2, h3);
       this.addToMain(dropper);

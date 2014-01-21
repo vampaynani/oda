@@ -75,29 +75,29 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U7_A2_instructions.mp3',
+          src: 'sounds/TU3_U3_A1_instructions.mp3',
           id: 'instructions'
         }, {
-          src: 'sounds/TU2_U7_A2_schedule1.mp3',
+          src: 'sounds/TU3_U3_A1_bella.mp3',
           id: 'sche1'
         }, {
-          src: 'sounds/TU2_U7_A2_schedule2.mp3',
+          src: 'sounds/TU3_U3_A1_aiden.mp3',
           id: 'sche2'
+        }, {
+          src: 'sounds/TU3_U3_A1_paisley.mp3',
+          id: 'sche3'
+        }, {
+          src: 'sounds/TU3_U3_A1_jacob.mp3',
+          id: 'sche4'
         }
       ];
       this.game = {
         gustos: {
-          chic1: ['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove'],
-          chic2: ['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove'],
-          chic3: ['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove'],
-          chic4: ['dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove', 'dragblelove'],
+          chic1: ['dragbledontlike', 'dragblelike', 'dragblelove', 'dragbledontlike', 'dragblelove', ''],
+          chic2: ['dragbledontlike', '', 'dragblehate', 'dragblelike', 'dragblelike', 'dragblelove'],
+          chic3: ['dragblelove', 'dragblelove', 'dragblelike', 'dragblehate', '', 'dragblelike'],
+          chic4: ['', 'dragbledontlike', 'dragblelike', 'dragblelike', 'dragblelove', 'dragblehate'],
           faces: ['dragblelove', 'dragblelike', 'dragbledontlike', 'dragblehate']
-        },
-        actividades: {
-          boy: ['boypropbaseball', 'boydragbleclean', 'boydragbleread', 'boypropbasketball', 'boyproptennis', 'boydragblecanoeing', 'boypropswimming', 'boydragbleriding', 'boydragblebiking', 'boydragblefishing'],
-          boydrags: ['boydragbleclean', 'boydragbleread', 'boydragblecanoeing', 'boydragbleriding', 'boydragblebiking', 'boydragblefishing'],
-          girl: ['girldragbleswimming', 'girldragblehiking', 'girldragblesoccer', 'girlpropclean', 'girldragblecanoeing', 'girlpropriding', 'girlproprest', 'girldragblevolleyball', 'girldragblefishing', 'girlproptennis'],
-          girldrags: ['girldragbleswimming', 'girldragblehiking', 'girldragblesoccer', 'girldragblecanoeing', 'girldragblevolleyball', 'girldragblefishing']
         }
       };
       U3A1.__super__.constructor.call(this, null, manifest, sounds);
@@ -107,10 +107,10 @@
       U3A1.__super__.setStage.apply(this, arguments);
       this.actividades = this.game.gustos;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Listen and drag the icons to the correct place on the schedule.', 40, 100);
+      this.insertInstructions('instructions', 'Listen and drag the faces to the correct place on the chart.', 40, 100);
       this.insertBitmap('btnRepeat', 'btnrepeat', 480, 540);
       this.insertBitmap('btnFinished', 'btnfinished', 610, 540);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 24, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 20, 0));
       this.insertBitmap('fondo', 'fondo', stageSize.w / 2, 130, 'tc');
       return this.setPizarra(1).introEvaluation();
     };
@@ -135,7 +135,7 @@
         c.y = i * 49;
         c.x = 0 + ((schedule - 1) * 125);
         hit = new createjs.Shape();
-        hit.graphics.beginFill('rgba(0,0,0,1)').drawRect(-25, -25, 90, 45);
+        hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 45);
         this.setReg(hit, 20, -20);
         c.addChild(hit);
         this.addToLibrary(c);
@@ -227,8 +227,8 @@
           } else {
             res.currentFrame = 0;
           }
+          this.library[this.current].addChild(res);
         }
-        this.library[this.current].addChild(res);
       }
       return setTimeout(this.nextEvaluation, 4 * 1000);
     };

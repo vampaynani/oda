@@ -39,6 +39,7 @@ class U1A1 extends Oda
 		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100
 		@insertSprite 'characters', ['p1','p2','p3','p4','p5'], null, stageSize.w / 2, 235, 'mc'
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@intento = 0
 		@setDropper().setNube1().setNube2().setNube3().introEvaluation()
 	setDropper: ->
 		dropper = new createjs.Container()
@@ -138,6 +139,7 @@ class U1A1 extends Oda
 				false
 			else
 				@warning()
+				@intento = 1
 				@answer.returnToPlace()
 		else
 			@answer.returnToPlace()
@@ -159,6 +161,7 @@ class U1A1 extends Oda
 					@library['p'+i+'n3'].addEventListener 'drop', @evaluateAnswer3
 			else
 				@warning()
+				@intento = 1
 				@answer.returnToPlace()
 		else
 			@answer.returnToPlace()
@@ -181,11 +184,14 @@ class U1A1 extends Oda
 					@library['p'+i+'n3'].endDragListener()
 			else
 				@warning()
+				@intento = 1
 				@answer.returnToPlace()
 		else
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		@library['score'].plusOne()
+		if @intento is 0
+			@library['score'].plusOne()
+		@intento = 0
 		@clearEvaluation()
 	clearEvaluation: (e) =>
 		for i in [1..2] by 1

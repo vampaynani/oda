@@ -138,6 +138,7 @@
       this.insertInstructions('instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 40, 100);
       this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'], null, 100, stageSize.h - 180);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 6, 0));
+      this.intento = 0;
       return this.setDropper().setNames().introEvaluation();
     };
 
@@ -244,6 +245,7 @@
           return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {
           this.warning();
+          this.intento = 1;
           return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
         }
       } else {
@@ -252,7 +254,10 @@
     };
 
     U1A2.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
+      if (this.intento === 0) {
+        this.library['score'].plusOne();
+      }
+      this.intento = 0;
       this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
       return TweenLite.to(this.library['characters'], 0.5, {
         alpha: 0,

@@ -7,6 +7,7 @@ class U2A2 extends Oda
 	constructor: ->
 		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
+			
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'finish', src: 'finish-btn.png'}

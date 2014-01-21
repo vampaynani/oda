@@ -163,6 +163,49 @@
         }
       ];
       this.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      this.numbers = [
+        {
+          id: '1',
+          x: 9,
+          y: 1
+        }, {
+          id: '2',
+          x: 11,
+          y: 0
+        }, {
+          id: '3',
+          x: 8,
+          y: 2
+        }, {
+          id: '4',
+          x: 7,
+          y: 3
+        }, {
+          id: '5',
+          x: 5,
+          y: 5
+        }, {
+          id: '6',
+          x: 4,
+          y: 6
+        }, {
+          id: '7',
+          x: 0,
+          y: 8
+        }, {
+          id: '8',
+          x: 4,
+          y: 10
+        }, {
+          id: '9',
+          x: 1,
+          y: 12
+        }, {
+          id: '10',
+          x: 0,
+          y: 14
+        }
+      ];
       this.containers = [
         {
           id: 'f',
@@ -448,7 +491,7 @@
     };
 
     U5A6.prototype.createDroppers = function() {
-      var crosswords, drop, i, _i, _ref;
+      var crosswords, drop, i, t, _i, _j, _ref;
       crosswords = new createjs.Container();
       crosswords.x = 235;
       crosswords.y = 125;
@@ -460,6 +503,12 @@
         drop.id = this.containers[i].id;
         this.addToLibrary(drop);
         crosswords.addChild(drop);
+      }
+      for (i = _j = 0; _j <= 9; i = ++_j) {
+        t = new createjs.Text(this.numbers[i].id, '14px Quicksand', '#333');
+        t.x = this.numbers[i].x * 21.9 + 6;
+        t.y = this.numbers[i].y * 21.9 + 4;
+        crosswords.addChild(t);
       }
       return this.addToMain(crosswords);
     };

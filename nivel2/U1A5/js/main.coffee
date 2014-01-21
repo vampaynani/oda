@@ -80,6 +80,7 @@ class U1A5 extends Oda
 		@insertBitmap 'btnnext', 'btn', 760, 589, 'tc'
 		@library['btnnext'].visible = off
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@intento = 0
 		@setCuento(1).introEvaluation()
 	setCuento: (scene) ->
 		cuento = new createjs.Container()
@@ -145,11 +146,14 @@ class U1A5 extends Oda
 						@answer.visible = off
 						createjs.Sound.play 'good'
 						if not @library["sc#{i}"].failed
-							@library['score'].plusOne()
+							if @intento is 0
+								@library['score'].plusOne()
+							@intento = 0
 						@finishEvaluation()
 					else
 						@library["sc#{i}"].failed = on
 						@warning()
+						@intento = 1
 						@answer.returnToPlace()
 				else
 					hit = false
@@ -161,11 +165,15 @@ class U1A5 extends Oda
 						@answer.visible = off
 						createjs.Sound.play 'good'
 						if not @library["sc#{i}"].failed
-							@library['score'].plusOne()
+							if @intento is 0
+								@library['score'].plusOne()
+							@intento = 0
+
 						@finishEvaluation()
 					else
 						@library["sc#{i}"].failed = on
 						@warning()
+						@intento = 1
 						@answer.returnToPlace()
 			else
 				@answer.returnToPlace()

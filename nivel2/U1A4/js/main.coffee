@@ -86,14 +86,14 @@ class U1A4 extends Oda
 			selection = @answers.where id:@phrase.id
 			selection[0].a = on
 			createjs.Sound.play 'good'
+			@library['score'].plusOne()
 			@library['choose1'].removeEventListener 'click', @evaluateAnswer
 			@library['choose2'].removeEventListener 'click', @evaluateAnswer
 			setTimeout @finishEvaluation, 1 * 1000
 		else
-			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @showPhrase}
+			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @finishEvaluation}
 			@warning()
 	finishEvaluation: =>
-		@library['score'].plusOne()
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++

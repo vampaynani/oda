@@ -29,31 +29,31 @@
           id: 'c2',
           src: 'circle2.png'
         }, {
-          id: '1',
+          id: 'q1',
           src: '1.png'
         }, {
-          id: '2',
+          id: 'q2',
           src: '2.png'
         }, {
-          id: '3',
+          id: 'q3',
           src: '3.png'
         }, {
-          id: '4',
+          id: 'q4',
           src: '4.png'
         }, {
-          id: '5',
+          id: 'q5',
           src: '5.png'
         }, {
-          id: '6',
+          id: 'q6',
           src: '6.png'
         }, {
-          id: '7',
+          id: 'q7',
           src: '7.png'
         }, {
-          id: '8',
+          id: 'q8',
           src: '8.png'
         }, {
-          id: '9',
+          id: 'q9',
           src: '9.png'
         }, {
           id: 'planetearth',
@@ -140,7 +140,7 @@
       ];
       sounds = [
         {
-          src: 'sounds/TU2_U1_A6_instructions.mp3',
+          src: 'sounds/TU3_U5_A6_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/boing.mp3',
@@ -514,20 +514,11 @@
     }
 
     U5A6.prototype.setStage = function() {
-      var i, _i;
       U5A6.__super__.setStage.apply(this, arguments);
       this.answers = this.clone(this.game.answers);
+      this.insertInstructions('instructions', 'Click on the crossword, read the clues and write the answers.', 30, 100);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Read the dialogues and solve the puzzle with past tense verbes.', 30, 100);
-      this.insertBitmap('1', '1', 214, 189, 'mc');
-      this.insertBitmap('2', '2', 134, 320, 'mc');
-      this.insertBitmap('3', '3', 133, 456, 'mc');
-      this.insertBitmap('4', '4', 300, 504, 'mc');
-      this.insertBitmap('5', '5', 666, 508, 'mc');
-      this.insertBitmap('6', '6', 683, 407, 'mc');
-      this.insertBitmap('7', '7', 670, 273, 'mc');
-      this.insertBitmap('8', '8', 628, 159, 'mc');
-      this.insertBitmap('9', '9', 405, 167, 'mc');
+      this.insertSprite('questions', ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9'], null, 370, stageSize.h / 2 + 30, 'mr');
       /*
       		@insertBitmap '1', '1', 307, 189, 'mc'
       		@insertBitmap '2', '2', 134, 249, 'mc'
@@ -540,9 +531,6 @@
       		@insertBitmap '9', '9', 496, 167, 'mc'
       */
 
-      for (i = _i = 1; _i <= 9; i = ++_i) {
-        this.library[i].scaleY = this.library[i].scaleX = 0.5;
-      }
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
       this.createDroppers();
       this.createAlphabet();
@@ -553,7 +541,7 @@
       var alphabet, i, letter, letterObj, _i, _ref;
       alphabet = new createjs.Container();
       alphabet.x = 135;
-      alphabet.y = 540;
+      alphabet.y = 510;
       alphabet.name = 'alphabet';
       for (i = _i = 0, _ref = this.abc.length - 1; _i <= _ref; i = _i += 1) {
         letter = this.abc[i];
@@ -572,8 +560,8 @@
     U5A6.prototype.createDroppers = function() {
       var crosswords, drop, i, t, _i, _j, _ref;
       crosswords = new createjs.Container();
-      crosswords.x = 245;
-      crosswords.y = 216;
+      crosswords.x = 415;
+      crosswords.y = 125;
       crosswords.name = 'crosswords';
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
         drop = new WordContainer("h" + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);

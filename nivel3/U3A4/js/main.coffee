@@ -9,33 +9,41 @@ class U3A4 extends Oda
 		    {id: 'n2', src: 'nube2.png'}
 		    {id: 'n3', src: 'nube3.png'}
 			{id: 'caras', src:'caras.png'}
-			{id: 'img01', src:'imagenes0001.png'}
-			{id: 'img02', src:'imagenes0002.png'}
-			{id: 'img03', src:'imagenes0003.png'}
-			{id: 'img04', src:'imagenes0004.png'}
-			{id: 'img05', src:'imagenes0005.png'}
-			{id: 'img06', src:'imagenes0006.png'}
-			{id: 'img07', src:'imagenes0007.png'}
-			{id: 'img08', src:'imagenes0008.png'}
-			{id: 'img09', src:'imagenes0009.png'}
-			{id: 'img10', src:'imagenes0010.png'}
+			{id: 'img01', src:'imagenes0001.png'}#ballet
+			{id: 'img02', src:'imagenes0002.png'}#skate
+			{id: 'img03', src:'imagenes0003.png'}#chat
+			{id: 'img04', src:'imagenes0004.png'}#drum
+			{id: 'img05', src:'imagenes0005.png'}#karate
+			{id: 'img06', src:'imagenes0006.png'}#study
+			{id: 'img07', src:'imagenes0007.png'}#gimnasia
+			{id: 'img08', src:'imagenes0008.png'}#swim
+			{id: 'img09', src:'imagenes0009.png'}#violin
+			{id: 'img10', src:'imagenes0010.png'}#PCGAMES
 		]
 		sounds = [
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U3_A4_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U3_A4_instructions.mp3', id:'instructions'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
 			{src:'sounds/good.mp3', id:'good'}
 		]
 		@answers = [
-			{w1:1, w2:1, w3:1}
-			{w1:0, w2:0, w3:0}
+			{w1:0, w2:4, w3:5}#ballet
+			{w1:3, w2:0, w3:0}#skate
+			{w1:3, w2:1, w3:2}#chat
+			{w1:1, w2:3, w3:3}#drum
+			{w1:0, w2:4, w3:8}#karate
+			{w1:0, w2:5, w3:4}#study
+			{w1:2, w2:2, w3:7}#gimnasia
+			{w1:1, w2:4, w3:9}#swim
+			{w1:3, w2:3, w3:1}#violin
+			{w1:2, w2:3, w3:6}#PCGAMES
 
 		]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and click .', 40, 100
+		@insertInstructions 'instructions', 'Look and click on the word to make a sentence.', 40, 100
 		@insertSprite 'characters', ['img01','img02','img03','img04','img05','img06','img07','img08','img09','img10'], null, stageSize.w / 2, 235, 'mc'
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@insertBitmap 'caras', 'caras', 670, 120
@@ -47,9 +55,9 @@ class U3A4 extends Oda
 		dropper.y = 541
 		dropper.name = 'dropper'
 		text = new createjs.Text 'I','26px Quicksand','#333'
-		h1 = new WordContainer 'h1', '', '#ccc', '#F59743', 20, 0, 188, 30
-		h2 = new WordContainer 'h2', '', '#ccc', '#F59743', 223, 0, 158, 30
-		h3 = new WordContainer 'h3', '', '#ccc', '#F59743', 396, 0, 136, 30
+		h1 = new WordContainer 'h1', '', '#fff', '#F59743', 20, 0, 167, 30
+		h2 = new WordContainer 'h2', '', '#fff', '#F59743', 210, 0, 167, 30
+		h3 = new WordContainer 'h3', '', '#fff', '#F59743', 396, 0, 167, 30
 		dropper.addChild text, h1, h2, h3
 		@addToLibrary h1, h2, h3
 		@addToMain dropper

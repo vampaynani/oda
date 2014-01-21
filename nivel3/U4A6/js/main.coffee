@@ -8,7 +8,9 @@ class U8A6 extends Oda
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
 			{id: 'playagain', src:'play_again.png'}
 			{id: 'startgame', src:'start_game.png'}
-			
+			{id:'youshouldcover', src:'youshouldcover.png'}
+			{id:'youshoulddentist', src:'youshoulddentist.png'}
+			{id:'souvenir', src:'souvenir.png'}
 			{id:'alotofcats', src:'a-lot-of-cats.png'}
 			{id:'anap', src:'a-nap.png'}
 			{id:'itakeanap', src:'i-take-a-nap.png'}
@@ -29,32 +31,34 @@ class U8A6 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU2_U8_A6_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U4_A6_instructions.mp3', id:'instructions'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@game =
 			preguntas: [
 				{tipo:'texto', imagen: 'notgoodat', pregunta:"", opcionUno:"He's good at", opcionDos:'not good at taking pictures', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'alotofcats', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'anap', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'itakeanap', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'itstheirs', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'jointheoutdoorsclub', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'many', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'alotofcats', pregunta:"", opcionUno:"There are much", opcionDos:'a lot of cats.', respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'itakeanap', pregunta:"When I'm sleepy,", opcionUno:"Itake a nap.",opcionDos:'I take a test.', respuesta:'opcionUno'}
+				{tipo:'texto', imagen: 'itstheirs',regunta:"Whose cat is it?", opcionUno:"It's his.", opcionDos:"It's theirs.", respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'jointheoutdoorsclub', pregunta:"", opcionUno:"Join the Crafts Club.", opcionDos:'Join the Outdoors Club.', respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'many', pregunta:"There are a lot!", opcionUno:"How much", opcionDos:'many watermelons are there?', respuesta:'opcionDos'}
 				{tipo:'texto', imagen: 'take', pregunta:"", opcionUno:"I want to taking", opcionDos:'take violin lessons.', respuesta:'opcionDos'}
 				{tipo:'texto', imagen: 'thatahealthyhabit', pregunta:"I love driking milk.", opcionUno:"That's a healthy habit.", opcionDos:"That's an unhealthy habit.", respuesta:'opcionUno'}
 				{tipo:'texto', imagen: 'thatsbadadvice', pregunta:"", opcionUno:"That's a good advice.", opcionDos:"That's a bad advice.", respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'thereareafew', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'thereareafew',pregunta:"How many eggs are there?", opcionUno:"There are a little.", opcionDos:'There are a few.', respuesta:'opcionDos'}
 				{tipo:'imagen', pregunta:"How much are the pears?", preguntados:"They're two dollars and thirty cents a kilo.", opcionUno:'twodollarsA', opcionDos:'twodollarsB', respuesta:"opcionUno"}
-				{tipo:'texto', imagen: 'youshould', pregunta:"", opcionUno:"", opcionDos:'', respuesta:'opcionDos'}
-				]
+				{tipo:'texto', imagen: 'youshoulddentist', pregunta:"You should go to the dentist", opcionUno:"twice a month", opcionDos:'twice a year.', respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'youshould', pregunta:"I cut my knee.", opcionUno:"You should rest.", opcionDos:'You should wash it with soap and water.', respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'youshouldcover', pregunta:"You should cover your mouth when you have", opcionUno:"chicken pox", opcionDos:'a cough.', respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'souvenirs?', pregunta:"Where can I buy souvenirs?", opcionUno:"At the movie theater.", opcionDos:'At the gift shop.', respuesta:'opcionDos'}
+			]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@intento = 0
 		@preguntas = @shuffleNoRepeat @game.preguntas, 11
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Take the review quiz! Click on the correct option.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
 		@setQuestion(0).introEvaluation()
 	setQuestion: (i) ->
