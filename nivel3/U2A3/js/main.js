@@ -447,13 +447,14 @@ NEW ODA
                 y: 254,
                 align: 'mc'
               }
-            ]
+            ],
+            groups: []
           }, {
             answers: {
               collection: [
                 [
                   {
-                    name: 'wcpt1',
+                    name: 'iwcpt1',
                     opts: {
                       containers: [
                         {
@@ -525,109 +526,126 @@ NEW ODA
                 y: 244,
                 align: 'mc'
               }, {
-                type: 'wcpt',
-                id: 'wcpt1',
+                type: 'img',
+                id: 'clue',
+                name: 'clue',
                 x: 400,
-                y: 494,
+                y: 580,
+                align: 'bc'
+              }, {
+                type: 'iwcpt',
+                id: 'iwcpt1',
+                x: 400,
+                y: 470,
                 uwidth: 70,
                 uheight: 60,
                 margin: 5,
                 bcolor: '#FFF',
-                scolor: '#333',
+                scolor: '#F00',
                 stroke: '3',
                 align: 'center'
               }, {
                 type: 'drg',
                 id: 'letraM',
                 name: 'letraM',
-                x: 100,
-                y: 100,
+                x: 521,
+                y: 404,
                 index: 'M',
-                target: 'wcpt1',
-                afterSuccess: 'hide',
-                afterFail: 'return'
-              }, {
-                type: 'drg',
-                id: 'letraU',
-                name: 'letraU',
-                x: 100,
-                y: 100,
-                index: 'U',
-                target: 'wcpt1',
-                afterSuccess: 'hide',
-                afterFail: 'return'
-              }, {
-                type: 'drg',
-                id: 'letraS',
-                name: 'letraS',
-                x: 100,
-                y: 100,
-                index: 'S',
-                target: 'wcpt1',
-                afterSuccess: 'hide',
-                afterFail: 'return'
-              }, {
-                type: 'drg',
-                id: 'letraH',
-                name: 'letraH',
-                x: 100,
-                y: 100,
-                index: 'H',
-                target: 'wcpt1',
+                align: 'mc',
+                target: 'iwcpt1',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
                 type: 'drg',
                 id: 'letraR',
                 name: 'letraR',
-                x: 100,
-                y: 100,
+                x: 350,
+                y: 218,
                 index: 'R',
-                target: 'wcpt1',
+                align: 'mc',
+                target: 'iwcpt1',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
                 type: 'drg',
-                id: 'letraO',
-                name: 'letraO',
-                x: 100,
-                y: 100,
-                index: 'O',
-                target: 'wcpt1',
-                afterSuccess: 'hide',
-                afterFail: 'return'
-              }, {
-                type: 'drg',
-                id: 'letraO',
-                name: 'letraO2',
-                x: 100,
-                y: 100,
-                index: 'O',
-                target: 'wcpt1',
+                id: 'letraS',
+                name: 'letraS',
+                x: 584,
+                y: 314,
+                index: 'S',
+                align: 'mc',
+                target: 'iwcpt1',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
                 type: 'drg',
                 id: 'letraM',
                 name: 'letraM2',
-                x: 100,
-                y: 100,
+                x: 580,
+                y: 176,
                 index: 'M',
-                target: 'wcpt1',
+                align: 'mc',
+                target: 'iwcpt1',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
                 type: 'drg',
                 id: 'letraS',
                 name: 'letraS2',
-                x: 100,
-                y: 100,
+                x: 416,
+                y: 253,
                 index: 'S',
-                target: 'wcpt1',
+                align: 'mc',
+                target: 'iwcpt1',
+                afterSuccess: 'hide',
+                afterFail: 'return'
+              }, {
+                type: 'drg',
+                id: 'letraH',
+                name: 'letraH',
+                x: 322,
+                y: 315,
+                index: 'H',
+                align: 'mc',
+                target: 'iwcpt1',
+                afterSuccess: 'hide',
+                afterFail: 'return'
+              }, {
+                type: 'drg',
+                id: 'letraO',
+                name: 'letraO',
+                x: 397,
+                y: 320,
+                index: 'O',
+                align: 'mc',
+                target: 'iwcpt1',
+                afterSuccess: 'hide',
+                afterFail: 'return'
+              }, {
+                type: 'drg',
+                id: 'letraU',
+                name: 'letraU',
+                x: 347,
+                y: 406,
+                index: 'U',
+                align: 'mc',
+                target: 'iwcpt1',
+                afterSuccess: 'hide',
+                afterFail: 'return'
+              }, {
+                type: 'drg',
+                id: 'letraO',
+                name: 'letraO2',
+                x: 477,
+                y: 313,
+                index: 'O',
+                align: 'mc',
+                target: 'iwcpt1',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }
-            ]
+            ],
+            groups: []
           }
         ]
       };

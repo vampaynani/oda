@@ -6,7 +6,8 @@ LIBRARY
 
 
 (function() {
-  var Actions, Behaviors, ButtonContainer, Component, DragContainer, Game, GameObserver, ImageCompleterContainer, ImageContainer, Instructions, LabelContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, Utilities, WordCompleterContainer, WordCompleterObserver, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _ref, _ref1, _ref2,
+  var Actions, Behaviors, ButtonContainer, Component, ComponentGroup, ComponentObserver, DragContainer, Game, GameObserver, ImageCompleterContainer, ImageContainer, ImageWordCompleterContainer, Instructions, LabelContainer, LetterDragContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, PhraseCompleterContainer, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, StepContainer, StepsContainer, TextCompleterContainer, Utilities, WordCompleterContainer, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _ref, _ref1, _ref2,
+    __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = {}.hasOwnProperty,
@@ -276,34 +277,7 @@ LIBRARY
         bmp.width = img.width;
         bmp.height = img.height;
         bmp.name = name;
-        switch (position) {
-          case 'tc':
-            this.setReg(bmp, img.width / 2, 0);
-            break;
-          case 'tr':
-            this.setReg(bmp, img.width, 0);
-            break;
-          case 'ml':
-            this.setReg(bmp, 0, img.height / 2);
-            break;
-          case 'mc':
-            this.setReg(bmp, img.width / 2, img.height / 2);
-            break;
-          case 'mr':
-            this.setReg(bmp, img.width, img.height / 2);
-            break;
-          case 'bl':
-            this.setReg(bmp, 0, img.height);
-            break;
-          case 'bc':
-            this.setReg(bmp, img.width / 2, img.height);
-            break;
-          case 'br':
-            this.setReg(bmp, img.width, img.height);
-            break;
-          default:
-            this.setReg(bmp, 0, 0);
-        }
+        this.setPosition(position, bmp);
         return bmp;
       };
 
@@ -374,34 +348,7 @@ LIBRARY
         animation.height = h;
         animation.name = name;
         animation.currentFrame = 0;
-        switch (position) {
-          case 'tc':
-            this.setReg(animation, animation.width / 2, 0);
-            break;
-          case 'tr':
-            this.setReg(animation, animation.width, 0);
-            break;
-          case 'ml':
-            this.setReg(animation, 0, animation.height / 2);
-            break;
-          case 'mc':
-            this.setReg(animation, animation.width / 2, animation.height / 2);
-            break;
-          case 'mr':
-            this.setReg(animation, animation.width, animation.height / 2);
-            break;
-          case 'bl':
-            this.setReg(animation, 0, animation.height);
-            break;
-          case 'bc':
-            this.setReg(animation, animation.width / 2, animation.height);
-            break;
-          case 'br':
-            this.setReg(animation, animation.width, animation.height);
-            break;
-          default:
-            this.setReg(animation, 0, 0);
-        }
+        this.setPosition(position, animation);
         return animation;
       };
 
@@ -418,6 +365,35 @@ LIBRARY
         return animation;
       };
 
+      Methods.setPosition = function(position, obj) {
+        if (obj == null) {
+          obj = null;
+        }
+        if (!obj) {
+          obj = this;
+        }
+        switch (position) {
+          case 'tc':
+            return this.setReg(obj, obj.width / 2, 0);
+          case 'tr':
+            return this.setReg(obj, obj.width, 0);
+          case 'ml':
+            return this.setReg(obj, 0, obj.height / 2);
+          case 'mc':
+            return this.setReg(obj, obj.width / 2, obj.height / 2);
+          case 'mr':
+            return this.setReg(obj, obj.width, obj.height / 2);
+          case 'bl':
+            return this.setReg(obj, 0, obj.height);
+          case 'bc':
+            return this.setReg(obj, obj.width / 2, obj.height);
+          case 'br':
+            return this.setReg(obj, obj.width, obj.height);
+          default:
+            return this.setReg(obj, 0, 0);
+        }
+      };
+
       Methods.setReg = function(obj, regX, regY) {
         obj.regX = regX;
         obj.regY = regY;
@@ -432,6 +408,12 @@ LIBRARY
         if (toLibrary) {
           return lib[child.name] = child;
         }
+      };
+
+      Methods.delay = function() {
+        var args, fn, time;
+        time = arguments[0], fn = arguments[1], args = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
+        return setTimeout.apply(null, [fn, time].concat(__slice.call(args)));
       };
 
       Methods;
@@ -946,6 +928,54 @@ LIBRARY
   */
 
 
+  ComponentGroup = (function() {
+    function ComponentGroup(opts) {
+      Module.extend(this, d2oda.methods);
+      this.name = opts.id;
+      this.group = opts.group;
+    }
+
+    ComponentGroup.prototype.update = function(opts) {
+      var item, _i, _len, _ref1;
+      switch (opts.type) {
+        case 'blink':
+          _ref1 = this.group;
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            item = _ref1[_i];
+            TweenMax.killTweensOf(lib[item]);
+            TweenLite.killTweensOf(lib[item]);
+            lib[item].alpha = 1;
+          }
+          return lib[opts.target].blink();
+      }
+    };
+
+    ComponentGroup.prototype.isComplete = function() {
+      return true;
+    };
+
+    window.ComponentGroup = ComponentGroup;
+
+    return ComponentGroup;
+
+  })();
+
+  ComponentObserver = (function(_super) {
+    __extends(ComponentObserver, _super);
+
+    function ComponentObserver() {
+      _ref1 = ComponentObserver.__super__.constructor.apply(this, arguments);
+      return _ref1;
+    }
+
+    ComponentObserver.UPDATED = 'component_update';
+
+    window.ComponentObserver = ComponentObserver;
+
+    return ComponentObserver;
+
+  })(Observer);
+
   Component = (function() {
     function Component() {}
 
@@ -1001,6 +1031,7 @@ LIBRARY
         this.block = false;
         return;
       }
+      createjs.Sound.play('s/good');
       this.counter++;
       return this.updateCount(this.counter);
     };
@@ -1191,8 +1222,16 @@ LIBRARY
           return new LabelContainer(opts);
         case 'btn':
           return new ButtonContainer(opts);
+        case 'stps':
+          return new StepsContainer(opts);
         case 'wcpt':
           return new WordCompleterContainer(opts);
+        case 'pcpt':
+          return new PhraseCompleterContainer(opts);
+        case 'iwcpt':
+          return new ImageWordCompleterContainer(opts);
+        case 'grp':
+          return new ComponentGroup(opts);
       }
     };
 
@@ -1204,8 +1243,8 @@ LIBRARY
     __extends(SceneObserver, _super);
 
     function SceneObserver() {
-      _ref1 = SceneObserver.__super__.constructor.apply(this, arguments);
-      return _ref1;
+      _ref2 = SceneObserver.__super__.constructor.apply(this, arguments);
+      return _ref2;
     }
 
     SceneObserver.NEXT_STEP = 'next_step';
@@ -1226,12 +1265,13 @@ LIBRARY
     Scene.prototype.Container_initialize = Scene.prototype.initialize;
 
     function Scene(scene) {
+      this.setStep = __bind(this.setStep, this);
       this.next = __bind(this.next, this);
       this.initialize(scene);
     }
 
     Scene.prototype.initialize = function(scene) {
-      var answers, c, container, _i, _len, _ref2, _results;
+      var answers, c, container, g, group, _i, _j, _len, _len1, _ref3, _ref4, _results;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
       this.factory = new SceneFactory();
@@ -1247,12 +1287,18 @@ LIBRARY
         case 'steps':
           this.observer.subscribe(SceneObserver.NEXT_STEP, this.next);
       }
-      _ref2 = scene.containers;
-      _results = [];
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        container = _ref2[_i];
+      _ref3 = scene.containers;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        container = _ref3[_i];
         c = this.factory.makeChild(container);
-        _results.push(this.add(c));
+        this.add(c);
+      }
+      _ref4 = scene.groups;
+      _results = [];
+      for (_j = 0, _len1 = _ref4.length; _j < _len1; _j++) {
+        group = _ref4[_j];
+        g = this.factory.makeChild(group);
+        _results.push(lib[group.id] = g);
       }
       return _results;
     };
@@ -1261,19 +1307,23 @@ LIBRARY
       return this.setStep();
     };
 
-    Scene.prototype.success = function() {
+    Scene.prototype.success = function(plusOne) {
       var step, target, _i, _len;
-      console.log('success');
-      lib.score.plusOne();
+      if (plusOne == null) {
+        plusOne = true;
+      }
+      createjs.Sound.stop();
+      if (plusOne) {
+        lib.score.plusOne();
+      }
       step = this.answers[this.currentStep];
       for (_i = 0, _len = step.length; _i < _len; _i++) {
         target = step[_i];
-        if (lib[target.name].isComplete() === !true) {
+        if (target.name !== 'snd' && lib[target.name].isComplete() === false) {
           return false;
-        } else {
-          this.nextStep();
         }
       }
+      return this.nextStep();
     };
 
     Scene.prototype.fail = function() {
@@ -1284,9 +1334,11 @@ LIBRARY
     Scene.prototype.next = function() {
       this.currentStep++;
       if (this.currentStep >= this.answers.length) {
-        return lib.game.observer.notify(GameObserver.NEXT_SCENE);
+        return this.delay(1000, function() {
+          return lib.game.observer.notify(GameObserver.NEXT_SCENE);
+        });
       } else {
-        return this.setStep();
+        return this.delay(1000, this.setStep);
       }
     };
 
@@ -1296,12 +1348,22 @@ LIBRARY
       _results = [];
       for (_i = 0, _len = step.length; _i < _len; _i++) {
         target = step[_i];
-        _results.push(lib[target.name].update(target.opts));
+        switch (target.name) {
+          case 'snd':
+            this.snd = target.opts.id;
+            createjs.Sound.stop();
+            createjs.Sound.play(target.opts.id);
+            _results.push(false);
+            break;
+          default:
+            _results.push(lib[target.name].update(target.opts));
+        }
       }
       return _results;
     };
 
     Scene.prototype.nextStep = function() {
+      console.log('next step');
       return this.observer.notify(SceneObserver.NEXT_STEP);
     };
 
@@ -1321,11 +1383,12 @@ LIBRARY
     }
 
     ImageContainer.prototype.initialize = function(opts) {
-      var align, b, _ref2, _ref3;
+      var align, b, _ref3, _ref4;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
-      align = (_ref2 = opts.align) != null ? _ref2 : '';
-      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
+      Module.extend(this, d2oda.actions);
+      align = (_ref3 = opts.align) != null ? _ref3 : '';
+      this.name = (_ref4 = opts.name) != null ? _ref4 : opts.id;
       this.x = opts.x;
       this.y = opts.y;
       b = this.createBitmap(this.name, opts.id, 0, 0, align);
@@ -1333,6 +1396,15 @@ LIBRARY
       this.height = b.height;
       this.mouseEnabled = true;
       return this.add(b, false);
+    };
+
+    ImageContainer.prototype.update = function(opts) {};
+
+    ImageContainer.prototype.isComplete = function() {
+      TweenLite.killTweensOf(this);
+      TweenMax.killTweensOf(this);
+      this.alpha = 1;
+      return true;
     };
 
     return ImageContainer;
@@ -1353,11 +1425,10 @@ LIBRARY
     }
 
     DragContainer.prototype.initialize = function(opts) {
-      var align, b, _ref2, _ref3;
+      var b, _ref3;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
       Module.extend(this, d2oda.actions);
-      align = (_ref2 = opts.align) != null ? _ref2 : '';
       this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
       this.x = opts.x;
       this.y = opts.y;
@@ -1368,9 +1439,16 @@ LIBRARY
       this.index = opts.index;
       this.target = lib[opts.target];
       this.droptargets = new Array();
+      b = this.createBitmap(this.name, opts.id, 0, 0);
+      this.width = b.width;
+      this.height = b.height;
+      this.setPosition(opts.align);
       switch (opts.afterSuccess) {
         case 'hide':
           this.afterSuccess = this.hide;
+          break;
+        case 'inplace':
+          this.afterSuccess = this.putInPlace;
           break;
         case 'return':
           this.afterSuccess = this.returnToPlace;
@@ -1382,17 +1460,19 @@ LIBRARY
         case 'hide':
           this.afterFail = this.hide;
           break;
+        case 'inplace':
+          this.afterSuccess = this.putInPlace;
+          break;
         case 'return':
           this.afterFail = this.returnToPlace;
           break;
         case 'origin':
           this.afterFail = this.setInOrigin;
       }
-      b = this.createBitmap(this.name, opts.id, 0, 0, align);
-      this.width = b.width;
-      this.height = b.height;
       this.add(b, false);
-      this.target.observer.subscribe(WordCompleterObserver.UPDATED, this.update);
+      if (this.target) {
+        this.target.observer.subscribe(ComponentObserver.UPDATED, this.update);
+      }
       return this.addEventListener('mousedown', this.handleMouseDown);
     };
 
@@ -1432,12 +1512,12 @@ LIBRARY
     };
 
     DragContainer.prototype.evaluateDrop = function(e) {
-      var drop, dropped, pt, target, _i, _len, _ref2;
+      var drop, dropped, pt, target, _i, _len, _ref3;
       target = null;
       dropped = false;
-      _ref2 = this.droptargets;
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        drop = _ref2[_i];
+      _ref3 = this.droptargets;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        drop = _ref3[_i];
         pt = drop.globalToLocal(oda.stage.mouseX, oda.stage.mouseY);
         if (drop.hitTest(pt.x, pt.y)) {
           target = drop;
@@ -1445,15 +1525,7 @@ LIBRARY
         }
       }
       if (dropped) {
-        if (this.index === target.success) {
-          target.complete = true;
-          target.update();
-          this.afterSuccess();
-          lib.scene.success();
-        } else {
-          this.afterFail();
-          lib.scene.fail();
-        }
+        target.evaluate(this);
         return this.dispatchEvent({
           type: 'dropped',
           drop: target
@@ -1464,6 +1536,136 @@ LIBRARY
     };
 
     return DragContainer;
+
+  })(Component);
+
+  LetterDragContainer = (function(_super) {
+    __extends(LetterDragContainer, _super);
+
+    LetterDragContainer.prototype = new createjs.Container();
+
+    LetterDragContainer.prototype.Container_initialize = LetterDragContainer.prototype.initialize;
+
+    function LetterDragContainer(opts) {
+      this.handleMouseDown = __bind(this.handleMouseDown, this);
+      this.update = __bind(this.update, this);
+      this.initialize(opts);
+    }
+
+    LetterDragContainer.prototype.initialize = function(opts) {
+      var hit, t, _ref3;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      Module.extend(this, d2oda.actions);
+      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
+      this.x = opts.x;
+      this.y = opts.y;
+      this.pos = {
+        x: this.x,
+        y: this.y
+      };
+      this.index = opts.index;
+      this.target = lib[opts.target];
+      this.droptargets = new Array();
+      t = this.createText('txt', opts.text, opts.font, opts.color, 0, 0);
+      this.width = t.getMeasuredWidth();
+      this.height = t.getMeasuredHeight();
+      switch (opts.afterSuccess) {
+        case 'hide':
+          this.afterSuccess = this.hide;
+          break;
+        case 'inplace':
+          this.afterSuccess = this.putInPlace;
+          break;
+        case 'return':
+          this.afterSuccess = this.returnToPlace;
+          break;
+        case 'origin':
+          this.afterSuccess = this.setInOrigin;
+      }
+      switch (opts.afterFail) {
+        case 'hide':
+          this.afterFail = this.hide;
+          break;
+        case 'inplace':
+          this.afterSuccess = this.putInPlace;
+          break;
+        case 'return':
+          this.afterFail = this.returnToPlace;
+          break;
+        case 'origin':
+          this.afterFail = this.setInOrigin;
+      }
+      hit = new createjs.Shape();
+      hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6);
+      t.hitArea = hit;
+      this.add(t, false);
+      if (this.target) {
+        this.target.observer.subscribe(ComponentObserver.UPDATED, this.update);
+      }
+      return this.addEventListener('mousedown', this.handleMouseDown);
+    };
+
+    LetterDragContainer.prototype.update = function(opts) {
+      return this.droptargets = this.target.droptargets;
+    };
+
+    LetterDragContainer.prototype.handleMouseDown = function(e) {
+      var offset, posX, posY,
+        _this = this;
+      posX = e.stageX / d2oda.stage.r;
+      posY = e.stageY / d2oda.stage.r;
+      offset = {
+        x: posX - this.x,
+        y: posY - this.y
+      };
+      this.x = posX - offset.x;
+      this.y = posY - offset.y;
+      e.addEventListener('mousemove', function(ev) {
+        posX = ev.stageX / d2oda.stage.r;
+        posY = ev.stageY / d2oda.stage.r;
+        _this.x = posX - offset.x;
+        _this.y = posY - offset.y;
+        return false;
+      });
+      e.addEventListener('mouseup', function(ev) {
+        if (_this.droptargets && _this.droptargets.length > 0) {
+          _this.evaluateDrop(e);
+        } else {
+          _this.dispatchEvent({
+            type: 'drop'
+          });
+        }
+        return false;
+      });
+      return false;
+    };
+
+    LetterDragContainer.prototype.evaluateDrop = function(e) {
+      var drop, dropped, pt, target, _i, _len, _ref3;
+      target = null;
+      dropped = false;
+      _ref3 = this.droptargets;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        drop = _ref3[_i];
+        pt = drop.globalToLocal(oda.stage.mouseX, oda.stage.mouseY);
+        if (drop.hitTest(pt.x, pt.y)) {
+          target = drop;
+          dropped = true;
+        }
+      }
+      if (dropped) {
+        this.target.evaluate(this, target);
+        return this.dispatchEvent({
+          type: 'dropped',
+          drop: target
+        });
+      } else {
+        return this.returnToPlace(this.alpha, this.scaleX, this.scaleY);
+      }
+    };
+
+    return LetterDragContainer;
 
   })(Component);
 
@@ -1479,15 +1681,15 @@ LIBRARY
     }
 
     ButtonContainer.prototype.initialize = function(opts) {
-      var _ref2, _ref3,
+      var _ref3, _ref4,
         _this = this;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
       this.x = opts.x;
       this.y = opts.y;
       this.index = opts.index;
-      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
-      this.scale = (_ref3 = opts.scale) != null ? _ref3 : 1;
+      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
+      this.scale = (_ref4 = opts.scale) != null ? _ref4 : 1;
       this.states = opts.states;
       this.currentState = 0;
       this.setImageText();
@@ -1507,36 +1709,40 @@ LIBRARY
         });
       });
       return this.addEventListener('click', function() {
-        if (_this.index === _this.target.success) {
-          _this.target.complete = true;
-          _this.update();
-          return lib.scene.success();
+        if (opts.isFinish) {
+          return _this.target.evaluate();
+        } else if (opts.isRepeat) {
+          createjs.Sound.stop();
+          return createjs.Sound.play(lib.scene.snd);
         } else {
-          return lib.scene.fail();
+          return _this.target.evaluate(_this);
         }
       });
     };
 
     ButtonContainer.prototype.setImageText = function() {
-      var align, b, color, font, img, t, text, txt, x, y, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var align, b, color, font, hit, img, t, text, txt, x, y, _ref10, _ref11, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       this.removeAllChildren();
       if (this.states[this.currentState].img) {
         img = this.states[this.currentState].img;
-        x = (_ref2 = img.x) != null ? _ref2 : 0;
-        y = (_ref3 = img.y) != null ? _ref3 : 0;
-        align = (_ref4 = img.align) != null ? _ref4 : '';
+        x = (_ref3 = img.x) != null ? _ref3 : 0;
+        y = (_ref4 = img.y) != null ? _ref4 : 0;
+        align = (_ref5 = img.align) != null ? _ref5 : '';
         b = this.createBitmap('img', img.name, x, y, align);
         this.add(b, false);
       }
       if (this.states[this.currentState].txt) {
         txt = this.states[this.currentState].txt;
-        text = (_ref5 = txt.text) != null ? _ref5 : '';
-        font = (_ref6 = txt.font) != null ? _ref6 : 'Arial 20px';
-        color = (_ref7 = txt.color) != null ? _ref7 : '#333';
-        x = (_ref8 = txt.x) != null ? _ref8 : 0;
-        y = (_ref9 = txt.y) != null ? _ref9 : 0;
-        align = (_ref10 = txt.align) != null ? _ref10 : '';
+        text = (_ref6 = txt.text) != null ? _ref6 : '';
+        font = (_ref7 = txt.font) != null ? _ref7 : '20px Arial';
+        color = (_ref8 = txt.color) != null ? _ref8 : '#333';
+        x = (_ref9 = txt.x) != null ? _ref9 : 0;
+        y = (_ref10 = txt.y) != null ? _ref10 : 0;
+        align = (_ref11 = txt.align) != null ? _ref11 : '';
         t = this.createText('txt', text, font, color, x, y, align);
+        hit = new createjs.Shape();
+        hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6);
+        t.hitArea = hit;
         return this.add(t, false);
       }
     };
@@ -1575,15 +1781,15 @@ LIBRARY
     }
 
     LabelContainer.prototype.initialize = function(opts) {
-      var align, color, font, _ref2, _ref3, _ref4, _ref5;
+      var align, color, font, _ref3, _ref4, _ref5, _ref6;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
       this.x = opts.x;
       this.y = opts.y;
-      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
-      font = (_ref3 = opts.font) != null ? _ref3 : 'Arial 20px';
-      color = (_ref4 = opts.color) != null ? _ref4 : '#333';
-      align = (_ref5 = opts.align) != null ? _ref5 : '';
+      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
+      font = (_ref4 = opts.font) != null ? _ref4 : 'Arial 20px';
+      color = (_ref5 = opts.color) != null ? _ref5 : '#333';
+      align = (_ref6 = opts.align) != null ? _ref6 : '';
       this.text = this.createText('txt', '', font, color, 0, 0, align);
       return this.add(this.text, false);
     };
@@ -1598,6 +1804,16 @@ LIBRARY
       });
     };
 
+    LabelContainer.prototype.evaluate = function(obj) {
+      if (obj.index === this.success) {
+        this.complete = true;
+        obj.update();
+        return lib.scene.success();
+      } else {
+        return lib.scene.fail();
+      }
+    };
+
     LabelContainer.prototype.isComplete = function() {
       return this.complete;
     };
@@ -1606,21 +1822,263 @@ LIBRARY
 
   })(Component);
 
-  WordCompleterObserver = (function(_super) {
-    __extends(WordCompleterObserver, _super);
+  StepsContainer = (function(_super) {
+    __extends(StepsContainer, _super);
 
-    function WordCompleterObserver() {
-      _ref2 = WordCompleterObserver.__super__.constructor.apply(this, arguments);
-      return _ref2;
+    StepsContainer.prototype = new createjs.Container();
+
+    StepsContainer.prototype.Container_initialize = StepsContainer.prototype.initialize;
+
+    function StepsContainer(opts) {
+      this.initialize(opts);
     }
 
-    WordCompleterObserver.UPDATED = 'wordcompleter_update';
+    StepsContainer.prototype.initialize = function(opts) {
+      var _ref3, _ref4, _ref5;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
+      this.x = (_ref4 = opts.x) != null ? _ref4 : 0;
+      this.y = (_ref5 = opts.y) != null ? _ref5 : 0;
+      this.observer = new ComponentObserver();
+      return this.droptargets = new Array();
+    };
 
-    window.WordCompleterObserver = WordCompleterObserver;
+    StepsContainer.prototype.update = function(opts) {
+      var c, child, gropts, i, npos, _i, _len, _ref3;
+      this.removeAllChildren();
+      i = 0;
+      npos = 0;
+      _ref3 = opts.containers;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        c = _ref3[_i];
+        if (c.opts) {
+          gropts = c.opts;
+        } else {
+          gropts = opts;
+        }
+        child = new StepContainer(gropts, c.type, c.success, c.x, c.y);
+        this.droptargets.push(child);
+        this.add(child, false);
+      }
+      this.observer.notify(ComponentObserver.UPDATED);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0,
+        y: this.y - 10
+      });
+    };
 
-    return WordCompleterObserver;
+    StepsContainer.prototype.evaluate = function() {
+      var target, _i, _len, _ref3;
+      _ref3 = this.droptargets;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        target = _ref3[_i];
+        target.showEvaluation();
+        if (target.complete) {
+          lib.score.plusOne();
+        }
+      }
+      return lib.scene.success(false);
+    };
 
-  })(Observer);
+    StepsContainer.prototype.isComplete = function() {
+      return true;
+    };
+
+    return StepsContainer;
+
+  })(Component);
+
+  StepContainer = (function(_super) {
+    __extends(StepContainer, _super);
+
+    StepContainer.prototype = new createjs.Container();
+
+    StepContainer.prototype.Container_initialize = StepContainer.prototype.initialize;
+
+    function StepContainer(opts, type, success, x, y) {
+      this.initialize(opts, type, success, x, y);
+    }
+
+    StepContainer.prototype.initialize = function(opts, type, success, x, y) {
+      var child, _ref3, _ref4;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = x != null ? x : 0;
+      this.y = y != null ? y : 0;
+      this.width = (_ref3 = opts.width) != null ? _ref3 : opts.radius;
+      this.height = (_ref4 = opts.height) != null ? _ref4 : opts.radius;
+      this.success = success;
+      this.complete = false;
+      switch (type) {
+        case 'rshp':
+          child = new createjs.Shape();
+          child.graphics.beginFill(opts.bcolor).setStrokeStyle(opts.stroke).beginStroke(opts.scolor).drawRoundRect(0, 0, opts.width, opts.height, opts.radius);
+      }
+      return this.add(child, false);
+    };
+
+    StepContainer.prototype.showEvaluation = function() {
+      if (this.complete) {
+        return this.insertBitmap('correct', 'correct', this.width, this.height / 2, 'ml');
+      } else {
+        return this.insertBitmap('wrong', 'wrong', this.width, this.height / 2, 'ml');
+      }
+    };
+
+    StepContainer.prototype.update = function(complete) {
+      if (complete == null) {
+        complete = true;
+      }
+      return this.complete = complete;
+    };
+
+    StepContainer.prototype.evaluate = function(obj) {
+      obj.afterSuccess({
+        x: this.x,
+        y: this.y
+      });
+      if (obj.index === this.success) {
+        return this.update();
+      } else {
+        return this.update(false);
+      }
+    };
+
+    return StepContainer;
+
+  })(Component);
+
+  PhraseCompleterContainer = (function(_super) {
+    __extends(PhraseCompleterContainer, _super);
+
+    PhraseCompleterContainer.prototype = new createjs.Container();
+
+    PhraseCompleterContainer.prototype.Container_initialize = PhraseCompleterContainer.prototype.initialize;
+
+    function PhraseCompleterContainer(opts) {
+      this.initialize(opts);
+    }
+
+    PhraseCompleterContainer.prototype.initialize = function(opts) {
+      var _ref10, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = opts.x;
+      this.y = opts.y;
+      this.margin = (_ref3 = opts.margin) != null ? _ref3 : 10;
+      this.font = (_ref4 = opts.font) != null ? _ref4 : '20px Arial';
+      this.fcolor = (_ref5 = opts.fcolor) != null ? _ref5 : '#333';
+      this.bcolor = (_ref6 = opts.bcolor) != null ? _ref6 : '#FFF';
+      this.scolor = (_ref7 = opts.scolor) != null ? _ref7 : '#333';
+      this.stroke = (_ref8 = opts.stroke) != null ? _ref8 : 3;
+      this.name = (_ref9 = opts.name) != null ? _ref9 : opts.id;
+      this.align = (_ref10 = opts.align) != null ? _ref10 : '';
+      this.currentTarget = 0;
+      this.observer = new ComponentObserver();
+      return this.droptargets = new Array();
+    };
+
+    PhraseCompleterContainer.prototype.update = function(opts) {
+      var align, h, h2, i, npos, t, txt, _i, _len, _ref3, _ref4;
+      this.removeAllChildren();
+      if (opts.h2) {
+        align = (_ref3 = opts.h2.align) != null ? _ref3 : '';
+        h2 = this.createText('h2', opts.h2.text, this.font, this.color, opts.h2.x, opts.h2.y, align);
+        this.add(h2, false);
+      }
+      i = 0;
+      npos = 0;
+      _ref4 = opts.pattern;
+      for (_i = 0, _len = _ref4.length; _i < _len; _i++) {
+        t = _ref4[_i];
+        if (t === '#tcpt') {
+          txt = opts.targets[i];
+          h = new TextCompleterContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, 5);
+          this.droptargets.push(h);
+          this.add(h, false);
+          npos += h.width + this.margin;
+          i++;
+        } else {
+          h = this.createText('txt', t, this.font, this.fcolor, npos, -5);
+          this.add(h, false);
+          npos += h.getMeasuredWidth() + this.margin;
+        }
+      }
+      this.width = npos;
+      this.setPosition(this.align);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0,
+        y: this.y - 10
+      });
+    };
+
+    PhraseCompleterContainer.prototype.evaluate = function(obj) {
+      if (obj.index === this.droptargets[this.currentTarget].success) {
+        this.droptargets[this.currentTarget].complete = true;
+        this.droptargets[this.currentTarget].update();
+        this.currentTarget++;
+        if (this.currentTarget === this.droptargets.length) {
+          return lib.scene.success();
+        }
+      } else {
+        return lib.scene.fail();
+      }
+    };
+
+    PhraseCompleterContainer.prototype.isComplete = function() {
+      var target, _i, _len, _ref3;
+      _ref3 = this.droptargets;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        target = _ref3[_i];
+        if (target.complete === false) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    return PhraseCompleterContainer;
+
+  })(Component);
+
+  TextCompleterContainer = (function(_super) {
+    __extends(TextCompleterContainer, _super);
+
+    TextCompleterContainer.prototype = new createjs.Container();
+
+    TextCompleterContainer.prototype.Container_initialize = TextCompleterContainer.prototype.initialize;
+
+    function TextCompleterContainer(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
+      this.initialize(opts, font, fcolor, bcolor, scolor, stroke, x, y);
+    }
+
+    TextCompleterContainer.prototype.initialize = function(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
+      var back, _ref3, _ref4;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = x;
+      this.y = y;
+      this.success = (_ref3 = opts.success) != null ? _ref3 : opts.text;
+      this.text = this.createText('txt', opts.text, font, fcolor, 0, -5);
+      this.width = (_ref4 = opts.width) != null ? _ref4 : this.text.getMeasuredWidth();
+      this.height = this.text.getMeasuredHeight();
+      this.complete = false;
+      back = new createjs.Shape();
+      back.graphics.f(bcolor).dr(0, 0, this.width, this.height).ss(stroke).s(scolor).mt(0, this.height).lt(this.width, this.height);
+      return this.add(back, false);
+    };
+
+    TextCompleterContainer.prototype.update = function(opts) {
+      this.add(this.text, false);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0
+      });
+    };
+
+    return TextCompleterContainer;
+
+  })(Component);
 
   WordCompleterContainer = (function(_super) {
     __extends(WordCompleterContainer, _super);
@@ -1634,51 +2092,96 @@ LIBRARY
     }
 
     WordCompleterContainer.prototype.initialize = function(opts) {
-      var _ref3, _ref4;
+      var _ref10, _ref11, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
+      Module.extend(this, d2oda.utilities);
+      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
       this.x = opts.x;
       this.y = opts.y;
-      this.margin = opts.margin;
-      this.uwidth = opts.uwidth;
-      this.uheight = opts.uheight;
-      this.bcolor = opts.bcolor;
-      this.scolor = opts.scolor;
-      this.stroke = opts.stroke;
-      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
-      this.align = (_ref4 = opts.align) != null ? _ref4 : '';
-      this.observer = new WordCompleterObserver();
+      this.uwidth = (_ref4 = opts.uwidth) != null ? _ref4 : 25;
+      this.bcolor = (_ref5 = opts.bcolor) != null ? _ref5 : '#FFF';
+      this.scolor = (_ref6 = opts.scolor) != null ? _ref6 : '#333';
+      this.fcolor = (_ref7 = opts.fcolor) != null ? _ref7 : '#333';
+      this.font = (_ref8 = opts.font) != null ? _ref8 : '20px Arial';
+      this.stroke = (_ref9 = opts.stroke) != null ? _ref9 : 3;
+      this.align = (_ref10 = opts.align) != null ? _ref10 : '';
+      this.margin = (_ref11 = opts.margin) != null ? _ref11 : 5;
+      this.currentTarget = 0;
+      this.observer = new ComponentObserver();
       return this.droptargets = new Array();
     };
 
     WordCompleterContainer.prototype.update = function(opts) {
-      var child, container, i, x, _i, _len, _ref3;
+      var d, h, i, letter, npos, scrambledLetter, scrambledWord, word, _i, _j, _len, _len1;
+      this.removeAllChildren();
+      this.target = opts.target;
+      word = opts.word.split('');
+      scrambledWord = this.shuffle(word);
       i = 0;
-      _ref3 = opts.containers;
-      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
-        child = _ref3[_i];
-        x = i * (this.uwidth + this.margin);
-        switch (child.type) {
-          case 'img':
-            container = new ImageCompleterContainer(child, x, this.uwidth, this.uheight, this.bcolor, this.scolor, this.stroke);
-            break;
-          case 'txt':
-            container = new TextCompleterContainer(child, x, this.uwidth, this.uheight, this.bcolor, this.scolor, this.stroke);
+      npos = 0;
+      for (_i = 0, _len = word.length; _i < _len; _i++) {
+        letter = word[_i];
+        if (letter === ' ') {
+          npos += this.margin;
+        } else {
+          opts = {
+            text: letter,
+            width: this.uwidth
+          };
+          h = new TextCompleterContainer(opts, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, 5);
+          this.droptargets.push(h);
+          this.add(h, false);
+          npos += this.uwidth + this.margin;
         }
-        this.droptargets.push(container);
-        this.addChild(container);
         i++;
       }
-      this.width = (this.uwidth + this.margin) * (i - 1);
-      switch (this.align) {
-        case 'center':
-          this.regX = this.width / 2;
+      this.width = npos;
+      this.setPosition(this.align);
+      i = 0;
+      npos = 0;
+      for (_j = 0, _len1 = scrambledWord.length; _j < _len1; _j++) {
+        scrambledLetter = scrambledWord[_j];
+        if (scrambledLetter !== ' ') {
+          opts = {
+            id: "l" + i,
+            x: npos,
+            y: -50,
+            index: scrambledLetter,
+            target: this.name,
+            text: scrambledLetter,
+            font: this.font,
+            color: this.fcolor,
+            afterSuccess: 'hide',
+            afterFail: 'return'
+          };
+          d = new LetterDragContainer(opts);
+          this.add(d, false);
+          npos += this.uwidth + this.margin;
+          i++;
+        }
       }
-      this.observer.notify(WordCompleterObserver.UPDATED);
+      this.observer.notify(ComponentObserver.UPDATED);
       return TweenLite.from(this, 0.3, {
         alpha: 0,
         y: this.y - 10
       });
+    };
+
+    WordCompleterContainer.prototype.evaluate = function(drag, target) {
+      if (drag.index === target.success) {
+        target.complete = true;
+        target.update();
+        drag.afterSuccess();
+        this.currentTarget++;
+        if (this.currentTarget === this.droptargets.length) {
+          lib[this.target].fadeOut();
+          return lib.scene.success();
+        }
+      } else {
+        drag.afterFail();
+        return lib.scene.fail();
+      }
     };
 
     WordCompleterContainer.prototype.isComplete = function() {
@@ -1697,19 +2200,75 @@ LIBRARY
 
   })(Component);
 
-  /*
-  class TextCompleterContainer extends Component
-  	TextCompleterContainer.prototype = new createjs.Container()
-  	TextCompleterContainer::Container_initialize = TextCompleterContainer::initialize
-  	constructor: (opts) ->
-  		@initialize opts
-  	TextCompleterContainer::initialize = (opts) ->
-  		@Container_initialize()
-  		Module.extend @, d2oda.methods
-  		@name = opts.name ? opts.id
-  	update: (opts) ->
-  */
+  ImageWordCompleterContainer = (function(_super) {
+    __extends(ImageWordCompleterContainer, _super);
 
+    ImageWordCompleterContainer.prototype = new createjs.Container();
+
+    ImageWordCompleterContainer.prototype.Container_initialize = ImageWordCompleterContainer.prototype.initialize;
+
+    function ImageWordCompleterContainer(opts) {
+      this.initialize(opts);
+    }
+
+    ImageWordCompleterContainer.prototype.initialize = function(opts) {
+      var _ref3, _ref4;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = opts.x;
+      this.y = opts.y;
+      this.margin = opts.margin;
+      this.uwidth = opts.uwidth;
+      this.uheight = opts.uheight;
+      this.bcolor = opts.bcolor;
+      this.scolor = opts.scolor;
+      this.stroke = opts.stroke;
+      this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
+      this.align = (_ref4 = opts.align) != null ? _ref4 : '';
+      this.observer = new ComponentObserver();
+      return this.droptargets = new Array();
+    };
+
+    ImageWordCompleterContainer.prototype.update = function(opts) {
+      var child, container, i, npos, _i, _len, _ref3;
+      this.removeAllChildren();
+      i = 0;
+      _ref3 = opts.containers;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        child = _ref3[_i];
+        npos = i * (this.uwidth + this.margin);
+        container = new ImageCompleterContainer(child, npos, this.uwidth, this.uheight, this.bcolor, this.scolor, this.stroke);
+        this.droptargets.push(container);
+        this.add(container, false);
+        i++;
+      }
+      this.width = (this.uwidth + this.margin) * (i - 1);
+      switch (this.align) {
+        case 'center':
+          this.regX = this.width / 2;
+      }
+      this.observer.notify(ComponentObserver.UPDATED);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0,
+        y: this.y - 10
+      });
+    };
+
+    ImageWordCompleterContainer.prototype.isComplete = function() {
+      var target, _i, _len, _ref3;
+      _ref3 = this.droptargets;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        target = _ref3[_i];
+        if (target.complete === false) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    return ImageWordCompleterContainer;
+
+  })(Component);
 
   ImageCompleterContainer = (function(_super) {
     __extends(ImageCompleterContainer, _super);
@@ -1768,6 +2327,18 @@ LIBRARY
       return TweenLite.from(this, 0.3, {
         alpha: 0
       });
+    };
+
+    ImageCompleterContainer.prototype.evaluate = function(obj) {
+      if (obj.index === this.success) {
+        this.complete = true;
+        this.update();
+        obj.afterSuccess();
+        return lib.scene.success();
+      } else {
+        obj.afterFail();
+        return lib.scene.fail();
+      }
     };
 
     return ImageCompleterContainer;

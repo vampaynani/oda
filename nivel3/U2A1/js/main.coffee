@@ -1,10 +1,14 @@
+###
+
+NEW ODA
+
+###
 class U2A1 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
-
 			{id: 'propblueberries', src:'prop_blueberries.png'}
 			{id: 'propcheese', src:'prop_cheese.png'}
 			{id: 'propcorn', src:'prop_corn.png'}
@@ -25,212 +29,285 @@ class U2A1 extends Oda
 			{id: 'n3', src:'tag_food.png'}
 			{id: 'n2', src:'tag_pronoun.png'}
 			{id: 'n1', src:'tag_verb.png'}			
+			{id:'s/instructions', src:'TU3_U2_A1_instructions.mp3'}
 		]
-		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU3_U2_A1_Instructions.mp3', id:'instructions'}
-			{src:'sounds/wrong.mp3', id:'wrong'}
-		]
-		@game = [
-			[
-				{id:'propstrawberryJelly', x:310, y:106, a1:1, a2:1, a3:1}
-				{id:'propPeanutButter', x:467, y:120, a1:1, a2:1, a3:1}
-				{id:'propcorn', x:223, y:167, a1:1, a2:1, a3:1}
-				{id:'propgreenPeppers', x:294, y:186, a1:1, a2:1, a3:1}
-				{id:'propmushrooms', x:370, y:185, a1:1, a2:1, a3:1}
-				{id:'propblueberries', x:440, y:172, a1:1, a2:1, a3:1}
-				{id:'proppeaches', x:530, y:172, a1:1, a2:1, a3:1}
-				{id:'propsugar', x:322, y:273, a1:1, a2:1, a3:1}
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Look and click on the words to make a sentence.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 16, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'propstrawberryJelly'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'strawberry jelly', success:'strawberryjelly'}]}}
+							]
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'propPeanutButter'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'peanut butter', success:'peanutbutter'}]}}
+			
+							]
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'propcorn'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'corn'}]}}
+							]
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'propgreenPeppers'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'green peppers', success:'greenpeppers'}]}}
+							]
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'propmushrooms'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'mushrooms', success:'mushrooms'}]}}
+							]
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'propblueberries'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'aren\'t', success:'arent'}, {text:'any'}, {text:'blueberries'}]}}
+							]
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'proppeaches'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'aren\'t', success:'arent'}, {text:'any'}, {text:'peaches'}]}}
+							]
+							[
+								{name: 'grp1', opts:{type: 'blink', target: 'propsugar'}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'is'}, {text:'some'}, {text:'sugar'}]}}
+							]
+						]
+						mixed: true
+						type: 'steps'
+					}
+					containers:[
+						{type: 'img', id: 'propmarket', x: 400, y: 235, align: 'mc'}
+						{type: 'img', id: 'propstrawberryJelly', x: 398, y: 172, align: 'mc'}
+						{type: 'img', id: 'propPeanutButter', x: 555, y: 186, align: 'mc'}
+						{type: 'img', id: 'propcorn', x: 311, y: 233, align: 'mc'}
+						{type: 'img', id: 'propgreenPeppers', x: 382, y: 252, align: 'mc'}
+						{type: 'img', id: 'propmushrooms', x: 458, y: 251, align: 'mc'}
+						{type: 'img', id: 'propblueberries', x: 528, y: 238, align: 'mc'}
+						{type: 'img', id: 'proppeaches', x: 618, y: 238, align: 'mc'}
+						{type: 'img', id: 'propsugar', x: 410, y: 339, align: 'mc'}
+						{type: 'pcpt', id: 'pcpt1', x: 400, y: 540, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00'}
+						{type: 'img', id: 'n1', x: 124, y: 412}
+						{
+							type: 'btn', id: 'btn_n11', x: 149, y: 432, index: 'are', target: 'pcpt1'
+							states: [{txt: {text: 'are', name: 'are', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n12', x: 190, y: 437, index: 'arent', target: 'pcpt1'
+							states: [{txt: {text: 'aren\'t', name: 'arent', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n13', x: 168, y: 459, index: 'is', target: 'pcpt1'
+							states: [{txt: {text: 'is', name: 'is', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n14', x: 193, y: 474, index: 'isnt', target: 'pcpt1'
+							states: [{txt: {text: 'isn\'t', name: 'isnt', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{type: 'img', id: 'n2', x: 291, y: 432}
+						{
+							type: 'btn', id: 'btn_n21', x: 324, y: 442, index: 'any', target: 'pcpt1'
+							states: [{txt: {text: 'any', name: 'any', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n22', x: 317, y: 467, index: 'some', target: 'pcpt1'
+							states: [{txt: {text: 'some', name: 'some', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{type: 'img', id: 'n3', x: 421, y: 383}
+						{
+							type: 'btn', id: 'btn_n31', x: 434, y: 417, index: 'sugar', target: 'pcpt1'
+							states: [{txt: {text: 'sugar', name: 'sugar', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n32', x: 446, y: 458, index: 'mushrooms', target: 'pcpt1'
+							states: [{txt: {text: 'mushrooms', name: 'mushrooms', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n33', x: 513, y: 400, index: 'peaches', target: 'pcpt1'
+							states: [{txt: {text: 'peaches', name: 'peaches', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n34', x: 488, y: 432, index: 'peanutbutter', target: 'pcpt1'
+							states: [{txt: {text: 'peanut butter', name: 'peanutbutter', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n35', x: 557, y: 457, index: 'corn', target: 'pcpt1'
+							states: [{txt: {text: 'corn', name: 'corn', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n36', x: 520, y: 483, index: 'blueberries', target: 'pcpt1'
+							states: [{txt: {text: 'blueberries', name: 'blueberries', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n37', x: 599, y: 395, index: 'fish', target: 'pcpt1'
+							states: [{txt: {text: 'fish', name: 'fish', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n38', x: 600, y: 414, index: 'greenpeppers', target: 'pcpt1'
+							states: [{txt: {text: 'green peppers', name: 'greenpeppers', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n39', x: 600, y: 452, index: 'strawberryjelly', target: 'pcpt1'
+							states: [{txt: {text: 'strawberry jelly', name: 'strawberryjelly', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n310', x: 633, y: 489, index: 'apples', target: 'pcpt1'
+							states: [{txt: {text: 'apples', name: 'apples', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+					]
+					groups:[
+						{
+
+							type: 'grp', id: 'grp1'
+							group: [
+								'propstrawberryJelly'
+								'propPeanutButter'
+								'propcorn'
+								'propgreenPeppers'
+								'propmushrooms'
+								'propblueberries'
+								'proppeaches'
+								'propsugar'
+							]
+						}
+					]
+				}
+				{
+					answers: {
+						collection: [
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'propmilk'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'milk'}]}}
+							]
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'prophoney'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'honey'}]}}
+			
+							]
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'propcheese'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'cheese'}]}}
+							]
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'propmeat'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'meat'}]}}
+							]
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'propyogurt'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'yogurt'}]}}
+							]
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'propeggs'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'eggs'}]}}
+							]
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'propraspberries'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'raspberries'}]}}
+							]
+							[
+								{name: 'grp2', opts:{type: 'blink', target: 'proppumpkins'}}
+								{name: 'pcpt2', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'pumpkins'}]}}
+							]
+						]
+						mixed: true
+						type: 'steps'
+					}
+					containers:[
+						{type: 'img', id: 'propmarket', x: 400, y: 235, align: 'mc'}
+						{type: 'img', id: 'propmilk', x: 391, y: 171, align: 'mc'}
+						{type: 'img', id: 'prophoney', x: 554, y: 182, align: 'mc'}
+						{type: 'img', id: 'propcheese', x: 311, y: 225, align: 'mc'}
+						{type: 'img', id: 'propmeat', x: 398, y: 226, align: 'mc'}
+						{type: 'img', id: 'propyogurt', x: 458, y: 247, align: 'mc'}
+						{type: 'img', id: 'propeggs', x: 522, y: 249, align: 'mc'}
+						{type: 'img', id: 'propraspberries', x: 593, y: 267, align: 'mc'}
+						{type: 'img', id: 'proppumpkins', x: 493, y: 336, align: 'mc'}
+						{type: 'pcpt', id: 'pcpt2', x: 400, y: 540, font: '24px Quicksand', margin: 10, align: 'center', scolor: '#F00'}
+						{type: 'img', id: 'n1', x: 124, y: 412}
+						{
+							type: 'btn', id: 'btn_n11', x: 149, y: 432, index: 'are', target: 'pcpt2'
+							states: [{txt: {text: 'are', name: 'are', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n12', x: 190, y: 437, index: 'arent', target: 'pcpt2'
+							states: [{txt: {text: 'aren\'t', name: 'arent', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n13', x: 168, y: 459, index: 'is', target: 'pcpt2'
+							states: [{txt: {text: 'is', name: 'is', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n14', x: 193, y: 474, index: 'isnt', target: 'pcpt2'
+							states: [{txt: {text: 'isn\'t', name: 'isnt', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{type: 'img', id: 'n2', x: 291, y: 432}
+						{
+							type: 'btn', id: 'btn_n21', x: 324, y: 442, index: 'any', target: 'pcpt2'
+							states: [{txt: {text: 'any', name: 'any', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n22', x: 317, y: 467, index: 'some', target: 'pcpt2'
+							states: [{txt: {text: 'some', name: 'some', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{type: 'img', id: 'n3', x: 421, y: 383}
+						{
+							type: 'btn', id: 'btn_n31', x: 434, y: 417, index: 'milk', target: 'pcpt2'
+							states: [{txt: {text: 'milk', name: 'milk', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n32', x: 446, y: 458, index: 'honey', target: 'pcpt2'
+							states: [{txt: {text: 'honey', name: 'honey', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n33', x: 513, y: 400, index: 'cheese', target: 'pcpt2'
+							states: [{txt: {text: 'cheese', name: 'cheese', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n34', x: 488, y: 432, index: 'meat', target: 'pcpt2'
+							states: [{txt: {text: 'meat', name: 'meat', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n35', x: 587, y: 467, index: 'yogurt', target: 'pcpt2'
+							states: [{txt: {text: 'yogurt', name: 'yogurt', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n36', x: 520, y: 483, index: 'eggs', target: 'pcpt2'
+							states: [{txt: {text: 'eggs', name: 'eggs', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n37', x: 599, y: 405, index: 'raspberries', target: 'pcpt2'
+							states: [{txt: {text: 'raspberries', name: 'raspberries', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n38', x: 530, y: 450, index: 'pumpkins', target: 'pcpt2'
+							states: [{txt: {text: 'pumpkins', name: 'pumpkins', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n39', x: 550, y: 427, index: 'strawberryjelly', target: 'pcpt2'
+							states: [{txt: {text: 'strawberry jelly', name: 'strawberryjelly', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n310', x: 633, y: 489, index: 'apples', target: 'pcpt2'
+							states: [{txt: {text: 'apples', name: 'apples', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+					]
+					groups:[
+						{
+
+							type: 'grp', id: 'grp2'
+							group: [
+								'propmilk'
+								'prophoney'
+								'propcheese'
+								'propmeat'
+								'propyogurt'
+								'propeggs'
+								'propraspberries'
+								'proppumpkins'
+							]
+						}
+					]
+				}
 			]
-			[
-				{id:'propmilk', x:303, y:105, a1:1, a2:1, a3:1}
-				{id:'prophoney', x:466, y:116, a1:1, a2:1, a3:1}
-				{id:'propcheese', x:223, y:159, a1:1, a2:1, a3:1}
-				{id:'propmeat', x:310, y:160, a1:1, a2:1, a3:1}
-				{id:'propyogurt', x:370, y:181, a1:1, a2:1, a3:1}
-				{id:'propeggs', x:434, y:183, a1:1, a2:1, a3:1}
-				{id:'propraspberries', x:505, y:201, a1:1, a2:1, a3:1}
-				{id:'proppumpkins', x:405, y:270, a1:1, a2:1, a3:1}
-			]
-		]
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and click on the words to make a sentence.', 40, 100
-
-		@insertBitmap 'propmarket', 'propmarket', 400, 235, 'mc'
-
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
-		@setFood(1).setNube1().setNube2().setNube3().setDropper().introEvaluation()
-	setFood: (food) ->
-		scene = new createjs.Container()
-		scene.x = 88
-		scene.y = 66
-		@foodcollection = @game[food - 1]
-		for i in [1..@foodcollection.length]
-			a = @createBitmap @foodcollection[i-1].id,  @foodcollection[i-1].id,  @foodcollection[i-1].x,  @foodcollection[i-1].y, 'mc'
-			scene.addChild a
-			@addToLibrary a
-		@addToMain  scene
-
-		@
-	setNube1: ->
-		container = new createjs.Container()
-		container.x = 124
-		container.y = 412
-		container.name = 'nube1'
-		back = @createBitmap 'backNube1', 'n1', 0, 0
-
-		w11 = new ClickableText 'w11', 'are', 0, 25, 20
-		w12 = new ClickableText 'w12', "aren't", 1, 69, 20
-		w13 = new ClickableText 'w13', 'is', 2, 44, 47
-		w14 = new ClickableText 'w14', "isn't", 3, 79, 62
-		
-		container.addChild back, w11, w12, w13, w14
-		@addToLibrary back, w11, w12, w13, w14
-		@addToMain container
-		@
-	setNube2: ->
-		container = new createjs.Container()
-		container.x = 291
-		container.y = 432
-		container.name = 'nube2'
-		back = @createBitmap 'backNube2', 'n2', 0, 0
-		w21 = new ClickableText 'w21', 'any', 0, 33, 10
-		w22 = new ClickableText 'w22', "some", 1, 26, 35
-		container.addChild back, w21, w22
-		@addToLibrary back, w21, w22
-		@addToMain container
-		@
-	setNube3: ->
-		container = new createjs.Container()
-		container.x = 421
-		container.y = 383
-		container.name = 'nube3'
-		back = @createBitmap 'backNube3', 'n3', -6, 0
-
-		w31 = new ClickableText 'w31', 'sugar', 0, 13, 34
-		w32 = new ClickableText 'w32', "mushrooms", 1, 25, 75
-		w33 = new ClickableText 'w33', 'peaches', 2, 92, 17
-		w34 = new ClickableText 'w34', "peanut butter", 3, 67, 45
-		w35 = new ClickableText 'w35', "corn", 4, 136, 74
-		w36 = new ClickableText 'w36', "blueberries", 5, 99, 100
-		w37 = new ClickableText 'w37', "fish", 6, 178, 12
-		w38 = new ClickableText 'w38', "green peppers",7, 199, 36
-		w39 = new ClickableText 'w39', "strawberry jelly", 8, 196, 69
-		w310 = new ClickableText 'w310', "apples", 9, 212, 106
-
-		container.addChild back, w31,w32,w33,w34,w35,w36,w37,w38,w39,w310	
-		@addToLibrary back, w31,w32,w33,w34,w35,w36,w37,w38,w39,w310	
-		@addToMain container
-		@
-	setDropper: ->
-		dropper = new createjs.Container()
-		dropper.x = stageSize.w / 2 - 205
-		dropper.y = 540
-		dropper.name = 'dropper'
-
-		t = new createjs.Text 'There','24px Arial','#333'
-		t.x = 20
-		t.y = 0
-		dropper.addChild t
-
-		h1 = new WordContainer 'wc1', '', '', '#eb2d3d', 90, 0, 60, 22
-		h2 = new WordContainer 'wc2', '', '', '#eb2d3d', 160, 0, 80, 22
-		h3 = new WordContainer 'wc3', '', '', '#eb2d3d', 250, 0, 140, 22
-		
-		t = new createjs.Text '.','24px Arial','#333'
-		t.x = 393
-		t.y = 0
-		dropper.addChild t
-
-		dropper.addChild h1, h2, h3
-		@addToLibrary h1, h2, h3
-		@addToMain dropper
-		@
-	introEvaluation: ->
-		super
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		#TweenMax.allFrom [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
-		TweenLite.from @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 50, delay: 1}
-		TweenLite.from @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 50, delay: 1.1}
-		TweenLite.from @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 50, delay: 1.2}
-		TweenLite.from @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-	initEvaluation: (e) =>
-		super
-		@blink @library[@foodcollection[@index].id]
-		@blink @library['nube1']
-		for i in [1..4] by 1
-			@library['w1'+i].addEventListener 'click', @evaluateAnswer1
-	evaluateAnswer1: (e) =>
-		@answer = e.target
-		if @answer.index is @foodcollection[@index].a1
-			createjs.Sound.play 'good'
-			@blink @library['nube1'], off
-			@library['wc1'].changeText @answer.text.text
-			@blink @library['nube2']
-			for i in [1..4] by 1
-				@library['w1'+i].removeEventListener 'click', @evaluateAnswer1
-			for i in [1..2] by 1
-				@library['w2'+i].addEventListener 'click', @evaluateAnswer2
-		else
-			@warning()
-	evaluateAnswer2: (e) =>
-		@answer = e.target
-		if @answer.index is @foodcollection[@index].a2
-			createjs.Sound.play 'good'
-			@blink @library['nube2'], off
-			@library['wc2'].changeText @answer.text.text
-			@blink @library['nube3']
-			for i in [1..2] by 1
-				@library['w2'+i].removeEventListener 'click', @evaluateAnswer2
-			for i in [1..10] by 1
-				@library['w3'+i].addEventListener 'click', @evaluateAnswer3
-		else
-			@warning()
-	evaluateAnswer3: (e) =>
-		@answer = e.target
-		if @answer.index is @foodcollection[@index].a3
-			createjs.Sound.play 'good'
-			@blink @library['nube3'], off
-			@blink @library[@foodcollection[@index].id], off
-			@library['wc3'].changeText @answer.text.text
-			for i in [1..10] by 1
-				@library['w3'+i].removeEventListener 'click', @evaluateAnswer3
-			setTimeout @finishEvaluation, 1 * 1000
-		else
-			@warning()
-	finishEvaluation: =>
-		@library['score'].plusOne()
-		TweenLite.to @library['dropper'], 0.5, {alpha: 0, ease: Quart.easeOut, onComplete: @nextEvaluation}
-	nextEvaluation: =>
-		@index++
-		if @index < @foodcollection.length
-			@library['wc1'].changeText ''
-			@library['wc2'].changeText ''
-			@library['wc3'].changeText ''
-			@blink @library[@foodcollection[@index].id]
-			@blink @library['nube1']
-			for i in [1..4] by 1
-				@library['w1'+i].addEventListener 'click', @evaluateAnswer1
-			TweenLite.to @library['dropper'], 0.5, {alpha: 1, ease: Quart.easeOut}
-		else
-			@library['wc1'].changeText ''
-			@library['wc2'].changeText ''
-			@library['wc3'].changeText ''
-			TweenLite.to @library['dropper'], 0.5, {alpha: 1, ease: Quart.easeOut}
-			@finish()
-	blink: (obj, state = on) ->
-		TweenMax.killTweensOf obj
-		obj.alpha = 1
-		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
-	finish: ->
-		#TweenMax.to [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
-		TweenLite.to @library['nube1'], 1, {alpha: 0, y: @library['nube1'].y + 50, delay: 0.1}
-		TweenLite.to @library['nube2'], 1, {alpha: 0, y: @library['nube2'].y + 50, delay: 0.1}
-		TweenLite.to @library['nube3'], 1, {alpha: 0, y: @library['nube3'].y + 50, delay: 0.1}
-		TweenLite.to @library['dropper'], 1, {alpha: 0, y: @library['dropper'].y + 20, delay: 0.1}
-		super
+		super()
 	window.U2A1 = U2A1
