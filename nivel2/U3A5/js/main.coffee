@@ -89,7 +89,8 @@ class U3A5 extends Oda
 		@addToMain ti
 		@insertBitmap 'btnnext', 'btn', 760, 520, 'tc'
 		@library['btnnext'].visible = off
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@intento = 0
 		@setCuento(1).introEvaluation()
 	setCuento: (scene) ->
 		cuento = new createjs.Container()
@@ -157,19 +158,22 @@ class U3A5 extends Oda
 					if @answer.p
 						if @library["sc#{i}"].currentFrame in [1,2]
 							@library["sc#{i}"].currentFrame = 3
-							@library['score'].plusOne()
 						else if @answer.p is 'p1'
 							@library["sc#{i}"].currentFrame = 1
 						else
 							@library["sc#{i}"].currentFrame = 2
 					else
 						@library["sc#{i}"].currentFrame = 1
+					
+					if @intento is 0
 						@library['score'].plusOne()
+					@intento = 0
 					@answer.visible = off
 					createjs.Sound.play 'good'
 					@finishEvaluation()
 				else
 					@warning()
+					@intento = 1
 					@answer.returnToPlace()
 			else
 				@answer.returnToPlace()

@@ -402,8 +402,9 @@ class U3A1 extends Oda
 		@answers = @clone @game.answers
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Listen and drag the foods and drinks to the menu.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 18, 0
 		@setDropper().setMenu(1).introEvaluation()
+		@intento = 0
 	setDropper: ->
 		common = new createjs.Container()
 		common.name = 'common'
@@ -451,8 +452,13 @@ class U3A1 extends Oda
 			if match
 				@answer.onStopEvaluation()
 				@evaluateValues()
+				if @intento is 0
+					@library['score'].plusOne()
+				createjs.Sound.play 'good'
+				@intento = 0
 			else
 				@warning()
+				@intento = 1
 				@answer.returnToPlace()
 		else
 			@answer.returnToPlace()
@@ -462,7 +468,6 @@ class U3A1 extends Oda
 			if value.r is off
 				complete = off
 		if complete
-			@library['score'].plusOne()
 			@evaluateAnswer()
 	evaluateAnswer: () =>
 		if @a_index < @answers["m#{@index+1}"].length - 1

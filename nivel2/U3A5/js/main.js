@@ -235,7 +235,8 @@
       this.addToMain(ti);
       this.insertBitmap('btnnext', 'btn', 760, 520, 'tc');
       this.library['btnnext'].visible = false;
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
+      this.intento = 0;
       return this.setCuento(1).introEvaluation();
     };
 
@@ -345,7 +346,6 @@
             if (this.answer.p) {
               if ((_ref1 = this.library["sc" + i].currentFrame) === 1 || _ref1 === 2) {
                 this.library["sc" + i].currentFrame = 3;
-                this.library['score'].plusOne();
               } else if (this.answer.p === 'p1') {
                 this.library["sc" + i].currentFrame = 1;
               } else {
@@ -353,13 +353,17 @@
               }
             } else {
               this.library["sc" + i].currentFrame = 1;
+            }
+            if (this.intento === 0) {
               this.library['score'].plusOne();
             }
+            this.intento = 0;
             this.answer.visible = false;
             createjs.Sound.play('good');
             _results.push(this.finishEvaluation());
           } else {
             this.warning();
+            this.intento = 1;
             _results.push(this.answer.returnToPlace());
           }
         } else {

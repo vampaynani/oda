@@ -321,7 +321,8 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Look at the chart and drag the words to build sentences.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
-      return this.setDropper().setTable(1).setClouds().introEvaluation();
+      this.setDropper().setTable(1).setClouds().introEvaluation();
+      return this.intento = 0;
     };
 
     U3A4.prototype.setDropper = function() {
@@ -517,9 +518,17 @@
       if (!dropped) {
         return this.answer.returnToPlace();
       } else {
+        if (success) {
+          if (this.intento === 0) {
+            this.library.score.plusOne();
+          }
+          this.intento = 0;
+          createjs.Sound.play('good');
+        }
         if (!success) {
           this.answer.returnToPlace();
-          return this.warning();
+          this.warning();
+          return this.intento = 1;
         }
       }
     };
@@ -550,9 +559,17 @@
       if (!dropped) {
         return this.answer.returnToPlace();
       } else {
+        if (success) {
+          if (this.intento === 0) {
+            this.library.score.plusOne();
+          }
+          this.intento = 0;
+          createjs.Sound.play('good');
+        }
         if (!success) {
           this.answer.returnToPlace();
-          return this.warning();
+          this.warning();
+          return this.intento = 1;
         }
       }
     };
@@ -578,6 +595,11 @@
         return this.answer.returnToPlace();
       } else {
         if (success) {
+          if (this.intento === 0) {
+            this.library.score.plusOne();
+          }
+          this.intento = 0;
+          createjs.Sound.play('good');
           for (i = _j = 1; _j <= 6; i = _j += 1) {
             this.library["t" + i + "n2"].endDragListener();
           }
@@ -587,6 +609,7 @@
           return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {
           this.answer.returnToPlace();
+          this.intento = 1;
           return this.warning();
         }
       }
@@ -594,8 +617,6 @@
 
     U3A4.prototype.finishEvaluation = function() {
       this.blink(this.library[this.answers[this.table - 1][this.aindex].a], false);
-      this.library.score.plusOne();
-      createjs.Sound.play('good');
       this.aindex++;
       if (this.aindex < this.answers[this.table - 1].length) {
         this.blink(this.library[this.answers[this.table - 1][this.aindex].a]);

@@ -1069,8 +1069,9 @@
       this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Listen and drag the foods and drinks to the menu.', 40, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
-      return this.setDropper().setMenu(1).introEvaluation();
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 18, 0));
+      this.setDropper().setMenu(1).introEvaluation();
+      return this.intento = 0;
     };
 
     U3A1.prototype.setDropper = function() {
@@ -1156,9 +1157,15 @@
         }
         if (match) {
           this.answer.onStopEvaluation();
-          return this.evaluateValues();
+          this.evaluateValues();
+          if (this.intento === 0) {
+            this.library['score'].plusOne();
+          }
+          createjs.Sound.play('good');
+          return this.intento = 0;
         } else {
           this.warning();
+          this.intento = 1;
           return this.answer.returnToPlace();
         }
       } else {
@@ -1177,7 +1184,6 @@
         }
       }
       if (complete) {
-        this.library['score'].plusOne();
         return this.evaluateAnswer();
       }
     };

@@ -115,6 +115,8 @@ class U3A4 extends Oda
 		@insertInstructions 'instructions', 'Look at the chart and drag the words to build sentences.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
 		@setDropper().setTable(1).setClouds().introEvaluation()
+		@intento = 0
+
 	setDropper: ->
 		@addToMain new WordContainer 'dropper1', '', '#FFF', '#F59743', 170, 541, 188, 30
 		@addToMain new WordContainer 'dropper2', '', '#FFF', '#F59743', 373, 541, 158, 30
@@ -277,9 +279,15 @@ class U3A4 extends Oda
 		if not dropped 
 			@answer.returnToPlace()
 		else
+			if success
+				if @intento is 0
+					@library.score.plusOne()
+				@intento = 0
+				createjs.Sound.play 'good'
 			if not success
 				@answer.returnToPlace()
 				@warning() 
+				@intento = 1
 	evaluateAnswer2: (e) =>
 		@answer = e.target
 		success = off
@@ -300,9 +308,16 @@ class U3A4 extends Oda
 		if not dropped 
 			@answer.returnToPlace()
 		else
+			if success
+				if @intento is 0
+					@library.score.plusOne()
+				@intento = 0
+				createjs.Sound.play 'good'
+
 			if not success
 				@answer.returnToPlace()
 				@warning() 
+				@intento = 1
 	evaluateAnswer3: (e) =>
 		@answer = e.target
 		dropped = off
@@ -316,11 +331,14 @@ class U3A4 extends Oda
 					@answer.y = @answer.pos.y
 					@library.dropper3.changeText @answer.text.text
 					success = on
-
 		if not dropped 
 			@answer.returnToPlace()
 		else
 			if success
+				if @intento is 0
+					@library.score.plusOne()
+				@intento = 0
+				createjs.Sound.play 'good'
 				for i in [1..6] by 1
 					@library["t#{i}n2"].endDragListener()
 				for i in [1..4] by 1
@@ -328,11 +346,11 @@ class U3A4 extends Oda
 				setTimeout @finishEvaluation, 1 * 1000
 			else
 				@answer.returnToPlace()
+				@intento = 1
 				@warning()
 	finishEvaluation: =>
 		@blink @library[@answers[@table - 1][@aindex].a], off
-		@library.score.plusOne()
-		createjs.Sound.play 'good'
+		#@library.score.plusOne()
 		@aindex++
 		if @aindex < @answers[@table - 1].length
 			@blink @library[@answers[@table-1][@aindex].a]
