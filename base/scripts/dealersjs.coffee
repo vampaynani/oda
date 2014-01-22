@@ -444,21 +444,40 @@ class Score extends Component
 		@x = opts.x
 		@y = opts.y
 		@counter = opts.init
-		@block = off
-		front = @createBitmap 'front', opts.aimg, 0, 0
-		back = @createBitmap 'back', opts.bimg, 0, 0
-		@count = @createText 'init', opts.init, '24px Quicksand', opts.acolor, 0, 0, 'center'
-		@total = @createText 'total', opts.total, '24px Quicksand', opts.bcolor, 0, 0, 'center'
-		back.x = front.width / 4 * 2
-		back.y = front.height / 4 * 2
-		@total.x = back.x + back.width / 2
-		@total.y = back.y + back.height / 2 - @total.getMeasuredHeight() / 2
-		@count.x = front.x + front.width / 2
-		@count.y = front.y + front.height / 2 - @count.getMeasuredHeight() / 2
-		@addChild back, front, @count, @total
+		@type = opts.type
+		switch opts.type
+			when 'points'
+				@block = off
+				front = @createBitmap 'front', opts.aimg, 0, 0
+				back = @createBitmap 'back', opts.bimg, 0, 0
+				@count = @createText 'init', opts.init, '24px Quicksand', opts.acolor, 0, 0, 'center'
+				@total = @createText 'total', opts.total, '24px Quicksand', opts.bcolor, 0, 0, 'center'
+				back.x = front.width / 4 * 2
+				back.y = front.height / 4 * 2
+				@total.x = back.x + back.width / 2
+				@total.y = back.y + back.height / 2 - @total.getMeasuredHeight() / 2
+				@count.x = front.x + front.width / 2
+				@count.y = front.y + front.height / 2 - @count.getMeasuredHeight() / 2
+				@addChild back, front, @count, @total
+			when 'clock'
+				front = @createBitmap 'front', opts.aimg, 0, 0
+				@count = @createText 'init', opts.init, '24px Quicksand', opts.acolor, 0, 0, 'center'
+				@count.x = front.x + front.width / 2
+				@count.y = front.y + front.height / 2 - @count.getMeasuredHeight() / 2
+				@addChild front, @count
+	start: ->
+		@interval = setInterval @minusOne, 1000
+	stop: ->
+		clearInterval @interval
 	reset: ->
 		@counter = 0
 		@updateCount @counter
+	minusOne: =>
+		@counter--
+		@updateCount @counter
+		if @counter is 0
+			@stop()
+			@dispatchEvent {type: 'count_complete' }
 	plusOne: ->
 		if @block is on
 			@block = off
@@ -513,132 +532,6 @@ class Instructions extends Component
 			@currentState++
 	window.Instructions = Instructions
 
-class SceneStack extends Component
-	SceneStack.prototype = new createjs.Container()
-	SceneStack::Container_initialize = SceneStack::initialize
-	constructor: (scenes) ->
-		@initialize scenes
-	SceneStack::initialize = (scenes) ->
-		@Container_initialize()
-		@stack = []
-		@currentScene = 0
-		for s in scenes
-			scene = new Scene s
-			scene.visible = false
-			@addChild scene
-			@stack.push scene
-		@setCurrent()
-		TweenLite.from @, 1, {alpha: 0}
-	next: =>
-		@currentScene++
-		if @stack.length > 1 and @currentScene < @stack.length
-			@stack[@currentScene - 1].visible = false
-			@setCurrent()
-			lib.scene.init()
-			TweenLite.from @, 1, {alpha: 0}
-		else
-			TweenLite.to @, 1, {alpha: 0, delay: 1, onComplete: @lastScene}
-	prev: =>
-		@currentScene--
-		if @currentScene >= 0
-			@stack[@currentScene + 1].visible = false
-			@setCurrent()
-			lib.scene.init()
-			TweenLite.from @, 1, {alpha: 0}
-		else
-			@currentScene++
-	lastScene: =>
-		@dispatchEvent {type: 'complete'}
-	setCurrent: ->
-		lib.scene = @stack[@currentScene]
-		lib.scene.visible = true
-	window.SceneStack = SceneStack
-
-class SceneFactory
-	makeChild: (opts) ->
-		switch opts.type
-			#containers
-			when 'drg' then new DragContainer opts
-			when 'img' then new ImageContainer opts
-			when 'lbl' then new LabelContainer opts
-			when 'btn' then new ButtonContainer opts
-			when 'stps' then new StepsContainer opts
-			when 'wcpt' then new WordCompleterContainer opts
-			when 'pcpt' then new PhraseCompleterContainer opts
-			when 'iwcpt' then new ImageWordCompleterContainer opts
-
-			#groups
-			when 'grp' then new ComponentGroup opts
-
-class SceneObserver extends Observer
-	@NEXT_STEP: 'next_step'
-	@COMPLETE: 'scene_complete'
-	window.GameObserver = GameObserver
-
-class Scene extends Component
-	Scene.prototype = new createjs.Container()
-	Scene::Container_initialize = Scene::initialize
-	constructor: (scene) ->
-		@initialize scene
-	Scene::initialize = (scene) ->
-		@Container_initialize()
-		Module.extend @, d2oda.methods
-		@factory = new SceneFactory()
-		@observer = new SceneObserver()
-		@currentStep = 0
-		answers = scene.answers.collection[..]
-		
-		if scene.answers.mixed is true
-			@answers = d2oda.utilities.shuffle answers
-		else
-			@answers = answers
-
-		switch scene.answers.type
-			when 'steps' then @observer.subscribe SceneObserver.NEXT_STEP, @next
-
-		for container in scene.containers
-			c = @factory.makeChild container
-			@add c
-		
-		for group in scene.groups
-			g = @factory.makeChild group
-			lib[group.id] = g
-
-	init: ->
-		@setStep()
-	success: (plusOne = true) ->
-		createjs.Sound.stop()
-		if plusOne then lib.score.plusOne()
-		step = @answers[@currentStep]
-		for target in step
-			if target.name isnt 'snd' and lib[target.name].isComplete() is false
-				return false
-		@nextStep()
-	fail: ->
-		lib.score.enableBlock()
-		lib.mainContainer.warning()
-	next: =>
-		@currentStep++
-		if @currentStep >= @answers.length
-			@delay 1000, ->
-				lib.game.observer.notify GameObserver.NEXT_SCENE
-		else
-			@delay 1000, @setStep
-	setStep: =>
-		step = @answers[@currentStep]
-		for target in step
-			switch target.name
-				when 'snd'
-					@snd = target.opts.id
-					createjs.Sound.stop()
-					createjs.Sound.play target.opts.id
-					false
-				else
-					lib[target.name].update target.opts
-	nextStep: ->
-		console.log 'next step'
-		@observer.notify SceneObserver.NEXT_STEP
-
 class ImageContainer extends Component
 	ImageContainer.prototype = new createjs.Container()
 	ImageContainer::Container_initialize = ImageContainer::initialize
@@ -657,7 +550,6 @@ class ImageContainer extends Component
 		@height = b.height
 		@mouseEnabled = true
 		@add b, false
-	update: (opts) ->
 	isComplete: ->
 		TweenLite.killTweensOf @
 		TweenMax.killTweensOf @
@@ -967,6 +859,83 @@ class StepContainer extends Component
 		else 
 			@update false
 
+class GridContainer extends Component
+	GridContainer.prototype = new createjs.Container()
+	GridContainer::Container_initialize = GridContainer::initialize
+	constructor: (opts) ->
+		@initialize opts
+	GridContainer::initialize = (opts) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		Module.extend @, d2oda.utilities
+		@x = opts.x ? 0
+		@y = opts.y ? 0
+		@columns = opts.columns ? 1
+		@rows = opts.rows ? 1
+		@uwidth = opts.uwidth ? 100
+		@uheight = opts.uheight ? 100
+		@name = opts.name ? opts.id
+		@currentTarget = 0
+		@warnings = 0
+		@targets = new Array()
+		if opts.label
+			font = opts.label.font ? 'Arial 20px'
+			color = opts.label.color ? '#333'
+			align = opts.label.align ? ''
+			x = opts.label.x ? 0
+			y = opts.label.y ? 0
+			@text = @createText 'txt', '', font, color, x, y, align
+			@add @text
+		@cells = if opts.mixed then @shuffle opts.cells else opts.cells
+		switch opts.align
+			when 'evenodd'
+				currentCol = 0
+				currentRow = 0
+				for cell in @cells
+					if currentRow % 2 is 0
+						x = currentCol * @uwidth
+					else
+						x = ((@columns - 1) - currentCol) * @uwidth
+					b = @insertBitmap cell.img, cell.img, x, currentRow * @uheight, 'mc'
+					@targets.push b
+					currentCol++
+					if currentCol is @columns
+						currentCol = 0
+						currentRow++
+	update: (opts) ->
+		cell = @cells[@currentTarget]
+		@success = cell.success
+		@text.text = cell.txt
+		@targets[@currentTarget].complete = false
+		@blink @targets[@currentTarget]
+		TweenLite.from @text, 0.3, {alpha: 0, y: @text.y - 10}
+	fadeOut: (obj) ->
+		TweenMax.killTweensOf obj
+		TweenLite.killTweensOf obj
+		TweenLite.to obj, 0.5, {alpha: 0, y: obj.y - 20}
+	blink: (obj, state=on) ->
+		TweenMax.killTweensOf obj
+		objalpha = 1
+		TweenMax.to obj, 0.5, {alpha: 0.2, repeat: -1, yoyo: true}  if state
+	evaluate: (obj) ->
+		if obj.index is @success
+			@targets[@currentTarget].complete = true
+			@fadeOut @targets[@currentTarget]
+			lib.scene.success false
+			createjs.Sound.play 's/good'
+			@currentTarget++
+		else 
+			@warnings++
+			lib.scene.fail()
+			if @warnings is 3
+				lib.score.stop()
+				lib.game.nextScene()
+	isComplete: ->
+		for target in @targets
+			if target.complete is false
+				return false
+		return true
+
 class PhraseCompleterContainer extends Component
 	PhraseCompleterContainer.prototype = new createjs.Container()
 	PhraseCompleterContainer::Container_initialize = PhraseCompleterContainer::initialize
@@ -1201,3 +1170,134 @@ class ImageCompleterContainer extends Component
 		else
 			obj.afterFail()
 			lib.scene.fail()
+
+class SceneStack extends Component
+	SceneStack.prototype = new createjs.Container()
+	SceneStack::Container_initialize = SceneStack::initialize
+	constructor: (scenes) ->
+		@initialize scenes
+	SceneStack::initialize = (scenes) ->
+		@Container_initialize()
+		@stack = []
+		@currentScene = 0
+		for s in scenes
+			scene = new Scene s
+			scene.visible = false
+			@addChild scene
+			@stack.push scene
+		@setCurrent()
+		TweenLite.from @, 1, {alpha: 0}
+	next: =>
+		@currentScene++
+		if @stack.length > 1 and @currentScene < @stack.length
+			@stack[@currentScene - 1].visible = false
+			@setCurrent()
+			lib.scene.init()
+			TweenLite.from @, 1, {alpha: 0}
+		else
+			TweenLite.to @, 1, {alpha: 0, delay: 1, onComplete: @lastScene}
+	prev: =>
+		@currentScene--
+		if @currentScene >= 0
+			@stack[@currentScene + 1].visible = false
+			@setCurrent()
+			lib.scene.init()
+			TweenLite.from @, 1, {alpha: 0}
+		else
+			@currentScene++
+	lastScene: =>
+		@dispatchEvent {type: 'complete'}
+	setCurrent: ->
+		lib.scene = @stack[@currentScene]
+		lib.scene.visible = true
+	window.SceneStack = SceneStack
+
+class SceneFactory
+	makeChild: (opts) ->
+		switch opts.type
+			#containers
+			when 'drg' then new DragContainer opts
+			when 'grd' then new GridContainer opts
+			when 'img' then new ImageContainer opts
+			when 'lbl' then new LabelContainer opts
+			when 'btn' then new ButtonContainer opts
+			when 'stps' then new StepsContainer opts
+			when 'wcpt' then new WordCompleterContainer opts
+			when 'pcpt' then new PhraseCompleterContainer opts
+			when 'iwcpt' then new ImageWordCompleterContainer opts
+
+			#groups
+			when 'grp' then new ComponentGroup opts
+	window.SceneFactory = SceneFactory
+
+class SceneObserver extends Observer
+	@NEXT_STEP: 'next_step'
+	@COMPLETE: 'scene_complete'
+	window.SceneObserver = SceneObserver
+
+class Scene extends Component
+	Scene.prototype = new createjs.Container()
+	Scene::Container_initialize = Scene::initialize
+	constructor: (scene) ->
+		@initialize scene
+	Scene::initialize = (scene) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		@factory = new SceneFactory()
+		@observer = new SceneObserver()
+		@currentStep = 0
+		answers = scene.answers.collection[..]
+		
+		if scene.answers.mixed is true
+			@answers = d2oda.utilities.shuffle answers
+		else
+			@answers = answers
+
+		switch scene.answers.type
+			when 'steps' then @observer.subscribe SceneObserver.NEXT_STEP, @next
+
+		for container in scene.containers
+			c = @factory.makeChild container
+			@add c
+		
+		for group in scene.groups
+			g = @factory.makeChild group
+			lib[group.id] = g
+	init: ->
+		if lib.score.type is 'clock'
+			lib.score.start()
+			lib.score.addEventListener 'count_complete', lib.game.nextScene
+		@setStep()
+	success: (plusOne = true) ->
+		createjs.Sound.stop()
+		if plusOne then lib.score.plusOne()
+		step = @answers[@currentStep]
+		for target in step
+			if target.name isnt 'snd' and lib[target.name].isComplete() is false
+				return false
+		@nextStep()
+	fail: ->
+		lib.score.enableBlock()
+		lib.mainContainer.warning()
+	next: =>
+		@currentStep++
+		if @currentStep >= @answers.length
+			@delay 1000, ->
+				lib.game.observer.notify GameObserver.NEXT_SCENE
+		else
+			@delay 1000, @setStep
+	setStep: =>
+		step = @answers[@currentStep]
+		for target in step
+			switch target.name
+				when 'snd'
+					@snd = target.opts.id
+					createjs.Sound.stop()
+					createjs.Sound.play target.opts.id
+					false
+				else
+					lib[target.name].update target.opts
+	nextStep: ->
+		console.log 'next step'
+		@observer.notify SceneObserver.NEXT_STEP
+	window.Scene = Scene
