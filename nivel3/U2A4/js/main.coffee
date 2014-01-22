@@ -11,8 +11,6 @@ class U2A4 extends Oda
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
 			{id: 'imageBacon', src:'image_bacon.png'}
 			{id: 'imageButter', src:'image_butter.png'}
 			{id: 'imageCheese', src:'image_cheese.png'}

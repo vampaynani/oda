@@ -31,12 +31,6 @@ NEW ODA
           id: 'repeatbtn',
           src: 'repeat-btn.png'
         }, {
-          id: 'playagain',
-          src: 'play_again.png'
-        }, {
-          id: 'startgame',
-          src: 'start_game.png'
-        }, {
           id: 'imageBacon',
           src: 'image_bacon.png'
         }, {
