@@ -13,6 +13,7 @@
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
+      this.updateCounter = __bind(this.updateCounter, this);
       var manifest, sounds;
       manifest = [
         {
@@ -118,7 +119,7 @@
       U4A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Find the words and drag the cursor.', 40, 100);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 9, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 150, 0));
       return this.setAnimals().setSopa().introEvaluation();
     };
 
@@ -166,6 +167,14 @@
       return this;
     };
 
+    U4A2.prototype.updateCounter = function() {
+      this.time--;
+      this.library['score'].updateTotal(this.time);
+      if (this.time === 0) {
+        return this.finish();
+      }
+    };
+
     U4A2.prototype.introEvaluation = function() {
       U4A2.__super__.introEvaluation.apply(this, arguments);
       TweenLite.from(this.library['header'], 1, {
@@ -186,6 +195,8 @@
 
     U4A2.prototype.initEvaluation = function(e) {
       U4A2.__super__.initEvaluation.apply(this, arguments);
+      this.time = 151;
+      this.timer = setInterval(this.updateCounter, 1000);
       this.library.sopa.visible = true;
       this.library.sopa.cache(-26, -26, 286, 286);
       TweenLite.from(this.library['sopa'], 1, {
@@ -273,13 +284,13 @@
 
     U4A2.prototype.nextEvaluation = function() {
       this.index++;
-      this.library.score.plusOne();
       if (this.index >= this.answers.length) {
         return this.finish();
       }
     };
 
     U4A2.prototype.finish = function() {
+      clearInterval(this.timer);
       this.mainContainer.removeEventListener('mousedown', this.evaluateAnswer);
       TweenLite.to(this.library['sopa'], 1, {
         y: this.library['sopa'].y + 100,

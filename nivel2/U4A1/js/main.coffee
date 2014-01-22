@@ -148,12 +148,13 @@ class U4A1 extends Oda
 		super null, manifest, sounds
 	setStage: ->
 		@round = 0
-		console.log 'ronda '+(@round+1)
+		console.log 'Ronda '+(@round+1)
 		super
 		@youcards = @shuffleNoRepeat @animals, 9
 		@pccards = @shuffleNoRepeat @animals, 9
 		@game.animals = @shuffle @animals
-
+		@game.you = 0
+		@game.pc = 0
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Listen and click on the correct pictures.', 40, 100
 		@insertBitmap 'scoreComputer', 'scoreComputer', 19, 463
@@ -178,7 +179,7 @@ class U4A1 extends Oda
 		@index = 0
 		@round++
 		#console.log 'indice '+@index
-		console.log 'ronda '+(@round+1)
+		console.log 'Ronda '+(@round+1)
 
 		TweenLite.to @library.cartas, 1, {alpha: 0, y: @library.cartas.y - 50}
 		TweenLite.to @library.cartaspc, 1, {alpha: 0, y: @library.cartaspc.y - 50}
@@ -187,7 +188,7 @@ class U4A1 extends Oda
 		@youcards = @shuffleNoRepeat @animals, 9
 		@pccards = @shuffleNoRepeat @animals, 9
 		@game.animals = @shuffle @animals
-		if @round <= 5
+		if @round <= 1
 			@setCardsYou().setCardsPc().introEvaluation()
 		else
 			@finish()

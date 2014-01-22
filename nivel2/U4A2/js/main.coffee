@@ -53,7 +53,7 @@ class U4A2 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Find the words and drag the cursor.', 40, 100
 	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 150, 0
 		@setAnimals().setSopa().introEvaluation()
 	setAnimals:  ->
 		@insertBitmap 'bluewhale', 'bluewhale', 509, 465
@@ -67,6 +67,7 @@ class U4A2 extends Oda
 		@insertBitmap 'polarbear', 'polarbear', 368, 424
 		@
 	setSopa: ->
+
 		j = 0
 		h = @letters.length
 		sopa = new createjs.Container()
@@ -92,6 +93,10 @@ class U4A2 extends Oda
 				j++
 		@addToMain sopa
 		@
+	updateCounter: =>
+		@time--
+		@library['score'].updateTotal @time
+		@finish() if @time is 0
 	introEvaluation: ->
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
@@ -108,6 +113,9 @@ class U4A2 extends Oda
 						], 1, {alpha: 0, delay: 1.5}, 0.1
 	initEvaluation: (e) =>
 		super
+		@time = 151
+		@timer = setInterval @updateCounter, 1000
+
 		@library.sopa.visible = on
 		@library.sopa.cache -26,-26,286,286
 		TweenLite.from @library['sopa'], 1, {alpha :0, y: @library['sopa'].y - 20}
@@ -156,10 +164,12 @@ class U4A2 extends Oda
 		@nextEvaluation()
 	nextEvaluation: =>
 		@index++
-		@library.score.plusOne()
+		#@library.score.plusOne()
 		if @index >= @answers.length
 			@finish()
 	finish: ->
+		clearInterval @timer
+
 		@mainContainer.removeEventListener 'mousedown', @evaluateAnswer
 		TweenLite.to @library['sopa'], 1, {y:@library['sopa'].y + 100, alpha:0}
 		super

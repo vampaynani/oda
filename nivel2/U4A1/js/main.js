@@ -395,11 +395,13 @@
 
     U4A1.prototype.setStage = function() {
       this.round = 0;
-      console.log('ronda ' + (this.round + 1));
+      console.log('Ronda ' + (this.round + 1));
       U4A1.__super__.setStage.apply(this, arguments);
       this.youcards = this.shuffleNoRepeat(this.animals, 9);
       this.pccards = this.shuffleNoRepeat(this.animals, 9);
       this.game.animals = this.shuffle(this.animals);
+      this.game.you = 0;
+      this.game.pc = 0;
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Listen and click on the correct pictures.', 40, 100);
       this.insertBitmap('scoreComputer', 'scoreComputer', 19, 463);
@@ -427,7 +429,7 @@
     U4A1.prototype.nuevaRonda = function() {
       this.index = 0;
       this.round++;
-      console.log('ronda ' + (this.round + 1));
+      console.log('Ronda ' + (this.round + 1));
       TweenLite.to(this.library.cartas, 1, {
         alpha: 0,
         y: this.library.cartas.y - 50
@@ -440,7 +442,7 @@
       this.youcards = this.shuffleNoRepeat(this.animals, 9);
       this.pccards = this.shuffleNoRepeat(this.animals, 9);
       this.game.animals = this.shuffle(this.animals);
-      if (this.round <= 5) {
+      if (this.round <= 1) {
         return this.setCardsYou().setCardsPc().introEvaluation();
       } else {
         return this.finish();
