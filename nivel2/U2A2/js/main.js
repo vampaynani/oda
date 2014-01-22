@@ -234,7 +234,7 @@
         'dishes': 12,
         'plants': 13
       }, 591, 452, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 14, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
       return this.introEvaluation();
     };
 
@@ -283,6 +283,7 @@
         });
         selection[0].a = true;
         createjs.Sound.play('good');
+        this.library['score'].plusOne();
         return setTimeout(this.finishEvaluation, 1 * 1000);
       } else {
         TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
@@ -297,7 +298,6 @@
     };
 
     U2A2.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 0,
         scaleX: 0.3,

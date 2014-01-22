@@ -67,8 +67,8 @@ class U2A5 extends Oda
 					{idx:5, t:'presents', p:'p1'}
 					{idx:6, t:'dinner'}
 					{idx:8, t:"Nick", p:'p1'}
-					{idx:8, t:"lights", p:'p1'}
-					{idx:5, t:"table", p:'p1'}
+					{idx:8, t:"lights", p:'p2'}
+					{idx:5, t:"table", p:'p2'}
 				]
 				positions:[
 					{x:'103', y:'170'}
@@ -89,7 +89,8 @@ class U2A5 extends Oda
 		@addToMain ti
 		@insertBitmap 'btnnext', 'btn', 760, 589, 'tc'
 		@library['btnnext'].visible = off
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@intento = 0
 		@setCuento(1).introEvaluation()
 	setCuento: (scene) ->
 		cuento = new createjs.Container()
@@ -157,19 +158,21 @@ class U2A5 extends Oda
 					if @answer.p
 						if @library["sc#{i}"].currentFrame in [1,2]
 							@library["sc#{i}"].currentFrame = 3
-							@library['score'].plusOne()
 						else if @answer.p is 'p1'
 							@library["sc#{i}"].currentFrame = 1
 						else
 							@library["sc#{i}"].currentFrame = 2
 					else
 						@library["sc#{i}"].currentFrame = 1
-						@library['score'].plusOne()
 					@answer.visible = off
+					if @intento is 0
+						@library['score'].plusOne()
 					createjs.Sound.play 'good'
+					@intento = 0
 					@finishEvaluation()
 				else
 					@warning()
+					@intento = 1
 					@answer.returnToPlace()
 			else
 				@answer.returnToPlace()

@@ -106,6 +106,7 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Read, look and drag the phrases to complete the sentences.', 30, 100);
       this.insertBitmap('casa', 'casa', 84, 137);
+      this.intento = 0;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 12, 0));
       return this.setDropper().setClouds().introEvaluation();
     };
@@ -205,10 +206,15 @@
           this.answer.x = this.answer.pos.x;
           this.answer.y = this.answer.pos.y;
           this.library['dropper'].changeText(this.answer.text.text);
-          return setTimeout(this.finishEvaluation, 1 * 1000);
+          setTimeout(this.finishEvaluation, 1 * 1000);
+          return createjs.Sound.play('good');
         } else {
           this.answer.returnToPlace();
-          return this.warning();
+          this.intento++;
+          this.warning();
+          if (this.intento === 2) {
+            return setTimeout(this.finishEvaluation, 1 * 1000);
+          }
         }
       } else {
         return this.answer.returnToPlace();
@@ -216,8 +222,10 @@
     };
 
     U2A1.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
-      createjs.Sound.play('good');
+      if (this.intento === 0) {
+        this.library['score'].plusOne();
+      }
+      this.intento = 0;
       return TweenLite.to(this.library['dropper'], 0.5, {
         alpha: 0,
         y: stageSize.h,

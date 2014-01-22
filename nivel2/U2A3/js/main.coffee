@@ -276,11 +276,12 @@ class U2A3 extends Oda
 			@wordcompleter.changeText @pieces[@answer.index].label
 			@stopListeners()
 			createjs.Sound.play 'good'
+			@library['score'].plusOne()
 			setTimeout @finishEvaluation, 1 * 1000
 		else
+			setTimeout @finishEvaluation, 1 * 1000
 			@warning()
 	finishEvaluation: =>
-		@library['score'].plusOne()
 		TweenLite.to @library['dropper'], 0.5, {alpha: 0, y: stageSize.h, ease:Quart.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++

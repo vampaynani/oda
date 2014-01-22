@@ -37,6 +37,7 @@ class U2A1 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Read, look and drag the phrases to complete the sentences.', 30, 100
 		@insertBitmap 'casa', 'casa', 84, 137
+		@intento = 0
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
 		@setDropper().setClouds().introEvaluation()
 	setDropper: ->
@@ -103,14 +104,20 @@ class U2A1 extends Oda
 				@answer.y = @answer.pos.y
 				@library['dropper'].changeText @answer.text.text
 				setTimeout @finishEvaluation, 1 * 1000
+				createjs.Sound.play 'good'
+
 			else
 				@answer.returnToPlace()	
+				@intento++
 				@warning()
+				if @intento is 2
+					setTimeout @finishEvaluation, 1 * 1000
 		else
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		@library['score'].plusOne()
-		createjs.Sound.play 'good'
+		if @intento is 0
+			@library['score'].plusOne()
+		@intento = 0
 		TweenLite.to @library['dropper'], 0.5, {alpha: 0, y: stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++

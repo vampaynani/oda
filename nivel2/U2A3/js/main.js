@@ -759,14 +759,15 @@
         this.wordcompleter.changeText(this.pieces[this.answer.index].label);
         this.stopListeners();
         createjs.Sound.play('good');
+        this.library['score'].plusOne();
         return setTimeout(this.finishEvaluation, 1 * 1000);
       } else {
+        setTimeout(this.finishEvaluation, 1 * 1000);
         return this.warning();
       }
     };
 
     U2A3.prototype.finishEvaluation = function() {
-      this.library['score'].plusOne();
       return TweenLite.to(this.library['dropper'], 0.5, {
         alpha: 0,
         y: stageSize.h,
