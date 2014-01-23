@@ -15,7 +15,6 @@ class U8A1 extends Oda
 			{id:'game2btn', src:'game2_btn.png'}
 			{id:'game3btn', src:'game3_btn.png'}
 
-
 			{id:'game1Box', src:'game1/box.png'}
 			{id:'game1Chopsticks', src:'game1/chopsticks.png'}
 			{id:'game1Chopsticks2', src:'game1/chopsticks2.png'}
@@ -66,8 +65,6 @@ class U8A1 extends Oda
 			{id:'game3Thirtytwodollarsandten.cents', src:'game3/thirty-two-dollars-and-ten-cents.png'}
 			{id:'game3Twentyfivedollarsandtencent', src:'game3/twenty-five-dollars-and-ten-cent.png'}
 			{id:'game3Twentyonedollarsandfiftycents', src:'game3/twenty-one-dollars-and-fifty-cents.png'}
-
-
 		]
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
@@ -94,44 +91,42 @@ class U8A1 extends Oda
 				{id:'game1Necklace2', i:8}
 			]
 			[
-				{id:'game2butterflies', i:1}
-				{id:'game2easter', i:2}
-				{id:'game2flowers', i:3}
-				{id:'game2leaves', i:4}
-				{id:'game2scooter', i:5}
-				{id:'game2sledding', i:6}
-				{id:'game2snowman', i:7}
-				{id:'game2swimming', i:8}
-				{id:'game2ichasebutterflies', i:1}
-				{id:'game2icelebrateeaster', i:2}
-				{id:'game2ipickflowers', i:3}
-				{id:'game2Iraketheleaves', i:4}
-				{id:'game2irideascooter', i:5}
-				{id:'game2igosledding', i:6}
-				{id:'game2ibuildasnowman', i:7}
-				{id:'game2igoswimming', i:8}
+				{id:'game2Australia', i:1}
+				{id:'game2Brazil', i:2}
+				{id:'game2Canada', i:3}
+				{id:'game2China', i:4}
+				{id:'game2France', i:5}
+				{id:'game2Germany', i:6}
+				{id:'game2India', i:7}
+				{id:'game2Mexico', i:8}
+				{id:'game2Australia2', i:1}
+				{id:'game2Brazil2', i:2}
+				{id:'game2Canada2', i:3}
+				{id:'game2China2', i:4}
+				{id:'game2France2', i:5}
+				{id:'game2Germany2', i:6}
+				{id:'game2India2', i:7}
+				{id:'game2Mexico2', i:8}
 			]
 			[
-				{id:'game3cold', i:1}
-				{id:'game3hot', i:2}
-				{id:'game3hungry', i:3}
-				{id:'game3mourn', i:4}
-				{id:'game3nap', i:5}
-				{id:'game3sick', i:6}
-				{id:'game3thirsty', i:7}
-				{id:'game3tired', i:8}
-				{id:'game3shescold', i:1}
-				{id:'game3sheshot', i:2}
-				{id:'game3shehungry', i:3}
-				{id:'game3shessad', i:4}
-				{id:'game3shestakinganap', i:5}
-				{id:'game3shessick', i:6}
-				{id:'game3shesthirsty', i:7}
-				{id:'game3shestired', i:8}
+				{id:'game3035', i:1}
+				{id:'game3050', i:2}
+				{id:'game3n1160', i:3}
+				{id:'game3n1340', i:4}
+				{id:'game3n1600', i:5}
+				{id:'game3n2150', i:6}
+				{id:'game3n2510', i:7}
+				{id:'game3n3210', i:8}
+				{id:'game3Evelendollarsandsixtycents', i:3}
+				{id:'game3Fidtycents', i:2}
+				{id:'game3Sixteendollars', i:5}
+				{id:'game3Thirteendollarsandfortycents', i:4}
+				{id:'game3Thirtyfivecents', i:1}
+				{id:'game3Thirtytwodollarsandten', i:8}
+				{id:'game3Twentyfivedollarsandtencent', i:7}
+				{id:'game3Twentyonedollarsandfiftycents', i:6}
 			]
 		]
-
-
 		super null, manifest, sounds
 	setStage: ->
 		super
@@ -142,6 +137,7 @@ class U8A1 extends Oda
 		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
 		@addToMain b1, b2, b3
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 100, 0
+		@clicked = 0
 		@introEvaluation()
 	setCards: (e) =>
 		@time = 100
@@ -163,16 +159,17 @@ class U8A1 extends Oda
 				c.scaleX = c.scaleY = 0.6
 				c.index = @cards[j].i
 				c.addEventListener 'click', @evaluateAnswer
-				juego.addChild b, c
-				@addToLibrary b, c
+				juego.addChild  c, b
+				@addToLibrary c, b
 				j++
 		@addToMain juego
 		TweenLite.from juego, 0.5, {alpha:0, y:juego.y - 20}
 		@
 	updateCounter: =>
-		@time--
-		@library['score'].updateTotal @time
-		@finish() if @time is 0
+		if @clicked is 1
+			@time--
+			@library['score'].updateTotal @time
+			@finish() if @time is 0
 	introEvaluation: ->
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
@@ -194,6 +191,7 @@ class U8A1 extends Oda
 		@library.game2btn.removeEventListener 'click', @setCards
 		@library.game3btn.removeEventListener 'click', @setCards
 	evaluateAnswer: (e) =>
+		@clicked = 1
 		if @selected.length < 2
 			@selected.push e.target
 			TweenLite.to e.target, 0.5, {alpha:0}

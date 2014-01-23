@@ -102,13 +102,13 @@
           src: 'sounds/wrong.mp3',
           id: 'wrong'
         }, {
-          src: 'sounds/TU2_U5_A5_instructions.mp3',
+          src: 'sounds/TU2_U8_A5_instructions.mp3',
           id: 'instructions'
         }, {
-          src: 'sounds/TU2_U5_A5_scene1.mp3',
+          src: 'sounds/TU2_U8_A5_scene1.mp3',
           id: 'scene1'
         }, {
-          src: 'sounds/TU2_U5_A5_scene2.mp3',
+          src: 'sounds/TU2_U8_A5_scene2.mp3',
           id: 'scene2'
         }
       ];

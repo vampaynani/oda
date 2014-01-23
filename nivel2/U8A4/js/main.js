@@ -10,7 +10,7 @@
 
     function U8A4() {
       this.finish = __bind(this.finish, this);
-      this.repeatSound = __bind(this.repeatSound, this);
+      this.playSound = __bind(this.playSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -298,7 +298,7 @@
       }
     };
 
-    U8A4.prototype.repeatSound = function() {
+    U8A4.prototype.playSound = function() {
       createjs.Sound.stop();
       return createjs.Sound.play(this.steps[this.index].sound);
     };

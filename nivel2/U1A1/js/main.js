@@ -345,11 +345,13 @@
     };
 
     U1A1.prototype.finishEvaluation = function() {
+      var song;
       if (this.intento === 0) {
         this.library['score'].plusOne();
       }
-      this.intento = 0;
-      return this.clearEvaluation();
+      song = createjs.Sound.play(this.answers[this.index].sound);
+      song.addEventListener('complete', this.clearEvaluation);
+      return this.intento = 0;
     };
 
     U1A1.prototype.clearEvaluation = function(e) {

@@ -267,103 +267,103 @@
           }
         ], [
           {
-            id: 'game2butterflies',
+            id: 'game2Australia',
             i: 1
           }, {
-            id: 'game2easter',
+            id: 'game2Brazil',
             i: 2
           }, {
-            id: 'game2flowers',
+            id: 'game2Canada',
             i: 3
           }, {
-            id: 'game2leaves',
+            id: 'game2China',
             i: 4
           }, {
-            id: 'game2scooter',
+            id: 'game2France',
             i: 5
           }, {
-            id: 'game2sledding',
+            id: 'game2Germany',
             i: 6
           }, {
-            id: 'game2snowman',
+            id: 'game2India',
             i: 7
           }, {
-            id: 'game2swimming',
+            id: 'game2Mexico',
             i: 8
           }, {
-            id: 'game2ichasebutterflies',
+            id: 'game2Australia2',
             i: 1
           }, {
-            id: 'game2icelebrateeaster',
+            id: 'game2Brazil2',
             i: 2
           }, {
-            id: 'game2ipickflowers',
+            id: 'game2Canada2',
             i: 3
           }, {
-            id: 'game2Iraketheleaves',
+            id: 'game2China2',
             i: 4
           }, {
-            id: 'game2irideascooter',
+            id: 'game2France2',
             i: 5
           }, {
-            id: 'game2igosledding',
+            id: 'game2Germany2',
             i: 6
           }, {
-            id: 'game2ibuildasnowman',
+            id: 'game2India2',
             i: 7
           }, {
-            id: 'game2igoswimming',
+            id: 'game2Mexico2',
             i: 8
           }
         ], [
           {
-            id: 'game3cold',
+            id: 'game3035',
             i: 1
           }, {
-            id: 'game3hot',
+            id: 'game3050',
             i: 2
           }, {
-            id: 'game3hungry',
+            id: 'game3n1160',
             i: 3
           }, {
-            id: 'game3mourn',
+            id: 'game3n1340',
             i: 4
           }, {
-            id: 'game3nap',
+            id: 'game3n1600',
             i: 5
           }, {
-            id: 'game3sick',
+            id: 'game3n2150',
             i: 6
           }, {
-            id: 'game3thirsty',
+            id: 'game3n2510',
             i: 7
           }, {
-            id: 'game3tired',
+            id: 'game3n3210',
             i: 8
           }, {
-            id: 'game3shescold',
+            id: 'game3Evelendollarsandsixtycents',
+            i: 3
+          }, {
+            id: 'game3Fidtycents',
+            i: 2
+          }, {
+            id: 'game3Sixteendollars',
+            i: 5
+          }, {
+            id: 'game3Thirteendollarsandfortycents',
+            i: 4
+          }, {
+            id: 'game3Thirtyfivecents',
             i: 1
           }, {
-            id: 'game3sheshot',
-            i: 2
+            id: 'game3Thirtytwodollarsandten',
+            i: 8
           }, {
-            id: 'game3shehungry',
-            i: 3
-          }, {
-            id: 'game3shessad',
-            i: 4
-          }, {
-            id: 'game3shestakinganap',
-            i: 5
-          }, {
-            id: 'game3shessick',
-            i: 6
-          }, {
-            id: 'game3shesthirsty',
+            id: 'game3Twentyfivedollarsandtencent',
             i: 7
           }, {
-            id: 'game3shestired',
-            i: 8
+            id: 'game3Twentyonedollarsandfiftycents',
+            i: 6
           }
         ]
       ];
@@ -380,6 +380,7 @@
       b3 = new Button('game3btn', this.preload.getResult('game3btn'), 3, 753, 550);
       this.addToMain(b1, b2, b3);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 100, 0));
+      this.clicked = 0;
       return this.introEvaluation();
     };
 
@@ -404,8 +405,8 @@
           c.scaleX = c.scaleY = 0.6;
           c.index = this.cards[j].i;
           c.addEventListener('click', this.evaluateAnswer);
-          juego.addChild(b, c);
-          this.addToLibrary(b, c);
+          juego.addChild(c, b);
+          this.addToLibrary(c, b);
           j++;
         }
       }
@@ -418,10 +419,12 @@
     };
 
     U8A1.prototype.updateCounter = function() {
-      this.time--;
-      this.library['score'].updateTotal(this.time);
-      if (this.time === 0) {
-        return this.finish();
+      if (this.clicked === 1) {
+        this.time--;
+        this.library['score'].updateTotal(this.time);
+        if (this.time === 0) {
+          return this.finish();
+        }
       }
     };
 
@@ -463,6 +466,7 @@
     };
 
     U8A1.prototype.evaluateAnswer = function(e) {
+      this.clicked = 1;
       if (this.selected.length < 2) {
         this.selected.push(e.target);
         TweenLite.to(e.target, 0.5, {

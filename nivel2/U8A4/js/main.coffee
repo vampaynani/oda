@@ -126,7 +126,7 @@ class U8A4 extends Oda
 		@index++
 		if @index < @steps.length
 			createjs.Sound.play @steps[@index].sound
-	repeatSound: =>
+	playSound: =>
 		createjs.Sound.stop()
 		createjs.Sound.play @steps[@index].sound
 	finish: =>
