@@ -66,7 +66,7 @@
           src: 'place_library.png'
         }, {
           id: 'museum',
-          src: 'place_museum.png'
+          src: 'place_museum2.png'
         }, {
           id: 'pet',
           src: 'place_pet.png'
@@ -151,13 +151,13 @@
           }, {
             i: 'museum',
             x: 309,
-            y: 105,
-            w: 180,
+            y: 93,
+            w: 95,
             h: 95
           }, {
             i: 'school',
             x: 150,
-            y: -42,
+            y: -52,
             w: 95,
             h: 95
           }
@@ -177,7 +177,7 @@
           }, {
             i: 'pet',
             x: 400,
-            y: -37,
+            y: -30,
             w: 95,
             h: 95
           }
@@ -192,6 +192,7 @@
       this.insertInstructions('instructions', 'Listen and drag the buildings to the correct place on the map.', 40, 100);
       this.insertBitmap('btnRepeat', 'repeatbtn', stageSize.w / 2, 570, 'mc');
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 9, 0));
+      this.intento = 0;
       return this.setMap(1).introEvaluation();
     };
 
@@ -277,16 +278,21 @@
           x: this.drop.x,
           y: this.drop.y
         });
-        return this.finishEvaluation();
+        this.finishEvaluation();
+        return createjs.Sound.play('good');
       } else {
         this.warning();
+        this.intento = 1;
         return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY);
       }
     };
 
     U6A2.prototype.finishEvaluation = function() {
       this.mindex++;
-      this.library.score.plusOne();
+      if (this.intento === 0) {
+        this.library.score.plusOne();
+      }
+      this.intento = 0;
       createjs.Sound.stop();
       if (this.mindex < this.current.length) {
         return createjs.Sound.play("s" + this.current[this.mindex].i);

@@ -177,6 +177,7 @@ class U6A6 extends Oda
 		@insertBitmap 'numberpolice', 'numberpolice', '670', '227'
 		@insertBitmap 'numbervet', 'numbervet', '582', '251'
 		@insertBitmap 'numberfirefighter', 'numberfirefighter', '618', '342'
+		@intento = 0
 
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
 		@createHelp()
@@ -326,6 +327,7 @@ class U6A6 extends Oda
 				@library.crosswords.cache -23, -23, 360, 335
 			else
 				@warning()
+				@intento++
 	evaluate: (obj) ->
 		ready = true
 		if not @answers[obj].r
@@ -335,7 +337,9 @@ class U6A6 extends Oda
 			if ready
 				@robj = obj
 				@answers[obj].r = on
-				@library['score'].plusOne()
+				if @intento in [0, 1] 	
+					@library['score'].plusOne()
+				@intento = 0
 				createjs.Sound.play 'good'
 				@library.helpertxt.text = @helps[8]
 

@@ -17,7 +17,7 @@ class U6A2 extends Oda
 			{id: 'cafe', src:'place_cafe.png'}
 			{id: 'hospital', src:'place_hospital.png'}
 			{id: 'library', src:'place_library.png'}
-			{id: 'museum', src:'place_museum.png'}
+			{id: 'museum', src:'place_museum2.png'}
 			{id: 'pet', src:'place_pet.png'}
 			{id: 'restaurant', src:'place_restaurant.png'}
 			{id: 'school', src:'place_school.png'}
@@ -46,13 +46,13 @@ class U6A2 extends Oda
 				]
 				[
 					{i:'bus', x:58, y:92, w:95, h:95}
-					{i:'museum', x:309, y:105, w:180, h:95}
-					{i:'school', x:150, y:-42, w:95, h:95}
+					{i:'museum', x:309, y:93, w:95, h:95}
+					{i:'school', x:150, y:-52, w:95, h:95}
 				]
 				[
 					{i:'library', x:-42, y:102, w:95, h:95}
 					{i:'cafe', x:65, y:-37, w:95, h:95}
-					{i:'pet', x:400, y:-37, w:95, h:95}
+					{i:'pet', x:400, y:-30, w:95, h:95}
 				]
 			]
 		super null, manifest, sounds
@@ -62,6 +62,7 @@ class U6A2 extends Oda
 		@insertInstructions 'instructions', 'Listen and drag the buildings to the correct place on the map.', 40, 100
 		@insertBitmap 'btnRepeat', 'repeatbtn',  stageSize.w / 2, 570, 'mc'
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
+		@intento = 0
 		@setMap( 1 ).introEvaluation()
 	setMap: (map) ->
 		mapa = new createjs.Container()
@@ -117,12 +118,17 @@ class U6A2 extends Oda
 			@answer.endDragListener()
 			@answer.putInPlace {x: @drop.x, y:@drop.y}
 			@finishEvaluation()
+			createjs.Sound.play 'good'
+
 		else
 			@warning()
+			@intento = 1
 			@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY
 	finishEvaluation: =>
 		@mindex++
-		@library.score.plusOne()
+		if @intento is 0
+			@library.score.plusOne()
+		@intento = 0
 		createjs.Sound.stop()
 		if @mindex < @current.length
 			createjs.Sound.play "s#{@current[@mindex].i}"

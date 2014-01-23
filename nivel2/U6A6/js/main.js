@@ -525,6 +525,7 @@
       this.insertBitmap('numberpolice', 'numberpolice', '670', '227');
       this.insertBitmap('numbervet', 'numbervet', '582', '251');
       this.insertBitmap('numberfirefighter', 'numberfirefighter', '618', '342');
+      this.intento = 0;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
       this.createHelp();
       this.createDroppers();
@@ -727,13 +728,14 @@
           this.evaluate('firefighter');
           return this.library.crosswords.cache(-23, -23, 360, 335);
         } else {
-          return this.warning();
+          this.warning();
+          return this.intento++;
         }
       }
     };
 
     U6A6.prototype.evaluate = function(obj) {
-      var box, ready, _i, _len, _ref;
+      var box, ready, _i, _len, _ref, _ref1;
       ready = true;
       if (!this.answers[obj].r) {
         _ref = this.answers[obj].c;
@@ -746,7 +748,10 @@
         if (ready) {
           this.robj = obj;
           this.answers[obj].r = true;
-          this.library['score'].plusOne();
+          if ((_ref1 = this.intento) === 0 || _ref1 === 1) {
+            this.library['score'].plusOne();
+          }
+          this.intento = 0;
           createjs.Sound.play('good');
           this.library.helpertxt.text = this.helps[8];
           return this.finishEvaluation();
