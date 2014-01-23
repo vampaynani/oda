@@ -137,6 +137,8 @@ class U5A6 extends Oda
 		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
 		@addToMain b1, b2, b3
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 100, 0
+		@clicked = 0
+
 		@introEvaluation()
 	setCards: (e) =>
 		@time = 100
@@ -164,9 +166,10 @@ class U5A6 extends Oda
 		TweenLite.from juego, 0.5, {alpha:0, y:juego.y - 20}
 		@
 	updateCounter: =>
-		@time--
-		@library['score'].updateTotal @time
-		@finish() if @time is 0
+		if @clicked is 1
+			@time--
+			@library['score'].updateTotal @time
+			@finish() if @time is 0
 	introEvaluation: ->
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
@@ -188,6 +191,7 @@ class U5A6 extends Oda
 		@library.game2btn.removeEventListener 'click', @setCards
 		@library.game3btn.removeEventListener 'click', @setCards
 	evaluateAnswer: (e) =>
+		@clicked = 1
 		if @selected.length < 2
 			@selected.push e.target
 			TweenLite.to e.target, 0.5, {alpha:0}

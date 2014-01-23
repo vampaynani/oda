@@ -380,6 +380,7 @@
       b3 = new Button('game3btn', this.preload.getResult('game3btn'), 3, 753, 550);
       this.addToMain(b1, b2, b3);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 100, 0));
+      this.clicked = 0;
       return this.introEvaluation();
     };
 
@@ -417,10 +418,12 @@
     };
 
     U5A6.prototype.updateCounter = function() {
-      this.time--;
-      this.library['score'].updateTotal(this.time);
-      if (this.time === 0) {
-        return this.finish();
+      if (this.clicked === 1) {
+        this.time--;
+        this.library['score'].updateTotal(this.time);
+        if (this.time === 0) {
+          return this.finish();
+        }
       }
     };
 
@@ -462,6 +465,7 @@
     };
 
     U5A6.prototype.evaluateAnswer = function(e) {
+      this.clicked = 1;
       if (this.selected.length < 2) {
         this.selected.push(e.target);
         TweenLite.to(e.target, 0.5, {
