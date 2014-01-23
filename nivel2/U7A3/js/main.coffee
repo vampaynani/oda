@@ -200,15 +200,16 @@ class U7A3 extends Oda
 				if @intento is 0
 					@library['score'].plusOne()
 				@finishEvaluation()
-				createjs.Sound.play 'good'
 				@intento = 0
+
+				createjs.Sound.play 'good'
 			else
 				@answer.returnToPlace 1, 0.43, 0.43
 				@intento = 1
 				@warning()
-				console.log 'fail'
 		else
 			@answer.returnToPlace 1, 0.43, 0.43
+			@intento = 1
 			@warning()
 	finishEvaluation: =>
 		TweenLite.to @library.label, 0.5, {alpha: 0, y: @library.label.y + 10, ease: Quart.easeOut, onComplete:@nextEvaluation}

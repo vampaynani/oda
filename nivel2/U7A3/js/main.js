@@ -411,16 +411,16 @@
             this.library['score'].plusOne();
           }
           this.finishEvaluation();
-          createjs.Sound.play('good');
-          return this.intento = 0;
+          this.intento = 0;
+          return createjs.Sound.play('good');
         } else {
           this.answer.returnToPlace(1, 0.43, 0.43);
           this.intento = 1;
-          this.warning();
-          return console.log('fail');
+          return this.warning();
         }
       } else {
         this.answer.returnToPlace(1, 0.43, 0.43);
+        this.intento = 1;
         return this.warning();
       }
     };
