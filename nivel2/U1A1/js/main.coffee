@@ -191,8 +191,9 @@ class U1A1 extends Oda
 	finishEvaluation: =>
 		if @intento is 0
 			@library['score'].plusOne()
+		song = createjs.Sound.play @answers[@index].sound
+		song.addEventListener 'complete', @clearEvaluation
 		@intento = 0
-		@clearEvaluation()
 	clearEvaluation: (e) =>
 		for i in [1..2] by 1
 			@library['p'+i+'n1'].visible = true
