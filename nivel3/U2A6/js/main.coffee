@@ -75,27 +75,27 @@ class U2A6 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn1', x: 40, y: 260, index: 'islot', target: 'grd1'
+							type: 'btn', id: 'btn1', x: 40, y: 260, index: 'islot', target: 'grd1', eval: 'click_03'
 							states: [{img: {name: 'btnIsLot', x: 0, y: 0}}]
 						}
 						{
-							type: 'btn', id: 'btn2', x: 40, y: 300, index: 'islittle', target: 'grd1'
+							type: 'btn', id: 'btn2', x: 40, y: 300, index: 'islittle', target: 'grd1', eval: 'click_03'
 							states: [{img: {name: 'btnIsLittle', x: 0, y: 0}}]
 						}
 						{
-							type: 'btn', id: 'btn3', x: 40, y: 340, index: 'isnone', target: 'grd1'
+							type: 'btn', id: 'btn3', x: 40, y: 340, index: 'isnone', target: 'grd1', eval: 'click_03'
 							states: [{img: {name: 'btnIsNone', x: 0, y: 0}}]
 						}
 						{
-							type: 'btn', id: 'btn4', x: 40, y: 380, index: 'arelot', target: 'grd1'
+							type: 'btn', id: 'btn4', x: 40, y: 380, index: 'arelot', target: 'grd1', eval: 'click_03'
 							states: [{img: {name: 'btnAreLot', x: 0, y: 0}}]
 						}
 						{
-							type: 'btn', id: 'btn5', x: 40, y: 420, index: 'arefew', target: 'grd1'
+							type: 'btn', id: 'btn5', x: 40, y: 420, index: 'arefew', target: 'grd1', eval: 'click_03'
 							states: [{img: {name: 'btnAreFew', x: 0, y: 0}}]
 						}
 						{
-							type: 'btn', id: 'btn6', x: 40, y: 460, index: 'arenone', target: 'grd1'
+							type: 'btn', id: 'btn6', x: 40, y: 460, index: 'arenone', target: 'grd1', eval: 'click_03'
 							states: [{img: {name: 'btnAreNone', x: 0, y: 0}}]
 						}
 					]

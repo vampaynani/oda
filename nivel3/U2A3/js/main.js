@@ -221,6 +221,7 @@ NEW ODA
                 y: 404,
                 index: 'blueberry',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -246,6 +247,7 @@ NEW ODA
                 y: 218,
                 index: 'butter',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -271,6 +273,7 @@ NEW ODA
                 y: 314,
                 index: 'carrots',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -296,6 +299,7 @@ NEW ODA
                 y: 176,
                 index: 'chilis',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -321,6 +325,7 @@ NEW ODA
                 y: 253,
                 index: 'cream',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -346,6 +351,7 @@ NEW ODA
                 y: 315,
                 index: 'eggs',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -371,6 +377,7 @@ NEW ODA
                 y: 320,
                 index: 'mushrooms',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -396,6 +403,7 @@ NEW ODA
                 y: 406,
                 index: 'peach',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -421,6 +429,7 @@ NEW ODA
                 y: 313,
                 index: 'peppers',
                 target: 'lbl1',
+                "eval": 'click_02',
                 states: [
                   {
                     img: {
@@ -553,6 +562,7 @@ NEW ODA
                 index: 'M',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -564,6 +574,7 @@ NEW ODA
                 index: 'R',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -575,6 +586,7 @@ NEW ODA
                 index: 'S',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -586,6 +598,7 @@ NEW ODA
                 index: 'M',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -597,6 +610,7 @@ NEW ODA
                 index: 'S',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -608,6 +622,7 @@ NEW ODA
                 index: 'H',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -619,6 +634,7 @@ NEW ODA
                 index: 'O',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -630,6 +646,7 @@ NEW ODA
                 index: 'U',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }, {
@@ -641,6 +658,7 @@ NEW ODA
                 index: 'O',
                 align: 'mc',
                 target: 'iwcpt1',
+                "eval": 'drop_02',
                 afterSuccess: 'hide',
                 afterFail: 'return'
               }

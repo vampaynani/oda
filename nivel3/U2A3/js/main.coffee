@@ -56,7 +56,7 @@ class U2A3 extends Oda
 						{type: 'img', id: 'propbg', name: 'propbg', x: 426, y: 308, align: 'mc'}
 						{type: 'lbl', id: 'lbl1', x: 415, y: 530, font: '20px Quicksand', color: '#333', align: 'center'}
 						{
-							type: 'btn', id: 'btn1', x: 521, y: 404, index: 'blueberry', target: 'lbl1'
+							type: 'btn', id: 'btn1', x: 521, y: 404, index: 'blueberry', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'priceblueberryJam', x: 0, y: 0, align: 'mc'}
@@ -68,7 +68,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn2', x: 350, y: 218, index: 'butter', target: 'lbl1'
+							type: 'btn', id: 'btn2', x: 350, y: 218, index: 'butter', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'pricebutter', x: 0, y: 0, align: 'mc'}
@@ -80,7 +80,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn3', x: 584, y: 314, index: 'carrots', target: 'lbl1'
+							type: 'btn', id: 'btn3', x: 584, y: 314, index: 'carrots', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'pricecarrots', x: 0, y: 0, align: 'mc'}
@@ -92,7 +92,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn4', x: 580, y: 176, index: 'chilis', target: 'lbl1'
+							type: 'btn', id: 'btn4', x: 580, y: 176, index: 'chilis', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'pricechilis', x: 0, y: 0, align: 'mc'}
@@ -104,7 +104,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn5', x: 416, y: 253, index: 'cream', target: 'lbl1'
+							type: 'btn', id: 'btn5', x: 416, y: 253, index: 'cream', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'pricecream', x: 0, y: 0, align: 'mc'}
@@ -116,7 +116,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn6', x: 322, y: 315, index: 'eggs', target: 'lbl1'
+							type: 'btn', id: 'btn6', x: 322, y: 315, index: 'eggs', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'priceeggs', x: 0, y: 0, align: 'mc'}
@@ -128,7 +128,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn7', x: 397, y: 320, index: 'mushrooms', target: 'lbl1'
+							type: 'btn', id: 'btn7', x: 397, y: 320, index: 'mushrooms', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'pricemushrooms', x: 0, y: 0, align: 'mc'}
@@ -140,7 +140,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn8', x: 347, y: 406, index: 'peach', target: 'lbl1'
+							type: 'btn', id: 'btn8', x: 347, y: 406, index: 'peach', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'pricepeachJam', x: 0, y: 0, align: 'mc'}
@@ -152,7 +152,7 @@ class U2A3 extends Oda
 							]
 						}
 						{
-							type: 'btn', id: 'btn9', x: 477, y: 313, index: 'peppers', target: 'lbl1'
+							type: 'btn', id: 'btn9', x: 477, y: 313, index: 'peppers', target: 'lbl1', eval: 'click_02'
 							states: [
 								{
 									img: {name: 'pricepeppers', x: 0, y: 0, align: 'mc'}
@@ -196,15 +196,15 @@ class U2A3 extends Oda
 						{type: 'img', id: 'propabuelita', name: 'abuelita', x:554, y:244, align: 'mc'}
 						{type: 'img', id: 'clue', name: 'clue', x: 400, y: 580, align: 'bc'}
 						{type: 'iwcpt', id: 'iwcpt1', x: 400, y: 470, uwidth: 70, uheight: 60, margin: 5, bcolor: '#FFF', scolor: '#F00', stroke: '3', align: 'center'}
-						{type: 'drg', id: 'letraM', name: 'letraM', x: 521, y: 404, index: 'M', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraR', name: 'letraR', x: 350, y: 218, index: 'R', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraS', name: 'letraS', x: 584, y: 314, index: 'S', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraM', name: 'letraM2', x: 580, y: 176, index: 'M', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraS', name: 'letraS2', x: 416, y: 253, index: 'S', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraH', name: 'letraH', x: 322, y: 315, index: 'H', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraO', name: 'letraO', x: 397, y: 320, index: 'O', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraU', name: 'letraU', x: 347, y: 406, index: 'U', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
-						{type: 'drg', id: 'letraO', name: 'letraO2', x: 477, y: 313, index: 'O', align: 'mc', target: 'iwcpt1', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraM', name: 'letraM', x: 521, y: 404, index: 'M', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraR', name: 'letraR', x: 350, y: 218, index: 'R', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraS', name: 'letraS', x: 584, y: 314, index: 'S', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraM', name: 'letraM2', x: 580, y: 176, index: 'M', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraS', name: 'letraS2', x: 416, y: 253, index: 'S', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraH', name: 'letraH', x: 322, y: 315, index: 'H', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraO', name: 'letraO', x: 397, y: 320, index: 'O', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraU', name: 'letraU', x: 347, y: 406, index: 'U', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'drg', id: 'letraO', name: 'letraO2', x: 477, y: 313, index: 'O', align: 'mc', target: 'iwcpt1', eval: 'drop_02', afterSuccess: 'hide', afterFail: 'return'}
 						
 					]
 					groups: []

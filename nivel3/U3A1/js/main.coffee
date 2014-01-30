@@ -1,177 +1,126 @@
+###
+
+NEW ODA
+
+###
 class U3A1 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
-			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
- 			{id: 'btnfinished', src:'btn_finished.png'}
-			{id: 'btnrepeat', src:'btn_repeat.png'}
-
+			{id: 'finish', src:'btn_finished.png'}
+			{id: 'repeat', src:'btn_repeat.png'}
 			{id: 'dragbledontlike', src: 'dragble_dontlike.png'}
 			{id: 'dragblehate', src: 'dragble_hate.png'}
 			{id: 'dragblelike', src: 'dragble_like.png'}
 			{id: 'dragblelove', src: 'dragble_love.png'}
 			{id: 'fondo', src: 'fondo.png'}
-		    {id:'imgwrong', src: 'wrong.png'}
-		    {id:'imgcorrect', src: 'correct.png'}
+		    {id:'wrong', src: 'wrong.png'}
+		    {id:'correct', src: 'correct.png'}
+			{src:'TU3_U3_A1_instructions.mp3', id:'s/instructions'}
+			{src:'TU3_U3_A1_bella.mp3', id:'s/che1'}
+			{src:'TU3_U3_A1_aiden.mp3', id:'s/che2'}
+			{src:'TU3_U3_A1_paisley.mp3', id:'s/che3'}
+			{src:'TU3_U3_A1_jacob.mp3', id:'s/che4'}
 		]
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-			{src:'sounds/wrong.mp3', id:'wrong'}
-
-			{src:'sounds/TU3_U3_A1_instructions.mp3', id:'instructions'}
-			{src:'sounds/TU3_U3_A1_bella.mp3', id:'sche1'}
-			{src:'sounds/TU3_U3_A1_aiden.mp3', id:'sche2'}
-			{src:'sounds/TU3_U3_A1_paisley.mp3', id:'sche3'}
-			{src:'sounds/TU3_U3_A1_jacob.mp3', id:'sche4'}
-
-		]
-		@game =
-			gustos:
-				chic1:['dragbledontlike', 'dragblelike', 'dragblelove', 'dragbledontlike', 'dragblelove', '']
-
-				chic2:['dragbledontlike','',  'dragblehate', 'dragblelike', 'dragblelike', 'dragblelove']
-
-				chic3:['dragblelove', 'dragblelove', 'dragblelike', 'dragblehate', '', 'dragblelike']
-
-				chic4:['', 'dragbledontlike', 'dragblelike', 'dragblelike', 'dragblelove', 'dragblehate']
-
-				faces:['dragblelove', 'dragblelike', 'dragbledontlike', 'dragblehate']
-
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@actividades = @game.gustos
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the faces to the correct place on the chart.', 40, 100
-		@insertBitmap 'btnRepeat', 'btnrepeat', 480, 540
-		@insertBitmap 'btnFinished', 'btnfinished', 610, 540
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
-		
-		@insertBitmap 'fondo','fondo', stageSize.w / 2, 130, 'tc'
-		@setPizarra(1).introEvaluation()
-	setPizarra: (schedule) ->
-		@schedule = schedule
-		@pizarra = new createjs.Container()
-		@pizarra.name = 'pizarra'
-		@pizarra.x = 0
-		@pizarra.y = 0	
-
-		actividades = new createjs.Container()
-		@current = actividades.name = "actividades#{schedule}"
-		actividades.x = 280 
-		actividades.y = 223
-		@addToLibrary actividades
-		
-		@drops = "@actividades.chic#{@schedule}"
-
-		@drags = @actividades.faces
-
-
-		for i in [0..5]
-			c = new createjs.Container()
-			c.name = "cont#{i}"
-			c.y = i * 49 
-			c.x = 0 + ((schedule - 1) * 125)
-			
-			hit = new createjs.Shape()
-			hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 45)
-			@setReg hit, 20, -20
-			c.addChild hit
-
-			@addToLibrary c
-			actividades.addChild c
-		@addToMain actividades
-
-		for i in [0..@drags.length - 1]
-			c = new Droppable "#{@drags[i]}", (@preload.getResult @drags[i]), i, 70*i + 150, 540, @stage, actividades.children	
-			#c.scaleX = c.scaleY = 0.9
-			@addToLibrary c
-			@pizarra.addChild c
-
-		@addToMain @pizarra
-		@
-	introEvaluation: ->
-		super
-		TweenLite.from @library.header, 1, {y:-@library.header.height}
-		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y - 5, delay: 0.5}
-		TweenLite.from @library.btnFinished, 1, {alpha :0, y: @library.btnFinished.y - 5, delay: 0.5}
-		TweenLite.from @library.pizarra, 1, {alpha: 0, y: @library.pizarra.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
-	initEvaluation: (e) =>
-		super
-		for i in [0..@drags.length - 1]
-			@library["#{@drags[i]}"].initDragListener()
-			@library["#{@drags[i]}"].addEventListener 'dropped', @evaluateDrop
-		@library.btnRepeat.addEventListener 'click', @repeatSound
-		@library.btnFinished.addEventListener 'click', @evaluateAnswer
-		createjs.Sound.play "sche#{@schedule}"
-	evaluateDrop: (e) =>
-		@answer = e.target
-		@drop = e.drop
-		#@answer.visible = off
-		@answer.returnToPlace()
-		v = @createBitmap @answer.name, @answer.name, 0, 20
-		v.scaleX = v.scaleY = 0.6
-		@setReg v, v.width / 2, v.height / 2
-		@drop.addChild v
-	evaluateAnswer: (e) =>
-		@library.btnRepeat.removeEventListener 'click', @repeatSound
-		@library.btnFinished.removeEventListener 'click', @evaluateAnswer
-		createjs.Sound.stop()
-		if @schedule is 1
-			answers = @actividades.chic1
-		else if @schedule is 2
-			answers = @actividades.chic2
-		else if @schedule is 3
-			answers = @actividades.chic3
-		else 
-			answers = @actividades.chic4
-
-		for i in [0..answers.length - 1] by 1
-			res = @createSprite 'resultado', ['imgwrong', 'imgcorrect'], null, @library["cont#{i}"].x + 25, @library["cont#{i}"].y
-			res.scaleY = res.scaleX = 0.5
-			if @library["cont#{i}"].children.length > 1
-				if @library["cont#{i}"].children[1].name is answers[i]
-					#@blink @library["cont#{i}"]
-					@library.score.plusOne()
-					res.currentFrame = 1
-				else
-					res.currentFrame = 0
-				@library[@current].addChild res
-		setTimeout @nextEvaluation, 4 * 1000
-	finishEvaluation: =>
-		TweenLite.to @library.pizarra, 1, {alpha: 0, y: @library.pizarra.y + 20, onComplete: @nextEvaluation}
-	nextEvaluation: =>
-		@index++
-		if @index < 4
-			@pizarra.removeAllChildren()
-
-			@setPizarra(@index + 1)
-			for i in [0..@drags.length - 1]
-				@library["#{@drags[i]}"].initDragListener()
-				@library["#{@drags[i]}"].addEventListener 'dropped', @evaluateDrop
-			@library.btnRepeat.addEventListener 'click', @repeatSound
-			@library.btnFinished.addEventListener 'click', @evaluateAnswer
-			createjs.Sound.stop()
-			#createjs.Sound.play "sche#{@schedule}"
-		else
-			@finish()
-	repeatSound: =>
-		createjs.Sound.stop()
-		createjs.Sound.play "sche#{@schedule}"
-	finish: ->
-		TweenLite.to @library.pizarra, 1, {alpha :0}
-		TweenLite.to @library.actividades1, 1, {alpha :0}
-		TweenLite.to @library.actividades2, 1, {alpha :0}
-		TweenLite.to @library.actividades3, 1, {alpha :0}
-		TweenLite.to @library.actividades4, 1, {alpha :0}
-		TweenLite.to @library.fondo, 1, {alpha :0}
-		TweenLite.to @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y - 5}
-		TweenLite.to @library.btnFinished, 1, {alpha :0, y: @library.btnFinished.y - 5}
-		super
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Listen and drag the faces to the correct place on the chart.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 24, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{name:'snd', opts:{id:'s/che1'}}
+								{
+									name:'ccpt1'
+									opts:{
+										containers:[
+											{name: 'ccpt1_1', x: 0, y: 0, success: 'dontlike'}
+											{name: 'ccpt1_2', x: 0, y: 49, success: 'like'}
+											{name: 'ccpt1_3', x: 0, y: 98, success: 'love'}
+											{name: 'ccpt1_4', x: 0, y: 145, success: 'dontlike'}
+											{name: 'ccpt1_5', x: 0, y: 194, success: 'love'}
+											{name: 'ccpt1_6', x: 0, y: 242, success: '#empty'}
+										]
+									}
+								}
+							]
+							[
+								{name:'snd', opts:{id:'s/che2'}}
+								{
+									name:'ccpt1'
+									opts:{
+										containers:[
+											{name: 'ccpt1_1', x: 120, y: 0, success: 'dontlike'}
+											{name: 'ccpt1_2', x: 120, y: 49, success: '#empty'}
+											{name: 'ccpt1_3', x: 120, y: 98, success: 'hate'}
+											{name: 'ccpt1_4', x: 120, y: 145, success: 'like'}
+											{name: 'ccpt1_5', x: 120, y: 194, success: 'like'}
+											{name: 'ccpt1_6', x: 120, y: 242, success: 'love'}
+										]
+									}
+								}
+							]
+							[
+								{name:'snd', opts:{id:'s/che3'}}
+								{
+									name:'ccpt1'
+									opts:{
+										containers:[
+											{name: 'ccpt1_1', x: 250, y: 0, success: 'love'}
+											{name: 'ccpt1_2', x: 250, y: 49, success: 'love'}
+											{name: 'ccpt1_3', x: 250, y: 98, success: 'like'}
+											{name: 'ccpt1_4', x: 250, y: 145, success: 'hate'}
+											{name: 'ccpt1_5', x: 250, y: 194, success: '#empty'}
+											{name: 'ccpt1_6', x: 250, y: 242, success: 'like'}
+										]
+									}
+								}
+							]
+							[
+								{name:'snd', opts:{id:'s/che4'}}
+								{
+									name:'ccpt1'
+									opts:{
+										containers:[
+											{name: 'ccpt1_1', x: 380, y: 0, success: '#empty'}
+											{name: 'ccpt1_2', x: 380, y: 49, success: 'dontlike'}
+											{name: 'ccpt1_3', x: 380, y: 98, success: 'like'}
+											{name: 'ccpt1_4', x: 380, y: 145, success: 'like'}
+											{name: 'ccpt1_5', x: 380, y: 194, success: 'love'}
+											{name: 'ccpt1_6', x: 380, y: 242, success: 'hate'}
+										]
+									}
+								}
+							]
+						]
+						type: 'steps'
+					}
+					containers:[
+						{type: 'img', id: 'fondo', x: 400, y: 130, align: 'tc'}
+						{type: 'ccpt', id: 'ccpt1', x: 236, y: 226, uwidth: 85, uheight: 40}
+						{type: 'drg', id: 'dragblelove', name: 'drg1', x: 150, y: 540, index: 'love', target: 'ccpt1', eval: 'clon_01', afterSuccess: 'origin', afterFail: 'origin'}
+						{type: 'drg', id: 'dragblelike', name: 'drg2', x: 220, y: 540, index: 'like', target: 'ccpt1', eval: 'clon_01', afterSuccess: 'origin', afterFail: 'origin'}
+						{type: 'drg', id: 'dragbledontlike', name: 'drg3', x: 290, y: 540, index: 'dontlike', target: 'ccpt1', eval: 'clon_01', afterSuccess: 'origin', afterFail: 'origin'}
+						{type: 'drg', id: 'dragblehate', name: 'drg4', x: 360, y: 540, index: 'hate', target: 'ccpt1', eval: 'clon_01', afterSuccess: 'origin', afterFail: 'origin'}
+						{
+							type: 'btn', id: 'finish', x: 610, y: 540, target:'ccpt1', isFinish: true
+							states:[
+								img: {name:'finish', x: 0, y: 0}
+							]
+						}
+						{
+							type: 'btn', id: 'repeat', x: 480, y: 540, isRepeat: true
+							states:[
+								img: {name:'repeat', x: 0, y: 0}
+							]
+						}
+					]
+					groups: []
+				}
+			]
+		super()
 	window.U3A1 = U3A1
