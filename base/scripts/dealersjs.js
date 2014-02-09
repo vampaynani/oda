@@ -6,7 +6,7 @@ LIBRARY
 
 
 (function() {
-  var Actions, Behaviors, ButtonContainer, Component, ComponentGroup, ComponentObserver, DragContainer, Game, GameObserver, GridContainer, ImageCompleterContainer, ImageContainer, ImageWordCompleterContainer, Instructions, LabelContainer, LetterDragContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, PhraseCompleterContainer, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, StepContainer, StepsContainer, TextCompleterContainer, Utilities, WordCompleterContainer, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _ref, _ref1, _ref2,
+  var ABCContainer, Actions, Behaviors, ButtonContainer, ChooseContainer, CloneCompleterContainer, CloneContainer, Component, ComponentGroup, ComponentObserver, CrossWordsContainer, DragContainer, Evaluator, Game, GameObserver, GridContainer, ImageCompleterContainer, ImageContainer, ImageWordCompleterContainer, Instructions, LabelContainer, LetterDragContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, PhraseCompleterContainer, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, StepContainer, StepsContainer, TextCompleterContainer, Utilities, WordCompleterContainer, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _base6, _ref, _ref1, _ref2,
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
@@ -161,29 +161,33 @@ LIBRARY
       function Actions() {}
 
       Actions.fadeOut = function() {
-        if (this.alpha === 1) {
-          return TweenLite.to(this, 0.5, {
-            alpha: 0,
-            y: this.y - 20
-          });
-        } else {
+        TweenMax.killTweensOf(this);
+        TweenLite.killTweensOf(this);
+        if (this.alpha === 0) {
           return TweenLite.from(this, 0.5, {
             alpha: 1,
             y: this.y + 20
+          });
+        } else {
+          return TweenLite.to(this, 0.5, {
+            alpha: 0,
+            y: this.y - 20
           });
         }
       };
 
       Actions.fadeIn = function() {
-        if (this.alpha === 0) {
-          return TweenLite.to(this, 0.5, {
-            alpha: 1,
-            y: this.y - 20
-          });
-        } else {
+        TweenMax.killTweensOf(this);
+        TweenLite.killTweensOf(this);
+        if (this.alpha === 1) {
           return TweenLite.from(this, 0.5, {
             alpha: 0,
             y: this.y + 20
+          });
+        } else {
+          return TweenLite.to(this, 0.5, {
+            alpha: 1,
+            y: this.y - 20
           });
         }
       };
@@ -193,6 +197,7 @@ LIBRARY
           state = true;
         }
         TweenMax.killTweensOf(this);
+        TweenLite.killTweensOf(this);
         this.alpha = 1;
         if (state) {
           return TweenMax.to(this, 0.5, {
@@ -222,6 +227,8 @@ LIBRARY
         if (scaleY == null) {
           scaleY = 1;
         }
+        TweenMax.killTweensOf(this);
+        TweenLite.killTweensOf(this);
         return TweenLite.to(this, 1, {
           ease: Back.easeOut,
           delay: 0.1,
@@ -243,6 +250,8 @@ LIBRARY
         if (scaleY == null) {
           scaleY = 1;
         }
+        TweenMax.killTweensOf(this);
+        TweenLite.killTweensOf(this);
         return TweenLite.to(this, 0.5, {
           ease: Back.easeOut,
           delay: 0.1,
@@ -429,6 +438,201 @@ LIBRARY
       h: 600,
       r: 1
     };
+  }
+
+  if ((_base6 = window.d2oda).evaluator == null) {
+    _base6.evaluator = Evaluator = (function() {
+      function Evaluator() {}
+
+      Evaluator.success = null;
+
+      Evaluator.evaluate = function(type, dispatcher, target) {
+        console.log(type, dispatcher, target);
+        switch (type) {
+          case 'repeat':
+            return this.evaluateRepeat();
+          case 'finish':
+            return this.evaluateFinish(target);
+          case 'global_01':
+            return this.evaluateGlobal01(dispatcher);
+          case 'click_O1':
+            return this.evaluateClick01(dispatcher, target);
+          case 'click_02':
+            return this.evaluateClick02(dispatcher, target);
+          case 'click_03':
+            return this.evaluateClick03(dispatcher, target);
+          case 'drop_01':
+            return this.evaluateDrop01(dispatcher, target);
+          case 'drop_02':
+            return this.evaluateDrop02(dispatcher, target);
+          case 'drop_03':
+            return this.evaluateDrop03(dispatcher, target);
+          case 'drop_04':
+            return this.evaluateDrop04(dispatcher, target);
+          case 'clon_01':
+            return this.evaluateClon01(dispatcher, target);
+          case 'switch_01':
+            return this.evaluateSwitch01(dispatcher, target);
+        }
+      };
+
+      Evaluator.evaluateRepeat = function() {
+        createjs.Sound.stop();
+        return createjs.Sound.play(lib.scene.snd);
+      };
+
+      Evaluator.evaluateFinish = function(target) {
+        var drop, _i, _len, _ref;
+        _ref = lib[target].droptargets;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          drop = _ref[_i];
+          drop.showEvaluation();
+          if (drop.complete) {
+            lib.score.plusOne();
+          }
+        }
+        return lib.scene.success(false);
+      };
+
+      Evaluator.evaluateGlobal01 = function(dispatcher) {
+        if (lib[dispatcher].index === this.success) {
+          return lib.scene.success();
+        } else {
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateGlobal02 = function(dispatcher) {
+        if (lib[dispatcher].index === this.success) {
+          lib.scene.success();
+          return lib.scene.nextStep();
+        } else {
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateClick01 = function(dispatcher, target) {
+        var answer, currentTarget, droptargets;
+        answer = lib[dispatcher].index;
+        droptargets = lib[target].droptargets;
+        currentTarget = lib[target].currentTarget;
+        if (answer === droptargets[currentTarget].success) {
+          droptargets[currentTarget].complete = true;
+          droptargets[currentTarget].update();
+          lib[target].currentTarget++;
+          if (lib[target].currentTarget === droptargets.length) {
+            return lib.scene.success();
+          }
+        } else {
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateClick02 = function(dispatcher, target) {
+        if (lib[dispatcher].index === lib[target].success) {
+          lib[target].complete = true;
+          lib[dispatcher].updateState();
+          return lib.scene.success();
+        } else {
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateClick03 = function(dispatcher, target) {
+        var currentTarget, targets;
+        targets = lib[target].targets;
+        currentTarget = lib[target].currentTarget;
+        if (lib[dispatcher].index === lib[target].success) {
+          targets[currentTarget].complete = true;
+          lib[target].fadeOut(targets[currentTarget]);
+          lib.scene.success(false);
+          createjs.Sound.play('s/good');
+          return lib[target].currentTarget++;
+        } else {
+          lib[target].warnings++;
+          lib.scene.fail();
+          if (lib[target].warnings === 3) {
+            lib.score.stop();
+            return lib.game.nextScene();
+          }
+        }
+      };
+
+      Evaluator.evaluateDrop01 = function(dispatcher, target) {
+        lib[dispatcher].afterSuccess({
+          x: target.x,
+          y: target.y
+        });
+        if (lib[dispatcher].index === target.success) {
+          return target.update();
+        } else {
+          return target.update(false);
+        }
+      };
+
+      Evaluator.evaluateDrop02 = function(dispatcher, target) {
+        if (lib[dispatcher].index === target.success) {
+          target.update();
+          lib[dispatcher].afterSuccess();
+          return lib.scene.success();
+        } else {
+          lib[dispatcher].afterFail();
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateDrop03 = function(dispatcher, target) {
+        if (lib[dispatcher].index === target.success) {
+          target.complete = true;
+          target.update();
+          lib[dispatcher].afterSuccess();
+          target.parent.currentTarget++;
+          if (target.parent.currentTarget === target.parent.droptargets.length) {
+            lib[target.parent.target].fadeOut();
+            return lib.scene.success();
+          }
+        } else {
+          lib[dispatcher].afterFail();
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateDrop04 = function(dispatcher, target) {
+        if (lib[dispatcher].index === target.success) {
+          target.update({
+            complete: true
+          });
+          lib[dispatcher].afterSuccess();
+          return target.parent.evaluateWords();
+        } else {
+          lib[dispatcher].afterFail();
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateClon01 = function(dispatcher, target) {
+        if (lib[dispatcher].index === target.success) {
+          target.update(true, lib[dispatcher].bmpid);
+        } else {
+          target.update(false, lib[dispatcher].bmpid);
+        }
+        return lib[dispatcher].afterSuccess();
+      };
+
+      Evaluator.evaluateSwitch01 = function(dispatcher, target) {
+        if (lib[dispatcher].index === lib[target].success) {
+          lib[target].doSwitch();
+          return lib.scene.success();
+        } else {
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator;
+
+      return Evaluator;
+
+    })();
   }
 
   Array.prototype.toDictionary = function(key) {
@@ -933,10 +1137,13 @@ LIBRARY
       Module.extend(this, d2oda.methods);
       this.name = opts.id;
       this.group = opts.group;
+      if (opts.invisible) {
+        this.setInvisible(true, false);
+      }
     }
 
     ComponentGroup.prototype.update = function(opts) {
-      var item, _i, _len, _ref1;
+      var item, _i, _j, _len, _len1, _ref1, _ref2;
       switch (opts.type) {
         case 'blink':
           _ref1 = this.group;
@@ -944,10 +1151,76 @@ LIBRARY
             item = _ref1[_i];
             TweenMax.killTweensOf(lib[item]);
             TweenLite.killTweensOf(lib[item]);
-            lib[item].alpha = 1;
+            if (lib[item].alpha !== 0) {
+              lib[item].alpha = 1;
+            }
           }
           return lib[opts.target].blink();
+        case 'fadeIn':
+          _ref2 = this.group;
+          for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+            item = _ref2[_j];
+            TweenMax.killTweensOf(lib[item]);
+            TweenLite.killTweensOf(lib[item]);
+            lib[item].alpha = 0;
+          }
+          return lib[opts.target].fadeIn();
+        case 'success':
+          this.target = opts.targetGroup;
+          this.next = opts.nextGroup;
+          this.success = opts.success;
+          lib[this.target].setInvisible();
+          lib[this.next].setInvisible();
+          return this.setInvisible(false);
       }
+    };
+
+    ComponentGroup.prototype.setInvisible = function(status, fade) {
+      var item, _i, _j, _len, _len1, _ref1, _ref2, _results, _results1;
+      if (status == null) {
+        status = true;
+      }
+      if (fade == null) {
+        fade = true;
+      }
+      if (status) {
+        _ref1 = this.group;
+        _results = [];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          item = _ref1[_i];
+          if (fade) {
+            _results.push(TweenLite.to(lib[item], 0.5, {
+              alpha: 0
+            }));
+          } else {
+            _results.push(lib[item].alpha = 0);
+          }
+        }
+        return _results;
+      } else {
+        _ref2 = this.group;
+        _results1 = [];
+        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+          item = _ref2[_j];
+          if (fade) {
+            _results1.push(TweenLite.to(lib[item], 0.5, {
+              alpha: 1
+            }));
+          } else {
+            _results1.push(lib[item].alpha = 0);
+          }
+        }
+        return _results1;
+      }
+    };
+
+    ComponentGroup.prototype.doSwitch = function() {
+      lib[this.target].update({
+        type: 'fadeIn',
+        target: this.success
+      });
+      lib[this.next].setInvisible(false);
+      return this.setInvisible();
     };
 
     ComponentGroup.prototype.isComplete = function() {
@@ -1057,11 +1330,11 @@ LIBRARY
     };
 
     Score.prototype.plusOne = function() {
+      createjs.Sound.play('s/good');
       if (this.block === true) {
         this.block = false;
         return;
       }
-      createjs.Sound.play('s/good');
       this.counter++;
       return this.updateCount(this.counter);
     };
@@ -1204,6 +1477,7 @@ LIBRARY
     DragContainer.prototype.Container_initialize = DragContainer.prototype.initialize;
 
     function DragContainer(opts) {
+      this.evaluateDrop = __bind(this.evaluateDrop, this);
       this.handleMouseDown = __bind(this.handleMouseDown, this);
       this.update = __bind(this.update, this);
       this.initialize(opts);
@@ -1222,9 +1496,12 @@ LIBRARY
         y: this.y
       };
       this.index = opts.index;
+      this["eval"] = opts["eval"];
       this.target = lib[opts.target];
       this.droptargets = new Array();
       b = this.createBitmap(this.name, opts.id, 0, 0);
+      this.bmpname = opts.name;
+      this.bmpid = opts.id;
       this.width = b.width;
       this.height = b.height;
       this.setPosition(opts.align);
@@ -1310,7 +1587,7 @@ LIBRARY
         }
       }
       if (dropped) {
-        target.evaluate(this);
+        d2oda.evaluator.evaluate(this["eval"], this.name, target);
         return this.dispatchEvent({
           type: 'dropped',
           drop: target
@@ -1321,136 +1598,6 @@ LIBRARY
     };
 
     return DragContainer;
-
-  })(Component);
-
-  LetterDragContainer = (function(_super) {
-    __extends(LetterDragContainer, _super);
-
-    LetterDragContainer.prototype = new createjs.Container();
-
-    LetterDragContainer.prototype.Container_initialize = LetterDragContainer.prototype.initialize;
-
-    function LetterDragContainer(opts) {
-      this.handleMouseDown = __bind(this.handleMouseDown, this);
-      this.update = __bind(this.update, this);
-      this.initialize(opts);
-    }
-
-    LetterDragContainer.prototype.initialize = function(opts) {
-      var hit, t, _ref2;
-      this.Container_initialize();
-      Module.extend(this, d2oda.methods);
-      Module.extend(this, d2oda.actions);
-      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
-      this.x = opts.x;
-      this.y = opts.y;
-      this.pos = {
-        x: this.x,
-        y: this.y
-      };
-      this.index = opts.index;
-      this.target = lib[opts.target];
-      this.droptargets = new Array();
-      t = this.createText('txt', opts.text, opts.font, opts.color, 0, 0);
-      this.width = t.getMeasuredWidth();
-      this.height = t.getMeasuredHeight();
-      switch (opts.afterSuccess) {
-        case 'hide':
-          this.afterSuccess = this.hide;
-          break;
-        case 'inplace':
-          this.afterSuccess = this.putInPlace;
-          break;
-        case 'return':
-          this.afterSuccess = this.returnToPlace;
-          break;
-        case 'origin':
-          this.afterSuccess = this.setInOrigin;
-      }
-      switch (opts.afterFail) {
-        case 'hide':
-          this.afterFail = this.hide;
-          break;
-        case 'inplace':
-          this.afterSuccess = this.putInPlace;
-          break;
-        case 'return':
-          this.afterFail = this.returnToPlace;
-          break;
-        case 'origin':
-          this.afterFail = this.setInOrigin;
-      }
-      hit = new createjs.Shape();
-      hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6);
-      t.hitArea = hit;
-      this.add(t, false);
-      if (this.target) {
-        this.target.observer.subscribe(ComponentObserver.UPDATED, this.update);
-      }
-      return this.addEventListener('mousedown', this.handleMouseDown);
-    };
-
-    LetterDragContainer.prototype.update = function(opts) {
-      return this.droptargets = this.target.droptargets;
-    };
-
-    LetterDragContainer.prototype.handleMouseDown = function(e) {
-      var offset, posX, posY,
-        _this = this;
-      posX = e.stageX / d2oda.stage.r;
-      posY = e.stageY / d2oda.stage.r;
-      offset = {
-        x: posX - this.x,
-        y: posY - this.y
-      };
-      this.x = posX - offset.x;
-      this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
-        posX = ev.stageX / d2oda.stage.r;
-        posY = ev.stageY / d2oda.stage.r;
-        _this.x = posX - offset.x;
-        _this.y = posY - offset.y;
-        return false;
-      });
-      e.addEventListener('mouseup', function(ev) {
-        if (_this.droptargets && _this.droptargets.length > 0) {
-          _this.evaluateDrop(e);
-        } else {
-          _this.dispatchEvent({
-            type: 'drop'
-          });
-        }
-        return false;
-      });
-      return false;
-    };
-
-    LetterDragContainer.prototype.evaluateDrop = function(e) {
-      var drop, dropped, pt, target, _i, _len, _ref2;
-      target = null;
-      dropped = false;
-      _ref2 = this.droptargets;
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        drop = _ref2[_i];
-        pt = drop.globalToLocal(oda.stage.mouseX, oda.stage.mouseY);
-        if (drop.hitTest(pt.x, pt.y)) {
-          target = drop;
-          dropped = true;
-        }
-      }
-      if (dropped) {
-        this.target.evaluate(this, target);
-        return this.dispatchEvent({
-          type: 'dropped',
-          drop: target
-        });
-      } else {
-        return this.returnToPlace(this.alpha, this.scaleX, this.scaleY);
-      }
-    };
-
-    return LetterDragContainer;
 
   })(Component);
 
@@ -1477,7 +1624,7 @@ LIBRARY
       this.scale = (_ref3 = opts.scale) != null ? _ref3 : 1;
       this.states = opts.states;
       this.currentState = 0;
-      this.setImageText();
+      this.setImageText(this.states[this.currentState].img, this.states[this.currentState].txt);
       if (opts.target) {
         this.target = lib[opts.target];
       }
@@ -1494,30 +1641,30 @@ LIBRARY
         });
       });
       return this.addEventListener('click', function() {
-        if (opts.isFinish) {
-          return _this.target.evaluate();
-        } else if (opts.isRepeat) {
-          createjs.Sound.stop();
-          return createjs.Sound.play(lib.scene.snd);
+        if (opts.isRepeat) {
+          return d2oda.evaluator.evaluate('repeat');
+        } else if (opts.isFinish) {
+          return d2oda.evaluator.evaluate('finish', null, opts.target);
         } else {
-          return _this.target.evaluate(_this);
+          return d2oda.evaluator.evaluate(opts["eval"], _this.name, opts.target);
         }
       });
     };
 
-    ButtonContainer.prototype.setImageText = function() {
-      var align, b, color, font, hit, img, t, text, txt, x, y, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+    ButtonContainer.prototype.setImageText = function(img, txt) {
+      var align, b, color, font, hit, t, text, x, y, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       this.removeAllChildren();
-      if (this.states[this.currentState].img) {
-        img = this.states[this.currentState].img;
+      if (img) {
         x = (_ref2 = img.x) != null ? _ref2 : 0;
         y = (_ref3 = img.y) != null ? _ref3 : 0;
         align = (_ref4 = img.align) != null ? _ref4 : '';
         b = this.createBitmap('img', img.name, x, y, align);
+        if (img.scale) {
+          b.scaleX = b.scaleY = img.scale;
+        }
         this.add(b, false);
       }
-      if (this.states[this.currentState].txt) {
-        txt = this.states[this.currentState].txt;
+      if (txt) {
         text = (_ref5 = txt.text) != null ? _ref5 : '';
         font = (_ref6 = txt.font) != null ? _ref6 : '20px Arial';
         color = (_ref7 = txt.color) != null ? _ref7 : '#333';
@@ -1525,6 +1672,9 @@ LIBRARY
         y = (_ref9 = txt.y) != null ? _ref9 : 0;
         align = (_ref10 = txt.align) != null ? _ref10 : '';
         t = this.createText('txt', text, font, color, x, y, align);
+        if (txt.lineWidth) {
+          t.lineWidth = txt.lineWidth;
+        }
         hit = new createjs.Shape();
         hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6);
         t.hitArea = hit;
@@ -1532,13 +1682,12 @@ LIBRARY
       }
     };
 
-    ButtonContainer.prototype.update = function() {
+    ButtonContainer.prototype.updateState = function() {
       this.currentState++;
       if (this.currentState < this.states.length) {
         TweenLite.killTweensOf(this);
-        this.setImageText();
-        this.scaleX = this.scale;
-        this.scaleY = this.scale;
+        this.setImageText(this.states[this.currentState].img, this.states[this.currentState].txt);
+        this.scaleX = this.scaleY = this.scale;
         if (this.states[this.currentState].removeListeners) {
           this.removeAllEventListeners();
         }
@@ -1550,7 +1699,125 @@ LIBRARY
       }
     };
 
+    ButtonContainer.prototype.update = function(opts) {
+      TweenLite.killTweensOf(this);
+      this.setImageText(opts.img, opts.txt);
+      return TweenLite.from(this, 0.5, {
+        alpha: 0
+      });
+    };
+
+    ButtonContainer.prototype.isComplete = function() {
+      return true;
+    };
+
     return ButtonContainer;
+
+  })(Component);
+
+  ChooseContainer = (function(_super) {
+    __extends(ChooseContainer, _super);
+
+    ChooseContainer.prototype = new createjs.Container();
+
+    ChooseContainer.prototype.Container_initialize = ChooseContainer.prototype.initialize;
+
+    function ChooseContainer(opts) {
+      this.initialize(opts);
+    }
+
+    ChooseContainer.prototype.initialize = function(opts) {
+      var _ref2;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = opts.x;
+      this.y = opts.y;
+      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
+      this.target = opts.target;
+      this["eval"] = opts["eval"];
+      this.label = opts.label;
+      this.caption = opts.caption;
+      return this.bullets = opts.bullets;
+    };
+
+    ChooseContainer.prototype.update = function(opts) {
+      var hito1, hito2, lineWidth, opt1, opt2,
+        _this = this;
+      this.removeAllChildren();
+      switch (opts.type) {
+        case 'img':
+          opt1 = this.createBitmap("" + this.name + "_opt1", opts.opt1, 0, 100, 'tr');
+          opt1.index = 1;
+          opt2 = this.createBitmap("" + this.name + "_opt2", opts.opt2, 0, 100);
+          opt2.index = 2;
+          break;
+        case 'txt':
+          if (opts.img) {
+            this.insertBitmap("" + this.name + "_img", opts.img.name, opts.img.x, opts.img.y, 'tc');
+          }
+          lineWidth = this.bullets.lineWidth ? this.bullets.lineWidth : 200;
+          this.insertText("separator", '/', this.bullets.font, this.bullets.color, 0, 400, 'center');
+          opt1 = this.createText("" + this.name + "_opt1", opts.opt1, this.bullets.font, this.bullets.color, -20, 400, 'right');
+          if (this.bullets.lineWidth) {
+            opt1.lineWidth = this.bullets.lineWidth;
+          }
+          hito1 = new createjs.Shape();
+          hito1.graphics.beginFill('#000').drawRect(-opt1.getMeasuredWidth() - 5, -3, opt1.getMeasuredWidth() + 10, opt1.getMeasuredHeight() + 6);
+          opt1.hitArea = hito1;
+          opt1.index = 1;
+          opt2 = this.createText("" + this.name + "_opt2", opts.opt2, this.bullets.font, this.bullets.color, 20, 400, 'left');
+          if (this.bullets.lineWidth) {
+            opt2.lineWidth = this.bullets.lineWidth;
+          }
+          hito2 = new createjs.Shape();
+          hito2.graphics.beginFill('#000').drawRect(-5, -3, opt2.getMeasuredWidth() + 10, opt2.getMeasuredHeight() + 6);
+          opt2.hitArea = hito2;
+          opt2.index = 2;
+      }
+      this.add(opt1);
+      opt1.addEventListener('mouseover', function() {
+        return TweenLite.to(opt1, 0.5, {
+          alpha: 0.5
+        });
+      });
+      opt1.addEventListener('mouseout', function() {
+        return TweenLite.to(opt1, 0.5, {
+          alpha: 1
+        });
+      });
+      opt1.addEventListener('click', function() {
+        return d2oda.evaluator.evaluate(_this["eval"], "" + _this.name + "_opt1", _this.target);
+      });
+      this.add(opt2);
+      opt2.addEventListener('mouseover', function() {
+        return TweenLite.to(opt2, 0.5, {
+          alpha: 0.5
+        });
+      });
+      opt2.addEventListener('mouseout', function() {
+        return TweenLite.to(opt2, 0.5, {
+          alpha: 1
+        });
+      });
+      opt2.addEventListener('click', function() {
+        return d2oda.evaluator.evaluate(_this["eval"], "" + _this.name + "_opt2", _this.target);
+      });
+      if (opts.label) {
+        this.insertText("" + this.name + "_label", opts.label, this.label.font, this.label.color, 0, 40, 'center');
+      }
+      if (opts.caption) {
+        this.insertText("" + this.name + "_caption", opts.caption, this.caption.font, this.caption.color, 0, 360, 'center');
+      }
+      return TweenLite.from(this, 0.5, {
+        alpha: 0
+      });
+    };
+
+    ChooseContainer.prototype.isComplete = function() {
+      return true;
+    };
+
+    return ChooseContainer;
 
   })(Component);
 
@@ -1589,21 +1856,124 @@ LIBRARY
       });
     };
 
-    LabelContainer.prototype.evaluate = function(obj) {
-      if (obj.index === this.success) {
-        this.complete = true;
-        obj.update();
-        return lib.scene.success();
-      } else {
-        return lib.scene.fail();
-      }
-    };
-
     LabelContainer.prototype.isComplete = function() {
       return this.complete;
     };
 
     return LabelContainer;
+
+  })(Component);
+
+  CloneCompleterContainer = (function(_super) {
+    __extends(CloneCompleterContainer, _super);
+
+    CloneCompleterContainer.prototype = new createjs.Container();
+
+    CloneCompleterContainer.prototype.Container_initialize = CloneCompleterContainer.prototype.initialize;
+
+    function CloneCompleterContainer(opts) {
+      this.initialize(opts);
+    }
+
+    CloneCompleterContainer.prototype.initialize = function(opts) {
+      var _ref2, _ref3, _ref4, _ref5, _ref6;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
+      this.x = (_ref3 = opts.x) != null ? _ref3 : 0;
+      this.y = (_ref4 = opts.y) != null ? _ref4 : 0;
+      this.uwidth = (_ref5 = opts.uwidth) != null ? _ref5 : 100;
+      this.uheight = (_ref6 = opts.uheight) != null ? _ref6 : 100;
+      this.observer = new ComponentObserver();
+      return this.droptargets = new Array();
+    };
+
+    CloneCompleterContainer.prototype.update = function(opts) {
+      var c, child, gropts, i, npos, _i, _len, _ref2;
+      this.removeAllChildren();
+      i = 0;
+      npos = 0;
+      _ref2 = opts.containers;
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        c = _ref2[_i];
+        if (c.opts) {
+          gropts = c.opts;
+        } else {
+          gropts = opts;
+        }
+        child = new CloneContainer(gropts, c.type, c.success, c.x, c.y, this.uwidth, this.uheight);
+        this.droptargets.push(child);
+        this.add(child, false);
+      }
+      this.observer.notify(ComponentObserver.UPDATED);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0,
+        y: this.y - 10
+      });
+    };
+
+    CloneCompleterContainer.prototype.isComplete = function() {
+      return true;
+    };
+
+    return CloneCompleterContainer;
+
+  })(Component);
+
+  CloneContainer = (function(_super) {
+    __extends(CloneContainer, _super);
+
+    CloneContainer.prototype = new createjs.Container();
+
+    CloneContainer.prototype.Container_initialize = CloneContainer.prototype.initialize;
+
+    function CloneContainer(opts, type, success, x, y, width, height) {
+      this.initialize(opts, type, success, x, y, width, height);
+    }
+
+    CloneContainer.prototype.initialize = function(opts, type, success, x, y, width, height) {
+      var child, _ref2;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
+      this.x = x != null ? x : 0;
+      this.y = y != null ? y : 0;
+      this.width = width;
+      this.height = height;
+      this.success = success;
+      this.complete = this.success !== '#empty' ? false : true;
+      this.img = null;
+      child = new createjs.Shape();
+      child.graphics.beginFill('#FFF').drawRect(0, 0, this.width, this.height);
+      child.alpha = 0.1;
+      return this.add(child, false);
+    };
+
+    CloneContainer.prototype.showEvaluation = function() {
+      if (this.complete) {
+        return this.insertBitmap('correct', 'correct', this.width, this.height / 2, 'ml');
+      } else {
+        return this.insertBitmap('wrong', 'wrong', this.width, this.height / 2, 'ml');
+      }
+    };
+
+    CloneContainer.prototype.update = function(complete, img) {
+      if (complete == null) {
+        complete = true;
+      }
+      if (img == null) {
+        img = '';
+      }
+      if (this.img !== null) {
+        this.removeChild(this.img);
+      }
+      this.img = this.createBitmap('img', img, this.width / 2, this.height / 2, 'mc');
+      this.img.scaleX = this.img.scaleY = (this.height - 5) / this.img.height;
+      this.add(this.img, false);
+      return this.complete = complete;
+    };
+
+    return CloneContainer;
 
   })(Component);
 
@@ -1651,19 +2021,6 @@ LIBRARY
         alpha: 0,
         y: this.y - 10
       });
-    };
-
-    StepsContainer.prototype.evaluate = function() {
-      var target, _i, _len, _ref2;
-      _ref2 = this.droptargets;
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        target = _ref2[_i];
-        target.showEvaluation();
-        if (target.complete) {
-          lib.score.plusOne();
-        }
-      }
-      return lib.scene.success(false);
     };
 
     StepsContainer.prototype.isComplete = function() {
@@ -1716,18 +2073,6 @@ LIBRARY
         complete = true;
       }
       return this.complete = complete;
-    };
-
-    StepContainer.prototype.evaluate = function(obj) {
-      obj.afterSuccess({
-        x: this.x,
-        y: this.y
-      });
-      if (obj.index === this.success) {
-        return this.update();
-      } else {
-        return this.update(false);
-      }
     };
 
     return StepContainer;
@@ -1835,23 +2180,6 @@ LIBRARY
       }
     };
 
-    GridContainer.prototype.evaluate = function(obj) {
-      if (obj.index === this.success) {
-        this.targets[this.currentTarget].complete = true;
-        this.fadeOut(this.targets[this.currentTarget]);
-        lib.scene.success(false);
-        createjs.Sound.play('s/good');
-        return this.currentTarget++;
-      } else {
-        this.warnings++;
-        lib.scene.fail();
-        if (this.warnings === 3) {
-          lib.score.stop();
-          return lib.game.nextScene();
-        }
-      }
-    };
-
     GridContainer.prototype.isComplete = function() {
       var target, _i, _len, _ref2;
       _ref2 = this.targets;
@@ -1913,7 +2241,7 @@ LIBRARY
         t = _ref3[_i];
         if (t === '#tcpt') {
           txt = opts.targets[i];
-          h = new TextCompleterContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, 5);
+          h = new TextCompleterContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, -5);
           this.droptargets.push(h);
           this.add(h, false);
           npos += h.width + this.margin;
@@ -1932,19 +2260,6 @@ LIBRARY
       });
     };
 
-    PhraseCompleterContainer.prototype.evaluate = function(obj) {
-      if (obj.index === this.droptargets[this.currentTarget].success) {
-        this.droptargets[this.currentTarget].complete = true;
-        this.droptargets[this.currentTarget].update();
-        this.currentTarget++;
-        if (this.currentTarget === this.droptargets.length) {
-          return lib.scene.success();
-        }
-      } else {
-        return lib.scene.fail();
-      }
-    };
-
     PhraseCompleterContainer.prototype.isComplete = function() {
       var target, _i, _len, _ref2;
       _ref2 = this.droptargets;
@@ -1961,41 +2276,193 @@ LIBRARY
 
   })(Component);
 
-  TextCompleterContainer = (function(_super) {
-    __extends(TextCompleterContainer, _super);
+  CrossWordsContainer = (function(_super) {
+    __extends(CrossWordsContainer, _super);
 
-    TextCompleterContainer.prototype = new createjs.Container();
+    CrossWordsContainer.prototype = new createjs.Container();
 
-    TextCompleterContainer.prototype.Container_initialize = TextCompleterContainer.prototype.initialize;
+    CrossWordsContainer.prototype.Container_initialize = CrossWordsContainer.prototype.initialize;
 
-    function TextCompleterContainer(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
-      this.initialize(opts, font, fcolor, bcolor, scolor, stroke, x, y);
+    function CrossWordsContainer(opts) {
+      this.initialize(opts);
     }
 
-    TextCompleterContainer.prototype.initialize = function(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
-      var back, _ref2, _ref3;
+    CrossWordsContainer.prototype.initialize = function(opts) {
+      var _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
-      this.x = x;
-      this.y = y;
-      this.success = (_ref2 = opts.success) != null ? _ref2 : opts.text;
-      this.text = this.createText('txt', opts.text, font, fcolor, 0, -5);
-      this.width = (_ref3 = opts.width) != null ? _ref3 : this.text.getMeasuredWidth();
-      this.height = this.text.getMeasuredHeight();
-      this.complete = false;
-      back = new createjs.Shape();
-      back.graphics.f(bcolor).dr(0, 0, this.width, this.height).ss(stroke).s(scolor).mt(0, this.height).lt(this.width, this.height);
-      return this.add(back, false);
+      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
+      this.x = opts.x;
+      this.y = opts.y;
+      this.font = (_ref3 = opts.font) != null ? _ref3 : '20px Arial';
+      this.fcolor = (_ref4 = opts.fcolor) != null ? _ref4 : '#333';
+      this.bcolor = (_ref5 = opts.bcolor) != null ? _ref5 : '#FFF';
+      this.stroke = (_ref6 = opts.stroke) != null ? _ref6 : 2;
+      this.scolor = (_ref7 = opts.scolor) != null ? _ref7 : '#FFF';
+      this.uwidth = (_ref8 = opts.uwidth) != null ? _ref8 : 100;
+      this.uheight = (_ref9 = opts.uheight) != null ? _ref9 : 100;
+      this.allComplete = false;
+      this.observer = new ComponentObserver();
+      return this.droptargets = new Array();
     };
 
-    TextCompleterContainer.prototype.update = function(opts) {
-      this.add(this.text, false);
+    CrossWordsContainer.prototype.update = function(opts) {
+      var column, i, j, k, row, tcc, _i, _j, _k, _len, _len1, _ref2, _ref3;
+      this.removeAllChildren();
+      this.words = opts.words;
+      for (k = _i = 1, _ref2 = this.words.length; 1 <= _ref2 ? _i <= _ref2 : _i >= _ref2; k = 1 <= _ref2 ? ++_i : --_i) {
+        this.insertText("txt" + k, "" + k, this.font, this.fcolor, this.words[k - 1].x, this.words[k - 1].y);
+      }
+      i = 0;
+      j = 0;
+      _ref3 = opts.matrix;
+      for (_j = 0, _len = _ref3.length; _j < _len; _j++) {
+        row = _ref3[_j];
+        for (_k = 0, _len1 = row.length; _k < _len1; _k++) {
+          column = row[_k];
+          if (column !== '#') {
+            if (column === '-') {
+              tcc = new createjs.Shape();
+              tcc.graphics.f('#999').ss(this.stroke).s(this.scolor).dr(0, 0, this.uwidth, this.uheight);
+              tcc.x = j * this.uwidth;
+              tcc.y = i * this.uheight;
+            } else {
+              tcc = new TextCompleterContainer({
+                text: column,
+                width: this.uwidth,
+                height: this.uheight
+              }, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, j * this.uwidth, i * this.uheight);
+              tcc.name = "l" + j + i;
+              tcc.setRectOutline(this.bcolor, this.stroke, this.scolor);
+            }
+            this.add(tcc);
+            this.droptargets.push(tcc);
+          }
+          j++;
+        }
+        j = 0;
+        i++;
+      }
+      this.observer.notify(ComponentObserver.UPDATED);
       return TweenLite.from(this, 0.3, {
-        alpha: 0
+        alpha: 0,
+        y: this.y - 10
       });
     };
 
-    return TextCompleterContainer;
+    CrossWordsContainer.prototype.fadeOut = function(obj) {
+      TweenMax.killTweensOf(obj);
+      TweenLite.killTweensOf(obj);
+      return TweenLite.to(obj, 0.5, {
+        alpha: 0,
+        y: obj.y - 20
+      });
+    };
+
+    CrossWordsContainer.prototype.evaluateWords = function() {
+      var coords, obj, word, wordComplete, _i, _j, _len, _len1, _ref2, _results;
+      this.allComplete = true;
+      _ref2 = this.words;
+      _results = [];
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        word = _ref2[_i];
+        coords = word.coords;
+        wordComplete = true;
+        for (_j = 0, _len1 = coords.length; _j < _len1; _j++) {
+          obj = coords[_j];
+          console.log(obj);
+          if (!lib["l" + obj].complete) {
+            wordComplete = false;
+          }
+        }
+        if (!word.complete) {
+          if (wordComplete) {
+            word.complete = true;
+            if (lib[word.target]) {
+              this.fadeOut(lib[word.target]);
+            }
+            if (lib["number" + word.target]) {
+              this.fadeOut(lib["number" + word.target]);
+            }
+            createjs.Sound.play("s/" + word.target);
+            _results.push(lib.scene.success());
+          } else {
+            _results.push(this.allComplete = false);
+          }
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
+    CrossWordsContainer.prototype.isComplete = function() {
+      return this.allComplete;
+    };
+
+    return CrossWordsContainer;
+
+  })(Component);
+
+  ABCContainer = (function(_super) {
+    __extends(ABCContainer, _super);
+
+    ABCContainer.prototype = new createjs.Container();
+
+    ABCContainer.prototype.Container_initialize = ABCContainer.prototype.initialize;
+
+    function ABCContainer(opts) {
+      this.initialize(opts);
+    }
+
+    ABCContainer.prototype.initialize = function(opts) {
+      var abc, abcarr, d, i, letter, lopts, _i, _len, _ref2, _x, _y;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
+      this.x = opts.x;
+      this.y = opts.y;
+      this["eval"] = opts["eval"];
+      this.target = opts.target;
+      abc = 'abcdefghijklmnopqrstuvwxyz';
+      abcarr = abc.split('');
+      i = 0;
+      for (_i = 0, _len = abcarr.length; _i < _len; _i++) {
+        letter = abcarr[_i];
+        if (i >= 13) {
+          _x = (i - 13) * (opts.uwidth + opts.margin);
+          _y = opts.uheight;
+        } else {
+          _x = i * (opts.uwidth + opts.margin);
+          _y = 0;
+        }
+        lopts = {
+          id: "abc_" + i,
+          x: _x,
+          y: _y,
+          index: letter,
+          target: this.target,
+          "eval": this["eval"],
+          text: letter,
+          font: opts.font,
+          color: opts.fcolor,
+          afterSuccess: 'origin',
+          afterFail: 'return'
+        };
+        d = new LetterDragContainer(lopts);
+        this.add(d);
+        i++;
+      }
+      this.width = _x + opts.uwidth;
+      this.height = _y * 2;
+      this.setPosition('mc');
+      return TweenLite.from(this, 0.3, {
+        alpha: 0,
+        y: this.y - 10
+      });
+    };
+
+    return ABCContainer;
 
   })(Component);
 
@@ -2026,6 +2493,7 @@ LIBRARY
       this.stroke = (_ref8 = opts.stroke) != null ? _ref8 : 3;
       this.align = (_ref9 = opts.align) != null ? _ref9 : '';
       this.margin = (_ref10 = opts.margin) != null ? _ref10 : 5;
+      this["eval"] = opts["eval"];
       this.currentTarget = 0;
       this.observer = new ComponentObserver();
       return this.droptargets = new Array();
@@ -2038,7 +2506,12 @@ LIBRARY
       word = opts.word.split('');
       scrambledWord = this.shuffle(word);
       i = 0;
-      npos = 0;
+      if (opts.prev) {
+        this.prev = this.insertText('prevTxt', opts.prev, this.font, this.fcolor, 0, 0);
+        npos = this.prev.getMeasuredWidth() + this.margin;
+      } else {
+        npos = 0;
+      }
       for (_i = 0, _len = word.length; _i < _len; _i++) {
         letter = word[_i];
         if (letter === ' ') {
@@ -2058,7 +2531,7 @@ LIBRARY
       this.width = npos;
       this.setPosition(this.align);
       i = 0;
-      npos = 0;
+      npos = this.prev ? this.prev.getMeasuredWidth() + this.margin : 0;
       for (_j = 0, _len1 = scrambledWord.length; _j < _len1; _j++) {
         scrambledLetter = scrambledWord[_j];
         if (scrambledLetter !== ' ') {
@@ -2068,6 +2541,7 @@ LIBRARY
             y: -50,
             index: scrambledLetter,
             target: this.name,
+            "eval": this["eval"],
             text: scrambledLetter,
             font: this.font,
             color: this.fcolor,
@@ -2075,7 +2549,7 @@ LIBRARY
             afterFail: 'return'
           };
           d = new LetterDragContainer(opts);
-          this.add(d, false);
+          this.add(d);
           npos += this.uwidth + this.margin;
           i++;
         }
@@ -2085,22 +2559,6 @@ LIBRARY
         alpha: 0,
         y: this.y - 10
       });
-    };
-
-    WordCompleterContainer.prototype.evaluate = function(drag, target) {
-      if (drag.index === target.success) {
-        target.complete = true;
-        target.update();
-        drag.afterSuccess();
-        this.currentTarget++;
-        if (this.currentTarget === this.droptargets.length) {
-          lib[this.target].fadeOut();
-          return lib.scene.success();
-        }
-      } else {
-        drag.afterFail();
-        return lib.scene.fail();
-      }
     };
 
     WordCompleterContainer.prototype.isComplete = function() {
@@ -2116,6 +2574,184 @@ LIBRARY
     };
 
     return WordCompleterContainer;
+
+  })(Component);
+
+  TextCompleterContainer = (function(_super) {
+    __extends(TextCompleterContainer, _super);
+
+    TextCompleterContainer.prototype = new createjs.Container();
+
+    TextCompleterContainer.prototype.Container_initialize = TextCompleterContainer.prototype.initialize;
+
+    function TextCompleterContainer(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
+      this.initialize(opts, font, fcolor, bcolor, scolor, stroke, x, y);
+    }
+
+    TextCompleterContainer.prototype.initialize = function(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
+      var _ref2, _ref3, _ref4;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = x;
+      this.y = y;
+      this.success = (_ref2 = opts.success) != null ? _ref2 : opts.text;
+      this.text = this.createText('txt', opts.text, font, fcolor, 0, -5);
+      this.width = (_ref3 = opts.width) != null ? _ref3 : this.text.getMeasuredWidth();
+      this.height = (_ref4 = opts.height) != null ? _ref4 : this.text.getMeasuredHeight();
+      this.complete = false;
+      this.back = new createjs.Shape();
+      this.back.graphics.f(bcolor).dr(0, 0, this.width, this.height).ss(stroke).s(scolor).mt(0, this.height).lt(this.width, this.height);
+      return this.add(this.back, false);
+    };
+
+    TextCompleterContainer.prototype.setRectOutline = function(bcolor, stroke, scolor) {
+      return this.back.graphics.f(bcolor).ss(stroke).s(scolor).dr(0, 0, this.width, this.height);
+    };
+
+    TextCompleterContainer.prototype.update = function(opts) {
+      if (opts && opts.complete) {
+        this.complete = opts.complete;
+      }
+      this.text.textAlign = 'center';
+      this.text.x = this.width / 2;
+      this.add(this.text, false);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0
+      });
+    };
+
+    return TextCompleterContainer;
+
+  })(Component);
+
+  LetterDragContainer = (function(_super) {
+    __extends(LetterDragContainer, _super);
+
+    LetterDragContainer.prototype = new createjs.Container();
+
+    LetterDragContainer.prototype.Container_initialize = LetterDragContainer.prototype.initialize;
+
+    function LetterDragContainer(opts) {
+      this.handleMouseDown = __bind(this.handleMouseDown, this);
+      this.update = __bind(this.update, this);
+      this.initialize(opts);
+    }
+
+    LetterDragContainer.prototype.initialize = function(opts) {
+      var hit, t, _ref2;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      Module.extend(this, d2oda.actions);
+      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
+      this.x = opts.x;
+      this.y = opts.y;
+      this.pos = {
+        x: this.x,
+        y: this.y
+      };
+      this.index = opts.index;
+      this.target = lib[opts.target];
+      this["eval"] = opts["eval"];
+      this.droptargets = new Array();
+      t = this.createText('txt', opts.text, opts.font, opts.color, 0, 0);
+      this.width = t.getMeasuredWidth();
+      this.height = t.getMeasuredHeight();
+      switch (opts.afterSuccess) {
+        case 'hide':
+          this.afterSuccess = this.hide;
+          break;
+        case 'inplace':
+          this.afterSuccess = this.putInPlace;
+          break;
+        case 'return':
+          this.afterSuccess = this.returnToPlace;
+          break;
+        case 'origin':
+          this.afterSuccess = this.setInOrigin;
+      }
+      switch (opts.afterFail) {
+        case 'hide':
+          this.afterFail = this.hide;
+          break;
+        case 'inplace':
+          this.afterSuccess = this.putInPlace;
+          break;
+        case 'return':
+          this.afterFail = this.returnToPlace;
+          break;
+        case 'origin':
+          this.afterFail = this.setInOrigin;
+      }
+      hit = new createjs.Shape();
+      hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6);
+      t.hitArea = hit;
+      this.add(t, false);
+      if (this.target) {
+        this.target.observer.subscribe(ComponentObserver.UPDATED, this.update);
+      }
+      return this.addEventListener('mousedown', this.handleMouseDown);
+    };
+
+    LetterDragContainer.prototype.update = function(opts) {
+      return this.droptargets = this.target.droptargets;
+    };
+
+    LetterDragContainer.prototype.handleMouseDown = function(e) {
+      var offset, posX, posY,
+        _this = this;
+      posX = e.stageX / d2oda.stage.r;
+      posY = e.stageY / d2oda.stage.r;
+      offset = {
+        x: posX - this.x,
+        y: posY - this.y
+      };
+      this.x = posX - offset.x;
+      this.y = posY - offset.y;
+      e.addEventListener('mousemove', function(ev) {
+        posX = ev.stageX / d2oda.stage.r;
+        posY = ev.stageY / d2oda.stage.r;
+        _this.x = posX - offset.x;
+        _this.y = posY - offset.y;
+        return false;
+      });
+      e.addEventListener('mouseup', function(ev) {
+        if (_this.droptargets && _this.droptargets.length > 0) {
+          _this.evaluateDrop(e);
+        } else {
+          _this.dispatchEvent({
+            type: 'drop'
+          });
+        }
+        return false;
+      });
+      return false;
+    };
+
+    LetterDragContainer.prototype.evaluateDrop = function(e) {
+      var drop, dropped, pt, target, _i, _len, _ref2;
+      target = null;
+      dropped = false;
+      _ref2 = this.droptargets;
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        drop = _ref2[_i];
+        pt = drop.globalToLocal(oda.stage.mouseX, oda.stage.mouseY);
+        if (drop.hitTest(pt.x, pt.y)) {
+          target = drop;
+          dropped = true;
+        }
+      }
+      if (dropped) {
+        d2oda.evaluator.evaluate(this["eval"], this.name, target);
+        return this.dispatchEvent({
+          type: 'dropped',
+          drop: target
+        });
+      } else {
+        return this.returnToPlace(this.alpha, this.scaleX, this.scaleY);
+      }
+    };
+
+    return LetterDragContainer;
 
   })(Component);
 
@@ -2248,18 +2884,6 @@ LIBRARY
       });
     };
 
-    ImageCompleterContainer.prototype.evaluate = function(obj) {
-      if (obj.index === this.success) {
-        this.complete = true;
-        this.update();
-        obj.afterSuccess();
-        return lib.scene.success();
-      } else {
-        obj.afterFail();
-        return lib.scene.fail();
-      }
-    };
-
     return ImageCompleterContainer;
 
   })(Component);
@@ -2329,6 +2953,9 @@ LIBRARY
     };
 
     SceneStack.prototype.lastScene = function() {
+      if (lib.score.type === 'clock') {
+        lib.score.stop();
+      }
       return this.dispatchEvent({
         type: 'complete'
       });
@@ -2350,6 +2977,8 @@ LIBRARY
 
     SceneFactory.prototype.makeChild = function(opts) {
       switch (opts.type) {
+        case 'abc':
+          return new ABCContainer(opts);
         case 'drg':
           return new DragContainer(opts);
         case 'grd':
@@ -2358,12 +2987,20 @@ LIBRARY
           return new ImageContainer(opts);
         case 'lbl':
           return new LabelContainer(opts);
+        case 'cln':
+          return new CloneContainer(opts);
         case 'btn':
           return new ButtonContainer(opts);
         case 'stps':
           return new StepsContainer(opts);
+        case 'chs':
+          return new ChooseContainer(opts);
+        case 'cwd':
+          return new CrossWordsContainer(opts);
         case 'wcpt':
           return new WordCompleterContainer(opts);
+        case 'ccpt':
+          return new CloneCompleterContainer(opts);
         case 'pcpt':
           return new PhraseCompleterContainer(opts);
         case 'iwcpt':
@@ -2426,6 +3063,10 @@ LIBRARY
       switch (scene.answers.type) {
         case 'steps':
           this.observer.subscribe(SceneObserver.NEXT_STEP, this.next);
+          break;
+        case 'limit':
+          this.answers = d2oda.utilities.shuffleNoRepeat(this.answers, scene.answers.limit);
+          this.observer.subscribe(SceneObserver.NEXT_STEP, this.next);
       }
       _ref3 = scene.containers;
       for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
@@ -2463,7 +3104,7 @@ LIBRARY
       step = this.answers[this.currentStep];
       for (_i = 0, _len = step.length; _i < _len; _i++) {
         target = step[_i];
-        if (target.name !== 'snd' && lib[target.name].isComplete() === false) {
+        if (target.name !== 'snd' && target.name !== 'global' && lib[target.name].isComplete() === false) {
           return false;
         }
       }
@@ -2493,6 +3134,10 @@ LIBRARY
       for (_i = 0, _len = step.length; _i < _len; _i++) {
         target = step[_i];
         switch (target.name) {
+          case 'global':
+            d2oda.evaluator.success = target.opts.success;
+            _results.push(false);
+            break;
           case 'snd':
             this.snd = target.opts.id;
             createjs.Sound.stop();

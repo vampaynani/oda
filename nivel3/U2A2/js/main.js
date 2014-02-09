@@ -252,6 +252,7 @@ NEW ODA
                 y: 137,
                 index: 1,
                 target: 'stps1',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -262,6 +263,7 @@ NEW ODA
                 y: 203,
                 index: 2,
                 target: 'stps1',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -272,6 +274,7 @@ NEW ODA
                 y: 269,
                 index: 3,
                 target: 'stps1',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -282,6 +285,7 @@ NEW ODA
                 y: 335,
                 index: 4,
                 target: 'stps1',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -292,6 +296,7 @@ NEW ODA
                 y: 400,
                 index: 5,
                 target: 'stps1',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -302,6 +307,7 @@ NEW ODA
                 y: 467,
                 index: 6,
                 target: 'stps1',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -443,6 +449,7 @@ NEW ODA
                 y: 137,
                 index: 1,
                 target: 'stps2',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -453,6 +460,7 @@ NEW ODA
                 y: 203,
                 index: 2,
                 target: 'stps2',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -463,6 +471,7 @@ NEW ODA
                 y: 269,
                 index: 3,
                 target: 'stps2',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -473,6 +482,7 @@ NEW ODA
                 y: 335,
                 index: 4,
                 target: 'stps2',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -483,6 +493,7 @@ NEW ODA
                 y: 400,
                 index: 5,
                 target: 'stps2',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {
@@ -493,6 +504,7 @@ NEW ODA
                 y: 467,
                 index: 6,
                 target: 'stps2',
+                "eval": 'drop_01',
                 afterSuccess: 'inplace',
                 afterFail: 'return'
               }, {

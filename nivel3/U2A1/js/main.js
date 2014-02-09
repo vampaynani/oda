@@ -127,7 +127,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'isn\'t',
@@ -151,7 +151,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'are'
@@ -174,7 +174,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'isn\'t',
@@ -197,7 +197,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'are'
@@ -220,7 +220,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'are'
@@ -243,7 +243,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'aren\'t',
@@ -266,7 +266,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'aren\'t',
@@ -289,7 +289,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'is'
@@ -382,6 +382,7 @@ NEW ODA
                 y: 432,
                 index: 'are',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -400,6 +401,7 @@ NEW ODA
                 y: 437,
                 index: 'arent',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -418,6 +420,7 @@ NEW ODA
                 y: 459,
                 index: 'is',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -436,6 +439,7 @@ NEW ODA
                 y: 474,
                 index: 'isnt',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -459,6 +463,7 @@ NEW ODA
                 y: 442,
                 index: 'any',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -477,6 +482,7 @@ NEW ODA
                 y: 467,
                 index: 'some',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -500,6 +506,7 @@ NEW ODA
                 y: 417,
                 index: 'sugar',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -518,6 +525,7 @@ NEW ODA
                 y: 458,
                 index: 'mushrooms',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -536,6 +544,7 @@ NEW ODA
                 y: 400,
                 index: 'peaches',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -554,6 +563,7 @@ NEW ODA
                 y: 432,
                 index: 'peanutbutter',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -572,6 +582,7 @@ NEW ODA
                 y: 457,
                 index: 'corn',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -590,6 +601,7 @@ NEW ODA
                 y: 483,
                 index: 'blueberries',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -608,6 +620,7 @@ NEW ODA
                 y: 395,
                 index: 'fish',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -626,6 +639,7 @@ NEW ODA
                 y: 414,
                 index: 'greenpeppers',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -644,6 +658,7 @@ NEW ODA
                 y: 452,
                 index: 'strawberryjelly',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -662,6 +677,7 @@ NEW ODA
                 y: 489,
                 index: 'apples',
                 target: 'pcpt1',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -930,7 +946,7 @@ NEW ODA
                 y: 540,
                 font: '24px Quicksand',
                 margin: 10,
-                align: 'center',
+                align: 'tc',
                 scolor: '#F00'
               }, {
                 type: 'img',
@@ -939,11 +955,12 @@ NEW ODA
                 y: 412
               }, {
                 type: 'btn',
-                id: 'btn_n11',
+                id: 'btn_2n11',
                 x: 149,
                 y: 432,
                 index: 'are',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -957,11 +974,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n12',
+                id: 'btn_2n12',
                 x: 190,
                 y: 437,
                 index: 'arent',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -975,11 +993,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n13',
+                id: 'btn_2n13',
                 x: 168,
                 y: 459,
                 index: 'is',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -993,11 +1012,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n14',
+                id: 'btn_2n14',
                 x: 193,
                 y: 474,
                 index: 'isnt',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1016,11 +1036,12 @@ NEW ODA
                 y: 432
               }, {
                 type: 'btn',
-                id: 'btn_n21',
+                id: 'btn_2n21',
                 x: 324,
                 y: 442,
                 index: 'any',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1034,11 +1055,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n22',
+                id: 'btn_2n22',
                 x: 317,
                 y: 467,
                 index: 'some',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1057,11 +1079,12 @@ NEW ODA
                 y: 383
               }, {
                 type: 'btn',
-                id: 'btn_n31',
+                id: 'btn_2n31',
                 x: 434,
                 y: 417,
                 index: 'milk',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1075,11 +1098,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n32',
+                id: 'btn_2n32',
                 x: 446,
                 y: 458,
                 index: 'honey',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1093,11 +1117,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n33',
+                id: 'btn_2n33',
                 x: 513,
                 y: 400,
                 index: 'cheese',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1111,11 +1136,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n34',
+                id: 'btn_2n34',
                 x: 488,
                 y: 432,
                 index: 'meat',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1129,11 +1155,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n35',
+                id: 'btn_2n35',
                 x: 587,
                 y: 467,
                 index: 'yogurt',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1147,11 +1174,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n36',
+                id: 'btn_2n36',
                 x: 520,
                 y: 483,
                 index: 'eggs',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1165,11 +1193,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n37',
+                id: 'btn_2n37',
                 x: 599,
                 y: 405,
                 index: 'raspberries',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1183,11 +1212,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n38',
+                id: 'btn_2n38',
                 x: 530,
                 y: 450,
                 index: 'pumpkins',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1201,11 +1231,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n39',
+                id: 'btn_2n39',
                 x: 550,
                 y: 427,
                 index: 'strawberryjelly',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {
@@ -1219,11 +1250,12 @@ NEW ODA
                 ]
               }, {
                 type: 'btn',
-                id: 'btn_n310',
+                id: 'btn_2n310',
                 x: 633,
                 y: 489,
                 index: 'apples',
                 target: 'pcpt2',
+                "eval": 'click_O1',
                 states: [
                   {
                     txt: {

@@ -333,7 +333,8 @@ NEW ODA
                 uwidth: 30,
                 font: '40px Quicksand',
                 scolor: '#F00',
-                align: 'tc'
+                align: 'tc',
+                "eval": 'drop_03'
               }
             ],
             groups: []

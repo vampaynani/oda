@@ -35,7 +35,7 @@ class U3A5 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU3_U2_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U3_A5_instructions.mp3', id:'instructions'}
 		]
 		@game = [
 			{

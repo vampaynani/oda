@@ -1,14 +1,15 @@
-class U8A6 extends Oda
+###
+
+NEW ODA
+
+###
+class U4A6 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
-			{id: 'c1', src: 'circle1.png'}
-			{id: 'c2', src: 'circle2.png'}
-			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
-			{id:'youshouldcover', src:'youshouldcover.png'}
+		    {id:'c1', src: 'circle1.png'}
+		    {id:'c2', src: 'circle2.png'}
+		    {id:'youshouldcover', src:'youshouldcover.png'}
 			{id:'youshoulddentist', src:'youshoulddentist.png'}
 			{id:'souvenir', src:'souvenir.png'}
 			{id:'alotofcats', src:'a-lot-of-cats.png'}
@@ -25,134 +26,124 @@ class U8A6 extends Oda
 			{id:'twodollarsA', src:'two-dollarsA.png'}
 			{id:'twodollarsB', src:'two-dollarsB.png'}
 			{id:'youshould', src:'you-should.png'}
-
+		    {src:'TU3_U4_A6_instructions.mp3', id:'s/instructions'}
 		]
-
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU3_U4_A6_instructions.mp3', id:'instructions'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
-		]
-		@game =
-			preguntas: [
-				{tipo:'texto', imagen: 'notgoodat', pregunta:"", opcionUno:"He's good at", opcionDos:'not good at taking pictures', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'alotofcats', pregunta:"", opcionUno:"There are much", opcionDos:'a lot of cats.', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'itakeanap', pregunta:"When I'm sleepy,", opcionUno:"Itake a nap.",opcionDos:'I take a test.', respuesta:'opcionUno'}
-				{tipo:'texto', imagen: 'itstheirs',regunta:"Whose cat is it?", opcionUno:"It's his.", opcionDos:"It's theirs.", respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'jointheoutdoorsclub', pregunta:"", opcionUno:"Join the Crafts Club.", opcionDos:'Join the Outdoors Club.', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'many', pregunta:"There are a lot!", opcionUno:"How much", opcionDos:'many watermelons are there?', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'take', pregunta:"", opcionUno:"I want to taking", opcionDos:'take violin lessons.', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'thatahealthyhabit', pregunta:"I love driking milk.", opcionUno:"That's a healthy habit.", opcionDos:"That's an unhealthy habit.", respuesta:'opcionUno'}
-				{tipo:'texto', imagen: 'thatsbadadvice', pregunta:"", opcionUno:"That's a good advice.", opcionDos:"That's a bad advice.", respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'thereareafew',pregunta:"How many eggs are there?", opcionUno:"There are a little.", opcionDos:'There are a few.', respuesta:'opcionDos'}
-				{tipo:'imagen', pregunta:"How much are the pears?", preguntados:"They're two dollars and thirty cents a kilo.", opcionUno:'twodollarsA', opcionDos:'twodollarsB', respuesta:"opcionUno"}
-				{tipo:'texto', imagen: 'youshoulddentist', pregunta:"You should go to the dentist", opcionUno:"twice a month", opcionDos:'twice a year.', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'youshould', pregunta:"I cut my knee.", opcionUno:"You should rest.", opcionDos:'You should wash it with soap and water.', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'youshouldcover', pregunta:"You should cover your mouth when you have", opcionUno:"chicken pox", opcionDos:'a cough.', respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'souvenirs?', pregunta:"Where can I buy souvenirs?", opcionUno:"At the movie theater.", opcionDos:'At the gift shop.', respuesta:'opcionDos'}
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Take the review quiz! Click on the correct option.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									img: {name: 'jointheoutdoorsclub', x: 20, y: 100}
+									opt1: 'Join the Crafts Club.', opt2: 'Join the Outdoors Club.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									img: {name: 'thatsbadadvice', x: 20, y: 100}
+									opt1: 'That\'s good advice.', opt2: 'That\'s bad advice.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									img: {name: 'take', x: 20, y: 100}
+									opt1: 'I want to taking violin lessons.', opt2: 'I want to take violin lessons.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									caption: 'You should cover your mouth when you have'
+									img: {name: 'youshouldcover', x: 20, y: 100}
+									opt1: 'chicken pox.', opt2: 'a cough.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									img: {name: 'anap', x: 20, y: 100}
+									opt1: 'Grandma is taking a picture.', opt2: 'Grandma is taking a nap.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									label: 'Whose cat is it?'
+									img: {name: 'itstheirs', x: 20, y: 100}
+									opt1: 'It\'s his.', opt2: 'It\'s theirs.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									img: {name: 'notgoodat', x: 20, y: 100}
+									opt1: 'He\'s good at taking pictures.', opt2: 'He\'s not good at taking pictures.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:1}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									label: 'I love drinking milk.'
+									img: {name: 'thatahealthyhabit', x: 20, y: 100}
+									opt1: 'That\'s a healthy habit.', opt2: 'That\'s an unhealthy habit.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:1}}
+								{
+									name: 'chs1', opts:{type: 'img'
+									label: 'How much are the pears?'
+									caption: 'They\'re two dollars and thirty cents a kilo.'
+									opt1: 'twodollarsA', opt2: 'twodollarsB'}
+								}
+							]
+							[
+								{name:'global', opts:{success:2}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									img: {name: 'alotofcats', x: 20, y: 100}
+									opt1: 'There are much cats.', opt2: 'There are a lot of cats.'}
+								}
+							]
+							[
+								{name:'global', opts:{success:1}}
+								{
+									name: 'chs1', opts:{type: 'txt'
+									label: 'When I\'m sleepy,'
+									img: {name: 'itakeanap', x: 20, y: 100}
+									opt1: 'I take a nap.', opt2: 'I take a test.'}
+								}
+							]
+						]
+						mixed: true
+						type: 'limit'
+						limit: 10
+					}
+					containers:[
+						{
+							type: 'chs', id: 'chs1', x: 400, y: 100, align: 'tc', target: 'global', eval:'global_01'
+							label:{font:'18px Quicksand', color:'#333'}
+							caption:{font:'20px Quicksand', color:'#333'}
+							bullets:{font:'24px Quicksand', color: '#000', lineWidth: 300}
+						}
+					]
+					groups: []
+				}
 			]
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@intento = 0
-		@preguntas = @shuffleNoRepeat @game.preguntas, 11
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Take the review quiz! Click on the correct option.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
-		@setQuestion(0).introEvaluation()
-	setQuestion: (i) ->
-		question = new createjs.Container()
-		question.x = 0
-		question.y = 0
-		question.name = 'question'
-		if @preguntas[i].tipo is 'texto'
-			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'
-			question.addChild v
-			@addToLibrary v
-
-			text = new createjs.Text @preguntas[i].pregunta,'24px Quicksand','#333'
-			text.name = 'titulo'
-			text.x = stageSize.w / 2
-			text.y = 140
-			text.textAlign = 'center'
-			text.lineWidth = 400
-			question.addChild text
-			@addToLibrary text
-
-			opciones = new createjs.Container()
-			uno = new ClickableText @preguntas[i].opcionUno, @preguntas[i].opcionUno, i, 0, 0
-			uno.text.textAlign = 'center'
-			uno.setLineWidth 300
-			uno.x = stageSize.w / 2 - uno.width / 2 - 10
-			opciones.addChild uno
-			@addToLibrary uno 
-
-			diagonal = new createjs.Text '/','16px Quicksand','#333'
-			diagonal.name = 'diagonal'
-			diagonal.textAlign = 'center'
-			diagonal.x = stageSize.w / 2
-			diagonal.y = 0
-			opciones.addChild diagonal
-			@addToLibrary diagonal
-
-			dos = new ClickableText @preguntas[i].opcionDos, @preguntas[i].opcionDos, i, 0, 0
-			dos.text.textAlign = 'center'
-			dos.setLineWidth 300
-			dos.x = stageSize.w / 2 + dos.width / 2 + 10
-			opciones.addChild dos
-			@addToLibrary dos
-
-			total = uno.width + dos.width + 20
-
-			#opciones.x = stageSize.w / 2 - total / 2;
-			opciones.y = 490;
-			question.addChild opciones
-		
-		@addToMain question
-		@
-	introEvaluation: ->
-		super
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['question'], 1, {alpha:0, y: @library['question'].y - 20, delay: 1, onComplete:@playInstructions, onCompleteParams:[@]}
-	initEvaluation: (e) =>
-		super
-		@setClick 0
-	setClick: (i) =>
-		@library[@preguntas[i].opcionUno].index = 'opcionUno'
-		@library[@preguntas[i].opcionDos].index = 'opcionDos'
-		@library[@preguntas[i].opcionUno].addEventListener 'click', @evaluateAnswer
-		@library[@preguntas[i].opcionDos].addEventListener 'click', @evaluateAnswer
-		@
-	evaluateAnswer: (e) =>
-		@answer = e.target
-		if @answer.index is @preguntas[@index].respuesta
-			createjs.Sound.play 'good'
-			if @intento is 0
-				@library['score'].plusOne()
-			@finishEvaluation()
-			@intento = 0
-		else
-			@intento = 1
-			@warning()
-	finishEvaluation: =>
-		if @preguntas[@index].tipo is 'texto'			
-			TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
-			TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}			
-			TweenLite.to @library['titulo'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
-			TweenLite.to @library['diagonal'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}				
-			TweenLite.to @library[@preguntas[@index].imagen], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}			
-		else if @preguntas[@index].tipo is 'imagen'
-			TweenLite.to @library['titulo'], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
-			TweenLite.to @library[@preguntas[@index].opcionDos], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
-			TweenLite.to @library[@preguntas[@index].opcionUno], 0.5, {alpha:0, y:stageSize.h, ease: Back.easeOut}
-	nextEvaluation: =>
-		@index++
-		if @index < @preguntas.length - 1
-			@setQuestion(@index).setClick(@index)
-		else
-			@finish()
-	finish: ->
-		super
-	window.U8A6 = U8A6
+		super()
+	window.U4A6 = U4A6

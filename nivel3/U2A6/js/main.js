@@ -248,6 +248,7 @@ NEW ODA
                 y: 260,
                 index: 'islot',
                 target: 'grd1',
+                "eval": 'click_03',
                 states: [
                   {
                     img: {
@@ -264,6 +265,7 @@ NEW ODA
                 y: 300,
                 index: 'islittle',
                 target: 'grd1',
+                "eval": 'click_03',
                 states: [
                   {
                     img: {
@@ -280,6 +282,7 @@ NEW ODA
                 y: 340,
                 index: 'isnone',
                 target: 'grd1',
+                "eval": 'click_03',
                 states: [
                   {
                     img: {
@@ -296,6 +299,7 @@ NEW ODA
                 y: 380,
                 index: 'arelot',
                 target: 'grd1',
+                "eval": 'click_03',
                 states: [
                   {
                     img: {
@@ -312,6 +316,7 @@ NEW ODA
                 y: 420,
                 index: 'arefew',
                 target: 'grd1',
+                "eval": 'click_03',
                 states: [
                   {
                     img: {
@@ -328,6 +333,7 @@ NEW ODA
                 y: 460,
                 index: 'arenone',
                 target: 'grd1',
+                "eval": 'click_03',
                 states: [
                   {
                     img: {

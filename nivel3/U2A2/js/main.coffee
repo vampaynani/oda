@@ -79,12 +79,12 @@ class U2A2 extends Oda
 						{type: 'img', id: 'j5', x: 132, y: 437}
 						{type: 'img', id: 'j6', x: 340, y: 437}
 						{type: 'stps', id:'stps1'}
-						{type: 'drg', id: 'jc1', name: 'clk1', x: 602, y: 137, index: 1, target: 'stps1', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'jc2', name: 'clk2', x: 644, y: 203, index: 2, target: 'stps1', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'jc3', name: 'clk3', x: 602, y: 269, index: 3, target: 'stps1', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'jc4', name: 'clk4', x: 644, y: 335, index: 4, target: 'stps1', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'jc5', name: 'clk5', x: 603, y: 400, index: 5, target: 'stps1', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'jc6', name: 'clk6', x: 644, y: 467, index: 6, target: 'stps1', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'jc1', name: 'clk1', x: 602, y: 137, index: 1, target: 'stps1', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'jc2', name: 'clk2', x: 644, y: 203, index: 2, target: 'stps1', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'jc3', name: 'clk3', x: 602, y: 269, index: 3, target: 'stps1', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'jc4', name: 'clk4', x: 644, y: 335, index: 4, target: 'stps1', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'jc5', name: 'clk5', x: 603, y: 400, index: 5, target: 'stps1', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'jc6', name: 'clk6', x: 644, y: 467, index: 6, target: 'stps1', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
 						{
 							type: 'btn', id: 'finish', x: 663, y: 539, target:'stps1', isFinish: true
 							states:[
@@ -131,12 +131,12 @@ class U2A2 extends Oda
 						{type: 'img', id: 'm5', x: 132, y: 437}
 						{type: 'img', id: 'm6', x: 340, y: 437}
 						{type: 'stps', id:'stps2'}
-						{type: 'drg', id: 'mc1', name: 'clk21', x: 602, y: 137, index: 1, target: 'stps2', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'mc2', name: 'clk22', x: 644, y: 203, index: 2, target: 'stps2', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'mc3', name: 'clk23', x: 602, y: 269, index: 3, target: 'stps2', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'mc4', name: 'clk24', x: 644, y: 335, index: 4, target: 'stps2', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'mc5', name: 'clk25', x: 603, y: 400, index: 5, target: 'stps2', afterSuccess: 'inplace', afterFail: 'return'}
-						{type: 'drg', id: 'mc6', name: 'clk26', x: 644, y: 467, index: 6, target: 'stps2', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'mc1', name: 'clk21', x: 602, y: 137, index: 1, target: 'stps2', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'mc2', name: 'clk22', x: 644, y: 203, index: 2, target: 'stps2', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'mc3', name: 'clk23', x: 602, y: 269, index: 3, target: 'stps2', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'mc4', name: 'clk24', x: 644, y: 335, index: 4, target: 'stps2', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'mc5', name: 'clk25', x: 603, y: 400, index: 5, target: 'stps2', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
+						{type: 'drg', id: 'mc6', name: 'clk26', x: 644, y: 467, index: 6, target: 'stps2', eval: 'drop_01', afterSuccess: 'inplace', afterFail: 'return'}
 						{
 							type: 'btn', id: 'finish', x: 663, y: 539, target:'stps2', isFinish: true
 							states:[

@@ -1,13 +1,14 @@
+###
+
+NEW ODA
+
+###
 class U4A3 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'c1', src: 'circle1.png'}
-			{id: 'c2', src: 'circle2.png'}
-			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
-
+		    {id:'c1', src: 'circle1.png'}
+		    {id:'c2', src: 'circle2.png'}
 		    {id: 'btnConfused', src:'btn_confused.png'}
 			{id: 'btnDirty', src:'btn_dirty.png'}
 			{id: 'btnEnergetic', src:'btn_energetic.png'}
@@ -23,243 +24,195 @@ class U4A3 extends Oda
 			{id: 'n2', src:'tag_answer.png'}
 			{id: 'n3', src:'tag_pronoun.png'}
 			{id: 'n1', src:'tag_verb.png'}
+			{src:'TU3_U4_A3_instructions.mp3', id:'s/instructions'}
 		]
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU3_U4_A3_instructions.mp3', id:'instructions'}
-		]
-		@game =
-			steps : [ ##no se como tengan que organizarse cada imagen tiene una frase que debe mostrar. Falta completar aqui las frases
-				{x:200 ,y:235 ,face:'faceSick', id:'btnSick', frase:"When I'm sick, I ", targets: ['go','to the doctor'], a1: 1, a2: 5}
-				{x:415 ,y:235 ,face:'faceConfused', id:'btnConfused', frase:"When I'm confused, I ", targets: ['ask','my teacher', 'a question'], a1: 3, a2: 1, a3: 1}
-				{x:630 ,y:235 ,face:'faceTired', id:'btnTired', frase:"When I'm tired, I ", targets: ['go','to bed'], a1: 1, a2: 3}
-				{x:200 ,y:380 ,face:'faceHot', id:'btnHot', frase:"When I'm hot, I ", targets: ['sit','in front of', 'a fan'], a1: 4, a2:2, a3: 2}
-				{x:415 ,y:380 ,face:'faceDirty', id:'btnDirty', frase:"When I'm dirty, I ", targets: ['take','a shower'], a1: 2, a2: 4}
-				{x:630 ,y:380 ,face:'faceEnergetic', id:'btnEnergetic', frase:"When I'm energetic, I ", targets: ['go','roller skating'], a1: 1, a2: 6}
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Read and choose the correct picture. Then click on the words to complete the sentence.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{name: 'grp0', opts:{type: 'fadeIn', target: 'faceDirty'}}
+								{name:'grp1',opts: {type: 'success', success: 'btnDirty', targetGroup: 'grp2', nextGroup: 'grp3'}}
+								{name: 'pcpt1', opts: {pattern: ['When I\'m dirty, I', '#tcpt', '#tcpt','.'], targets: [{text:'take'}, {text:'a shower', success:'ashower'}]}}
+							]
+							[
+								{name: 'grp0', opts:{type: 'fadeIn', target: 'faceTired'}}
+								{name:'grp1',opts: {type: 'success', success: 'btnTired', targetGroup: 'grp2', nextGroup: 'grp3'}}
+								{name: 'pcpt1', opts: {pattern:['When I\'m tired, I', '#tcpt', '#tcpt','.'], targets: [{text:'go'}, {text:'to bed', success:'tobed'}]}}
+							]
+							[
+								{name: 'grp0', opts:{type: 'fadeIn', target: 'faceConfused'}}
+								{name:'grp1',opts: {type: 'success', success: 'btnConfused', targetGroup: 'grp2', nextGroup: 'grp3'}}
+								{name: 'pcpt1', opts: {pattern:['When I\'m confused, I', '#tcpt', '#tcpt', '#tcpt', '.'], targets: [{text:'ask'}, {text:'my teacher', success:'myteacher'}, {text:'a question', success:'aquestion'}]}}
+							]
+							[
+								{name: 'grp0', opts:{type: 'fadeIn', target: 'faceEnergetic'}}
+								{name:'grp1',opts: {type: 'success', success: 'btnEnergetic', targetGroup: 'grp2', nextGroup: 'grp3'}}
+								{name: 'pcpt1', opts: {pattern:['When I\'m energetic, I', '#tcpt', '#tcpt', '.'], targets: [{text:'go'}, {text:'roller skating', success:'rollerskating'}]}}
+							]
+							[
+								{name: 'grp0', opts:{type: 'fadeIn', target: 'faceHot'}}
+								{name:'grp1',opts: {type: 'success', success: 'btnHot', targetGroup: 'grp2', nextGroup: 'grp3'}}
+								{name: 'pcpt1', opts: {pattern:['When I\'m hot, I', '#tcpt', '#tcpt', '#tcpt',' .'], targets: [{text:'sit'}, {text:'in front of', success:'infrontof'}, {text:'a fan', success:'afan'}]}}
+							]
+							[
+								{name: 'grp0', opts:{type: 'fadeIn', target: 'faceSick'}}
+								{name:'grp1',opts: {type: 'success', success: 'btnSick', targetGroup: 'grp2', nextGroup: 'grp3'}}
+								{name: 'pcpt1', opts: {pattern:['When I\'m sick, I', '#tcpt', '#tcpt','.'], targets: [{text:'go'}, {text:'to the doctor', success:'tothedoctor'}]}}
+							]
+						]
+						type: 'steps'
+					}
+					containers:[
+						{type: 'img', id: 'faceSick', x: 150, y: 185, align: 'mc'}
+						{type: 'img', id: 'faceConfused', x: 150, y: 185, align: 'mc'}
+						{type: 'img', id: 'faceTired', x: 150, y: 185, align: 'mc'}
+						{type: 'img', id: 'faceHot', x: 150, y: 185, align: 'mc'}
+						{type: 'img', id: 'faceDirty', x: 150, y: 185, align: 'mc'}
+						{type: 'img', id: 'faceEnergetic', x: 150, y: 185, align: 'mc'}
+						{type: 'pcpt', id: 'pcpt1', x: 200, y: 165, font: '24px Quicksand', margin: 10, align: 'tl', scolor: '#eb188e'}
+						{
+							type: 'btn', id: 'btn1', x: 200, y: 275, index: 'btnSick', target: 'grp1', eval: 'switch_01'
+							states: [{img: {name: 'btnSick', x: 0, y: 0, align: 'mc', scale: 0.8}}]
+						}
+						{
+							type: 'btn', id: 'btn2', x: 415, y: 275, index: 'btnConfused', target: 'grp1', eval: 'switch_01'
+							states: [{img: {name: 'btnConfused', x: 0, y: 0, align: 'mc', scale: 0.8}}]
+						}
+						{
+							type: 'btn', id: 'btn3', x: 630, y: 275, index: 'btnTired', target: 'grp1', eval: 'switch_01'
+							states: [{img: {name: 'btnTired', x: 0, y: 0, align: 'mc', scale: 0.8}}]
+						}
+						{
+							type: 'btn', id: 'btn4', x: 200, y: 420, index: 'btnHot', target: 'grp1', eval: 'switch_01'
+							states: [{img: {name: 'btnHot', x: 0, y: 0, align: 'mc', scale: 0.8}}]
+						}
+						{
+							type: 'btn', id: 'btn5', x: 415, y: 420, index: 'btnDirty', target: 'grp1', eval: 'switch_01'
+							states: [{img: {name: 'btnDirty', x: 0, y: 0, align: 'mc', scale: 0.8}}]
+						}
+						{
+							type: 'btn', id: 'btn6', x: 630, y: 420, index: 'btnEnergetic', target: 'grp1', eval: 'switch_01'
+							states: [{img: {name: 'btnEnergetic', x: 0, y: 0, align: 'mc', scale: 0.8}}]
+						}
+						{type: 'img', id: 'btnSick', x: 400, y: 310, align: 'mc'}
+						{type: 'img', id: 'btnConfused', x: 400, y: 310, align: 'mc'}
+						{type: 'img', id: 'btnTired', x: 400, y: 310, align: 'mc'}
+						{type: 'img', id: 'btnHot', x: 400, y: 310, align: 'mc'}
+						{type: 'img', id: 'btnDirty', x: 400, y: 310, align: 'mc'}
+						{type: 'img', id: 'btnEnergetic', x: 400, y: 310, align: 'mc'}
+						{type: 'img', id: 'n1', x: 110, y: 452}
+						{
+							type: 'btn', id: 'btn_n11', x: 141, y: 488, index: 'go', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'go', name: 'go', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n12', x: 179, y: 473, index: 'take', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'take', name: 'take', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n13', x: 177, y: 522, index: 'sit', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'sit', name: 'sit', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n14', x: 217, y: 499, index: 'ask', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'ask', name: 'ask', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{type: 'img', id: 'n2', x: 312, y: 395}
+						{
+							type: 'btn', id: 'btn_n21', x: 456, y: 420, index: 'ashower', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'a shower', name: 'ashower', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n22', x: 348, y: 441, index: 'myteacher', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'my teacher', name: 'myteacher', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n23', x: 398, y: 469, index: 'tothedoctor', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'to the doctor', name: 'tothedoctor', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n24', x: 328, y: 488, index: 'infrontof', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'in front of', name: 'infrontof', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n25', x: 426, y: 508, index: 'rollerskating', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'roller skating', name: 'rollerskating', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n26', x: 379, y: 527, index: 'tobed', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'to bed', name: 'tobed', x: 0, y: 0, font: '18px Quicksand'}}]
+						}
+						{type: 'img', id: 'n3', x: 626, y: 459}
+						{
+							type: 'btn', id: 'btn_n31', x: 648, y: 480, index: 'aquestion', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'a question', name: 'aquestion', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+						{
+							type: 'btn', id: 'btn_n32', x: 669, y: 516, index: 'afan', target: 'pcpt1', eval: 'click_O1'
+							states: [{txt: {text: 'a fan', name: 'afan', x: 0, y: 0, font: '20px Quicksand'}}]
+						}
+					]
+					groups: [
+						{
+							type: 'grp', id: 'grp0', invisible: true
+							group: [
+								'faceSick'
+								'faceConfused'
+								'faceTired'
+								'faceHot'
+								'faceDirty'
+								'faceEnergetic'
+							]
+						}
+						{
+							type: 'grp', id: 'grp1'
+							group: [
+								'btn1'
+								'btn2'
+								'btn3'
+								'btn4'
+								'btn5'
+								'btn6'	
+							]
+						}
+						{
+							type: 'grp', id: 'grp2', invisible: true
+							group: [
+								'btnSick'
+								'btnConfused'
+								'btnTired'
+								'btnHot'
+								'btnDirty'
+								'btnEnergetic'
+							]
+						}
+						{
+							type: 'grp', id: 'grp3', invisible: true
+							group: [
+								'n1'
+								'btn_n11'
+								'btn_n12'
+								'btn_n13'
+								'btn_n14'
+								'n2'
+								'btn_n21'
+								'btn_n22'
+								'btn_n23'
+								'btn_n24'
+								'btn_n25'
+								'btn_n26'
+								'n3'
+								'btn_n31'
+								'btn_n32'
+							]
+						}
+					]
+				}
 			]
-			opt1:[
-				{i:1, t:'go', x:31, y:36}
-				{i:2, t:'take', x:69, y:21}
-				{i:3, t:'ask', x:67, y:70}
-				{i:4, t:'sit', x:117, y:47}
-			]
-			opt2:[
-				{i:1, t:'my teacher', x:36, y:36}
-				{i:2, t:'in front of', x:16, y:93}
-				{i:3, t:'to bed', x:67, y:132}
-				{i:4, t:'a shower', x:164, y:25}
-				{i:5, t:'to the doctor', x:116, y:69}
-				{i:6, t:'roller skating', x:134, y:113}
-			]
-			opt3:[
-				{i:1, t:'a question', x:22, y:21}
-				{i:2, t:'a fan', x:43, y:57}
-			]
-			
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@current = @shuffle @game.steps
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and click on the correct ticket.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
-		@setNube1().setNube2().setNube3()
-		@setDropper()
-
-		@setTickets().introEvaluation()
-	setTickets:  ->
-		if @library.tickets
-			tickets = @library.tickets
-		else
-			tickets = new createjs.Container()
-			tickets.name = 'tickets'
-		
-			for i in [0..@current.length - 1] by 1
-				v = @createBitmap @current[i].id, @current[i].id, @current[i].x, @current[i].y, 'tc'
-				v.scaleX = v.scaleY = 0.8
-				tickets.addChild v
-				@addToLibrary v
-		@addToMain tickets
-		@
-	setDropper: ->
-		step = @index
-
-		if @library.dropper
-			dropper = @library.dropper
-		else
-			dropper = new createjs.Container()
-			dropper.x = 70
-			dropper.y = 140
-			dropper.name = 'dropper'
-			@addToMain dropper
-		dropper.removeAllChildren()
-
-		face = @createBitmap 'face', @current[step].face, 0,0
-		frase = @createText 'frase', @current[step].frase,'28px Quicksand','#333', 100,20
-		@addToLibrary frase
-		dropper.addChild frase, face
-
-		for i in [0..@current[step].targets.length - 1] by 1
-			h = new WordContainer "wc#{i + 1}", '', '#FFF', '#F00', (120*i  + 10)+130+frase.getMeasuredWidth(), 25, 110, 22
-			h.index = i
-			dropper.addChild h
-			@addToLibrary h
-		question = @createText 'q', '.','28px Quicksand','#333', @current[step].targets.length*120 + 140 + frase.getMeasuredWidth(), 20
-		dropper.addChild question
-
-		if @library.picture
-			picture = @library.picture
-		else
-			picture = new createjs.Container()
-
-			picture.name = 'picture'
-			@addToMain picture
-		picture.removeAllChildren()
-
-		v = @createBitmap 'pic', @current[step].id, stageSize.w / 2, 220, 'tc'
-		picture.addChild v		
-		@
-	setNube1: ->
-		container = new createjs.Container()
-		container.x = 110
-		container.y = 452
-		container.name = 'group1'
-		
-		back = @createBitmap 'backNube1', 'n1', 0, 0
-		container.addChild back
-
-		word1 = new ClickableText 'w11', @game.opt1[0].t, 1,  @game.opt1[0].x,  @game.opt1[0].y
-		word2 = new ClickableText 'w12', @game.opt1[1].t, 2,  @game.opt1[1].x,  @game.opt1[1].y
-		word3 = new ClickableText 'w13', @game.opt1[2].t, 3,  @game.opt1[2].x,  @game.opt1[2].y
-		word4 = new ClickableText 'w14', @game.opt1[3].t, 4,  @game.opt1[3].x,  @game.opt1[3].y
- 
-		container.addChild word1, word2, word3, word4
-		@addToLibrary word1, word2, word3, word4
-		
-		@addToMain container
-		@
-	setNube2: ->
-		container = new createjs.Container()
-		container.x = 312
-		container.y = 395
-		container.name = 'group2'
-		
-		back = @createBitmap 'backNube2', 'n2', 0, 0
-		container.addChild back
-
-		word1 = new ClickableText 'w21',  @game.opt2[0].t, 1,  @game.opt2[0].x,  @game.opt2[0].y
-		word2 = new ClickableText 'w22',  @game.opt2[1].t, 2,  @game.opt2[1].x,  @game.opt2[1].y
-		word3 = new ClickableText 'w23',  @game.opt2[2].t, 3,  @game.opt2[2].x,  @game.opt2[2].y
-		word4 = new ClickableText 'w24',  @game.opt2[3].t, 4,  @game.opt2[3].x,  @game.opt2[3].y
-		word5 = new ClickableText 'w25',  @game.opt2[4].t, 5,  @game.opt2[4].x,  @game.opt2[4].y
-		word6 = new ClickableText 'w26',  @game.opt2[5].t, 6,  @game.opt2[5].x,  @game.opt2[5].y
-
-		container.addChild word1, word2, word3, word4, word5, word6
-		@addToLibrary word1, word2, word3, word4, word5, word6
-
- 
-		@addToMain container
-		@
-	setNube3: ->
-		container = new createjs.Container()
-		container.x = 626
-		container.y = 459
-		container.name = 'group3'
-		
-		back = @createBitmap 'backNube3', 'n3', 0, 0
-		container.addChild back
-
-		word1 = new ClickableText 'w31', @game.opt3[0].t, 1,  @game.opt3[0].x,  @game.opt3[0].y
-		word2 = new ClickableText 'w32', @game.opt3[1].t, 2,  @game.opt3[1].x,  @game.opt3[1].y
-		container.addChild word1, word2
-		@addToLibrary word1, word2
-		@addToMain container
-		@
-	introEvaluation: ->
-		super
-		TweenLite.from @library.header, 1, {y: -@library.header.height}
-		TweenLite.from @library.instructions, 1, {alpha: 0, x: 0, delay: 0.5}
-		TweenLite.to @library.picture, 0, {alpha: 0}
-		TweenLite.to @library.group1, 0, {alpha:0}
-		TweenLite.to @library.group2, 0, {alpha:0}
-		TweenLite.to @library.group3, 0, {alpha:0}
-		TweenLite.from @library.tickets, 1, {alpha: 0, y: @library.tickets.y + 20, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
-	initEvaluation: (e) =>
-		super
-		for i in [0..@current.length - 1] by 1
-			@library[@current[i].id].addEventListener 'click', @evaluateClick
-		for i in [1..4] by 1
-			@library['w1'+i].addEventListener 'click', @evaluateAnswer1
-	evaluateAnswer1: (e) =>
-		@answer = e.target
-		if @answer.index is @current[@index].a1
-			createjs.Sound.play 'good'
-			@blink @library['group1'], off
-			@library['wc1'].changeText @answer.text.text
-			@blink @library['group2']
-			for i in [1..4] by 1
-				@library['w1'+i].removeEventListener 'click', @evaluateAnswer1
-			for i in [1..6] by 1
-				@library['w2'+i].addEventListener 'click', @evaluateAnswer2
-		else
-			@warning()
-	evaluateAnswer2: (e) =>
-		@answer = e.target
-		if @answer.index is @current[@index].a2
-			createjs.Sound.play 'good'
-			@blink @library['group2'], off
-			@library['wc2'].changeText @answer.text.text
-			for i in [1..6] by 1
-				@library['w2'+i].removeEventListener 'click', @evaluateAnswer2
-			if @current[@index].a3
-				@blink @library['group3']
-				for i in [1..2] by 1
-					@library['w3'+i].addEventListener 'click', @evaluateAnswer3
-			else
-				setTimeout @finishEvaluation, 1 * 1000
-		else
-			@warning()
-	evaluateAnswer3: (e) =>
-		@answer = e.target
-		if @answer.index is @current[@index].a3
-			createjs.Sound.play 'good'
-			@blink @library['group3'], off
-
-			@library['wc3'].changeText @answer.text.text
-			for i in [1..2] by 1
-				@library['w3'+i].removeEventListener 'click', @evaluateAnswer3
-			setTimeout @finishEvaluation, 1 * 1000
-		else
-			@warning()
-	evaluateClick: (e) =>
-		if e.target.name is @current[@index].id
-			createjs.Sound.stop()
-			createjs.Sound.play 'good'
-			@library['score'].plusOne()
-
-			TweenLite.to @library.tickets, 0.5, {alpha:0}
-			TweenLite.to @library.group1, 0.5, {alpha:1, delay:1}
-			TweenLite.to @library.group2, 0.5, {alpha:1, delay:1}
-			TweenLite.to @library.group3, 0.5, {alpha:1, delay:1}
-			TweenLite.to @library.picture, 0.5, {alpha:1, delay:1}
-			@blink @library['group1']
-		else
-			@warning()
-	finishEvaluation: =>
-		@library['score'].plusOne()
-		TweenLite.to @library.group1, 0.5, {alpha:0}
-		TweenLite.to @library.group2, 0.5, {alpha:0}
-		TweenLite.to @library.group3, 0.5, {alpha:0}
-		TweenLite.to @library.picture, 0.5, {alpha:0}
-
-		if @index < @current.length - 1
-			@index++
-			TweenLite.to @library.tickets, 0.5, {alpha:1, delay:1}
-			@setDropper().initEvaluation()
-		else
-			@finish()
-	finish: ->
-		TweenLite.to @library.dropper, 0.5, {alpha:0}
-		super
+		super()
 	window.U4A3 = U4A3
