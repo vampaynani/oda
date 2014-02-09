@@ -41,36 +41,36 @@ class U2A1 extends Oda
 						collection: [
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'propstrawberryJelly'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'strawberry jelly', success:'strawberryjelly'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt', '#tcpt', '#tcpt','.'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'strawberry jelly', success:'strawberryjelly'}]}}
 							]
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'propPeanutButter'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'peanut butter', success:'peanutbutter'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt','.'], targets: [{text:'are'}, {text:'some'}, {text:'peanut butter', success:'peanutbutter'}]}}
 			
 							]
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'propcorn'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'corn'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt','.'], targets: [{text:'isn\'t', success:'isnt'}, {text:'any'}, {text:'corn'}]}}
 							]
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'propgreenPeppers'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'green peppers', success:'greenpeppers'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt','.'], targets: [{text:'are'}, {text:'some'}, {text:'green peppers', success:'greenpeppers'}]}}
 							]
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'propmushrooms'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'are'}, {text:'some'}, {text:'mushrooms', success:'mushrooms'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt','.'], targets: [{text:'are'}, {text:'some'}, {text:'mushrooms', success:'mushrooms'}]}}
 							]
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'propblueberries'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'aren\'t', success:'arent'}, {text:'any'}, {text:'blueberries'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt','.'], targets: [{text:'aren\'t', success:'arent'}, {text:'any'}, {text:'blueberries'}]}}
 							]
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'proppeaches'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'aren\'t', success:'arent'}, {text:'any'}, {text:'peaches'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt','.'], targets: [{text:'aren\'t', success:'arent'}, {text:'any'}, {text:'peaches'}]}}
 							]
 							[
 								{name: 'grp1', opts:{type: 'blink', target: 'propsugar'}}
-								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt'], targets: [{text:'is'}, {text:'some'}, {text:'sugar'}]}}
+								{name: 'pcpt1', opts:{pattern:['There', '#tcpt','#tcpt','#tcpt','.'], targets: [{text:'is'}, {text:'some'}, {text:'sugar'}]}}
 							]
 						]
 						mixed: true

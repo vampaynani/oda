@@ -1,122 +1,146 @@
+###
+
+NEW ODA
+
+###
 class U4A4 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'c1', src: 'circle1.png'}
-			{id: 'c2', src: 'circle2.png'}
-			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
-			{id: 'btnH', src:'btn_H.png'}
+		    {id:'c1', src: 'circle1.png'}
+		    {id:'c2', src: 'circle2.png'}
+		    {id: 'btnH', src:'btn_H.png'}
 			{id: 'btnU', src:'btn_U.png'}
-			{id: 'btnrepeat', src:'btn_repeat.png'}
+		    {id:'repeat', src:'btn_repeat.png'}
+			{src:'TU3_U4_A4_1.mp3', id:'s/1'}
+		    {src:'TU3_U4_A4_2.mp3', id:'s/2'}
+		    {src:'TU3_U4_A4_3.mp3', id:'s/3'}
+		    {src:'TU3_U4_A4_4.mp3', id:'s/4'}
+		    {src:'TU3_U4_A4_5.mp3', id:'s/5'}
+		    {src:'TU3_U4_A4_6.mp3', id:'s/6'}
+		    {src:'TU3_U4_A4_7.mp3', id:'s/7'}
+		    {src:'TU3_U4_A4_8.mp3', id:'s/8'}
+		    {src:'TU3_U4_A4_9.mp3', id:'s/9'}
+		    {src:'TU3_U4_A4_10.mp3', id:'s/10'}
+		    {src:'TU3_U4_A4_11.mp3', id:'s/11'}
+		    {src:'TU3_U4_A4_12.mp3', id:'s/12'}
+		    {src:'TU3_U4_A4_13.mp3', id:'s/13'}
+		    {src:'TU3_U4_A4_14.mp3', id:'s/14'}
+		    {src:'TU3_U4_A4_15.mp3', id:'s/15'}
+		    {src:'TU3_U4_A4_16.mp3', id:'s/16'}
+		    {src:'TU3_U4_A4_17.mp3', id:'s/17'}
+		    {src:'TU3_U4_A4_18.mp3', id:'s/18'}
+		    {src:'TU3_U4_A4_19.mp3', id:'s/19'}
+		    {src:'TU3_U4_A4_20.mp3', id:'s/20'}
+			{src:'TU3_U4_A4_instructions.mp3', id:'s/instructions'}
 		]
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU3_U4_A4_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU3_U4_A4_1.mp3', id:'sound1'}
-		    {src:'sounds/TU3_U4_A4_2.mp3', id:'sound2'}
-		    {src:'sounds/TU3_U4_A4_3.mp3', id:'sound3'}
-		    {src:'sounds/TU3_U4_A4_4.mp3', id:'sound4'}
-		    {src:'sounds/TU3_U4_A4_5.mp3', id:'sound5'}
-		    {src:'sounds/TU3_U4_A4_6.mp3', id:'sound6'}
-		    {src:'sounds/TU3_U4_A4_7.mp3', id:'sound7'}
-		    {src:'sounds/TU3_U4_A4_8.mp3', id:'sound8'}
-		    {src:'sounds/TU3_U4_A4_9.mp3', id:'sound9'}
-		    {src:'sounds/TU3_U4_A4_10.mp3', id:'sound10'}
-		    {src:'sounds/TU3_U4_A4_11.mp3', id:'sound11'}
-		    {src:'sounds/TU3_U4_A4_12.mp3', id:'sound12'}
-		    {src:'sounds/TU3_U4_A4_13.mp3', id:'sound13'}
-		    {src:'sounds/TU3_U4_A4_14.mp3', id:'sound14'}
-		    {src:'sounds/TU3_U4_A4_15.mp3', id:'sound15'}
-		    {src:'sounds/TU3_U4_A4_16.mp3', id:'sound16'}
-		    {src:'sounds/TU3_U4_A4_17.mp3', id:'sound17'}
-		    {src:'sounds/TU3_U4_A4_18.mp3', id:'sound18'}
-		    {src:'sounds/TU3_U4_A4_19.mp3', id:'sound19'}
-		    {src:'sounds/TU3_U4_A4_20.mp3', id:'sound20'}
-		]
-		@game =
-			tickets:[
-				{snd:1, res:'btnH'}
-				{snd:2, res:'btnH'}
-				{snd:3, res:'btnU'}
-				{snd:4, res:'btnH'}
-				{snd:5, res:'btnH'}
-				{snd:6, res:'btnH'}
-				{snd:7, res:'btnU'}
-				{snd:8, res:'btnU'}
-				{snd:9, res:'btnH'}
-				{snd:10, res:'btnU'}
-				{snd:11, res:'btnU'}
-				{snd:12, res:'btnH'}
-				{snd:13, res:'btnU'}
-				{snd:14, res:'btnU'}
-				{snd:15, res:'btnU'}
-				{snd:16, res:'btnU'}
-				{snd:17, res:'btnH'}
-				{snd:18, res:'btnH'}
-				{snd:19, res:'btnH'}
-				{snd:20, res:'btnU'}
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Listen and click on the correct option.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/1'}}
+							]
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/2'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/3'}}
+							]
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/4'}}
+							]
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/5'}}
+							]
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/6'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/7'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/8'}}
+							]
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/9'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/10'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/11'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/12'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/13'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/14'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/15'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/16'}}
+							]
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/17'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/18'}}
+							]
+							[
+								{name:'global',opts:{success:1}}
+								{name: 'snd', opts:{id: 's/19'}}
+							]
+							[
+								{name:'global',opts:{success:2}}
+								{name: 'snd', opts:{id: 's/20'}}
+							]
+						]
+						type: 'steps'
+					}
+					containers:[
+						{
+							type: 'btn', id: 'btn1', x: 509, y: 236, index: 1, target: 'global', eval: 'global_01'
+							states: [{img: {name: 'btnH', align: 'mc', x: 0, y: 0}}]
+						}
+						{
+							type: 'btn', id: 'btn2', x: 330, y: 473, index: 2, target: 'global', eval: 'global_01'
+							states: [{img: {name: 'btnU', align: 'mc', x: 0, y: 0}}]
+						}
+						{
+							type: 'btn', id: 'repeat', x: 600, y: 541, align: 'tc', isRepeat: true
+							states:[{img: {name:'repeat', x: 0, y: 0}}]
+						}
+					]
+					groups: []
+				}
 			]
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@current = @shuffle @game.tickets
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and click on the correct ticket.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
-		@setTickets().introEvaluation()
-	setTickets:  ->
-		if @library.tickets
-			tickets = @library.tickets
-		else
-			tickets = new createjs.Container()
-			tickets.name = 'tickets'
-		
-			u = @createBitmap 'btnU', 'btnU', 110, 353
-			u.addEventListener 'click', @evaluateClick
-
-			h = @createBitmap 'btnH', 'btnH', 239, 146
-			h.addEventListener 'click', @evaluateClick
-
-			tickets.addChild u, h
-			@addToLibrary u, h
-
-			r = @createBitmap 'repeat', 'btnrepeat', 600,541
-			r.addEventListener 'click', @repeatSound
-			tickets.addChild r
-		@addToMain tickets
-		@
-	 
-	introEvaluation: ->
-		super
-		TweenLite.from @library.header, 1, {y: -@library.header.height}
-		TweenLite.from @library.instructions, 1, {alpha: 0, x: 0, delay: 0.5}
-		TweenLite.from @library.tickets, 1, {alpha: 0, y: @library.tickets.y + 20, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
-	initEvaluation: (e) =>
-		super
-		createjs.Sound.play "sound#{@current[@index].snd}"
-	evaluateClick: (e) =>
-		if e.target.name is @current[@index].res
-			createjs.Sound.stop()
-			createjs.Sound.play 'good'
-			@library.score.plusOne()
-			setTimeout @nextEvaluation(), 2 * 1000
-		else
-			@warning()
-			setTimeout @nextEvaluation(), 2 * 1000
-
-	nextEvaluation: =>
-		@index++
-		if @index < @current.length
-			createjs.Sound.play "sound#{@current[@index].snd}"
-		else
-			@finish()
-	repeatSound: =>
-		createjs.Sound.stop()
-		createjs.Sound.play "sound#{@current[@index].snd}"
-	finish: ->
-		TweenLite.to @library.tickets, 0.5, {alpha:0}
-		super
+		super()
 	window.U4A4 = U4A4

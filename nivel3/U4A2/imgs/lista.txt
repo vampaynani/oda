@@ -1,7 +1,0 @@
-{id:'balloon1', src:'balloon_1.png'}
-{id:'balloon2', src:'balloon_2.png'}
-{id:'balloon3', src:'balloon_3.png'}
-{id:'btnrepeat', src:'btn_repeat.png'}
-{id:'docquestion', src:'doc_question.png'}
-{id:'docright', src:'doc_right.png'}
-{id:'docwrong', src:'doc_wrong.png'}

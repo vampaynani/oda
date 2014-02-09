@@ -127,7 +127,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'isn\'t',
@@ -151,7 +151,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'are'
@@ -174,7 +174,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'isn\'t',
@@ -197,7 +197,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'are'
@@ -220,7 +220,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'are'
@@ -243,7 +243,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'aren\'t',
@@ -266,7 +266,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'aren\'t',
@@ -289,7 +289,7 @@ NEW ODA
                   }, {
                     name: 'pcpt1',
                     opts: {
-                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt'],
+                      pattern: ['There', '#tcpt', '#tcpt', '#tcpt', '.'],
                       targets: [
                         {
                           text: 'is'
