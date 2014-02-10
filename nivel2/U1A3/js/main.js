@@ -97,11 +97,11 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Look at the schedule and click on the phrases to make sentences.', 40, 100);
       this.insertBitmap('calendar', 'cal', 0, 130);
-      this.insertBitmap('iconGym', 'gym', 375, 210);
-      this.insertBitmap('iconArt', 'art', 194, 199);
+      this.insertBitmap('iconGym', 'gym', 375, 213);
+      this.insertBitmap('iconArt', 'art', 194, 202);
       this.insertBitmap('iconWatch', 'watch', 255, 248);
       this.insertBitmap('iconRead', 'read', 320, 248);
-      this.insertBitmap('iconLunch', 'lunch', 455, 328);
+      this.insertBitmap('iconLunch', 'lunch', 455, 333);
       this.intento = 0;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
       return this.setGrupo1().setGrupo2().setGrupo3().setDropper().introEvaluation();

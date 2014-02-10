@@ -30,11 +30,11 @@ class U1A3 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Look at the schedule and click on the phrases to make sentences.', 40, 100
 		@insertBitmap 'calendar', 'cal', 0, 130
-		@insertBitmap 'iconGym', 'gym', 375, 210
-		@insertBitmap 'iconArt', 'art', 194, 199
+		@insertBitmap 'iconGym', 'gym', 375, 213
+		@insertBitmap 'iconArt', 'art', 194, 202
 		@insertBitmap 'iconWatch', 'watch', 255, 248
 		@insertBitmap 'iconRead', 'read', 320, 248
-		@insertBitmap 'iconLunch', 'lunch', 455, 328
+		@insertBitmap 'iconLunch', 'lunch', 455, 333
 		@intento = 0
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
 		@setGrupo1().setGrupo2().setGrupo3().setDropper().introEvaluation()
