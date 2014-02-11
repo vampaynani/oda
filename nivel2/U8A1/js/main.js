@@ -396,13 +396,11 @@
       juego.name = 'juego';
       this.clearButtons();
       this.selected = new Array();
-      this.cards = this.game[game - 1];
+      this.cards = this.shuffle(this.game[game - 1]);
       for (h = _i = 0; _i <= 3; h = ++_i) {
         for (i = _j = 0; _j <= 3; i = ++_j) {
           c = this.createBitmap("carta" + game, "carta" + game, i * 130, h * 110, 'mc');
-          console.log(c);
           b = this.createBitmap("cartab" + game, this.cards[j].id, i * 130, h * 110, 'mc');
-          console.log(this.cards[j].id, b);
           b.scaleX = b.scaleY = 0.6;
           c.scaleX = c.scaleY = 0.6;
           c.index = this.cards[j].i;

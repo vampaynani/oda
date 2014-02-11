@@ -150,14 +150,11 @@ class U8A1 extends Oda
 		juego.name = 'juego'
 		@clearButtons()
 		@selected = new Array()
-		#@cards = @shuffle @game[game - 1]
-		@cards = @game[game - 1]
+		@cards = @shuffle @game[game - 1]
 		for h in [0..3]
 			for i in [0..3]
 				c = @createBitmap "carta#{game}", "carta#{game}", i*130, h*110, 'mc'
-				console.log c
 				b = @createBitmap "cartab#{game}", @cards[j].id, i*130, h*110, 'mc'
-				console.log @cards[j].id, b
 				b.scaleX = b.scaleY = 0.6
 				c.scaleX = c.scaleY = 0.6
 				c.index = @cards[j].i
