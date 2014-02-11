@@ -1096,6 +1096,8 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         value = _ref[_i];
         v = new Draggable(value.id, this.preload.getResult(value.id), value.id, value.x, value.y);
+        console.log(v.scaleX, v.scaleY);
+        v.scaleX = v.scaleY = 0.7;
         this.observer.subscribe("init_" + num + "_evaluation", v.onInitEvaluation);
         v.addEventListener('drop', this.evaluateDrop);
         menu.addChild(v);

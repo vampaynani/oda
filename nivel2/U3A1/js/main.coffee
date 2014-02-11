@@ -421,6 +421,8 @@ class U3A1 extends Oda
 		
 		for value in @game["m#{num}"].abajo
 			v = new Draggable value.id, (@preload.getResult value.id), value.id, value.x, value.y
+			console.log v.scaleX, v.scaleY
+			v.scaleX = v.scaleY = 0.7
 			@observer.subscribe "init_#{num}_evaluation", v.onInitEvaluation
 			v.addEventListener 'drop', @evaluateDrop
 			menu.addChild v
