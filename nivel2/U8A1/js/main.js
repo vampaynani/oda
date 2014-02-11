@@ -111,7 +111,7 @@
           id: 'game2Australia',
           src: 'game2/australia.png'
         }, {
-          id: 'game2Brazil ',
+          id: 'game2Brazil',
           src: 'game2/brazil.png'
         }, {
           id: 'game2Brazil2',
@@ -147,7 +147,7 @@
           id: 'game2India',
           src: 'game2/india.png'
         }, {
-          id: 'game2Mexico ',
+          id: 'game2Mexico',
           src: 'game2/mexico.png'
         }, {
           id: 'game2Mexico2',
@@ -192,7 +192,7 @@
           id: 'game3Thirtyfivecents',
           src: 'game3/thirty-five-cents.png'
         }, {
-          id: 'game3Thirtytwodollarsandten.cents',
+          id: 'game3Thirtytwodollarsandten',
           src: 'game3/thirty-two-dollars-and-ten-cents.png'
         }, {
           id: 'game3Twentyfivedollarsandtencent',
@@ -405,8 +405,8 @@
           c.scaleX = c.scaleY = 0.6;
           c.index = this.cards[j].i;
           c.addEventListener('click', this.evaluateAnswer);
-          juego.addChild(c, b);
-          this.addToLibrary(c, b);
+          juego.addChild(b, c);
+          this.addToLibrary(b, c);
           j++;
         }
       }
