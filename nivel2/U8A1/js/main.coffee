@@ -34,7 +34,7 @@ class U8A1 extends Oda
 			
 			{id:'game2Australia2', src:'game2/australia2.png'}
 			{id:'game2Australia', src:'game2/australia.png'}
-			{id:'game2Brazil ', src:'game2/brazil.png'}
+			{id:'game2Brazil', src:'game2/brazil.png'}
 			{id:'game2Brazil2', src:'game2/brazil2.png'}
 			{id:'game2Canada2', src:'game2/canada2.png'}
 			{id:'game2Canada', src:'game2/canada.png'}
@@ -46,7 +46,7 @@ class U8A1 extends Oda
 			{id:'game2Germany', src:'game2/germany.png'}
 			{id:'game2India2', src:'game2/india2.png'}
 			{id:'game2India', src:'game2/india.png'}
-			{id:'game2Mexico ', src:'game2/mexico.png'}
+			{id:'game2Mexico', src:'game2/mexico.png'}
 			{id:'game2Mexico2', src:'game2/mexico2.png'}
 			
 			{id:'game3035', src:'game3/0-35.png'}
@@ -62,7 +62,7 @@ class U8A1 extends Oda
 			{id:'game3Sixteendollars', src:'game3/sixteen-dollars.png'}
 			{id:'game3Thirteendollarsandfortycents', src:'game3/thirteen-dollars-and-forty-cents.png'}
 			{id:'game3Thirtyfivecents', src:'game3/thirty-five-cents.png'}
-			{id:'game3Thirtytwodollarsandten.cents', src:'game3/thirty-two-dollars-and-ten-cents.png'}
+			{id:'game3Thirtytwodollarsandten', src:'game3/thirty-two-dollars-and-ten-cents.png'}
 			{id:'game3Twentyfivedollarsandtencent', src:'game3/twenty-five-dollars-and-ten-cent.png'}
 			{id:'game3Twentyonedollarsandfiftycents', src:'game3/twenty-one-dollars-and-fifty-cents.png'}
 		]
@@ -150,17 +150,20 @@ class U8A1 extends Oda
 		juego.name = 'juego'
 		@clearButtons()
 		@selected = new Array()
-		@cards = @shuffle @game[game - 1]
+		#@cards = @shuffle @game[game - 1]
+		@cards = @game[game - 1]
 		for h in [0..3]
 			for i in [0..3]
 				c = @createBitmap "carta#{game}", "carta#{game}", i*130, h*110, 'mc'
+				console.log c
 				b = @createBitmap "cartab#{game}", @cards[j].id, i*130, h*110, 'mc'
+				console.log @cards[j].id, b
 				b.scaleX = b.scaleY = 0.6
 				c.scaleX = c.scaleY = 0.6
 				c.index = @cards[j].i
 				c.addEventListener 'click', @evaluateAnswer
-				juego.addChild  c, b
-				@addToLibrary c, b
+				juego.addChild b, c
+				@addToLibrary b, c
 				j++
 		@addToMain juego
 		TweenLite.from juego, 0.5, {alpha:0, y:juego.y - 20}

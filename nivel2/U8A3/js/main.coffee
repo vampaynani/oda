@@ -34,11 +34,11 @@ class U8A3 extends Oda
 				{pattern:["I'm from", "#wc", ". I have dark brown eyes. I have long", "#wc", "hair.", "#br", "I'm", "#wc", "tall. My name's", "#wc"], targets:['China','black', '1m 15cm', 'Cassandra Wang']}
 			]
 			positions:[
-				{x:'65', y:'22'}
-				{x:'77', y:'50'}
-				{x:'84', y:'78'}
-				{x:'90', y:'106'}
-				{x:'68', y:'134'}
+				{x:'70', y:'22'}
+				{x:'82', y:'50'}
+				{x:'89', y:'78'}
+				{x:'95', y:'106'}
+				{x:'73', y:'134'}
 			]
 
 
