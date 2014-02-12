@@ -90,7 +90,7 @@ class U8A3 extends Oda
 				j++
 			else if t is '#wc'
 				txt = @steps[step - 1].targets[i]
-				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#F00', npos, ny
+				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#eb188e', npos, ny
 				h.text.font = '20px Quicksand'
 				h.index = i
 				dropper.addChild h

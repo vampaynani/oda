@@ -179,7 +179,7 @@
           j++;
         } else if (t === '#wc') {
           txt = this.steps[step - 1].targets[i];
-          h = new WordContainer("h" + i, "" + txt, '#FFF', '#F00', npos, ny);
+          h = new WordContainer("h" + i, "" + txt, '#FFF', '#eb188e', npos, ny);
           h.text.font = '20px Quicksand';
           h.index = i;
           dropper.addChild(h);
