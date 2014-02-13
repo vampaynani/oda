@@ -183,6 +183,7 @@ window.d2oda.evaluator ?= class Evaluator
 			when 'click_03' then @evaluateClick03(dispatcher, target)
 			when 'drop_01' then @evaluateDrop01(dispatcher, target)
 			when 'drop_02' then @evaluateDrop02(dispatcher, target)
+			when 'drop_02_01' then @evaluateDrop02_01(dispatcher, target)
 			when 'drop_03' then @evaluateDrop03(dispatcher, target)
 			when 'drop_04' then @evaluateDrop04(dispatcher, target)
 			when 'clon_01' then @evaluateClon01(dispatcher, target)
@@ -255,6 +256,22 @@ window.d2oda.evaluator ?= class Evaluator
 		else
 			lib[dispatcher].afterFail()
 			lib.scene.fail()
+	@evaluateDrop02_01 = (dispatcher, target) ->
+		complete = true
+		if lib[dispatcher].index is target.success
+			target.update lib[dispatcher].label.text, true
+		else 
+			target.update lib[dispatcher].label.text, false
+		lib[dispatcher].afterSuccess()
+		for drop in lib[dispatcher].droptargets
+			if drop.text.text is '' then complete = false
+		if not complete then return
+		for drop in lib[dispatcher].droptargets
+			drop.showEvaluation()
+			if drop.complete
+				lib.score.plusOne()
+		lib.scene.success false
+
 	@evaluateDrop03 = (dispatcher, target) ->
 		if lib[dispatcher].index is target.success
 			target.complete = true
@@ -306,6 +323,7 @@ Array::unique = ->
 	output = {}
 	output[@[key]] = @[key] for key in [0...@length]
 	value for key, value of output
+Array::merge = (other) -> Array::push.apply @, other
 
 ###
 
@@ -700,6 +718,8 @@ class ImageContainer extends Component
 		@name = opts.name ? opts.id
 		@x = opts.x
 		@y = opts.y
+		@scaleX = opts.scale ? 1
+		@scaleY = opts.scale ? 1
 		b = @createBitmap @name, opts.id, 0, 0, align
 		@width = b.width
 		@height = b.height
@@ -1166,12 +1186,95 @@ class PhraseCompleterContainer extends Component
 				npos += h.getMeasuredWidth() + @margin
 		@width = npos
 		@setPosition @align
+		@observer.notify ComponentObserver.UPDATED
 		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
 	isComplete: ->
 		for target in @droptargets
 			if target.complete is false
 				return false
 		return true
+
+class PhraseCloneContainer extends Component
+	PhraseCloneContainer.prototype = new createjs.Container()
+	PhraseCloneContainer::Container_initialize = PhraseCloneContainer::initialize
+	constructor: (opts) ->
+		@initialize opts
+	PhraseCloneContainer::initialize = (opts) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		@x = opts.x
+		@y = opts.y
+		@margin = opts.margin ? 10
+		@font = opts.font ? '20px Arial'
+		@fcolor = opts.fcolor ? '#333'
+		@bcolor = opts.bcolor ? '#FFF'
+		@scolor = opts.scolor ? '#333'
+		@stroke = opts.stroke ? 3
+		@name = opts.name ? opts.id
+		@align = opts.align ? ''
+		@currentTarget = 0
+		@observer = new ComponentObserver()
+		@droptargets = new Array()
+	update: (opts) ->
+		@removeAllChildren()
+		if opts.h2
+			align = opts.h2.align ? ''
+			h2 = @createText 'h2', opts.h2.text, @font, @color, opts.h2.x, opts.h2.y, align
+			@add h2, false
+		i = 0
+		npos = 0
+		for t in opts.pattern
+			if t is '#tcpt'
+				txt = opts.targets[i]
+				h = new TextCloneContainer txt, @font, @fcolor, @bcolor, @scolor, @stroke, npos, -5
+				@droptargets.push h
+				@add h, false
+				npos += h.width + @margin
+				i++
+			else
+				h = @createText 'txt', t, @font, @fcolor, npos, -5
+				@add h, false
+				npos += h.getMeasuredWidth() + @margin
+		@width = npos
+		@setPosition @align
+		@observer.notify ComponentObserver.UPDATED
+		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
+	isComplete: ->
+		true
+
+class TextCloneContainer extends Component
+	TextCloneContainer.prototype = new createjs.Container()
+	TextCloneContainer::Container_initialize = TextCloneContainer::initialize
+	constructor: (opts, font, fcolor, bcolor, scolor, stroke, x, y) ->
+		@initialize opts, font, fcolor, bcolor, scolor, stroke, x, y
+	TextCloneContainer::initialize = (opts, font, fcolor, bcolor, scolor, stroke, x, y) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		@x = x
+		@y = y
+		@success = opts.success ? opts.text
+		@text = @createText 'txt', opts.text, font, fcolor, 0, -5
+		@width = opts.width ? @text.getMeasuredWidth()
+		@height = opts.height ? @text.getMeasuredHeight()
+		@complete = false
+		@back = new createjs.Shape()
+		@back.graphics.f(bcolor).dr(0, 0, @width, @height).ss(stroke).s(scolor).mt(0, @height).lt(@width, @height)
+		@add @back, false
+		@add @text, false
+		@text.text = ''
+	setRectOutline: (bcolor, stroke, scolor) ->
+		@back.graphics.f(bcolor).ss(stroke).s(scolor).dr(0, 0, @width, @height)
+	showEvaluation: () ->
+		if @complete
+			@insertBitmap 'correct', 'correct', @width, @height / 2, 'ml'
+		else
+			@insertBitmap 'wrong', 'wrong', @width, @height / 2, 'ml'
+	update: (text, complete = true) ->
+		@complete = complete
+		@text.text = text
+		@text.textAlign = 'center'
+		@text.x = @width / 2
+		TweenLite.from @, 0.3, {alpha: 0}
 
 class CrossWordsContainer extends Component
 	CrossWordsContainer.prototype = new createjs.Container()
@@ -1384,17 +1487,21 @@ class LetterDragContainer extends Component
 		@Container_initialize()
 		Module.extend @, d2oda.methods
 		Module.extend @, d2oda.actions
+		Module.extend @, d2oda.utilities
 		@name = opts.name ? opts.id
 		@x = opts.x
 		@y = opts.y
 		@pos = {x: @x, y: @y}
 		@index = opts.index
-		@target = lib[opts.target]
-		@eval = opts.eval
+		if @isArray opts.target 
+			@target = opts.target
+		else
+			@target = lib[opts.target]
 		@droptargets = new Array()
-		t = @createText 'txt', opts.text, opts.font, opts.color, 0, 0
-		@width = t.getMeasuredWidth()
-		@height = t.getMeasuredHeight()
+		@eval = opts.eval
+		@label = @createText 'txt', opts.text, opts.font, opts.color, 0, 0
+		@width = @label.getMeasuredWidth()
+		@height = @label.getMeasuredHeight()
 		switch opts.afterSuccess
 			when 'hide' then @afterSuccess = @hide
 			when 'inplace' then @afterSuccess = @putInPlace
@@ -1406,13 +1513,24 @@ class LetterDragContainer extends Component
 			when 'return' then @afterFail = @returnToPlace
 			when 'origin' then @afterFail = @setInOrigin
 		hit = new createjs.Shape()
-		hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6)
-		t.hitArea = hit
-		@add t, false
-		if @target then @target.observer.subscribe ComponentObserver.UPDATED, @update
+		hit.graphics.beginFill('#000').drawRect(-5, -3, @label.getMeasuredWidth() + 10, @label.getMeasuredHeight() + 6)
+		@label.hitArea = hit
+		@add @label, false
+		if @target 
+			if @isArray @target
+				for t in @target
+					lib[t].observer.subscribe ComponentObserver.UPDATED, @update
+			else 
+				@target.observer.subscribe ComponentObserver.UPDATED, @update
 		@addEventListener 'mousedown', @handleMouseDown
 	update: (opts) =>
-		@droptargets = @target.droptargets
+		if @isArray @target
+			alldrops = new Array()
+			for t in @target
+				alldrops.merge lib[t].droptargets
+			@droptargets = alldrops
+		else
+			@droptargets = @target.droptargets
 	handleMouseDown: (e) =>
 		posX = e.stageX / d2oda.stage.r
 		posY = e.stageY / d2oda.stage.r
@@ -1570,6 +1688,8 @@ class SceneFactory
 			when 'stps' then new StepsContainer opts
 			when 'chs' then new ChooseContainer opts
 			when 'cwd' then new CrossWordsContainer opts
+			when 'ldrg' then new LetterDragContainer opts
+			when 'pcct' then new PhraseCloneContainer opts
 			when 'wcpt' then new WordCompleterContainer opts
 			when 'ccpt' then new CloneCompleterContainer opts
 			when 'pcpt' then new PhraseCompleterContainer opts
@@ -1629,6 +1749,8 @@ class Scene extends Component
 			if target.name isnt 'snd' and target.name isnt 'global' and lib[target.name].isComplete() is false
 				return false
 		@nextStep()
+	sndsuccess: () =>
+		@success false
 	fail: ->
 		lib.score.enableBlock()
 		lib.mainContainer.warning()
@@ -1649,7 +1771,9 @@ class Scene extends Component
 				when 'snd'
 					@snd = target.opts.id
 					createjs.Sound.stop()
-					createjs.Sound.play target.opts.id
+					snd = createjs.Sound.play target.opts.id
+					if target.opts.successoncomplete
+						snd.addEventListener 'complete', @sndsuccess
 					false
 				else
 					lib[target.name].update target.opts

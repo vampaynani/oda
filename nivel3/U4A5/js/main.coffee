@@ -2,7 +2,6 @@ class U5A2 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -17,7 +16,7 @@ class U5A2 extends Oda
 		]
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU2_U5_A2_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U4_A5_instructions.mp3', id:'instructions'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 
@@ -26,7 +25,7 @@ class U5A2 extends Oda
 		super
 		@insertBitmap 'propback', 'propback', 0, 0
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'instructions', 'inst', 20, 100
+		@insertInstructions 'instructions', 'Read the speech bubbles and click on the corresponding character.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 15, 0
 		@setFaces().introEvaluation()
 	setFaces: ->

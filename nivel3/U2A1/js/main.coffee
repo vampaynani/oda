@@ -293,7 +293,6 @@ class U2A1 extends Oda
 					]
 					groups:[
 						{
-
 							type: 'grp', id: 'grp2'
 							group: [
 								'propmilk'

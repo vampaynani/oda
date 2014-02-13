@@ -1,109 +1,75 @@
+###
+
+NEW ODA
+
+###
 class U5A2 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
-			{id: 'c1', src: 'circle1.png'}
-			{id: 'c2', src: 'circle2.png'}
-			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
+			{id:'c1', src: 'circle1.png'}
+			{id:'c2', src: 'circle2.png'}
 			{id: 'final', src:'fondofinal.png'}
 			{id: 'cancion', src:'cancion.png'}
+			{id: 'correct', src:'correct.png'}
+			{id: 'wrong', src:'wrong.png'}
+			{src:'TU3_U5_A2_instructions.mp3', id:'s/instructions'}
+			{src:'TU3_U5_A2_song.mp3', id:'s/song'}
 		]
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU3_U5_A2_instructions.mp3', id:'instructions'}
-		    {src:'sounds/TU3_U5_A2_song.mp3', id:'song'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
-		]
-		@game =
-			answers:[
-				{a:"was", x:45, y:0}
-				{a:"were", x:32, y:1}
-				{a:"was", x:48, y:2}
-				{a:"was", x:220, y:2}
-				{a:"wasn't", x:32, y:3}
-				{a:"weren't", x:32, y:4}
-				{a:"weren't", x:255, y:4}
-				{a:"was", x:32, y:5}
-				{a:"were", x:65, y:6}
-				{a:"was", x:65, y:7}
-				{a:"was", x:32, y:8}
-				{a:"was", x:0, y:9}
-			] 
-		
-
-
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@intento = 0
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'final', 'final', 650, 100, 'tc'
-		@insertInstructions 'instructions', 'Drag the verbs to complete the song.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
-		@setcancion().setDropper().introEvaluation()
-	setcancion: ->
-		cancion = new createjs.Container()
-		cancion.x = 47
-		cancion.y = 120
-		cancion.name = 'cancion'
-
-		fondo = @createBitmap 'cancion', 'cancion', 0, 0
-		fondo.scaleX = fondo.scaleY = 0.7
-		cancion.addChild fondo
-
-		v1 = new DroppableText 'v1', "was", 0, 15,  12, @stage
-		v2 = new DroppableText 'v2', "wasn't", 1, 55,  12, @stage
-		v3 = new DroppableText 'v3', "were", 2, 110,  12, @stage
-		v4 = new DroppableText 'v4', "weren't", 3, 155,  12, @stage
-		v1.text.font = v2.text.font = v3.text.font = v4.text.font = '14px Quicksand'
-
-		@addToLibrary v1, v2, v3, v4
-		cancion.addChild v1, v2, v3, v4
-
-		@addToMain cancion
-		@
-	setDropper: ->
-		dropper = new createjs.Container()
-		dropper.x = 70
-		dropper.y = 190
-		dropper.name = 'dropper'
-		console.log @game.answers.length
-
-		for i in [0..@game.answers.length - 1]
-			h = new WordContainer "h#{i}", '', '', '',  @game.answers[i].x,  @game.answers[i].y * 30.5, 85, 25
-			h.text.font = '20px Quicksand'
-			h.index = i
-			dropper.addChild h
-			@addToLibrary h
-			console.log @game.answers[i].a
-
-		@addToMain dropper
-		@
-	introEvaluation: ->
-		super
-		TweenLite.from @library.header, 1, {y:-@library.header.height}
-		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.cancion, 1, {alpha: 0, delay: 1}
-		TweenLite.to @library.final, 0, {alpha: 0}
-		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
-	initEvaluation: (e) =>
-		super
-		for i in [1..4] by 1
-			@library["v#{i}"].addEventListener 'dropped', @evaluateAnswer
-			@library["v#{i}"].initDragListener()
-	evaluateAnswer: (e) =>
-
-	finishEvaluation: =>
-		createjs.Sound.play 'song'
-		TweenLite.from @library.final, 1, {alpha: 0}
-		setTimeout @clearEvaluation, 1 * 10000
-	clearEvaluation: (e) =>
-		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 20, onComplete: @nextEvaluation}
-		@finish()
-	finish: ->
-		TweenLite.to @library.cancion, 1, {alpha: 0}
-		super
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Drag the verbs to complete the song.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{name: 'pcct1', opts: {pattern: ['When I', '#tcpt', 'a boy, I lived in Riverville.'], targets: [{text:'weren\'t', success:'was'}]}}
+								{name: 'pcct2', opts: {pattern: ['There', '#tcpt', 'lots of factories and big steel mills.'], targets: [{text:'weren\'t', success:'were'}]}}
+								{name: 'pcct3', opts: {pattern: ['The city', '#tcpt', 'dirty. There','#tcpt','smoke everywhere!'], targets: [{text:'weren\'t', success:'was'},{text:'weren\'t', success:'were'}]}}
+								{name: 'pcct4', opts: {pattern: ['There', '#tcpt', 'a park... or any fresh air!'], targets: [{text:'weren\'t', success:'wasnt'}]}}
+								{name: 'pcct5', opts: {pattern: ['There', '#tcpt', 'any flowers. There','#tcpt','any trees.'], targets: [{text:'weren\'t', success:'werent'},{text:'weren\'t', success:'werent'}]}}
+								{name: 'pcct6', opts: {pattern: ['There', '#tcpt', 'lots of pollution. We all coughed and sneezed!'], targets: [{text:'weren\'t', success:'were'}]}}
+								{name: 'pcct7', opts: {pattern: ['The rivers', '#tcpt', 'full of garbage and junk.'], targets: [{text:'weren\'t', success:'were'}]}}
+								{name: 'pcct8', opts: {pattern: ['The water', '#tcpt', 'black and slimy with muck.'], targets: [{text:'weren\'t', success:'was'}]}}
+								{name: 'pcct9', opts: {pattern: ['There', '#tcpt', 'always noise and traffic in the street.'], targets: [{text:'weren\'t', success:'were'}]}}
+								{name: 'pcct10', opts: {pattern: ['It', '#tcpt', 'so loud, you couldn\'t hear yourself speak!'], targets: [{text:'weren\'t', success:'was'}]}}
+							]
+							[
+								{name:'snd', opts:{id:'s/song', successoncomplete: true}}
+								{name: 'grp1', opts:{type: 'fadeIn', target: 'final'}}
+							]
+						]
+						type:'steps'
+					}
+					containers:[
+						{type: 'img', id: 'cancion', x: 57, y: 120, scale: 0.7}
+						{type: 'img', id: 'final', x: 650, y: 280, align: 'tc', scale: 0.7}
+						{type:'pcct', id: 'pcct1', x: 65, y: 202, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct2', x: 65, y: 232, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct3', x: 65, y: 262, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct4', x: 65, y: 292, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct5', x: 65, y: 322, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct6', x: 65, y: 352, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct7', x: 65, y: 382, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct8', x: 65, y: 412, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct9', x: 65, y: 442, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type:'pcct', id: 'pcct10', x: 65, y: 472, font: '15px Quicksand', margin: 10, scolor: '#f59743'}
+						{type: 'ldrg', id: 'ldrg1', x: 70, y: 132, index: 'was', text:'was', font:'15px Quicksand', color:'#333', target: ['pcct1','pcct2','pcct3','pcct4','pcct5','pcct6','pcct7','pcct8','pcct9','pcct10'], eval: 'drop_02_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg2', x: 110, y: 132, index: 'wasnt', text:'wasn\'t', font:'15px Quicksand', color:'#333', target: ['pcct1','pcct2','pcct3','pcct4','pcct5','pcct6','pcct7','pcct8','pcct9','pcct10'], eval: 'drop_02_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg3', x: 170, y: 132, index: 'were', text:'were', font:'15px Quicksand', color:'#333', target: ['pcct1','pcct2','pcct3','pcct4','pcct5','pcct6','pcct7','pcct8','pcct9','pcct10'], eval: 'drop_02_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg4', x: 215, y: 132, index: 'werent', text:'weren\'t', font:'15px Quicksand', color:'#333', target: ['pcct1','pcct2','pcct3','pcct4','pcct5','pcct6','pcct7','pcct8','pcct9','pcct10'], eval: 'drop_02_01', afterSuccess: 'origin', afterFail: 'return'}
+					]
+					groups: [
+						{
+							type: 'grp', id: 'grp1', invisible: true
+							group: [
+								'final'
+							]
+						}
+					]
+				}
+			]
+		super()
 	window.U5A2 = U5A2

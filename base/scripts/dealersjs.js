@@ -6,7 +6,7 @@ LIBRARY
 
 
 (function() {
-  var ABCContainer, Actions, Behaviors, ButtonContainer, ChooseContainer, CloneCompleterContainer, CloneContainer, Component, ComponentGroup, ComponentObserver, CrossWordsContainer, DragContainer, Evaluator, Game, GameObserver, GridContainer, ImageCompleterContainer, ImageContainer, ImageWordCompleterContainer, Instructions, LabelContainer, LetterDragContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, PhraseCompleterContainer, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, StepContainer, StepsContainer, TextCompleterContainer, Utilities, WordCompleterContainer, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _base6, _ref, _ref1, _ref2,
+  var ABCContainer, Actions, Behaviors, ButtonContainer, ChooseContainer, CloneCompleterContainer, CloneContainer, Component, ComponentGroup, ComponentObserver, CrossWordsContainer, DragContainer, Evaluator, Game, GameObserver, GridContainer, ImageCompleterContainer, ImageContainer, ImageWordCompleterContainer, Instructions, LabelContainer, LetterDragContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, PhraseCloneContainer, PhraseCompleterContainer, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, StepContainer, StepsContainer, TextCloneContainer, TextCompleterContainer, Utilities, WordCompleterContainer, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _base6, _ref, _ref1, _ref2,
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
@@ -465,6 +465,8 @@ LIBRARY
             return this.evaluateDrop01(dispatcher, target);
           case 'drop_02':
             return this.evaluateDrop02(dispatcher, target);
+          case 'drop_02_01':
+            return this.evaluateDrop02_01(dispatcher, target);
           case 'drop_03':
             return this.evaluateDrop03(dispatcher, target);
           case 'drop_04':
@@ -581,6 +583,36 @@ LIBRARY
         }
       };
 
+      Evaluator.evaluateDrop02_01 = function(dispatcher, target) {
+        var complete, drop, _i, _j, _len, _len1, _ref, _ref1;
+        complete = true;
+        if (lib[dispatcher].index === target.success) {
+          target.update(lib[dispatcher].label.text, true);
+        } else {
+          target.update(lib[dispatcher].label.text, false);
+        }
+        lib[dispatcher].afterSuccess();
+        _ref = lib[dispatcher].droptargets;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          drop = _ref[_i];
+          if (drop.text.text === '') {
+            complete = false;
+          }
+        }
+        if (!complete) {
+          return;
+        }
+        _ref1 = lib[dispatcher].droptargets;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          drop = _ref1[_j];
+          drop.showEvaluation();
+          if (drop.complete) {
+            lib.score.plusOne();
+          }
+        }
+        return lib.scene.success(false);
+      };
+
       Evaluator.evaluateDrop03 = function(dispatcher, target) {
         if (lib[dispatcher].index === target.success) {
           target.complete = true;
@@ -682,6 +714,10 @@ LIBRARY
       _results.push(value);
     }
     return _results;
+  };
+
+  Array.prototype.merge = function(other) {
+    return Array.prototype.push.apply(this, other);
   };
 
   /*
@@ -1443,7 +1479,7 @@ LIBRARY
     }
 
     ImageContainer.prototype.initialize = function(opts) {
-      var align, b, _ref2, _ref3;
+      var align, b, _ref2, _ref3, _ref4, _ref5;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
       Module.extend(this, d2oda.actions);
@@ -1451,6 +1487,8 @@ LIBRARY
       this.name = (_ref3 = opts.name) != null ? _ref3 : opts.id;
       this.x = opts.x;
       this.y = opts.y;
+      this.scaleX = (_ref4 = opts.scale) != null ? _ref4 : 1;
+      this.scaleY = (_ref5 = opts.scale) != null ? _ref5 : 1;
       b = this.createBitmap(this.name, opts.id, 0, 0, align);
       this.width = b.width;
       this.height = b.height;
@@ -2254,6 +2292,7 @@ LIBRARY
       }
       this.width = npos;
       this.setPosition(this.align);
+      this.observer.notify(ComponentObserver.UPDATED);
       return TweenLite.from(this, 0.3, {
         alpha: 0,
         y: this.y - 10
@@ -2273,6 +2312,137 @@ LIBRARY
     };
 
     return PhraseCompleterContainer;
+
+  })(Component);
+
+  PhraseCloneContainer = (function(_super) {
+    __extends(PhraseCloneContainer, _super);
+
+    PhraseCloneContainer.prototype = new createjs.Container();
+
+    PhraseCloneContainer.prototype.Container_initialize = PhraseCloneContainer.prototype.initialize;
+
+    function PhraseCloneContainer(opts) {
+      this.initialize(opts);
+    }
+
+    PhraseCloneContainer.prototype.initialize = function(opts) {
+      var _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = opts.x;
+      this.y = opts.y;
+      this.margin = (_ref2 = opts.margin) != null ? _ref2 : 10;
+      this.font = (_ref3 = opts.font) != null ? _ref3 : '20px Arial';
+      this.fcolor = (_ref4 = opts.fcolor) != null ? _ref4 : '#333';
+      this.bcolor = (_ref5 = opts.bcolor) != null ? _ref5 : '#FFF';
+      this.scolor = (_ref6 = opts.scolor) != null ? _ref6 : '#333';
+      this.stroke = (_ref7 = opts.stroke) != null ? _ref7 : 3;
+      this.name = (_ref8 = opts.name) != null ? _ref8 : opts.id;
+      this.align = (_ref9 = opts.align) != null ? _ref9 : '';
+      this.currentTarget = 0;
+      this.observer = new ComponentObserver();
+      return this.droptargets = new Array();
+    };
+
+    PhraseCloneContainer.prototype.update = function(opts) {
+      var align, h, h2, i, npos, t, txt, _i, _len, _ref2, _ref3;
+      this.removeAllChildren();
+      if (opts.h2) {
+        align = (_ref2 = opts.h2.align) != null ? _ref2 : '';
+        h2 = this.createText('h2', opts.h2.text, this.font, this.color, opts.h2.x, opts.h2.y, align);
+        this.add(h2, false);
+      }
+      i = 0;
+      npos = 0;
+      _ref3 = opts.pattern;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        t = _ref3[_i];
+        if (t === '#tcpt') {
+          txt = opts.targets[i];
+          h = new TextCloneContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, -5);
+          this.droptargets.push(h);
+          this.add(h, false);
+          npos += h.width + this.margin;
+          i++;
+        } else {
+          h = this.createText('txt', t, this.font, this.fcolor, npos, -5);
+          this.add(h, false);
+          npos += h.getMeasuredWidth() + this.margin;
+        }
+      }
+      this.width = npos;
+      this.setPosition(this.align);
+      this.observer.notify(ComponentObserver.UPDATED);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0,
+        y: this.y - 10
+      });
+    };
+
+    PhraseCloneContainer.prototype.isComplete = function() {
+      return true;
+    };
+
+    return PhraseCloneContainer;
+
+  })(Component);
+
+  TextCloneContainer = (function(_super) {
+    __extends(TextCloneContainer, _super);
+
+    TextCloneContainer.prototype = new createjs.Container();
+
+    TextCloneContainer.prototype.Container_initialize = TextCloneContainer.prototype.initialize;
+
+    function TextCloneContainer(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
+      this.initialize(opts, font, fcolor, bcolor, scolor, stroke, x, y);
+    }
+
+    TextCloneContainer.prototype.initialize = function(opts, font, fcolor, bcolor, scolor, stroke, x, y) {
+      var _ref2, _ref3, _ref4;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      this.x = x;
+      this.y = y;
+      this.success = (_ref2 = opts.success) != null ? _ref2 : opts.text;
+      this.text = this.createText('txt', opts.text, font, fcolor, 0, -5);
+      this.width = (_ref3 = opts.width) != null ? _ref3 : this.text.getMeasuredWidth();
+      this.height = (_ref4 = opts.height) != null ? _ref4 : this.text.getMeasuredHeight();
+      this.complete = false;
+      this.back = new createjs.Shape();
+      this.back.graphics.f(bcolor).dr(0, 0, this.width, this.height).ss(stroke).s(scolor).mt(0, this.height).lt(this.width, this.height);
+      this.add(this.back, false);
+      this.add(this.text, false);
+      return this.text.text = '';
+    };
+
+    TextCloneContainer.prototype.setRectOutline = function(bcolor, stroke, scolor) {
+      return this.back.graphics.f(bcolor).ss(stroke).s(scolor).dr(0, 0, this.width, this.height);
+    };
+
+    TextCloneContainer.prototype.showEvaluation = function() {
+      if (this.complete) {
+        return this.insertBitmap('correct', 'correct', this.width, this.height / 2, 'ml');
+      } else {
+        return this.insertBitmap('wrong', 'wrong', this.width, this.height / 2, 'ml');
+      }
+    };
+
+    TextCloneContainer.prototype.update = function(text, complete) {
+      if (complete == null) {
+        complete = true;
+      }
+      this.complete = complete;
+      this.text.text = text;
+      this.text.textAlign = 'center';
+      this.text.x = this.width / 2;
+      return TweenLite.from(this, 0.3, {
+        alpha: 0
+      });
+    };
+
+    return TextCloneContainer;
 
   })(Component);
 
@@ -2638,10 +2808,11 @@ LIBRARY
     }
 
     LetterDragContainer.prototype.initialize = function(opts) {
-      var hit, t, _ref2;
+      var hit, t, _i, _len, _ref2, _ref3;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
       Module.extend(this, d2oda.actions);
+      Module.extend(this, d2oda.utilities);
       this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
       this.x = opts.x;
       this.y = opts.y;
@@ -2650,12 +2821,16 @@ LIBRARY
         y: this.y
       };
       this.index = opts.index;
-      this.target = lib[opts.target];
-      this["eval"] = opts["eval"];
+      if (this.isArray(opts.target)) {
+        this.target = opts.target;
+      } else {
+        this.target = lib[opts.target];
+      }
       this.droptargets = new Array();
-      t = this.createText('txt', opts.text, opts.font, opts.color, 0, 0);
-      this.width = t.getMeasuredWidth();
-      this.height = t.getMeasuredHeight();
+      this["eval"] = opts["eval"];
+      this.label = this.createText('txt', opts.text, opts.font, opts.color, 0, 0);
+      this.width = this.label.getMeasuredWidth();
+      this.height = this.label.getMeasuredHeight();
       switch (opts.afterSuccess) {
         case 'hide':
           this.afterSuccess = this.hide;
@@ -2683,17 +2858,36 @@ LIBRARY
           this.afterFail = this.setInOrigin;
       }
       hit = new createjs.Shape();
-      hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6);
-      t.hitArea = hit;
-      this.add(t, false);
+      hit.graphics.beginFill('#000').drawRect(-5, -3, this.label.getMeasuredWidth() + 10, this.label.getMeasuredHeight() + 6);
+      this.label.hitArea = hit;
+      this.add(this.label, false);
       if (this.target) {
-        this.target.observer.subscribe(ComponentObserver.UPDATED, this.update);
+        if (this.isArray(this.target)) {
+          _ref3 = this.target;
+          for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+            t = _ref3[_i];
+            lib[t].observer.subscribe(ComponentObserver.UPDATED, this.update);
+          }
+        } else {
+          this.target.observer.subscribe(ComponentObserver.UPDATED, this.update);
+        }
       }
       return this.addEventListener('mousedown', this.handleMouseDown);
     };
 
     LetterDragContainer.prototype.update = function(opts) {
-      return this.droptargets = this.target.droptargets;
+      var alldrops, t, _i, _len, _ref2;
+      if (this.isArray(this.target)) {
+        alldrops = new Array();
+        _ref2 = this.target;
+        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+          t = _ref2[_i];
+          alldrops.merge(lib[t].droptargets);
+        }
+        return this.droptargets = alldrops;
+      } else {
+        return this.droptargets = this.target.droptargets;
+      }
     };
 
     LetterDragContainer.prototype.handleMouseDown = function(e) {
@@ -2997,6 +3191,10 @@ LIBRARY
           return new ChooseContainer(opts);
         case 'cwd':
           return new CrossWordsContainer(opts);
+        case 'ldrg':
+          return new LetterDragContainer(opts);
+        case 'pcct':
+          return new PhraseCloneContainer(opts);
         case 'wcpt':
           return new WordCompleterContainer(opts);
         case 'ccpt':
@@ -3044,6 +3242,7 @@ LIBRARY
     function Scene(scene) {
       this.setStep = __bind(this.setStep, this);
       this.next = __bind(this.next, this);
+      this.sndsuccess = __bind(this.sndsuccess, this);
       this.initialize(scene);
     }
 
@@ -3111,6 +3310,10 @@ LIBRARY
       return this.nextStep();
     };
 
+    Scene.prototype.sndsuccess = function() {
+      return this.success(false);
+    };
+
     Scene.prototype.fail = function() {
       lib.score.enableBlock();
       return lib.mainContainer.warning();
@@ -3128,7 +3331,7 @@ LIBRARY
     };
 
     Scene.prototype.setStep = function() {
-      var step, target, _i, _len, _results;
+      var snd, step, target, _i, _len, _results;
       step = this.answers[this.currentStep];
       _results = [];
       for (_i = 0, _len = step.length; _i < _len; _i++) {
@@ -3141,7 +3344,10 @@ LIBRARY
           case 'snd':
             this.snd = target.opts.id;
             createjs.Sound.stop();
-            createjs.Sound.play(target.opts.id);
+            snd = createjs.Sound.play(target.opts.id);
+            if (target.opts.successoncomplete) {
+              snd.addEventListener('complete', this.sndsuccess);
+            }
             _results.push(false);
             break;
           default:

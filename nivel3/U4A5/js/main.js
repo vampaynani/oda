@@ -14,9 +14,6 @@
           id: 'head',
           src: 'pleca1.png'
         }, {
-          id: 'inst',
-          src: 'inst.png'
-        }, {
           id: 'c1',
           src: 'circle1.png'
         }, {
@@ -56,7 +53,7 @@
           src: 'sounds/good.mp3',
           id: 'good'
         }, {
-          src: 'sounds/TU2_U5_A2_instructions.mp3',
+          src: 'sounds/TU3_U4_A5_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
@@ -70,7 +67,7 @@
       U5A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('propback', 'propback', 0, 0);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertBitmap('instructions', 'inst', 20, 100);
+      this.insertInstructions('instructions', 'Read the speech bubbles and click on the corresponding character.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 15, 0));
       return this.setFaces().introEvaluation();
     };
