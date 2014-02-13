@@ -71,25 +71,6 @@ class U3A4 extends Oda
 		    {src:'sounds/TU2_U3_A4_instructions.mp3', id:'instructions'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
-		###
-			0:They
-			1:He
-			2:She
-			3:like
-			4:don't like
-			5:likes
-			6:doesn't likes
-			7:love
-			8:loves
-			9:milk
-			10:pancakes
-			11:eggs
-			12:beans
-			9:corn
-			10:ice cream
-			11:peaches
-			12:spinach
-			###
 		@answers = [
 			[
 				{a:'Table1num2',a1:2,a2:6,a3:10}
@@ -118,9 +99,9 @@ class U3A4 extends Oda
 		@intento = 0
 
 	setDropper: ->
-		@addToMain new WordContainer 'dropper1', '', '#FFF', '#F59743', 170, 541, 188, 30
-		@addToMain new WordContainer 'dropper2', '', '#FFF', '#F59743', 373, 541, 158, 30
-		@addToMain new WordContainer 'dropper3', '', '#FFF', '#F59743', 544, 541, 136, 30
+		@addToMain new WordContainer 'dropper1', '', '#FFF', '#0098d7', 170, 541, 188, 30
+		@addToMain new WordContainer 'dropper2', '', '#FFF', '#0098d7', 373, 541, 158, 30
+		@addToMain new WordContainer 'dropper3', '', '#FFF', '#0098d7', 544, 541, 136, 30
 		text = new createjs.Text '.', '24px Arial', '#000'
 		text.x = 685
 		text.y = 545
