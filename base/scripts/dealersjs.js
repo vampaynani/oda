@@ -457,6 +457,8 @@ LIBRARY
             return this.evaluateGlobal01(dispatcher);
           case 'click_O1':
             return this.evaluateClick01(dispatcher, target);
+          case 'click_O1_01':
+            return this.evaluateClick01_01(dispatcher, target);
           case 'click_02':
             return this.evaluateClick02(dispatcher, target);
           case 'click_03':
@@ -475,6 +477,8 @@ LIBRARY
             return this.evaluateClon01(dispatcher, target);
           case 'switch_01':
             return this.evaluateSwitch01(dispatcher, target);
+          case 'choose_01':
+            return this.evaluateChoose01(dispatcher);
         }
       };
 
@@ -524,6 +528,26 @@ LIBRARY
           lib[target].currentTarget++;
           if (lib[target].currentTarget === droptargets.length) {
             return lib.scene.success();
+          }
+        } else {
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluateClick01_01 = function(dispatcher, target) {
+        var answer, currentTarget, droptargets, next;
+        answer = lib[dispatcher].index;
+        droptargets = lib[target].droptargets;
+        currentTarget = lib[target].currentTarget;
+        if (answer === droptargets[currentTarget].success) {
+          droptargets[currentTarget].complete = true;
+          droptargets[currentTarget].update();
+          lib[target].currentTarget++;
+          if (lib[target].currentTarget === droptargets.length) {
+            next = lib[target].nextGroup;
+            lib.score.plusOne();
+            createjs.Sound.play('s/good');
+            return lib[next].setInvisible(false);
           }
         } else {
           return lib.scene.fail();
@@ -658,6 +682,11 @@ LIBRARY
         } else {
           return lib.scene.fail();
         }
+      };
+
+      Evaluator.evaluateChoose01 = function(dispatcher) {
+        lib.scene.choose = lib[dispatcher].index;
+        return lib.scene.success(false);
       };
 
       Evaluator;
@@ -1208,6 +1237,8 @@ LIBRARY
           lib[this.target].setInvisible();
           lib[this.next].setInvisible();
           return this.setInvisible(false);
+        case 'choose':
+          return this.setInvisible(false);
       }
     };
 
@@ -1257,6 +1288,10 @@ LIBRARY
       });
       lib[this.next].setInvisible(false);
       return this.setInvisible();
+    };
+
+    ComponentGroup.prototype.doChoose = function(choosenone) {
+      return this.choosen = choosenone;
     };
 
     ComponentGroup.prototype.isComplete = function() {
@@ -2272,6 +2307,9 @@ LIBRARY
         h2 = this.createText('h2', opts.h2.text, this.font, this.color, opts.h2.x, opts.h2.y, align);
         this.add(h2, false);
       }
+      if (opts.nextGroup) {
+        this.nextGroup = opts.nextGroup;
+      }
       i = 0;
       npos = 0;
       _ref3 = opts.pattern;
@@ -2531,7 +2569,6 @@ LIBRARY
 
     CrossWordsContainer.prototype.evaluateWords = function() {
       var coords, obj, word, wordComplete, _i, _j, _len, _len1, _ref2, _results;
-      this.allComplete = true;
       _ref2 = this.words;
       _results = [];
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
@@ -2540,7 +2577,6 @@ LIBRARY
         wordComplete = true;
         for (_j = 0, _len1 = coords.length; _j < _len1; _j++) {
           obj = coords[_j];
-          console.log(obj);
           if (!lib["l" + obj].complete) {
             wordComplete = false;
           }
@@ -2557,7 +2593,7 @@ LIBRARY
             createjs.Sound.play("s/" + word.target);
             _results.push(lib.scene.success());
           } else {
-            _results.push(this.allComplete = false);
+            _results.push(void 0);
           }
         } else {
           _results.push(void 0);
@@ -2567,6 +2603,15 @@ LIBRARY
     };
 
     CrossWordsContainer.prototype.isComplete = function() {
+      var word, _i, _len, _ref2;
+      this.allComplete = true;
+      _ref2 = this.words;
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        word = _ref2[_i];
+        if (!word.complete) {
+          this.allComplete = false;
+        }
+      }
       return this.allComplete;
     };
 
@@ -3115,9 +3160,16 @@ LIBRARY
     };
 
     SceneStack.prototype.next = function() {
-      this.currentScene++;
+      if (this.stack[this.currentScene].chooseEnabled) {
+        this.stack[this.currentScene].visible = false;
+        this.currentScene = this.stack[this.currentScene].choose;
+      } else {
+        this.currentScene++;
+      }
       if (this.stack.length > 1 && this.currentScene < this.stack.length) {
-        this.stack[this.currentScene - 1].visible = false;
+        if (!this.stack[this.currentScene].chooseEnabled) {
+          this.stack[this.currentScene - 1].visible = false;
+        }
         this.setCurrent();
         lib.scene.init();
         return TweenLite.from(this, 1, {
@@ -3247,18 +3299,20 @@ LIBRARY
     }
 
     Scene.prototype.initialize = function(scene) {
-      var answers, c, container, g, group, _i, _j, _len, _len1, _ref3, _ref4, _results;
+      var answers, c, container, g, group, _i, _j, _len, _len1, _ref3, _ref4, _ref5, _results;
       this.Container_initialize();
       Module.extend(this, d2oda.methods);
       this.factory = new SceneFactory();
       this.observer = new SceneObserver();
       this.currentStep = 0;
+      this.choose = (_ref3 = scene.answers.choose) != null ? _ref3 : 0;
       answers = scene.answers.collection.slice(0);
       if (scene.answers.mixed === true) {
         this.answers = d2oda.utilities.shuffle(answers);
       } else {
         this.answers = answers;
       }
+      this.chooseEnabled = scene.answers.chooseEnabled;
       switch (scene.answers.type) {
         case 'steps':
           this.observer.subscribe(SceneObserver.NEXT_STEP, this.next);
@@ -3267,20 +3321,24 @@ LIBRARY
           this.answers = d2oda.utilities.shuffleNoRepeat(this.answers, scene.answers.limit);
           this.observer.subscribe(SceneObserver.NEXT_STEP, this.next);
       }
-      _ref3 = scene.containers;
-      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
-        container = _ref3[_i];
-        c = this.factory.makeChild(container);
-        this.add(c);
+      if (scene.containers.length > 0) {
+        _ref4 = scene.containers;
+        for (_i = 0, _len = _ref4.length; _i < _len; _i++) {
+          container = _ref4[_i];
+          c = this.factory.makeChild(container);
+          this.add(c);
+        }
       }
-      _ref4 = scene.groups;
-      _results = [];
-      for (_j = 0, _len1 = _ref4.length; _j < _len1; _j++) {
-        group = _ref4[_j];
-        g = this.factory.makeChild(group);
-        _results.push(lib[group.id] = g);
+      if (scene.groups.length > 0) {
+        _ref5 = scene.groups;
+        _results = [];
+        for (_j = 0, _len1 = _ref5.length; _j < _len1; _j++) {
+          group = _ref5[_j];
+          g = this.factory.makeChild(group);
+          _results.push(lib[group.id] = g);
+        }
+        return _results;
       }
-      return _results;
     };
 
     Scene.prototype.init = function() {
@@ -3301,10 +3359,12 @@ LIBRARY
         lib.score.plusOne();
       }
       step = this.answers[this.currentStep];
-      for (_i = 0, _len = step.length; _i < _len; _i++) {
-        target = step[_i];
-        if (target.name !== 'snd' && target.name !== 'global' && lib[target.name].isComplete() === false) {
-          return false;
+      if (step && step.length > 0) {
+        for (_i = 0, _len = step.length; _i < _len; _i++) {
+          target = step[_i];
+          if (target.name !== 'snd' && target.name !== 'global' && lib[target.name].isComplete() === false) {
+            return false;
+          }
         }
       }
       return this.nextStep();
@@ -3333,28 +3393,30 @@ LIBRARY
     Scene.prototype.setStep = function() {
       var snd, step, target, _i, _len, _results;
       step = this.answers[this.currentStep];
-      _results = [];
-      for (_i = 0, _len = step.length; _i < _len; _i++) {
-        target = step[_i];
-        switch (target.name) {
-          case 'global':
-            d2oda.evaluator.success = target.opts.success;
-            _results.push(false);
-            break;
-          case 'snd':
-            this.snd = target.opts.id;
-            createjs.Sound.stop();
-            snd = createjs.Sound.play(target.opts.id);
-            if (target.opts.successoncomplete) {
-              snd.addEventListener('complete', this.sndsuccess);
-            }
-            _results.push(false);
-            break;
-          default:
-            _results.push(lib[target.name].update(target.opts));
+      if (step && step.length > 0) {
+        _results = [];
+        for (_i = 0, _len = step.length; _i < _len; _i++) {
+          target = step[_i];
+          switch (target.name) {
+            case 'global':
+              d2oda.evaluator.success = target.opts.success;
+              _results.push(false);
+              break;
+            case 'snd':
+              this.snd = target.opts.id;
+              createjs.Sound.stop();
+              snd = createjs.Sound.play(target.opts.id);
+              if (target.opts.successoncomplete) {
+                snd.addEventListener('complete', this.sndsuccess);
+              }
+              _results.push(false);
+              break;
+            default:
+              _results.push(lib[target.name].update(target.opts));
+          }
         }
+        return _results;
       }
-      return _results;
     };
 
     Scene.prototype.nextStep = function() {

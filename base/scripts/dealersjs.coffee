@@ -179,6 +179,7 @@ window.d2oda.evaluator ?= class Evaluator
 			when 'finish' then @evaluateFinish(target)
 			when 'global_01' then @evaluateGlobal01(dispatcher)
 			when 'click_O1' then @evaluateClick01(dispatcher, target)
+			when 'click_O1_01' then @evaluateClick01_01(dispatcher, target)
 			when 'click_02' then @evaluateClick02(dispatcher, target)
 			when 'click_03' then @evaluateClick03(dispatcher, target)
 			when 'drop_01' then @evaluateDrop01(dispatcher, target)
@@ -188,6 +189,7 @@ window.d2oda.evaluator ?= class Evaluator
 			when 'drop_04' then @evaluateDrop04(dispatcher, target)
 			when 'clon_01' then @evaluateClon01(dispatcher, target)
 			when 'switch_01' then @evaluateSwitch01(dispatcher, target)
+			when 'choose_01' then @evaluateChoose01(dispatcher)
 	@evaluateRepeat = () ->
 		createjs.Sound.stop()
 		createjs.Sound.play lib.scene.snd
@@ -218,6 +220,22 @@ window.d2oda.evaluator ?= class Evaluator
 			lib[target].currentTarget++
 			if lib[target].currentTarget is droptargets.length
 				lib.scene.success()
+		else
+			lib.scene.fail()
+	@evaluateClick01_01 = (dispatcher, target) ->
+		answer = lib[dispatcher].index
+		droptargets = lib[target].droptargets
+		currentTarget = lib[target].currentTarget
+		if answer is droptargets[currentTarget].success
+			droptargets[currentTarget].complete = true
+			droptargets[currentTarget].update()
+			lib[target].currentTarget++
+			if lib[target].currentTarget is droptargets.length
+				#lib.scene.success()
+				next = lib[target].nextGroup
+				lib.score.plusOne()
+				createjs.Sound.play 's/good'
+				lib[next].setInvisible false
 		else
 			lib.scene.fail()
 	@evaluateClick02 = (dispatcher, target) ->
@@ -304,6 +322,9 @@ window.d2oda.evaluator ?= class Evaluator
 			lib.scene.success()
 		else
 			lib.scene.fail()
+	@evaluateChoose01 = (dispatcher) ->
+		lib.scene.choose = lib[dispatcher].index
+		lib.scene.success false
 	Evaluator
 
 
@@ -581,6 +602,8 @@ class ComponentGroup
 				lib[@target].setInvisible()
 				lib[@next].setInvisible()
 				@setInvisible false
+			when 'choose'
+				@setInvisible false
 	setInvisible: (status=true, fade=true) ->
 		if status
 			for item in @group
@@ -592,6 +615,8 @@ class ComponentGroup
 		lib[@target].update {type:'fadeIn', target: @success}
 		lib[@next].setInvisible false
 		@setInvisible()
+	doChoose: (choosenone) ->
+		@choosen = choosenone
 	isComplete: ->
 		true
 	window.ComponentGroup = ComponentGroup
@@ -1170,6 +1195,8 @@ class PhraseCompleterContainer extends Component
 			align = opts.h2.align ? ''
 			h2 = @createText 'h2', opts.h2.text, @font, @color, opts.h2.x, opts.h2.y, align
 			@add h2, false
+		if opts.nextGroup
+			@nextGroup = opts.nextGroup
 		i = 0
 		npos = 0
 		for t in opts.pattern
@@ -1329,12 +1356,10 @@ class CrossWordsContainer extends Component
 		TweenLite.killTweensOf obj
 		TweenLite.to obj, 0.5, {alpha: 0, y: obj.y - 20}
 	evaluateWords: () ->
-		@allComplete = true
 		for word in @words
 			coords = word.coords
 			wordComplete = true
 			for obj in coords
-				console.log obj
 				if not lib["l#{obj}"].complete
 					wordComplete = false
 			if not word.complete
@@ -1344,9 +1369,11 @@ class CrossWordsContainer extends Component
 					if lib["number#{word.target}"] then @fadeOut lib["number#{word.target}"]
 					createjs.Sound.play "s/#{word.target}"
 					lib.scene.success()
-				else
-					@allComplete = false
 	isComplete: () ->
+		@allComplete = true
+		for word in @words
+			if not word.complete
+				@allComplete = false
 		@allComplete
 
 class ABCContainer extends Component
@@ -1649,9 +1676,13 @@ class SceneStack extends Component
 		@setCurrent()
 		TweenLite.from @, 1, {alpha: 0}
 	next: =>
-		@currentScene++
+		if @stack[@currentScene].chooseEnabled
+			@stack[@currentScene].visible = false
+			@currentScene = @stack[@currentScene].choose 
+		else 
+			@currentScene++
 		if @stack.length > 1 and @currentScene < @stack.length
-			@stack[@currentScene - 1].visible = false
+			if not @stack[@currentScene].chooseEnabled then @stack[@currentScene - 1].visible = false
 			@setCurrent()
 			lib.scene.init()
 			TweenLite.from @, 1, {alpha: 0}
@@ -1715,12 +1746,15 @@ class Scene extends Component
 		@factory = new SceneFactory()
 		@observer = new SceneObserver()
 		@currentStep = 0
+		@choose = scene.answers.choose ? 0
 		answers = scene.answers.collection[..]
 		
 		if scene.answers.mixed is true
 			@answers = d2oda.utilities.shuffle answers
 		else
 			@answers = answers
+
+		@chooseEnabled = scene.answers.chooseEnabled
 
 		switch scene.answers.type
 			when 'steps'
@@ -1729,13 +1763,15 @@ class Scene extends Component
 				@answers = d2oda.utilities.shuffleNoRepeat @answers, scene.answers.limit
 				@observer.subscribe SceneObserver.NEXT_STEP, @next
 
-		for container in scene.containers
-			c = @factory.makeChild container
-			@add c
+		if scene.containers.length > 0 
+			for container in scene.containers
+				c = @factory.makeChild container
+				@add c
 		
-		for group in scene.groups
-			g = @factory.makeChild group
-			lib[group.id] = g
+		if scene.groups.length > 0 
+			for group in scene.groups
+				g = @factory.makeChild group
+				lib[group.id] = g
 	init: ->
 		if lib.score.type is 'clock'
 			lib.score.start()
@@ -1745,9 +1781,10 @@ class Scene extends Component
 		createjs.Sound.stop()
 		if plusOne then lib.score.plusOne()
 		step = @answers[@currentStep]
-		for target in step
-			if target.name isnt 'snd' and target.name isnt 'global' and lib[target.name].isComplete() is false
-				return false
+		if step && step.length > 0
+			for target in step
+				if target.name isnt 'snd' and target.name isnt 'global' and lib[target.name].isComplete() is false
+					return false
 		@nextStep()
 	sndsuccess: () =>
 		@success false
@@ -1763,20 +1800,21 @@ class Scene extends Component
 			@delay 1000, @setStep
 	setStep: =>
 		step = @answers[@currentStep]
-		for target in step
-			switch target.name
-				when 'global'
-					d2oda.evaluator.success = target.opts.success
-					false
-				when 'snd'
-					@snd = target.opts.id
-					createjs.Sound.stop()
-					snd = createjs.Sound.play target.opts.id
-					if target.opts.successoncomplete
-						snd.addEventListener 'complete', @sndsuccess
-					false
-				else
-					lib[target.name].update target.opts
+		if step && step.length > 0
+			for target in step
+				switch target.name
+					when 'global'
+						d2oda.evaluator.success = target.opts.success
+						false
+					when 'snd'
+						@snd = target.opts.id
+						createjs.Sound.stop()
+						snd = createjs.Sound.play target.opts.id
+						if target.opts.successoncomplete
+							snd.addEventListener 'complete', @sndsuccess
+						false
+					else
+						lib[target.name].update target.opts
 	nextStep: ->
 		console.log 'next step'
 		@observer.notify SceneObserver.NEXT_STEP
