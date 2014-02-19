@@ -1245,8 +1245,8 @@
   })();
 
   window.stageSize || (window.stageSize = {
-    w: 800,
-    h: 600,
+    w: 1600,
+    h: 1200,
     r: 1
   });
 

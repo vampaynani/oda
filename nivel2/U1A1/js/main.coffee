@@ -36,61 +36,61 @@ class U1A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100
-		@insertSprite 'characters', ['p1','p2','p3','p4','p5'], null, stageSize.w / 2, 235, 'mc'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@insertInstructions 'instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 80, 200
+		@insertSprite 'characters', ['p1','p2','p3','p4','p5'], null, stageSize.w / 2, 470, 'mc'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 5, 0
 		@intento = 0
 		@setDropper().setNube1().setNube2().setNube3().introEvaluation()
 	setDropper: ->
 		dropper = new createjs.Container()
-		dropper.x = stageSize.w / 2 - 205
-		dropper.y = @library['characters'].y + 60
+		dropper.x = stageSize.w / 2 - 410
+		dropper.y = @library['characters'].y + 120
 		dropper.name = 'dropper'
 		back = @createBitmap 'backDropper','gg', 0, 0
-		h1 = new WordContainer 'h1', '', '#fef2e7', '#f39234', 14, 62, 90, 22
-		h2 = new WordContainer 'h2', '', '#fef2e7', '#f39234', 118, 62, 122, 22
-		h3 = new WordContainer 'h3', '', '#fef2e7', '#f39234', 254, 62, 137, 22
+		h1 = new WordContainer 'h1', '', '#fef2e7', '#f39234', 28, 124, 180, 44
+		h2 = new WordContainer 'h2', '', '#fef2e7', '#f39234', 237, 124, 244, 44
+		h3 = new WordContainer 'h3', '', '#fef2e7', '#f39234', 508, 124, 274, 44
 		dropper.addChild back, h1, h2, h3
 		@addToLibrary h1, h2, h3
 		@addToMain dropper
 		@
 	setNube1: ->
 		container = new createjs.Container()
-		container.x = 100
-		container.y = @library['dropper'].y + 120
+		container.x = 200
+		container.y = @library['dropper'].y + 240
 		container.name = 'nube1'
 		back = @createBitmap 'backNube1', 'n1', 0, 0
-		p1n1 = new DraggableText 'p1n1', "I'm", 0, 40, 10
-		p2n1 = new DraggableText 'p2n1', "We're", 1, 30, 40
+		p1n1 = new DraggableText 'p1n1', "I'm", 0, 80, 20
+		p2n1 = new DraggableText 'p2n1', "We're", 1, 60, 80
 		container.addChild back, p1n1, p2n1
 		@addToLibrary back, p1n1, p2n1
 		@addToMain container
 		@
 	setNube2: ->
 		container = new createjs.Container()
-		container.x = 250
-		container.y = @library['dropper'].y + 120
+		container.x = 500
+		container.y = @library['dropper'].y + 240
 		container.name = 'nube2'
 		back = @createBitmap 'backNube2', 'n2', 0, 0
-		p1n2 = new DraggableText 'p1n2', "painting", 0, 40, 30
-		p2n2 = new DraggableText 'p2n2', "playing", 1, 140, 60
-		p3n2 = new DraggableText 'p3n2', "singing", 2, 40, 80
-		p4n2 = new DraggableText 'p4n2', "studying", 3, 120, 120
+		p1n2 = new DraggableText 'p1n2', "painting", 0, 80, 60
+		p2n2 = new DraggableText 'p2n2', "playing", 1, 280, 120
+		p3n2 = new DraggableText 'p3n2', "singing", 2, 80, 160
+		p4n2 = new DraggableText 'p4n2', "studying", 3, 240, 240
 		container.addChild back, p1n2, p2n2, p3n2, p4n2
 		@addToLibrary back, p1n2, p2n2, p3n2, p4n2
 		@addToMain container
 		@
 	setNube3: ->
 		container = new createjs.Container()
-		container.x = 540
-		container.y = @library['dropper'].y + 120
+		container.x = 1080
+		container.y = @library['dropper'].y + 240
 		container.name = 'nube3'
 		back = @createBitmap 'backNube3', 'n3', 0, 0
-		p1n3 = new DraggableText 'p1n3', "a picture.", 0, 110, 40
-		p2n3 = new DraggableText 'p2n3', "English.", 1, 20, 50
-		p3n3 = new DraggableText 'p3n3', "a song.", 2, 140, 80
-		p4n3 = new DraggableText 'p4n3', "the flute.", 3, 30, 100
-		p5n3 = new DraggableText 'p5n3', "outside.", 4, 100, 140
+		p1n3 = new DraggableText 'p1n3', "a picture.", 0, 220, 80
+		p2n3 = new DraggableText 'p2n3', "English.", 1, 40, 100
+		p3n3 = new DraggableText 'p3n3', "a song.", 2, 280, 160
+		p4n3 = new DraggableText 'p4n3', "the flute.", 3, 60, 200
+		p5n3 = new DraggableText 'p5n3', "outside.", 4, 200, 280
 		container.addChild back, p1n3, p2n3, p3n3, p4n3, p5n3
 		@addToLibrary back, p1n3, p2n3, p3n3, p4n3, p5n3
 		@addToMain container

@@ -2751,9 +2751,9 @@ LIBRARY
         scrambledLetter = scrambledWord[_j];
         if (scrambledLetter !== ' ') {
           opts = {
-            id: "l" + i,
+            id: "l" + this.name + i,
             x: npos,
-            y: -50,
+            y: -h.height,
             index: scrambledLetter,
             target: this.name,
             "eval": this["eval"],

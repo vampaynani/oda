@@ -120,9 +120,9 @@
     U1A1.prototype.setStage = function() {
       U1A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 40, 100);
-      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5'], null, stageSize.w / 2, 235, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.insertInstructions('instructions', 'Look and drag the parts of the sentences to the speech bubbles.', 80, 200);
+      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5'], null, stageSize.w / 2, 470, 'mc');
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 5, 0));
       this.intento = 0;
       return this.setDropper().setNube1().setNube2().setNube3().introEvaluation();
     };
@@ -130,13 +130,13 @@
     U1A1.prototype.setDropper = function() {
       var back, dropper, h1, h2, h3;
       dropper = new createjs.Container();
-      dropper.x = stageSize.w / 2 - 205;
-      dropper.y = this.library['characters'].y + 60;
+      dropper.x = stageSize.w / 2 - 410;
+      dropper.y = this.library['characters'].y + 120;
       dropper.name = 'dropper';
       back = this.createBitmap('backDropper', 'gg', 0, 0);
-      h1 = new WordContainer('h1', '', '#fef2e7', '#f39234', 14, 62, 90, 22);
-      h2 = new WordContainer('h2', '', '#fef2e7', '#f39234', 118, 62, 122, 22);
-      h3 = new WordContainer('h3', '', '#fef2e7', '#f39234', 254, 62, 137, 22);
+      h1 = new WordContainer('h1', '', '#fef2e7', '#f39234', 28, 124, 180, 44);
+      h2 = new WordContainer('h2', '', '#fef2e7', '#f39234', 237, 124, 244, 44);
+      h3 = new WordContainer('h3', '', '#fef2e7', '#f39234', 508, 124, 274, 44);
       dropper.addChild(back, h1, h2, h3);
       this.addToLibrary(h1, h2, h3);
       this.addToMain(dropper);
@@ -146,12 +146,12 @@
     U1A1.prototype.setNube1 = function() {
       var back, container, p1n1, p2n1;
       container = new createjs.Container();
-      container.x = 100;
-      container.y = this.library['dropper'].y + 120;
+      container.x = 200;
+      container.y = this.library['dropper'].y + 240;
       container.name = 'nube1';
       back = this.createBitmap('backNube1', 'n1', 0, 0);
-      p1n1 = new DraggableText('p1n1', "I'm", 0, 40, 10);
-      p2n1 = new DraggableText('p2n1', "We're", 1, 30, 40);
+      p1n1 = new DraggableText('p1n1', "I'm", 0, 80, 20);
+      p2n1 = new DraggableText('p2n1', "We're", 1, 60, 80);
       container.addChild(back, p1n1, p2n1);
       this.addToLibrary(back, p1n1, p2n1);
       this.addToMain(container);
@@ -161,14 +161,14 @@
     U1A1.prototype.setNube2 = function() {
       var back, container, p1n2, p2n2, p3n2, p4n2;
       container = new createjs.Container();
-      container.x = 250;
-      container.y = this.library['dropper'].y + 120;
+      container.x = 500;
+      container.y = this.library['dropper'].y + 240;
       container.name = 'nube2';
       back = this.createBitmap('backNube2', 'n2', 0, 0);
-      p1n2 = new DraggableText('p1n2', "painting", 0, 40, 30);
-      p2n2 = new DraggableText('p2n2', "playing", 1, 140, 60);
-      p3n2 = new DraggableText('p3n2', "singing", 2, 40, 80);
-      p4n2 = new DraggableText('p4n2', "studying", 3, 120, 120);
+      p1n2 = new DraggableText('p1n2', "painting", 0, 80, 60);
+      p2n2 = new DraggableText('p2n2', "playing", 1, 280, 120);
+      p3n2 = new DraggableText('p3n2', "singing", 2, 80, 160);
+      p4n2 = new DraggableText('p4n2', "studying", 3, 240, 240);
       container.addChild(back, p1n2, p2n2, p3n2, p4n2);
       this.addToLibrary(back, p1n2, p2n2, p3n2, p4n2);
       this.addToMain(container);
@@ -178,15 +178,15 @@
     U1A1.prototype.setNube3 = function() {
       var back, container, p1n3, p2n3, p3n3, p4n3, p5n3;
       container = new createjs.Container();
-      container.x = 540;
-      container.y = this.library['dropper'].y + 120;
+      container.x = 1080;
+      container.y = this.library['dropper'].y + 240;
       container.name = 'nube3';
       back = this.createBitmap('backNube3', 'n3', 0, 0);
-      p1n3 = new DraggableText('p1n3', "a picture.", 0, 110, 40);
-      p2n3 = new DraggableText('p2n3', "English.", 1, 20, 50);
-      p3n3 = new DraggableText('p3n3', "a song.", 2, 140, 80);
-      p4n3 = new DraggableText('p4n3', "the flute.", 3, 30, 100);
-      p5n3 = new DraggableText('p5n3', "outside.", 4, 100, 140);
+      p1n3 = new DraggableText('p1n3', "a picture.", 0, 220, 80);
+      p2n3 = new DraggableText('p2n3', "English.", 1, 40, 100);
+      p3n3 = new DraggableText('p3n3', "a song.", 2, 280, 160);
+      p4n3 = new DraggableText('p4n3', "the flute.", 3, 60, 200);
+      p5n3 = new DraggableText('p5n3', "outside.", 4, 200, 280);
       container.addChild(back, p1n3, p2n3, p3n3, p4n3, p5n3);
       this.addToLibrary(back, p1n3, p2n3, p3n3, p4n3, p5n3);
       this.addToMain(container);
