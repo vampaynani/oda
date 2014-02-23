@@ -469,6 +469,8 @@ LIBRARY
             return this.evaluateDrop02(dispatcher, target);
           case 'drop_02_01':
             return this.evaluateDrop02_01(dispatcher, target);
+          case 'drop_02_02':
+            return this.evaluateDrop02_02(dispatcher, target);
           case 'drop_03':
             return this.evaluateDrop03(dispatcher, target);
           case 'drop_04':
@@ -479,6 +481,8 @@ LIBRARY
             return this.evaluateSwitch01(dispatcher, target);
           case 'choose_01':
             return this.evaluateChoose01(dispatcher);
+          case 'phrase_drop_01':
+            return this.evaluatePhraseDrop01(dispatcher, target);
         }
       };
 
@@ -637,6 +641,19 @@ LIBRARY
         return lib.scene.success(false);
       };
 
+      Evaluator.evaluateDrop02_02 = function(dispatcher, target) {
+        if (lib[dispatcher].index === target.success) {
+          target.update({
+            complete: true
+          });
+          lib[dispatcher].afterSuccess();
+          return lib.scene.success();
+        } else {
+          lib[dispatcher].afterFail();
+          return lib.scene.fail();
+        }
+      };
+
       Evaluator.evaluateDrop03 = function(dispatcher, target) {
         if (lib[dispatcher].index === target.success) {
           target.complete = true;
@@ -646,6 +663,23 @@ LIBRARY
           if (target.parent.currentTarget === target.parent.droptargets.length) {
             lib[target.parent.target].fadeOut();
             return lib.scene.success();
+          }
+        } else {
+          lib[dispatcher].afterFail();
+          return lib.scene.fail();
+        }
+      };
+
+      Evaluator.evaluatePhraseDrop01 = function(dispatcher, target) {
+        if (lib[dispatcher].index === target.success) {
+          target.complete = true;
+          target.update();
+          lib[dispatcher].afterSuccess();
+          target.parent.currentTarget++;
+          lib.score.plusOne();
+          createjs.Sound.play('s/good');
+          if (target.parent.currentTarget === target.parent.droptargets.length) {
+            return lib.scene.success(false);
           }
         } else {
           lib[dispatcher].afterFail();
@@ -1239,6 +1273,8 @@ LIBRARY
           return this.setInvisible(false);
         case 'choose':
           return this.setInvisible(false);
+        case 'hide':
+          return this.setInvisible();
       }
     };
 
@@ -1274,7 +1310,7 @@ LIBRARY
               alpha: 1
             }));
           } else {
-            _results1.push(lib[item].alpha = 0);
+            _results1.push(lib[item].alpha = 1);
           }
         }
         return _results1;
@@ -2300,7 +2336,7 @@ LIBRARY
     };
 
     PhraseCompleterContainer.prototype.update = function(opts) {
-      var align, h, h2, i, npos, t, txt, _i, _len, _ref2, _ref3;
+      var align, h, h2, i, maxWidth, npos, t, txt, ypos, _i, _len, _ref2, _ref3;
       this.removeAllChildren();
       if (opts.h2) {
         align = (_ref2 = opts.h2.align) != null ? _ref2 : '';
@@ -2312,23 +2348,32 @@ LIBRARY
       }
       i = 0;
       npos = 0;
+      ypos = -5;
+      maxWidth = 0;
       _ref3 = opts.pattern;
       for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
         t = _ref3[_i];
         if (t === '#tcpt') {
           txt = opts.targets[i];
-          h = new TextCompleterContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, -5);
+          h = new TextCompleterContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, ypos);
           this.droptargets.push(h);
           this.add(h, false);
           npos += h.width + this.margin;
           i++;
+        } else if (t === '#rtn') {
+          h = this.createText('txt', 'BLANK', this.font, this.fcolor, npos, 0);
+          if (npos > maxWidth) {
+            maxWidth = npos;
+          }
+          npos = 0;
+          ypos += h.getMeasuredHeight();
         } else {
-          h = this.createText('txt', t, this.font, this.fcolor, npos, -5);
+          h = this.createText('txt', t, this.font, this.fcolor, npos, ypos);
           this.add(h, false);
           npos += h.getMeasuredWidth() + this.margin;
         }
       }
-      this.width = npos;
+      this.width = maxWidth;
       this.setPosition(this.align);
       this.observer.notify(ComponentObserver.UPDATED);
       return TweenLite.from(this, 0.3, {

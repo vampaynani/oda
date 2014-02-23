@@ -1,20 +1,21 @@
+###
+
+NEW ODA
+
+###
 class U6A2 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
-			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
-			{id: 'btnrepeat', src:'btn_repeat.png'}
+			{id: 'repeat', src:'btn_repeat.png'}
 			{id: 'propimg0', src:'prop_img.png'}
 			{id: 'propimg1', src:'prop_img1.png'}
 			{id: 'propimg2', src:'prop_img2.png'}
 			{id: 'propimg3', src:'prop_img3.png'}
 			{id: 'propimg4', src:'prop_img4.png'}
 			{id: 'propimg5', src:'prop_img5.png'}
-
 			{id: 'tag1', src:'tag_1.png'}
 			{id: 'tag1580', src:'tag_1580.png'}
 			{id: 'tag2', src:'tag_2.png'}
@@ -29,131 +30,112 @@ class U6A2 extends Oda
 			{id: 'tag815', src:'tag_815.png'}
 			{id: 'tag590', src:'tag_590.png'}
 			{id: 'tag900', src:'tag_900.png'}
-
-
+			{src:'TU3_U6_A2_instructions.mp3', id:'s/instructions'}
+		    {src:'TU3_U6_A2_bisonte.mp3', id:'s/bisonte'}
+		    {src:'TU3_U6_A2_camello.mp3', id:'s/camello'}
+		    {src:'TU3_U6_A2_dormilon.mp3', id:'s/dormilon'}
+		    {src:'TU3_U6_A2_mamut.mp3', id:'s/mamut'}
+		    {src:'TU3_U6_A2_oso.mp3', id:'s/oso'}
+		    {src:'TU3_U6_A2_sable.mp3', id:'s/sable'}
 		]
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU3_U6_A2_instructions.mp3', id:'instructions'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
-		]
-		@game =
-			nubes:[
-				{txt: '1', img:'tag1', x:741, y:315}
-				{txt: '1580', img:'tag1580', x:702, y:163}
-				{txt: '2',  img:'tag2',  x:70, y:264}
-				{txt: '28', img:'tag28', x:668, y:351}
-				{txt: '280', img:'tag280', x:151, y:210}
-				{txt: '3', img:'tag3', x:158, y:300}
-				{txt: '3.3',  img:'tag33',  x:602, y:227}
-				{txt: '35', img:'tag35', x:715, y:261}
-				{txt: '4', img:'tag4', x:616, y:297}
-				{txt: '40000', img:'tag40000', x:89, y:352}
-				{txt: '4500', img:'tag4500', x:89, y:159}
-				{txt: '815', img:'tag815', x:554, y:152}
-				{txt: '590', img:'tag590', x:257, y:162}
-				{txt: '900', img:'tag900', x:339, y:150}
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Listen and drag the numbers to complete the descriptions.', sound:'s/instructions', played: false}, {text:'Now label the pictures.', sound:'s/instructions2', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 16, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{name:'snd', opts:{id:'s/camello'}}
+								{name:'grp1_0', opts:{type:'fadeIn', target:'propimg0'}}
+								{name: 'pcpt1', opts:{pattern:['Can you believe that','#tcpt','years ago there','#rtn','were camels in Los Angeles, California? They were','#rtn','#tcpt','meters tall. They weighed','#tcpt','kilograms.'], targets: [{text:'40,000'},{text:'4'},{text:'590'}]}}
+							]
+							[
+								{name:'snd', opts:{id:'s/dormilon'}}
+								{name:'grp1_0', opts:{type:'fadeIn', target:'propimg2'}}
+								{name: 'pcpt1', opts:{pattern:['This animal was a ground slot.','#rtn','It weighted','#tcpt','kilograms and','#rtn','was','#tcpt','meters tall.'], targets: [{text:'1,580'},{text:'2'}]}}
+							]
+							[
+								{name:'snd', opts:{id:'s/sable'}}
+								{name:'grp1_0', opts:{type:'fadeIn', target:'propimg5'}}
+								{name: 'pcpt1', opts:{pattern:['This animal was a saber-toothed cat. It wasn\'t','#rtn','very big--it was only','#tcpt','meter tall and it weighed','#rtn','#tcpt','kilograms. But it had long sharp fangs--they','#rtn','were','#tcpt','centimeters long!'], targets: [{text:'1'},{text:'280'},{text:'28'}]}}
+							]
+							[
+								{name:'snd', opts:{id:'s/mamut'}}
+								{name:'grp1_0', opts:{type:'fadeIn', target:'propimg3'}}
+								{name: 'pcpt1', opts:{pattern:['This animal was a Columbian mammoth. It was','#rtn','enormous. It weighted','#tcpt','kilograms and was','#tcpt','#rtn','meters tall. its tusk were','#tcpt','meters long!'], targets: [{text:'4,500'},{text:'4'},{text:'3'}]}}
+							]
+							[
+								{name:'snd', opts:{id:'s/bisonte'}}
+								{name:'grp1_0', opts:{type:'fadeIn', target:'propimg1'}}
+								{name: 'pcpt1', opts:{pattern:['This animal was an ancient bison.','#rtn','It was','#tcpt','meters tall and weighed','#tcpt','kilograms.','#rtn','Its horns were','#tcpt','centimeters long.'], targets: [{text:'2'},{text:'900'},{text:'35'}]}}
+							]
+							[
+								{name:'snd', opts:{id:'s/oso'}}
+								{name:'grp1_0', opts:{type:'fadeIn', target:'propimg4'}}
+								{name: 'pcpt1', opts:{pattern:['This animal was a short-faced bear.','#rtn','It was much bigger than the modern grizzly bear.','#rtn','It was','#tcpt','meters tall and weighed','#tcpt','kilograms.'], targets: [{text:'3.3'},{text:'815'}]}}
+							]
+						]
+						type: 'steps'
+					}
+					containers:[
+						{type: 'img', id: 'tag1', x: 741, y: 315, align: 'tc'}
+						{type: 'img', id: 'tag1580', x: 702, y: 163, align: 'tc'}
+						{type: 'img', id: 'tag2', x: 70, y: 264, align: 'tc'}
+						{type: 'img', id: 'tag28', x: 668, y: 351, align: 'tc'}
+						{type: 'img', id: 'tag280', x: 151, y: 210, align: 'tc'}
+						{type: 'img', id: 'tag3', x: 158, y: 300, align: 'tc'}
+						{type: 'img', id: 'tag33', x: 602, y: 227, align: 'tc'}
+						{type: 'img', id: 'tag35', x: 715, y: 261, align: 'tc'}
+						{type: 'img', id: 'tag4', x: 616, y: 297, align: 'tc'}
+						{type: 'img', id: 'tag40000', x: 89, y: 352, align: 'tc'}
+						{type: 'img', id: 'tag4500', x: 89, y: 159, align: 'tc'}
+						{type: 'img', id: 'tag815', x: 554, y: 152, align: 'tc'}
+						{type: 'img', id: 'tag590', x: 257, y: 162, align: 'tc'}
+						{type: 'img', id: 'tag900', x: 339, y: 150, align: 'tc'}
+						{type: 'img', id: 'propimg0', x: 400, y: 345, align: 'mc'}
+						{type: 'img', id: 'propimg1', x: 400, y: 345, align: 'mc'}
+						{type: 'img', id: 'propimg2', x: 400, y: 345, align: 'mc'}
+						{type: 'img', id: 'propimg3', x: 400, y: 345, align: 'mc'}
+						{type: 'img', id: 'propimg4', x: 400, y: 345, align: 'mc'}
+						{type: 'img', id: 'propimg5', x: 400, y: 345, align: 'mc'}
+						{type: 'pcpt', id: 'pcpt1', x: 400, y: 450, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'ldrg', id: 'ldrg1', x: 731, y: 325, index: '1', text:'1', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg2', x: 672, y: 173, index: '1,580', text:'1,580', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg3', x: 60, y: 274, index: '2', text:'2', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg4', x: 648, y: 361, index: '28', text:'28', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg5', x: 136, y: 220, index: '280', text:'280', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg6', x: 148, y: 310, index: '3', text:'3', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg7', x: 577, y: 237, index: '3.3', text:'3.3', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg8', x: 695, y: 271, index: '35', text:'35', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg9', x: 606, y: 307, index: '4', text:'4', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg10', x: 45, y: 362, index: '40,000', text:'40,000', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg11', x: 59, y: 169, index: '4,500', text:'4,500', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg12', x: 524, y: 162, index: '815', text:'815', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg13', x: 227, y: 172, index: '590', text:'590', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg14', x: 309, y: 160, index: '900', text:'900', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
+						{
+							type: 'btn', id: 'repeat', x: 400, y: 560, isRepeat: true
+							states:[
+								img: {name:'repeat', x: 0, y: 0, align: 'mc'}
+							]
+						}
+					]
+					groups: [
+						{
+							type: 'grp', id: 'grp1_0', invisible: true
+							group: [
+								'propimg0'
+								'propimg1'
+								'propimg2'
+								'propimg3'
+								'propimg4'
+								'propimg5'
+							]
+						}
+					]
+				}
 			]
-			passports:[
-				{x: 130, y: 130, values: ['Eric Schmidt', 'Germany', 'blue', 'brown', '1m 10cm']}
-				{x: 430, y: 135, values: ['Melanie Murphy', 'Ireland', 'green', 'red', '1m 7cm']}
-				{x: 130, y: 304, values: ['Cassandra Wang', 'China', 'dark brown', 'black', '1m 15cm']}
-				{x: 434, y: 304, values: ['Saul Peterson', 'Canada', 'light brown', 'blonde', '1m 14cm']}
-			]
-			steps:[
-
-				{pattern:["Can you believe that", "#wc", "years ago there", "#br", "were camels in Los Angeles, California? They were", "#br", "#wc", "meters tall. They weighed", "#wc", "kilograms."], targets:['40,000', '4',  '590']}
-				{pattern:["This animal was an ancient bison.", "#br", "it was", "#wc", "meters tall amd weighed", "#wc", "kilograms.", "#br", "Its horns were", "#wc", "centimeters long."], targets:['2','900','35']}
-				{pattern:["This animal was a ground sloth.", "#br", "it weighed", "#wc", "kilograms and", "#br", "was", "#wc", "meters tall."], targets:['1580','2']}
-				{pattern:["This animal was a Columbian mammoth. It was", "#br", "enormous. It weighed", "#wc", "kilograms and was", "#wc", "#br", "meters tall. Its tusks were", "#wc", "meters long!"], targets:['	4500','4','3']}
-				{pattern:["This animal was a short-faced bear.", "#br", "It was much bigger than the modern grizzly bear.", "#br", "It was", "#wc", "meters tall and weighed", "#wc", "kilograms."], targets:['3.3', '815']}
-				{pattern:["This animal was a saber-toothed cat. It wasn't", "#br", "very big --it was only", "#wc", "meter tall amd it weighed", "#br", "#wc", "kilograms. But it had long sharp fangs-- they", "#br", "were", "#wc", "centimeters long!"], targets:['1','280','28']}
-			]
-			positions:[
-				{x:'65', y:'22'}
-				{x:'77', y:'50'}
-				{x:'84', y:'78'}
-				{x:'90', y:'106'}
-				{x:'68', y:'134'}
-			]
-
-
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@intento = 0
-		@steps =  @game.steps
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertBitmap 'btnrepeat', 'btnrepeat', stageSize.w / 2, 560, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the numbers to complete the descriptions.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
-		@insertSprite 'animals', ['propimg0','propimg1','propimg2','propimg3','propimg4','propimg5'], null, stageSize.w / 2, 325, 'mc'
-		@setDropper( 1 )#.setPassports().introEvaluation()
-		@setNubes()
-	setNubes: ->
-		nubes = new createjs.Container() 
-		for i in [1..@game.nubes.length]
-			n = @createBitmap @game.nubes[i-1].img, @game.nubes[i-1].img, @game.nubes[i-1].x, @game.nubes[i-1].y , 'tc'
-
-			t = new DroppableText "text#{i}", @game.nubes[i-1].txt, i, @game.nubes[i-1].x,  @game.nubes[i-1].y + 10, @stage
-			t.textAlign = 'center'
-			@addToLibrary t			
-			nubes.addChild n, t
-
-
-		@addToMain nubes
-		@
-	setPassports: ->
-		i = 1
-		for passport in @game.passports
-			p = new createjs.Container()
-			p.x = passport.x
-			p.y = passport.y
-			p.name = "pass#{i}"
-			f = @createBitmap "p#{i}", "pas#{i}", 0, 0
-			p.addChild f
-			@addToMain p
-			for j in [0..passport.values.length - 1] by 1
-				n = new DroppableText "p#{i}v#{j}", passport.values[j], passport.values[j], @game.positions[j].x,  @game.positions[j].y, @stage
-				@addToLibrary n
-				p.addChild n
-			i++
-		@
-	setDropper: (step) ->
-		@step = step
-		if @library.dropper and @mainContainer.contains @library.dropper
-			dropper = @library.dropper
-		else
-			dropper = new createjs.Container()
-			dropper.x = 150
-			dropper.y = 445
-			dropper.name = 'dropper'
-			@addToMain dropper
-		dropper.removeAllChildren()
-		
-		i = 0
-		j = 0
-		npos = 0
-		@targets = new Array()
-		for t in @steps[step - 1].pattern
-			ny = j * 30 + 7
-			if t is '#br'
-				npos = 0
-				j++
-			else if t is '#wc'
-				txt = @steps[step - 1].targets[i]
-				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#F00', npos, ny
-				h.text.font = '20px Quicksand'
-				h.index = i
-				dropper.addChild h
-				@addToLibrary h
-				@targets.push h
-				npos += h.width + 7
-				i++
-			else
-				h = @createText '', t,'20px Quicksand','#333', npos, ny
-				dropper.addChild h
-				npos += h.getMeasuredWidth() + 12
-		@
- 
+		super()
 	window.U6A2 = U6A2

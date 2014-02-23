@@ -185,11 +185,13 @@ window.d2oda.evaluator ?= class Evaluator
 			when 'drop_01' then @evaluateDrop01(dispatcher, target)
 			when 'drop_02' then @evaluateDrop02(dispatcher, target)
 			when 'drop_02_01' then @evaluateDrop02_01(dispatcher, target)
+			when 'drop_02_02' then @evaluateDrop02_02(dispatcher, target)
 			when 'drop_03' then @evaluateDrop03(dispatcher, target)
 			when 'drop_04' then @evaluateDrop04(dispatcher, target)
 			when 'clon_01' then @evaluateClon01(dispatcher, target)
 			when 'switch_01' then @evaluateSwitch01(dispatcher, target)
 			when 'choose_01' then @evaluateChoose01(dispatcher)
+			when 'phrase_drop_01' then @evaluatePhraseDrop01(dispatcher, target)
 	@evaluateRepeat = () ->
 		createjs.Sound.stop()
 		createjs.Sound.play lib.scene.snd
@@ -289,7 +291,14 @@ window.d2oda.evaluator ?= class Evaluator
 			if drop.complete
 				lib.score.plusOne()
 		lib.scene.success false
-
+	@evaluateDrop02_02 = (dispatcher, target) ->
+		if lib[dispatcher].index is target.success
+			target.update {complete: true}
+			lib[dispatcher].afterSuccess()
+			lib.scene.success()
+		else
+			lib[dispatcher].afterFail()
+			lib.scene.fail()
 	@evaluateDrop03 = (dispatcher, target) ->
 		if lib[dispatcher].index is target.success
 			target.complete = true
@@ -299,6 +308,19 @@ window.d2oda.evaluator ?= class Evaluator
 			if target.parent.currentTarget is target.parent.droptargets.length
 				lib[target.parent.target].fadeOut()
 				lib.scene.success()
+		else
+			lib[dispatcher].afterFail()
+			lib.scene.fail()
+	@evaluatePhraseDrop01 = (dispatcher, target) ->
+		if lib[dispatcher].index is target.success
+			target.complete = true
+			target.update()
+			lib[dispatcher].afterSuccess()
+			target.parent.currentTarget++
+			lib.score.plusOne()
+			createjs.Sound.play 's/good'
+			if target.parent.currentTarget is target.parent.droptargets.length
+				lib.scene.success false
 		else
 			lib[dispatcher].afterFail()
 			lib.scene.fail()
@@ -604,13 +626,15 @@ class ComponentGroup
 				@setInvisible false
 			when 'choose'
 				@setInvisible false
+			when 'hide'
+				@setInvisible()
 	setInvisible: (status=true, fade=true) ->
 		if status
 			for item in @group
 				if fade then TweenLite.to lib[item], 0.5, {alpha: 0} else lib[item].alpha = 0
 		else
 			for item in @group
-				if fade then TweenLite.to lib[item], 0.5, {alpha: 1} else lib[item].alpha = 0
+				if fade then TweenLite.to lib[item], 0.5, {alpha: 1} else lib[item].alpha = 1
 	doSwitch: ->
 		lib[@target].update {type:'fadeIn', target: @success}
 		lib[@next].setInvisible false
@@ -1199,19 +1223,26 @@ class PhraseCompleterContainer extends Component
 			@nextGroup = opts.nextGroup
 		i = 0
 		npos = 0
+		ypos = -5
+		maxWidth = 0
 		for t in opts.pattern
 			if t is '#tcpt'
 				txt = opts.targets[i]
-				h = new TextCompleterContainer txt, @font, @fcolor, @bcolor, @scolor, @stroke, npos, -5
+				h = new TextCompleterContainer txt, @font, @fcolor, @bcolor, @scolor, @stroke, npos, ypos
 				@droptargets.push h
 				@add h, false
 				npos += h.width + @margin
 				i++
+			else if t is '#rtn'
+				h = @createText 'txt', 'BLANK', @font, @fcolor, npos, 0
+				maxWidth = npos if npos > maxWidth
+				npos = 0
+				ypos += h.getMeasuredHeight()
 			else
-				h = @createText 'txt', t, @font, @fcolor, npos, -5
+				h = @createText 'txt', t, @font, @fcolor, npos, ypos
 				@add h, false
 				npos += h.getMeasuredWidth() + @margin
-		@width = npos
+		@width = maxWidth
 		@setPosition @align
 		@observer.notify ComponentObserver.UPDATED
 		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}

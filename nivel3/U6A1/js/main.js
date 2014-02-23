@@ -351,6 +351,581 @@ NEW ODA
                 group: ['prophead', 'propteeth', 'proptail']
               }
             ]
+          }, {
+            answers: {
+              collection: [
+                [
+                  {
+                    name: 'grp1_0',
+                    opts: {
+                      type: 'fadeIn',
+                      target: 'scene2bison'
+                    }
+                  }, {
+                    name: 'pcpt1',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'leg'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt2',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'horn'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'grp0_1',
+                    opts: {
+                      type: 'choose'
+                    }
+                  }, {
+                    name: 'grp0_2',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_3',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_4',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }
+                ], [
+                  {
+                    name: 'grp1_0',
+                    opts: {
+                      type: 'fadeIn',
+                      target: 'scene2velociraptor'
+                    }
+                  }, {
+                    name: 'pcpt3',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'feather'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt4',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'teeth'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt5',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'claw'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt6',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'wing'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'grp0_1',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_2',
+                    opts: {
+                      type: 'choose'
+                    }
+                  }, {
+                    name: 'grp0_3',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_4',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }
+                ], [
+                  {
+                    name: 'grp1_0',
+                    opts: {
+                      type: 'fadeIn',
+                      target: 'scene2mauisaurus'
+                    }
+                  }, {
+                    name: 'pcpt7',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'fin'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt8',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'head'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt9',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'neck'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'grp0_1',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_2',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_3',
+                    opts: {
+                      type: 'choose'
+                    }
+                  }, {
+                    name: 'grp0_4',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }
+                ], [
+                  {
+                    name: 'grp1_0',
+                    opts: {
+                      type: 'fadeIn',
+                      target: 'scene2mamut'
+                    }
+                  }, {
+                    name: 'pcpt10',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'tail'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt11',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'hair'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'pcpt12',
+                    opts: {
+                      pattern: ['#tcpt'],
+                      targets: [
+                        {
+                          text: 'tusk'
+                        }
+                      ]
+                    }
+                  }, {
+                    name: 'grp0_1',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_2',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_3',
+                    opts: {
+                      type: 'hide'
+                    }
+                  }, {
+                    name: 'grp0_4',
+                    opts: {
+                      type: 'choose'
+                    }
+                  }
+                ]
+              ],
+              type: 'steps'
+            },
+            containers: [
+              {
+                type: 'img',
+                id: 'propwords',
+                x: 115,
+                y: 490
+              }, {
+                type: 'img',
+                id: 'scene2bison',
+                x: 400,
+                y: 300,
+                align: 'mc'
+              }, {
+                type: 'img',
+                id: 'scene2mamut',
+                x: 400,
+                y: 300,
+                align: 'mc'
+              }, {
+                type: 'img',
+                id: 'scene2velociraptor',
+                x: 400,
+                y: 300,
+                align: 'mc'
+              }, {
+                type: 'img',
+                id: 'scene2mauisaurus',
+                x: 400,
+                y: 300,
+                align: 'mc'
+              }, {
+                type: 'pcpt',
+                id: 'pcpt1',
+                x: 120,
+                y: 277,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt2',
+                x: 700,
+                y: 143,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt3',
+                x: 205,
+                y: 254,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt4',
+                x: 660,
+                y: 235,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt5',
+                x: 185,
+                y: 415,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt6',
+                x: 680,
+                y: 364,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt7',
+                x: 137,
+                y: 305,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt8',
+                x: 670,
+                y: 193,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt9',
+                x: 670,
+                y: 405,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt10',
+                x: 175,
+                y: 394,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt11',
+                x: 145,
+                y: 193,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'pcpt',
+                id: 'pcpt12',
+                x: 655,
+                y: 316,
+                font: '24px Quicksand',
+                margin: 10,
+                align: 'tc',
+                scolor: '#F00',
+                stroke: 1
+              }, {
+                type: 'ldrg',
+                id: 'ldrg1',
+                x: 140,
+                y: 520,
+                index: 'horn',
+                text: 'horn',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg2',
+                x: 220,
+                y: 510,
+                index: 'feather',
+                text: 'feather',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg3',
+                x: 340,
+                y: 500,
+                index: 'tail',
+                text: 'tail',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg4',
+                x: 430,
+                y: 500,
+                index: 'fin',
+                text: 'fin',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg5',
+                x: 510,
+                y: 502,
+                index: 'head',
+                text: 'head',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg6',
+                x: 600,
+                y: 510,
+                index: 'teeth',
+                text: 'teeth',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg7',
+                x: 200,
+                y: 545,
+                index: 'tusk',
+                text: 'tusk',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg8',
+                x: 290,
+                y: 535,
+                index: 'neck',
+                text: 'neck',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg9',
+                x: 380,
+                y: 535,
+                index: 'claw',
+                text: 'claw',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg10',
+                x: 460,
+                y: 535,
+                index: 'wing',
+                text: 'wing',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg11',
+                x: 550,
+                y: 540,
+                index: 'leg',
+                text: 'leg',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }, {
+                type: 'ldrg',
+                id: 'ldrg12',
+                x: 650,
+                y: 545,
+                index: 'hair',
+                text: 'hair',
+                font: '24px Quicksand',
+                color: '#333',
+                "eval": 'drop_02_02',
+                afterSuccess: 'hide',
+                afterFail: 'return',
+                target: ['pcpt1', 'pcpt2', 'pcpt3', 'pcpt4', 'pcpt5', 'pcpt6', 'pcpt7', 'pcpt8', 'pcpt9', 'pcpt10', 'pcpt11', 'pcpt12']
+              }
+            ],
+            groups: [
+              {
+                type: 'grp',
+                id: 'grp1_0',
+                invisible: true,
+                group: ['scene2bison', 'scene2mamut', 'scene2velociraptor', 'scene2mauisaurus']
+              }, {
+                type: 'grp',
+                id: 'grp0_1',
+                invisible: true,
+                group: ['pcpt1', 'pcpt2']
+              }, {
+                type: 'grp',
+                id: 'grp0_2',
+                invisible: true,
+                group: ['pcpt3', 'pcpt4', 'pcpt5', 'pcpt6']
+              }, {
+                type: 'grp',
+                id: 'grp0_3',
+                invisible: true,
+                group: ['pcpt7', 'pcpt8', 'pcpt9']
+              }, {
+                type: 'grp',
+                id: 'grp0_4',
+                invisible: true,
+                group: ['pcpt10', 'pcpt11', 'pcpt12']
+              }
+            ]
           }
         ]
       };
