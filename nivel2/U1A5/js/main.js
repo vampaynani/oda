@@ -131,41 +131,41 @@
               idx: 2,
               t: "Sam",
               im: 'face1',
-              x: 700,
-              y: 110
+              x: 1400,
+              y: 220
             }, {
               idx: 1,
               t: 'Kara',
               im: 'face2',
-              x: 700,
-              y: 220
+              x: 1400,
+              y: 440
             }, {
               idx: 3,
               t: "Mrs. Smith",
               im: 'face3',
-              x: 700,
-              y: 330
+              x: 1400,
+              y: 660
             }, {
               idx: 4,
               t: "Lily",
               im: 'face4',
-              x: 700,
-              y: 440
+              x: 1400,
+              y: 880
             }
           ],
           positions: [
             {
-              x: '111',
-              y: '144'
+              x: 222,
+              y: 288
             }, {
-              x: '335',
-              y: '171'
+              x: 670,
+              y: 342
             }, {
-              x: '106',
-              y: '372'
+              x: 212,
+              y: 744
             }, {
-              x: '332',
-              y: '363'
+              x: 664,
+              y: 726
             }
           ]
         }, {
@@ -174,41 +174,41 @@
               idx: 5,
               t: "Sam",
               im: 'face1',
-              x: 700,
-              y: 110
+              x: 1400,
+              y: 220
             }, {
               idx: 7,
               t: 'Kara',
               im: 'face2',
-              x: 700,
-              y: 220
+              x: 1400,
+              y: 440
             }, {
               idx: [6, 8],
               t: 'Lily',
               im: 'face4',
-              x: 700,
-              y: 330
+              x: 1400,
+              y: 660
             }, {
               idx: [6, 8],
               t: 'Lily',
               im: 'face4',
-              x: 700,
-              y: 330
+              x: 1400,
+              y: 660
             }
           ],
           positions: [
             {
-              x: '101',
-              y: '160'
+              x: 202,
+              y: 320
             }, {
-              x: '328',
-              y: '160'
+              x: 656,
+              y: 320
             }, {
-              x: '102',
-              y: '373'
+              x: 204,
+              y: 746
             }, {
-              x: '320',
-              y: '364'
+              x: 640,
+              y: 728
             }
           ]
         }
@@ -221,13 +221,13 @@
       var ti;
       U1A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Read and drag the names to complete the story.', 40, 100);
-      ti = this.createBitmap('title', 'title1', 350, 135, 'tc');
-      ti.scaleX = ti.scaleY = 0.72;
+      this.insertInstructions('instructions', 'Read and drag the names to complete the story.', 80, 200);
+      ti = this.createBitmap('title', 'title1', 700, 270, 'tc');
       this.addToMain(ti);
-      this.insertBitmap('btnnext', 'btn', 760, 589, 'tc');
+      this.insertBitmap('btnnext', 'btn', 1520, 1178, 'tc');
       this.library['btnnext'].visible = false;
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 8, 0));
+      this.intento = 0;
       return this.setCuento(1).introEvaluation();
     };
 
@@ -240,19 +240,17 @@
       for (i = _i = 1, _ref = scn.positions.length; _i <= _ref; i = _i += 1) {
         m = this.createSprite("sc" + i, ["" + ((scene - 1) * 4 + i), "" + ((scene - 1) * 4 + i) + "b"], null, scn.positions[i - 1].x, scn.positions[i - 1].y);
         m.index = (scene - 1) * 4 + i;
-        m.scaleX = m.scaleY = 0.73;
         cuento.addChild(m);
         this.addToLibrary(m);
       }
       for (i = _j = 1, _ref1 = scn.texts.length; _j <= _ref1; i = _j += 1) {
-        y = scene === 1 ? 100 : 150;
+        y = scene === 1 ? 200 : 300;
         f = this.createBitmap(scn.texts[i - 1].im, scn.texts[i - 1].im, scn.texts[i - 1].x, scn.texts[i - 1].y + y, 'bc');
-        f.scaleX = f.scaleY = 0.73;
         this.addToLibrary(f);
         cuento.addChild(f);
         t = new DraggableText("t" + i, scn.texts[i - 1].t, scn.texts[i - 1].idx, scn.texts[i - 1].x, scn.texts[i - 1].y + y);
-        t.text.lineHeight = 20;
-        t.text.lineWidth = 200;
+        t.text.lineHeight = 40;
+        t.text.lineWidth = 400;
         t.text.textAlign = 'center';
         t.setHitArea();
         this.addToLibrary(t);
@@ -270,7 +268,6 @@
       scn = this.game[scene - 1];
       for (i = _i = 1, _ref = scn.positions.length; _i <= _ref; i = _i += 1) {
         m = this.createBitmap("" + ((scene - 1) * 4 + i) + "b", "" + ((scene - 1) * 4 + i) + "b", scn.positions[i - 1].x, scn.positions[i - 1].y);
-        m.scaleX = m.scaleY = 0.73;
         cuento.addChild(m);
         this.addToLibrary(m);
       }
@@ -293,12 +290,12 @@
       });
       TweenLite.from(this.library['title'], 1, {
         alpha: 0,
-        y: this.library['title'].y + 20,
+        y: this.library['title'].y + 40,
         delay: 1
       });
       return TweenLite.from(this.library['cuento'], 1, {
         alpha: 0,
-        y: this.library['cuento'].y + 20,
+        y: this.library['cuento'].y + 40,
         delay: 1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -329,12 +326,16 @@
               this.answer.visible = false;
               createjs.Sound.play('good');
               if (!this.library["sc" + i].failed) {
-                this.library['score'].plusOne();
+                if (this.intento === 0) {
+                  this.library['score'].plusOne();
+                }
+                this.intento = 0;
               }
               _results.push(this.finishEvaluation());
             } else {
               this.library["sc" + i].failed = true;
               this.warning();
+              this.intento = 1;
               _results.push(this.answer.returnToPlace());
             }
           } else {
@@ -351,12 +352,16 @@
               this.answer.visible = false;
               createjs.Sound.play('good');
               if (!this.library["sc" + i].failed) {
-                this.library['score'].plusOne();
+                if (this.intento === 0) {
+                  this.library['score'].plusOne();
+                }
+                this.intento = 0;
               }
               _results.push(this.finishEvaluation());
             } else {
               this.library["sc" + i].failed = true;
               this.warning();
+              this.intento = 1;
               _results.push(this.answer.returnToPlace());
             }
           }
@@ -377,10 +382,10 @@
       if (this.scene < 2) {
         this.library['btnnext'].visible = true;
         this.library['btnnext'].alpha = 1;
-        this.library['btnnext'].y = 560;
+        this.library['btnnext'].y = 1120;
         TweenLite.from(this.library['btnnext'], 1, {
           alpha: 0,
-          y: this.library['btnnext'].y + 10
+          y: this.library['btnnext'].y + 20
         });
         return this.library['btnnext'].addEventListener('click', this.nextEvaluation);
       } else {
@@ -395,16 +400,16 @@
       if (this.index < this.game.length) {
         TweenLite.to(this.library['btnnext'], 1, {
           alpha: 0,
-          y: this.library['btnnext'].y + 10
+          y: this.library['btnnext'].y + 20
         });
         TweenLite.to(this.library['cuento'], 1, {
           alpha: 0,
-          y: this.library['cuento'].y + 10
+          y: this.library['cuento'].y + 20
         });
         this.setCuento(this.index + 1);
         TweenLite.from(this.library['cuento'], 1, {
           alpha: 0,
-          y: this.library['cuento'].y + 10
+          y: this.library['cuento'].y + 20
         });
         _results = [];
         for (i = _i = 1, _ref = this.game[this.scene - 1].texts.length; _i <= _ref; i = _i += 1) {
@@ -416,7 +421,7 @@
         this.finalscene = 0;
         TweenLite.to(this.library['title'], 1, {
           alpha: 0,
-          y: this.library['title'].y + 20
+          y: this.library['title'].y + 40
         });
         return setTimeout(this.storyTale, 2 * 1000);
       }
@@ -426,7 +431,7 @@
       var s;
       TweenLite.to(this.library['cuento'], 1, {
         alpha: 0,
-        y: this.library['cuento'].y - 50
+        y: this.library['cuento'].y - 100
       });
       if (this.finalscene < this.game.length) {
         this.setCuentoFinal(this.finalscene + 1);
@@ -434,7 +439,7 @@
         s.addEventListener('complete', this.storyTale);
         TweenLite.to(this.library['cuento'], 1, {
           alpha: 1,
-          y: this.library['cuento'].y + 10
+          y: this.library['cuento'].y + 20
         });
         return this.finalscene++;
       } else {

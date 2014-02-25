@@ -115,7 +115,7 @@ class U4A1 extends Oda
 						{type: 'img', id: 'imagestomachache', x: 186, y: 131, align: 'tl'}
 						{type: 'img', id: 'imagesunburn', x: 422, y: 466, align: 'tl'}
 						{type: 'img', id: 'imagetoothache', x: 585, y: 132, align: 'tl'}
-						{type: 'wcpt', id: 'wcpt1', x: 435, y: 350, margin: 10, uwidth: 30, font: '30px Quicksand', scolor: '#F00', align: 'tc', eval:'drop_03'}
+						{type: 'swct', id: 'wcpt1', x: 435, y: 350, margin: 10, uwidth: 30, font: '30px Quicksand', scolor: '#F00', align: 'tc', eval:'drop_03'}
 					]
 					groups: [
 						{

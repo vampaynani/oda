@@ -166,9 +166,9 @@
         answer.a = false;
       }
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Listen and click on the correct picture.', 40, 100);
-      this.insertBitmap('teacher', 'teacher', 250, 134);
-      this.insertBitmap('repeat', 'repeat', 441, 210);
+      this.insertInstructions('instructions', 'Listen and click on the correct picture.', 80, 200);
+      this.insertBitmap('teacher', 'teacher', 500, 268);
+      this.insertBitmap('repeat', 'repeat', 882, 420);
       this.insertSprite('choose1', ['arrive', 'quiet', 'bus', 'eat', 'aud', 'run', 'cafe', 'library', 'movies', 'trash', 'walk'], {
         arrive: 0,
         quiet: 1,
@@ -181,7 +181,7 @@
         movies: 8,
         trash: 9,
         walk: 10
-      }, 270, 452, 'mc');
+      }, 540, 904, 'mc');
       this.insertSprite('choose2', ['arrive', 'quiet', 'bus', 'eat', 'aud', 'run', 'cafe', 'library', 'movies', 'trash', 'walk'], {
         arrive: 0,
         quiet: 1,
@@ -194,17 +194,17 @@
         movies: 8,
         trash: 9,
         walk: 10
-      }, 591, 452, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 10, 0));
+      }, 1182, 904, 'mc');
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 10, 0));
       return this.introEvaluation();
     };
 
     U1A4.prototype.introEvaluation = function() {
       U1A4.__super__.introEvaluation.apply(this, arguments);
       this.library['choose1'].alpha = 0;
-      this.library['choose1'].scaleX = this.library['choose1'].scaleY = 0.3;
+      this.library['choose1'].scaleX = this.library['choose1'].scaleY = 0.6;
       this.library['choose2'].alpha = 0;
-      this.library['choose2'].scaleX = this.library['choose2'].scaleY = 0.3;
+      this.library['choose2'].scaleX = this.library['choose2'].scaleY = 0.6;
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
       });
@@ -215,12 +215,12 @@
       });
       TweenLite.from(this.library['teacher'], 1, {
         alpha: 0,
-        y: this.library['teacher'].y + 50,
+        y: this.library['teacher'].y + 100,
         delay: 1
       });
       return TweenLite.from(this.library['repeat'], 1, {
         alpha: 0,
-        y: this.library['repeat'].y + 50,
+        y: this.library['repeat'].y + 100,
         delay: 1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -251,8 +251,8 @@
       } else {
         TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
           alpha: 0,
-          scaleX: 0.3,
-          scaleY: 0.3,
+          scaleX: 0.6,
+          scaleY: 0.6,
           ease: Elastic.easeOut,
           onComplete: this.finishEvaluation
         });
@@ -263,8 +263,8 @@
     U1A4.prototype.finishEvaluation = function() {
       return TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
         alpha: 0,
-        scaleX: 0.3,
-        scaleY: 0.3,
+        scaleX: 0.6,
+        scaleY: 0.6,
         ease: Elastic.easeOut,
         onComplete: this.nextEvaluation
       });
@@ -334,7 +334,7 @@
       obj.alpha = 1;
       if (state) {
         return TweenMax.to(obj, 0.5, {
-          alpha: .5,
+          alpha: 0.5,
           repeat: -1,
           yoyo: true
         });
@@ -344,12 +344,12 @@
     U1A4.prototype.finish = function() {
       TweenLite.to(this.library['teacher'], 1, {
         alpha: 0,
-        y: this.library['teacher'].y + 50,
+        y: this.library['teacher'].y + 100,
         delay: 0.1
       });
       TweenLite.to(this.library['repeat'], 1, {
         alpha: 0,
-        y: this.library['repeat'].y + 50,
+        y: this.library['repeat'].y + 100,
         delay: 0.1
       });
       return U1A4.__super__.finish.apply(this, arguments);

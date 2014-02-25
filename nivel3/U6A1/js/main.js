@@ -294,7 +294,7 @@ NEW ODA
                 y: 437,
                 align: 'mc'
               }, {
-                type: 'wcpt',
+                type: 'swct',
                 id: 'wcpt1',
                 x: 214,
                 y: 368,
@@ -305,7 +305,7 @@ NEW ODA
                 align: 'tc',
                 "eval": 'drop_03'
               }, {
-                type: 'wcpt',
+                type: 'swct',
                 id: 'wcpt2',
                 x: 608,
                 y: 368,
@@ -316,7 +316,7 @@ NEW ODA
                 align: 'tc',
                 "eval": 'drop_03'
               }, {
-                type: 'wcpt',
+                type: 'swct',
                 id: 'wcpt3',
                 x: 415,
                 y: 547,

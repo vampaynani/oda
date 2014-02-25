@@ -132,9 +132,9 @@
     U1A2.prototype.setStage = function() {
       U1A2.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 40, 100);
-      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'], null, 100, stageSize.h - 180);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 6, 0));
+      this.insertInstructions('instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 80, 200);
+      this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'], null, 200, stageSize.h - 340);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 6, 0));
       this.intento = 0;
       return this.setDropper().setNames().introEvaluation();
     };
@@ -142,13 +142,13 @@
     U1A2.prototype.setDropper = function() {
       var h1, myname, question;
       myname = new createjs.Container();
-      myname.x = 285;
-      myname.y = stageSize.h - 70;
+      myname.x = 670;
+      myname.y = stageSize.h - 140;
       myname.name = 'dropname';
       question = this.createBitmap('question', 'q', 0, 0);
-      h1 = new createjs.Shape(new createjs.Graphics().beginFill('#FFF').drawRect(0, 0, 130, 30));
-      h1.x = 250;
-      h1.y = -7;
+      h1 = new createjs.Shape(new createjs.Graphics().beginFill('#FFF').drawRect(0, 0, 260, 60));
+      h1.x = 500;
+      h1.y = -14;
       h1.name = 'h1';
       myname.addChild(question, h1);
       this.addToLibrary(h1);
@@ -159,17 +159,17 @@
     U1A2.prototype.setNames = function() {
       var faces, name1, name2, name3, name4, name5, name6, names, repeat;
       names = new createjs.Container();
-      names.x = 120;
-      names.y = 132;
+      names.x = 240;
+      names.y = 264;
       names.name = 'names';
       faces = this.createBitmap('facesback', 'faces', 69, 0);
-      repeat = new Button('btnrepeat', this.preload.getResult('repeat'), 0, 300, 320);
-      name1 = new Draggable('name1', this.preload.getResult('n1'), 1, 16, 20);
-      name2 = new Draggable('name2', this.preload.getResult('n2'), 2, 4, 260);
-      name3 = new Draggable('name3', this.preload.getResult('n3'), 3, 16, 210);
-      name4 = new Draggable('name4', this.preload.getResult('n4'), 4, 16, 125);
-      name5 = new Draggable('name5', this.preload.getResult('n5'), 5, 4, 78);
-      name6 = new Draggable('name6', this.preload.getResult('n6'), 6, 4, 164);
+      repeat = new Button('btnrepeat', this.preload.getResult('repeat'), 0, 600, 640);
+      name1 = new Draggable('name1', this.preload.getResult('n1'), 1, 16, 40);
+      name2 = new Draggable('name2', this.preload.getResult('n2'), 2, 4, 520);
+      name3 = new Draggable('name3', this.preload.getResult('n3'), 3, 16, 420);
+      name4 = new Draggable('name4', this.preload.getResult('n4'), 4, 16, 250);
+      name5 = new Draggable('name5', this.preload.getResult('n5'), 5, 4, 156);
+      name6 = new Draggable('name6', this.preload.getResult('n6'), 6, 4, 328);
       name1.addEventListener('drop', this.evaluateAnswer);
       name2.addEventListener('drop', this.evaluateAnswer);
       name3.addEventListener('drop', this.evaluateAnswer);
@@ -200,17 +200,17 @@
       });
       TweenLite.from(this.library['names'], 1, {
         alpha: 0,
-        y: this.library['names'].y + 50,
+        y: this.library['names'].y + 100,
         delay: 1
       });
       TweenLite.from(this.library['dropname'], 1, {
         alpha: 0,
-        y: this.library['dropname'].y + 50,
+        y: this.library['dropname'].y + 100,
         delay: 1
       });
       return TweenLite.from(this.library['characters'], 1, {
         alpha: 0,
-        y: this.library['characters'].y + 20,
+        y: this.library['characters'].y + 40,
         delay: 1.5,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -227,7 +227,7 @@
       }
       return TweenLite.to(this.library['characters'], 0.5, {
         alpha: 1,
-        y: stageSize.h - 180,
+        y: stageSize.h - 340,
         ease: Quart.easeOut
       });
     };
@@ -258,7 +258,7 @@
       this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
       return TweenLite.to(this.library['characters'], 0.5, {
         alpha: 0,
-        y: -200,
+        y: -400,
         delay: 0.5,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
@@ -269,7 +269,7 @@
       this.index++;
       if (this.index < this.answers.length) {
         this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 180;
+        this.library['characters'].y = stageSize.h - 360;
         this.library['characters'].currentFrame = this.answers[this.index].id;
         createjs.Sound.play(this.answers[this.index].sound);
         return TweenLite.from(this.library['characters'], 0.5, {
@@ -291,17 +291,17 @@
       var i, _i, _results;
       TweenLite.to(this.library['names'], 1, {
         alpha: 0,
-        y: this.library['names'].y + 50,
+        y: this.library['names'].y + 100,
         delay: 0.1
       });
       TweenLite.to(this.library['dropname'], 1, {
         alpha: 0,
-        y: this.library['dropname'].y + 50,
+        y: this.library['dropname'].y + 100,
         delay: 0.1
       });
       TweenLite.to(this.library['characters'], 1, {
         alpha: 0,
-        y: this.library['characters'].y + 20,
+        y: this.library['characters'].y + 40,
         delay: 0.1
       });
       U1A2.__super__.finish.apply(this, arguments);

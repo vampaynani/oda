@@ -302,6 +302,7 @@ NEW ODA
                   }
                 ]
               ],
+              mixed: true,
               type: 'steps'
             },
             containers: [

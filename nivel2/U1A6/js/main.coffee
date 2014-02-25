@@ -134,24 +134,24 @@ class U1A6 extends Oda
 		super
 		@answers = @clone @game.answers
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and drag the letters to complete the crossword puzzle.', 30, 100
-		@insertBitmap 'saxophone', 'sax', 341, 123
-		@insertBitmap 'saxophoneNo', 'sax_number', 346, 135
-		@insertBitmap 'drum', 'drum', 99, 125
-		@insertBitmap 'drumNo', 'drum_number', 69, 125
-		@insertBitmap 'guitar', 'guitar', 99, 228
-		@insertBitmap 'guitarNo', 'guitar_number', 163, 252
-		@insertBitmap 'tambourine', 'tambourine', 192, 412
-		@insertBitmap 'tambourineNo', 'tambourine_number', 197, 390
-		@insertBitmap 'trumpet', 'trumpet', 353, 446
-		@insertBitmap 'trumpetNo', 'trumpet_number', 322, 444
-		@insertBitmap 'flute', 'flute', 546, 448
-		@insertBitmap 'fluteNo', 'flute_number', 521, 443
-		@insertBitmap 'bass', 'bass', 639, 249
-		@insertBitmap 'bassNo', 'bass_number', 621, 279
-		@insertBitmap 'piano', 'piano', 567, 77
-		@insertBitmap 'pianoNo', 'piano_number', 567, 138
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@insertInstructions 'instructions', 'Look and drag the letters to complete the crossword puzzle.', 60, 200
+		@insertBitmap 'saxophone', 'sax', 682, 246
+		@insertBitmap 'saxophoneNo', 'sax_number', 692, 270
+		@insertBitmap 'drum', 'drum', 198, 250
+		@insertBitmap 'drumNo', 'drum_number', 138, 250
+		@insertBitmap 'guitar', 'guitar', 198, 456
+		@insertBitmap 'guitarNo', 'guitar_number', 326, 504
+		@insertBitmap 'tambourine', 'tambourine', 384, 824
+		@insertBitmap 'tambourineNo', 'tambourine_number', 394, 780
+		@insertBitmap 'trumpet', 'trumpet', 706, 892
+		@insertBitmap 'trumpetNo', 'trumpet_number', 644, 888
+		@insertBitmap 'flute', 'flute', 1092, 896
+		@insertBitmap 'fluteNo', 'flute_number', 1042, 886
+		@insertBitmap 'bass', 'bass', 1278, 498
+		@insertBitmap 'bassNo', 'bass_number', 1242, 558
+		@insertBitmap 'piano', 'piano', 1134, 154
+		@insertBitmap 'pianoNo', 'piano_number', 1134, 276
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 8, 0
 		@intento = 0
 
 		@createDroppers()
@@ -159,43 +159,43 @@ class U1A6 extends Oda
 		@introEvaluation()
 	createAlphabet: ->
 		alphabet = new createjs.Container()
-		alphabet.x = 135
-		alphabet.y = 510
+		alphabet.x = 270
+		alphabet.y = 1020
 		alphabet.name = 'alphabet'
 		for i in [0..@abc.length - 1] by 1
 			letter = @abc[i]
 			if i <= 13
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i, 0
+				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 83*i, 0
 			else
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i-540, 34
+				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 83*i-1020, 68
 			letterObj.onInitEvaluation()
 			alphabet.addChild letterObj	
 			@addToLibrary letterObj
 		@addToMain alphabet
 	createDroppers: ->
 		crosswords = new createjs.Container()
-		crosswords.x = 305
-		crosswords.y = 216
+		crosswords.x = 610
+		crosswords.y = 432
 		crosswords.name = 'crosswords'
 		for i in [0..@containers.length - 1] by 1
-			drop = new WordContainer "h#{i}", '', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
-			drop.setRectShape '#FFF', '#999', 2, 23, 23
+			drop = new WordContainer "h#{i}", '', '#FFF', '#999', @containers[i].x*46, @containers[i].y*46, 46, 46
+			drop.setRectShape '#FFF', '#999', 2, 46, 46
 			drop.text.y -= 3
 			drop.id = @containers[i].id
 			@addToLibrary drop
 			crosswords.addChild drop
 		for i in [0..7]
-			t = new createjs.Text @numbers[i].id,'14px Quicksand','#333'
-			t.x = @numbers[i].x*23 + 6
-			t.y = @numbers[i].y*23 + 4
+			t = new createjs.Text @numbers[i].id,'28px Quicksand','#333'
+			t.x = @numbers[i].x*46 + 12
+			t.y = @numbers[i].y*46 + 8
 			crosswords.addChild t
-		crosswords.cache -23, -23, 276, 230
+		crosswords.cache -46, -46, 552, 480
 		@addToMain crosswords
 	introEvaluation: ->
 		super
-		@library['crosswords'].y = 216
+		@library['crosswords'].y = 432
 		@library['crosswords'].alpha = 1
-		@library['alphabet'].y = 510
+		@library['alphabet'].y = 1020
 		@library['alphabet'].alpha = 1
 		@library['saxophone'].alpha = 1
 		@library['saxophoneNo'].alpha = 1
@@ -222,11 +222,11 @@ class U1A6 extends Oda
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenMax.allFrom [@library['saxophone'], @library['drum'], @library['guitar'], @library['tambourine'], @library['trumpet'], @library['flute'], @library['bass'], @library['piano']], 1, {alpha:0, delay:1.5}, 0.2
 		TweenMax.allFrom [@library['saxophoneNo'], @library['drumNo'], @library['guitarNo'], @library['tambourineNo'], @library['trumpetNo'], @library['fluteNo'], @library['bassNo'], @library['pianoNo']], 1, {alpha:0, delay:1.5}, 0.2
-		TweenLite.from @library['alphabet'], 1, {alpha: 0, y: @library['alphabet'].y + 50, delay: 1.5}
-		TweenLite.from @library['crosswords'], 1, {alpha: 0, y: @library['crosswords'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['alphabet'], 1, {alpha: 0, y: @library['alphabet'].y + 100, delay: 1.5}
+		TweenLite.from @library['crosswords'], 1, {alpha: 0, y: @library['crosswords'].y + 100, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library.crosswords.cache -23, -23, 276, 230
+		@library.crosswords.cache -46, -46, 552, 480
 		for letter in @abc
 			@library[letter].addEventListener 'drop', @evaluateAnswer
 	evaluateAnswer: (e) =>
@@ -255,7 +255,7 @@ class U1A6 extends Oda
 				@evaluate 'bass'
 				@evaluate 'piano'
 				@evaluate 'saxophone'
-				@library.crosswords.cache -23, -23, 276, 230
+				@library.crosswords.cache -46, -46, 552, 480
 			else
 				@warning()
 				@intento++
@@ -280,8 +280,8 @@ class U1A6 extends Oda
 		for instrument of @answers
 			if @answers[instrument].r is off
 				complete = off
-		TweenLite.to @library['alphabet'], 0.5, {alpha:0, y: @library['alphabet'].y - 100, ease:Quart.easeOut} if complete
-		TweenLite.to @library['crosswords'], 0.5, {alpha:0, y: @library['crosswords'].y - 100, ease:Quart.easeOut, onComplete: @finish} if complete
+		TweenLite.to @library['alphabet'], 0.5, {alpha:0, y: @library['alphabet'].y - 200, ease:Quart.easeOut} if complete
+		TweenLite.to @library['crosswords'], 0.5, {alpha:0, y: @library['crosswords'].y - 200, ease:Quart.easeOut, onComplete: @finish} if complete
 	blink: (obj, state = on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1

@@ -28,26 +28,26 @@ class U1A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look at the schedule and click on the phrases to make sentences.', 40, 100
-		@insertBitmap 'calendar', 'cal', 0, 130
-		@insertBitmap 'iconGym', 'gym', 370, 216
-		@insertBitmap 'iconArt', 'art', 194, 205
-		@insertBitmap 'iconWatch', 'watch', 255, 255
-		@insertBitmap 'iconRead', 'read', 315, 253
-		@insertBitmap 'iconLunch', 'lunch', 445, 340
+		@insertInstructions 'instructions', 'Look at the schedule and click on the phrases to make sentences.', 80, 200
+		@insertBitmap 'calendar', 'cal', 0, 260
+		@insertBitmap 'iconGym', 'gym', 740, 432
+		@insertBitmap 'iconArt', 'art', 388, 410
+		@insertBitmap 'iconWatch', 'watch', 510, 510
+		@insertBitmap 'iconRead', 'read', 630, 506
+		@insertBitmap 'iconLunch', 'lunch', 890, 680
 		@intento = 0
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 5, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 5, 0
 		@setGrupo1().setGrupo2().setGrupo3().setDropper().introEvaluation()
 	setGrupo1: ->
 		group1 = new createjs.Container()
-		group1.x = 565
-		group1.y = 70
+		group1.x = 1130
+		group1.y = 140
 		group1.name = 'group1'
 		word1 = new ClickableText 'w11', 'We read books', 1, 0, 0
-		word2 = new ClickableText 'w12', 'We do exercise', 2, 0, 25
-		word3 = new ClickableText 'w13', 'We paint', 3, 0, 50
-		word4 = new ClickableText 'w14', 'We eat lunch', 4, 0, 75
-		word5 = new ClickableText 'w15', 'We watch movies', 5, 0, 100
+		word2 = new ClickableText 'w12', 'We do exercise', 2, 0, 50
+		word3 = new ClickableText 'w13', 'We paint', 3, 0, 100
+		word4 = new ClickableText 'w14', 'We eat lunch', 4, 0, 150
+		word5 = new ClickableText 'w15', 'We watch movies', 5, 0, 200
 
 		group1.addChild word1, word2, word3, word4, word5
 		@addToLibrary word1, word2, word3, word4, word5
@@ -55,14 +55,14 @@ class U1A3 extends Oda
 		@
 	setGrupo2: ->
 		group2 = new createjs.Container()
-		group2.x = 565
-		group2.y = 210
+		group2.x = 1130
+		group2.y = 420
 		group2.name = 'group2'
 		word1 = new ClickableText 'w21', 'in the gym', 1, 0, 0
-		word2 = new ClickableText 'w22', 'in the cafeteria', 2, 0, 25
-		word3 = new ClickableText 'w23', 'in the library', 3, 0, 50
-		word4 = new ClickableText 'w24', 'in the auditorium', 4, 0, 75
-		word5 = new ClickableText 'w25', 'in the art room', 5, 0, 100
+		word2 = new ClickableText 'w22', 'in the cafeteria', 2, 0, 50
+		word3 = new ClickableText 'w23', 'in the library', 3, 0, 100
+		word4 = new ClickableText 'w24', 'in the auditorium', 4, 0, 150
+		word5 = new ClickableText 'w25', 'in the art room', 5, 0, 200
 
 		group2.addChild word1, word2, word3, word4, word5
 		@addToLibrary word1, word2, word3, word4, word5
@@ -70,14 +70,14 @@ class U1A3 extends Oda
 		@
 	setGrupo3: ->
 		group3 = new createjs.Container()
-		group3.x = 565
-		group3.y = 350
+		group3.x = 1130
+		group3.y = 700
 		group3.name = 'group3'
 		word1 = new ClickableText 'w31', 'on Monday and Friday.', 1, 0, 0
-		word2 = new ClickableText 'w32', 'on Tuesday and Thursday.', 2, 0, 25
-		word3 = new ClickableText 'w33', 'on Thursday and Friday.', 3, 0, 50
-		word4 = new ClickableText 'w34', 'on Tuesday and Friday.', 4, 0, 75
-		word5 = new ClickableText 'w35', 'on Monday and Wednesday.', 5, 0, 100
+		word2 = new ClickableText 'w32', 'on Tuesday and Thursday.', 2, 0, 50
+		word3 = new ClickableText 'w33', 'on Thursday and Friday.', 3, 0, 100
+		word4 = new ClickableText 'w34', 'on Tuesday and Friday.', 4, 0, 150
+		word5 = new ClickableText 'w35', 'on Monday and Wednesday.', 5, 0, 200
 
 		group3.addChild word1, word2, word3, word4, word5
 		@addToLibrary word1, word2, word3, word4, word5
@@ -85,12 +85,12 @@ class U1A3 extends Oda
 		@
 	setDropper: ->
 		words = new createjs.Container()
-		words.x = 170
-		words.y = stageSize.h - 100
+		words.x = 340
+		words.y = stageSize.h - 200
 		words.name = 'words'
-		wc1 = new WordContainer 'wc1', '', '#FFF', '#ff983a', 0, 0, 275, 30
-		wc2 = new WordContainer 'wc2', '', '#FFF', '#ff983a', 290, 0, 275, 30
-		wc3 = new WordContainer 'wc3', '', '#FFF', '#ff983a', 100, 37, 355, 30
+		wc1 = new WordContainer 'wc1', '', '#FFF', '#ff983a', 0, 0, 550, 60
+		wc2 = new WordContainer 'wc2', '', '#FFF', '#ff983a', 580, 0, 550, 60
+		wc3 = new WordContainer 'wc3', '', '#FFF', '#ff983a', 200, 74, 710, 60
 		words.addChild wc1, wc2, wc3
 		@addToLibrary wc1, wc2, wc3
 		@addToMain words
@@ -100,10 +100,10 @@ class U1A3 extends Oda
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenMax.allFrom [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
-		TweenLite.from @library['group1'], 1, {alpha: 0, y: @library['group1'].y + 50, delay: 1}
-		TweenLite.from @library['group2'], 1, {alpha: 0, y: @library['group2'].y + 50, delay: 1.1}
-		TweenLite.from @library['group3'], 1, {alpha: 0, y: @library['group3'].y + 50, delay: 1.2}
-		TweenLite.from @library['words'], 1, {alpha: 0, y: @library['words'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['group1'], 1, {alpha: 0, y: @library['group1'].y + 100, delay: 1}
+		TweenLite.from @library['group2'], 1, {alpha: 0, y: @library['group2'].y + 100, delay: 1.1}
+		TweenLite.from @library['group3'], 1, {alpha: 0, y: @library['group3'].y + 100, delay: 1.2}
+		TweenLite.from @library['words'], 1, {alpha: 0, y: @library['words'].y + 40, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@blink @library[@answers[@index].id]
@@ -179,9 +179,9 @@ class U1A3 extends Oda
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
 		TweenMax.to [@library['calendar'], @library['iconGym'], @library['iconArt'], @library['iconWatch'], @library['iconRead'], @library['iconLunch']], 1, {alpha: 0, delay: 0.5}
-		TweenLite.to @library['group1'], 1, {alpha: 0, y: @library['group1'].y + 50, delay: 0.1}
-		TweenLite.to @library['group2'], 1, {alpha: 0, y: @library['group2'].y + 50, delay: 0.1}
-		TweenLite.to @library['group3'], 1, {alpha: 0, y: @library['group3'].y + 50, delay: 0.1}
-		TweenLite.to @library['words'], 1, {alpha: 0, y: @library['words'].y + 20, delay: 0.1}
+		TweenLite.to @library['group1'], 1, {alpha: 0, y: @library['group1'].y + 100, delay: 0.1}
+		TweenLite.to @library['group2'], 1, {alpha: 0, y: @library['group2'].y + 100, delay: 0.1}
+		TweenLite.to @library['group3'], 1, {alpha: 0, y: @library['group3'].y + 100, delay: 0.1}
+		TweenLite.to @library['words'], 1, {alpha: 0, y: @library['words'].y + 40, delay: 0.1}
 		super
 	window.U1A3 = U1A3

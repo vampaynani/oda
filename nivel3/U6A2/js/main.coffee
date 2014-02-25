@@ -77,6 +77,7 @@ class U6A2 extends Oda
 								{name: 'pcpt1', opts:{pattern:['This animal was a short-faced bear.','#rtn','It was much bigger than the modern grizzly bear.','#rtn','It was','#tcpt','meters tall and weighed','#tcpt','kilograms.'], targets: [{text:'3.3'},{text:'815'}]}}
 							]
 						]
+						mixed: true
 						type: 'steps'
 					}
 					containers:[

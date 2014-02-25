@@ -368,7 +368,7 @@ NEW ODA
               }, {
                 type: 'pcpt',
                 id: 'pcpt1',
-                x: 400,
+                x: 270,
                 y: 380,
                 font: '24px Quicksand',
                 margin: 10,
@@ -761,7 +761,7 @@ NEW ODA
               }, {
                 type: 'pcpt',
                 id: 'pcpt2',
-                x: 400,
+                x: 270,
                 y: 380,
                 font: '24px Quicksand',
                 margin: 10,

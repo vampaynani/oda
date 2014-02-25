@@ -44,20 +44,20 @@ class U1A2 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 40, 100
-		@insertSprite 'characters', ['p1','p2','p3','p4','p5','p6'], null, 100, stageSize.h - 180
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 6, 0
+		@insertInstructions 'instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 80, 200
+		@insertSprite 'characters', ['p1','p2','p3','p4','p5','p6'], null, 200, stageSize.h - 340
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 6, 0
 		@intento = 0
 		@setDropper().setNames().introEvaluation()
 	setDropper: ->
 		myname = new createjs.Container()
-		myname.x = 285
-		myname.y = stageSize.h - 70
+		myname.x = 670
+		myname.y = stageSize.h - 140
 		myname.name = 'dropname'
 		question = @createBitmap 'question', 'q', 0, 0
-		h1 = new createjs.Shape new createjs.Graphics().beginFill( '#FFF' ).drawRect( 0, 0, 130, 30 )
-		h1.x = 250
-		h1.y = -7
+		h1 = new createjs.Shape new createjs.Graphics().beginFill( '#FFF' ).drawRect( 0, 0, 260, 60 )
+		h1.x = 500
+		h1.y = -14
 		h1.name = 'h1'
 		myname.addChild question, h1
 		@addToLibrary h1
@@ -65,17 +65,17 @@ class U1A2 extends Oda
 		@
 	setNames: ->
 		names = new createjs.Container()
-		names.x = 120
-		names.y = 132
+		names.x = 240
+		names.y = 264
 		names.name = 'names'
 		faces = @createBitmap 'facesback', 'faces', 69, 0
-		repeat = new Button 'btnrepeat', (@preload.getResult 'repeat'), 0, 300, 320
-		name1 = new Draggable 'name1', (@preload.getResult 'n1'), 1, 16, 20
-		name2 = new Draggable 'name2', (@preload.getResult 'n2'), 2, 4, 260
-		name3 = new Draggable 'name3', (@preload.getResult 'n3'), 3, 16, 210
-		name4 = new Draggable 'name4', (@preload.getResult 'n4'), 4, 16, 125
-		name5 = new Draggable 'name5', (@preload.getResult 'n5'), 5, 4, 78
-		name6 = new Draggable 'name6', (@preload.getResult 'n6'), 6, 4, 164
+		repeat = new Button 'btnrepeat', (@preload.getResult 'repeat'), 0, 600, 640
+		name1 = new Draggable 'name1', (@preload.getResult 'n1'), 1, 16, 40
+		name2 = new Draggable 'name2', (@preload.getResult 'n2'), 2, 4, 520
+		name3 = new Draggable 'name3', (@preload.getResult 'n3'), 3, 16, 420
+		name4 = new Draggable 'name4', (@preload.getResult 'n4'), 4, 16, 250
+		name5 = new Draggable 'name5', (@preload.getResult 'n5'), 5, 4, 156
+		name6 = new Draggable 'name6', (@preload.getResult 'n6'), 6, 4, 328
 
 		name1.addEventListener 'drop', @evaluateAnswer
 		name2.addEventListener 'drop', @evaluateAnswer
@@ -98,16 +98,16 @@ class U1A2 extends Oda
 
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 100, delay: 1}
+		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 100, delay: 1}
+		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 40, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@library['characters'].currentFrame = @answers[@index].id
 		createjs.Sound.play @answers[@index].sound
 		for i in [1..6] by 1
 			@library['name'+i].blink()
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
+		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 340, ease: Quart.easeOut}
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
@@ -126,12 +126,12 @@ class U1A2 extends Oda
 			@library['score'].plusOne()
 		@intento = 0
 		@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, delay:0.5, ease: Back.easeOut, onComplete: @nextEvaluation}
+		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -400, delay:0.5, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
 			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
+			@library['characters'].y = stageSize.h - 360
 			@library['characters'].currentFrame = @answers[@index].id
 			createjs.Sound.play @answers[@index].sound
 			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
@@ -141,9 +141,9 @@ class U1A2 extends Oda
 		createjs.Sound.stop()
 		createjs.Sound.play @answers[@index].sound
 	finish: ->
-		TweenLite.to @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 0.1}
-		TweenLite.to @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 0.1}
-		TweenLite.to @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 0.1}
+		TweenLite.to @library['names'], 1, {alpha: 0, y: @library['names'].y + 100, delay: 0.1}
+		TweenLite.to @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 100, delay: 0.1}
+		TweenLite.to @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 40, delay: 0.1}
 		super
 		for i in [1..6] by 1
 			@library['name'+i].blink off

@@ -41,30 +41,30 @@ class U1A5 extends Oda
 		@game = [
 			{
 				texts:[
-					{idx:2, t:"Sam", im:'face1', x:700, y:110}
-					{idx:1, t:'Kara', im:'face2', x:700, y:220}
-					{idx:3, t:"Mrs. Smith", im:'face3', x:700, y:330}
-					{idx:4, t:"Lily", im:'face4', x:700, y:440}
+					{idx:2, t:"Sam", im:'face1', x:1400, y:220}
+					{idx:1, t:'Kara', im:'face2', x:1400, y:440}
+					{idx:3, t:"Mrs. Smith", im:'face3', x:1400, y:660}
+					{idx:4, t:"Lily", im:'face4', x:1400, y:880}
 				]
 				positions:[
-					{x:'111', y:'144'}
-					{x:'335', y:'171'}
-					{x:'106', y:'372'}
-					{x:'332', y:'363'}
+					{x: 222, y: 288}
+					{x: 670, y: 342}
+					{x: 212, y: 744}
+					{x: 664, y: 726}
 				]
 			}
 			{
 				texts:[
-					{idx:5, t:"Sam", im:'face1', x:700, y:110}
-					{idx:7, t:'Kara', im:'face2', x:700, y:220}
-					{idx:[6,8], t:'Lily', im:'face4', x:700, y:330}
-					{idx:[6,8], t:'Lily', im:'face4', x:700, y:330}
+					{idx:5, t:"Sam", im:'face1', x: 1400, y: 220}
+					{idx:7, t:'Kara', im:'face2', x:1400, y: 440}
+					{idx:[6,8], t:'Lily', im:'face4', x:1400, y: 660}
+					{idx:[6,8], t:'Lily', im:'face4', x:1400, y: 660}
 				]
 				positions:[
-					{x:'101', y:'160'}
-					{x:'328', y:'160'}
-					{x:'102', y:'373'}
-					{x:'320', y:'364'}	
+					{x: 202, y: 320}
+					{x: 656, y: 320}
+					{x: 204, y: 746}
+					{x: 640, y: 728}	
 				]
 			}
 		]
@@ -73,13 +73,13 @@ class U1A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read and drag the names to complete the story.', 40, 100
-		ti = @createBitmap 'title', 'title1', 350, 135, 'tc'
-		ti.scaleX = ti.scaleY = 0.72
+		@insertInstructions 'instructions', 'Read and drag the names to complete the story.', 80, 200
+		ti = @createBitmap 'title', 'title1', 700, 270, 'tc'
+		#ti.scaleX = ti.scaleY = 0.72
 		@addToMain ti
-		@insertBitmap 'btnnext', 'btn', 760, 589, 'tc'
+		@insertBitmap 'btnnext', 'btn', 1520, 1178, 'tc'
 		@library['btnnext'].visible = off
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 8, 0
 		@intento = 0
 		@setCuento(1).introEvaluation()
 	setCuento: (scene) ->
@@ -90,19 +90,19 @@ class U1A5 extends Oda
 		for i in [1..scn.positions.length] by 1
 			m = @createSprite "sc#{i}", ["#{(scene - 1) * 4 + i}", "#{(scene - 1) * 4 + i}b"],null, scn.positions[i - 1].x, scn.positions[i - 1].y
 			m.index = (scene - 1) * 4 + i
-			m.scaleX = m.scaleY = 0.73
+			#m.scaleX = m.scaleY = 0.73
 			cuento.addChild m
 			@addToLibrary m
 
 		for i in [1..scn.texts.length] by 1
-			y = if scene is 1 then 100 else 150
+			y = if scene is 1 then 200 else 300
 			f = @createBitmap scn.texts[i - 1].im, scn.texts[i - 1].im, scn.texts[i - 1].x, scn.texts[i - 1].y + y, 'bc'
-			f.scaleX = f.scaleY = 0.73
+			#f.scaleX = f.scaleY = 0.73
 			@addToLibrary f
 			cuento.addChild f
 			t = new DraggableText "t#{i}", scn.texts[i - 1].t, scn.texts[i - 1].idx, scn.texts[i - 1].x, scn.texts[i - 1].y + y
-			t.text.lineHeight = 20
-			t.text.lineWidth = 200
+			t.text.lineHeight = 40
+			t.text.lineWidth = 400
 			t.text.textAlign = 'center'
 			t.setHitArea()
 			@addToLibrary t
@@ -117,7 +117,7 @@ class U1A5 extends Oda
 		scn = @game[scene - 1]
 		for i in [1..scn.positions.length] by 1
 			m = @createBitmap "#{(scene - 1) * 4 + i}b", "#{(scene - 1) * 4 + i}b", scn.positions[i - 1].x, scn.positions[i - 1].y
-			m.scaleX = m.scaleY = 0.73
+			#m.scaleX = m.scaleY = 0.73
 			cuento.addChild m
 			@addToLibrary m
 
@@ -128,8 +128,8 @@ class U1A5 extends Oda
 			@observer.subscribe 'init_evaluation', @library["t#{i}"].onInitEvaluation
 		TweenLite.from @library['header'], 1, {y: -@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha: 0, x: 0, delay: 0.5}
-		TweenLite.from @library['title'], 1, {alpha: 0, y: @library['title'].y + 20, delay: 1}
-		TweenLite.from @library['cuento'], 1, {alpha: 0, y: @library['cuento'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['title'], 1, {alpha: 0, y: @library['title'].y + 40, delay: 1}
+		TweenLite.from @library['cuento'], 1, {alpha: 0, y: @library['cuento'].y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for i in [1..@game[@scene - 1].texts.length] by 1
@@ -184,8 +184,8 @@ class U1A5 extends Oda
 		if @scene < 2
 			@library['btnnext'].visible = on
 			@library['btnnext'].alpha = 1
-			@library['btnnext'].y = 560
-			TweenLite.from @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
+			@library['btnnext'].y = 1120
+			TweenLite.from @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 20}
 			@library['btnnext'].addEventListener 'click', @nextEvaluation
 		else
 			@nextEvaluation()
@@ -193,24 +193,24 @@ class U1A5 extends Oda
 		@index++
 		createjs.Sound.stop()
 		if @index < @game.length
-			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
-			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
+			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 20}
+			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 20}
 			@setCuento @index + 1
-			TweenLite.from @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
+			TweenLite.from @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 20}
 			for i in [1..@game[@scene - 1].texts.length] by 1
 				@library["t#{i}"].onInitEvaluation()
 				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
 			@finalscene = 0
-			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
+			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
 			setTimeout @storyTale, 2 * 1000
 	storyTale: =>
-		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
+		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 100}
 		if @finalscene < @game.length
 			@setCuentoFinal @finalscene + 1
 			s = createjs.Sound.play "scene#{@scene}"
 			s.addEventListener 'complete', @storyTale
-			TweenLite.to @library['cuento'], 1, {alpha:1, y:@library['cuento'].y + 10}
+			TweenLite.to @library['cuento'], 1, {alpha:1, y:@library['cuento'].y + 20}
 			@finalscene++
 		else
 			@finish()

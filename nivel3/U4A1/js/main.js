@@ -427,7 +427,7 @@ NEW ODA
                 y: 132,
                 align: 'tl'
               }, {
-                type: 'wcpt',
+                type: 'swct',
                 id: 'wcpt1',
                 x: 435,
                 y: 350,

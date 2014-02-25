@@ -127,7 +127,7 @@ class U4A4 extends Oda
 					}
 					containers:[
 						{
-							type: 'btn', id: 'btn1', x: 509, y: 236, index: 1, target: 'global', eval: 'global_01'
+							type: 'btn', id: 'btn1', x: 509, y: 286, index: 1, target: 'global', eval: 'global_01'
 							states: [{img: {name: 'btnH', align: 'mc', x: 0, y: 0}}]
 						}
 						{

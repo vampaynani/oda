@@ -1,14 +1,17 @@
-class U5A6 extends Oda
+###
+
+NEW ODA
+
+###
+class U6A3 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id:'volcan', src:'prop_img.png'}
 			{id:'btnready', src:'btn_ready.png'}
 			{id:'crossword', src:'prop_crossword.png'}
-
 			{id:'q1', src:'q1.png'}
 			{id:'q2', src:'q2.png'}
 			{id:'q3', src:'q3.png'}
@@ -19,243 +22,119 @@ class U5A6 extends Oda
 			{id:'q8', src:'q8.png'}
 			{id:'q9', src:'q9.png'}
 			{id:'q10', src:'q10.png'}
-
-			{id: 'aLetra', src: 'a.png'}
-			{id: 'bLetra', src: 'b.png'}
-			{id: 'cLetra', src: 'c.png'}
-			{id: 'dLetra', src: 'd.png'}
-			{id: 'eLetra', src: 'e.png'}
-			{id: 'fLetra', src: 'f.png'}
-			{id: 'gLetra', src: 'g.png'}
-			{id: 'hLetra', src: 'h.png'}
-			{id: 'iLetra', src: 'i.png'}
-			{id: 'jLetra', src: 'j.png'}
-			{id: 'kLetra', src: 'k.png'}
-			{id: 'lLetra', src: 'l.png'}
-			{id: 'mLetra', src: 'm.png'}
-			{id: 'nLetra', src: 'n.png'}
-			{id: 'oLetra', src: 'o.png'}
-			{id: 'pLetra', src: 'p.png'}
-			{id: 'qLetra', src: 'q.png'}
-			{id: 'rLetra', src: 'r.png'}
-			{id: 'sLetra', src: 's.png'}
-			{id: 'tLetra', src: 't.png'}
-			{id: 'uLetra', src: 'u.png'}
-			{id: 'vLetra', src: 'v.png'}
-			{id: 'wLetra', src: 'w.png'}
-			{id: 'xLetra', src: 'x.png'}
-			{id: 'yLetra', src: 'y.png'}
-			{id: 'zLetra', src: 'z.png'}
-		]
-		sounds = [
-			{src:'sounds/TU3_U6_A3_instructions.mp3', id:'instructions'}
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}	
-		]
-		@abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-		@numbers = [
-			{id:'1', x:9, y:1}
-			{id:'2', x:11, y:0}
-			{id:'3', x:8, y:2}
-			{id:'4', x:7, y:3}
-			{id:'5', x:5, y:5}
-			{id:'6', x:4, y:6}
-			{id:'7', x:0, y:8}
-			{id:'8',  x:4, y:10}
-			{id:'9',  x:1, y:12}
-			{id:'10', x:0, y:14}
-		]
-		@containers = [
-			{id:'f', x:10, y:1}
-			{id:'o', x:11, y:1}
-			{id:'r', x:12, y:1}
-			{id:'e', x:13, y:1}
-			{id:'s', x:14, y:1}
-			{id:'t', x:15, y:1}
-
-			{id:'c', x:11, y:2}
-			{id:'e', x:11, y:3}
-			{id:'a', x:11, y:4}
-			{id:'n', x:11, y:5}
-
-			{id:'l', x:8, y:3}
-			{id:'a', x:9, y:3}
-			{id:'k', x:10, y:3}
-
-			{id:'c', x:7, y:4}
-			{id:'o', x:7, y:5}
-			{id:'n', x:7, y:6}
-			{id:'t', x:7, y:7}
-			{id:'i', x:7, y:8}
-			{id:'n', x:7, y:9}
-			{id:'e', x:7, y:10}
-			{id:'n', x:7, y:11}
-			{id:'t', x:7, y:12}
-
-			{id:'v', x:6, y:5}
-			{id:'l', x:8, y:5}
-			{id:'c', x:9, y:5}
-			{id:'a', x:10, y:5}
-			{id:'o', x:12, y:5}
-			{id:'s', x:5, y:6}
-			{id:'w', x:5, y:7}
-			{id:'a', x:5, y:8}
-			{id:'m', x:5, y:9}
-			{id:'p', x:5, y:10}
-			{id:'t', x:1, y:8}
-			{id:'s', x:2, y:8}
-			{id:'u', x:3, y:8}
-			{id:'n', x:4, y:8}
-			{id:'m', x:6, y:8}
-			{id:'i', x:4, y:11}
-			{id:'s', x:4, y:12}
-			{id:'l', x:4, y:13}
-			{id:'a', x:4, y:14}
-			{id:'n', x:4, y:15}
-			{id:'d', x:4, y:16}
-			{id:'d', x:2, y:12}
-			{id:'e', x:3, y:12}
- 			{id:'e', x:5, y:12}
-			{id:'r', x:6, y:12}
-			{id:'l', x:1, y:14}
-			{id:'a', x:2, y:14}
-			{id:'v', x:3, y:14}
+			{src:'TU3_U6_A3_instructions.mp3', id:'s/instructions'}
 		]
 		@game = 
-			answers:
-				palabra1: r:off, c: [0,1,2,3,4,5]
-				palabra2: r:off, c: [1,6,7,8,9]
-				palabra3: r:off, c: [10,11,12,7]
-				palabra4: r:off, c: [13,14,15,16,17,18,19,20,21]
-				palabra5: r:off, c: [22,14,23,24,25,9,26]
-				palabra6: r:off, c: [27,28,29,30,31]
-				palabra7: r:off, c: [32,33,34,35,29,36,17]
-				palabra8: r:off, c: [37,38,39,40,41,42]
-				palabra9: r:off, c: [43,44,38,45,46,21]
-				palabra9: r:off, c: [47,48,49,40]
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@answers = @clone @game.answers
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Click on the crossword, read the clues and write the answers.', 30, 100
-		@insertBitmap 'volcan', 'volcan', 495, 177
-		@insertSprite 'questions', ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'], null, 0, 0
-		@library['questions'].currentFrame = 9
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
-		@createDroppers()
-		@createAlphabet()
-		@introEvaluation()
-	createAlphabet: ->
-		alphabet = new createjs.Container()
-		alphabet.x = 135
-		alphabet.y = 540
-		alphabet.name = 'alphabet'
-		for i in [0..@abc.length - 1] by 1
-			letter = @abc[i]
-			if i <= 13
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i, 0
-			else
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i-540, 34
-			letterObj.onInitEvaluation()
-			alphabet.addChild letterObj	
-			@addToLibrary letterObj
-		@addToMain alphabet
-	createDroppers: ->
-		crosswords = new createjs.Container()
-		crosswords.x = 235
-		crosswords.y = 125
-		crosswords.name = 'crosswords'
-		for i in [0..@containers.length - 1] by 1
-			drop = new WordContainer "h#{i}", '', '#FFF', '#999', @containers[i].x*21.9, @containers[i].y*21.9, 21.9, 21.9
-			drop.setRectShape '#FFF', '#999', 2, 21.9, 21.9
-			drop.text.y -= 3
-			drop.id = @containers[i].id
-			@addToLibrary drop
-			crosswords.addChild drop
-		for i in [0..9]
-			t = new createjs.Text @numbers[i].id,'14px Quicksand','#333'
-			t.x = @numbers[i].x*21.9 + 6
-			t.y = @numbers[i].y*21.9 + 4
-			crosswords.addChild t
-		#crosswords.cache -23, -23, 276, 230
-		@addToMain crosswords
-	introEvaluation: ->
-		super
-		#@library['crosswords'].y = 216
-		@library['crosswords'].alpha = 1
-		@library['alphabet'].y = 540
-		@library['alphabet'].alpha = 1
-		
-		for i in [0..@containers.length - 1] by 1
-			if(@containers[i].a)
-				@library['h'+i].changeText @containers[i].id
-			else
-				@library['h'+i].changeText ''
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['alphabet'], 1, {alpha: 0, y: @library['alphabet'].y + 50, delay: 1.5}
-		TweenLite.from @library['crosswords'], 1, {alpha: 0, y: @library['crosswords'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
-	initEvaluation: (e) =>
-		super
-		#@library.crosswords.cache -23, -23, 276, 230
-		for letter in @abc
-			@library[letter].addEventListener 'drop', @evaluateAnswer
-	evaluateAnswer: (e) =>
-		@answer = e.target
-		dropped = false
-		hitdrop = null
-		for i in [0..@containers.length - 1] by 1
-			hit = @library["h#{i}"]
-			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
-			if hit.hitTest pt.x, pt.y
-				dropped = true
-				if hit.id is @answer.index
-					hitdrop = hit
-			else
-				@answer.returnToPlace()
-		if dropped is true
-			if hitdrop isnt null
-				hitdrop.changeText hitdrop.id
-				@answer.x = @answer.pos.x
-				@answer.y = @answer.pos.y
-				@evaluate 'palabra1'
-				@evaluate 'palabra2'
-				@evaluate 'palabra3'
-				@evaluate 'palabra4'
-				@evaluate 'palabra5'
-				@evaluate 'palabra6'
-				@evaluate 'palabra7'
-				@evaluate 'palabra8'
-				@evaluate 'palabra9'
-
-				#@library.crosswords.cache -23, -23, 276, 230
-			else
-				@warning()
-	evaluate: (instrument) ->
-		ready = true
-		if not @answers[instrument].r
-			for box in @answers[instrument].c
-				if @library['h'+box].text.text is ''
-					ready = false
-			if ready
-				@finishEvaluation()
-				@answers[instrument].r = on
-				@library['score'].plusOne()
-	finishEvaluation: (e) =>
-		@nextEvaluation
-	nextEvaluation: =>
-		complete = on
-		for instrument of @answers
-			if @answers[instrument].r is off
-				complete = off
-		TweenLite.to @library['alphabet'], 0.5, {alpha:0, y: @library['alphabet'].y - 100, ease:Quart.easeOut} if complete
-		TweenLite.to @library['crosswords'], 0.5, {alpha:0, y: @library['crosswords'].y - 100, ease:Quart.easeOut, onComplete: @finish} if complete
-	blink: (obj, state = on) ->
-		TweenMax.killTweensOf obj
-		obj.alpha = 1
-		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
-	finish: =>
-		super
-	window.U5A6 = U5A6
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Click on the crossword, read the clues and write the answers.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{
+									name:'cwd1'
+									opts:{
+										matrix:[
+											['#','#','#','#','#','#','#','#','#','f','o','r','e','s','t']
+											['#','#','#','#','#','#','#','#','#','#','c','#','#','#','#']
+											['#','#','#','#','#','#','#','l','a','k','e','#','#','#','#']
+											['#','#','#','#','#','#','c','#','#','#','a','#','#','#','#']
+											['#','#','#','#','#','v','o','l','c','a','n','o','#','#','#']
+											['#','#','#','#','s','#','n','#','#','#','#','#','#','#','#']
+											['#','#','#','#','w','#','t','#','#','#','#','#','#','#','#']
+											['t','s','u','n','a','m','i','#','#','#','#','#','#','#','#']
+											['#','#','#','#','m','#','n','#','#','#','#','#','#','#','#']
+											['#','#','#','#','p','#','e','#','#','#','#','#','#','#','#']
+											['#','#','#','i','#','#','n','#','#','#','#','#','#','#','#']
+											['#','d','e','s','e','r','t','#','#','#','#','#','#','#','#']
+											['#','#','#','l','#','#','#','#','#','#','#','#','#','#','#']
+											['l','a','v','a','#','#','#','#','#','#','#','#','#','#','#']
+											['#','#','#','n','#','#','#','#','#','#','#','#','#','#','#']
+											['#','#','#','d','#','#','#','#','#','#','#','#','#','#','#']
+										]
+										words:[
+											{
+												x: 165, y: 0, target:'forest', eval:'show_click_01', index: 'q1', target: 'grp1_0', complete: false
+												coords:['90', '100', '110', '120', '130', '140']
+											}
+											{
+												x: 205, y: -25, target:'ocean', eval:'show_click_01', index: 'q2', target: 'grp1_0', complete: false
+												coords:['100', '101', '102', '103', '104']
+											}
+											{
+												x: 145, y: 20, target:'lake', eval:'show_click_01', index: 'q3', target: 'grp1_0', complete: false
+												coords:['72', '82', '92', '102']
+											}
+											{
+												x: 125, y: 40, target:'continent', eval:'show_click_01', index: 'q4', target: 'grp1_0', complete: false
+												coords:['63', '64', '65', '66', '67', '68', '69', '610', '611']
+											}
+											{
+												x: 85, y: 80, target:'volcano', eval:'show_click_01', index: 'q5', target: 'grp1_0', complete: false
+												coords:['54', '64', '74', '84', '94', '104', '114']
+											}
+											{
+												x: 65, y: 100, target:'swamp', eval:'show_click_01', index: 'q6', target: 'grp1_0', complete: false
+												coords:['45', '46', '47', '48', '49']
+											}
+											{
+												x: -20, y: 140, target:'tsunami', eval:'show_click_01', index: 'q7', target: 'grp1_0', complete: false
+												coords:['07', '17', '27', '37', '47', '57', '67']
+											}
+											{
+												x: 65, y: 180, target:'island', eval:'show_click_01', index: 'q8', target: 'grp1_0', complete: false
+												coords:['310', '311', '312', '313', '314', '315']
+											}
+											{
+												x: 5, y: 220, target:'desert', eval:'show_click_01', index: 'q9', target: 'grp1_0', complete: false
+												coords:['111', '211', '311', '411', '511', '611']
+											}
+											{
+												x: -25, y: 260, target:'lava', eval:'show_click_01', index: 'q10', target: 'grp1_0', complete: false
+												coords:['013', '113', '213', '313']
+											}
+										]
+									}
+								}
+							]
+						]
+						type: 'steps'
+					}
+					containers:[
+						{type: 'img', id: 'volcan', x: 495, y: 777, align: 'mc'}
+						{type: 'img', id: 'q1', x: 5, y: 18}
+						{type: 'img', id: 'q2', x: 10, y: 0}
+						{type: 'img', id: 'q3', x: 10, y: 12}
+						{type: 'img', id: 'q4', x: 10, y: 11}
+						{type: 'img', id: 'q5', x: 10, y: 0}
+						{type: 'img', id: 'q6', x: 15, y: 0}
+						{type: 'img', id: 'q7', x: 20, y: 0}
+						{type: 'img', id: 'q8', x: 15, y: -8}
+						{type: 'img', id: 'q9', x: 18, y: -10}
+						{type: 'img', id: 'q10', x: 20, y: -18}
+						{type:'cwd', id: 'cwd1', x: 285, y: 156, font: '20px Quicksand', fcolor:'#333', uwidth: 20, uheight: 20, stroke: 1, scolor: '#000'}
+						{type: 'abc', id: 'abc1', x: 400, y: 560, font:'20px Quicksand', fcolor:'#333', uwidth: 22, uheight: 34, margin: 10, target:'cwd1', eval:'drop_04'}
+					]
+					groups: [
+						{
+							type: 'grp', id: 'grp1_0', invisible: true
+							group: [
+								'q1'
+								'q2'
+								'q3'
+								'q4'
+								'q5'
+								'q6'
+								'q7'
+								'q8'
+								'q9'
+								'q10'
+							]
+						}
+					]
+				}
+			]
+		super()
+	window.U6A3 = U6A3

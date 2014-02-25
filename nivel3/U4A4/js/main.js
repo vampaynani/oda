@@ -375,7 +375,7 @@ NEW ODA
                 type: 'btn',
                 id: 'btn1',
                 x: 509,
-                y: 236,
+                y: 286,
                 index: 1,
                 target: 'global',
                 "eval": 'global_01',

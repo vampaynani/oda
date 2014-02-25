@@ -95,7 +95,7 @@ class U5A4 extends Oda
 					}
 					containers:[
 						{type: 'img', id: 'sc1', x: 120, y: 150}
-						{type: 'pcpt', id: 'pcpt1', x: 400, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
+						{type: 'pcpt', id: 'pcpt1', x: 270, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
 						{type: 'img', id: 'n1', x: 600, y: 180}
 						{
 							type: 'btn', id: 'sc1btn_n11', x: 625, y: 205, index: 'was', target: 'pcpt1', eval: 'click_O1_01'
@@ -194,7 +194,7 @@ class U5A4 extends Oda
 					}
 					containers:[
 						{type: 'img', id: 'sc2', x: 120, y: 150}
-						{type: 'pcpt', id: 'pcpt2', x: 400, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
+						{type: 'pcpt', id: 'pcpt2', x: 270, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
 						{type: 'img', id: 'n1', x: 600, y: 180}
 						{
 							type: 'btn', id: 'btn_n11', x: 625, y: 205, index: 'was', target: 'pcpt2', eval: 'click_O1_01'

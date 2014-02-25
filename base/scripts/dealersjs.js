@@ -6,7 +6,7 @@ LIBRARY
 
 
 (function() {
-  var ABCContainer, Actions, Behaviors, ButtonContainer, ChooseContainer, CloneCompleterContainer, CloneContainer, Component, ComponentGroup, ComponentObserver, CrossWordsContainer, DragContainer, Evaluator, Game, GameObserver, GridContainer, ImageCompleterContainer, ImageContainer, ImageWordCompleterContainer, Instructions, LabelContainer, LetterDragContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, PhraseCloneContainer, PhraseCompleterContainer, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, StepContainer, StepsContainer, TextCloneContainer, TextCompleterContainer, Utilities, WordCompleterContainer, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _base6, _ref, _ref1, _ref2,
+  var ABCContainer, Actions, Behaviors, ButtonContainer, ChooseContainer, CloneCompleterContainer, CloneContainer, Component, ComponentGroup, ComponentObserver, CrossWordsContainer, DragContainer, Evaluator, Game, GameObserver, GridContainer, ImageCompleterContainer, ImageContainer, ImageWordCompleterContainer, Instructions, LabelContainer, LetterDragContainer, MainContainer, Methods, Mobile, Module, Observer, Oda, PhraseCloneContainer, PhraseCompleterContainer, Preloader, Scene, SceneFactory, SceneObserver, SceneStack, Score, ScrambledWordContainer, StepContainer, StepsContainer, TextCloneContainer, TextCompleterContainer, Utilities, WordCompleterContainer, moduleKeywords, _base, _base1, _base2, _base3, _base4, _base5, _base6, _ref, _ref1, _ref2,
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
@@ -164,11 +164,13 @@ LIBRARY
         TweenMax.killTweensOf(this);
         TweenLite.killTweensOf(this);
         if (this.alpha === 0) {
+          this.y -= 20;
           return TweenLite.from(this, 0.5, {
             alpha: 1,
             y: this.y + 20
           });
         } else {
+          this.y += 20;
           return TweenLite.to(this, 0.5, {
             alpha: 0,
             y: this.y - 20
@@ -180,11 +182,13 @@ LIBRARY
         TweenMax.killTweensOf(this);
         TweenLite.killTweensOf(this);
         if (this.alpha === 1) {
+          this.y -= 20;
           return TweenLite.from(this, 0.5, {
             alpha: 0,
             y: this.y + 20
           });
         } else {
+          this.y += 20;
           return TweenLite.to(this, 0.5, {
             alpha: 1,
             y: this.y - 20
@@ -481,6 +485,10 @@ LIBRARY
             return this.evaluateSwitch01(dispatcher, target);
           case 'choose_01':
             return this.evaluateChoose01(dispatcher);
+          case 'hangman_click_01':
+            return this.evaluateHangmanClick01(dispatcher, target);
+          case 'show_click_01':
+            return this.evaluateShowClick01(dispatcher, target);
           case 'phrase_drop_01':
             return this.evaluatePhraseDrop01(dispatcher, target);
         }
@@ -519,6 +527,55 @@ LIBRARY
         } else {
           return lib.scene.fail();
         }
+      };
+
+      Evaluator.evaluateHangmanClick01 = function(dispatcher, target) {
+        var complete, droptarget, failed, _i, _j, _len, _len1, _ref, _ref1;
+        failed = true;
+        lib[dispatcher].visible = false;
+        _ref = lib[target].droptargets;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          droptarget = _ref[_i];
+          if (lib[dispatcher].index === droptarget.success) {
+            droptarget.update({
+              complete: true
+            });
+            failed = false;
+          }
+          console.log(lib[dispatcher].index, droptarget.success, failed);
+        }
+        if (failed) {
+          lib.scene.fail();
+          lib.hangman.current++;
+          if (lib.hangman.current >= lib.hangman.group.length) {
+            lib.hangman.current = 0;
+            lib.scene.nextStep();
+          } else {
+            lib.hangman.update({
+              type: 'fadeIn',
+              target: lib.hangman.group[lib.hangman.current]
+            });
+          }
+        } else {
+          complete = true;
+          _ref1 = lib[target].droptargets;
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            droptarget = _ref1[_j];
+            if (!droptarget.complete) {
+              complete = false;
+            }
+          }
+        }
+        if (complete) {
+          return lib.scene.success();
+        }
+      };
+
+      Evaluator.evaluateShowClick01 = function(dispatcher, target) {
+        return lib[target].update({
+          type: 'fadeIn',
+          target: lib[dispatcher].index
+        });
       };
 
       Evaluator.evaluateClick01 = function(dispatcher, target) {
@@ -1236,6 +1293,7 @@ LIBRARY
       Module.extend(this, d2oda.methods);
       this.name = opts.id;
       this.group = opts.group;
+      this.current = 0;
       if (opts.invisible) {
         this.setInvisible(true, false);
       }
@@ -1850,7 +1908,7 @@ LIBRARY
     };
 
     ChooseContainer.prototype.update = function(opts) {
-      var hito1, hito2, lineWidth, opt1, opt2,
+      var bmp, hito1, hito2, lineWidth, opt1, opt2,
         _this = this;
       this.removeAllChildren();
       switch (opts.type) {
@@ -1862,7 +1920,10 @@ LIBRARY
           break;
         case 'txt':
           if (opts.img) {
-            this.insertBitmap("" + this.name + "_img", opts.img.name, opts.img.x, opts.img.y, 'tc');
+            bmp = this.insertBitmap("" + this.name + "_img", opts.img.name, opts.img.x, opts.img.y, 'tc');
+            if (opts.img.scale) {
+              bmp.scaleY = bmp.scaleX = opts.img.scale;
+            }
           }
           lineWidth = this.bullets.lineWidth ? this.bullets.lineWidth : 200;
           this.insertText("separator", '/', this.bullets.font, this.bullets.color, 0, 400, 'center');
@@ -2560,11 +2621,20 @@ LIBRARY
     };
 
     CrossWordsContainer.prototype.update = function(opts) {
-      var column, i, j, k, row, tcc, _i, _j, _k, _len, _len1, _ref2, _ref3;
+      var column, i, j, k, row, tcc, txt, _i, _j, _k, _len, _len1, _ref2, _ref3,
+        _this = this;
       this.removeAllChildren();
       this.words = opts.words;
       for (k = _i = 1, _ref2 = this.words.length; 1 <= _ref2 ? _i <= _ref2 : _i >= _ref2; k = 1 <= _ref2 ? ++_i : --_i) {
-        this.insertText("txt" + k, "" + k, this.font, this.fcolor, this.words[k - 1].x, this.words[k - 1].y);
+        txt = this.insertText("txt" + k, "" + k, this.font, this.fcolor, this.words[k - 1].x, this.words[k - 1].y);
+        if (this.words[k - 1]["eval"]) {
+          txt["eval"] = this.words[k - 1]["eval"];
+          txt.target = this.words[k - 1].target;
+          txt.index = this.words[k - 1].index;
+          txt.addEventListener('click', function(e) {
+            return d2oda.evaluator.evaluate(e.target["eval"], e.target.name, e.target.target);
+          });
+        }
       }
       i = 0;
       j = 0;
@@ -2686,6 +2756,7 @@ LIBRARY
       this.target = opts.target;
       abc = 'abcdefghijklmnopqrstuvwxyz';
       abcarr = abc.split('');
+      this.abccollection = new Array();
       i = 0;
       for (_i = 0, _len = abcarr.length; _i < _len; _i++) {
         letter = abcarr[_i];
@@ -2696,20 +2767,42 @@ LIBRARY
           _x = i * (opts.uwidth + opts.margin);
           _y = 0;
         }
-        lopts = {
-          id: "abc_" + i,
-          x: _x,
-          y: _y,
-          index: letter,
-          target: this.target,
-          "eval": this["eval"],
-          text: letter,
-          font: opts.font,
-          color: opts.fcolor,
-          afterSuccess: 'origin',
-          afterFail: 'return'
-        };
-        d = new LetterDragContainer(lopts);
+        if (opts.clickable) {
+          lopts = {
+            id: "abc_" + i,
+            x: _x,
+            y: _y,
+            index: letter,
+            target: this.target,
+            "eval": this["eval"],
+            states: [
+              {
+                txt: {
+                  text: letter,
+                  font: opts.font,
+                  color: opts.fcolor
+                }
+              }
+            ]
+          };
+          d = new ButtonContainer(lopts);
+        } else {
+          lopts = {
+            id: "abc_" + i,
+            x: _x,
+            y: _y,
+            index: letter,
+            target: this.target,
+            "eval": this["eval"],
+            text: letter,
+            font: opts.font,
+            color: opts.fcolor,
+            afterSuccess: 'origin',
+            afterFail: 'return'
+          };
+          d = new LetterDragContainer(lopts);
+        }
+        this.abccollection.push(d);
         this.add(d);
         i++;
       }
@@ -2720,6 +2813,23 @@ LIBRARY
         alpha: 0,
         y: this.y - 10
       });
+    };
+
+    ABCContainer.prototype.update = function(opts) {
+      var letter, _i, _len, _ref2, _results;
+      if (opts.reset) {
+        _ref2 = this.abccollection;
+        _results = [];
+        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+          letter = _ref2[_i];
+          _results.push(letter.visible = true);
+        }
+        return _results;
+      }
+    };
+
+    ABCContainer.prototype.isComplete = function() {
+      return true;
     };
 
     return ABCContainer;
@@ -2760,6 +2870,95 @@ LIBRARY
     };
 
     WordCompleterContainer.prototype.update = function(opts) {
+      var h, i, letter, npos, word, _i, _len;
+      this.removeAllChildren();
+      this.droptargets = new Array();
+      this.target = opts.target;
+      word = opts.word.split('');
+      i = 0;
+      if (opts.prev) {
+        this.prev = this.insertText('prevTxt', opts.prev, this.font, this.fcolor, 0, 0);
+        npos = this.prev.getMeasuredWidth() + this.margin;
+      } else {
+        npos = 0;
+      }
+      for (_i = 0, _len = word.length; _i < _len; _i++) {
+        letter = word[_i];
+        if (letter === ' ') {
+          npos += this.margin;
+        } else {
+          opts = {
+            text: letter,
+            width: this.uwidth
+          };
+          h = new TextCompleterContainer(opts, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, 5);
+          this.droptargets.push(h);
+          this.add(h, false);
+          npos += this.uwidth + this.margin;
+        }
+        i++;
+      }
+      this.width = npos;
+      this.setPosition(this.align);
+      i = 0;
+      npos = this.prev ? this.prev.getMeasuredWidth() + this.margin : 0;
+      this.observer.notify(ComponentObserver.UPDATED);
+      return TweenLite.from(this, 0.3, {
+        alpha: 0,
+        y: this.y - 10
+      });
+    };
+
+    WordCompleterContainer.prototype.isComplete = function() {
+      var target, _i, _len, _ref2;
+      _ref2 = this.droptargets;
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        target = _ref2[_i];
+        if (target.complete === false) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    return WordCompleterContainer;
+
+  })(Component);
+
+  ScrambledWordContainer = (function(_super) {
+    __extends(ScrambledWordContainer, _super);
+
+    ScrambledWordContainer.prototype = new createjs.Container();
+
+    ScrambledWordContainer.prototype.Container_initialize = ScrambledWordContainer.prototype.initialize;
+
+    function ScrambledWordContainer(opts) {
+      this.initialize(opts);
+    }
+
+    ScrambledWordContainer.prototype.initialize = function(opts) {
+      var _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      this.Container_initialize();
+      Module.extend(this, d2oda.methods);
+      Module.extend(this, d2oda.utilities);
+      this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
+      this.x = opts.x;
+      this.y = opts.y;
+      this.uwidth = (_ref3 = opts.uwidth) != null ? _ref3 : 25;
+      this.bcolor = (_ref4 = opts.bcolor) != null ? _ref4 : '#FFF';
+      this.scolor = (_ref5 = opts.scolor) != null ? _ref5 : '#333';
+      this.fcolor = (_ref6 = opts.fcolor) != null ? _ref6 : '#333';
+      this.font = (_ref7 = opts.font) != null ? _ref7 : '20px Arial';
+      this.stroke = (_ref8 = opts.stroke) != null ? _ref8 : 3;
+      this.align = (_ref9 = opts.align) != null ? _ref9 : '';
+      this.margin = (_ref10 = opts.margin) != null ? _ref10 : 5;
+      this["eval"] = opts["eval"];
+      this.currentTarget = 0;
+      this.observer = new ComponentObserver();
+      return this.droptargets = new Array();
+    };
+
+    ScrambledWordContainer.prototype.update = function(opts) {
       var d, h, i, letter, npos, scrambledLetter, scrambledWord, word, _i, _j, _len, _len1;
       this.removeAllChildren();
       this.target = opts.target;
@@ -2821,7 +3020,7 @@ LIBRARY
       });
     };
 
-    WordCompleterContainer.prototype.isComplete = function() {
+    ScrambledWordContainer.prototype.isComplete = function() {
       var target, _i, _len, _ref2;
       _ref2 = this.droptargets;
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
@@ -2833,7 +3032,7 @@ LIBRARY
       return true;
     };
 
-    return WordCompleterContainer;
+    return ScrambledWordContainer;
 
   })(Component);
 
@@ -3294,6 +3493,8 @@ LIBRARY
           return new PhraseCloneContainer(opts);
         case 'wcpt':
           return new WordCompleterContainer(opts);
+        case 'swct':
+          return new ScrambledWordContainer(opts);
         case 'ccpt':
           return new CloneCompleterContainer(opts);
         case 'pcpt':

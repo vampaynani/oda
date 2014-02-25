@@ -56,23 +56,23 @@ class U1A4 extends Oda
 		for answer in @answers
 			answer.a = false
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 40, 100
-		@insertBitmap 'teacher', 'teacher', 250, 134
-		@insertBitmap 'repeat', 'repeat', 441, 210
-		@insertSprite 'choose1', ['arrive','quiet','bus','eat','aud','run','cafe','library','movies','trash','walk'], {arrive:0, quiet:1, bus:2, eat:3, aud:4, run:5, cafe:6, library:7, movies:8, trash:9, walk:10}, 270, 452, 'mc'
-		@insertSprite 'choose2', ['arrive','quiet','bus','eat','aud','run','cafe','library','movies','trash','walk'], {arrive:0, quiet:1, bus:2, eat:3, aud:4, run:5, cafe:6, library:7, movies:8, trash:9, walk:10}, 591, 452, 'mc'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 80, 200
+		@insertBitmap 'teacher', 'teacher', 500, 268
+		@insertBitmap 'repeat', 'repeat', 882, 420
+		@insertSprite 'choose1', ['arrive','quiet','bus','eat','aud','run','cafe','library','movies','trash','walk'], {arrive:0, quiet:1, bus:2, eat:3, aud:4, run:5, cafe:6, library:7, movies:8, trash:9, walk:10}, 540, 904, 'mc'
+		@insertSprite 'choose2', ['arrive','quiet','bus','eat','aud','run','cafe','library','movies','trash','walk'], {arrive:0, quiet:1, bus:2, eat:3, aud:4, run:5, cafe:6, library:7, movies:8, trash:9, walk:10}, 1182, 904, 'mc'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@introEvaluation()
 	introEvaluation: ->
 		super
 		@library['choose1'].alpha = 0
-		@library['choose1'].scaleX = @library['choose1'].scaleY = 0.3
+		@library['choose1'].scaleX = @library['choose1'].scaleY = 0.6
 		@library['choose2'].alpha = 0
-		@library['choose2'].scaleX = @library['choose2'].scaleY = 0.3
+		@library['choose2'].scaleX = @library['choose2'].scaleY = 0.6
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 50, delay: 1}
-		TweenLite.from @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 100, delay: 1}
+		TweenLite.from @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 100, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@showPhrase()
@@ -90,10 +90,10 @@ class U1A4 extends Oda
 			@library['choose2'].removeEventListener 'click', @evaluateAnswer
 			setTimeout @finishEvaluation, 1 * 1000
 		else
-			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @finishEvaluation}
+			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.6, scaleY: 0.6, ease:Elastic.easeOut, onComplete: @finishEvaluation}
 			@warning()
 	finishEvaluation: =>
-		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @nextEvaluation}
+		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.6, scaleY: 0.6, ease:Elastic.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
@@ -128,9 +128,9 @@ class U1A4 extends Oda
 	blink: (obj, state = on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1
-		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
+		TweenMax.to obj, 0.5, {alpha:0.5, repeat:-1, yoyo:true}  if state
 	finish: ->
-		TweenLite.to @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 50, delay: 0.1}
-		TweenLite.to @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 0.1}
+		TweenLite.to @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 100, delay: 0.1}
+		TweenLite.to @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 100, delay: 0.1}
 		super
 	window.U1A4 = U1A4

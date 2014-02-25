@@ -71,7 +71,7 @@ class U2A4 extends Oda
 						{type: 'img', id: 'imageWax', x: 402, y: 520, align: 'mc'}
 						{type: 'img', id: 'imageYarn', x: 701, y: 422, align: 'mc'}
 						{type: 'img', id: 'imageYogurt', x: 279, y: 481, align: 'mc'}
-						{type: 'wcpt', id: 'wcpt1', x: 435, y: 310, margin: 10, uwidth: 30, font: '40px Quicksand', scolor: '#F00', align: 'tc', eval:'drop_03'}
+						{type: 'swct', id: 'wcpt1', x: 435, y: 310, margin: 10, uwidth: 30, font: '40px Quicksand', scolor: '#F00', align: 'tc', eval:'drop_03'}
 					]
 					groups: []
 				}

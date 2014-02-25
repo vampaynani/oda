@@ -95,29 +95,29 @@
     U1A3.prototype.setStage = function() {
       U1A3.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look at the schedule and click on the phrases to make sentences.', 40, 100);
-      this.insertBitmap('calendar', 'cal', 0, 130);
-      this.insertBitmap('iconGym', 'gym', 370, 216);
-      this.insertBitmap('iconArt', 'art', 194, 205);
-      this.insertBitmap('iconWatch', 'watch', 255, 255);
-      this.insertBitmap('iconRead', 'read', 315, 253);
-      this.insertBitmap('iconLunch', 'lunch', 445, 340);
+      this.insertInstructions('instructions', 'Look at the schedule and click on the phrases to make sentences.', 80, 200);
+      this.insertBitmap('calendar', 'cal', 0, 260);
+      this.insertBitmap('iconGym', 'gym', 740, 432);
+      this.insertBitmap('iconArt', 'art', 388, 410);
+      this.insertBitmap('iconWatch', 'watch', 510, 510);
+      this.insertBitmap('iconRead', 'read', 630, 506);
+      this.insertBitmap('iconLunch', 'lunch', 890, 680);
       this.intento = 0;
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 5, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 5, 0));
       return this.setGrupo1().setGrupo2().setGrupo3().setDropper().introEvaluation();
     };
 
     U1A3.prototype.setGrupo1 = function() {
       var group1, word1, word2, word3, word4, word5;
       group1 = new createjs.Container();
-      group1.x = 565;
-      group1.y = 70;
+      group1.x = 1130;
+      group1.y = 140;
       group1.name = 'group1';
       word1 = new ClickableText('w11', 'We read books', 1, 0, 0);
-      word2 = new ClickableText('w12', 'We do exercise', 2, 0, 25);
-      word3 = new ClickableText('w13', 'We paint', 3, 0, 50);
-      word4 = new ClickableText('w14', 'We eat lunch', 4, 0, 75);
-      word5 = new ClickableText('w15', 'We watch movies', 5, 0, 100);
+      word2 = new ClickableText('w12', 'We do exercise', 2, 0, 50);
+      word3 = new ClickableText('w13', 'We paint', 3, 0, 100);
+      word4 = new ClickableText('w14', 'We eat lunch', 4, 0, 150);
+      word5 = new ClickableText('w15', 'We watch movies', 5, 0, 200);
       group1.addChild(word1, word2, word3, word4, word5);
       this.addToLibrary(word1, word2, word3, word4, word5);
       this.addToMain(group1);
@@ -127,14 +127,14 @@
     U1A3.prototype.setGrupo2 = function() {
       var group2, word1, word2, word3, word4, word5;
       group2 = new createjs.Container();
-      group2.x = 565;
-      group2.y = 210;
+      group2.x = 1130;
+      group2.y = 420;
       group2.name = 'group2';
       word1 = new ClickableText('w21', 'in the gym', 1, 0, 0);
-      word2 = new ClickableText('w22', 'in the cafeteria', 2, 0, 25);
-      word3 = new ClickableText('w23', 'in the library', 3, 0, 50);
-      word4 = new ClickableText('w24', 'in the auditorium', 4, 0, 75);
-      word5 = new ClickableText('w25', 'in the art room', 5, 0, 100);
+      word2 = new ClickableText('w22', 'in the cafeteria', 2, 0, 50);
+      word3 = new ClickableText('w23', 'in the library', 3, 0, 100);
+      word4 = new ClickableText('w24', 'in the auditorium', 4, 0, 150);
+      word5 = new ClickableText('w25', 'in the art room', 5, 0, 200);
       group2.addChild(word1, word2, word3, word4, word5);
       this.addToLibrary(word1, word2, word3, word4, word5);
       this.addToMain(group2);
@@ -144,14 +144,14 @@
     U1A3.prototype.setGrupo3 = function() {
       var group3, word1, word2, word3, word4, word5;
       group3 = new createjs.Container();
-      group3.x = 565;
-      group3.y = 350;
+      group3.x = 1130;
+      group3.y = 700;
       group3.name = 'group3';
       word1 = new ClickableText('w31', 'on Monday and Friday.', 1, 0, 0);
-      word2 = new ClickableText('w32', 'on Tuesday and Thursday.', 2, 0, 25);
-      word3 = new ClickableText('w33', 'on Thursday and Friday.', 3, 0, 50);
-      word4 = new ClickableText('w34', 'on Tuesday and Friday.', 4, 0, 75);
-      word5 = new ClickableText('w35', 'on Monday and Wednesday.', 5, 0, 100);
+      word2 = new ClickableText('w32', 'on Tuesday and Thursday.', 2, 0, 50);
+      word3 = new ClickableText('w33', 'on Thursday and Friday.', 3, 0, 100);
+      word4 = new ClickableText('w34', 'on Tuesday and Friday.', 4, 0, 150);
+      word5 = new ClickableText('w35', 'on Monday and Wednesday.', 5, 0, 200);
       group3.addChild(word1, word2, word3, word4, word5);
       this.addToLibrary(word1, word2, word3, word4, word5);
       this.addToMain(group3);
@@ -161,12 +161,12 @@
     U1A3.prototype.setDropper = function() {
       var wc1, wc2, wc3, words;
       words = new createjs.Container();
-      words.x = 170;
-      words.y = stageSize.h - 100;
+      words.x = 340;
+      words.y = stageSize.h - 200;
       words.name = 'words';
-      wc1 = new WordContainer('wc1', '', '#FFF', '#ff983a', 0, 0, 275, 30);
-      wc2 = new WordContainer('wc2', '', '#FFF', '#ff983a', 290, 0, 275, 30);
-      wc3 = new WordContainer('wc3', '', '#FFF', '#ff983a', 100, 37, 355, 30);
+      wc1 = new WordContainer('wc1', '', '#FFF', '#ff983a', 0, 0, 550, 60);
+      wc2 = new WordContainer('wc2', '', '#FFF', '#ff983a', 580, 0, 550, 60);
+      wc3 = new WordContainer('wc3', '', '#FFF', '#ff983a', 200, 74, 710, 60);
       words.addChild(wc1, wc2, wc3);
       this.addToLibrary(wc1, wc2, wc3);
       this.addToMain(words);
@@ -189,22 +189,22 @@
       });
       TweenLite.from(this.library['group1'], 1, {
         alpha: 0,
-        y: this.library['group1'].y + 50,
+        y: this.library['group1'].y + 100,
         delay: 1
       });
       TweenLite.from(this.library['group2'], 1, {
         alpha: 0,
-        y: this.library['group2'].y + 50,
+        y: this.library['group2'].y + 100,
         delay: 1.1
       });
       TweenLite.from(this.library['group3'], 1, {
         alpha: 0,
-        y: this.library['group3'].y + 50,
+        y: this.library['group3'].y + 100,
         delay: 1.2
       });
       return TweenLite.from(this.library['words'], 1, {
         alpha: 0,
-        y: this.library['words'].y + 20,
+        y: this.library['words'].y + 40,
         delay: 1.5,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -343,22 +343,22 @@
       });
       TweenLite.to(this.library['group1'], 1, {
         alpha: 0,
-        y: this.library['group1'].y + 50,
+        y: this.library['group1'].y + 100,
         delay: 0.1
       });
       TweenLite.to(this.library['group2'], 1, {
         alpha: 0,
-        y: this.library['group2'].y + 50,
+        y: this.library['group2'].y + 100,
         delay: 0.1
       });
       TweenLite.to(this.library['group3'], 1, {
         alpha: 0,
-        y: this.library['group3'].y + 50,
+        y: this.library['group3'].y + 100,
         delay: 0.1
       });
       TweenLite.to(this.library['words'], 1, {
         alpha: 0,
-        y: this.library['words'].y + 20,
+        y: this.library['words'].y + 40,
         delay: 0.1
       });
       return U1A3.__super__.finish.apply(this, arguments);

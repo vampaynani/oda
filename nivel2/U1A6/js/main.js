@@ -459,24 +459,24 @@
       U1A6.__super__.setStage.apply(this, arguments);
       this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Look and drag the letters to complete the crossword puzzle.', 30, 100);
-      this.insertBitmap('saxophone', 'sax', 341, 123);
-      this.insertBitmap('saxophoneNo', 'sax_number', 346, 135);
-      this.insertBitmap('drum', 'drum', 99, 125);
-      this.insertBitmap('drumNo', 'drum_number', 69, 125);
-      this.insertBitmap('guitar', 'guitar', 99, 228);
-      this.insertBitmap('guitarNo', 'guitar_number', 163, 252);
-      this.insertBitmap('tambourine', 'tambourine', 192, 412);
-      this.insertBitmap('tambourineNo', 'tambourine_number', 197, 390);
-      this.insertBitmap('trumpet', 'trumpet', 353, 446);
-      this.insertBitmap('trumpetNo', 'trumpet_number', 322, 444);
-      this.insertBitmap('flute', 'flute', 546, 448);
-      this.insertBitmap('fluteNo', 'flute_number', 521, 443);
-      this.insertBitmap('bass', 'bass', 639, 249);
-      this.insertBitmap('bassNo', 'bass_number', 621, 279);
-      this.insertBitmap('piano', 'piano', 567, 77);
-      this.insertBitmap('pianoNo', 'piano_number', 567, 138);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 8, 0));
+      this.insertInstructions('instructions', 'Look and drag the letters to complete the crossword puzzle.', 60, 200);
+      this.insertBitmap('saxophone', 'sax', 682, 246);
+      this.insertBitmap('saxophoneNo', 'sax_number', 692, 270);
+      this.insertBitmap('drum', 'drum', 198, 250);
+      this.insertBitmap('drumNo', 'drum_number', 138, 250);
+      this.insertBitmap('guitar', 'guitar', 198, 456);
+      this.insertBitmap('guitarNo', 'guitar_number', 326, 504);
+      this.insertBitmap('tambourine', 'tambourine', 384, 824);
+      this.insertBitmap('tambourineNo', 'tambourine_number', 394, 780);
+      this.insertBitmap('trumpet', 'trumpet', 706, 892);
+      this.insertBitmap('trumpetNo', 'trumpet_number', 644, 888);
+      this.insertBitmap('flute', 'flute', 1092, 896);
+      this.insertBitmap('fluteNo', 'flute_number', 1042, 886);
+      this.insertBitmap('bass', 'bass', 1278, 498);
+      this.insertBitmap('bassNo', 'bass_number', 1242, 558);
+      this.insertBitmap('piano', 'piano', 1134, 154);
+      this.insertBitmap('pianoNo', 'piano_number', 1134, 276);
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 8, 0));
       this.intento = 0;
       this.createDroppers();
       this.createAlphabet();
@@ -486,15 +486,15 @@
     U1A6.prototype.createAlphabet = function() {
       var alphabet, i, letter, letterObj, _i, _ref;
       alphabet = new createjs.Container();
-      alphabet.x = 135;
-      alphabet.y = 510;
+      alphabet.x = 270;
+      alphabet.y = 1020;
       alphabet.name = 'alphabet';
       for (i = _i = 0, _ref = this.abc.length - 1; _i <= _ref; i = _i += 1) {
         letter = this.abc[i];
         if (i <= 13) {
-          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 41.5 * i, 0);
+          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 83 * i, 0);
         } else {
-          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 41.5 * i - 540, 34);
+          letterObj = new Draggable(letter, this.preload.getResult(letter + 'Letra'), letter, 83 * i - 1020, 68);
         }
         letterObj.onInitEvaluation();
         alphabet.addChild(letterObj);
@@ -506,33 +506,33 @@
     U1A6.prototype.createDroppers = function() {
       var crosswords, drop, i, t, _i, _j, _ref;
       crosswords = new createjs.Container();
-      crosswords.x = 305;
-      crosswords.y = 216;
+      crosswords.x = 610;
+      crosswords.y = 432;
       crosswords.name = 'crosswords';
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
-        drop = new WordContainer("h" + i, '', '#FFF', '#999', this.containers[i].x * 23, this.containers[i].y * 23, 23, 23);
-        drop.setRectShape('#FFF', '#999', 2, 23, 23);
+        drop = new WordContainer("h" + i, '', '#FFF', '#999', this.containers[i].x * 46, this.containers[i].y * 46, 46, 46);
+        drop.setRectShape('#FFF', '#999', 2, 46, 46);
         drop.text.y -= 3;
         drop.id = this.containers[i].id;
         this.addToLibrary(drop);
         crosswords.addChild(drop);
       }
       for (i = _j = 0; _j <= 7; i = ++_j) {
-        t = new createjs.Text(this.numbers[i].id, '14px Quicksand', '#333');
-        t.x = this.numbers[i].x * 23 + 6;
-        t.y = this.numbers[i].y * 23 + 4;
+        t = new createjs.Text(this.numbers[i].id, '28px Quicksand', '#333');
+        t.x = this.numbers[i].x * 46 + 12;
+        t.y = this.numbers[i].y * 46 + 8;
         crosswords.addChild(t);
       }
-      crosswords.cache(-23, -23, 276, 230);
+      crosswords.cache(-46, -46, 552, 480);
       return this.addToMain(crosswords);
     };
 
     U1A6.prototype.introEvaluation = function() {
       var i, _i, _ref;
       U1A6.__super__.introEvaluation.apply(this, arguments);
-      this.library['crosswords'].y = 216;
+      this.library['crosswords'].y = 432;
       this.library['crosswords'].alpha = 1;
-      this.library['alphabet'].y = 510;
+      this.library['alphabet'].y = 1020;
       this.library['alphabet'].alpha = 1;
       this.library['saxophone'].alpha = 1;
       this.library['saxophoneNo'].alpha = 1;
@@ -575,12 +575,12 @@
       }, 0.2);
       TweenLite.from(this.library['alphabet'], 1, {
         alpha: 0,
-        y: this.library['alphabet'].y + 50,
+        y: this.library['alphabet'].y + 100,
         delay: 1.5
       });
       return TweenLite.from(this.library['crosswords'], 1, {
         alpha: 0,
-        y: this.library['crosswords'].y + 50,
+        y: this.library['crosswords'].y + 100,
         delay: 1,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -590,7 +590,7 @@
     U1A6.prototype.initEvaluation = function(e) {
       var letter, _i, _len, _ref, _results;
       U1A6.__super__.initEvaluation.apply(this, arguments);
-      this.library.crosswords.cache(-23, -23, 276, 230);
+      this.library.crosswords.cache(-46, -46, 552, 480);
       _ref = this.abc;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -630,7 +630,7 @@
           this.evaluate('bass');
           this.evaluate('piano');
           this.evaluate('saxophone');
-          return this.library.crosswords.cache(-23, -23, 276, 230);
+          return this.library.crosswords.cache(-46, -46, 552, 480);
         } else {
           this.warning();
           return this.intento++;
@@ -681,14 +681,14 @@
       if (complete) {
         TweenLite.to(this.library['alphabet'], 0.5, {
           alpha: 0,
-          y: this.library['alphabet'].y - 100,
+          y: this.library['alphabet'].y - 200,
           ease: Quart.easeOut
         });
       }
       if (complete) {
         return TweenLite.to(this.library['crosswords'], 0.5, {
           alpha: 0,
-          y: this.library['crosswords'].y - 100,
+          y: this.library['crosswords'].y - 200,
           ease: Quart.easeOut,
           onComplete: this.finish
         });
