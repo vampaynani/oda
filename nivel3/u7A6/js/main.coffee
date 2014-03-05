@@ -1,14 +1,14 @@
+###
+
+NEW ODA
+
+###
 class U7A6 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
-			{id: 'repeatbtn', src: 'repeat-btn.png'}
-			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
-
 			{id:'1p1', src:'1p0001.png'}
 			{id:'1p2', src:'1p0002.png'}
 			{id:'2p1', src:'2p0001.png'}
@@ -32,162 +32,315 @@ class U7A6 extends Oda
 			{id:'line', src:'line.png'}
 			{id:'area', src:'prop_area.png'}
 			{id:'bg', src:'prop_bg.png'}
+			{src:'TU3_U7_A6_instructions.mp3', id:'s/instructions'}
 		]
-		sounds = [
-			{src:'sounds/boing.mp3', id:'boing'}
-			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU3_U7_A6_instructions.mp3', id:'instructions'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
-		]
-		@letters = [
-			['e', 's', 'c', 'a', 'l', 'c', 'u', 'l', 'a', 't', 'o', 'r']
-			['m', 'b', 'a', 'm', 'e', 'r', 'c', 't', 'o', 'r', 'w', 'a']
-			['b', 'a', 'm', 'b', 'o', 'o', 'o', 'c', 'g', 'g', 'd', 'c']
-			['a', 'b', 'l', 'a', 'r', 'c', 'm', 'o', 'm', 'u', 'e', 'a']
-			['c', 'o', 'r', 'm', 'a', 'r', 't', 'm', 'e', 'n', 'r', 'l']
-			['l', 'e', 'c', 'e', 'v', 'e', 'r', 'p', 'e', 'p', 'a', 'n']
-			['e', 'd', 'u', 't', 'c', 'h', 'e', 'a', 'f', 'o', 'k', 'o']
-			['v', 'e', 'r', 'i', 'a', 'g', 'l', 's', 'r', 'w', 'a', 'm']
-			['e', 's', 't', 'a', 'm', 'o', 'u', 's', 'u', 'd', 'n', 'a']
-			['r', 'h', 'i', 'b', 'e', 'r', 'n', 'a', 't', 'e', 'o', 'd']
-			['c', 'o', 'p', 's', 'l', 'e', 'o', 'd', 'i', 'r', 'e', 'e']
-			['e', 'c', 'h', 'o', 'p', 's', 't', 'i', 'c', 'k', 's', 't']	
-		]
-		@answers = [
-			{q: 'What do you use to do sums in math class?', t:'A', id: 'calculator', line: ['l11','l12','l13','l14','l15','l16','l17','l18','l19'], x:110, y:475 }
-			{q:'Who invented the telescope?', t:'The' , id: 'Dutch', line: ['l10','l20','l30','l40','l50','l60','l70','l80','l90'], x:202, y:475 }
-			{q: 'What plant do pandas mainly eat?', t:'', id: 'bamboo', line: ['l91','l92','l93','l94','l95','l96','l97','l98','l99'], x:298, y:475 }
-			{q: "What's another word for 'intelligent'?", t:'', id: 'clever', line: ['l0','l1','l2','l3','l4','l5','l6','l7','l8','l9'], x:393, y:475 }
-			{q: 'What instrument shows north, south, east and west?', t:'A', id: 'compass', line: ['l42','l43','l44','l45','l46','l47','l48'], x:131, y:511 }
-			{q: 'What do you call a person with no permanent home?', t:'A', id: 'nomad', line: ['l61','l62','l63','l64','l65','l66','l67'], x:227, y:511 }
-			{q: 'What do Chinese people use to eat food?', t:'', id: 'chopsticks', line: ['l29','l39','l49','l59','l69','l79'], x:321, y:511 }
-			{q: 'How did people travel on the Silk Road?', t:'By', id: 'camel', line: ['l29','l39','l49','l59','l69','l79'], x:152, y:543 }
-			{q: 'What do most bears do during the winter?', t:'They', id: 'hibernate', line: ['l29','l39','l49','l59','l69','l79'], x:243, y:543 }
-			{q: 'What are fireworks made from?', t:'', id: 'gunpowder', line: ['l29','l39','l49','l59','l69','l79'], x:355, y:543 }
-		]
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Click on the numbers, unscramble the answers and find them in the word search.', 40, 100
-		@insertBitmap 'bg', 'bg', 840, 380, 'tr'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
-		@setQuestions().setSopa().introEvaluation()
-	setQuestions:  ->
-		preguntas = new createjs.Container()
-		preguntas.x = 40
-		preguntas.y = 173
-
-		area = @createBitmap 'area', 'area', 0, 42
-		preguntas.addChild area
-
-		for i in [1..5]
-			numero = @createSprite "numero#{i}", ["#{i}p1","#{i}p2"],null, (i - 1) * 63, 0 
-			numerob = @createSprite "numerob#{i}", ["#{i + 5}p1","#{i + 5}p2"],null, (i - 1) * 63, 225 - i
-
-			if i is 1 
-				numero.x = numero.x + 17
-				numerob.x = numerob.x + 17
-			preguntas.addChild numero, numerob
-		for i in [1..@answers.length]
-			respuesta = new createjs.Container()
-			respuesta.x = @answers[i - 1].x + 30
-			respuesta.y = @answers[i - 1].y + 10
-
-			text = new createjs.Text @answers[i - 1].id, '16px Quicksand', '#333333'
-			text.textAlign = 'center'
-			tache = @createBitmap 'line', 'line', 0, 5, 'tc'
-
-			respuesta.addChild text, tache
-			@addToMain respuesta
-		@addToMain preguntas
-		@
-	setSopa: ->
-		j = 0
-		h = @letters.length
-		sopa = new createjs.Container()
-		sopa.x = 420
-		sopa.y = 148
-		sopa.name = 'sopa'
-		sopa.visible = off
-		shapesContainer = new createjs.Container()
-		shapesContainer.name = 'shapesContainer'
-		sopa.addChild shapesContainer
-		@addToLibrary shapesContainer
-		llength = @letters.length - 1
-		for h in [0..llength] by 1
-			lhlength = @letters[h].length - 1
-			for i in [0..lhlength] by 1
-				letra = new ClickableText "l#{j}", @letters[h][i], "l#{j}", i * 26, h * 26
-				letra.h = h
-				letra.i = i
-				letra.text.font = '20px Quicksand'
-				letra.text.textAlign = 'center'
-				sopa.addChild letra
-				@addToLibrary letra
-				j++
-		@addToMain sopa
-		@
-	introEvaluation: ->
-		super
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
-	
- 	initEvaluation: (e) =>
-		super
-		@library.sopa.visible = on
-		#@library.sopa.cache -26,-26,286,286
-		TweenLite.from @library['sopa'], 1, {alpha :0, y: @library['sopa'].y - 20}
-		@mainContainer.addEventListener 'mousedown', @evaluateAnswer
-	evaluateAnswer: (e) =>
-		answer = Array()
-		shape = new createjs.Shape()
-		pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
-		oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
-		i = 0
-		h = 0
-		@library.shapesContainer.addChild shape
-		if oup
-			clktxt = oup.parent
-			if clktxt instanceof ClickableText
-				answer.push clktxt.index
-				pos = x: clktxt.i * 26 - 13, y: clktxt.h * 26, i: clktxt.i, h: clktxt.h
-				shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,26,26,5)
-				#@library.sopa.cache -26,-26,286,286
-				e.addEventListener 'mousemove', (ev) =>
-					pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
-					oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
-					if oup
-						clktxt = oup.parent
-						if clktxt instanceof ClickableText
-							i = if Math.abs(clktxt.i - pos.i + 1) is 0 then 1 else Math.abs(clktxt.i - pos.i + 1)
-							h = if Math.abs(clktxt.h - pos.h + 1) is 0 then 1 else Math.abs(clktxt.h - pos.h + 1)
-							npos = w: i * 26, h: h * 26
-							answer.push clktxt.index
-							shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,npos.w,npos.h,5)
-							#@library.sopa.cache -26,-26,286,286
-				e.addEventListener 'mouseup', (ev) =>
-					find = off
-					answer = Array()
-					for i in [0..99] by 1
-						if shape.hitTest @library["l#{i}"].x, @library["l#{i}"].y + 13 
-							answer.push @library["l#{i}"].name
-					for obj in @answers
-						if obj.line.toString() is answer.toString()
-							TweenLite.to @library[obj.id], 0.3, {y:@library[obj.id].y - 100, alpha:0, onComplete: @finishEvaluation}
-							find = on
-					@library.shapesContainer.removeChild shape if not find
-					#@library.sopa.cache -26,-26,286,286
-	finishEvaluation: =>
-		createjs.Sound.play 'good'
-		@nextEvaluation()
-	nextEvaluation: =>
-		@index++
-		@library.score.plusOne()
-		if @index >= @answers.length
-			@finish()
-	finish: ->
-		@mainContainer.removeEventListener 'mousedown', @evaluateAnswer
-		TweenLite.to @library['sopa'], 1, {y:@library['sopa'].y + 100, alpha:0}
-		super
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Click on the numbers, unscramble the answers and find them in the word search.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: [
+							[
+								{
+									name:'wsch1'
+									opts:{
+										matrix:[
+											['e', 's', 'c', 'a', 'l', 'c', 'u', 'l', 'a', 't', 'o', 'r']
+											['m', 'b', 'a', 'm', 'e', 'r', 'c', 't', 'o', 'r', 'w', 'a']
+											['b', 'a', 'm', 'b', 'o', 'o', 'o', 'c', 'g', 'g', 'd', 'c']
+											['a', 'b', 'l', 'a', 'r', 'c', 'm', 'o', 'm', 'u', 'e', 'a']
+											['c', 'o', 'r', 'm', 'a', 'r', 't', 'm', 'e', 'n', 'r', 'l']
+											['l', 'e', 'c', 'e', 'v', 'e', 'r', 'p', 'e', 'p', 'a', 'n']
+											['e', 'd', 'u', 't', 'c', 'h', 'e', 'a', 'f', 'o', 'k', 'o']
+											['v', 'e', 'r', 'i', 'a', 'g', 'l', 's', 'r', 'w', 'a', 'm']
+											['e', 's', 't', 'a', 'm', 'o', 'u', 's', 'u', 'd', 'n', 'a']
+											['r', 'h', 'i', 'b', 'e', 'r', 'n', 'a', 't', 'e', 'o', 'd']
+											['c', 'o', 'p', 's', 'l', 'e', 'o', 'd', 'i', 'r', 'e', 'e']
+											['e', 'c', 'h', 'o', 'p', 's', 't', 'i', 'c', 'k', 's', 't']
+										]
+										words:[
+											{
+												target:'ln1', fx:'fadeIn', enabled:false, complete: false
+												coords:['1_6','2_6','3_6','4_6','5_6']
+											}
+											{
+												target:'ln2', fx:'fadeIn', enabled:false, complete: false
+												coords:['11_5','11_6','11_7','11_8','11_9']
+											}
+											{
+												target:'ln3', fx:'fadeIn', enabled:false, complete: false
+												coords:['7_2','7_3','7_4','7_5','7_6','7_7','7_8']
+											}
+											{
+												target:'ln4', fx:'fadeIn', enabled:false, complete: false
+												coords:['1_11','2_11','3_11','4_11','5_11','6_11','7_11','8_11','9_11','10_11']
+											}
+											{
+												target:'ln5', fx:'fadeIn', enabled:false, complete: false
+												coords:['4_6','4_7','4_8','4_9','4_10']
+											}
+											{
+												target:'ln6', fx:'fadeIn', enabled:true, complete: false
+												coords:['0_2','1_2','2_2','3_2','4_2','5_2']
+											}
+											{
+												target:'ln7', fx:'fadeIn', enabled:false, complete: false
+												coords:['1_9','2_9','3_9','4_9','5_9','6_9','7_9','8_9','9_9']
+											}
+											{
+												target:'ln8', fx:'fadeIn', enabled:false, complete: false
+												coords:['9_2','9_3','9_4','9_5','9_6','9_7','9_8','9_9','9_10']
+											}
+											{
+												target:'ln9', fx:'fadeIn', enabled:false, complete: false
+												coords:['0_4','0_5','0_6','0_7','0_8','0_9']
+											}
+											{
+												target:'ln10', fx:'fadeIn', enabled:false, complete: false
+												coords:['2_0','3_0','4_0','5_0','6_0','7_0','8_0','9_0','10_0','11_0']
+											}
+										]
+									}
+								}
+								{name:'swct1', opts:{prev:'The', word:'Dutch', target: 'dutch', fx:'fadeIn'}}
+								{name:'swct2', opts:{prev:'A', word:'nomad', target: 'nomad', fx:'fadeIn'}}
+								{name:'swct3', opts:{prev:'A', word:'compass', target: 'compass', fx:'fadeIn'}}
+								{name:'swct4', opts:{word:'chopsticks', target: 'chopsticks', fx:'fadeIn'}}
+								{name:'swct5', opts:{prev:'By', word:'camel', target: 'camel', fx:'fadeIn'}}
+								{name:'swct6', opts:{word:'bamboo', target: 'bamboo', fx:'fadeIn'}}
+								{name:'swct7', opts:{prev:'They', word:'hibernate', target: 'hibernate', fx:'fadeIn'}}
+								{name:'swct8', opts:{word:'gunpowder', target: 'gunpowder', fx:'fadeIn'}}
+								{name:'swct9', opts:{word:'clever', target: 'clever', fx:'fadeIn'}}
+								{name:'swct10', opts:{prev:'A', word:'calculator', target: 'calculator', fx:'fadeIn'}}
+							]
+						]
+						type: 'steps'
+					}
+					containers:[
+						{type: 'img', id: 'bg', x: 840, y: 380, align:'tr'}
+						{type: 'img', id: 'area', x: 40, y: 215}
+						{
+							type: 'btn', id: 'btn1', x: 77, y: 190, index: 1, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '1p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '1p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn2', x: 140, y: 190, index: 2, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '2p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '2p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn3', x: 203, y: 190, index: 3, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '3p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '3p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn4', x: 266, y: 190, index: 4, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '4p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '4p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn5', x: 329, y: 190, index: 5, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '5p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '5p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn6', x: 77, y: 425, index: 6, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '6p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '6p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn7', x: 140, y: 425, index: 7, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '7p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '7p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn8', x: 203, y: 425, index: 8, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '8p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '8p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn9', x: 266, y: 425, index: 9, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '9p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '9p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{
+							type: 'btn', id: 'btn10', x: 329, y: 425, index: 10, target: ['grp1','grp2'], eval: 'show_choose_01'
+							states: [
+								{img: {name: '10p1', x: 0, y: 0, align: 'mc'}}
+								{img: {name: '10p2', x: 0, y: 0, align: 'mc'}}
+							]
+						}
+						{type: 'txt', id: 'txt1', text:'Who invented the telescope?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt2', text:'What do you call a person with no permanent home?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt3', text:'What instrument shows north, south, east and west?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt4', text:'What do Chinese people use to eat food?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt5', text:'How did people travel on the Silk Road?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt6', text:'What plant do pandas mainly eat?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt7', text:'What do most bears do during the winter?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt8', text:'What are fireworks made from?', x: 200, y: 235, font:'22px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt9', text:'What\'s another word for \'intelligent\'?', x: 200, y: 235, align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'txt10', text:'What do you use to do sums in math class?', x: 200, y: 235, align: 'center', lineWidth: 250}
+						{type: 'wsch', id: 'wsch1', x: 420, y: 148, font: '20px Quicksand', uwidth: 25, uheight: 25, radius: 12.5, shcolor:'#F00', shape:'circle'}
+						{
+							type: 'swct', id: 'swct1', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 0}
+						}
+						{
+							type: 'swct', id: 'swct2', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 1}
+						}
+						{
+							type: 'swct', id: 'swct3', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 2}
+						}
+						{
+							type: 'swct', id: 'swct4', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 3}
+						}
+						{
+							type: 'swct', id: 'swct5', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 4}
+						}
+						{
+							type: 'swct', id: 'swct6', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 5}
+						}
+						{
+							type: 'swct', id: 'swct7', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 6}
+						}
+						{
+							type: 'swct', id: 'swct8', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 7}
+						}
+						{
+							type: 'swct', id: 'swct9', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 8}
+						}
+						{
+							type: 'swct', id: 'swct10', x: 200, y: 330, margin: 5, uwidth: 20, font: '22px Quicksand', scolor: '#0098d7', bcolor: 'rgba(255,255,255,0.1)', align: 'tc', eval:'word_drop_01'
+							oncomplete: {function: 'word_complete_01', target:'wsch1', index: 9}
+						}
+						{type: 'txt', id: 'dutch', text:'Dutch', x: 170, y: 465, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'bamboo', text:'bamboo', x: 300, y: 465, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'clever', text:'clever', x: 430, y: 465, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'compass', text:'compass', x: 160, y: 495, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'nomad', text:'nomad', x: 290, y: 495, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'chopsticks', text:'chopsticks', x: 420, y: 495, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'camel', text:'camel', x: 150, y: 525, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'hibernate', text:'hibernate', x: 280, y: 525, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'gunpowder', text:'gunpowder', x: 410, y: 525, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'txt', id: 'calculator', text:'calculator', x: 270, y: 555, font:'18px Quicksand', align: 'center', lineWidth: 250}
+						{type: 'img', name:'ln1', id: 'line', x: 170, y: 475, align:'mc'}
+						{type: 'img', name:'ln2', id: 'line', x: 290, y: 505, align:'mc'}
+						{type: 'img', name:'ln3', id: 'line', x: 430, y: 475, align:'mc'}
+						{type: 'img', name:'ln4', id: 'line', x: 160, y: 505, align:'mc'}
+						{type: 'img', name:'ln5', id: 'line', x: 290, y: 505, align:'mc'}
+						{type: 'img', name:'ln6', id: 'line', x: 420, y: 505, align:'mc'}
+						{type: 'img', name:'ln7', id: 'line', x: 150, y: 535, align:'mc'}
+						{type: 'img', name:'ln8', id: 'line', x: 280, y: 535, align:'mc'}
+						{type: 'img', name:'ln9', id: 'line', x: 410, y: 535, align:'mc'}
+						{type: 'img', name:'ln10', id: 'line', x: 270, y: 565, align:'mc'}
+					]	
+					groups: [
+						{
+							type: 'grp', id: 'grp_lines', invisible: true
+							group:[
+								'ln1'
+								'ln2'
+								'ln3'
+								'ln4'
+								'ln5'
+								'ln6'
+								'ln7'
+								'ln8'
+								'ln9'
+								'ln10'
+							]
+						}
+						{
+							type: 'grp', id: 'grp_words', invisible: true
+							group:[
+								'dutch'
+								'bamboo'
+								'clever'
+								'compass'
+								'nomad'
+								'chopsticks'
+								'camel'
+								'hibernate'
+								'gunpowder'
+								'calculator'
+							]
+						}
+						{
+							type: 'grp', id: 'grp0'
+							group:[
+								'btn1'
+								'btn2'
+								'btn3'
+								'btn4'
+								'btn5'
+								'btn6'
+								'btn7'
+								'btn8'
+								'btn9'
+								'btn10'
+							]
+						}
+						{
+							type: 'grp', id: 'grp1', invisible: true
+							group: [
+								'swct1'
+								'swct2'
+								'swct3'
+								'swct4'
+								'swct5'
+								'swct6'
+								'swct7'
+								'swct8'
+								'swct9'
+								'swct10'
+							]
+						}
+						{
+							type: 'grp', id: 'grp2', invisible: true
+							group: [
+								'txt1'
+								'txt2'
+								'txt3'
+								'txt4'
+								'txt5'
+								'txt6'
+								'txt7'
+								'txt8'
+								'txt9'
+								'txt10'
+							]
+						}
+					]
+				}
+			]
+		super()
 	window.U7A6 = U7A6

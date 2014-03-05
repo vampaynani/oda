@@ -77,7 +77,7 @@ class U2A1 extends Oda
 						type: 'steps'
 					}
 					containers:[
-						{type: 'img', id: 'propmarket', x: 400, y: 235, align: 'mc'}
+						{type: 'img', id: 'propmarket', x: 400, y: 245, align: 'mc'}
 						{type: 'img', id: 'propstrawberryJelly', x: 398, y: 172, align: 'mc'}
 						{type: 'img', id: 'propPeanutButter', x: 555, y: 186, align: 'mc'}
 						{type: 'img', id: 'propcorn', x: 311, y: 233, align: 'mc'}

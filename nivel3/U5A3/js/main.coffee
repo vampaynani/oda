@@ -137,11 +137,11 @@ class U5A3 extends Oda
 						{type: 'img', id: 'prof', x: 550, y: 300, align: 'mc'}
 						{
 							type: 'btn', id: 'btn1', x: 240, y: 222, index: 1, target: 'global', eval: 'global_01'
-							states: [{img: {name: 'electricity1', align: 'mc', x: 0, y: 0}}]
+							states: [{img: null}]
 						}
 						{
 							type: 'btn', id: 'btn2', x: 240, y: 432, index: 2, target: 'global', eval: 'global_01'
-							states: [{img: {name: 'electricity2', align: 'mc', x: 0, y: 0}}]
+							states: [{img: null}]
 						}
 						{
 							type: 'btn', id: 'repeat', x: 570, y: 440, align: 'mc', isRepeat: true

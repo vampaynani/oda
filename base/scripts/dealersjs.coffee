@@ -85,6 +85,11 @@ window.d2oda.actions ?= class Actions
 		else 
 			@y += 20
 			TweenLite.to @, 0.5, {alpha: 1, y: @y - 20}
+	@pulse = (state=on) ->
+		TweenMax.killTweensOf @
+		TweenLite.killTweensOf @
+		@alpha = 1
+		TweenMax.to @, 0.5, {scaleX: 0.8, scaleY: 0.8, repeat: -1, yoyo: true}  if state
 	@blink = (state=on) ->
 		TweenMax.killTweensOf @
 		TweenLite.killTweensOf @
@@ -201,17 +206,29 @@ window.d2oda.evaluator ?= class Evaluator
 			when 'clon_01' then @evaluateClon01(dispatcher, target)
 			when 'switch_01' then @evaluateSwitch01(dispatcher, target)
 			when 'choose_01' then @evaluateChoose01(dispatcher)
+			when 'show_choose_01' then @evaluateShowChoose01(dispatcher, target)
 			when 'hangman_click_01' then @evaluateHangmanClick01(dispatcher, target)
 			when 'show_click_01' then @evaluateShowClick01(dispatcher, target)
 			when 'phrase_drop_01' then @evaluatePhraseDrop01(dispatcher, target)
+			when 'phrase_drop_02' then @evaluatePhraseDrop02(dispatcher, target)
+			when 'phrase_drop_03' then @evaluatePhraseDrop03(dispatcher, target)
+			when 'sprite_drop_01' then @evaluateSpriteDrop01(dispatcher, target)
+			when 'word_drop_01' then @evaluateWordDrop01(dispatcher, target)
+			when 'word_complete_01' then @evaluateWordComplete01(dispatcher, target)
 	@evaluateRepeat = () ->
 		createjs.Sound.stop()
 		createjs.Sound.play lib.scene.snd
 	@evaluateFinish = (target) ->
-		for drop in lib[target].droptargets
-			drop.showEvaluation()
-			if drop.complete
-				lib.score.plusOne()
+		if lib[target].droptargets
+			for drop in lib[target].droptargets
+				drop.showEvaluation()
+				if drop.complete
+					lib.score.plusOne()
+		else if lib[target].group
+			for tgt in lib[target].group
+				console.log lib[tgt].complete
+				if lib[tgt].complete
+					lib.score.plusOne()
 		lib.scene.success false
 	@evaluateGlobal01 = (dispatcher) ->
 		if lib[dispatcher].index is @success
@@ -247,6 +264,22 @@ window.d2oda.evaluator ?= class Evaluator
 		if complete then lib.scene.success()
 	@evaluateShowClick01 = (dispatcher, target) ->
 		lib[target].update {type:'fadeIn', target: lib[dispatcher].index}
+	@evaluateWordDrop01 = (dispatcher, target) ->
+		if lib[dispatcher].index is target.success
+			target.complete = true
+			target.update()
+			lib[dispatcher].afterSuccess()
+			target.parent.currentTarget++
+			if target.parent.currentTarget is target.parent.droptargets.length
+				lib[target.parent.target][target.parent.fx]()
+				lib.scene.success()
+				target.parent.onComplete()
+		else
+			lib[dispatcher].afterFail()
+			lib.scene.fail()
+	@evaluateWordComplete01 = (dispatcher, target) ->
+		index = lib[dispatcher].oncomplete.index
+		lib[target].words[index].enabled = on
 	@evaluateClick01 = (dispatcher, target) ->
 		answer = lib[dispatcher].index
 		droptargets = lib[target].droptargets
@@ -359,6 +392,37 @@ window.d2oda.evaluator ?= class Evaluator
 		else
 			lib[dispatcher].afterFail()
 			lib.scene.fail()
+	@evaluatePhraseDrop02 = (dispatcher, target) ->
+		if lib[dispatcher].index is target.success
+			target.complete = true
+			target.update()
+			lib[dispatcher].afterSuccess()
+			target.parent.currentTarget++
+			if target.parent.currentTarget is target.parent.droptargets.length
+				lib.scene.success()
+		else
+			lib[dispatcher].afterFail()
+			lib.scene.fail()
+	@evaluatePhraseDrop03 = (dispatcher, target) ->
+		if lib[dispatcher].index is target.success
+			target.complete = true
+			target.update()
+			lib[dispatcher].afterSuccess()
+			target.parent.currentTarget++
+			if target.parent.currentTarget is target.parent.droptargets.length
+				target.parent.fadeOut()
+				lib.scene.success()
+		else
+			lib[dispatcher].afterFail()
+			lib.scene.fail()
+	@evaluateSpriteDrop01 = (dispatcher, target) ->
+		if lib[dispatcher].index is target.parent.success
+			target.parent.nextStep()
+			lib[dispatcher].afterSuccess()
+			lib.scene.success true, false
+		else
+			lib[dispatcher].afterFail()
+			lib.scene.fail()
 	@evaluateDrop04 = (dispatcher, target) ->
 		if lib[dispatcher].index is target.success
 			target.update {complete:true}
@@ -379,6 +443,13 @@ window.d2oda.evaluator ?= class Evaluator
 			lib.scene.success()
 		else
 			lib.scene.fail()
+	@evaluateShowChoose01 = (dispatcher, target) ->
+		console.log dispatcher, target
+		index  = lib[dispatcher].index - 1
+		if d2oda.utilities.isArray(target)
+			for t in target
+				i = lib[t].group[index]
+				g = lib[t].update {type:'fadeIn', target:i}
 	@evaluateChoose01 = (dispatcher) ->
 		lib.scene.choose = lib[dispatcher].index
 		lib.scene.success false
@@ -401,6 +472,12 @@ Array::unique = ->
 	output = {}
 	output[@[key]] = @[key] for key in [0...@length]
 	value for key, value of output
+Array::compare = (array) ->
+	i = @length
+	if i isnt array.length then return false
+	while i-- 
+		if @[i] isnt array[i] then return false
+	return true;
 Array::merge = (other) -> Array::push.apply @, other
 
 ###
@@ -459,7 +536,6 @@ class Oda
 			inst = lib.instructions.playSound 's/instructions'
 			inst.addEventListener 'complete', @initGame
 	initMobileInstructions: (e) =>
-		createjs.Sound.stop()
 		inst = lib.instructions.playSound 's/instructions'
 		e.target.removeEventListener 'click', @initMobileInstructions
 		inst.addEventListener 'complete', @initGame
@@ -469,6 +545,7 @@ class Oda
 	initGame: =>
 		lib.game.start()
 	endGame: =>
+		createjs.Sound.stop()
 		lib.mainContainer.insertBitmap 'play_again', 'pa', d2oda.stage.w / 2, d2oda.stage.h / 2, 'mc'
 		lib.play_again.addEventListener 'click', @handlePlayAgain
 		TweenLite.from lib.play_again, 0.5, { alpha: 0, y: lib.play_again.y - 20 }
@@ -484,7 +561,7 @@ class Oda
 		createjs.Ticker.addListener @
 		createjs.Ticker.setFPS 60
 		createjs.Touch.enable @stage
-		@stage.enableMouseOver()
+		@stage.enableMouseOver(50)
 		@stage.addChild lib.mainContainer
 		lib.preloader.mainContainer = lib.mainContainer
 		@
@@ -641,12 +718,12 @@ class ComponentGroup
 			@setInvisible true, false
 	update: (opts) ->
 		switch opts.type
-			when 'blink'
+			when 'blinkAll'
 				for item in @group
-					TweenMax.killTweensOf lib[item]
-					TweenLite.killTweensOf lib[item]
-					lib[item].alpha = 1 if lib[item].alpha isnt 0
-				lib[opts.target].blink()
+					lib[item].blink()
+			when 'pulseAll'
+				for item in @group
+					lib[item].pulse()
 			when 'fadeIn'
 				for item in @group
 					TweenMax.killTweensOf lib[item]
@@ -761,6 +838,7 @@ class Instructions extends Component
 		@x = opts.x
 		@y = opts.y
 		@states = opts.states
+		@playing = false
 		@currentState = 0
 		triangle = new createjs.Shape()
 		triangle.graphics.beginFill('#bcd748').moveTo(0,0).lineTo(8,5).lineTo(0,10)
@@ -771,16 +849,17 @@ class Instructions extends Component
 		TweenLite.from @, 0.5, {alpha: 0, x: @x - 20}
 	playSound: ->
 		if not @states[@currentState].played
+			@playing = true
 			@states[@currentState].played = true
-			createjs.Sound.play @states[@currentState].sound
+			snd = createjs.Sound.play @states[@currentState].sound
+			snd.addEventListener 'complete', @instructionsComplete
+			snd
 	next: =>
 		@currentState++
 		if @states.length > 1 and @currentState < @states.length
-			@playSound()
 			@label.text = @states[@currentState].text
 			TweenLite.from @, 0.5, {alpha: 0, x: @x - 20}
-		else
-			@dispatchEvent {type:'complete'}
+			@playSound()
 	prev: =>
 		@currentState--
 		if @currentState >= 0
@@ -788,7 +867,54 @@ class Instructions extends Component
 			TweenLite.from @, 0.5, {alpha: 0, x: @x - 20}
 		else
 			@currentState++
+	instructionsComplete: =>
+		@playing = false
+		@dispatchEvent {type:'complete'}
 	window.Instructions = Instructions
+
+class WriteContainer extends Component
+	WriteContainer.prototype = new createjs.Container()
+	WriteContainer::Container_initialize = WriteContainer::initialize
+	constructor: (opts) ->
+		@initialize opts
+	WriteContainer::initialize = (opts) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		Module.extend @, d2oda.actions
+		@x = opts.x
+		@y = opts.y
+		@name = opts.name ? opts.id
+		font = opts.font ? 'Arial 20px'
+		fcolor = opts.color ? '#333'
+		@stroke = opts.stroke ? 3
+		@scolor = opts.scolor ? '#333'
+		@bcolor = opts.bcolor ? '#FFF'
+		align = opts.align ? ''
+		@mainText = @createText '#{@name}_main', '', font, fcolor, 0, 0, align
+		@pastText = @createText '#{@name}_past', '', font, fcolor, 0, @mainText.getMeasuredHeight() + opts.margin, align
+		@pastText.text = ''
+		@back = new createjs.Shape()
+		@back.y = @mainText.getMeasuredHeight() + opts.margin
+		@add @back, false
+		@add @pastText, false
+		@add @mainText, false
+		@addEventListener 'click', @openPrompt
+	openPrompt: =>
+		verb = prompt "Enter the past simple form of #{@mainText.text}"
+		@pastText.text = verb
+		if verb is @success
+			@complete = true
+	update: (opts) ->
+		@pastText.text = opts.success
+		@mainText.text = opts.text
+		@success = opts.success
+		@complete = false
+		@back.graphics.c().f(@bcolor).dr(0, 0, @pastText.getMeasuredWidth(), @pastText.getMeasuredHeight()).ss(@stroke).s(@scolor).mt(0, @pastText.getMeasuredHeight()).lt(@pastText.getMeasuredWidth(), @pastText.getMeasuredHeight())
+		@back.x = -@pastText.getMeasuredWidth() / 2
+		@pastText.text = ''
+		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
+	isComplete: ->
+		true
 
 class ImageContainer extends Component
 	ImageContainer.prototype = new createjs.Container()
@@ -816,6 +942,78 @@ class ImageContainer extends Component
 		@alpha = 1
 		true
 
+class TextContainer extends Component
+	TextContainer.prototype = new createjs.Container()
+	TextContainer::Container_initialize = TextContainer::initialize
+	constructor: (opts) ->
+		@initialize opts
+	TextContainer::initialize = (opts) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		Module.extend @, d2oda.actions
+		font = opts.font ? '20px Arial'
+		fcolor = opts.fcolor ? '#333'
+		align = opts.align ? ''
+		@name = opts.name ? opts.id
+		@x = opts.x
+		@y = opts.y
+		@scaleX = opts.scale ? 1
+		@scaleY = opts.scale ? 1
+		t = @createText @name, opts.text, font, fcolor, 0, 0, align
+		if opts.lineWidth then t.lineWidth = opts.lineWidth
+		@width = t.getMeasuredWidth()
+		@height = t.getMeasuredHeight()
+		@mouseEnabled = true
+		@add t, false
+	isComplete: ->
+		TweenLite.killTweensOf @
+		TweenMax.killTweensOf @
+		@alpha = 1
+		true
+
+class SpriteContainer extends Component
+	SpriteContainer.prototype = new createjs.Container()
+	SpriteContainer::Container_initialize = SpriteContainer::initialize
+	constructor: (opts) ->
+		@initialize opts
+	SpriteContainer::initialize = (opts) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		Module.extend @, d2oda.actions
+		align = opts.align ? ''
+		@name = opts.name ? opts.id
+		@x = opts.x
+		@y = opts.y
+		@scaleX = opts.scale ? 1
+		@scaleY = opts.scale ? 1
+		@sprite = @createSprite @name, opts.imgs, opts.frames, 0, 0, align
+		@width = @sprite.width
+		@height = @sprite.height
+		@mouseEnabled = true
+		@droptargets = new Array()
+		@observer = new ComponentObserver()
+		@add @sprite, false
+	prevFrame: ->
+		@sprite.currentFrame--
+	nextFrame: ->
+		@sprite.currentFrame++
+	nextStep: ->
+		if @storyboard.length > 0 
+			@sprite.gotoAndStop @storyboard[@sprite.currentFrame]
+			TweenLite.from @, 0.3, {alpha: 0}
+	goto: (frame) ->
+		@sprite.gotoAndStop frame
+	update:(opts) ->
+		@droptargets = [@sprite]
+		@success = opts.success
+		@storyboard = opts.storyboard
+		@observer.notify ComponentObserver.UPDATED
+	isComplete: ->
+		TweenLite.killTweensOf @
+		TweenMax.killTweensOf @
+		@alpha = 1
+		@sprite.currentFrame > 0
+
 class DragContainer extends Component
 	DragContainer.prototype = new createjs.Container()
 	DragContainer::Container_initialize = DragContainer::initialize
@@ -825,13 +1023,13 @@ class DragContainer extends Component
 		@Container_initialize()
 		Module.extend @, d2oda.methods
 		Module.extend @, d2oda.actions
+		Module.extend @, d2oda.utilities
 		@name = opts.name ? opts.id
 		@x = opts.x
 		@y = opts.y
 		@pos = {x: @x, y: @y}
 		@index = opts.index
 		@eval = opts.eval
-		@target = lib[opts.target]
 		@droptargets = new Array()
 		b = @createBitmap @name, opts.id, 0, 0
 		@bmpname = opts.name
@@ -850,11 +1048,25 @@ class DragContainer extends Component
 			when 'return' then @afterFail = @returnToPlace
 			when 'origin' then @afterFail = @setInOrigin
 		@add b, false
-		
-		if @target then @target.observer.subscribe ComponentObserver.UPDATED, @update
+		if @isArray opts.target 
+			@target = opts.target
+		else
+			@target = lib[opts.target]
+		if @target 
+			if @isArray @target
+				for t in @target
+					lib[t].observer.subscribe ComponentObserver.UPDATED, @update
+			else 
+				@target.observer.subscribe ComponentObserver.UPDATED, @update
 		@addEventListener 'mousedown', @handleMouseDown
 	update: (opts) =>
-		@droptargets = @target.droptargets
+		if @isArray @target
+			alldrops = new Array()
+			for t in @target
+				alldrops.merge lib[t].droptargets
+			@droptargets = alldrops
+		else
+			@droptargets = @target.droptargets
 	handleMouseDown: (e) =>
 		posX = e.stageX / d2oda.stage.r
 		posY = e.stageY / d2oda.stage.r
@@ -895,7 +1107,9 @@ class ButtonContainer extends Component
 		@initialize opts
 	ButtonContainer::initialize = (opts) ->
 		@Container_initialize()
+		Module.extend @, d2oda.actions
 		Module.extend @, d2oda.methods
+		Module.extend @, d2oda.utilities
 		@x = opts.x
 		@y = opts.y
 		@index = opts.index
@@ -904,6 +1118,10 @@ class ButtonContainer extends Component
 		@states = opts.states
 		@currentState = 0
 		@setImageText @states[@currentState].img, @states[@currentState].txt
+		if @isArray opts.target 
+			@target = opts.target
+		else
+			@target = lib[opts.target]
 		if opts.target then @target = lib[opts.target]
 		@addEventListener 'mouseover', =>
 			TweenLite.to @, 0.5, {scaleX: 1.2, scaleY: 1.2}
@@ -918,6 +1136,7 @@ class ButtonContainer extends Component
 				d2oda.evaluator.evaluate opts.eval, @name, opts.target
 	setImageText: (img, txt) ->
 		@removeAllChildren()
+		@alpha = 1
 		if img
 			x = img.x ? 0
 			y = img.y ? 0
@@ -1236,6 +1455,7 @@ class PhraseCompleterContainer extends Component
 		@initialize opts
 	PhraseCompleterContainer::initialize = (opts) ->
 		@Container_initialize()
+		Module.extend @, d2oda.actions
 		Module.extend @, d2oda.methods
 		@x = opts.x
 		@y = opts.y
@@ -1268,7 +1488,7 @@ class PhraseCompleterContainer extends Component
 				h = new TextCompleterContainer txt, @font, @fcolor, @bcolor, @scolor, @stroke, npos, ypos
 				@droptargets.push h
 				@add h, false
-				npos += h.width + @margin
+				maxWidth = npos += h.width + @margin
 				i++
 			else if t is '#rtn'
 				h = @createText 'txt', 'BLANK', @font, @fcolor, npos, 0
@@ -1278,7 +1498,7 @@ class PhraseCompleterContainer extends Component
 			else
 				h = @createText 'txt', t, @font, @fcolor, npos, ypos
 				@add h, false
-				npos += h.getMeasuredWidth() + @margin
+				maxWidth = npos += h.getMeasuredWidth() + @margin
 		@width = maxWidth
 		@setPosition @align
 		@observer.notify ComponentObserver.UPDATED
@@ -1370,6 +1590,85 @@ class TextCloneContainer extends Component
 		@text.textAlign = 'center'
 		@text.x = @width / 2
 		TweenLite.from @, 0.3, {alpha: 0}
+
+class WordSearchContainer extends Component
+	WordSearchContainer.prototype = new createjs.Container()
+	WordSearchContainer::Container_initialize = WordSearchContainer::initialize
+	constructor: (opts) ->
+		@initialize opts
+	WordSearchContainer::initialize = (opts) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		@name = opts.name ? opts.id
+		@x = opts.x
+		@y  = opts.y
+		@font = opts.font ? '20px Arial'
+		@fcolor = opts.fcolor ? '#333'
+		@bcolor = opts.bcolor ? '#FFF'
+		@shcolor = opts.shcolor ? '#F00'
+		@shape = opts.shape ? 'rect'
+		@uwidth = opts.uwidth ? 100
+		@uheight = opts.uheight ? 100
+		@radius = opts.radius ? 0
+		@allComplete = false
+		@observer = new ComponentObserver()
+		@droptargets = new Array()
+		@path = new Array()
+		@addEventListener 'mousedown', (e) =>
+			@path = new Array()
+			@getLetterContainer()
+			e.addEventListener 'mousemove', (ev) =>
+				@getLetterContainer()
+			e.addEventListener 'mouseup', (ev) =>
+				found = false
+				upath = @path.unique()
+				unames = (coord.name for coord in upath)
+				unames.sort()
+				for word in @words
+					if word.enabled
+						lcoords = new Array()
+						wcoords = word.coords.sort()
+						for key in [0...wcoords.length]
+							lcoords[key] = "l#{wcoords[key]}"
+						foundAWord = lcoords.compare(unames)
+						if foundAWord
+							found = true
+							word.complete = true
+							if word.fx then lib[word.target][word.fx]() else lib[word.target].fadeOut()
+							lib.scene.success()
+				if not found
+					for ltc in upath
+						ltc.showShape off
+					lib.scene.fail()
+			false
+	getLetterContainer: () ->
+		pt = @globalToLocal oda.stage.mouseX, oda.stage.mouseY
+		oup = @getObjectUnderPoint pt.x, pt.y
+		ltc = oup.parent
+		if ltc and ltc instanceof LetterContainer
+			ltc.showShape()
+			@path.push ltc
+	update: (opts) ->
+		@removeAllChildren()
+		@words = opts.words
+		#for k in [1..]
+		i = 0
+		j = 0
+		for row in opts.matrix
+			for column in row
+				olc = new LetterContainer {text:column, width: @uwidth, height: @uheight, radius: @radius}, @font, @fcolor, @bcolor, @shcolor, @shape, j * @uwidth, i * @uheight
+				olc.name = "l#{j}_#{i}"
+				@add olc
+				@droptargets.push olc
+				j++
+			j = 0
+			i++
+		@observer.notify ComponentObserver.UPDATED
+		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
+	isComplete: ->
+		for word in @words
+			if word.complete is false then false
+		true
 
 class CrossWordsContainer extends Component
 	CrossWordsContainer.prototype = new createjs.Container()
@@ -1562,6 +1861,7 @@ class ScrambledWordContainer extends Component
 	ScrambledWordContainer::initialize = (opts) ->
 		@Container_initialize()
 		Module.extend @, d2oda.methods
+		Module.extend @, d2oda.actions
 		Module.extend @, d2oda.utilities
 		@name = opts.name ? opts.id
 		@x = opts.x
@@ -1574,6 +1874,7 @@ class ScrambledWordContainer extends Component
 		@stroke = opts.stroke ? 3
 		@align = opts.align ? ''
 		@margin = opts.margin ? 5
+		@oncomplete = opts.oncomplete ? null
 		@eval = opts.eval
 		@currentTarget = 0
 		@observer = new ComponentObserver()
@@ -1581,9 +1882,9 @@ class ScrambledWordContainer extends Component
 	update: (opts) ->
 		@removeAllChildren()
 		@target = opts.target
+		@fx = opts.fx ? 'fadeOut'
 		word = opts.word.split ''
 		scrambledWord = @shuffle word
-
 		i = 0
 		if opts.prev
 			@prev = @insertText 'prevTxt', opts.prev, @font, @fcolor, 0, 0
@@ -1601,10 +1902,8 @@ class ScrambledWordContainer extends Component
 				@add h, false
 				npos += @uwidth + @margin
 			i++
-
 		@width = npos
 		@setPosition @align
-
 		i = 0
 		npos = if @prev then @prev.getMeasuredWidth() + @margin else 0
 		for scrambledLetter in scrambledWord
@@ -1615,9 +1914,10 @@ class ScrambledWordContainer extends Component
 				@add d
 				npos += @uwidth + @margin
 				i++
-			
 		@observer.notify ComponentObserver.UPDATED
 		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
+	onComplete: () ->
+		d2oda.evaluator.evaluate @oncomplete.function, @name, @oncomplete.target
 	isComplete: () ->
 		for target in @droptargets
 			if target.complete is false
@@ -1650,6 +1950,43 @@ class TextCompleterContainer extends Component
 		@text.x = @width / 2
 		@add @text, false
 		TweenLite.from @, 0.3, {alpha: 0}
+
+class LetterContainer extends Component
+	LetterContainer.prototype = new createjs.Container()
+	LetterContainer::Container_initialize = LetterContainer::initialize
+	constructor: (opts, font, fcolor, bcolor, shcolor, shape, x, y) ->
+		@initialize opts, font, fcolor, bcolor, shcolor, shape, x, y
+	LetterContainer::initialize = (opts, font, fcolor, bcolor, shcolor, shape, x, y) ->
+		@Container_initialize()
+		Module.extend @, d2oda.methods
+		Module.extend @, d2oda.actions
+		Module.extend @, d2oda.utilities
+		@mouseChildren = off
+		@x = x
+		@y = y
+		@name = "ltc_#{opts.name}" ? "ltc_#{opts.text}"
+		@success = opts.success ? opts.text
+		@text = @createText 'txt', opts.text, font, fcolor, opts.width/2, opts.height/2 - 15, 'center'
+		@width = opts.width
+		@height = opts.height
+		@radius = opts.radius ? '20'
+		@complete = false
+		@selectionEnabled = off
+		@back = new createjs.Shape()
+		@shape = new createjs.Shape()
+		@back.graphics.f(bcolor).dr(0, 0, @width, @height)
+		switch shape
+			when 'rect' then @shape.graphics.f(shcolor).dr(0, 0, @width, @height)
+			when 'round' then @shape.graphics.f(shcolor).rr(0, 0, @width, @height, @radius)
+			when 'circle' then @shape.graphics.f(shcolor).dc(@width/2, @height/2, @radius)
+		@add @back, false
+		@add @shape, false
+		@add @text, false
+		@shape.visible = off
+	showShape: (visible = on) ->
+		@shape.visible = visible
+	update: (opts) ->
+		@complete = true
 
 class LetterDragContainer extends Component
 	LetterDragContainer.prototype = new createjs.Container()
@@ -1858,13 +2195,17 @@ class SceneFactory
 			when 'abc' then new ABCContainer opts
 			when 'drg' then new DragContainer opts
 			when 'grd' then new GridContainer opts
+			when 'txt' then new TextContainer opts
 			when 'img' then new ImageContainer opts
 			when 'lbl' then new LabelContainer opts
 			when 'cln' then new CloneContainer opts
+			when 'wrt' then new WriteContainer opts
+			when 'spr' then new SpriteContainer opts
 			when 'btn' then new ButtonContainer opts
 			when 'stps' then new StepsContainer opts
 			when 'chs' then new ChooseContainer opts
 			when 'cwd' then new CrossWordsContainer opts
+			when 'wsch' then new WordSearchContainer opts
 			when 'ldrg' then new LetterDragContainer opts
 			when 'pcct' then new PhraseCloneContainer opts
 			when 'wcpt' then new WordCompleterContainer opts
@@ -1924,8 +2265,8 @@ class Scene extends Component
 			lib.score.start()
 			lib.score.addEventListener 'count_complete', lib.game.nextScene
 		@setStep()
-	success: (plusOne = true) ->
-		createjs.Sound.stop()
+	success: (plusOne = true, stopSound = true) ->
+		if stopSound then createjs.Sound.stop()
 		if plusOne then lib.score.plusOne()
 		step = @answers[@currentStep]
 		if step && step.length > 0
@@ -1946,22 +2287,26 @@ class Scene extends Component
 		else
 			@delay 1000, @setStep
 	setStep: =>
-		step = @answers[@currentStep]
-		if step && step.length > 0
-			for target in step
-				switch target.name
-					when 'global'
-						d2oda.evaluator.success = target.opts.success
-						false
-					when 'snd'
-						@snd = target.opts.id
-						createjs.Sound.stop()
-						snd = createjs.Sound.play target.opts.id
-						if target.opts.successoncomplete
-							snd.addEventListener 'complete', @sndsuccess
-						false
-					else
-						lib[target.name].update target.opts
+		if lib.instructions.playing
+			lib.instructions.addEventListener 'complete', @setStep
+		else
+			console.log 'setStep'
+			step = @answers[@currentStep]
+			if step && step.length > 0
+				for target in step
+					switch target.name
+						when 'global'
+							d2oda.evaluator.success = target.opts.success
+							false
+						when 'snd'
+							@snd = target.opts.id
+							createjs.Sound.stop()
+							snd = createjs.Sound.play target.opts.id
+							if target.opts.successoncomplete
+								snd.addEventListener 'complete', @sndsuccess
+							false
+						else
+							lib[target.name].update target.opts
 	nextStep: ->
 		console.log 'next step'
 		@observer.notify SceneObserver.NEXT_STEP

@@ -68,12 +68,12 @@ class U4A3 extends Oda
 						type: 'steps'
 					}
 					containers:[
-						{type: 'img', id: 'faceSick', x: 150, y: 185, align: 'mc'}
-						{type: 'img', id: 'faceConfused', x: 150, y: 185, align: 'mc'}
-						{type: 'img', id: 'faceTired', x: 150, y: 185, align: 'mc'}
-						{type: 'img', id: 'faceHot', x: 150, y: 185, align: 'mc'}
-						{type: 'img', id: 'faceDirty', x: 150, y: 185, align: 'mc'}
-						{type: 'img', id: 'faceEnergetic', x: 150, y: 185, align: 'mc'}
+						{type: 'img', id: 'faceSick', x: 150, y: 165, align: 'mc'}
+						{type: 'img', id: 'faceConfused', x: 150, y: 165, align: 'mc'}
+						{type: 'img', id: 'faceTired', x: 150, y: 165, align: 'mc'}
+						{type: 'img', id: 'faceHot', x: 150, y: 165, align: 'mc'}
+						{type: 'img', id: 'faceDirty', x: 150, y: 165, align: 'mc'}
+						{type: 'img', id: 'faceEnergetic', x: 150, y: 165, align: 'mc'}
 						{type: 'pcpt', id: 'pcpt1', x: 200, y: 165, font: '24px Quicksand', margin: 10, align: 'tl', scolor: '#eb188e'}
 						{
 							type: 'btn', id: 'btn1', x: 200, y: 275, index: 'btnSick', target: 'grp1', eval: 'switch_01'
