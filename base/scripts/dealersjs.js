@@ -468,6 +468,10 @@ LIBRARY
 
       Evaluator.evaluate = function(type, dispatcher, target) {
         console.log(type, dispatcher, target);
+        if (type instanceof Function) {
+          type(dispatcher, target);
+          return;
+        }
         switch (type) {
           case 'repeat':
             return this.evaluateRepeat();
@@ -1436,7 +1440,7 @@ LIBRARY
     }
 
     ComponentGroup.prototype.update = function(opts) {
-      var item, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2, _ref3, _results, _results1;
+      var item, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref2, _ref3, _ref4, _results, _results1;
       switch (opts.type) {
         case 'blinkAll':
           _ref1 = this.group;
@@ -1463,8 +1467,29 @@ LIBRARY
             TweenMax.killTweensOf(lib[item]);
             TweenLite.killTweensOf(lib[item]);
             lib[item].alpha = 0;
+            if (!opts.target) {
+              lib[item].fadeOut();
+            }
           }
-          return lib[opts.target].fadeIn();
+          if (opts.target) {
+            return lib[opts.target].fadeIn();
+          }
+          break;
+        case 'fadeOut':
+          _ref4 = this.group;
+          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+            item = _ref4[_l];
+            TweenMax.killTweensOf(lib[item]);
+            TweenLite.killTweensOf(lib[item]);
+            lib[item].alpha = 1;
+            if (!opts.target) {
+              lib[item].fadeOut();
+            }
+          }
+          if (opts.target) {
+            return lib[opts.target].fadeOut();
+          }
+          break;
         case 'success':
           this.target = opts.targetGroup;
           this.next = opts.nextGroup;

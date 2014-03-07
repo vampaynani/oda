@@ -189,6 +189,9 @@ window.d2oda.evaluator ?= class Evaluator
 	@success = null
 	@evaluate = (type, dispatcher, target) ->
 		console.log type, dispatcher, target
+		if type instanceof Function
+			type(dispatcher, target)
+			return
 		switch type
 			when 'repeat' then @evaluateRepeat()
 			when 'finish' then @evaluateFinish(target)
@@ -729,7 +732,15 @@ class ComponentGroup
 					TweenMax.killTweensOf lib[item]
 					TweenLite.killTweensOf lib[item]
 					lib[item].alpha = 0
-				lib[opts.target].fadeIn()
+					if not opts.target then lib[item].fadeOut()
+				if opts.target then lib[opts.target].fadeIn()
+			when 'fadeOut'
+				for item in @group
+					TweenMax.killTweensOf lib[item]
+					TweenLite.killTweensOf lib[item]
+					lib[item].alpha = 1
+					if not opts.target then lib[item].fadeOut()
+				if opts.target then lib[opts.target].fadeOut()
 			when 'success'
 				@target = opts.targetGroup
 				@next = opts.nextGroup

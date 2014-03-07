@@ -130,31 +130,31 @@ class U3A6 extends Oda
 		super
 		@answers = @shuffleNoRepeat @game.answers, 10
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Click on the letters and guess the word before George is complete.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@insertInstructions 'instructions', 'Click on the letters and guess the word before George is complete.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@setChango().createAlphabet().introEvaluation()
 	setChango: ->
-		@insertSprite 'chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 549, 150, 'tl'
+		@insertSprite 'chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 1098, 300, 'tl'
 		burbuja = new createjs.Container()
 		burbuja.name = 'burbuja'
-		burbuja.y = 149
-		burbuja.x = 550
+		burbuja.y = 298
+		burbuja.x = 1100
 		@addToMain burbuja
 		@
 	createAlphabet: ->
 		alphabet = new createjs.Container()
-		alphabet.x = 125
-		alphabet.y = 440
+		alphabet.x = 250
+		alphabet.y = 880
 		alphabet.name = 'alphabet'
 		for i in [0..@abc.length - 1] by 1
 			letter = @abc[i]
 			if i <= 9
-				letterObj = new ClickableLetter "l#{i}", letter, letter, 41.5 * i, 0
+				letterObj = new ClickableLetter "l#{i}", letter, letter, 83 * i, 0
 			else if i <= 18
-				letterObj = new ClickableLetter "l#{i}", letter, letter, 41.5 * i - 395, 34
+				letterObj = new ClickableLetter "l#{i}", letter, letter, 83 * i - 790, 68
 			else
-				letterObj = new ClickableLetter "l#{i}", letter, letter, 41.5 * i - 750, 68
-			letterObj.text.font = '20px Quicksand'
+				letterObj = new ClickableLetter "l#{i}", letter, letter, 83 * i - 1500, 136
+			letterObj.text.font = '40px Quicksand'
 			@addToLibrary letterObj
 			alphabet.addChild letterObj
 		@addToMain alphabet
@@ -164,7 +164,7 @@ class U3A6 extends Oda
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['chango'], 1, {alpha: 0, x: @library['chango'].x + 50, ease: Quart.easeOut, delay: 1.5}
+		TweenLite.from @library['chango'], 1, {alpha: 0, x: @library['chango'].x + 100, ease: Quart.easeOut, delay: 1.5}
 		TweenMax.from @library['alphabet'], 1, {alpha: 0, y: stageSize.h, delay: 2, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
@@ -173,24 +173,24 @@ class U3A6 extends Oda
 		
 		comidas = new createjs.Container()
 		comidas.name = 'comidas'
-		comidas.y = 250
-		comidas.x = 300
+		comidas.y = 500
+		comidas.x = 600
 
 		imagen = @createBitmap @answers[@index].i, @answers[@index].i, 0, 0, 'mc'
-		imagen.scaleX = imagen.scaleY = 0.4
+		imagen.scaleX = imagen.scaleY = 0.8
 		comidas.addChild imagen
 
 		wordContainers = new createjs.Container()
 		wordContainers.name = 'wordContainers'
-		wordContainers.y = 400
-		wordContainers.x = (@library['alphabet'].x + 157) - @col.length * 30 / 2
+		wordContainers.y = 800
+		wordContainers.x = (@library['alphabet'].x + 314) - @col.length * 60 / 2
 		
 		for i in [0..@abc.length - 1]
 			@library["l#{i}"].addEventListener 'click', @evaluateAnswer
 		
 		for i in [1..@col.length]
 			if @col[i - 1] isnt ' '
-				wc = new WordContainer "w#{i}", '', '#fff', '#0098d7', 30 * i, 0, 26, 26
+				wc = new WordContainer "w#{i}", '', '#fff', '#0098d7', 60 * i, 0, 52, 52
 				wc.index = @col[i - 1]
 				@addToLibrary wc
 				wordContainers.addChild wc
@@ -258,13 +258,13 @@ class U3A6 extends Oda
 			@library.comidas.addChild imagen
 	
 			@library.wordContainers.removeAllChildren()
-			@library.wordContainers.x = (@library['alphabet'].x + 177) - @col.length * 30 / 2
+			@library.wordContainers.x = (@library['alphabet'].x + 354) - @col.length * 60 / 2
 			for i in [0..@abc.length - 1]
 				@library["l#{i}"].visible = on
 		
 			for i in [1..@col.length]
 				if @col[i - 1] isnt ' '
-					wc = new WordContainer "w#{i}", '', '#fff', '#0098d7', 30 * i, 0, 26, 26
+					wc = new WordContainer "w#{i}", '', '#fff', '#0098d7', 60 * i, 0, 52, 52
 					wc.index = @col[i - 1]
 					@addToLibrary wc
 					@library.wordContainers.addChild wc

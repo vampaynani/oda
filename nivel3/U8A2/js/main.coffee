@@ -1,13 +1,14 @@
+###
+
+NEW ODA
+
+###
 class U8A2 extends Oda
 	constructor: ->
-		manifest = [
+		@manifest = [
 			{id: 'head', src: 'pleca1.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
- 			{id: 'playagain', src:'play_again.png'}
-			{id: 'startgame', src:'start_game.png'}
-			{id: 'ballon', src:'ballon.png'}
- 			
 			{id: 'btnrepeat', src:'btn_repeat.png'}
 			{id: 'menuAshton', src:'ashton.png'}
 			{id: 'menuCarla', src:'carla.png'}
@@ -54,74 +55,114 @@ class U8A2 extends Oda
 			{id: 'spSamBig2', src:'prop_sam_big0002.png'}
 			{id: 'spWilsonBig1', src:'prop_wilson_big0001.png'}
 			{id: 'spWilsonBig2', src:'prop_wilson_big0002.png'}
+			{src:'TU3_U8_A2_instructions.mp3', id:'s/instructions'}
+			{src:'TU3_U8_A2_ashton.mp3', id:'s/ashton'}
+			{src:'TU3_U8_A2_carla.mp3', id:'s/carla'}
+			{src:'TU3_U8_A2_eva.mp3', id:'s/eva'}
+			{src:'TU3_U8_A2_jack.mp3', id:'s/jack'}
+			{src:'TU3_U8_A2_kevin.mp3', id:'s/kevin'}
+			{src:'TU3_U8_A2_marissa.mp3', id:'s/marissa'}
+			{src:'TU3_U8_A2_renee.mp3', id:'s/renee'}
+			{src:'TU3_U8_A2_sam.mp3', id:'s/sam'}
+			{src:'TU3_U8_A2_wilson.mp3', id:'s/wilson'}
 		]
-		sounds = [
-			{src:'sounds/good.mp3', id:'good'}
-			{src:'sounds/boing.mp3', id:'boing'}
-		    {src:'sounds/TU3_U8_A2_instructions.mp3', id:'instructions'}
-		    {src:'sounds/wrong.mp3', id:'wrong'}
-		]
-		@game =
-			names:[
-				{img: 'Wilson', x:443 , y:266 , frase:'' }
-				{img: 'Jack', x:442 , y:274 , frase:'' }
-				{img: 'Renee', x:427 , y:288 , frase:'' }
-				{img: 'Ashton', x:463 , y:309 , frase:'' }
-				{img: 'Eva', x:464 , y:329 , frase:'' }
-				{img: 'Kevin', x:460 , y:295 , frase:'' }
-				{img: 'Marissa', x:474 , y:291 , frase:'' }
-				{img: 'Sam', x:474 , y:319 , frase:'' }
-				{img: 'Carla', x:468 , y:332 , frase:'' }
+		@btnClick = (dispatcher, target) =>
+			console.log @, dispatcher, target
+			@selection = lib[dispatcher].index
+			lib[dispatcher].removeAllEventListeners()
+			lib.grp_btn.update {type:'fadeOut'}
+			#lib.grp_idrags.update {type:'fadeIn'}
+			#lib.grp_tdrags.update {type:'fadeIn'}
+			#lib.grp_sprites.update {type:'fadeIn', target:"sp#{@selection}"}
+		@drgDrop = (dispatcher, target) =>
+			console.log @, dispatcher, target
+		@game = 
+			header: 'head'
+			instructions: {x: 40, y: 100, states: [{text:'Click, listen and match.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			scenes:[
+				{
+					answers: {
+						collection: []
+						type: 'steps'
+					}
+					containers:[
+						{
+							type: 'btn', id: 'btn1', x: 100, y: 290, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuAshton', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn2', x: 250, y: 290, index: 2, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuCarla', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn3', x: 400, y: 290, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuEva', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn4', x: 550, y: 290, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuJack', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn5', x: 700, y: 290, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuKevin', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn6', x: 180, y: 490, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuMarissa', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn7', x: 330, y: 490, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuRenee', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn8', x: 480, y: 490, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuSam', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn9', x: 630, y: 490, index: 1, target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuWilson', x: 0, y: 0, align: 'bc'}}]
+						}
+						{type: 'spr', id: 'spAshton', imgs: ['spAshtonBig1','spAshtonBig2'], frames: null, x: 400, y:300, align: 'mc'}
+						{type: 'spr', id: 'spCarla', imgs: ['spCarlaBig1','spCarlaBig2'], frames: null, x: 400, y:300, align: 'mc'}
+						{type: 'spr', id: 'spEva', imgs: ['spEvaBig1','spEvaBig2'], frames: null, x: 400, y:300, align: 'mc'}
+						{type: 'spr', id: 'spJack', imgs: ['spJackBig1','spJackBig2'], frames: null, x: 400, y:300, align: 'mc'}
+						{type: 'spr', id: 'spKevin', imgs: ['spKevinBig1','spKevinBig2'], frames: null, x: 400, y:300, align: 'mc'}
+						{type: 'drg', id: 'spJack', name: 'ballonAshton', x: 400, y: 300, index: 'jack', align: 'mc', target: 'iwcpt1', eval: @drgDrop, afterSuccess: 'hide', afterFail: 'return'}
+					]	
+					groups: [
+						{
+							type: 'grp', id: 'grp_sprites'
+							group: [
+								'spAshton'
+								''
+							]
+						}
+						{
+							type: 'grp', id: 'grp_btn'
+							group: [
+								'btn1'
+								'btn2'
+								'btn3'
+								'btn4'
+								'btn5'
+								'btn6'
+								'btn7'
+								'btn8'
+								'btn9'
+							]
+						}
+					]
+				}
 			]
-		super null, manifest, sounds
-	setStage: ->
-		super
-		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Click, listen and match.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
-		#@setMenu()
-		@setVacations(9)
-	setMenu: ->
-		menu = new createjs.Container()
-		menu.x = 100
-		menu.y = 290
-		menu.name = 'menu'
-		for i in [0..@game.names.length - 1]
-			v = @createBitmap 'drag'+i, 'menu'+@game.names[i].img, i * 150, 20, 'bc'
-			if i >= 5
-				v.y = 200
-				v.x = v.x - 670
-			menu.addChild v
-			@addToLibrary v
-		@addToMain menu
-		@
-	setVacations: (nombre) ->
-		@nombre = @game.names[nombre - 1].img
-		menu = new createjs.Container()	
-		menu.x = 24
-		menu.y = 140
-		menu.name = 'menu'
-		for i in [0..@game.names.length - 1]
-			v = new Draggable 'drag'+i, (@preload.getResult 'image'+@game.names[i].img+'Dragble'),i , i * 85, 0
-			if i in [0,8]
-				v.y = 50
-			else if i in [1,7]
-				v.y = 25
-			menu.addChild v
-			@addToLibrary v
-
-		for i in [0..@game.names.length - 1]
-			b = new Draggable 'ballon'+i, (@preload.getResult 'ballon'+@game.names[i].img+'Dragble'), i, i * 140 + 80, 370
-			if i >= 5
-				b.y = 415
-				b.x = b.x - 620 
-			menu.addChild b
-			@addToLibrary b
-
-		char = @createSprite "character", ["sp#{@nombre}Big1","sp#{@nombre}Big2"],null, 180, 340, 'bl'
-		btn = @createBitmap  'btnrepeat', 'btnrepeat', 220, 310, 'bl'
-		ballon = @createBitmap  'ballon', 'ballon', @game.names[nombre - 1].x + 10, @game.names[nombre - 1].y - 112
-		menu.addChild char, btn, ballon
-		@addToMain menu
-		@
+		super()
 	window.U8A2 = U8A2

@@ -93,47 +93,47 @@ class U3A4 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look at the chart and drag the words to build sentences.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@insertInstructions 'instructions', 'Look at the chart and drag the words to build sentences.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 12, 0
 		@setDropper().setTable(1).setClouds().introEvaluation()
 		@intento = 0
 
 	setDropper: ->
-		@addToMain new WordContainer 'dropper1', '', '#FFF', '#0098d7', 170, 541, 188, 30
-		@addToMain new WordContainer 'dropper2', '', '#FFF', '#0098d7', 373, 541, 158, 30
-		@addToMain new WordContainer 'dropper3', '', '#FFF', '#0098d7', 544, 541, 136, 30
+		@addToMain new WordContainer 'dropper1', '', '#FFF', '#0098d7', 340, 1082, 376, 60
+		@addToMain new WordContainer 'dropper2', '', '#FFF', '#0098d7', 746, 1082, 316, 60
+		@addToMain new WordContainer 'dropper3', '', '#FFF', '#0098d7', 1088, 1082, 272, 60
 		text = new createjs.Text '.', '24px Arial', '#000'
-		text.x = 685
-		text.y = 545
+		text.x = 1370
+		text.y = 1090
 		@addToMain text
 		@
 	setTable: (table) ->
 		if not @library.smileys
 			smileys = new createjs.Container()
-			smileys.x = 246
+			smileys.x = 492
 			smileys.name = 'smileys'
 		else
 			smileys = @library.smileys
 
 		smileys.alpha = 1
-		smileys.y = 184
+		smileys.y = 368
 		smileys.removeAllChildren()
 		
 		@table = table
 
-		l1 = @createBitmap 'lineaJack', 'lineaJack', -68, 83
-		l2 = @createBitmap 'lineaMeg', 'lineaMeg', -109, 26
-		l3 = @createBitmap 'lineaTomandSue', 'lineaTomandSue', -108, 139
-		i1 = @createBitmap 'imageJack', 'imageJack', -82, 12
-		i2 = @createBitmap 'imageMeg', 'imageMeg', -176, -50
-		i3 = @createBitmap 'imageTomandSue', 'imageTomandSue', -245, 66
-		n1 = @createBitmap 'labelJack', 'labelJack', -69, 90
-		n2 = @createBitmap 'labelMeg', 'labelMeg', -151, 12
-		n3 = @createBitmap 'labelTomandSue', 'labelTomandSue', -188, 149
-		f1 = @createBitmap "table#{table}food1", "table#{table}food1", 52, -3, 'bc'
-		f2 = @createBitmap "table#{table}food2", "table#{table}food2", 183, -3, 'bc'
-		f3 = @createBitmap "table#{table}food3", "table#{table}food3", 312, -3, 'bc'
-		f4 = @createBitmap "table#{table}food4", "table#{table}food4", 444, -3, 'bc'
+		l1 = @createBitmap 'lineaJack', 'lineaJack', -136, 166
+		l2 = @createBitmap 'lineaMeg', 'lineaMeg', -218, 52
+		l3 = @createBitmap 'lineaTomandSue', 'lineaTomandSue', -216, 278
+		i1 = @createBitmap 'imageJack', 'imageJack', -164, 24
+		i2 = @createBitmap 'imageMeg', 'imageMeg', -352, -100
+		i3 = @createBitmap 'imageTomandSue', 'imageTomandSue', -490, 132
+		n1 = @createBitmap 'labelJack', 'labelJack', -138, 180
+		n2 = @createBitmap 'labelMeg', 'labelMeg', -302, 24
+		n3 = @createBitmap 'labelTomandSue', 'labelTomandSue', -376, 298
+		f1 = @createBitmap "table#{table}food1", "table#{table}food1", 104, -6, 'bc'
+		f2 = @createBitmap "table#{table}food2", "table#{table}food2", 366, -6, 'bc'
+		f3 = @createBitmap "table#{table}food3", "table#{table}food3", 624, -6, 'bc'
+		f4 = @createBitmap "table#{table}food4", "table#{table}food4", 888, -6, 'bc'
 
 		smileys.addChild l1,l2,l3
 		smileys.addChild i1,i2,i3
@@ -142,15 +142,15 @@ class U3A4 extends Oda
 		TweenMax.allFrom [f1, f2, f3, f4], 1, {alpha: 0}
 
 		for i in [0..3]
-			smiley = @createBitmap "Table#{table}num#{i+1}", "Table#{table}num#{i+1}", i * 130, 0
+			smiley = @createBitmap "Table#{table}num#{i+1}", "Table#{table}num#{i+1}", i * 260, 0
 			smileys.addChild smiley
 			@addToLibrary smiley
 		for i in [0..3]
-			smiley = @createBitmap "Table#{table}num#{i+5}", "Table#{table}num#{i+5}", i * 130, 58
+			smiley = @createBitmap "Table#{table}num#{i+5}", "Table#{table}num#{i+5}", i * 260, 116
 			smileys.addChild smiley
 			@addToLibrary smiley
 		for i in [0..3]
-			smiley = @createBitmap "Table#{table}num#{i+9}", "Table#{table}num#{i+9}", i * 130, 116
+			smiley = @createBitmap "Table#{table}num#{i+9}", "Table#{table}num#{i+9}", i * 260, 232
 			smileys.addChild smiley
 			@addToLibrary smiley
 		@addToMain smileys
@@ -158,22 +158,22 @@ class U3A4 extends Oda
 	setClouds: ->
 		if not @library.nube1
 			nube1 = new createjs.Container()
-			nube1.x = 77
-			nube1.y = 388
+			nube1.x = 154
+			nube1.y = 776
 			nube1.name = 'nube1'
 		else
 			nube1 = @library.nube1
 		if not @library.nube2
 			nube2 = new createjs.Container()
-			nube2.x = 272
-			nube2.y = 369
+			nube2.x = 544
+			nube2.y = 738
 			nube2.name = 'nube2'
 		else
 			nube2 = @library.nube2
 		if not @library.nube3
 			nube3 = new createjs.Container()
-			nube3.x = 581
-			nube3.y = 372
+			nube3.x = 1162
+			nube3.y = 744
 			nube3.name = 'nube3'
 		else
 			nube3 = @library.nube3
@@ -190,33 +190,33 @@ class U3A4 extends Oda
 		n2 = @createBitmap 'n2', 'n2', 0, 0
 		n3 = @createBitmap 'n3', 'n3', 0, 0
 
-		t1n1 = new DraggableText 't1n1', "They", 0, 32, 42 
-		t2n1 = new DraggableText 't2n1', "He", 1, 80, 74 
-		t3n1 = new DraggableText 't3n1', "She", 2, 90, 21 
+		t1n1 = new DraggableText 't1n1', "They", 0, 64, 84 
+		t2n1 = new DraggableText 't2n1', "He", 1, 160, 148 
+		t3n1 = new DraggableText 't3n1', "She", 2, 180, 42 
 
-		t1n2 = new DraggableText 't1n2', "like", 3, 103, 91 
-		t2n2 = new DraggableText 't2n2', "don't like", 4, 119, 24 
-		t3n2 = new DraggableText 't3n2', "likes", 5, 55, 38 
-		t4n2 = new DraggableText 't4n2', "doesn't like", 6, 134, 62
-		t5n2 = new DraggableText 't5n2', "love", 7, 188, 98 
-		t6n2 = new DraggableText 't6n2', "loves", 8, 23, 75 
+		t1n2 = new DraggableText 't1n2', "like", 3, 206, 182 
+		t2n2 = new DraggableText 't2n2', "don't like", 4, 238, 48 
+		t3n2 = new DraggableText 't3n2', "likes", 5, 110, 76 
+		t4n2 = new DraggableText 't4n2', "doesn't like", 6, 268, 124
+		t5n2 = new DraggableText 't5n2', "love", 7, 376, 196 
+		t6n2 = new DraggableText 't6n2', "loves", 8, 46, 150 
 
 		switch @table
 			when 1
-				t1n3 = new DraggableText 't1n3', "milk", 9, 32, 23 
-				t2n3 = new DraggableText 't2n3', "pancakes", 10, 92, 48 
-				t3n3 = new DraggableText 't3n3', "eggs", 11, 23, 67 
-				t4n3 = new DraggableText 't4n3', "beans", 12, 85, 87 
+				t1n3 = new DraggableText 't1n3', "milk", 9, 64, 46 
+				t2n3 = new DraggableText 't2n3', "pancakes", 10, 184, 96 
+				t3n3 = new DraggableText 't3n3', "eggs", 11, 46, 134 
+				t4n3 = new DraggableText 't4n3', "beans", 12, 170, 174 
 			when 2
-				t1n3 = new DraggableText 't1n3', "corn", 9, 32, 23 
-				t2n3 = new DraggableText 't2n3', "ice cream", 10, 92, 48 
-				t3n3 = new DraggableText 't3n3', "peaches", 11, 23, 67 
-				t4n3 = new DraggableText 't4n3', "spinach", 12, 85, 87 
+				t1n3 = new DraggableText 't1n3', "corn", 9, 64, 46 
+				t2n3 = new DraggableText 't2n3', "ice cream", 10, 184, 96 
+				t3n3 = new DraggableText 't3n3', "peaches", 11, 46, 134 
+				t4n3 = new DraggableText 't4n3', "spinach", 12, 170, 174 
 			when 3
-				t1n3 = new DraggableText 't1n3', "tomatoes", 9, 32, 23 
-				t2n3 = new DraggableText 't2n3', "broccoli", 10, 92, 48 
-				t3n3 = new DraggableText 't3n3', "fish", 11, 23, 67 
-				t4n3 = new DraggableText 't4n3', "lettuce", 12, 85, 87 
+				t1n3 = new DraggableText 't1n3', "tomatoes", 9, 64, 46 
+				t2n3 = new DraggableText 't2n3', "broccoli", 10, 184, 96 
+				t3n3 = new DraggableText 't3n3', "fish", 11, 46, 134 
+				t4n3 = new DraggableText 't4n3', "lettuce", 12, 170, 174 
 
 		nube1.addChild n1, t1n1, t2n1, t3n1
 		nube2.addChild n2, t1n2, t2n2, t3n2, t4n2, t5n2, t6n2

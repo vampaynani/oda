@@ -53,42 +53,42 @@ class U3A2 extends Oda
 		]
 		@game = {
 			common: [
-				{id:'mattno', x:'606' , y:'116' }
-				{id:'mattyes',  x:'464' , y:'121' }
-				{id:'patno',  x:'274' , y:'124' }
-				{id:'patyes', x:'127' , y:'123' }
-				{id:'labelmatt',  x:'569' , y:'233' }
-				{id:'labelpat', x:'235' , y:'233' }
+				{id:'mattno', x: 1212, y: 232 }
+				{id:'mattyes', x: 928, y: 242 }
+				{id:'patno', x: 548, y: 248 }
+				{id:'patyes', x: 254, y: 246 }
+				{id:'labelmatt', x: 1138, y: 466 }
+				{id:'labelpat', x: 470, y: 466 }
 			]
 			buttons: [
-				{id:'btnYesTheyDo', x:'166' , y:'485' }
-				{id:'btnYesHeDoes', x:'361' , y:'485' }
-				{id:'btnYesSheDoes',  x:'555' , y:'485' }
-				{id:'btnNoTheyDont',  x:'166' , y:'539' }
-				{id:'btnNoHeDoesnt',  x:'361' , y:'539' }
-				{id:'btnNoSheDoesnt', x:'555' , y:'539' }
+				{id:'btnYesTheyDo', x: 332, y: 970}
+				{id:'btnYesHeDoes', x: 722, y: 970}
+				{id:'btnYesSheDoes',  x: 1110, y: 970}
+				{id:'btnNoTheyDont',  x: 332, y: 1078}
+				{id:'btnNoHeDoesnt',  x: 722, y: 1078}
+				{id:'btnNoSheDoesnt', x: 1110, y: 1078}
 			]
 			m1: [
-				{id:'lineastable1', x:'150' , y:'245' }
-				{id:'table1foodmattno',  x:'594' , y:'285' }
-				{id:'table1foodmattyes',  x:'424' , y:'294' }
-				{id:'table1foodpatno', x:'265' , y:'319' }
-				{id:'table1foodpatyes',  x:'84' , y:'306' }		
+				{id:'lineastable1', x: 300, y: 490}
+				{id:'table1foodmattno', x: 1188, y: 570}
+				{id:'table1foodmattyes', x: 848, y: 588}
+				{id:'table1foodpatno', x: 530, y: 638}
+				{id:'table1foodpatyes', x: 168, y: 612}		
 
 			]
 			m2: [
-				{id:'lineastable2', x:'182' , y:'216' }
-				{id:'table2foodmattyes', x:'431' , y:'310' }
-				{id:'table2foodmattno', x:'612' , y:'307' }
-				{id:'table2foodpatno', x:'284' , y:'313' }
-				{id:'table2foodpatyes',  x:'81' , y:'320' } 
+				{id:'lineastable2', x: 364, y: 432}
+				{id:'table2foodmattyes', x: 862, y: 620}
+				{id:'table2foodmattno', x: 1224, y: 614}
+				{id:'table2foodpatno', x: 568, y: 626}
+				{id:'table2foodpatyes', x: 162, y: 640} 
 			]
 			m3: [
-				{id:'lineastable3', x:'163' , y:'227' }
-				{id:'table3foodpatyes', x:'96' , y:'311' }
-				{id:'table3foodmattno', x:'629' , y:'333' }
-				{id:'table3foodmattyes',  x:'447' , y:'311' }
-				{id:'table3foodpatno',  x:'255' , y:'327' }
+				{id:'lineastable3', x: 326, y: 454}
+				{id:'table3foodpatyes', x: 192, y: 622}
+				{id:'table3foodmattno', x: 1258, y: 666}
+				{id:'table3foodmattyes',  x: 894, y: 622}
+				{id:'table3foodpatno',  x: 510, y: 654}
 			]
 		}
 		@answers = [
@@ -127,8 +127,8 @@ class U3A2 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read, follow the lines and click on the correct answer.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 18, 0
+		@insertInstructions 'instructions', 'Read, follow the lines and click on the correct answer.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 18, 0
 		@setCommon().setMenu(1).introEvaluation()
 	setCommon: ->
 		common = new createjs.Container()
@@ -142,11 +142,11 @@ class U3A2 extends Oda
 			v = @createBitmap "b#{i}", value.id, value.x, value.y
 			common.addChild v
 			@addToLibrary v
-		@phrase = new createjs.Text '', '20px Arial', '#333333'
+		@phrase = new createjs.Text '', '40px Arial', '#333333'
 		@phrase.name = 'phrase'
 		@phrase.textAlign = 'center'
 		@phrase.x = stageSize.w / 2
-		@phrase.y = 440
+		@phrase.y = 880
 		@addToMain common, @phrase
 		@
 	setMenu: (num) ->
@@ -162,8 +162,8 @@ class U3A2 extends Oda
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha:0, x: 0, delay: 0.5}
-		TweenLite.from @library['common'], 1, {alpha:0, y: @library['common'].y - 20, delay: 1}
-		TweenLite.from @library['menu'], 1, {alpha :0, y: @library['menu'].y - 20, delay: 1.2, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['common'], 1, {alpha:0, y: @library['common'].y - 40, delay: 1}
+		TweenLite.from @library['menu'], 1, {alpha :0, y: @library['menu'].y - 40, delay: 1.2, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@a_index = 0
@@ -171,7 +171,7 @@ class U3A2 extends Oda
 		for i in [1..@game.buttons.length] by 1
 			@library["b#{i}"].index = i
 			@library["b#{i}"].addEventListener 'click', @evaluateClick
-		TweenLite.from @library['phrase'], 1, {alpha:0}
+		TweenLite.from @library['phrase'], 1, {alpha: 0}
 	evaluateClick: (e) =>
 		@answer = e.target
 		if @answer.index is @answers[@index].values[@a_index].index
@@ -188,7 +188,7 @@ class U3A2 extends Oda
 		else
 			setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
-		TweenLite.to @library['menu'], 1, {alpha: 0, y: @library['menu'].y - 20, ease: Back.easeOut, onComplete: @nextEvaluation}
+		TweenLite.to @library['menu'], 1, {alpha: 0, y: @library['menu'].y - 40, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
@@ -200,7 +200,7 @@ class U3A2 extends Oda
 		else
 			@finish()
 	finish: ->
-		TweenLite.to @library['common'], 1, {alpha:0, y: @library['common'].y - 20}
-		TweenLite.to @library['menu'], 1, {alpha :0, y: @library['menu'].y - 20}
+		TweenLite.to @library['common'], 1, {alpha:0, y: @library['common'].y - 40}
+		TweenLite.to @library['menu'], 1, {alpha :0, y: @library['menu'].y - 40}
 		super
 	window.U3A2 = U3A2

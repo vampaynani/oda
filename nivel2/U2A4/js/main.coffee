@@ -68,48 +68,48 @@ class U2A4 extends Oda
 			}
 		]
 		@clocks = [
-			{x: 485, y: 13}
-			{x: 527, y: 79}
-			{x: 485, y: 145}
-			{x: 527, y: 211}
-			{x: 485, y: 276}
-			{x: 527, y: 343}
+			{x: 970, y: 26}
+			{x: 1054, y: 160}
+			{x: 970, y: 290}
+			{x: 1054, y: 422}
+			{x: 970, y: 552}
+			{x: 1054, y: 686}
 		]
 		@drops = [
-			{x: 12, y: 5}
-			{x: 220, y: 5}
-			{x: 12, y: 153}
-			{x: 220, y: 153}
-			{x: 12, y: 305}
-			{x: 220, y: 305}
+			{x: 24, y: 10}
+			{x: 440, y: 10}
+			{x: 24, y: 306}
+			{x: 440, y: 306}
+			{x: 24, y: 610}
+			{x: 440, y: 610}
 		]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the clocks to the correct picture.', 40, 100
-		@insertBitmap 'repeat', 'repeat', 545, 539
-		@insertBitmap 'finish', 'finish', 663, 539
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@insertInstructions 'instructions', 'Listen and drag the clocks to the correct picture.', 80, 200
+		@insertBitmap 'repeat', 'repeat', 1090, 1080
+		@insertBitmap 'finish', 'finish', 1326, 1080
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 12, 0
 		@setMeg()
 		@introEvaluation()
 	setMeg: ->
 		meg = new createjs.Container()
-		meg.x = 117;
-		meg.y = 124;
+		meg.x = 234;
+		meg.y = 248;
 		@current = meg.name = 'meg'
 		
-		m1 = @createBitmap 'megWakes', 'm1', 15, 13
-		m2 = @createBitmap 'megBreakfast', 'm2', 223, 13
-		m3 = @createBitmap 'megLeaves', 'm3', 15, 161
-		m4 = @createBitmap 'megDishes', 'm4', 223, 161
-		m5 = @createBitmap 'megDinner', 'm5', 15, 313
-		m6 = @createBitmap 'megSleep', 'm6', 223, 313
+		m1 = @createBitmap 'megWakes', 'm1', 30, 26
+		m2 = @createBitmap 'megBreakfast', 'm2', 446, 26
+		m3 = @createBitmap 'megLeaves', 'm3', 30, 322
+		m4 = @createBitmap 'megDishes', 'm4', 446, 322
+		m5 = @createBitmap 'megDinner', 'm5', 30, 626
+		m6 = @createBitmap 'megSleep', 'm6', 446, 626
 		meg.addChild m1, m2, m3, m4, m5, m6
 
 		for i in [1..6] by 1
 			sh = new createjs.Shape()
-			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#333').drawRoundRect(0, 0, 66, 42, 10)
+			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#333').drawRoundRect(0, 0, 132, 84, 10)
 			sh.x = @drops[i - 1].x
 			sh.y = @drops[i - 1].y
 			sh.name = 'sh'+i
@@ -128,22 +128,22 @@ class U2A4 extends Oda
 		@addToMain meg
 	setJim: ->
 		jim = new createjs.Container()
-		jim.x = 117;
-		jim.y = 124;
+		jim.x = 234;
+		jim.y = 248;
 		@current = jim.name = 'jim'
 		
 		
-		j1 = @createBitmap 'jimShower', 'j1', 15, 13
-		j2 = @createBitmap 'jimBreakfast', 'j2', 223, 13
-		j3 = @createBitmap 'jimLeaves', 'j3', 15, 161
-		j4 = @createBitmap 'jimBus', 'j4', 223, 161
-		j5 = @createBitmap 'jimCat', 'j5', 15, 313
-		j6 = @createBitmap 'jimTv', 'j6', 223, 313
+		j1 = @createBitmap 'jimShower', 'j1', 30, 26
+		j2 = @createBitmap 'jimBreakfast', 'j2', 446, 26
+		j3 = @createBitmap 'jimLeaves', 'j3', 30, 322
+		j4 = @createBitmap 'jimBus', 'j4', 446, 322
+		j5 = @createBitmap 'jimCat', 'j5', 30, 626
+		j6 = @createBitmap 'jimTv', 'j6', 446, 626
 		jim.addChild j1, j2, j3, j4, j5, j6
 
 		for i in [1..6] by 1
 			sh = new createjs.Shape()
-			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#000').drawRoundRect(0, 0, 66, 42, 10)
+			sh.graphics.beginFill('#FFF').setStrokeStyle( 2 ).beginStroke('#000').drawRoundRect(0, 0, 132, 84, 10)
 			sh.x = @drops[i - 1].x
 			sh.y = @drops[i - 1].y
 			sh.name = 'sh'+i
@@ -162,7 +162,7 @@ class U2A4 extends Oda
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha: 0, x: 0, delay: 0.5}
-		TweenMax.from @library['meg'], 1, {alpha: 0, x: @library['meg'].x + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenMax.from @library['meg'], 1, {alpha: 0, x: @library['meg'].x + 100, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@observer.notify 'init_' + @answers[@index].name + '_evaluation'
@@ -209,7 +209,7 @@ class U2A4 extends Oda
 		@index++
 		if @index < @answers.length
 			@setJim()
-			TweenMax.from @library['jim'], 1, {alpha: 0, x: @library['jim'].x + 50, delay: 1, onComplete: @initEvaluation}
+			TweenMax.from @library['jim'], 1, {alpha: 0, x: @library['jim'].x + 100, delay: 1, onComplete: @initEvaluation}
 		else
 			@finish()
 	playSound: =>
@@ -220,8 +220,8 @@ class U2A4 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
-		TweenLite.to @library['repeat'], 1, {alpha: 0, x: @x + 20}
-		TweenLite.to @library['finish'], 1, {alpha: 0, x: @x + 20}
-		TweenLite.to @library['jim'], 1, {alpha: 0, x: @library['jim'].x + 50}
+		TweenLite.to @library['repeat'], 1, {alpha: 0, x: @x + 40}
+		TweenLite.to @library['finish'], 1, {alpha: 0, x: @x + 40}
+		TweenLite.to @library['jim'], 1, {alpha: 0, x: @library['jim'].x + 100}
 		super
 	window.U2A4 = U2A4

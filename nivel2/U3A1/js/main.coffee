@@ -143,128 +143,128 @@ class U3A1 extends Oda
 		]
 		@game =
 			common: [
-				{id: 'menuback', x:'157', y:'121'}
-				{id: 'hojabreakfast', x:'164', y:'132'}
-				{id: 'hojadinner', x:'510', y:'127'}
-				{id: 'hojalunch', x:'337', y:'132'}
-				{id: 'menubreakfast', x:'174', y:'164'}
-				{id: 'menudinner', x:'526', y:'161'}
-				{id: 'menulunch', x:'349', y:'164'}
-				{id: 'labelbreakfast', x:'214', y:'149'}
-				{id: 'labeldinner', x:'582', y:'150'}
-				{id: 'labellunch', x:'407', y:'151'}
+				{id: 'menuback', x: 314, y: 242}
+				{id: 'hojabreakfast', x: 328, y:264}
+				{id: 'hojadinner', x: 1020, y: 254}
+				{id: 'hojalunch', x: 674, y: 264}
+				{id: 'menubreakfast', x: 348, y: 328}
+				{id: 'menudinner', x: 1052, y: 322}
+				{id: 'menulunch', x: 698, y: 328}
+				{id: 'labelbreakfast', x: 428, y: 298}
+				{id: 'labeldinner', x: 1164, y: 300}
+				{id: 'labellunch', x: 814, y: 302}
 			]	
 			m1: 
 				arriba:[
-					{id: 'bigm1c1', x:'185', y:'202'}
-					{id: 'bigm1c2', x:'261', y:'202'}
-					{id: 'bigm1c3', x:'181', y:'296'}
-					{id: 'bigm1c4', x:'352', y:'168'}
-					{id: 'bigm1c5', x:'372', y:'234'}
-					{id: 'bigm1c6', x:'362', y:'320'}
-					{id: 'bigm1c7', x:'534', y:'179'}
-					{id: 'bigm1c8', x:'530', y:'254'}
-					{id: 'bigm1c9', x:'590', y:'275'}
+					{id: 'bigm1c1', x: 370, y: 404}
+					{id: 'bigm1c2', x: 522, y: 404}
+					{id: 'bigm1c3', x: 362, y: 592}
+					{id: 'bigm1c4', x: 704, y: 336}
+					{id: 'bigm1c5', x: 744, y: 468}
+					{id: 'bigm1c6', x: 724, y: 640}
+					{id: 'bigm1c7', x: 1068, y: 358}
+					{id: 'bigm1c8', x: 1060, y: 508}
+					{id: 'bigm1c9', x: 1080, y: 550}
 				]
 				abajo:[
-					{id: 'm1c1', x:'143', y:'473'}
-					{id: 'm1c2', x:'206', y:'454'}
-					{id: 'm1c3', x:'260', y:'455'}
-					{id: 'm1c4', x:'322', y:'459'}
-					{id: 'm1c5', x:'417', y:'455'}
-					{id: 'm1c6', x:'489', y:'452'}
-					{id: 'm1c7', x:'586', y:'461'}
-					{id: 'm1c8', x:'690', y:'474'}
-					{id: 'm1c9', x:'182', y:'526'}
-					{id: 'm1c10', x:'284', y:'515'}
-					{id: 'm1c11', x:'364', y:'527'}
-					{id: 'm1c12', x:'448', y:'522'}
-					{id: 'm1c13', x:'536', y:'519'}
-					{id: 'm1c14', x:'609', y:'536'}
+					{id: 'm1c1', x: 286, y: 946}
+					{id: 'm1c2', x: 412, y: 908}
+					{id: 'm1c3', x: 520, y: 910}
+					{id: 'm1c4', x: 644, y: 918}
+					{id: 'm1c5', x: 834, y: 910}
+					{id: 'm1c6', x: 978, y: 904}
+					{id: 'm1c7', x: 1172, y: 922}
+					{id: 'm1c8', x: 1380, y: 948}
+					{id: 'm1c9', x: 364, y: 1052}
+					{id: 'm1c10', x: 568, y: 1030}
+					{id: 'm1c11', x: 728, y: 1054}
+					{id: 'm1c12', x: 896, y: 1044}
+					{id: 'm1c13', x: 1072, y: 1038}
+					{id: 'm1c14', x: 1218, y: 1072}
 				]
 			m2:
 				arriba: [
-					{id: 'bigm2c1', x:'181', y:'163'}
-					{id: 'bigm2c2', x:'259', y:'232'}
-					{id: 'bigm2c3', x:'184', y:'279'}
-					{id: 'bigm2c4', x:'353', y:'177'}
-					{id: 'bigm2c5', x:'408', y:'274'}
-					{id: 'bigm2c6', x:'339', y:'279'}
-					{id: 'bigm2c7', x:'548', y:'177'}
-					{id: 'bigm2c8', x:'554', y:'245'}
-					{id: 'bigm2c9', x:'536', y:'308'}
+					{id: 'bigm2c1', x: 362, y: 326}
+					{id: 'bigm2c2', x: 518, y: 464}
+					{id: 'bigm2c3', x: 368, y: 558}
+					{id: 'bigm2c4', x: 706, y: 354}
+					{id: 'bigm2c5', x: 816, y: 548}
+					{id: 'bigm2c6', x: 678, y: 558}
+					{id: 'bigm2c7', x: 1096, y: 354}
+					{id: 'bigm2c8', x: 1108, y: 490}
+					{id: 'bigm2c9', x: 1072, y: 616}
 				]
 				abajo: [
-					{id: 'm2c1', x:'145', y:'466'}
-					{id: 'm2c2', x:'235', y:'473'}
-					{id: 'm2c3', x:'292', y:'460'}
-					{id: 'm2c4', x:'373', y:'473'}
-					{id: 'm2c5', x:'462', y:'458'}
-					{id: 'm2c6', x:'523', y:'466'}
-					{id: 'm2c7', x:'615', y:'469'}
-					{id: 'm2c8', x:'664', y:'458'}
-					{id: 'm2c9', x:'207', y:'525'}
-					{id: 'm2c10', x:'298', y:'525'}
-					{id: 'm2c11', x:'380', y:'517'}
-					{id: 'm2c12', x:'491', y:'518'}
-					{id: 'm2c13', x:'557', y:'532'}
-					{id: 'm2c14', x:'635', y:'515'}
+					{id: 'm2c1', x: 290, y: 932}
+					{id: 'm2c2', x: 470, y: 946}
+					{id: 'm2c3', x: 584, y: 920}
+					{id: 'm2c4', x: 746, y: 946}
+					{id: 'm2c5', x: 924, y: 916}
+					{id: 'm2c6', x: 1046, y: 932}
+					{id: 'm2c7', x: 1230, y: 938}
+					{id: 'm2c8', x: 1328, y: 916}
+					{id: 'm2c9', x: 414, y: 1050}
+					{id: 'm2c10', x: 596, y: 1050}
+					{id: 'm2c11', x: 760, y: 1034}
+					{id: 'm2c12', x: 982, y: 1036}
+					{id: 'm2c13', x: 1114, y: 1064}
+					{id: 'm2c14', x: 1270, y: 1030}
 				]
 			m3 :
 				arriba: [
-					{id: 'bigm3c1', x:'189', y:'177'}
-					{id: 'bigm3c2', x:'262', y:'217'}
-					{id: 'bigm3c3', x:'186', y:'303'}
-					{id: 'bigm3c4', x:'364', y:'174'}
-					{id: 'bigm3c5', x:'353', y:'251'}
-					{id: 'bigm3c6', x:'403', y:'272'}
-					{id: 'bigm3c7', x:'534', y:'174'}
-					{id: 'bigm3c8', x:'587', y:'249'}
-					{id: 'bigm3c9', x:'537', y:'315'}
+					{id: 'bigm3c1', x: 378, y: 354}
+					{id: 'bigm3c2', x: 524, y: 434}
+					{id: 'bigm3c3', x: 372, y: 606}
+					{id: 'bigm3c4', x: 728, y: 348}
+					{id: 'bigm3c5', x: 706, y: 502}
+					{id: 'bigm3c6', x: 806, y: 544}
+					{id: 'bigm3c7', x: 1068, y: 348}
+					{id: 'bigm3c8', x: 1174, y: 498}
+					{id: 'bigm3c9', x: 1074, y: 630}
 				]
 				abajo: [
-					{id: 'm3c1', x:'152', y:'451'}
-					{id: 'm3c2', x:'207', y:'447'}
-					{id: 'm3c3', x:'254', y:'449'}
-					{id: 'm3c4', x:'319', y:'460'}
-					{id: 'm3c5', x:'403', y:'453'}
-					{id: 'm3c6', x:'462', y:'456'}
-					{id: 'm3c7', x:'530', y:'458'}
-					{id: 'm3c8', x:'628', y:'449'}
-					{id: 'm3c9', x:'175', y:'521'}
-					{id: 'm3c10', x:'251', y:'504'}
-					{id: 'm3c11', x:'339', y:'519'}
-					{id: 'm3c12', x:'434', y:'526'}
-					{id: 'm3c13', x:'516', y:'519'}
-					{id: 'm3c14', x:'623', y:'526'}
+					{id: 'm3c1', x: 304, y: 902}
+					{id: 'm3c2', x: 414, y: 894}
+					{id: 'm3c3', x: 508, y: 898}
+					{id: 'm3c4', x: 638, y: 920}
+					{id: 'm3c5', x: 806, y: 906}
+					{id: 'm3c6', x: 924, y: 912}
+					{id: 'm3c7', x: 1060, y: 916}
+					{id: 'm3c8', x: 1256, y: 898}
+					{id: 'm3c9', x: 350, y: 1042}
+					{id: 'm3c10', x: 502, y: 1008}
+					{id: 'm3c11', x: 678, y: 1038}
+					{id: 'm3c12', x: 868, y: 1052}
+					{id: 'm3c13', x: 1032, y: 1038}
+					{id: 'm3c14', x: 1246, y: 1052}
 				]
 			m4 :
 				arriba: [
-					{id: 'bigm4c1', x:'184', y:'191'}
-					{id: 'bigm4c2', x:'262', y:'227'}
-					{id: 'bigm4c3', x:'192', y:'287'}
-					{id: 'bigm4c4', x:'351', y:'181'}
-					{id: 'bigm4c5', x:'445', y:'235'}
-					{id: 'bigm4c6', x:'355', y:'309'}
-					{id: 'bigm4c7', x:'535', y:'174'}
-					{id: 'bigm4c8', x:'560', y:'241'}
-					{id: 'bigm4c9', x:'535', y:'313'}
+					{id: 'bigm4c1', x: 368, y: 382}
+					{id: 'bigm4c2', x: 524, y: 454}
+					{id: 'bigm4c3', x: 384, y: 574}
+					{id: 'bigm4c4', x: 702, y: 362}
+					{id: 'bigm4c5', x: 890, y: 470}
+					{id: 'bigm4c6', x: 710, y: 618}
+					{id: 'bigm4c7', x: 1070, y: 348}
+					{id: 'bigm4c8', x: 1120, y: 482}
+					{id: 'bigm4c9', x: 1070, y: 626}
 				]
 				abajo: [
-					{id: 'm4c1', x:'136', y:'453'}
-					{id: 'm4c2', x:'192', y:'469'}
-					{id: 'm4c3', x:'272', y:'454'}
-					{id: 'm4c4', x:'325', y:'463'}
-					{id: 'm4c5', x:'413', y:'462'}
-					{id: 'm4c6', x:'519', y:'454'}
-					{id: 'm4c7', x:'580', y:'474'}
-					{id: 'm4c8', x:'654', y:'462'}
-					{id: 'm4c9', x:'166', y:'523'}
-					{id: 'm4c10', x:'264', y:'526'}
-					{id: 'm4c11', x:'351', y:'522'}
-					{id: 'm4c12', x:'452', y:'527'}
-					{id: 'm4c13', x:'538', y:'519'}
-					{id: 'm4c14', x:'623', y:'525'}
+					{id: 'm4c1', x: 272, y: 906}
+					{id: 'm4c2', x: 384, y: 938}
+					{id: 'm4c3', x: 544, y: 908}
+					{id: 'm4c4', x: 650, y: 926}
+					{id: 'm4c5', x: 826, y: 924}
+					{id: 'm4c6', x: 1038, y: 908}
+					{id: 'm4c7', x: 1160, y: 948}
+					{id: 'm4c8', x: 1308, y: 924}
+					{id: 'm4c9', x: 332, y: 1046}
+					{id: 'm4c10', x: 528, y: 1052}
+					{id: 'm4c11', x: 702, y: 1044}
+					{id: 'm4c12', x: 904, y: 1054}
+					{id: 'm4c13', x: 1076, y: 1038}
+					{id: 'm4c14', x: 1246, y: 1050}
 				]
 			answers:
 				m1: [
@@ -401,14 +401,14 @@ class U3A1 extends Oda
 		super
 		@answers = @clone @game.answers
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the foods and drinks to the menu.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 18, 0
+		@insertInstructions 'instructions', 'Listen and drag the foods and drinks to the menu.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 18, 0
 		@setDropper().setMenu(1).introEvaluation()
 		@intento = 0
 	setDropper: ->
 		common = new createjs.Container()
 		common.name = 'common'
-		repeat = new Button 'repeat', (@preload.getResult 'repeatbtn'), 0, 404, 413
+		repeat = new Button 'repeat', (@preload.getResult 'repeatbtn'), 0, 808, 826
 		for i in [1..@game.common.length]
 			v = @createBitmap @game.common[i - 1].id, @game.common[i - 1].id, @game.common[i - 1].x, @game.common[i - 1].y
 			common.addChild v
@@ -434,8 +434,8 @@ class U3A1 extends Oda
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenLite.from @library['common'], 1, {alpha :0, x: 0, delay: 1}
-		TweenLite.from @library['repeat'], 1, {alpha :0, y: @library['repeat'].y + 20, delay: 1.2}
-		TweenLite.from @library['menu'], 1, {alpha :0, y: @library['menu'].y + 20, delay: 1.4, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['repeat'], 1, {alpha :0, y: @library['repeat'].y + 40, delay: 1.2}
+		TweenLite.from @library['menu'], 1, {alpha :0, y: @library['menu'].y + 40, delay: 1.4, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@a_index = 0
@@ -478,7 +478,7 @@ class U3A1 extends Oda
 		else
 			setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
-		TweenLite.to @library['menu'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
+		TweenLite.to @library['menu'], 0.5, {alpha: 0, y: -400, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.total
@@ -493,7 +493,7 @@ class U3A1 extends Oda
 		createjs.Sound.play @answers["m#{@index+1}"][@a_index].sound
 	finish: ->
 		TweenLite.to @library['common'], 1, {alpha :0, x: 0}
-		TweenLite.to @library['repeat'], 1, {alpha :0, y: @library['repeat'].y + 20}
-		TweenLite.to @library['menu'], 1, {alpha :0, y: @library['menu'].y + 20}
+		TweenLite.to @library['repeat'], 1, {alpha :0, y: @library['repeat'].y + 40}
+		TweenLite.to @library['menu'], 1, {alpha :0, y: @library['menu'].y + 40}
 		super
 	window.U3A1 = U3A1

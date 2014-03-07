@@ -2,7 +2,6 @@ class U3A5 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
-			{id: 'inst', src: 'inst.png'}
 			{id: 'c1', src: 'circle1.png'}
 			{id: 'c2', src: 'circle2.png'}
 			{id: 'repeatbtn', src: 'repeat-btn.png'}
@@ -55,10 +54,10 @@ class U3A5 extends Oda
 					{idx:4, t:"soccer ball", p:'p2'}
 				]
 				positions:[
-					{x:'112', y:'166'}
-					{x:'334', y:'173'}
-					{x:'108', y:'384'}
-					{x:'325', y:'379'}
+					{x: 224, y: 332}
+					{x: 668, y: 346}
+					{x: 216, y: 768}
+					{x: 650, y: 758}
 				]
 			}
 			{
@@ -71,10 +70,10 @@ class U3A5 extends Oda
 					{idx:6, t:"grandpa", p:'p2'}
 				]
 				positions:[
-					{x:'103', y:'170'}
-					{x:'326', y:'173'}
-					{x:'100', y:'378'}
-					{x:'318', y:'371'}	
+					{x: 206, y: 340}
+					{x: 652, y: 346}
+					{x: 200, y: 756}
+					{x: 636, y: 742}	
 				]
 			}
 		]
@@ -83,13 +82,13 @@ class U3A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read and drag the words to complete the story.', 40, 100
-		ti = @createBitmap 'title', 'title1', 350, 135, 'tc'
+		@insertInstructions 'instructions', 'Read and drag the words to complete the story.', 80, 200
+		ti = @createBitmap 'title', 'title1', 700, 230, 'tc'
 		ti.scaleX = ti.scaleY = 0.8
 		@addToMain ti
-		@insertBitmap 'btnnext', 'btn', 760, 520, 'tc'
+		@insertBitmap 'btnnext', 'btn', 1520, 1040, 'tc'
 		@library['btnnext'].visible = off
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 12, 0
 		@intento = 0
 		@setCuento(1).introEvaluation()
 	setCuento: (scene) ->
@@ -108,14 +107,14 @@ class U3A5 extends Oda
 				else
 					m = @createSprite "sc#{i}", ["#{(scene - 1) * 4 + i}", "#{(scene - 1) * 4 + i}b"],null, @game[scene - 1].positions[i - 1].x, @game[scene - 1].positions[i - 1].y
 
-			m.scaleX = m.scaleY = 0.8
+			m.scaleX = m.scaleY = 1.1
 			m.index = (scene - 1) * 4 + i
 			cuento.addChild m
 			@addToLibrary m
 		for i in [1..@game[scene - 1].texts.length] by 1
-			t = new DraggableText "t#{i}", @game[scene - 1].texts[i-1].t, @game[scene - 1].texts[i-1].idx, 700, i * 60 + 160
-			t.text.lineHeight = 20
-			t.text.lineWidth = 200
+			t = new DraggableText "t#{i}", @game[scene - 1].texts[i-1].t, @game[scene - 1].texts[i-1].idx, 1400, i * 120 + 320
+			t.text.lineHeight = 40
+			t.text.lineWidth = 400
 			t.text.textAlign = 'center'
 			t.setHitArea()
 			if @game[scene - 1].texts[i-1].p
@@ -131,7 +130,7 @@ class U3A5 extends Oda
 		scn = @game[scene - 1]
 		for i in [1..scn.positions.length] by 1
 			m = @createBitmap "#{(scene - 1) * 4 + i}b", "#{(scene - 1) * 4 + i}b", scn.positions[i - 1].x, scn.positions[i - 1].y
-			m.scaleX = m.scaleY = 0.8
+			m.scaleX = m.scaleY = 1.1
 			cuento.addChild m
 			@addToLibrary m
 
@@ -142,8 +141,8 @@ class U3A5 extends Oda
 			@observer.subscribe 'init_evaluation', @library["t#{i}"].onInitEvaluation
 		TweenLite.from @library['header'], 1, {y: -@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha: 0, x: 0, delay: 0.5}
-		TweenLite.from @library['title'], 1, {alpha: 0, y: @library['title'].y + 20, delay: 1}
-		TweenLite.from @library['cuento'], 1, {alpha: 0, y: @library['cuento'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['title'], 1, {alpha: 0, y: @library['title'].y + 40, delay: 1}
+		TweenLite.from @library['cuento'], 1, {alpha: 0, y: @library['cuento'].y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for i in [1..@game[@scene - 1].texts.length] by 1
@@ -184,8 +183,8 @@ class U3A5 extends Oda
 		if @scene < 2
 			@library['btnnext'].visible = on
 			@library['btnnext'].alpha = 1
-			@library['btnnext'].y = 520
-			TweenLite.from @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
+			@library['btnnext'].y = 1040
+			TweenLite.from @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 20}
 			@library['btnnext'].addEventListener 'click', @nextEvaluation
 		else
 			@nextEvaluation()
@@ -193,24 +192,24 @@ class U3A5 extends Oda
 		@index++
 		createjs.Sound.stop()
 		if @index < @game.length
-			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 10}
-			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
+			TweenLite.to @library['btnnext'], 1, {alpha:0, y:@library['btnnext'].y + 20}
+			TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 20}
 			@setCuento @index + 1
-			TweenLite.from @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
+			TweenLite.from @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 20}
 			for i in [1..@game[@scene - 1].texts.length] by 1
 				@library["t#{i}"].onInitEvaluation()
 				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
 			@finalscene = 0
-			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 20}
+			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
 			setTimeout @storyTale, 2 * 1000
 	storyTale: =>
-		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 50}
+		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 100}
 		if @finalscene < @game.length
 			@setCuentoFinal @finalscene + 1
 			s = createjs.Sound.play "scene#{@scene}"
 			s.addEventListener 'complete', @storyTale
-			TweenLite.to @library['cuento'], 1, {alpha:1, y:@library['cuento'].y + 10}
+			TweenLite.to @library['cuento'], 1, {alpha:1, y:@library['cuento'].y + 20}
 			@finalscene++
 		else
 			@finish()

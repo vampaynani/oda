@@ -100,11 +100,11 @@ class U2A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Drag the puzzle pieces, read and click on the correct answers.', 40, 100
-		@insertBitmap 'p1', 'p1', 731, 436
-		@insertBitmap 'p2', 'p2', 731, 483
-		@insertBitmap 'p3', 'p3', 731, 530
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@insertInstructions 'instructions', 'Drag the puzzle pieces, read and click on the correct answers.', 80, 200
+		@insertBitmap 'p1', 'p1', 1462, 872
+		@insertBitmap 'p2', 'p2', 1462, 966
+		@insertBitmap 'p3', 'p3', 1462, 1060
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 8, 0
 		@introEvaluation()
 	introEvaluation: ->
 		super
@@ -121,77 +121,77 @@ class U2A3 extends Oda
 			@blink @library["p#{i}"], off
 			@library['p'+i].removeEventListener 'click', @selectPuzzle
 
-		@insertBitmap 'behind','behind', 118, 290
-		@insertBitmap 'in','in', 118, 347
-		@insertBitmap 'under','under', 118, 404
-		@insertBitmap 'next','next', 628, 293
-		@insertBitmap 'on','on', 628, 350
-		@insertBitmap 'above','above', 628, 407
+		@insertBitmap 'behind','behind', 236, 580
+		@insertBitmap 'in','in', 236, 694
+		@insertBitmap 'under','under', 236, 808
+		@insertBitmap 'next','next', 1256, 586
+		@insertBitmap 'on','on', 1256, 700
+		@insertBitmap 'above','above', 1256, 814
 
 		switch e.target.name
 			when 'p1'
 				@pieces =
-					p1p1: {x: 10, y: 10, texta:'The picture is',textb:'the fridge.', label:'above', back: on}
-					p1p2: {x: 83, y: 10}
-					p1p3: {x: 180, y: 10, texta:'The cat is',textb:'the flowers.', label:'next to', back: on}
-					p1p4: {x: 10, y: 68}
-					p1p5: {x: 82, y: 80, texta:'The apples are',textb:'the sink.', label:'in', back: on}
-					p1p6: {x: 175, y: 80}
-					p1p7: {x: 10, y: 150, texta:'The broom is',textb:'the fridge.', label:'next to', back: on}
-					p1p8: {x: 77, y: 133, texta:'The fruit is',textb:'the table.', label:'on', back: on}
-					p1p9: {x: 175, y: 135, texta:'The cake is',textb:'the oven.', label:'in', back: on}
-					p1p10: {x: 10, y: 202, texta:'The mouse is',textb:'the chair.', label:'behind', back: on}
-					p1p11: {x: 83, y: 202, texta:'The puppy is',textb:'the table.', label:'under', back: on}
-					p1p12: {x: 180, y: 208}
+					p1p1: {x: 20, y: 20, texta:'The picture is',textb:'the fridge.', label:'above', back: on}
+					p1p2: {x: 166, y: 20}
+					p1p3: {x: 360, y: 20, texta:'The cat is',textb:'the flowers.', label:'next to', back: on}
+					p1p4: {x: 20, y: 136}
+					p1p5: {x: 164, y: 160, texta:'The apples are',textb:'the sink.', label:'in', back: on}
+					p1p6: {x: 350, y: 160}
+					p1p7: {x: 20, y: 300, texta:'The broom is',textb:'the fridge.', label:'next to', back: on}
+					p1p8: {x: 154, y: 266, texta:'The fruit is',textb:'the table.', label:'on', back: on}
+					p1p9: {x: 350, y: 270, texta:'The cake is',textb:'the oven.', label:'in', back: on}
+					p1p10: {x: 20, y: 404, texta:'The mouse is',textb:'the chair.', label:'behind', back: on}
+					p1p11: {x: 166, y: 404, texta:'The puppy is',textb:'the table.', label:'under', back: on}
+					p1p12: {x: 360, y: 416}
 				@answers = 8
 				@setPuzzle 1
 			when 'p2'
 				@pieces =
-					p2p1: {x: 28, y: 10, texta:'The picture is',textb:'the wall.', label:'on', back: on}
-					p2p2: {x: 106, y: 10, texta:'The clock is',textb:'the window.', label:'above', back: on}
-					p2p3: {x: 206, y: 10, texta:'The plant is',textb:'the bookcase.', label:'on', back: on}
-					p2p4: {x: 28, y: 66, texta:'The lamp is',textb:'the sofa.', label:'next to', back: on}
-					p2p5: {x: 104, y: 80}
-					p2p6: {x: 202, y: 80, texta:'The books are',textb:'the bookcase.', label:'in', back: on}
-					p2p7: {x: 28, y: 147, texta:'The boy is',textb:'the armchair.', label:'behind', back: on}
-					p2p8: {x: 98, y: 133, texta:'The doll is',textb:'the sofa.', label:'on', back: on}
-					p2p9: {x: 202, y: 133}
-					p2p10: {x: 28, y: 201}
-					p2p11: {x: 105, y: 201, texta:'The dog is',textb:'the table.', label:'under', back: on}
-					p2p12: {x: 209, y: 207}
+					p2p1: {x: 56, y: 20, texta:'The picture is',textb:'the wall.', label:'on', back: on}
+					p2p2: {x: 212, y: 20, texta:'The clock is',textb:'the window.', label:'above', back: on}
+					p2p3: {x: 412, y: 20, texta:'The plant is',textb:'the bookcase.', label:'on', back: on}
+					p2p4: {x: 56, y: 132, texta:'The lamp is',textb:'the sofa.', label:'next to', back: on}
+					p2p5: {x: 208, y: 160}
+					p2p6: {x: 404, y: 160, texta:'The books are',textb:'the bookcase.', label:'in', back: on}
+					p2p7: {x: 56, y: 294, texta:'The boy is',textb:'the armchair.', label:'behind', back: on}
+					p2p8: {x: 196, y: 266, texta:'The doll is',textb:'the sofa.', label:'on', back: on}
+					p2p9: {x: 404, y: 266}
+					p2p10: {x: 56, y: 402}
+					p2p11: {x: 210, y: 402, texta:'The dog is',textb:'the table.', label:'under', back: on}
+					p2p12: {x: 418, y: 414}
 				@answers = 8
 				@setPuzzle 2
 			when 'p3'
 				@pieces =
-					p3p1: {x: 15, y: 12}
-					p3p2: {x: 104, y: 12}
-					p3p3: {x: 174, y: 12, texta:'The boots are',textb:'the teddy bear.', label:'next to', back: on}
-					p3p4: {x: 268, y: 12}
-					p3p5: {x: 15, y: 89, texta:'The picture is',textb:'the bed.', label:'above', back: on}
-					p3p6: {x: 105, y: 89, texta:'The brown cat is',textb:'the bed.', label:'on', back: on}
-					p3p7: {x: 172, y: 89, texta:'The dress is',textb:'the closet.', label:'in', back: on}
-					p3p8: {x: 263, y: 89, texta:'The pencil case is',textb:'the dresser.', label:'on', back: on}
-					p3p9: {x: 15, y: 170, texta:'The mouse is',textb:'the bed.', label:'behind', back: on}
-					p3p10: {x: 88, y: 170, texta:'The white cat is',textb:'the bed.', label:'under', back: on}
-					p3p11: {x: 192, y: 170}
-					p3p12: {x: 262, y: 170, texta:'The schoolbag is',textb:'the dresser.', label:'next to', back: on}
+					p3p1: {x: 30, y: 24}
+					p3p2: {x: 208, y: 24}
+					p3p3: {x: 348, y: 24, texta:'The boots are',textb:'the teddy bear.', label:'next to', back: on}
+					p3p4: {x: 536, y: 24}
+					p3p5: {x: 30, y: 180, texta:'The picture is',textb:'the bed.', label:'above', back: on}
+					p3p6: {x: 210, y: 180, texta:'The brown cat is',textb:'the bed.', label:'on', back: on}
+					p3p7: {x: 344, y: 180, texta:'The dress is',textb:'the closet.', label:'in', back: on}
+					p3p8: {x: 526, y: 180, texta:'The pencil case is',textb:'the dresser.', label:'on', back: on}
+					p3p9: {x: 30, y: 340, texta:'The mouse is',textb:'the bed.', label:'behind', back: on}
+					p3p10: {x: 176, y: 340, texta:'The white cat is',textb:'the bed.', label:'under', back: on}
+					p3p11: {x: 384, y: 340}
+					p3p12: {x: 524, y: 340, texta:'The schoolbag is',textb:'the dresser.', label:'next to', back: on}
 				@answers = 8
 				@setPuzzle 3
 
-		TweenLite.from @library['behind'], 1, {alpha:0, y:@library['behind'].y - 20}
-		TweenLite.from @library['in'], 1, {alpha:0, y:@library['in'].y - 20, delay: 0.2}
-		TweenLite.from @library['under'], 1, {alpha:0, y:@library['under'].y - 20, delay: 0.4}
-		TweenLite.from @library['next'], 1, {alpha:0, y:@library['next'].y - 20}
-		TweenLite.from @library['on'], 1, {alpha:0, y:@library['on'].y - 20, delay: 0.2}
-		TweenLite.from @library['above'], 1, {alpha:0, y:@library['above'].y - 20, delay: 0.4}
+		TweenLite.from @library['behind'], 1, {alpha:0, y:@library['behind'].y - 40}
+		TweenLite.from @library['in'], 1, {alpha:0, y:@library['in'].y - 40, delay: 0.2}
+		TweenLite.from @library['under'], 1, {alpha:0, y:@library['under'].y - 40, delay: 0.4}
+		TweenLite.from @library['next'], 1, {alpha:0, y:@library['next'].y - 40}
+		TweenLite.from @library['on'], 1, {alpha:0, y:@library['on'].y - 40, delay: 0.2}
+		TweenLite.from @library['above'], 1, {alpha:0, y:@library['above'].y - 40, delay: 0.4}
 	setPuzzle: (num) ->
 		@num = num
 		puzzle = new createjs.Container()
 		puzzle.x = switch num
-			when 1 then 260
-			when 2 then 240
-			when 3 then 220
-		puzzle.y = 230
+			when 1 then 520
+			when 2 then 480
+			when 3 then 440
+		puzzle.y = 460
 		puzzle.name = 'puzzle'
 
 		m = @createBitmap "m#{num}", "m#{num}", 0, 0
@@ -208,13 +208,13 @@ class U2A3 extends Oda
 
 		dragpieces = new createjs.Container()
 		dragpieces.x = stageSize.w / 2
-		dragpieces.y = 150
+		dragpieces.y = 300
 		dragpieces.name = 'dragpieces'
 		index = 0
 		
 		for i in [1..12] by 1
 			if @pieces["p#{num}p#{i}"].back
-				dpp = new Draggable "dp#{num}p#{i}", @preload.getResult("p#{num}p#{i}"), "p#{num}p#{i}", index*88, 0
+				dpp = new Draggable "dp#{num}p#{i}", @preload.getResult("p#{num}p#{i}"), "p#{num}p#{i}", index * 176, 0
 				dpp.addEventListener 'drop', @evaluateAnswer
 				@observer.subscribe 'init_drag', dpp.onInitEvaluation
 				@observer.subscribe 'stop_drag', dpp.onStopEvaluation
@@ -223,14 +223,14 @@ class U2A3 extends Oda
 				@addToLibrary dpp
 				dragpieces.addChild dpp
 		
-		dragpieces.width = index*88
+		dragpieces.width = index * 176
 		@setReg(dragpieces, dragpieces.width / 2, 0)
 		
 		@addToMain puzzle
 		@addToMain dragpieces
 
-		TweenLite.from puzzle, 1, {alpha:0, y:puzzle.y - 20, delay: 0.6}
-		TweenLite.from dragpieces, 1, {alpha:0, y:puzzle.y - 20, delay: 0.6, onComplete: @initDrag}
+		TweenLite.from puzzle, 1, {alpha:0, y:puzzle.y - 40, delay: 0.6}
+		TweenLite.from dragpieces, 1, {alpha:0, y:puzzle.y - 40, delay: 0.6, onComplete: @initDrag}
 	initDrag: =>
 		@observer.notify 'init_drag'
 	initListeners: ->
@@ -255,7 +255,7 @@ class U2A3 extends Oda
 		if hit.hitTest pt.x, pt.y
 			hpt = hit.parent.localToGlobal hit.x, hit.y
 			htt = @answer.parent.globalToLocal hpt.x, hpt.y
-			@wordcompleter = new AfterBeforeWord 'dropper', @pieces[@answer.index].texta, '', @pieces[@answer.index].textb, '#FFF', '#E90E2C', 150, 560, 110, 30
+			@wordcompleter = new AfterBeforeWord 'dropper', @pieces[@answer.index].texta, '', @pieces[@answer.index].textb, '#FFF', '#E90E2C', 300, 1120, 220, 60
 			
 			@wordcompleter.x = stageSize.w / 2 - @wordcompleter.width / 2
 			
@@ -294,8 +294,8 @@ class U2A3 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
-		TweenLite.to @library['dragpieces'], 1, {alpha:0, y:@y - 20}
-		TweenLite.to @library['puzzle'], 1, {alpha:0, y:@y - 20}
+		TweenLite.to @library['dragpieces'], 1, {alpha:0, y:@y - 40}
+		TweenLite.to @library['puzzle'], 1, {alpha:0, y:@y - 40}
 		TweenMax.to [@library['p1'], @library['p2'], @library['p3'], @library['behind'], @library['in'], @library['under'], @library['next'],@library['on'], @library['above']], 1, {alpha:0, y:stageSize.h}
 		super
 	window.U2A3 = U2A3

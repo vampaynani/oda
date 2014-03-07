@@ -35,30 +35,30 @@ class U2A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read, look and drag the phrases to complete the sentences.', 30, 100
-		@insertBitmap 'casa', 'casa', 84, 137
+		@insertInstructions 'instructions', 'Read, look and drag the phrases to complete the sentences.', 60, 200
+		@insertBitmap 'casa', 'casa', 168, 274
 		@intento = 0
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 12, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 12, 0
 		@setDropper().setClouds().introEvaluation()
 	setDropper: ->
-		@addToMain new WordCompleter 'dropper', '', '', '#FFF', '#E90E2C', 150, 525, 175, 30
+		@addToMain new WordCompleter 'dropper', '', '', '#FFF', '#E90E2C', 300, 1050, 350, 60
 		@
 	setClouds: ->
 		nube1 = new createjs.Container()
-		nube1.x = 661
-		nube1.y = 130
+		nube1.x = 1322
+		nube1.y = 260
 		nube1.name = 'nube1'
 		nube2 = new createjs.Container()
-		nube2.x = 654
-		nube2.y = 223
+		nube2.x = 1308
+		nube2.y = 446
 		nube2.name = 'nube2'
 		nube3 = new createjs.Container()
-		nube3.x = 650
-		nube3.y = 327
+		nube3.x = 1300
+		nube3.y = 654
 		nube3.name = 'nube3'
 		nube4 = new createjs.Container()
-		nube4.x = 645
-		nube4.y = 425
+		nube4.x = 1290
+		nube4.y = 850
 		nube4.name = 'nube4'
 		
 		n1 = @createBitmap 'n1', 'n1', 0, 0
@@ -66,10 +66,10 @@ class U2A1 extends Oda
 		n3 = @createBitmap 'n3', 'n3', 0, 0
 		n4 = @createBitmap 'n4', 'n4', 0, 0
 
-		tn1 = new DraggableText 'tn0', "There is", 0, 14, 21 
-		tn2 = new DraggableText 'tn1', "There are", 1, 15, 25 
-		tn3 = new DraggableText 'tn2', "There isn't", 2, 15, 20 
-		tn4 = new DraggableText 'tn3', "There aren't", 3, 13, 25 
+		tn1 = new DraggableText 'tn0', "There is", 0, 28, 42 
+		tn2 = new DraggableText 'tn1', "There are", 1, 30, 50 
+		tn3 = new DraggableText 'tn2', "There isn't", 2, 30, 40 
+		tn4 = new DraggableText 'tn3', "There aren't", 3, 26, 50 
 
 		nube1.addChild n1, tn1
 		nube2.addChild n2, tn2
@@ -88,8 +88,8 @@ class U2A1 extends Oda
 
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['casa'], 1, {alpha: 0, y: @library['casa'].y + 50, delay: 1}
-		TweenLite.from @library['dropper'], 1, {alpha: 0, x: @library['dropper'].x + 50, ease: Quart.easeOut, delay: 3, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['casa'], 1, {alpha: 0, y: @library['casa'].y + 100, delay: 1}
+		TweenLite.from @library['dropper'], 1, {alpha: 0, x: @library['dropper'].x + 100, ease: Quart.easeOut, delay: 3, onComplete: @playInstructions, onCompleteParams: [@]}
 		TweenMax.allFrom [@library['nube1'], @library['nube2'], @library['nube3'], @library['nube4']], 1, {alpha: 0, y: stageSize.h, delay: 2}
 	initEvaluation: (e) =>
 		super
@@ -122,16 +122,16 @@ class U2A1 extends Oda
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
-			@library['dropper'].y = 525
-			@library['dropper'].x = 150 + 50
+			@library['dropper'].y = 1050
+			@library['dropper'].x = 400
 			@library['dropper'].changeText ''
 			@library['dropper'].changeLabel @answers[@index].text
-			TweenLite.to @library['dropper'], 0.5, {alpha: 1, x: 150, ease: Quart.easeOut}
+			TweenLite.to @library['dropper'], 0.5, {alpha: 1, x: 300, ease: Quart.easeOut}
 		else
 			@finish()
 	finish: ->
-		TweenLite.to @library['casa'], 1, {alpha: 0, y: @library['casa'].y + 50}
-		TweenLite.to @library['dropper'], 1, {alpha: 0, x: @library['dropper'].x + 50, ease: Quart.easeOut}
+		TweenLite.to @library['casa'], 1, {alpha: 0, y: @library['casa'].y + 100}
+		TweenLite.to @library['dropper'], 1, {alpha: 0, x: @library['dropper'].x + 100, ease: Quart.easeOut}
 		TweenMax.allTo [@library['nube1'], @library['nube2'], @library['nube3'], @library['nube4']], 1, {alpha: 0, y: stageSize.h}
 		super
 	window.U2A1 = U2A1

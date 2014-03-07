@@ -106,11 +106,11 @@ class U3A3 extends Oda
 				{id:'saladStart5Final2'}
 			]
 			texts:[
-				{t:'Wash the fruit.',x:'165',y:'487'}
-				{t:'Wash your hands.',x:'294',y:'456'}
-				{t:'  Mix the fruit.  ',x:'430',y:'487'}
-				{t:'  Serve and eat!  ',x:'553',y:'456'}
-				{t:'  Cut the fruit.  ',x:'696',y:'487'}
+				{t:'Wash the fruit.', x: 330, y: 974}
+				{t:'Wash your hands.', x: 588, y: 912}
+				{t:'  Mix the fruit.  ', x: 860, y: 974}
+				{t:'  Serve and eat!  ', x: 1106, y: 912}
+				{t:'  Cut the fruit.  ', x: 1392, y: 974}
 			]
 		@sandwich =
 			drags:[
@@ -121,31 +121,31 @@ class U3A3 extends Oda
 				{id:'sandwichStart5Final2'}
 			]
 			texts:[
-				{t:'Put slices of turkey on the bread.',x:'165',y:'487'}
-				{t:'Wash your hands.',x:'294',y:'456'}
-				{t:'Spread mayonnaise on the bread.',x:'430',y:'487'}
-				{t:'Eat your sandwich!',x:'553',y:'456'}
-				{t:'Put the two slices of bread together.',x:'696',y:'487'}
+				{t:'Put slices of turkey on the bread.', x: 330, y: 974}
+				{t:'Wash your hands.', x: 588, y: 912}
+				{t:'Spread mayonnaise on the bread.', x: 860, y: 974}
+				{t:'Eat your sandwich!', x: 1106,y: 912}
+				{t:'Put the two slices of bread together.', x: 1392, y: 974}
 			]
 		@positions = 
 			dragsImg:[
-				{x:'160',y:'195'}
-				{x:'284',y:'195'}
-				{x:'407',y:'195'}
-				{x:'531',y:'195'}
-				{x:'654',y:'195'}
+				{x: 320, y: 390}
+				{x: 568, y: 390}
+				{x: 814, y: 390}
+				{x: 1062, y: 390}
+				{x: 1308, y: 390}
 			]		
 			steps:[
-				{x:77, y:296}
-				{x:219,y:296}
-				{x:360,y:296}
-				{x:502,y:296}
-				{x:644,y:296}
+				{x: 154, y: 592}
+				{x: 438, y: 592}
+				{x: 720, y: 592}
+				{x: 1004, y: 592}
+				{x: 1288, y: 592}
 			]
-			ready: {x:431,y:539}
-			start: {x:284,y:539}
-			score: {x:86,y:191}
-			titulo: {x:410,y:131}
+			ready: {x: 862, y: 1078}
+			start: {x: 568, y: 1078}
+			score: {x: 172, y: 382}
+			titulo: {x: 820, y: 262}
 		@answers =
 			sandwich: [
 				{t:'sandwichstep1', d:'d2'}
@@ -175,14 +175,14 @@ class U3A3 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Drag the pictures and instructions in the correct order and click on the Ready to Eat! button.', 40, 100		
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@insertInstructions 'instructions', 'Drag the pictures and instructions in the correct order and click on the Ready to Eat! button.', 80, 200		
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@setStart()
 	setStart:  ->
-		@insertBitmap 'propsalad', 'propsalad', 412, 361, 'tc'
-		@insertBitmap 'btnsalad', 'btnsalad', 412, 450, 'tc'
-		@insertBitmap 'propsandwich', 'propsandwich', 412, 149, 'tc'
-		@insertBitmap 'btnsandwich', 'btnsandwich', 412, 244, 'tc'
+		@insertBitmap 'propsalad', 'propsalad', 824, 722, 'tc'
+		@insertBitmap 'btnsalad', 'btnsalad', 824, 900, 'tc'
+		@insertBitmap 'propsandwich', 'propsandwich', 824, 298, 'tc'
+		@insertBitmap 'btnsandwich', 'btnsandwich', 824, 488, 'tc'
 		@library['btnsalad'].addEventListener 'click', @setSalad
 		@library['btnsandwich'].addEventListener 'click', @setSandwich
 		@
@@ -202,8 +202,8 @@ class U3A3 extends Oda
 
 		for i in [1..5] by 1
 			s = @createBitmap 'sandwichstep'+i, 'sandwichstep', @positions.steps[i-1].x, @positions.steps[i-1].y
-			n = @createBitmap 'sandwichnumber'+i, 'sandwichnumber'+i, s.x + 56, s.y + 43, 'mc'
-			l = @createBitmap 'sandwichline'+i, 'sandwichline', s.x - 10, s.y + 90
+			n = @createBitmap 'sandwichnumber'+i, 'sandwichnumber'+i, s.x + 112, s.y + 86, 'mc'
+			l = @createBitmap 'sandwichline'+i, 'sandwichline', s.x - 20, s.y + 180
 			s.scaleX = s.scaleY = 0.46
 			@addToLibrary s, l
 			sandwich.addChild s, n, l
@@ -227,9 +227,9 @@ class U3A3 extends Oda
 		for i in [1..@sandwich.texts.length] by 1
 			value = @sandwich.texts[i - 1]
 			v = new DraggableText "dt#{i}", value.t, i, value.x, value.y
-			v.text.font = '20px Arial'
-			v.text.lineHeight = 40
-			v.text.lineWidth = 200
+			v.text.font = '40px Arial'
+			v.text.lineHeight = 80
+			v.text.lineWidth = 400
 			v.text.textAlign = 'center'
 			v.scaleX = v.scaleY = 0.46
 			v.setHitArea()
@@ -248,8 +248,8 @@ class U3A3 extends Oda
 
 		for i in [1..5] by 1
 			s = @createBitmap 'saladstep'+i, 'saladstep', @positions.steps[i-1].x, @positions.steps[i-1].y
-			n = @createBitmap 'saladnumber'+i, 'saladnumber'+i, s.x + 56, s.y + 43, 'mc'
-			l = @createBitmap 'saladline'+i, 'saladline', s.x - 10, s.y + 90
+			n = @createBitmap 'saladnumber'+i, 'saladnumber'+i, s.x + 112, s.y + 86, 'mc'
+			l = @createBitmap 'saladline'+i, 'saladline', s.x - 20, s.y + 180
 			s.scaleX = s.scaleY = 0.46
 			@addToLibrary s, l
 			salad.addChild s, n, l
@@ -273,9 +273,9 @@ class U3A3 extends Oda
 		for i in [1..@salad.texts.length] by 1
 			value = @salad.texts[i - 1]
 			v = new DraggableText "dt#{i}", value.t, i, value.x, value.y
-			v.text.font = '20px Arial'
-			v.text.lineHeight = 40
-			v.text.lineWidth = 200
+			v.text.font = '40px Arial'
+			v.text.lineHeight = 80
+			v.text.lineWidth = 400
 			v.text.textAlign = 'center'
 			v.scaleX = v.scaleY = 0.46
 			v.setHitArea()
@@ -327,9 +327,9 @@ class U3A3 extends Oda
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 			if hit.hitTest pt.x, pt.y
 				if @current is 'sandwich'
-					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 10}, 1, @answer.scaleX, @answer.scaleY
+					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 20}, 1, @answer.scaleX, @answer.scaleY
 				if @current is 'salad'
-					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 7}, 1, @answer.scaleX, @answer.scaleY
+					@answer.putInPlace {x: hit.x + hit.width / 2, y: hit.y + 14}, 1, @answer.scaleX, @answer.scaleY
 				dropped = on
 			else
 				i++
@@ -341,7 +341,7 @@ class U3A3 extends Oda
 		@library.btnready.blink(off)
 		@library.counter.stop()
 		for value in @answers[@current]
-			pt = @library[value.t].localToLocal 5, 5, @library[value.d]
+			pt = @library[value.t].localToLocal 10, 10, @library[value.d]
 			if @library[value.t].name.length > 3
 				npt = @library[value.t].localToLocal 0, 0, @mainContainer
 			else
@@ -359,13 +359,13 @@ class U3A3 extends Oda
 		@finishEvaluation()
 	finishEvaluation: =>
 		if not @complete
-			@insertBitmap 'chefAgain', 'chefAgain', 400, 600, 'bc'
+			@insertBitmap 'chefAgain', 'chefAgain', 800, 1200, 'bc'
 		else
 			if @current is 'salad'
-				@insertBitmap 'chefSalad', 'chefSalad', 400, 600, 'bc'
+				@insertBitmap 'chefSalad', 'chefSalad', 800, 1200, 'bc'
 			if @current is 'sandwich'
-				@insertBitmap 'chefSandwich', 'chefSandwich', 400, 600, 'bc'
-		TweenLite.to @library[@current], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @finish}
+				@insertBitmap 'chefSandwich', 'chefSandwich', 800, 1200, 'bc'
+		TweenLite.to @library[@current], 0.5, {alpha: 0, y: -400, ease: Back.easeOut, onComplete: @finish}
 	finish: =>
 		super
 	window.U3A3 = U3A3

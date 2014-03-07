@@ -52,12 +52,12 @@ class U2A6 extends Oda
 	setStage: ->
 		super
 		@buckets = [
-			{x:132, y:492, a: on}
-			{x:232, y:466, a: on}
-			{x:332, y:492, a: on}
-			{x:432, y:466, a: on}
-			{x:532, y:492, a: on}
-			{x:632, y:466, a: on}
+			{x:264, y:984, a: on}
+			{x:464, y:932, a: on}
+			{x:664, y:984, a: on}
+			{x:864, y:932, a: on}
+			{x:1064, y:984, a: on}
+			{x:1264, y:932, a: on}
 		]
 		@random = []
 		count = 0
@@ -73,21 +73,21 @@ class U2A6 extends Oda
 		
 		@insertBitmap 'background', 'background', 0, 50
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Race the clock! Drag the numerals to the number words.', 40, 100
-		@insertBitmap 'l1', 'level1Btn', 731, 436
-		@insertBitmap 'l2', 'level2Btn', 731, 483
-		@insertBitmap 'l3', 'level3Btn', 731, 530
+		@insertInstructions 'instructions', 'Race the clock! Drag the numerals to the number words.', 80, 200
+		@insertBitmap 'l1', 'level1Btn', 1462, 872
+		@insertBitmap 'l2', 'level2Btn', 1462, 966
+		@insertBitmap 'l3', 'level3Btn', 1462, 1060
 		
 		for i in [0..5] by 1
 			c = new createjs.Container()
 			n = @bucketName @random[i]
-			t = new createjs.Text "#{n}", '16px Quicksand', '#FF0000'
+			t = new createjs.Text "#{n}", '32px Quicksand', '#FF0000'
 			b = @createBitmap "b#{i}", 'bucket', 0, 0
 			c.name = "b#{i}"
 			c.index = @random[i]
 			t.textAlign = 'center'
 			#t.x = b.width / 2 - t.getMeasuredWidth() / 2 + 20
-			t.x = b.width / 2 - 15
+			t.x = b.width / 2
 			t.y = b.height / 2
 			c.x = @buckets[i].x
 			c.y = @buckets[i].y
@@ -98,7 +98,7 @@ class U2A6 extends Oda
 			box.addChild c
 
 		@addToMain box
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 90, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 90, 0
 		@introEvaluation()
 	bucketName: (num) ->
 		strnum = ""+num
@@ -162,8 +162,8 @@ class U2A6 extends Oda
 		rbase = Math.round Math.random() * 5
 		@makeRaindrop @random[rbase]
 	makeRaindrop: (num) =>
-		d = new Draggable 'd' + @rnum, @preload.getResult('raindrop'), num, Math.random() * (700 - 100) + 100, @library['header'].height
-		t = new createjs.Text "#{num}", '16px Quicksand', '#000099'
+		d = new Draggable 'd' + @rnum, @preload.getResult('raindrop'), num, Math.random() * (1400 - 200) + 200, @library['header'].height
+		t = new createjs.Text "#{num}", '32px Quicksand', '#000099'
 		t.textAlign = 'center'
 		t.x = d.width / 2
 		t.y = d.height / 2
@@ -176,11 +176,11 @@ class U2A6 extends Oda
 
 		switch @level
 			when 1
-				TweenLite.to d, 9, {y: 390, ease: Linear.easeNone, onComplete: @killThis, onCompleteParams: [d]}
+				TweenLite.to d, 9, {y: 780, ease: Linear.easeNone, onComplete: @killThis, onCompleteParams: [d]}
 			when 2
-				TweenLite.to d, 7, {y: 390, ease: Linear.easeNone, onComplete: @killThis, onCompleteParams: [d]}
+				TweenLite.to d, 7, {y: 780, ease: Linear.easeNone, onComplete: @killThis, onCompleteParams: [d]}
 			when 3
-				TweenLite.to d, 5, {y: 390, ease: Linear.easeNone, onComplete: @killThis, onCompleteParams: [d]}
+				TweenLite.to d, 5, {y: 780, ease: Linear.easeNone, onComplete: @killThis, onCompleteParams: [d]}
 	killThis: (object) =>
 		TweenLite.killTweensOf object
 		@raindrops.removeChild object
@@ -192,7 +192,7 @@ class U2A6 extends Oda
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
 
 			if (hit.hitTest pt.x, pt.y) and hit.index is @answer.index
-				hpp = hit.parent.localToGlobal hit.x + hit.width / 2 - 40, hit.y + hit.height / 2 - 30
+				hpp = hit.parent.localToGlobal hit.x + hit.width / 2 - 160, hit.y + hit.height / 2 - 120
 				app = @answer.parent.globalToLocal hpp.x, hpp.y
 				@buckets[i].a = off
 				dropped = on

@@ -67,12 +67,12 @@ class U2A2 extends Oda
 		for answer in @answers
 			answer.a = false
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 40, 100
-		@insertBitmap 'teacher', 'lady', 250, 134
-		@insertBitmap 'repeat', 'repeat', 441, 210
-		@insertSprite 'choose1', ['kitchen','cat','dog','fish','bed','doll','toys','soup','swipe','broom','garbage','walkdog','dishes','plants'], {'kitchen':0,'cat':1,'dog':2,'fish':3,'bed':4,'doll':5,'toys':6,'soup':7,'swipe':8,'broom':9,'garbage':10,'walkdog':11,'dishes':12,'plants':13}, 270, 452, 'mc'
-		@insertSprite 'choose2', ['kitchen','cat','dog','fish','bed','doll','toys','soup','swipe','broom','garbage','walkdog','dishes','plants'], {'kitchen':0,'cat':1,'dog':2,'fish':3,'bed':4,'doll':5,'toys':6,'soup':7,'swipe':8,'broom':9,'garbage':10,'walkdog':11,'dishes':12,'plants':13}, 591, 452, 'mc'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@insertInstructions 'instructions', 'Listen and click on the correct picture.', 80, 200
+		@insertBitmap 'teacher', 'lady', 500, 268
+		@insertBitmap 'repeat', 'repeat', 882, 420
+		@insertSprite 'choose1', ['kitchen','cat','dog','fish','bed','doll','toys','soup','swipe','broom','garbage','walkdog','dishes','plants'], {'kitchen':0,'cat':1,'dog':2,'fish':3,'bed':4,'doll':5,'toys':6,'soup':7,'swipe':8,'broom':9,'garbage':10,'walkdog':11,'dishes':12,'plants':13}, 540, 904, 'mc'
+		@insertSprite 'choose2', ['kitchen','cat','dog','fish','bed','doll','toys','soup','swipe','broom','garbage','walkdog','dishes','plants'], {'kitchen':0,'cat':1,'dog':2,'fish':3,'bed':4,'doll':5,'toys':6,'soup':7,'swipe':8,'broom':9,'garbage':10,'walkdog':11,'dishes':12,'plants':13}, 1182, 904, 'mc'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@introEvaluation()
 	introEvaluation: ->
 		super
@@ -82,8 +82,8 @@ class U2A2 extends Oda
 		@library['choose2'].scaleX = @library['choose2'].scaleY = 0.3
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 50, delay: 1}
-		TweenLite.from @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 50, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['teacher'], 1, {alpha: 0, y: @library['teacher'].y + 100, delay: 1}
+		TweenLite.from @library['repeat'], 1, {alpha: 0, y: @library['repeat'].y + 100, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@showPhrase()
