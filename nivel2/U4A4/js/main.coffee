@@ -90,33 +90,33 @@ class U4A4 extends Oda
 		super
 		@answers = @shuffleNoRepeat @game.answers, 16
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look at the pictures, read the sentences and click on True or False.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
+		@insertInstructions 'instructions', 'Look at the pictures, read the sentences and click on True or False.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 16, 0
 		@setAnimals().setClick().introEvaluation()
 	setAnimals: ->
-		@insertBitmap 'framedesert', 'framedesert', 447, 309
-		@insertBitmap 'framegrasslands', 'framegrasslands', 447, 131
-		@insertBitmap 'framejungle', 'framejungle', 174, 309
-		@insertBitmap 'frameocean', 'frameocean', 168, 131
+		@insertBitmap 'framedesert', 'framedesert', 894, 618
+		@insertBitmap 'framegrasslands', 'framegrasslands', 894, 262
+		@insertBitmap 'framejungle', 'framejungle', 348, 618
+		@insertBitmap 'frameocean', 'frameocean', 336, 262
 
 	
-		@insertBitmap 'incamel', 'incamel', 446, 365 
-		@insertBitmap 'incrocodile', 'incrocodile', 282, 419
-		@insertBitmap 'indolphin', 'indolphin', 168, 217
-		@insertBitmap 'inelephant', 'inelephant', 605, 180
-		@insertBitmap 'ingiraffe', 'ingiraffe', 452, 138
-		@insertBitmap 'injaguar', 'injaguar', 160, 376
-		@insertBitmap 'inlion', 'inlion', 540, 148
-		@insertBitmap 'inlizard', 'inlizard', 561, 343
-		@insertBitmap 'inmonkey', 'inmonkey', 305, 314
-		@insertBitmap 'inoctopus', 'inoctopus', 174, 140
-		@insertBitmap 'inparrot', 'inparrot', 173, 326
-		@insertBitmap 'inscorpion', 'inscorpion', 555, 410
-		@insertBitmap 'inshark', 'inshark', 292, 140
-		@insertBitmap 'insnake', 'insnake', 601, 366
-		@insertBitmap 'inwhale', 'inwhale', 240, 219
-		@insertBitmap 'inzebra', 'inzebra', 513, 198
-		@insertSprite 'animalesfuera', ['outcamel', 'outcrocodile', 'outdolphin', 'outelephant',  'outgiraffe', 'outjaguar', 'outlion', 'outlizard', 'outmonkey', 'outoctopus', 'outparrot', 'outscorpion', 'outshark', 'outsnake', 'outwhale', 'outzebra'], {camel:0, crocodile:1, dolphin: 2, elephant: 3, giraffe: 4, jaguar: 5, lion: 6, lizard: 7, monkey: 8, octopus: 9, parrot: 10, scorpion: 11, shark: 12, snake: 13, whale: 14, zebra: 15}, 243, 535, 'mc'
+		@insertBitmap 'incamel', 'incamel', 892, 730 
+		@insertBitmap 'incrocodile', 'incrocodile', 564, 838
+		@insertBitmap 'indolphin', 'indolphin', 336, 434
+		@insertBitmap 'inelephant', 'inelephant', 1210, 360
+		@insertBitmap 'ingiraffe', 'ingiraffe', 904, 276
+		@insertBitmap 'injaguar', 'injaguar', 320, 752
+		@insertBitmap 'inlion', 'inlion', 1080, 296
+		@insertBitmap 'inlizard', 'inlizard', 1122, 686
+		@insertBitmap 'inmonkey', 'inmonkey', 610, 628
+		@insertBitmap 'inoctopus', 'inoctopus', 348, 280
+		@insertBitmap 'inparrot', 'inparrot', 346, 652
+		@insertBitmap 'inscorpion', 'inscorpion', 1110, 820
+		@insertBitmap 'inshark', 'inshark', 584, 280
+		@insertBitmap 'insnake', 'insnake', 1202, 732
+		@insertBitmap 'inwhale', 'inwhale', 480, 438
+		@insertBitmap 'inzebra', 'inzebra', 1026, 396
+		@insertSprite 'animalesfuera', ['outcamel', 'outcrocodile', 'outdolphin', 'outelephant',  'outgiraffe', 'outjaguar', 'outlion', 'outlizard', 'outmonkey', 'outoctopus', 'outparrot', 'outscorpion', 'outshark', 'outsnake', 'outwhale', 'outzebra'], {camel:0, crocodile:1, dolphin: 2, elephant: 3, giraffe: 4, jaguar: 5, lion: 6, lizard: 7, monkey: 8, octopus: 9, parrot: 10, scorpion: 11, shark: 12, snake: 13, whale: 14, zebra: 15}, 486, 1070, 'mc'
 		@allInvisible()
 		@
 	allInvisible: ->
@@ -137,8 +137,8 @@ class U4A4 extends Oda
 		@library['inwhale'].visible = false
 		@library['inzebra'].visible = false
 	setClick: -> 
-		@insertBitmap 'btnfalse', 'btnfalse', 536, 535
-		@insertBitmap 'btntrue', 'btntrue', 409, 536
+		@insertBitmap 'btnfalse', 'btnfalse', 1072, 1070
+		@insertBitmap 'btntrue', 'btntrue', 818, 1072
 		@library.btnfalse.index = 'off'
 		@library.btntrue.index = 'on'
 		@library['btntrue'].addEventListener 'click', @evaluateAnswer
@@ -149,19 +149,19 @@ class U4A4 extends Oda
 		@library.animalesfuera.visible = off
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0}
-		TweenLite.from @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 10, ease: Quart.easeOut}
-		TweenLite.from @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut}
-		TweenLite.from @library.frameocean, 1, {alpha: 0, y: @library.frameocean.y - 10, ease: Quart.easeOut, delay:0.4}
-		TweenLite.from @library.framejungle, 1, {alpha: 0, y: @library.framejungle.y - 10, ease: Quart.easeOut, delay:0.6}
-		TweenLite.from @library.framegrasslands, 1, {alpha: 0, y: @library.framegrasslands.y - 10, ease: Quart.easeOut, delay:0.8}
-		TweenLite.from @library.framedesert, 1, {alpha: 0, y: @library.framedesert.y - 10, ease: Quart.easeOut, delay:1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 20, ease: Quart.easeOut}
+		TweenLite.from @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 20, ease: Quart.easeOut}
+		TweenLite.from @library.frameocean, 1, {alpha: 0, y: @library.frameocean.y - 20, ease: Quart.easeOut, delay:0.4}
+		TweenLite.from @library.framejungle, 1, {alpha: 0, y: @library.framejungle.y - 20, ease: Quart.easeOut, delay:0.6}
+		TweenLite.from @library.framegrasslands, 1, {alpha: 0, y: @library.framegrasslands.y - 20, ease: Quart.easeOut, delay:0.8}
+		TweenLite.from @library.framedesert, 1, {alpha: 0, y: @library.framedesert.y - 20, ease: Quart.easeOut, delay:1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@library.animalesfuera.visible = on
 		@library.animalesfuera.gotoAndStop @answers[@index].animal
-		@insertText 'frases', @answers[@index].text, '20px Quicksand', '#333', 410, 500
-		TweenLite.from @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
-		TweenLite.from @library.animalesfuera, 0.5, {alpha:0, y:@library.animalesfuera.y - 20}
+		@insertText 'frases', @answers[@index].text, '40px Quicksand', '#333', 820, 1000
+		TweenLite.from @library.frases, 0.5, {alpha: 0, y: @library.frases - 20, ease: Quart.easeOut}
+		TweenLite.from @library.animalesfuera, 0.5, {alpha:0, y:@library.animalesfuera.y - 40}
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		if @answer.index is @answers[@index].respuestas
@@ -179,18 +179,18 @@ class U4A4 extends Oda
 		@index++
 		if @index < @answers.length
 			@library.animalesfuera.gotoAndStop @answers[@index].animal
-			TweenLite.to @library.animalesfuera, 0.5, {alpha:1, y:535, ease: Back.easeOut}
+			TweenLite.to @library.animalesfuera, 0.5, {alpha:1, y:1070, ease: Back.easeOut}
 			@library.frases.text = @answers[@index].text
 		else
 			setTimeout @finish, 1 * 1000
 	finish: =>
 		@allInvisible()
-		TweenLite.to @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 10, ease: Quart.easeOut}
-		TweenLite.to @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut}
-		TweenLite.to @library.frameocean, 1, {alpha: 0, y: @library.frameocean.y - 10, ease: Quart.easeOut, delay:0.4}
-		TweenLite.to @library.framejungle, 1, {alpha: 0, y: @library.framejungle.y - 10, ease: Quart.easeOut, delay:0.6}
-		TweenLite.to @library.framegrasslands, 1, {alpha: 0, y: @library.framegrasslands.y - 10, ease: Quart.easeOut, delay:0.8}
-		TweenLite.to @library.framedesert, 1, {alpha: 0, y: @library.framedesert.y - 10, ease: Quart.easeOut, delay:1}
-		TweenLite.to @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
+		TweenLite.to @library.btnfalse, 1, {alpha: 0, y: @library.btnfalse.y - 20, ease: Quart.easeOut}
+		TweenLite.to @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 20, ease: Quart.easeOut}
+		TweenLite.to @library.frameocean, 1, {alpha: 0, y: @library.frameocean.y - 20, ease: Quart.easeOut, delay:0.4}
+		TweenLite.to @library.framejungle, 1, {alpha: 0, y: @library.framejungle.y - 20, ease: Quart.easeOut, delay:0.6}
+		TweenLite.to @library.framegrasslands, 1, {alpha: 0, y: @library.framegrasslands.y - 20, ease: Quart.easeOut, delay:0.8}
+		TweenLite.to @library.framedesert, 1, {alpha: 0, y: @library.framedesert.y - 20, ease: Quart.easeOut, delay:1}
+		TweenLite.to @library.frases, 0.5, {alpha: 0, y: @library.frases - 20, ease: Quart.easeOut}
 		super
 	window.U4A4 = U4A4

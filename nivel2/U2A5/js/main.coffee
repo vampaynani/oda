@@ -83,7 +83,7 @@ class U2A5 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read and drag the names to complete the story.', 80, 200
+		@insertInstructions 'instructions', 'Read and drag the words to complete the story.', 80, 200
 		ti = @createBitmap 'title', 'title1', 700, 230, 'tc'
 		ti.scaleX = ti.scaleY = 0.72
 		@addToMain ti
@@ -200,7 +200,7 @@ class U2A5 extends Oda
 				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
 			@finalscene = 0
-			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
+			#TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
 			setTimeout @storyTale, 2 * 1000
 	storyTale: =>
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 100}

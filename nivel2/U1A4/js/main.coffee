@@ -96,7 +96,7 @@ class U1A4 extends Oda
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.6, scaleY: 0.6, ease:Elastic.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
-		if @index < @answers.length
+		if @index < @answers.length - 1
 			@showPhrase()
 		else
 			@finish()

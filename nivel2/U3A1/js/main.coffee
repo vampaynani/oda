@@ -143,7 +143,7 @@ class U3A1 extends Oda
 		]
 		@game =
 			common: [
-				{id: 'menuback', x: 314, y: 242}
+				{id: 'menuback', x: 304, y: 232}
 				{id: 'hojabreakfast', x: 328, y:264}
 				{id: 'hojadinner', x: 1020, y: 254}
 				{id: 'hojalunch', x: 674, y: 264}
@@ -402,7 +402,7 @@ class U3A1 extends Oda
 		@answers = @clone @game.answers
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Listen and drag the foods and drinks to the menu.', 80, 200
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 18, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 36, 0
 		@setDropper().setMenu(1).introEvaluation()
 		@intento = 0
 	setDropper: ->
@@ -461,9 +461,9 @@ class U3A1 extends Oda
 			else
 				@warning()
 				@intento = 1
-				@answer.returnToPlace()
+				@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY
 		else
-			@answer.returnToPlace()
+			@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY
 	evaluateValues: ->
 		complete = on
 		for value in @answers["m#{@index+1}"][@a_index].values

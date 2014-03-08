@@ -47,7 +47,7 @@ class U1A5 extends Oda
 					{idx:4, t:"Lily", im:'face4', x:1400, y:880}
 				]
 				positions:[
-					{x: 222, y: 288}
+					{x: 222, y: 318}
 					{x: 670, y: 342}
 					{x: 212, y: 744}
 					{x: 664, y: 726}
@@ -58,13 +58,12 @@ class U1A5 extends Oda
 					{idx:5, t:"Sam", im:'face1', x: 1400, y: 220}
 					{idx:7, t:'Kara', im:'face2', x:1400, y: 440}
 					{idx:[6,8], t:'Lily', im:'face4', x:1400, y: 660}
-					{idx:[6,8], t:'Lily', im:'face4', x:1400, y: 660}
 				]
 				positions:[
-					{x: 202, y: 320}
-					{x: 656, y: 320}
-					{x: 204, y: 746}
-					{x: 640, y: 728}	
+					{x: 202, y: 340}
+					{x: 656, y: 340}
+					{x: 214, y: 766}
+					{x: 670, y: 768}	
 				]
 			}
 		]
@@ -143,7 +142,8 @@ class U1A5 extends Oda
 				if not @isArray @answer.index 
 					if @answer.index is @library["sc#{i}"].index
 						@library["sc#{i}"].currentFrame = 1
-						@answer.visible = off
+						@answer.returnToOrigin()
+						#@answer.visible = off
 						createjs.Sound.play 'good'
 						if not @library["sc#{i}"].failed
 							if @intento is 0
@@ -161,8 +161,10 @@ class U1A5 extends Oda
 						if ans is @library["sc#{i}"].index
 							hit = true	
 					if hit
+						console.log hit
 						@library["sc#{i}"].currentFrame = 1
-						@answer.visible = off
+						@answer.returnToOrigin()
+						#@answer.visible = off
 						createjs.Sound.play 'good'
 						if not @library["sc#{i}"].failed
 							if @intento is 0
@@ -202,7 +204,7 @@ class U1A5 extends Oda
 				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
 			@finalscene = 0
-			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
+			#TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
 			setTimeout @storyTale, 2 * 1000
 	storyTale: =>
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 100}

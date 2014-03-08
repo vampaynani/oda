@@ -70,12 +70,12 @@ class U1A2 extends Oda
 		names.name = 'names'
 		faces = @createBitmap 'facesback', 'faces', 69, 0
 		repeat = new Button 'btnrepeat', (@preload.getResult 'repeat'), 0, 600, 640
-		name1 = new Draggable 'name1', (@preload.getResult 'n1'), 1, 16, 40
-		name2 = new Draggable 'name2', (@preload.getResult 'n2'), 2, 4, 520
-		name3 = new Draggable 'name3', (@preload.getResult 'n3'), 3, 16, 420
-		name4 = new Draggable 'name4', (@preload.getResult 'n4'), 4, 16, 250
-		name5 = new Draggable 'name5', (@preload.getResult 'n5'), 5, 4, 156
-		name6 = new Draggable 'name6', (@preload.getResult 'n6'), 6, 4, 328
+		name1 = new Draggable 'name1', (@preload.getResult 'n1'), 1, 16, 30
+		name2 = new Draggable 'name2', (@preload.getResult 'n2'), 2, 4, 504
+		name3 = new Draggable 'name3', (@preload.getResult 'n3'), 3, 16, 413
+		name4 = new Draggable 'name4', (@preload.getResult 'n4'), 4, 16, 227
+		name5 = new Draggable 'name5', (@preload.getResult 'n5'), 5, 4, 126
+		name6 = new Draggable 'name6', (@preload.getResult 'n6'), 6, 4, 318
 
 		name1.addEventListener 'drop', @evaluateAnswer
 		name2.addEventListener 'drop', @evaluateAnswer

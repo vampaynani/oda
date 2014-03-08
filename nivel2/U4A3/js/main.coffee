@@ -48,36 +48,36 @@ class U4A3 extends Oda
 		]
 		@answers = 
 			words: [
-				{w:'whiskers',x:77,y:72}
-				{w:'fur',x:77,y:54}
-				{w:'fins',x:77,y:90}
-				{w:'beaks',x:77,y:108}
-				{w:'wings',x:77,y:18}
-				{w:'scales',x:215,y:36}
-				{w:'paws',x:210,y:90}
-				{w:'tails',x:206,y:54}
-				{w:'claws',x:217,y:72}
-				{w:'feathers',x:77,y:36}
+				{w:'whiskers',x:154,y:144}
+				{w:'fur',x:154,y:108}
+				{w:'fins',x:154,y:180}
+				{w:'beaks',x:154,y:216}
+				{w:'wings',x:154,y:36}
+				{w:'scales',x:428,y:72}
+				{w:'paws',x:420,y:180}
+				{w:'tails',x:410,y:108}
+				{w:'claws',x:434,y:144}
+				{w:'feathers',x:154,y:72}
 			]
 			pairs: [
-				{b:'bodybeaks', a: 'animalbeaks', x: 464, y: 504, s: off}
-				{b:'bodyclaws', a: 'animalclaws', x: 204, y: 217,  s: off}
-				{b:'bodyfeathers', a: 'animalfeathers', x: 610, y: 217,  s: off}
-				{b:'bodyfins', a: 'animalfins', x: 204, y: 468,  s: off}
-				{b:'bodyfur', a: 'animalfur', x: 610, y: 468,  s: off}
-				{b:'bodypaws', a: 'animalpaws', x: 696, y: 333,  s: off}
-				{b:'bodyscales', a: 'animalscales', x: 331, y: 181,  s: off}
-				{b:'bodytails', a: 'animaltails', x: 464, y: 181,  s: off}
-				{b:'bodywhiskers', a: 'animalwhiskers', x: 330, y: 504,  s: off}
-				{b:'bodywings', a: 'animalwings', x: 119, y: 333,  s: off}
+				{b:'bodybeaks', a: 'animalbeaks', x: 928, y: 1008, s: off}
+				{b:'bodyclaws', a: 'animalclaws', x: 408, y: 434,  s: off}
+				{b:'bodyfeathers', a: 'animalfeathers', x: 1220, y: 434,  s: off}
+				{b:'bodyfins', a: 'animalfins', x: 408, y: 936,  s: off}
+				{b:'bodyfur', a: 'animalfur', x: 1220, y: 936,  s: off}
+				{b:'bodypaws', a: 'animalpaws', x: 1392, y: 666,  s: off}
+				{b:'bodyscales', a: 'animalscales', x: 662, y: 362,  s: off}
+				{b:'bodytails', a: 'animaltails', x: 928, y: 362,  s: off}
+				{b:'bodywhiskers', a: 'animalwhiskers', x: 660, y: 1008,  s: off}
+				{b:'bodywings', a: 'animalwings', x: 238, y: 666,  s: off}
 			]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and click on the corresponding picture.', 40, 100
+		@insertInstructions 'instructions', 'Look and click on the corresponding picture.', 80, 200
 	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@setParts().setAnimals().setText().introEvaluation()
 	setParts: ->
 		parts = new createjs.Container()
@@ -101,15 +101,15 @@ class U4A3 extends Oda
 	setText: ->
 		cancion = new createjs.Container()
 		cancion.name = 'cancion'
-		cancion.x = 290
-		cancion.y = 270
+		cancion.x = 580
+		cancion.y = 540
 		for i in [0..@letra.length - 1] by 1
-			text = new createjs.Text @letra[i],'13px Quicksand','#666'
+			text = new createjs.Text @letra[i],'26px Quicksand','#666'
 			text.x = 0
-			text.y = i * 18
+			text.y = i * 36
 			cancion.addChild text
 		for i in [0..@answers.words.length - 1] by 1
-			text = new createjs.Text @answers.words[i].w, '13px Quicksand', '#EB198E'
+			text = new createjs.Text @answers.words[i].w, '26px Quicksand', '#EB198E'
 			text.name = "t#{i}"
 			text.x = @answers.words[i].x
 			text.y = @answers.words[i].y
@@ -121,8 +121,8 @@ class U4A3 extends Oda
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['cancion'], 0.5, {alpha :0, y: @library['cancion'].y - 20, delay: 1}
-		TweenLite.from @library['parts'], 0.5, {alpha: 0, y: @library['parts'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['cancion'], 0.5, {alpha :0, y: @library['cancion'].y - 40, delay: 1}
+		TweenLite.from @library['parts'], 0.5, {alpha: 0, y: @library['parts'].y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@blink @library["t#{@index}"]
@@ -155,8 +155,8 @@ class U4A3 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.2, repeat:-1, yoyo:true}  if state
 	finish: =>
-		TweenLite.to @library['cancion'], 0.5, {alpha :0, y: @library['cancion'].y - 20}
-		TweenLite.to @library['parts'], 0.5, {alpha: 0, y: @library['parts'].y + 20}
-		TweenLite.to @library['animals'], 0.5, {alpha: 0, y: @library['animals'].y + 20}
+		TweenLite.to @library['cancion'], 0.5, {alpha :0, y: @library['cancion'].y - 40}
+		TweenLite.to @library['parts'], 0.5, {alpha: 0, y: @library['parts'].y + 40}
+		TweenLite.to @library['animals'], 0.5, {alpha: 0, y: @library['animals'].y + 40}
 		super
 	window.U4A3 = U4A3

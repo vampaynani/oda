@@ -51,28 +51,28 @@ class U4A2 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Find the words and drag the cursor.', 40, 100
+		@insertInstructions 'instructions', 'Find the words and drag the cursor.', 80, 200
 	
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 150, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 150, 0
 		@setAnimals().setSopa().introEvaluation()
 	setAnimals:  ->
-		@insertBitmap 'bluewhale', 'bluewhale', 509, 465
-		@insertBitmap 'dolphin', 'dolphin', 227, 460
-		@insertBitmap 'eagle', 'eagle', 43, 131
-		@insertBitmap 'giantpanda', 'giantpanda', 661, 249
-		@insertBitmap 'gorilla', 'gorilla', 122, 361
-		@insertBitmap 'jaguar', 'jaguar', 142, 132
-		@insertBitmap 'lion', 'lion', 586, 130
-		@insertBitmap 'seaturtle', 'seaturtle', 590, 372
-		@insertBitmap 'polarbear', 'polarbear', 368, 424
+		@insertBitmap 'bluewhale', 'bluewhale', 1018, 930
+		@insertBitmap 'dolphin', 'dolphin', 454, 920
+		@insertBitmap 'eagle', 'eagle', 66, 312
+		@insertBitmap 'giantpanda', 'giantpanda', 1322, 498
+		@insertBitmap 'gorilla', 'gorilla', 244, 722
+		@insertBitmap 'jaguar', 'jaguar', 284, 264
+		@insertBitmap 'lion', 'lion', 1172, 260
+		@insertBitmap 'seaturtle', 'seaturtle', 1180, 744
+		@insertBitmap 'polarbear', 'polarbear', 736, 848
 		@
 	setSopa: ->
 
 		j = 0
 		h = @letters.length
 		sopa = new createjs.Container()
-		sopa.x = 297
-		sopa.y = 148
+		sopa.x = 594
+		sopa.y = 296
 		sopa.name = 'sopa'
 		sopa.visible = off
 		shapesContainer = new createjs.Container()
@@ -83,10 +83,10 @@ class U4A2 extends Oda
 		for h in [0..llength] by 1
 			lhlength = @letters[h].length - 1
 			for i in [0..lhlength] by 1
-				letra = new ClickableText "l#{j}", @letters[h][i], "l#{j}", i * 26, h * 26
+				letra = new ClickableText "l#{j}", @letters[h][i], "l#{j}", i * 52, h * 52
 				letra.h = h
 				letra.i = i
-				letra.text.font = '20px Quicksand'
+				letra.text.font = '40px Quicksand'
 				letra.text.textAlign = 'center'
 				sopa.addChild letra
 				@addToLibrary letra
@@ -117,8 +117,8 @@ class U4A2 extends Oda
 		@timer = setInterval @updateCounter, 1000
 
 		@library.sopa.visible = on
-		@library.sopa.cache -26,-26,286,286
-		TweenLite.from @library['sopa'], 1, {alpha :0, y: @library['sopa'].y - 20}
+		@library.sopa.cache -52, -52, 572, 572
+		TweenLite.from @library['sopa'], 1, {alpha :0, y: @library['sopa'].y - 40}
 		@mainContainer.addEventListener 'mousedown', @evaluateAnswer
 	evaluateAnswer: (e) =>
 		answer = Array()
@@ -132,9 +132,9 @@ class U4A2 extends Oda
 			clktxt = oup.parent
 			if clktxt instanceof ClickableText
 				answer.push clktxt.index
-				pos = x: clktxt.i * 26 - 13, y: clktxt.h * 26, i: clktxt.i, h: clktxt.h
-				shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,26,26,5)
-				@library.sopa.cache -26,-26,286,286
+				pos = x: clktxt.i * 52 - 26, y: clktxt.h * 52, i: clktxt.i, h: clktxt.h
+				shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,52,52,10)
+				@library.sopa.cache -52,-52,572,572
 				e.addEventListener 'mousemove', (ev) =>
 					pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
 					oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
@@ -143,10 +143,10 @@ class U4A2 extends Oda
 						if clktxt instanceof ClickableText
 							i = if Math.abs(clktxt.i - pos.i + 1) is 0 then 1 else Math.abs(clktxt.i - pos.i + 1)
 							h = if Math.abs(clktxt.h - pos.h + 1) is 0 then 1 else Math.abs(clktxt.h - pos.h + 1)
-							npos = w: i * 26, h: h * 26
+							npos = w: i * 52, h: h * 52
 							answer.push clktxt.index
-							shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,npos.w,npos.h,5)
-							@library.sopa.cache -26,-26,286,286
+							shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,npos.w,npos.h,10)
+							@library.sopa.cache -52,-52,572,572
 				e.addEventListener 'mouseup', (ev) =>
 					find = off
 					answer = Array()
@@ -155,10 +155,10 @@ class U4A2 extends Oda
 							answer.push @library["l#{i}"].name
 					for obj in @answers
 						if obj.line.toString() is answer.toString()
-							TweenLite.to @library[obj.id], 0.3, {y:@library[obj.id].y - 100, alpha:0, onComplete: @finishEvaluation}
+							TweenLite.to @library[obj.id], 0.3, {y:@library[obj.id].y - 200, alpha:0, onComplete: @finishEvaluation}
 							find = on
 					@library.shapesContainer.removeChild shape if not find
-					@library.sopa.cache -26,-26,286,286
+					@library.sopa.cache -52,-52,572,572
 	finishEvaluation: =>
 		createjs.Sound.play 'good'
 		@nextEvaluation()
@@ -171,6 +171,6 @@ class U4A2 extends Oda
 		clearInterval @timer
 
 		@mainContainer.removeEventListener 'mousedown', @evaluateAnswer
-		TweenLite.to @library['sopa'], 1, {y:@library['sopa'].y + 100, alpha:0}
+		TweenLite.to @library['sopa'], 1, {y:@library['sopa'].y + 200, alpha:0}
 		super
 	window.U4A2 = U4A2

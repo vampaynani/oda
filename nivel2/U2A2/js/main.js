@@ -233,7 +233,7 @@
         'dishes': 12,
         'plants': 13
       }, 1182, 904, 'mc');
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 10, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 14, 0));
       return this.introEvaluation();
     };
 

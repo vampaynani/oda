@@ -412,8 +412,8 @@
         common: [
           {
             id: 'menuback',
-            x: 314,
-            y: 242
+            x: 304,
+            y: 232
           }, {
             id: 'hojabreakfast',
             x: 328,
@@ -1068,7 +1068,7 @@
       this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Listen and drag the foods and drinks to the menu.', 80, 200);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 18, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 36, 0));
       this.setDropper().setMenu(1).introEvaluation();
       return this.intento = 0;
     };
@@ -1167,10 +1167,10 @@
         } else {
           this.warning();
           this.intento = 1;
-          return this.answer.returnToPlace();
+          return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY);
         }
       } else {
-        return this.answer.returnToPlace();
+        return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY);
       }
     };
 

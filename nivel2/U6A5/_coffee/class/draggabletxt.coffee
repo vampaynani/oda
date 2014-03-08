@@ -63,6 +63,9 @@ class DraggableText
 	putInPlace: (position, alpha=1, scaleX=1, scaleY=1) ->
 		@inPlace = on
 		TweenLite.to @, 1, { ease: Back.easeOut, delay: 0.1, x: position.x, y: position.y, alpha: alpha, scaleX: scaleX, scaleY: scaleY }
+	returnToOrigin: (alpha=1, scaleX=1, scaleY=1) ->
+		@x = @pos.x
+		@y = @pos.y
 	returnToPlace: (alpha=1, scaleX=1, scaleY=1) ->
 		TweenLite.to @, 0.5, { ease: Back.easeOut, delay: 0.1, x: @pos.x, y: @pos.y, alpha: alpha, scaleX: scaleX, scaleY: scaleY }
 	window.DraggableText = DraggableText

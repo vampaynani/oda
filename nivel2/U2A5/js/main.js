@@ -228,7 +228,7 @@
       var ti;
       U2A5.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Read and drag the names to complete the story.', 80, 200);
+      this.insertInstructions('instructions', 'Read and drag the words to complete the story.', 80, 200);
       ti = this.createBitmap('title', 'title1', 700, 230, 'tc');
       ti.scaleX = ti.scaleY = 0.72;
       this.addToMain(ti);
@@ -419,10 +419,6 @@
         return _results;
       } else {
         this.finalscene = 0;
-        TweenLite.to(this.library['title'], 1, {
-          alpha: 0,
-          y: this.library['title'].y + 40
-        });
         return setTimeout(this.storyTale, 2 * 1000);
       }
     };

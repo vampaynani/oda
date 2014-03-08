@@ -165,9 +165,12 @@ class U1A6 extends Oda
 		for i in [0..@abc.length - 1] by 1
 			letter = @abc[i]
 			if i <= 13
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 83*i, 0
+				letterObj = new DraggableText letter, letter, letter, 83 * i, 0
+				#letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 83*i, 0
 			else
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 83*i-1020, 68
+				letterObj = new DraggableText letter, letter, letter, 83 * i - 1020, 68
+				#letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 83*i-1020, 68
+			letterObj.text.font = "48px Quicksand"
 			letterObj.onInitEvaluation()
 			alphabet.addChild letterObj	
 			@addToLibrary letterObj

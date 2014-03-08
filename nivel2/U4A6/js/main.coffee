@@ -82,8 +82,8 @@ class U4A6 extends Oda
 		super
 		@preguntas = @shuffleNoRepeat @game.preguntas, 16
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Take the review quiz! Click on the correct option.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
+		@insertInstructions 'instructions', 'Take the review quiz! Click on the correct option.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 16, 0
 		@setQuestion(0).introEvaluation()
 	setQuestion: (i) ->
 		question = new createjs.Container()
@@ -91,15 +91,15 @@ class U4A6 extends Oda
 		question.y = 0
 		question.name = 'question'
 		if @preguntas[i].tipo is 'texto'
-			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'
-			v.scaleX = v.scaleY = 0.5
+			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2 + 60, 'mc'
+			#v.scaleX = v.scaleY = 0.5
 			question.addChild v
 			@addToLibrary v
 
-			text = new createjs.Text @preguntas[i].pregunta,'24px Quicksand','#333'
+			text = new createjs.Text @preguntas[i].pregunta,'48px Quicksand','#333'
 			text.name = 'titulo'
 			text.x = stageSize.w / 2
-			text.y = 140
+			text.y = 280
 			text.textAlign = 'center'
 			question.addChild text
 			@addToLibrary text
@@ -110,36 +110,36 @@ class U4A6 extends Oda
 			opciones.addChild uno
 			@addToLibrary uno 
 
-			diagonal = new createjs.Text '/','16px Quicksand','#333'
+			diagonal = new createjs.Text '/','32px Quicksand','#333'
 			diagonal.name = 'diagonal'
 			diagonal.x = uno.x + uno.width
 			diagonal.y = 0
 			opciones.addChild diagonal
 			@addToLibrary diagonal
 
-			dos = new ClickableText @preguntas[i].opcionDos, @preguntas[i].opcionDos, i,  diagonal.x + 10, 0
+			dos = new ClickableText @preguntas[i].opcionDos, @preguntas[i].opcionDos, i,  diagonal.x + 20, 0
 			opciones.addChild dos
 			@addToLibrary dos
 
-			total = uno.width + dos.width + 20
+			total = uno.width + dos.width + 40
 
 			opciones.x = stageSize.w / 2 - total / 2;
-			opciones.y = 490;
+			opciones.y = 980;
 			question.addChild opciones
 		else if @preguntas[i].tipo is 'imagen'
-			text = new createjs.Text @preguntas[i].pregunta,'24px Quicksand','#333'
+			text = new createjs.Text @preguntas[i].pregunta,'48px Quicksand','#333'
 			text.name = 'titulo'
-			text.x = 200
-			text.y = 140
+			text.x = 600
+			text.y = 280
 			question.addChild text
 			@addToLibrary text
 
-			v = @createBitmap @preguntas[i].opcionUno, @preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2+30, 'mc'
-			v.scaleX = v.scaleY = 0.3
+			v = @createBitmap @preguntas[i].opcionUno, @preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2 + 60, 'mc'
+			v.scaleX = v.scaleY = 0.6
 			question.addChild v
 			@addToLibrary v
-			v = @createBitmap @preguntas[i].opcionDos, @preguntas[i].opcionDos, (stageSize.w / 4)*3, stageSize.h / 2+30, 'mc'
-			v.scaleX = v.scaleY = 0.3
+			v = @createBitmap @preguntas[i].opcionDos, @preguntas[i].opcionDos, (stageSize.w / 4)*3, stageSize.h / 2 + 60, 'mc'
+			v.scaleX = v.scaleY = 0.6
 			question.addChild v
 			@addToLibrary v
 
@@ -149,7 +149,7 @@ class U4A6 extends Oda
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['question'], 1, {alpha:0, y: @library['question'].y - 20, delay: 1, onComplete:@playInstructions, onCompleteParams:[@]}
+		TweenLite.from @library['question'], 1, {alpha:0, y: @library['question'].y - 40, delay: 1, onComplete:@playInstructions, onCompleteParams:[@]}
 	initEvaluation: (e) =>
 		super
 		@setClick 0
