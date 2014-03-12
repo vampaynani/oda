@@ -40,38 +40,38 @@ class U6A2 extends Oda
 		@game =
 			[
 				[
-					{i:'theater', x:154, y:-35, w:95, h:95}
-					{i:'hospital', x:416, y:102, w:95, h:95}
-					{i:'restaurant', x:58, y:243, w:95, h:95}
+					{i:'theater', x:290, y:-80, w:190, h:190}
+					{i:'hospital', x:810, y:189, w:190, h:190}
+					{i:'restaurant', x:105, y:460, w:190, h:190}
 				]
 				[
-					{i:'bus', x:58, y:92, w:95, h:95}
-					{i:'museum', x:309, y:93, w:95, h:95}
-					{i:'school', x:150, y:-52, w:95, h:95}
+					{i:'bus', x:116, y:184, w:190, h:190}
+					{i:'museum', x:618, y:196, w:190, h:190}
+					{i:'school', x:280, y:-74, w:190, h:190}
 				]
 				[
-					{i:'library', x:-42, y:102, w:95, h:95}
-					{i:'cafe', x:65, y:-37, w:95, h:95}
-					{i:'pet', x:400, y:-30, w:95, h:95}
+					{i:'library', x:-94, y:210, w:190, h:190}
+					{i:'cafe', x:120, y:-74, w:190, h:190}
+					{i:'pet', x:800, y:-73, w:190, h:190}
 				]
 			]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the buildings to the correct place on the map.', 40, 100
-		@insertBitmap 'btnRepeat', 'repeatbtn',  stageSize.w / 2, 570, 'mc'
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
+		@insertInstructions 'instructions', 'Listen and drag the buildings to the correct place on the map.', 80, 200
+		@insertBitmap 'btnRepeat', 'repeatbtn',  stageSize.w / 2, 1140, 'mc'
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 9, 0
 		@intento = 0
 		@setMap( 1 ).introEvaluation()
 	setMap: (map) ->
 		mapa = new createjs.Container()
 		mapa.name = 'mapa'
-		mapa.x = 150
-		mapa.y = 180
+		mapa.x = 300
+		mapa.y = 360
 
-		fondo = @createBitmap "map#{map}", "map#{map}", -50, -40
-		calles = @createBitmap 'calles', 'calles', -50, -30
+		fondo = @createBitmap "map#{map}", "map#{map}", -100, -80
+		calles = @createBitmap 'calles', 'calles', -100, -60
 		mapa.addChild calles, fondo
 
 		@current = @game[map - 1]
@@ -86,9 +86,9 @@ class U6A2 extends Oda
 			@addToLibrary s
 			mapa.addChild s
 
-		d1 = new Droppable 'd1', (@preload.getResult @current[0].i), @current[0].i, 650, 55, @stage, drops
-		d2 = new Droppable 'd2', (@preload.getResult @current[1].i), @current[1].i, 650, 155, @stage, drops
-		d3 = new Droppable 'd3', (@preload.getResult @current[2].i), @current[2].i, 650, 255, @stage, drops
+		d1 = new Droppable 'd1', (@preload.getResult @current[0].i), @current[0].i, 1300, 110, @stage, drops
+		d2 = new Droppable 'd2', (@preload.getResult @current[1].i), @current[1].i, 1300, 310, @stage, drops
+		d3 = new Droppable 'd3', (@preload.getResult @current[2].i), @current[2].i, 1300, 510, @stage, drops
 		d1.scaleX = d1.scaleY = d2.scaleX = d2.scaleY = d3.scaleX = d3.scaleY = 0.7
  
 		@addToLibrary d1, d2, d3
@@ -102,8 +102,8 @@ class U6A2 extends Oda
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 10, delay: 1}
-		TweenLite.from @library.mapa, 1, {alpha: 0, y: @library.mapa.y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 20, delay: 1}
+		TweenLite.from @library.mapa, 1, {alpha: 0, y: @library.mapa.y + 40, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@mindex = 0
@@ -138,7 +138,7 @@ class U6A2 extends Oda
 			@library.btnRepeat.removeEventListener 'click', @repeatSound
 	nextEvaluation: =>
 		@index++
-		TweenLite.to @library.mapa, 1, {alpha: 0, y: @library.mapa.y + 20}
+		TweenLite.to @library.mapa, 1, {alpha: 0, y: @library.mapa.y + 40}
 		if @index < @game.length
 			@setMap @index + 1
 			createjs.Sound.play "s#{@current[@mindex].i}"
@@ -152,6 +152,6 @@ class U6A2 extends Oda
 		createjs.Sound.play "s#{@current[@mindex].i}"
 	finish: ->
 		createjs.Sound.stop()
-		TweenLite.to @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 10}
+		TweenLite.to @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 20}
 		super
 	window.U6A2 = U6A2

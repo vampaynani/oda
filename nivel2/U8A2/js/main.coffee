@@ -30,14 +30,14 @@ class U8A2 extends Oda
 						{frase:'They float boats with flowers and candles in the sea.', pattern:['#wc','do they','#wc','?'], targets: ['What','do']}
 					]	
 					opt1:[
-						{i:1, t:'When', x:25, y:35}
-						{i:2, t:'What', x:90, y:22}
-						{i:3, t:'Where', x:70, y:70}
+						{i:1, t:'When', x:50, y:70}
+						{i:2, t:'What', x:180, y:44}
+						{i:3, t:'Where', x:140, y:140}
 					]
 					opt2:[
-						{i:1, t:'celebrate', x:26, y:20}
-						{i:2, t:'do', x:50, y:72}
-						{i:3, t:'wear', x:85, y:58}
+						{i:1, t:'celebrate', x:52, y:40}
+						{i:2, t:'do', x:100, y:144}
+						{i:3, t:'wear', x:170, y:116}
 					]
 				}
 				{
@@ -48,16 +48,16 @@ class U8A2 extends Oda
 						{frase:'Lanterns.', pattern:['#wc','do they','#wc','?'], targets: ['What','carry']}	
 					]
 					opt1:[
-						{i:1, t:'When', x:25, y:35}
-						{i:2, t:'What', x:90, y:22}
-						{i:3, t:'Who', x:90, y:45}
-						{i:4, t:'Where', x:70, y:70}
+						{i:1, t:'When', x:50, y:70}
+						{i:2, t:'What', x:180, y:44}
+						{i:3, t:'Who', x:180, y:90}
+						{i:4, t:'Where', x:140, y:140}
 					]
 					opt2:[
-						{i:1, t:'visit', x:26, y:20}
-						{i:2, t:'eat', x:50, y:72}
-						{i:3, t:'celebrate', x:80, y:28}
-						{i:4, t:'carry', x:85, y:58}
+						{i:1, t:'visit', x:52, y:40}
+						{i:2, t:'eat', x:100, y:144}
+						{i:3, t:'celebrate', x:160, y:56}
+						{i:4, t:'carry', x:170, y:116}
 					]
 				}
 				{
@@ -68,15 +68,15 @@ class U8A2 extends Oda
 						{frase:'They watch fireworks and light candles for good luck.',  pattern:['#wc','do they','#wc','?'],targets: ['What','do']}	
 					]
 					opt1:[
-						{i:1, t:'When', x:25, y:35}
-						{i:2, t:'What', x:90, y:22}
-						{i:3, t:'Who', x:90, y:45}
-						{i:4, t:'Where', x:70, y:70}
+						{i:1, t:'When', x:50, y:70}
+						{i:2, t:'What', x:180, y:44}
+						{i:3, t:'Who', x:180, y:90}
+						{i:4, t:'Where', x:90, y:90}
 					]
 					opt2:[
-						{i:1, t:'wear', x:26, y:20}
-						{i:2, t:'do', x:50, y:72}
-						{i:3, t:'celebrate', x:85, y:58}
+						{i:1, t:'wear', x:52, y:40}
+						{i:2, t:'do', x:100, y:144}
+						{i:3, t:'celebrate', x:170, y:116}
 					]
 				}
 			]
@@ -85,13 +85,13 @@ class U8A2 extends Oda
 		super
 		@escena = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Drag the words to form a question.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 24, 0
+		@insertInstructions 'instructions', 'Drag the words to form a question.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 24, 0
 		@setScene( 1 ).setDropper( 1 ).setNube1().setNube2().introEvaluation()
 	setScene: (scene) ->
 		@scene = @game.scenes[scene - 1]
 		@intento = 0
-		@sc = @createBitmap "scene", "scene#{scene}", stageSize.w / 2, 150, 'tc'
+		@sc = @createBitmap "scene", "scene#{scene}", stageSize.w / 2, 300, 'tc'
 		@addToMain @sc
 		@
 	setDropper: (step) ->
@@ -100,37 +100,37 @@ class U8A2 extends Oda
 			dropper = @library.dropper
 		else
 			dropper = new createjs.Container()
-			dropper.y = 390
+			dropper.y = 780
 			dropper.name = 'dropper'
 			@addToMain dropper
 		dropper.removeAllChildren()
 
-		q = @createText 'q', 'Q:','24px Quicksand','#333', 120, 0
+		q = @createText 'q', 'Q:','48px Quicksand','#333', 240, 0
 		dropper.addChild q
 
 		i = 0
-		npos = q.x + q.getMeasuredWidth() + 15
+		npos = q.x + q.getMeasuredWidth() + 20
 		for t in @scene.steps[step - 1].pattern
 			if t is '#wc'
 				txt = @scene.steps[step - 1].targets[i]
-				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#eb188e', npos, 5
+				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#eb188e', npos, 30
 				h.index = i
 				dropper.addChild h
 				@addToLibrary h
-				npos += h.width + 10
+				npos += h.width + 20
 				i++
 			else
-				h = @createText '', t,'24px Quicksand','#333', npos, 0
+				h = @createText '', t,'48px Quicksand','#333', npos, 0
 				dropper.addChild h
 				npos += h.getMeasuredWidth() + 20
 
-		a = @createText 'a', "A: #{@scene.steps[@step - 1].frase}",'24px Quicksand','#333', 120, 40
+		a = @createText 'a', "A: #{@scene.steps[@step - 1].frase}",'48px Quicksand','#333', 240, 80
 		dropper.addChild a
 		@
 	setNube1: ->
 		container = new createjs.Container()
-		container.x = 210
-		container.y = 480
+		container.x = 420
+		container.y = 960
 		container.name = 'nube1'
 		container.removeAllChildren()
 
@@ -146,8 +146,8 @@ class U8A2 extends Oda
 		@
 	setNube2: ->
 		container = new createjs.Container()
-		container.x = 440
-		container.y = 480
+		container.x = 880
+		container.y = 960
 		container.name = 'nube2'
 		container.removeAllChildren()
 		back = @createBitmap 'backNube2', 'n2', 0, 0
@@ -164,10 +164,10 @@ class U8A2 extends Oda
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha: 0, x: 0, delay: 0.5}
-		TweenLite.from @library.scene, 1, {alpha: 0, y: @library.scene.y + 20, delay: 1}
-		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 20, delay: 1}
-		TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20, delay: 1.5}
-		TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.scene, 1, {alpha: 0, y: @library.scene.y + 40, delay: 1}
+		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 40, delay: 1}
+		TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 40, delay: 1.5}
+		TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 40, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for opt in @scene.opt1
@@ -204,12 +204,12 @@ class U8A2 extends Oda
 		for opt in @scene.opt2
 			@library["n2d#{opt.i}"].visible = true
 			@library["n2d#{opt.i}"].returnToPlace()
-		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 20, onComplete: @nextEvaluation}
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 40, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @scene.steps.length
 			@setDropper @index + 1
-			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 390}
+			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 780}
 			for opt in @scene.opt1
 				@library["n1d#{opt.i}"].updateDrops @library.h0
 			for opt in @scene.opt2
@@ -220,18 +220,18 @@ class U8A2 extends Oda
 				@index = 0
 				#TweenLite.to @library.sc, 0.5, {alpha: 0, y: @library.dropper.y + 20}
 				@mainContainer.removeChild @sc
-				TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
-				TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
+				TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 40}
+				TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 40}
 				@setScene( @escena ).setDropper(1).setNube1().setNube2().initEvaluation()
-				TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
-				TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
-				TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 390}
+				TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 40}
+				TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 40}
+				TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 780}
 			else
 				@finish()
 	finish: ->
-		TweenLite.to @library.scene, 1, {alpha: 0, y: @library.scene.y + 20}
-		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
-		TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
-		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: 390}
+		TweenLite.to @library.scene, 1, {alpha: 0, y: @library.scene.y + 40}
+		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 40}
+		TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 40}
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: 780}
 		super
 	window.U8A2 = U8A2

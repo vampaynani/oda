@@ -157,66 +157,66 @@ class U6A6 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look and drag the letters to complete the crossword puzzle.', 40, 100
-		doc = @createBitmap 'persondoctor', 'persondoctor', '77', '121'
-		mec = @createBitmap 'personmechanic', 'personmechanic', '137', '194'
-		chef = @createBitmap 'personchef', 'personchef', '27', '208'
-		sales = @createBitmap 'personsalesclerk', 'personsalesclerk', '79', '325'
-		wait = @createBitmap 'personwaiter', 'personwaiter', '580', '117'
-		poli = @createBitmap 'personpolice', 'personpolice', '681', '204'
-		vet = @createBitmap 'personvet', 'personvet', '579', '224'
-		fire = @createBitmap 'personfirefighter', 'personfirefighter', '632', '318'
+		@insertInstructions 'instructions', 'Look and drag the letters to complete the crossword puzzle.', 80, 200
+		doc = @createBitmap 'persondoctor', 'persondoctor', 154, 242
+		mec = @createBitmap 'personmechanic', 'personmechanic', 274, 388
+		chef = @createBitmap 'personchef', 'personchef', 54, 416
+		sales = @createBitmap 'personsalesclerk', 'personsalesclerk', 158, 650
+		wait = @createBitmap 'personwaiter', 'personwaiter', 1160, 184
+		poli = @createBitmap 'personpolice', 'personpolice', 1362, 408
+		vet = @createBitmap 'personvet', 'personvet', 1158, 448
+		fire = @createBitmap 'personfirefighter', 'personfirefighter', 1264, 636
 		doc.scaleX = doc.scaleY = mec.scaleX = mec.scaleY = chef.scaleX = chef.scaleY = sales.scaleX = sales.scaleY = wait.scaleX = wait.scaleY = poli.scaleX = poli.scaleY = vet.scaleX = vet.scaleY = fire.scaleX = fire.scaleY = 0.5
 		@addToMain doc, mec, chef, sales, wait, poli, vet, fire
 
-		@insertBitmap 'numberdoctor', 'numberdoctor', '65', '138'
-		@insertBitmap 'numbermechanic', 'numbermechanic', '125', '227'
-		@insertBitmap 'numberchef', 'numberchef', '28', '251'
-		@insertBitmap 'numbersalesclerk', 'numbersalesclerk', '65', '342'
-		@insertBitmap 'numberwaiter', 'numberwaiter', '615', '132'
-		@insertBitmap 'numberpolice', 'numberpolice', '670', '227'
-		@insertBitmap 'numbervet', 'numbervet', '582', '251'
-		@insertBitmap 'numberfirefighter', 'numberfirefighter', '618', '342'
+		@insertBitmap 'numberdoctor', 'numberdoctor', 130, 276
+		@insertBitmap 'numbermechanic', 'numbermechanic', 250, 454
+		@insertBitmap 'numberchef', 'numberchef', 56, 502
+		@insertBitmap 'numbersalesclerk', 'numbersalesclerk', 130, 684
+		@insertBitmap 'numberwaiter', 'numberwaiter', 1230, 264
+		@insertBitmap 'numberpolice', 'numberpolice', 1340, 454
+		@insertBitmap 'numbervet', 'numbervet', 1164, 502
+		@insertBitmap 'numberfirefighter', 'numberfirefighter', 1236, 684
 		@intento = 0
 
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 8, 0
 		@createHelp()
 		@createDroppers()
 		@createAlphabet()
 		@introEvaluation()
 	createHelp: ->
 		help = new createjs.Container()
-		help.x = 127
-		help.y = 510
+		help.x = 254
+		help.y = 1020
 		help.name = 'helper'
 		p = @createBitmap 'prophelper', 'prophelper', 0, 0
 		help.addChild p
 
-		t = @createText 'helpertxt', @helps[8], '14px Quicksand', '#333', 330, 25
+		t = @createText 'helpertxt', @helps[8], '28px Quicksand', '#333', 660, 50
 		@addToLibrary t
 
-		a = @createBitmap "btndoctor", "btn1", (0)*40 + 10, 20
+		a = @createBitmap "btndoctor", "btn1", (0) * 80 + 20, 40
 		a.index = 1
 		a.addEventListener 'click', @showHelper
-		b = @createBitmap "btnmechanic", "btn2", (1)*40 + 10, 20
+		b = @createBitmap "btnmechanic", "btn2", (1) * 80 + 20, 40
 		b.index = 2
 		b.addEventListener 'click', @showHelper
-		c = @createBitmap "btnchef", "btn3", (2)*40 + 10, 20
+		c = @createBitmap "btnchef", "btn3", (2) * 80 + 20, 40
 		c.index = 3
 		c.addEventListener 'click', @showHelper
-		d = @createBitmap "btnsalesclerk", "btn4", (3)*40 + 10, 20
+		d = @createBitmap "btnsalesclerk", "btn4", (3) * 80 + 20, 40
 		d.index = 4
 		d.addEventListener 'click', @showHelper
-		e = @createBitmap "btnwaiter", "btn5", (4)*40 + 10, 20
+		e = @createBitmap "btnwaiter", "btn5", (4) * 80 + 20, 40
 		e.index = 5
 		e.addEventListener 'click', @showHelper
-		f = @createBitmap "btnpolice", "btn6", (5)*40 + 10, 20
+		f = @createBitmap "btnpolice", "btn6", (5) * 80 + 20, 40
 		f.index = 6
 		f.addEventListener 'click', @showHelper
-		g = @createBitmap "btnvet", "btn7", (6)*40 + 10, 20
+		g = @createBitmap "btnvet", "btn7", (6) * 80 + 20, 40
 		g.index = 7
 		g.addEventListener 'click', @showHelper
-		h = @createBitmap "btnfirefighter", "btn8", (7)*40 + 10, 20
+		h = @createBitmap "btnfirefighter", "btn8", (7) * 80 + 20, 40
 		h.index = 8
 		h.addEventListener 'click', @showHelper
 
@@ -226,42 +226,45 @@ class U6A6 extends Oda
 		@addToMain help
 	createAlphabet: ->
 		alphabet = new createjs.Container()
-		alphabet.x = 115
-		alphabet.y = 410
+		alphabet.x = 230
+		alphabet.y = 900
 		alphabet.name = 'alphabet'
 		for i in [0..@abc.length - 1] by 1
 			letter = @abc[i]
 			if i <= 13
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i, 0
+				letterObj = new DraggableText letter, letter, letter, 83 * i, 0
+				#letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i, 0
 			else
-				letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i-540, 34
+				letterObj = new DraggableText letter, letter, letter, 83 * i - 1080, 68
+				#letterObj = new Draggable letter, (@preload.getResult letter+'Letra'), letter, 41.5*i-540, 34
+			letterObj.text.font = "48px Quicksand"
 			letterObj.onInitEvaluation()
 			alphabet.addChild letterObj	
 			@addToLibrary letterObj
 		@addToMain alphabet
 	createDroppers: ->
 		crosswords = new createjs.Container()
-		crosswords.x = 245
+		crosswords.x = 490
 		crosswords.name = 'crosswords'
 		for i in [0..@containers.length - 1] by 1
-			drop = new WordContainer 'h'+i, '', '#FFF', '#999', @containers[i].x*23, @containers[i].y*23, 23, 23
-			drop.setRectShape '#FFF', '#999', 2, 23, 23
+			drop = new WordContainer 'h'+i, '', '#FFF', '#999', @containers[i].x * 46, @containers[i].y * 46, 46, 46
+			drop.setRectShape '#FFF', '#999', 2, 46, 46
 			drop.text.y -= 3
 			drop.id = @containers[i].id
 			@addToLibrary drop
 			crosswords.addChild drop
 		for i in [0..7]
-			t = new createjs.Text @numbers[i].id,'14px Quicksand','#333'
-			t.x = @numbers[i].x*23 + 6
-			t.y = @numbers[i].y*23 + 4
+			t = new createjs.Text @numbers[i].id,'28px Quicksand','#333'
+			t.x = @numbers[i].x * 46 + 12
+			t.y = @numbers[i].y * 46 + 8
 			crosswords.addChild t
-		crosswords.cache -23, -23, 360, 335
 		@addToMain crosswords
+		@library.crosswords.cache -46, -46, 720, 670
 	introEvaluation: ->
 		super
-		@library.crosswords.y = 145
+		@library.crosswords.y = 290
 		@library.crosswords.alpha = 1
-		@library.alphabet.y = 430
+		@library.alphabet.y = 900
 		@library.alphabet.alpha = 1
 		@library.persondoctor.alpha = 1
 		@library.personfirefighter.alpha = 1
@@ -288,14 +291,14 @@ class U6A6 extends Oda
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
 		TweenMax.allFrom [@library.persondoctor, @library.personfirefighter, @library.personvet, @library.personpolice, @library.personwaiter, @library.personsalesclerk, @library.personchef, @library.personmechanic], 1, {alpha:0, delay:1.5}, 0.2
 		TweenMax.allFrom [@library.numberdoctor, @library.numberfirefighter, @library.numbervet, @library.numberpolice, @library.numberwaiter, @library.numbersalesclerk, @library.numberchef, @library.numbermechanic], 1, {alpha:0, delay:1.5}, 0.2
-		TweenLite.from @library.alphabet, 1, {alpha: 0, y: @library.alphabet.y + 20, delay: 1.5}
-		TweenLite.from @library.helper, 1, {alpha: 0, y: @library.helper.y + 20, delay: 1.5}
-		TweenLite.from @library.crosswords, 1, {alpha: 0, y: @library.crosswords.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.alphabet, 1, {alpha: 0, y: @library.alphabet.y + 40, delay: 1.5}
+		TweenLite.from @library.helper, 1, {alpha: 0, y: @library.helper.y + 40, delay: 1.5}
+		TweenLite.from @library.crosswords, 1, {alpha: 0, y: @library.crosswords.y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
  	initEvaluation: (e) =>
 		super
 		for letter in @abc
 			@library[letter].addEventListener 'drop', @evaluateAnswer
-		@library.crosswords.cache -23, -23, 360, 335
+		@library.crosswords.cache -46, -46, 720, 670
 	showHelper: (e) =>
 		@library.helpertxt.text = @helps[e.target.index - 1]
 	evaluateAnswer: (e) =>
@@ -324,7 +327,7 @@ class U6A6 extends Oda
 				@evaluate 'police'
 				@evaluate 'vet'
 				@evaluate 'firefighter'
-				@library.crosswords.cache -23, -23, 360, 335
+				@library.crosswords.cache -46, -46, 720, 670
 			else
 				@warning()
 				@intento++
@@ -351,13 +354,13 @@ class U6A6 extends Oda
 		for obj of @answers
 			if @answers[obj].r is off
 				complete = off
-		TweenLite.to @library.crosswords, 0.5, {alpha:0, y: @library.crosswords.y - 100, ease:Quart.easeOut, onComplete: @finish} if complete
+		TweenLite.to @library.crosswords, 0.5, {alpha:0, y: @library.crosswords.y - 200, ease:Quart.easeOut, onComplete: @finish} if complete
 	blink: (obj, state = on) ->
 		TweenMax.killTweensOf obj
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: =>
-		TweenLite.to @library.alphabet, 0.5, {alpha:0, y: @library.alphabet.y - 100, ease:Quart.easeOut}
-		TweenLite.from @library.helper, 1, {alpha: 0, y: @library.helper.y + 20}
+		TweenLite.to @library.alphabet, 0.5, {alpha:0, y: @library.alphabet.y - 200, ease:Quart.easeOut}
+		TweenLite.from @library.helper, 1, {alpha: 0, y: @library.helper.y + 40}
 		super
 	window.U6A6 = U6A6

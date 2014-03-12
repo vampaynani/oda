@@ -58,29 +58,29 @@ class U8A4 extends Oda
 		super
 		@steps = @shuffle @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the name to the corresponding person.', 40, 100
-		@insertBitmap 'finish', 'btnfinished', 387, 541
-		@insertBitmap 'repeat', 'btnrepeat', 264, 541
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@insertInstructions 'instructions', 'Listen and drag the name to the corresponding person.', 80, 200
+		@insertBitmap 'finish', 'btnfinished', 774, 1082
+		@insertBitmap 'repeat', 'btnrepeat', 528, 1082
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 8, 0
 		@setKids().introEvaluation()
 	setKids: ->
 		caras = new createjs.Container()
-		caras.x = 90
-		caras.y = 150
+		caras.x = 180
+		caras.y = 300
 		caras.name = 'caras'
 		
 		@targets = new Array()
 		for i in [1..8]
 			if i < 5
-				c = @createBitmap "image#{i}", "image#{i}", (145*i)-145, 0
+				c = @createBitmap "image#{i}", "image#{i}", (290 * i) - 290, 0
 			else
-				c = @createBitmap "image#{i}", "image#{i}", (145*i)-145*5, 190
+				c = @createBitmap "image#{i}", "image#{i}", (290 * i) - 290 * 5, 380
 			@targets.push c
 			@addToLibrary c
 			caras.addChild c
 		
 		for i in [1..8] by 1
-			d = new Droppable "dragble#{i}", (@preload.getResult "dragble#{i}"), i, 630, i*37, @stage
+			d = new Droppable "dragble#{i}", (@preload.getResult "dragble#{i}"), i, 1260, i * 74, @stage
 			@setReg d, d.width / 2, d.height / 2
 			@addToLibrary d
 			caras.addChild d
@@ -90,9 +90,9 @@ class U8A4 extends Oda
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.finish, 1, {alpha :0, y: @library.finish.y + 10, delay: 0.7}
-		TweenLite.from @library.repeat, 1, {alpha :0, y: @library.repeat.y + 10, delay: 0.7}
-		TweenLite.from @library.caras, 1, {alpha: 0, y: @library.caras.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.finish, 1, {alpha :0, y: @library.finish.y + 20, delay: 0.7}
+		TweenLite.from @library.repeat, 1, {alpha :0, y: @library.repeat.y + 20, delay: 0.7}
+		TweenLite.from @library.caras, 1, {alpha: 0, y: @library.caras.y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		createjs.Sound.play @steps[@index].sound
@@ -105,7 +105,7 @@ class U8A4 extends Oda
 	evaluateDrop: (e) =>
 		@answer = e.target
 		@drop = e.drop
-		@answer.putInPlace x:@drop.x + 65, y:@drop.y + 150
+		@answer.putInPlace x:@drop.x + 130, y:@drop.y + 300
 		setTimeout @finishEvaluation, 1 * 1000
 	evaluateAnswer: (e) =>
 		@library.repeat.removeEventListener 'click', @playSound
@@ -113,7 +113,7 @@ class U8A4 extends Oda
 		for i in [1..8] by 1
 			step = @steps[i - 1]
 			res = @createSprite 'resultado', ['incorrect', 'correct'], null, @library["image#{step.tgt}"].x, @library["image#{step.tgt}"].y
-			if @library["dragble#{step.drp}"].x is @library["image#{step.tgt}"].x + 65
+			if @library["dragble#{step.drp}"].x is @library["image#{step.tgt}"].x + 130
 				@library.score.plusOne()
 				res.currentFrame = 1
 			else
@@ -130,8 +130,8 @@ class U8A4 extends Oda
 		createjs.Sound.stop()
 		createjs.Sound.play @steps[@index].sound
 	finish: =>
-		TweenLite.to @library.finish, 1, {alpha :0, y: @library.finish.y + 10}
-		TweenLite.to @library.repeat, 1, {alpha :0, y: @library.repeat.y + 10}
-		TweenLite.to @library.caras, 1, {alpha: 0, y: @library.caras.y + 20}
+		TweenLite.to @library.finish, 1, {alpha :0, y: @library.finish.y + 20}
+		TweenLite.to @library.repeat, 1, {alpha :0, y: @library.repeat.y + 20}
+		TweenLite.to @library.caras, 1, {alpha: 0, y: @library.caras.y + 40}
 		super
 	window.U8A4 = U8A4

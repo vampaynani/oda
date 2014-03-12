@@ -71,8 +71,8 @@ class U5A2 extends Oda
 		@steps = @shuffle @game.steps
 		@stepsid = (step.id for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and click on the correct option.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 15, 0
+		@insertInstructions 'instructions', 'Listen and click on the correct option.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 15, 0
 		@setStep().introEvaluation()
 	setStep: ->
 		@selected = @stepsid[@index]
@@ -82,9 +82,9 @@ class U5A2 extends Oda
 		stepsView = @shuffle stepsView
 		img1 = @preload.getResult @selected
 		img2 = @preload.getResult stepsView[0]
-		choose = new ChooseBitmap 'chooseImg', img1, img2, 1, stageSize.w / 2, 70
+		choose = new ChooseBitmap 'chooseImg', img1, img2, 1, stageSize.w / 2, 140
 		choose.scaleX = choose.scaleY = 0.6
-		choose.setDistance 550, 300
+		choose.setDistance 1100, 600
 		choose.addEventListener 'selection', (e)=>
 			@tindex = 0
 			if e.success is false 
@@ -96,7 +96,7 @@ class U5A2 extends Oda
 					createjs.Sound.play "good"
 				@showText()
 		@addToMain choose
-		TweenLite.from choose, 1, {alpha: 0, y: @library.chooseImg.y + 50, delay: 1}
+		TweenLite.from choose, 1, {alpha: 0, y: @library.chooseImg.y + 100, delay: 1}
 		@
 	introEvaluation: ->
 		super
@@ -109,7 +109,7 @@ class U5A2 extends Oda
 	showText: () ->
 		text = @steps[@index].texts[@tindex]
 		intento = 0
-		choosetxt = new ChooseText 'chooseTxt', text.p, "want", "don't want", text.c, text.s, 0, 450
+		choosetxt = new ChooseText 'chooseTxt', text.p, "want", "don't want", text.c, text.s, 0, 900
 		choosetxt.x = stageSize.w / 2 -  choosetxt.width / 2
 		choosetxt.addEventListener 'selection', (e)=>
 			if e.success is false 
@@ -125,13 +125,13 @@ class U5A2 extends Oda
 	evaluateAnswer: (e) =>
 		@tindex++
 		if @tindex < @steps[@index].texts.length
-			TweenLite.to @library.chooseTxt, 0.5, {y:@library.chooseTxt.y - 50, alpha:0}
+			TweenLite.to @library.chooseTxt, 0.5, {y:@library.chooseTxt.y - 100, alpha:0}
 			@showText()
 		else
 			@finishEvaluation()
 	finishEvaluation: =>
-		TweenLite.to @library.chooseTxt, 0.5, {y:@library.chooseTxt.y - 50, alpha:0}
-		TweenLite.to @library.chooseImg, 0.5, {alpha: 0, y: @library.chooseImg.y - 50, ease: Back.easeOut, onComplete: @nextEvaluation}
+		TweenLite.to @library.chooseTxt, 0.5, {y:@library.chooseTxt.y - 100, alpha:0}
+		TweenLite.to @library.chooseImg, 0.5, {alpha: 0, y: @library.chooseImg.y - 100, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		createjs.Sound.stop()

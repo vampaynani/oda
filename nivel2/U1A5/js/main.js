@@ -438,6 +438,10 @@
     };
 
     U1A5.prototype.finish = function() {
+      TweenLite.to(this.library['title'], 1, {
+        alpha: 0,
+        y: this.library['title'].y + 40
+      });
       return U1A5.__super__.finish.apply(this, arguments);
     };
 

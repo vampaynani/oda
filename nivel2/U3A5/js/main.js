@@ -416,10 +416,6 @@
         return _results;
       } else {
         this.finalscene = 0;
-        TweenLite.to(this.library['title'], 1, {
-          alpha: 0,
-          y: this.library['title'].y + 40
-        });
         return setTimeout(this.storyTale, 2 * 1000);
       }
     };
@@ -445,6 +441,10 @@
     };
 
     U3A5.prototype.finish = function() {
+      TweenLite.to(this.library['title'], 1, {
+        alpha: 0,
+        y: this.library['title'].y + 40
+      });
       return U3A5.__super__.finish.apply(this, arguments);
     };
 

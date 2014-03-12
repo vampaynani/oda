@@ -65,28 +65,28 @@ class U5A1 extends Oda
 		@game = [
 			{
 				finales:[
-					{x:185, y:198}
-					{x:299, y:210}
-					{x:393, y:217}
-					{x:200, y:260}
-					{x:306, y:257}
-					{x:397, y:270}
-					{x:214, y:323}
-					{x:325, y:321}
-					{x:415, y:322}
-					{x:223, y:387}
-					{x:340, y:372}
-					{x:445, y:375}
+					{x:365, y:396}
+					{x:588, y:400}
+					{x:776, y:424}
+					{x:390, y:520}
+					{x:612, y:514}
+					{x:794, y:530}
+					{x:423, y:646}
+					{x:650, y:642}
+					{x:830, y:634}
+					{x:451, y:779}
+					{x:680, y:744}
+					{x:890, y:750}
 				]
 				drags:[
-					{x:70, y:508}
-					{x:157, y:527}
-					{x:228, y:505}
-					{x:302, y:513}
-					{x:389, y:503}
-					{x:465, y:514}
-					{x:539, y:512}
-					{x:635, y:521}
+					{x:140, y:1016}
+					{x:314, y:1054}
+					{x:456, y:1010}
+					{x:604, y:1026}
+					{x:778, y:1006}
+					{x:930, y:1028}
+					{x:1078, y:1024}
+					{x:1270, y:1042}
 				]
 				drops:[
 					{id:'cal1Dragble2', tgt:'cal1Final1'}
@@ -101,28 +101,28 @@ class U5A1 extends Oda
 			}
 			{
 				finales:[
-					{x:181, y:193}
-					{x:292, y:202}
-					{x:388, y:212}
-					{x:193, y:255}
-					{x:308, y:259}
-					{x:397, y:263}
-					{x:209, y:320}
-					{x:316, y:318}
-					{x:424, y:317}
-					{x:216, y:385}
-					{x:342, y:383}
-					{x:458, y:368}
+					{x:362, y:386}
+					{x:584, y:404}
+					{x:776, y:424}
+					{x:386, y:510}
+					{x:616, y:518}
+					{x:794, y:526}
+					{x:418, y:640}
+					{x:632, y:636}
+					{x:848, y:634}
+					{x:432, y:770}
+					{x:684, y:766}
+					{x:916, y:731}
 				]
 				drags:[
-					{x:70, y:508}
-					{x:157, y:527}
-					{x:228, y:505}
-					{x:302, y:513}
-					{x:349, y:503}
-					{x:445, y:514}
-					{x:539, y:512}
-					{x:615, y:521}
+					{x:140, y:1016}
+					{x:314, y:1054}
+					{x:456, y:1010}
+					{x:564, y:1026}
+					{x:698, y:1006}
+					{x:890, y:1028}
+					{x:1078, y:1024}
+					{x:1230, y:1042}
 				]
 				drops:[
 					{id:'cal2Dragble3', tgt:'cal2Final1'}
@@ -140,18 +140,18 @@ class U5A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen and drag the pictures to the correct month on the calendar.', 40, 100
-		@insertBitmap 'btnRepeat', 'btnRepeat', 598, 245
-		@insertBitmap 'btnFinished', 'btnFinished', 598, 292
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
+		@insertInstructions 'instructions', 'Listen and drag the pictures to the correct month on the calendar.', 80, 200
+		@insertBitmap 'btnRepeat', 'btnRepeat', 1196, 490
+		@insertBitmap 'btnFinished', 'btnFinished', 1196, 584
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 16, 0
 		@setCalendar(1).introEvaluation()
 	setCalendar: (calendar) ->
 		@calendar = calendar
 		cal = new createjs.Container()
 		cal.name = 'calendar'
-		cal.x = 60
+		cal.x = 120
 		cal.y = 0	
-		@insertBitmap 'propCalendar', 'propCalendar', 60, 128
+		@insertBitmap 'propCalendar', 'propCalendar', 120, 256
 		for i in [1..12]
 			c = new createjs.Container()
 			c.name = "cal#{calendar}Final#{i}"
@@ -163,7 +163,7 @@ class U5A1 extends Oda
 					c.addChild v
 				else
 					hit = new createjs.Shape()
-					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55)
+					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-50, -50, 180, 110)
 					c.addChild hit
 			else if calendar is 2
 				if i in [6, 8, 10, 12]
@@ -171,7 +171,7 @@ class U5A1 extends Oda
 					c.addChild v
 				else
 					hit = new createjs.Shape()
-					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-25, -25, 90, 55)
+					hit.graphics.beginFill('rgba(255,255,255,0.1)').drawRect(-50, -50, 180, 110)
 					c.addChild hit
 			cal.addChild c
 			@addToLibrary c
@@ -187,8 +187,8 @@ class U5A1 extends Oda
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 20, delay: 0.5}
-		TweenLite.from @library.btnFinished, 1, {alpha: 0, y: @library.btnFinished.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 40, delay: 0.5}
+		TweenLite.from @library.btnFinished, 1, {alpha: 0, y: @library.btnFinished.y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for i in [1..8]
@@ -205,7 +205,7 @@ class U5A1 extends Oda
 				dropped = on
 				@answer.visible = false
 				relation = @game[@calendar - 1].drops.where id:@answer.name
-				v = @createBitmap relation[0].id, relation[0].tgt, 22.5, 12.5
+				v = @createBitmap relation[0].id, relation[0].tgt, 45, 25
 				@setReg v, v.width / 2, v.height / 2
 				@library[drop.tgt].addChild v
 		if not dropped then @answer.returnToPlace()
@@ -221,8 +221,8 @@ class U5A1 extends Oda
 					@library.score.plusOne()
 		setTimeout @finishEvaluation, 4 * 1000
 	finishEvaluation: =>
-		TweenLite.to @library.calendar, 1, {alpha:0, y:@library.calendar.y - 20}
-		TweenLite.to @library.propCalendar, 1, {alpha:0, y:@library.propCalendar.y - 20, onComplete: @nextEvaluation}
+		TweenLite.to @library.calendar, 1, {alpha:0, y:@library.calendar.y - 40}
+		TweenLite.to @library.propCalendar, 1, {alpha:0, y:@library.propCalendar.y - 40, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @game.length
@@ -240,7 +240,7 @@ class U5A1 extends Oda
 		createjs.Sound.play "cal#{@calendar}"
 	finish: ->
 		createjs.Sound.stop()
-		TweenLite.to @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 20}
-		TweenLite.to @library.btnFinished, 1, {alpha: 0, y: @library.btnFinished.y + 20}
+		TweenLite.to @library.btnRepeat, 1, {alpha :0, y: @library.btnRepeat.y + 40}
+		TweenLite.to @library.btnFinished, 1, {alpha: 0, y: @library.btnFinished.y + 40}
 		super
 	window.U5A1 = U5A1

@@ -22,10 +22,10 @@ class U8A3 extends Oda
 		]
 		@game =
 			passports:[
-				{x: 130, y: 130, values: ['Eric Schmidt', 'Germany', 'blue', 'brown', '1m 10cm']}
-				{x: 430, y: 135, values: ['Melanie Murphy', 'Ireland', 'green', 'red', '1m 7cm']}
-				{x: 130, y: 304, values: ['Cassandra Wang', 'China', 'dark brown', 'black', '1m 15cm']}
-				{x: 434, y: 304, values: ['Saul Peterson', 'Canada', 'light brown', 'blonde', '1m 14cm']}
+				{x: 260, y: 260, values: ['Eric Schmidt', 'Germany', 'blue', 'brown', '1m 10cm']}
+				{x: 860, y: 270, values: ['Melanie Murphy', 'Ireland', 'green', 'red', '1m 7cm']}
+				{x: 260, y: 608, values: ['Cassandra Wang', 'China', 'dark brown', 'black', '1m 15cm']}
+				{x: 868, y: 608, values: ['Saul Peterson', 'Canada', 'light brown', 'blonde', '1m 14cm']}
 			]
 			steps:[
 				{pattern:["I have", "#wc", "eyes. I have straight", "#wc", "hair. I'm", "#wc", "tall.", "#br", "My name's", "#wc", "I'm from Germany."], targets:['blue','brown', '1m 10cm', 'Eric Schmidt']}
@@ -34,11 +34,11 @@ class U8A3 extends Oda
 				{pattern:["I'm from", "#wc", ". I have dark brown eyes. I have long", "#wc", "hair.", "#br", "I'm", "#wc", "tall. My name's", "#wc"], targets:['China','black', '1m 15cm', 'Cassandra Wang']}
 			]
 			positions:[
-				{x:'70', y:'22'}
-				{x:'82', y:'50'}
-				{x:'89', y:'78'}
-				{x:'95', y:'106'}
-				{x:'73', y:'134'}
+				{x:140, y:44}
+				{x:164, y:100}
+				{x:178, y:156}
+				{x:190, y:212}
+				{x:146, y:255}
 			]
 
 
@@ -48,8 +48,8 @@ class U8A3 extends Oda
 		@intento = 0
 		@steps = @shuffle @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look at the passports, read and drag the words to complete the text.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
+		@insertInstructions 'instructions', 'Look at the passports, read and drag the words to complete the text.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 16, 0
 		@setDropper( 1 ).setPassports().introEvaluation()
 	setPassports: ->
 		i = 1
@@ -73,8 +73,8 @@ class U8A3 extends Oda
 			dropper = @library.dropper
 		else
 			dropper = new createjs.Container()
-			dropper.x = 120
-			dropper.y = 500
+			dropper.x = 240
+			dropper.y = 1000
 			dropper.name = 'dropper'
 			@addToMain dropper
 		dropper.removeAllChildren()
@@ -84,31 +84,32 @@ class U8A3 extends Oda
 		npos = 0
 		@targets = new Array()
 		for t in @steps[step - 1].pattern
-			ny = j * 30 + 7
+			ny = j * 60 + 14
+			console.log ny
 			if t is '#br'
 				npos = 0
 				j++
 			else if t is '#wc'
 				txt = @steps[step - 1].targets[i]
-				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#eb188e', npos, ny
-				h.text.font = '20px Quicksand'
+				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#eb188e', npos, ny + 20
+				h.text.font = '40px Quicksand'
 				h.index = i
 				dropper.addChild h
 				@addToLibrary h
 				@targets.push h
-				npos += h.width + 7
+				npos += h.width + 14
 				i++
 			else
-				h = @createText '', t,'20px Quicksand','#333', npos, ny
+				h = @createText '', t,'40px Quicksand','#333', npos, ny
 				dropper.addChild h
-				npos += h.getMeasuredWidth() + 12
+				npos += h.getMeasuredWidth() + 24
 		@
 	introEvaluation: ->
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
 		TweenLite.from [@library.pass1, @library.pass2, @library.pass3, @library.pass4], 1, {alpha: 0, delay: 1}
-		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for i in [1..@game.passports.length] by 1
@@ -142,7 +143,7 @@ class U8A3 extends Oda
 			for j in [0..@game.passports[i - 1].values.length - 1] by 1 
 				@library["p#{i}v#{j}"].visible = true
 				@library["p#{i}v#{j}"].returnToPlace()
-		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 20, onComplete: @nextEvaluation}
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 40, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @steps.length
@@ -150,7 +151,7 @@ class U8A3 extends Oda
 			for i in [1..@game.passports.length] by 1
 				for j in [0..@game.passports[i - 1].values.length - 1] by 1 
 					@library["p#{i}v#{j}"].updateDrops @targets
-			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 500}
+			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: 1000}
 		else
 			@finish()
 	finish: ->

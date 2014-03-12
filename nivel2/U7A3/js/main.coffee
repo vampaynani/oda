@@ -57,12 +57,12 @@ class U7A3 extends Oda
 				{t:'6. They are hiking mountains.', l:'summerR'}
 			]
 			summerletras:[
-				{letra:'summerS', x:'366', y:'185'}
-				{letra:'summerU', x:'201', y:'172'} #24 y 10
-				{letra:'summerM', x:'80', y:'175'}
-				{letra:'summerM2', x:'423', y:'281'}
-				{letra:'summerE', x:'162', y:'291'}
-				{letra:'summerR', x:'211', y:'98'}
+				{letra:'summerS', x:732, y:370}
+				{letra:'summerU', x:402, y:344} #24 y 10
+				{letra:'summerM', x:160, y:350}
+				{letra:'summerM2', x:846, y:562}
+				{letra:'summerE', x:324, y:582}
+				{letra:'summerR', x:422, y:196}
 			]
 			greentexts:[
 				{t:'1. She is planting trees.', l:'greenB'}
@@ -74,13 +74,13 @@ class U7A3 extends Oda
 				{t:'7. He is recycling bottles and cans.', l:'greenN'}
 			]
 			greenletras:[
-				{letra:'greenB', x:'187', y:'119'} # 36 y 20
-				{letra:'greenE', x:'49', y:'264'}
-				{letra:'greenG', x:'267', y:'209'}
-				{letra:'greenR', x:'428', y:'178'}
-				{letra:'greenE2', x:'314', y:'220'}
-				{letra:'greenE3', x:'470', y:'119'}
-				{letra:'greenN', x:'413', y:'245'}
+				{letra:'greenB', x:374, y:238} # 36 y 20
+				{letra:'greenE', x:98, y:528}
+				{letra:'greenG', x:534, y:418}
+				{letra:'greenR', x:856, y:356}
+				{letra:'greenE2', x:628, y:440}
+				{letra:'greenE3', x:940, y:238}
+				{letra:'greenN', x:826, y:490}
 			]
 
 		
@@ -90,13 +90,13 @@ class U7A3 extends Oda
 		super
 		@intento = 0
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read, drag the letters and complete the mystery word.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 13, 0
+		@insertInstructions 'instructions', 'Read, drag the letters and complete the mystery word.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 13, 0
 		@setScene(1).introEvaluation()
 	setScene: (scene) ->
 		@escena = new createjs.Container()
-		@escena.x = 116
-		@escena.y = 160
+		@escena.x = 232
+		@escena.y = 320
 		@escena.name = 'escena'
 
 		if scene is 1
@@ -106,11 +106,11 @@ class U7A3 extends Oda
 			es = 'green'
 			@esc = 2
 
-		fondo = @createBitmap "#{es}bg", "#{es}bg", 24,11
+		fondo = @createBitmap "#{es}bg", "#{es}bg", 48, 22
 		
 		@texts = @positions["#{es}texts"]
 
-		@insertText 'label', @texts[@index].t,'24px Quicksand','#333', stageSize.w / 2, 140, 'center'
+		@insertText 'label', @texts[@index].t,'48px Quicksand','#333', stageSize.w / 2, 280, 'center'
 		@escena.addChild fondo
 
 		@letras = @positions["#{es}letras"]
@@ -119,11 +119,11 @@ class U7A3 extends Oda
 		for i in [0..@letras.length - 1]
 			word = @letras[i]
 			if scene is 1
-				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*75 + 85, 430, 'bc'
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i * 150 + 170, 860, 'bc'
 			if scene is 2
-				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*75 + 55, 430, 'bc'
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i * 150 + 110, 860, 'bc'
 				if i >= 2
-					drop.x = drop.x + 30
+					drop.x = drop.x + 60
 			hit = new createjs.Shape()
 			hit.graphics.beginFill('rgba(255,255,255,1)').drawRect(0, 0, drop.width, drop.height)
 			hit.x = drop.x - drop.width / 2
@@ -136,14 +136,14 @@ class U7A3 extends Oda
 		for i in [0..@letras.length - 1]
 			word = @letras[i]
 			if scene is 1
-				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*75 + 85, 430, 'bc'
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i * 150 + 170, 860, 'bc'
 			if scene is 2
-				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i*75 + 55, 430, 'bc'
+				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i * 150 + 110, 860, 'bc'
 				if i >= 2
-					drop.x = drop.x + 30
-			letra = new Droppable word.letra, (@preload.getResult word.letra), i, word.x-10	, word.y-10, @stage, hits
+					drop.x = drop.x + 60
+			letra = new Droppable word.letra, (@preload.getResult word.letra), i, word.x - 20, word.y - 20, @stage, hits
 			letra.scaleX = letra.scaleY = 0.43
-			letrafinal = @createBitmap "f#{@letras[i].letra}", @letras[i].letra, drop.x, drop.y-7, 'bc'
+			letrafinal = @createBitmap "f#{@letras[i].letra}", @letras[i].letra, drop.x, drop.y - 14, 'bc'
 			letrafinal.visible = off
 			@addToLibrary letra, letrafinal
 			@escena.addChild letra, letrafinal
@@ -170,11 +170,11 @@ class U7A3 extends Oda
 
 		if @esc is 1
 			@setScene(2).initEvaluation()
-			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 20, delay: 4}
+			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 40, delay: 4}
 			TweenLite.from @library.label, 0.5, {alpha: 0, delay: 4}
 
 		else
-			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 20, delay: 4, onComplete: @finish()}	
+			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 40, delay: 4, onComplete: @finish()}	
 
 		#@initEvaluation()
 		@
@@ -182,8 +182,8 @@ class U7A3 extends Oda
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.label, 1, {alpha :0, y: @library.label.y + 10, delay: 1}
-		TweenLite.from @library.escena, 1, {alpha: 0, y: @library.escena.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.label, 1, {alpha :0, y: @library.label.y + 20, delay: 1}
+		TweenLite.from @library.escena, 1, {alpha: 0, y: @library.escena.y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for i in [0..@letras.length - 1]
@@ -212,12 +212,12 @@ class U7A3 extends Oda
 			@intento = 1
 			@warning()
 	finishEvaluation: =>
-		TweenLite.to @library.label, 0.5, {alpha: 0, y: @library.label.y + 10, ease: Quart.easeOut, onComplete:@nextEvaluation}
+		TweenLite.to @library.label, 0.5, {alpha: 0, y: @library.label.y + 20, ease: Quart.easeOut, onComplete:@nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @texts.length
 			@library.label.text = @texts[@index].t
-			TweenLite.to @library.label, 0.5, {alpha: 1, y: @library.label.y - 10, ease: Quart.easeOut}
+			TweenLite.to @library.label, 0.5, {alpha: 1, y: @library.label.y - 20, ease: Quart.easeOut}
 		else		
 			@escena.removeAllChildren()
 			@mainContainer.removeChild @escena
@@ -226,6 +226,6 @@ class U7A3 extends Oda
 	finish: ->
 		TweenLite.to @library.instructions, 1, {alpha :0}
 
-		TweenLite.to @library.escena, 1, {alpha: 0, y: @library.escena.y + 20}
+		TweenLite.to @library.escena, 1, {alpha: 0, y: @library.escena.y + 40}
 		super
 	window.U7A3 = U7A3

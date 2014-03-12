@@ -201,7 +201,7 @@ class U3A5 extends Oda
 				@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 		else
 			@finalscene = 0
-			TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
+			#TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
 			setTimeout @storyTale, 2 * 1000
 	storyTale: =>
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y - 100}
@@ -214,5 +214,6 @@ class U3A5 extends Oda
 		else
 			@finish()
 	finish: =>
+		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
 		super
 	window.U3A5 = U3A5

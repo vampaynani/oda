@@ -217,5 +217,6 @@ class U1A5 extends Oda
 		else
 			@finish()
 	finish: =>
+		TweenLite.to @library['title'], 1, {alpha:0, y:@library['title'].y + 40}
 		super
 	window.U1A5 = U1A5

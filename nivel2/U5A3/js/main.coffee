@@ -35,26 +35,26 @@ class U5A3 extends Oda
 		    {src:'sounds/TU2_U5_A3_instructions.mp3', id:'instructions'}
 		]
 		@imagenes = [
-			{id: 'imageApril', x:'592', y:'175'}
-			{id: 'imageAugust', x:'495', y:'522'}
-			{id: 'imageChristmas', x:'715', y:'520'}
-			{id: 'imageDecember', x:'99', y:'298'}
-			{id: 'imageEaster', x:'603', y:'431'}
-			{id: 'imageFall', x:'91', y:'202'}
-			{id: 'imageFebruary', x:'328', y:'184'}
-			{id: 'imageJanuary', x:'190', y:'172'}
-			{id: 'imageJuly', x:'617', y:'529'}
-			{id: 'imageJune', x:'724', y:'402'}
-			{id: 'imageMarch', x:'459', y:'171'}
-			{id: 'imageMay', x:'719', y:'290'}
-			{id: 'imageNovember', x:'107', y:'405'}
-			{id: 'imageOctober', x:'236', y:'515'}
-			{id: 'imageSeptember', x:'359', y:'529'}
-			{id: 'imageSpring', x:'637', y:'284'}
-			{id: 'imageSummer', x:'137', y:'493'}
-			{id: 'imageThanksgiving', x:'276', y:'437'}
-			{id: 'imageValentine', x:'205', y:'251'}
-			{id: 'imageWinter', x:'304', y:'184'}
+			{id: 'imageApril', x:1184, y:350}
+			{id: 'imageAugust', x:990, y:1044}
+			{id: 'imageChristmas', x:1430, y:1040}
+			{id: 'imageDecember', x:198, y:596}
+			{id: 'imageEaster', x:1206, y:862}
+			{id: 'imageFall', x:182, y:404}
+			{id: 'imageFebruary', x:656, y:368}
+			{id: 'imageJanuary', x:380, y:344}
+			{id: 'imageJuly', x:1234, y:1058}
+			{id: 'imageJune', x:1448, y:804}
+			{id: 'imageMarch', x:918, y:342}
+			{id: 'imageMay', x:1438, y:580}
+			{id: 'imageNovember', x:214, y:810}
+			{id: 'imageOctober', x:472, y:1030}
+			{id: 'imageSeptember', x:718, y:1058}
+			{id: 'imageSpring', x:1274, y:568}
+			{id: 'imageSummer', x:274, y:586}
+			{id: 'imageThanksgiving', x:552, y:874}
+			{id: 'imageValentine', x:410, y:502}
+			{id: 'imageWinter', x:608, y:368}
 		]
 		@answers = [
 			{txt:'January',img:'imageJanuary'}
@@ -83,8 +83,8 @@ class U5A3 extends Oda
 		super
 		@success = 1
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Unscramble the seasons, months of the year and holidays.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
+		@insertInstructions 'instructions', 'Unscramble the seasons, months of the year and holidays.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 20, 0
 		@setSeasons().introEvaluation()
 	setSeasons: ->
 		seasons = new createjs.Container()
@@ -100,7 +100,7 @@ class U5A3 extends Oda
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['seasons'], 0.5, {alpha: 0, y: @library['seasons'].y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['seasons'], 0.5, {alpha: 0, y: @library['seasons'].y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@answers = @shuffle @answers
@@ -112,25 +112,33 @@ class U5A3 extends Oda
 		@scrambled = @shuffle col
 		for i in [1..@scrambled.length]
 			if @scrambled[i - 1] isnt ' '
-				letra = new DraggableText "t#{i}", @scrambled[i - 1], @scrambled[i - 1], i * 30, 0
-				letra.text.font = '20px Quicksand'
-				letra.createHitArea(28,30)
+				letra = new DraggableText "t#{i}", @scrambled[i - 1], @scrambled[i - 1], i * 60, 0
+				letra.text.font = '40px Quicksand'
+				letra.createHitArea(56,60)
 				letra.addEventListener 'drop', @evaluateAnswer
 				letra.onInitEvaluation()
 				@addToLibrary letra
 				letras.addChild letra
 			if col[i - 1] isnt ' '
-				wc = new WordContainer "l#{i}", '', 'rgba(238,238,238,0.3)','#f39234', i * 42, 50, 40, 30
+				wc = new WordContainer "l#{i}", '', 'rgba(238,238,238,0.3)','#f39234', i * 84, 100, 80, 60
 				wc.index = col[i - 1]
+				wc.hitter = null
+				wc.addEventListener 'mousedown', (e) ->
+					e.addEventListener 'mousemove', (ev) ->
+						wc = e.target
+						if wc.hitter
+							wc.changeText ''
+							wc.hitter.visible = on
+							wc.hitter.returnToPlace()
 				@addToLibrary wc
 				palabra.addChild wc
 		palabra.name = 'palabra'
-		palabra.y = 300
-		palabra.x = stageSize.w / 2 - @scrambled.length * 42 / 2 - 50
+		palabra.y = 600
+		palabra.x = stageSize.w / 2 - @scrambled.length * 84 / 2 - 100
 		@addToMain palabra
 		letras.name = 'letras'
-		letras.y = 300
-		letras.x = stageSize.w / 2 - @scrambled.length * 30 / 2 - 30
+		letras.y = 600
+		letras.x = stageSize.w / 2 - @scrambled.length * 60 / 2 - 60
 		@addToMain letras
 	evaluateAnswer: (e) =>
 		@answer = e.target
@@ -142,6 +150,7 @@ class U5A3 extends Oda
 					#if @answer.index is @library["l#{i}"].index
 					if @library["l#{i}"].text.text is ''
 						@answer.visible = off
+						@library["l#{i}"].hitter = @answer
 						@library["l#{i}"].changeText @answer.index#@library["l#{i}"].index
 						dropped = on
 					
@@ -168,9 +177,9 @@ class U5A3 extends Oda
 
 
 	nextEvaluation: =>
-		TweenLite.to @library[@answers[@index].img], 1, {alpha: 0, y: @library[@answers[@index].img].y - 20, ease: Back.easeOut}
-		TweenLite.to @library.letras, 1, {alpha: 0, y: @library['letras'].y - 20, ease: Back.easeOut}
-		TweenLite.to @library.palabra, 1, {alpha: 0, y: @library['palabra'].y - 20, ease: Back.easeOut}
+		TweenLite.to @library[@answers[@index].img], 1, {alpha: 0, y: @library[@answers[@index].img].y - 40, ease: Back.easeOut}
+		TweenLite.to @library.letras, 1, {alpha: 0, y: @library['letras'].y - 40, ease: Back.easeOut}
+		TweenLite.to @library.palabra, 1, {alpha: 0, y: @library['palabra'].y - 40, ease: Back.easeOut}
 		@index++
 		if @index < @answers.length
 			@setQuestion @index

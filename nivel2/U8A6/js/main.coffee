@@ -52,7 +52,7 @@ class U8A6 extends Oda
 				{tipo:'texto', imagen: 'leaves', pregunta:'When do we play in the leaves?', opcionUno:'in the fall.', opcionDos:'In the winter.', respuesta:'opcionUno'}
 				{tipo:'texto', imagen: 'librarian', pregunta:'Where does a librarian works?', opcionUno:'At a bookstore.', opcionDos:'At a library.', respuesta:'opcionDos'}
 				{tipo:'texto', imagen: 'mapaSB', pregunta:"Where's the internet café?", opcionUno:"Go straight. Turn right on Pine Street. It's next to the grocery store.", opcionDos:"Go straight. Turn left on Pine Street. It's across from the police station.", respuesta:'opcionDos'}
-				{tipo:'texto', imagen: 'mapaSB', pregunta:"Go straight. Turn right on Pine Street. It's across from the fire station.", opcionUno:"Where's the art museum?", opcionDos:"Where's the movie theater?", respuesta:'opcionDos'}
+				{tipo:'texto', imagen: 'mapaSB', pregunta:"Go straight. Turn right on Pine Street. It's across from the fire station.", opcionUno:"Where's the art museum?", opcionDos:"Where's the movie theater?", respuesta:'opcionUno'}
 				{tipo:'texto', imagen: 'motherchild', pregunta:"When do we celebrate Mother's Day?", opcionUno:'In June.', opcionDos:'In May.', respuesta:'opcionDos'}
 				{tipo:'texto', imagen: 'necklace', pregunta:'', opcionUno:"It's nineteen dollars and fifteen cents.", opcionDos:"It's nineteen dollars and fifty cents.", respuesta:"opcionDos"}
 				{tipo:'texto', imagen: 'USmoney', pregunta:'Three dollars and twenty-five cents.', opcionUno:'$25.30', opcionDos:'$3.25', respuesta:'opcionDos'}
@@ -61,10 +61,10 @@ class U8A6 extends Oda
 	setStage: ->
 		super
 		@intento = 0
-		@preguntas = @shuffleNoRepeat @game.preguntas, 11
+		@preguntas = @shuffleNoRepeat @game.preguntas, 10
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Take the review quiz! Look and click on the correct option.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@insertInstructions 'instructions', 'Take the review quiz! Look and click on the correct option.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@setQuestion(0).introEvaluation()
 	setQuestion: (i) ->
 		question = new createjs.Container()
@@ -72,29 +72,29 @@ class U8A6 extends Oda
 		question.y = 0
 		question.name = 'question'
 		if @preguntas[i].tipo is 'texto'
-			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2+30, 'mc'
-			v.scaleX = v.scaleY = 0.5
+			v = @createBitmap @preguntas[i].imagen, @preguntas[i].imagen, stageSize.w / 2, stageSize.h / 2 + 60, 'mc'
+			v.scaleX = v.scaleY = 1
 			question.addChild v
 			@addToLibrary v
 
-			text = new createjs.Text @preguntas[i].pregunta,'24px Quicksand','#333'
+			text = new createjs.Text @preguntas[i].pregunta,'48px Quicksand','#333'
 			text.name = 'titulo'
 			text.x = stageSize.w / 2
-			text.y = 140
+			text.y = 280
 			text.textAlign = 'center'
-			text.lineWidth = 400
+			text.lineWidth = 900
 			question.addChild text
 			@addToLibrary text
 
 			opciones = new createjs.Container()
 			uno = new ClickableText @preguntas[i].opcionUno, @preguntas[i].opcionUno, i, 0, 0
 			uno.text.textAlign = 'center'
-			uno.setLineWidth 300
-			uno.x = stageSize.w / 2 - uno.width / 2 - 10
+			uno.setLineWidth 600
+			uno.x = stageSize.w / 2 - uno.width / 2 - 20
 			opciones.addChild uno
 			@addToLibrary uno 
 
-			diagonal = new createjs.Text '/','16px Quicksand','#333'
+			diagonal = new createjs.Text '/','32px Quicksand','#333'
 			diagonal.name = 'diagonal'
 			diagonal.textAlign = 'center'
 			diagonal.x = stageSize.w / 2
@@ -104,15 +104,15 @@ class U8A6 extends Oda
 
 			dos = new ClickableText @preguntas[i].opcionDos, @preguntas[i].opcionDos, i, 0, 0
 			dos.text.textAlign = 'center'
-			dos.setLineWidth 300
-			dos.x = stageSize.w / 2 + dos.width / 2 + 10
+			dos.setLineWidth 600
+			dos.x = stageSize.w / 2 + dos.width / 2 + 20
 			opciones.addChild dos
 			@addToLibrary dos
 
-			total = uno.width + dos.width + 20
+			total = uno.width + dos.width + 40
 
 			#opciones.x = stageSize.w / 2 - total / 2;
-			opciones.y = 490;
+			opciones.y = 980;
 			question.addChild opciones
 		
 		@addToMain question
@@ -121,7 +121,7 @@ class U8A6 extends Oda
 		super
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['question'], 1, {alpha:0, y: @library['question'].y - 20, delay: 1, onComplete:@playInstructions, onCompleteParams:[@]}
+		TweenLite.from @library['question'], 1, {alpha:0, y: @library['question'].y - 40, delay: 1, onComplete:@playInstructions, onCompleteParams:[@]}
 	initEvaluation: (e) =>
 		super
 		@setClick 0

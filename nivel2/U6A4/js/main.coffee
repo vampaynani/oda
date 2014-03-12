@@ -42,8 +42,8 @@ class U6A4 extends Oda
 		@success = 1
 		@steps = @shuffle @game.steps
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Look at the pictures and unscramble the words to make sentences.', 40, 100
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@insertInstructions 'instructions', 'Look at the pictures and unscramble the words to make sentences.', 80, 200
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 8, 0
 		@setScenario( 1 ).introEvaluation()
 	setScenario: (sce) ->
 		if @library.scenario
@@ -54,8 +54,8 @@ class U6A4 extends Oda
 		scenario.removeAllChildren()
 		scenario.alpha = 1
 
-		v = @createBitmap @steps[sce - 1].img, @steps[sce - 1].img, stageSize.w / 2, stageSize.h / 2 - 50, 'mc'
-		v.scaleX = v.scaleY = 0.3
+		v = @createBitmap @steps[sce - 1].img, @steps[sce - 1].img, stageSize.w / 2, stageSize.h / 2 - 100, 'mc'
+		v.scaleX = v.scaleY = 0.7
 		scenario.addChild v
 		@addToLibrary scenario
 		@addToMain scenario
@@ -64,7 +64,7 @@ class U6A4 extends Oda
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.scenario, 0.5, {alpha: 0, y: @library.scenario.y + 20, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.scenario, 0.5, {alpha: 0, y: @library.scenario.y + 40, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@setQuestion @index
@@ -75,27 +75,27 @@ class U6A4 extends Oda
 		@scrambled = @shuffle col
 		for i in [1..@scrambled.length]
 			if @scrambled[i - 1] isnt ' '
-				palabra = new DraggableText "t#{i}", @scrambled[i - 1], @scrambled[i - 1], i * 90, 0
-				palabra.text.font = '20px Quicksand'
+				palabra = new DraggableText "t#{i}", @scrambled[i - 1], @scrambled[i - 1], i * 180, 0
+				palabra.text.font = '40px Quicksand'
 				palabra.text.textAlign = 'center'
-				palabra.createHitArea 80, 30
+				palabra.createHitArea 160, 60
 				palabra.addEventListener 'drop', @evaluateAnswer
 				palabra.onInitEvaluation()
 				@addToLibrary palabra
 				palabras.addChild palabra
 			if col[i - 1] isnt ' '
-				wc = new WordContainer "l#{i}", '', 'rgba(238,238,238,0.3)','#F00', i * 100, 0, 90, 30
+				wc = new WordContainer "l#{i}", '', 'rgba(238,238,238,0.3)','#F00', i * 200, 0, 180, 60
 				wc.index = col[i - 1]
 				@addToLibrary wc
 				frase.addChild wc
 		frase.name = 'frase'
-		frase.y = 420
-		frase.x = stageSize.w / 2 - @scrambled.length * 100 / 2 - 50
+		frase.y = 840
+		frase.x = stageSize.w / 2 - @scrambled.length * 200 / 2 - 100
 		@addToMain frase
 		
 		palabras.name = 'palabras'
-		palabras.y = 370
-		palabras.x = stageSize.w / 2 - @scrambled.length * 90 / 2
+		palabras.y = 740
+		palabras.x = stageSize.w / 2 - @scrambled.length * 180 / 2
 		@addToMain palabras
 	evaluateAnswer: (e) =>
 		@answer = e.target
@@ -132,8 +132,8 @@ class U6A4 extends Oda
 
 	nextEvaluation: =>
 		TweenLite.to @library.scenario, 0.5, {alpha: 0}
-		TweenLite.to @library.palabras, 1, {alpha: 0, y: @library.palabras.y - 20, ease: Back.easeOut}
-		TweenLite.to @library.frase, 1, {alpha: 0, y: @library.frase.y - 20, ease: Back.easeOut}
+		TweenLite.to @library.palabras, 1, {alpha: 0, y: @library.palabras.y - 40, ease: Back.easeOut}
+		TweenLite.to @library.frase, 1, {alpha: 0, y: @library.frase.y - 40, ease: Back.easeOut}
 
 		@index++
 		if @index < @steps.length

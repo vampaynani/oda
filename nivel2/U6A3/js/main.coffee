@@ -46,30 +46,30 @@ class U6A3 extends Oda
 				{img:'anInternetcafe', frase:'I need to send an e-mail.', targets: ['an','Internet','cafe']}
 			]
 			opt1:[
-				{i:1, t:'a', x:26, y:15}
-				{i:2, t:'an', x:44, y:30}
+				{i:1, t:'a', x:52, y:30}
+				{i:2, t:'an', x:88, y:60}
 			]
 			opt2:[
-				{i:1, t:'cafe', x:20, y:25}
-				{i:2, t:'stop', x:24, y:70}
-				{i:3, t:'library', x:65, y:45}
-				{i:4, t:'grocery', x:74, y:85}
-				{i:5, t:'police', x:56, y:107}
-				{i:6, t:'candy', x:124, y:26}
-				{i:7, t:'post', x:141, y:60}
-				{i:8, t:'animal', x:152, y:105}
-				{i:9, t:'bus', x:200, y:21}
-				{i:10, t:'theater', x:189, y:66}
-				{i:11, t:'pet', x:253, y:33}
-				{i:12, t:'shoe', x:240, y:100}
-				{i:13, t:'gas', x:303, y:25}
-				{i:14, t:'station', x:273, y:71}
-				{i:15, t:'store', x:327, y:46}
-				{i:16, t:'hospital', x:305, y:104}
-				{i:17, t:'bank', x:378, y:25}
-				{i:18, t:'internet', x:363, y:75}
-				{i:19, t:'movie', x:383, y:111}
-				{i:20, t:'office', x:418, y:48}
+				{i:1, t:'cafe', x:40, y:50}
+				{i:2, t:'stop', x:48, y:140}
+				{i:3, t:'library', x:130, y:90}
+				{i:4, t:'grocery', x:148, y:170}
+				{i:5, t:'police', x:112, y:214}
+				{i:6, t:'candy', x:248, y:52}
+				{i:7, t:'post', x:282, y:120}
+				{i:8, t:'animal', x:304, y:210}
+				{i:9, t:'bus', x:400, y:42}
+				{i:10, t:'theater', x:378, y:132}
+				{i:11, t:'pet', x:506, y:66}
+				{i:12, t:'shoe', x:480, y:200}
+				{i:13, t:'gas', x:606, y:50}
+				{i:14, t:'station', x:546, y:142}
+				{i:15, t:'store', x:654, y:92}
+				{i:16, t:'hospital', x:610, y:208}
+				{i:17, t:'bank', x:756, y:50}
+				{i:18, t:'internet', x:726, y:150}
+				{i:19, t:'movie', x:766, y:222}
+				{i:20, t:'office', x:836, y:96}
 			]
 		super null, manifest, sounds
 	setStage: ->
@@ -78,12 +78,12 @@ class U6A3 extends Oda
 		@intento = 0
 		stepsimg = (step.img for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Read and drag the words to make questions.', 40, 100
-		imgs = @createSprite 'images', stepsimg, null, stageSize.w / 2, 235, 'mc'
-		imgs.scaleX = imgs.scaleY = 0.3
+		@insertInstructions 'instructions', 'Read and drag the words to make questions.', 80, 200
+		imgs = @createSprite 'images', stepsimg, null, stageSize.w / 2, 470, 'mc'
+		imgs.scaleX = imgs.scaleY = 0.7
 		@addToMain imgs
 
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@setDropper(1).setNube1().setNube2().introEvaluation()
 	setDropper: (step) ->
 		@step = step
@@ -91,32 +91,32 @@ class U6A3 extends Oda
 			dropper = @library.dropper
 		else
 			dropper = new createjs.Container()
-			dropper.y = @library.images.y + 10
+			dropper.y = @library.images.y + 20
 			dropper.name = 'dropper'
 			@addToMain dropper
 		dropper.removeAllChildren()
 
-		frase = @createText 'frase', @steps[step - 1].frase,'24px Quicksand','#333', 190, 110, 'center'
+		frase = @createText 'frase', @steps[step - 1].frase,'48px Quicksand','#333', 380, 220, 'center'
 		@addToLibrary frase
 		dropper.addChild frase
 
-		isThere = @createText 'isThere', 'Is there','24px Quicksand','#333', 0, 150
+		isThere = @createText 'isThere', 'Is there','48px Quicksand','#333', 0, 300
 		dropper.addChild isThere
 
 		for i in [0..@steps[step - 1].targets.length - 1] by 1
-			h = new WordContainer "h#{i}", '', '#FFF', '#F00', 110*i + isThere.getMeasuredWidth() + 10, 155, 100, 22
+			h = new WordContainer "h#{i}", '', '#FFF', '#F00', 220 * i + isThere.getMeasuredWidth() + 20, 310, 200, 44
 			h.index = i
 			dropper.addChild h
 			@addToLibrary h
-		question = @createText 'q', '?','24px Quicksand','#333', @steps[step - 1].targets.length*115 + isThere.getMeasuredWidth() - 10, 150
+		question = @createText 'q', '?','48px Quicksand','#333', @steps[step - 1].targets.length * 230 + isThere.getMeasuredWidth() - 20, 300
 		dropper.addChild question
 
 		dropper.x = stageSize.w / 2 - (question.x + question.getMeasuredWidth()) / 2
 		@
 	setNube1: ->
 		container = new createjs.Container()
-		container.x = 150
-		container.y = @library.dropper.y + 200
+		container.x = 300
+		container.y = @library.dropper.y + 400
 		container.name = 'nube1'
 		
 		back = @createBitmap 'backNube1', 'n1', 0, 0
@@ -131,8 +131,8 @@ class U6A3 extends Oda
 		@
 	setNube2: ->
 		container = new createjs.Container()
-		container.x = 250
-		container.y = @library.dropper.y + 200
+		container.x = 500
+		container.y = @library.dropper.y + 400
 		container.name = 'nube2'
 		
 		back = @createBitmap 'backNube2', 'n2', 0, 0
@@ -149,10 +149,10 @@ class U6A3 extends Oda
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 20, delay: 0.7}
-		TweenLite.from @library.images, 1, {alpha: 0, y: @library.images.y + 20, delay: 0.7}
-		TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20, delay: 0.9}
-		TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20, delay: 1.1, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.dropper, 1, {alpha: 0, y: @library.dropper.y + 40, delay: 0.7}
+		TweenLite.from @library.images, 1, {alpha: 0, y: @library.images.y + 40, delay: 0.7}
+		TweenLite.from @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 40, delay: 0.9}
+		TweenLite.from @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 40, delay: 1.1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for opt in @game.opt1
@@ -199,15 +199,15 @@ class U6A3 extends Oda
 		for opt in @game.opt2
 			@library["n2d#{opt.i}"].visible = true
 			@library["n2d#{opt.i}"].returnToPlace()
-		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 20}
+		TweenLite.to @library.dropper, 0.5, {alpha: 0, y: @library.dropper.y + 40}
 		TweenLite.to @library.images, 0.5, {scaleX: 1, scaleY: 1, alpha: 0, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @steps.length
 			@library.images.currentFrame = @index
 			@setDropper @index + 1
-			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: @library.images.y + 10}
-			TweenLite.to @library.images, 0.5, {scaleX: 0.3, scaleY: 0.3, alpha: 1, ease: Back.easeOut}
+			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: @library.images.y + 40}
+			TweenLite.to @library.images, 0.5, {scaleX: 0.7, scaleY: 0.7, alpha: 1, ease: Back.easeOut}
 			for opt in @game.opt1
 				@library["n1d#{opt.i}"].updateDrops @library.h0
 			for opt in @game.opt2
@@ -218,7 +218,7 @@ class U6A3 extends Oda
 		else
 			@finish()
 	finish: ->
-		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 20}
-		TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 20}
+		TweenLite.to @library.nube1, 1, {alpha: 0, y: @library.nube1.y + 40}
+		TweenLite.to @library.nube2, 1, {alpha: 0, y: @library.nube2.y + 40}
 		super
 	window.U6A3 = U6A3

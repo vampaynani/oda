@@ -73,10 +73,10 @@ class U6A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Drag the puzzle pieces, read and click on the correct answers.', 40, 100
-		@insertBitmap 'p1', 'p1', 731, 483
-		@insertBitmap 'p2', 'p2', 731, 530
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@insertInstructions 'instructions', 'Drag the puzzle pieces, read and click on the correct answers.', 80, 200
+		@insertBitmap 'p1', 'p1', 1462, 966
+		@insertBitmap 'p2', 'p2', 1462, 1060
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 8, 0
 		@introEvaluation()
 	introEvaluation: ->
 		super
@@ -93,53 +93,53 @@ class U6A1 extends Oda
 			@blink @library["p#{i}"], off
 			@library['p'+i].removeEventListener 'click', @selectPuzzle
 
-		@insertBitmap 'btntrue','btntrue', 300, 540
-		@insertBitmap 'btnfalse','btnfalse', 420, 540
+		@insertBitmap 'btntrue','btntrue', 600, 1080
+		@insertBitmap 'btnfalse','btnfalse', 840, 1080
 
 		switch e.target.name
 			when 'p1'
 				@pieces =
-					p1p1:  {x: 150, y: 79,  text:'A firefighter put out fires.', label:'true', back: on}
-					p1p2:  {x: 245, y: 79} 
-					p1p3:  {x: 318, y: 79,  text:'A nurse helps sick people.', label:'true', back: on}
-					p1p4:  {x: 414, y: 79} 
-					p1p5:  {x: 150, y: 165, text:'A mail carrier works at he post office.', label:'true', back: on}
-					p1p6:  {x: 245, y: 165, text:'A bus driver works in an office.', label:'false', back: on}
-					p1p7:  {x: 316, y: 165, text:'A waitress works at a grocery store.', label:'false', back: on}
-					p1p8:  {x: 408, y: 165, text:'A salesclerk works at a bank.', label:'false', back: on}
-					p1p9:  {x: 150, y: 256}
-					p1p10: {x: 228, y: 256, text:'A librarian sells books.', label:'false', back: on}
-					p1p11: {x: 336, y: 256}
-					p1p12: {x: 408, y: 256, text:'A chef serves food.', label:'false', back: on}
+					p1p1:  {x: 310, y: 163,  text:'A firefighter put out fires.', label:'true', back: on}
+					p1p2:  {x: 495, y: 160} 
+					p1p3:  {x: 641, y: 163,  text:'A nurse helps sick people.', label:'true', back: on}
+					p1p4:  {x: 823, y: 163} 
+					p1p5:  {x: 307, y: 330, text:'A mail carrier works at he post office.', label:'true', back: on}
+					p1p6:  {x: 493, y: 330, text:'A bus driver works in an office.', label:'false', back: on}
+					p1p7:  {x: 637, y: 330, text:'A waitress works at a grocery store.', label:'false', back: on}
+					p1p8:  {x: 814, y: 333, text:'A salesclerk works at a bank.', label:'false', back: on}
+					p1p9:  {x: 305, y: 515}
+					p1p10: {x: 458, y: 513, text:'A librarian sells books.', label:'false', back: on}
+					p1p11: {x: 678, y: 513}
+					p1p12: {x: 810, y: 511, text:'A chef serves food.', label:'false', back: on}
 				@answers = 8
 				@setPuzzle 1
 			when 'p2'
 				@pieces =
-					p2p1:  {x: 150, y: 79,  text:'A doctor works at a bank.', label:'false', back: on}
-					p2p2:  {x: 245, y: 79} 
-					p2p3:  {x: 318, y: 79,  text:'A teacher works at a library.', label:'false', back: on}
-					p2p4:  {x: 414, y: 79} 
-					p2p5:  {x: 150, y: 165, text:'A mechanic fixes cars.', label:'true', back: on}
-					p2p6:  {x: 245, y: 165, text:'A police officer puts out fires.', label:'false', back: on}
-					p2p7:  {x: 316, y: 165, text:'A farmer fixes cars.', label:'false', back: on}
-					p2p8:  {x: 408, y: 165, text:'A waitress works at a restaurant.', label:'true', back: on}
-					p2p9:  {x: 150, y: 256}
-					p2p10: {x: 228, y: 256, text:'A vet helps sick animals.', label:'true', back: on}
-					p2p11: {x: 336, y: 256}
-					p2p12: {x: 408, y: 256, text:'A salesclerk works at a museum.', label:'false', back: on}
+					p2p1:  {x: 300, y: 160,  text:'A doctor works at a bank.', label:'false', back: on}
+					p2p2:  {x: 490, y: 160} 
+					p2p3:  {x: 636, y: 160,  text:'A teacher works at a library.', label:'false', back: on}
+					p2p4:  {x: 828, y: 160} 
+					p2p5:  {x: 300, y: 330, text:'A mechanic fixes cars.', label:'true', back: on}
+					p2p6:  {x: 490, y: 330, text:'A police officer puts out fires.', label:'false', back: on}
+					p2p7:  {x: 632, y: 330, text:'A farmer fixes cars.', label:'false', back: on}
+					p2p8:  {x: 816, y: 330, text:'A waitress works at a restaurant.', label:'true', back: on}
+					p2p9:  {x: 300, y: 520}
+					p2p10: {x: 456, y: 520, text:'A vet helps sick animals.', label:'true', back: on}
+					p2p11: {x: 672, y: 515}
+					p2p12: {x: 816, y: 520, text:'A salesclerk works at a museum.', label:'false', back: on}
 				@answers = 8
 				@setPuzzle 2
 
-		TweenLite.from @library.btntrue, 1, {alpha:0, y:@library.btntrue.y - 20}
-		TweenLite.from @library.btnfalse, 1, {alpha:0, y:@library.btnfalse.y - 20, delay: 0.2}
+		TweenLite.from @library.btntrue, 1, {alpha:0, y:@library.btntrue.y - 40}
+		TweenLite.from @library.btnfalse, 1, {alpha:0, y:@library.btnfalse.y - 40, delay: 0.2}
 	setPuzzle: (num) ->
 		@num = num
 		puzzle = new createjs.Container()
-		puzzle.x = 75
-		puzzle.y = 148
+		puzzle.x = 150
+		puzzle.y = 290
 		puzzle.name = 'puzzle'
 
-		m = @createBitmap "m#{num}", "m#{num}", 145, 74
+		m = @createBitmap "m#{num}", "m#{num}", 290, 150
 		puzzle.addChild m
 		
 		for i in [1..12] by 1
@@ -153,13 +153,13 @@ class U6A1 extends Oda
 
 		dragpieces = new createjs.Container()
 		dragpieces.x = stageSize.w / 2
-		dragpieces.y = 135
+		dragpieces.y = 270
 		dragpieces.name = 'dragpieces'
 		index = 0
 		
 		for i in [1..12] by 1
 			if @pieces["p#{num}p#{i}"].back
-				dpp = new Draggable "dp#{num}p#{i}", @preload.getResult("p#{num}p#{i}"), "p#{num}p#{i}", index*88, 0
+				dpp = new Draggable "dp#{num}p#{i}", @preload.getResult("p#{num}p#{i}"), "p#{num}p#{i}", index * 176, 0
 				dpp.addEventListener 'drop', @evaluateAnswer
 				@observer.subscribe 'init_drag', dpp.onInitEvaluation
 				@observer.subscribe 'stop_drag', dpp.onStopEvaluation
@@ -168,14 +168,14 @@ class U6A1 extends Oda
 				@addToLibrary dpp
 				dragpieces.addChild dpp
 		
-		dragpieces.width = index*88
+		dragpieces.width = index * 176
 		@setReg(dragpieces, dragpieces.width / 2, 0)
 		
 		@addToMain puzzle
 		@addToMain dragpieces
 
-		TweenLite.from puzzle, 1, {alpha:0, y:puzzle.y - 20, delay: 0.6}
-		TweenLite.from dragpieces, 1, {alpha:0, y:puzzle.y - 20, delay: 0.6, onComplete: @initDrag}
+		TweenLite.from puzzle, 1, {alpha:0, y:puzzle.y - 40, delay: 0.6}
+		TweenLite.from dragpieces, 1, {alpha:0, y:puzzle.y - 40, delay: 0.6, onComplete: @initDrag}
 	initDrag: =>
 		@observer.notify 'init_drag'
 	initListeners: ->
@@ -192,7 +192,7 @@ class U6A1 extends Oda
 		if hit.hitTest pt.x, pt.y
 			hpt = hit.parent.localToGlobal hit.x, hit.y
 			htt = @answer.parent.globalToLocal hpt.x, hpt.y
-			@insertText 'dropper', @pieces[@answer.index].text,'24px Quicksand','#333', stageSize.w / 2, 510, 'center'
+			@insertText 'dropper', @pieces[@answer.index].text,'48px Quicksand','#333', stageSize.w / 2, 1020, 'center'
 			createjs.Sound.play 'bell'
 
 			@observer.notify 'stop_drag'
@@ -225,8 +225,8 @@ class U6A1 extends Oda
 		obj.alpha = 1
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: ->
-		TweenLite.to @library.dragpieces, 1, {alpha:0, y:@y - 20}
-		TweenLite.to @library.puzzle, 1, {alpha:0, y:@y - 20}
+		TweenLite.to @library.dragpieces, 1, {alpha:0, y:@y - 40}
+		TweenLite.to @library.puzzle, 1, {alpha:0, y:@y - 40}
 		TweenMax.to [@library.p1, @library.p2, @library.btntrue, @library.btnfalse], 1, {alpha:0, y:stageSize.h}
 		super
 	window.U6A1 = U6A1

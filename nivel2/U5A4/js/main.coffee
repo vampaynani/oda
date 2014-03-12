@@ -132,21 +132,21 @@ class U5A4 extends Oda
 					}
 				]
 				positions: [
-					{id: 'summerJenifferdressclothdrag', x:'733', y:'460'}
-					{id: 'summerJenifferhatclothdrag', x:'146', y:'432'}
-					{id: 'summerJeniffersandalsclothdrag', x:'717', y:'405'}
-					{id: 'summerJeniffersunglassesclothdrag', x:'247', y:'432'}
-					{id: 'summerMIkecapclothdrag', x:'632', y:'439'}
-					{id: 'summerMIkeshirtclothdrag', x:'504', y:'450'}
-					{id: 'summerMIkesunglassesclothdrag', x:'695', y:'555'}
-					{id: 'summerMIkeswimsuitclothdrag', x:'615', y:'500'}
-					{id: 'summerMIketennisclothdrag', x:'422', y:'518'}
-					{id: 'summerRachelhatclothdrag', x:'348', y:'427'}
-					{id: 'summerRachelsandalsclothdrag', x:'503', y:'544'}
-					{id: 'summerRachelswimsuitclothdrag',x:'461', y:'441'}
-					{id: 'summerTylercapclothdrag', x:'303', y:'490'}
-					{id: 'summerTylersandalsclothdrag', x:'291', y:'535'}
-					{id: 'summerTylerswimsuitclothdrag', x:'187', y:'516'}
+					{id: 'summerJenifferdressclothdrag', x:1466, y:920}
+					{id: 'summerJenifferhatclothdrag', x:292, y:864}
+					{id: 'summerJeniffersandalsclothdrag', x:1434, y:810}
+					{id: 'summerJeniffersunglassesclothdrag', x:494, y:864}
+					{id: 'summerMIkecapclothdrag', x:1264, y:878}
+					{id: 'summerMIkeshirtclothdrag', x:1008, y:900}
+					{id: 'summerMIkesunglassesclothdrag', x:1390, y:1110}
+					{id: 'summerMIkeswimsuitclothdrag', x:1230, y:1000}
+					{id: 'summerMIketennisclothdrag', x:844, y:1036}
+					{id: 'summerRachelhatclothdrag', x:696, y:854}
+					{id: 'summerRachelsandalsclothdrag', x:1006, y:1088}
+					{id: 'summerRachelswimsuitclothdrag',x:922, y:882}
+					{id: 'summerTylercapclothdrag', x:606, y:960}
+					{id: 'summerTylersandalsclothdrag', x:582, y:1070}
+					{id: 'summerTylerswimsuitclothdrag', x:374, y:1032}
 				]
 			winter:
 				kids: [
@@ -157,52 +157,53 @@ class U5A4 extends Oda
 				]
 				drops: []
 				positions: [
-					{id: 'winterJenniferbootsclothdrag', x:'630', y:'409'}
-					{id: 'winterJenniferhatclothdrag', x:'541', y:'428'}
-					{id: 'winterJenniferraincoatclothdrag', x:'713', y:'515'}
-					{id: 'winterMikebootsclothdrag', x:'304', y:'536'}
-					{id: 'winterMikecoatclothdrag', x:'410', y:'497'}
-					{id: 'winterMikeglovesclothdrag', x:'480', y:'490'}
-					{id: 'winterMikehatclothdragwinter', x:'221', y:'429'}
-					{id: 'winterMikejeansclothdrag', x:'132', y:'444'}
-					{id: 'winterRacheljacketclothdrag', x:'147', y:'523'}
-					{id: 'winterRachelscarfclothdrag', x:'732', y:'407'}
-					{id: 'winterRachelshoesclothdrag', x:'427', y:'415'}
-					{id: 'winterRachelskirtclothdrag', x:'211', y:'495'}
-					{id: 'winterTylerhatclothdrag', x:'678', y:'453'}
-					{id: 'winterTylerpantsclothdrag', x:'316', y:'447'}
-					{id: 'winterTylersweaterclothdrag', x:'566', y:'494'}
-					{id: 'winterTylertennisclothdrag', x:'632', y:'533'}
+					{id: 'winterJenniferbootsclothdrag', x:1260, y:818}
+					{id: 'winterJenniferhatclothdrag', x:1082, y:856}
+					{id: 'winterJenniferraincoatclothdrag', x:1426, y:1030}
+					{id: 'winterMikebootsclothdrag', x:608, y:1072}
+					{id: 'winterMikecoatclothdrag', x:820, y:994}
+					{id: 'winterMikeglovesclothdrag', x:960, y:980}
+					{id: 'winterMikehatclothdragwinter', x:442, y:858}
+					{id: 'winterMikejeansclothdrag', x:264, y:888}
+					{id: 'winterRacheljacketclothdrag', x:294, y:1046}
+					{id: 'winterRachelscarfclothdrag', x:1464, y:814}
+					{id: 'winterRachelshoesclothdrag', x:854, y:830}
+					{id: 'winterRachelskirtclothdrag', x:422, y:990}
+					{id: 'winterTylerhatclothdrag', x:1356, y:906}
+					{id: 'winterTylerpantsclothdrag', x:632, y:894}
+					{id: 'winterTylersweaterclothdrag', x:1132, y:988}
+					{id: 'winterTylertennisclothdrag', x:1264, y:1066}
 				]
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Click on the models, listen and dress them up.', 40, 100
-		@insertBitmap 'bg', 'bg', 85, 300
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
+		@insertInstructions 'instructions', 'Click on the models, listen and dress them up.', 80, 200
+		@insertBitmap 'bg', 'bg', 170, 600
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 15, 0
 		@setKids('summer').setRopa().introEvaluation()
 	setKids: (station) ->
 		kids = new createjs.Container()
 		kids.name = 'kids'
-		kids.x = 160
-		kids.y = 150
+		kids.x = 320
+		kids.y = 300
 		@station = station
 		current = @game[@station].kids
 		for i in [0..3]	by 1
-			boton = @createBitmap "repeat#{current[i][0]}", 'repeatbtn', i * 145, 200
+			boton = @createBitmap "repeat#{current[i][0]}", 'repeatbtn', i * 290, 400
 			boton.visible = off
 			@addToLibrary boton
 			kids.addChild boton
 		for i in [0..3] by 1
 			for j in [0..current[i].length-1] by 1
-				asset = @createBitmap current[i][j], current[i][j], i * 160 + 20, 85, 'mc'
+				asset = @createBitmap current[i][j], current[i][j], i * 320 + 40, 170, 'mc'
 				asset.scaleX = asset.scaleY = 0.45
+				console.log asset
 				if j > 0 
 					asset.visible = off
 				else 
 					hit = new createjs.Shape()
-					hit.graphics.beginFill('#000').drawRect(-5, -3, asset.width + 20, asset.height + 10)
+					hit.graphics.beginFill('#000').drawRect(-5, -3, asset.width + 40, asset.height + 20)
 					asset.index = i
 					asset.hitArea = hit
 				@addToLibrary asset
@@ -230,9 +231,9 @@ class U5A4 extends Oda
 			@blink @library[kid[0]]
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library.bg, 1, {alpha: 0, y: @library.bg.y + 20, delay: 1}
-		TweenLite.from @library.kids, 1, {alpha: 0, y: @library.kids.y + 20, delay: 1}
-		TweenLite.from @library.ropas, 1, {alpha: 0, y: @library.ropas.y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library.bg, 1, {alpha: 0, y: @library.bg.y + 40, delay: 1}
+		TweenLite.from @library.kids, 1, {alpha: 0, y: @library.kids.y + 40, delay: 1}
+		TweenLite.from @library.ropas, 1, {alpha: 0, y: @library.ropas.y + 40, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		for kid in @game[@station].kids
@@ -277,7 +278,7 @@ class U5A4 extends Oda
 			if @library[asset].visible is off
 				return
 		@library["repeat#{@selected.name}"].removeEventListener 'click', @repeatSound
-		TweenLite.to @library["repeat#{@selected.name}"], 1, {y: @library["repeat#{@selected.name}"] + 50, alpha: 0, onComplete: @nextEvaluation}
+		TweenLite.to @library["repeat#{@selected.name}"], 1, {y: @library["repeat#{@selected.name}"] + 100, alpha: 0, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @game[@station].kids.length
@@ -293,7 +294,7 @@ class U5A4 extends Oda
 		createjs.Sound.stop()
 		createjs.Sound.play "s#{@selected.name}"
 	finish: ->
-		TweenLite.to @library.bg, 1, {alpha: 0, y: @library.bg.y + 20}
-		TweenLite.to @library.kids, 1, {alpha: 0, y: @library.kids.y + 20}
+		TweenLite.to @library.bg, 1, {alpha: 0, y: @library.bg.y + 40}
+		TweenLite.to @library.kids, 1, {alpha: 0, y: @library.kids.y + 40}
 		super
 	window.U5A4 = U5A4

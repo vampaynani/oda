@@ -23,7 +23,7 @@ class U8A1 extends Oda
 			{id:'game1Doll2', src:'game1/doll2.png'}
 			{id:'game1Fan', src:'game1/fan.png'}
 			{id:'game1Fan2', src:'game1/fan2.png'}
-			{id:'game1Fourtunecookie', src:'game1/fourtune-cookie.png'}
+			{id:'game1Fourtunecookie', src:'game1/cookie2.png'}
 			{id:'game1Mask', src:'game1/mask.png'}
 			{id:'game1Mask2', src:'game1/mask2.png'}
 			{id:'game1Necklace2', src:'game1/necklace2.png'}
@@ -131,12 +131,12 @@ class U8A1 extends Oda
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Click on two cards and see if they match.', 40, 100
-		b1 = new Button 'game1btn', (@preload.getResult 'game1btn'), 1, 753, 460
-		b2 = new Button 'game2btn', (@preload.getResult 'game2btn'), 2, 753, 505
-		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
+		@insertInstructions 'instructions', 'Click on two cards and see if they match.', 80, 200
+		b1 = new Button 'game1btn', (@preload.getResult 'game1btn'), 1, 1506, 920
+		b2 = new Button 'game2btn', (@preload.getResult 'game2btn'), 2, 1506, 1010
+		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 1506, 1100	
 		@addToMain b1, b2, b3
-		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 100, 0
+		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 100, 0
 		@clicked = 0
 		@introEvaluation()
 	setCards: (e) =>
@@ -145,25 +145,25 @@ class U8A1 extends Oda
 		j = 0
 		game = e.target.index
 		juego = new createjs.Container()
-		juego.x = 200
-		juego.y = 180
+		juego.x = 400
+		juego.y = 360
 		juego.name = 'juego'
 		@clearButtons()
 		@selected = new Array()
 		@cards = @shuffle @game[game - 1]
 		for h in [0..3]
 			for i in [0..3]
-				c = @createBitmap "carta#{game}", "carta#{game}", i*130, h*110, 'mc'
-				b = @createBitmap "cartab#{game}", @cards[j].id, i*130, h*110, 'mc'
-				b.scaleX = b.scaleY = 0.6
-				c.scaleX = c.scaleY = 0.6
+				c = @createBitmap "carta#{game}", "carta#{game}", i * 260, h * 220, 'mc'
+				b = @createBitmap "cartab#{game}", @cards[j].id, i * 260, h * 220, 'mc'
+				b.scaleX = b.scaleY = 1
+				c.scaleX = c.scaleY = 1
 				c.index = @cards[j].i
 				c.addEventListener 'click', @evaluateAnswer
 				juego.addChild b, c
 				@addToLibrary b, c
 				j++
 		@addToMain juego
-		TweenLite.from juego, 0.5, {alpha:0, y:juego.y - 20}
+		TweenLite.from juego, 0.5, {alpha:0, y:juego.y - 40}
 		@
 	updateCounter: =>
 		if @clicked is 1
@@ -217,6 +217,6 @@ class U8A1 extends Oda
 		clearInterval @timer
 
 		TweenLite.to [@library.game1btn, @library.game2btn, @library.game3btn], 1, {alpha: 0}
-		TweenLite.to @library.juego, 1, {alpha:0, y:@library.juego.y - 20}
+		TweenLite.to @library.juego, 1, {alpha:0, y:@library.juego.y - 40}
 		super
 	window.U8A1 = U8A1
