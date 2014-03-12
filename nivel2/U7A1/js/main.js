@@ -80,42 +80,42 @@
         }, {
           id: 'hisTowel',
           p1: 5,
-          x1: 1164,
-          y1: 744,
+          x1: 1140,
+          y1: 729,
           l1: 104,
           p2: 4,
-          x2: 602,
-          y2: 336,
-          l2: 220
+          x2: 610,
+          y2: 344,
+          l2: 200
         }, {
           id: 'hisWhose',
           p1: 5,
-          x1: 1058,
-          y1: 780,
+          x1: 1045,
+          y1: 770,
           l1: 110,
           p2: 1,
           x2: 456,
-          y2: 336,
+          y2: 343,
           l2: 140
         }, {
           id: 'mineBackpack',
           p1: 0,
-          x1: 1160,
-          y1: 744,
+          x1: 1135,
+          y1: 735,
           l1: 110,
           p2: 3,
-          x2: 696,
-          y2: 336,
+          x2: 700,
+          y2: 345,
           l2: 220
         }, {
           id: 'mineSwimsuit',
           p1: 0,
           x1: 890,
-          y1: 788,
+          y1: 783,
           l1: 110,
           p2: 6,
           x2: 596,
-          y2: 336,
+          y2: 340,
           l2: 220
         }, {
           id: 'mineWhose',
@@ -130,12 +130,12 @@
         }, {
           id: 'yoursWhose',
           p1: 2,
-          x1: 1070,
+          x1: 1050,
           y1: 744,
           l1: 112,
           p2: 1,
           x2: 568,
-          y2: 336,
+          y2: 340,
           l2: 140
         }
       ];
@@ -168,11 +168,14 @@
       if (!this.library.scene) {
         esc = new createjs.Container();
         esc.name = 'scene';
-        this.addToMain(esc);
       } else {
-        this.library.scene.removeAllChildren();
         esc = this.library.scene;
       }
+      esc.alpha = 1;
+      if (!esc.parent) {
+        this.addToMain(esc);
+      }
+      esc.removeAllChildren();
       i = scene - 1;
       im = this.createBitmap(this.escenas[i].id, this.escenas[i].id, stageSize.w / 2, stageSize.h / 2, 'mc');
       p1 = new WordContainer('p1', '', '#eff9fe', '#0098d7', this.escenas[i].x1, this.escenas[i].y1, this.escenas[i].l1, 60);
@@ -192,7 +195,7 @@
       var back, container, i, p1n, p2n, p3n, p4n, p5n, p6n, p7n, p8n, p9n, _i;
       container = new createjs.Container();
       container.x = -20;
-      container.y = 25;
+      container.y = 45;
       container.name = 'nube1';
       back = this.createBitmap('cloud', 'cloud', 476, 824);
       p1n = new DroppableText('p1n', 'mine', 0, 568, 946, this.stage, [this.library.p1, this.library.p2]);

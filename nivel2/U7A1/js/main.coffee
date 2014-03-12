@@ -28,23 +28,23 @@ class U7A1 extends Oda
 			}
 			{
 				id:'hisTowel', 
-				p1:5, x1:1164, y1:744, l1:104, 
-				p2:4, x2:602, y2:336, l2:220
+				p1:5, x1:1140, y1:729, l1:104, 
+				p2:4, x2:610, y2:344, l2:200
 			}
 			{
 				id:'hisWhose', 
-				p1:5, x1:1058, y1:780, l1:110,
-				p2:1, x2:456, y2:336, l2:140
+				p1:5, x1:1045, y1:770, l1:110,
+				p2:1, x2:456, y2:343, l2:140
 			}
 			{
 				id:'mineBackpack', 
-				p1:0, x1:1160, y1:744, l1:110,
-				p2:3, x2:696, y2:336, l2:220
+				p1:0, x1:1135, y1:735, l1:110,
+				p2:3, x2:700, y2:345, l2:220
 			}
 			{
 				id:'mineSwimsuit', 
-				p1:0, x1:890, y1:788, l1:110,
-				p2:6, x2:596, y2:336, l2:220
+				p1:0, x1:890, y1:783, l1:110,
+				p2:6, x2:596, y2:340, l2:220
 			}
 			{
 				id:'mineWhose', 
@@ -53,8 +53,8 @@ class U7A1 extends Oda
 			}
 			{
 				id:'yoursWhose', 
-				p1:2, x1:1070, y1:744, l1:112,
-				p2:1, x2:568, y2:336, l2:140
+				p1:2, x1:1050, y1:744, l1:112,
+				p2:1, x2:568, y2:340, l2:140
 			}
 		]
 		sounds = [
@@ -75,10 +75,11 @@ class U7A1 extends Oda
 		if not @library.scene
 			esc = new createjs.Container()
 			esc.name = 'scene'
-			@addToMain esc
 		else
-			@library.scene.removeAllChildren()
 			esc = @library.scene
+		esc.alpha = 1
+		if not esc.parent then @addToMain esc
+		esc.removeAllChildren()
 		
 		i = scene - 1
 		im = @createBitmap @escenas[i].id,  @escenas[i].id, stageSize.w /2, stageSize.h/2, 'mc'
@@ -94,7 +95,7 @@ class U7A1 extends Oda
 	setNube: ->
 		container = new createjs.Container()
 		container.x = -20
-		container.y = 25
+		container.y = 45
 		container.name = 'nube1'
 		back = @createBitmap 'cloud', 'cloud', 476, 824
 		p1n = new DroppableText 'p1n', 'mine', 0, 568, 946, @stage, [@library.p1, @library.p2]

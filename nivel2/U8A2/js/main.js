@@ -152,8 +152,8 @@
               }, {
                 i: 2,
                 t: 'What',
-                x: 180,
-                y: 44
+                x: 130,
+                y: 34
               }, {
                 i: 3,
                 t: 'Who',
@@ -170,8 +170,8 @@
               {
                 i: 1,
                 t: 'visit',
-                x: 52,
-                y: 40
+                x: 80,
+                y: 30
               }, {
                 i: 2,
                 t: 'eat',
@@ -180,8 +180,8 @@
               }, {
                 i: 3,
                 t: 'celebrate',
-                x: 160,
-                y: 56
+                x: 50,
+                y: 81
               }, {
                 i: 4,
                 t: 'carry',
@@ -218,8 +218,8 @@
               }, {
                 i: 2,
                 t: 'What',
-                x: 180,
-                y: 44
+                x: 130,
+                y: 34
               }, {
                 i: 3,
                 t: 'Who',
@@ -228,16 +228,16 @@
               }, {
                 i: 4,
                 t: 'Where',
-                x: 90,
-                y: 90
+                x: 140,
+                y: 140
               }
             ],
             opt2: [
               {
                 i: 1,
                 t: 'wear',
-                x: 52,
-                y: 40
+                x: 170,
+                y: 116
               }, {
                 i: 2,
                 t: 'do',
@@ -246,8 +246,8 @@
               }, {
                 i: 3,
                 t: 'celebrate',
-                x: 170,
-                y: 116
+                x: 52,
+                y: 40
               }
             ]
           }
@@ -282,6 +282,9 @@
         dropper = new createjs.Container();
         dropper.y = 780;
         dropper.name = 'dropper';
+      }
+      dropper.alpha = 1;
+      if (!dropper.parent) {
         this.addToMain(dropper);
       }
       dropper.removeAllChildren();

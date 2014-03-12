@@ -49,14 +49,14 @@ class U8A2 extends Oda
 					]
 					opt1:[
 						{i:1, t:'When', x:50, y:70}
-						{i:2, t:'What', x:180, y:44}
+						{i:2, t:'What', x:130, y:34}
 						{i:3, t:'Who', x:180, y:90}
 						{i:4, t:'Where', x:140, y:140}
 					]
 					opt2:[
-						{i:1, t:'visit', x:52, y:40}
+						{i:1, t:'visit', x:80, y:30}
 						{i:2, t:'eat', x:100, y:144}
-						{i:3, t:'celebrate', x:160, y:56}
+						{i:3, t:'celebrate', x:50, y:81}
 						{i:4, t:'carry', x:170, y:116}
 					]
 				}
@@ -69,14 +69,14 @@ class U8A2 extends Oda
 					]
 					opt1:[
 						{i:1, t:'When', x:50, y:70}
-						{i:2, t:'What', x:180, y:44}
+						{i:2, t:'What', x:130, y:34}
 						{i:3, t:'Who', x:180, y:90}
-						{i:4, t:'Where', x:90, y:90}
+						{i:4, t:'Where', x:140, y:140}
 					]
 					opt2:[
-						{i:1, t:'wear', x:52, y:40}
+						{i:1, t:'wear', x:170, y:116}
 						{i:2, t:'do', x:100, y:144}
-						{i:3, t:'celebrate', x:170, y:116}
+						{i:3, t:'celebrate', x:52, y:40}
 					]
 				}
 			]
@@ -102,7 +102,8 @@ class U8A2 extends Oda
 			dropper = new createjs.Container()
 			dropper.y = 780
 			dropper.name = 'dropper'
-			@addToMain dropper
+		dropper.alpha = 1
+		if not dropper.parent then @addToMain dropper
 		dropper.removeAllChildren()
 
 		q = @createText 'q', 'Q:','48px Quicksand','#333', 240, 0
