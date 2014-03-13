@@ -111,7 +111,7 @@ class U1A3 extends Oda
 		for i in [1..5] by 1
 			@library['w1'+i].addEventListener 'click', @evaluateAnswer1
 	evaluateAnswer1: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @answers[@index].a1
 			createjs.Sound.play 'good'
 			@blink @library['group1'], off
@@ -125,7 +125,7 @@ class U1A3 extends Oda
 
 			@warning()
 	evaluateAnswer2: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @answers[@index].a2
 			createjs.Sound.play 'good'
 			@blink @library['group2'], off
@@ -139,7 +139,7 @@ class U1A3 extends Oda
 			@intento = 1
 
 	evaluateAnswer3: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @answers[@index].a3
 			createjs.Sound.play 'good'
 			@blink @library['group3'], off
