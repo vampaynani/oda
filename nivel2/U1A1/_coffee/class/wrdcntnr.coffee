@@ -18,6 +18,7 @@ class WordContainer
 		@text.x = w / 2
 		@text.y = h - @text.getMeasuredHeight()
 		@addChild @shape, @text
+		@shape.cursor = 'pointer'
 		false
 	setRectShape: (bgcolor, stcolor, thin, w, h) ->
 		@shape.graphics = new createjs.Graphics().clear().beginFill( bgcolor ).setStrokeStyle( thin ).beginStroke( stcolor ).drawRect( 0, 0, w, h );

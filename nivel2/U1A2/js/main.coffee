@@ -111,6 +111,7 @@ class U1A2 extends Oda
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
+		console.log pt
 		if @library['dropname'].hitTest pt.x, pt.y
 			if @answer.index is @answers[@index].id
 				createjs.Sound.play 'good'

@@ -47,9 +47,10 @@ class U1A1 extends Oda
 		dropper.y = @library['characters'].y + 120
 		dropper.name = 'dropper'
 		back = @createBitmap 'backDropper','gg', 0, 0
-		h1 = new WordContainer 'h1', '', '#fef2e7', '#f39234', 28, 124, 180, 44
+		h1 = new WordContainer 'h1', '', '#fef2e7', '#f39234', 28, 64, 180, 44
 		h2 = new WordContainer 'h2', '', '#fef2e7', '#f39234', 237, 124, 244, 44
 		h3 = new WordContainer 'h3', '', '#fef2e7', '#f39234', 508, 124, 274, 44
+		h1.mouseEnabled = true
 		dropper.addChild back, h1, h2, h3
 		@addToLibrary h1, h2, h3
 		@addToMain dropper
@@ -123,6 +124,7 @@ class U1A1 extends Oda
 		@answer = e.target
 		pt = @library['h1'].globalToLocal @stage.mouseX, @stage.mouseY
 		if @library['h1'].hitTest pt.x, pt.y
+			console.log pt.x, pt.y
 			if @answer.index is @answers[@index].w1
 				@answer.visible = false
 				@library['h1'].changeText @answer.text.text

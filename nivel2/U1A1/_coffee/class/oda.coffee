@@ -41,7 +41,7 @@ class Oda
 		@
 	initStage: ->
 		@stage = new createjs.Stage 'oda'
-		createjs.Ticker.addListener @
+		createjs.Ticker.addEventListener 'tick', @stage
 		createjs.Ticker.setFPS 60
 		createjs.Touch.enable @stage
 		@stage.enableMouseOver()

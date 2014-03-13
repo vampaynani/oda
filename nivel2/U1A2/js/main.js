@@ -235,6 +235,7 @@
       var pt;
       this.answer = e.target;
       pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
+      console.log(pt);
       if (this.library['dropname'].hitTest(pt.x, pt.y)) {
         if (this.answer.index === this.answers[this.index].id) {
           createjs.Sound.play('good');
