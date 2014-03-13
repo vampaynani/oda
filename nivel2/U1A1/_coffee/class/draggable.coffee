@@ -35,13 +35,13 @@ class Draggable
 		offset = x: posX - @x, y: posY - @y
 		@x = posX - offset.x
 		@y = posY - offset.y
-		e.addEventListener 'mousemove', (ev)=>
+		@addEventListener 'mousemove', (ev)=>
 			posX = ev.stageX / stageSize.r
 			posY = ev.stageY / stageSize.r
 			@x = posX - offset.x
 			@y = posY - offset.y
 			false
-		e.addEventListener 'mouseup', (ev)=>
+		@addEventListener 'mouseup', (ev)=>
 			@dispatchEvent 'drop'
 			false
 		false

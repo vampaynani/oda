@@ -405,14 +405,14 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('mousemove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('mouseup', function(ev) {
         _this.dispatchEvent('drop');
         return false;
       });
@@ -602,14 +602,14 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('pressmove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('pressup', function(ev) {
         _this.dispatchEvent('drop');
         return false;
       });
@@ -781,14 +781,14 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('mousemove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('mouseup', function(ev) {
         if (_this.drops.length > 0) {
           _this.evaluateDrop(e);
         } else {
@@ -1035,14 +1035,14 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('mousemove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('mouseup', function(ev) {
         if (_this.drops.length > 0) {
           _this.evaluateDrop(e);
         } else {
@@ -1591,7 +1591,7 @@
     };
 
     Oda.prototype.createSprite = function(name, imgs, anim, x, y, position) {
-      var animation, h, img, sprite, spriteImgs, w;
+      var animation, h, img, spriteImgs, spriteSheet, w;
       if (anim == null) {
         anim = null;
       }
@@ -1609,7 +1609,7 @@
       }).call(this);
       w = spriteImgs[0].width;
       h = spriteImgs[0].height;
-      sprite = new createjs.SpriteSheet({
+      spriteSheet = new createjs.SpriteSheet({
         images: spriteImgs,
         animations: anim,
         frames: {
@@ -1617,7 +1617,7 @@
           height: h
         }
       });
-      animation = new createjs.BitmapAnimation(sprite);
+      animation = new createjs.Sprite(spriteSheet);
       animation.x = x;
       animation.y = y;
       animation.width = w;
@@ -2013,7 +2013,6 @@
       this.text.x = w / 2;
       this.text.y = h - this.text.getMeasuredHeight();
       this.addChild(this.shape, this.text);
-      this.shape.cursor = 'pointer';
       return false;
     };
 

@@ -43,13 +43,13 @@ class DraggableText
 		offset = x: posX - @x, y: posY - @y
 		@x = posX - offset.x
 		@y = posY - offset.y
-		e.addEventListener 'mousemove', (ev)=>
+		@addEventListener 'pressmove', (ev)=>
 			posX = ev.stageX / stageSize.r
 			posY = ev.stageY / stageSize.r
 			@x = posX - offset.x
 			@y = posY - offset.y
 			false
-		e.addEventListener 'mouseup', (ev)=>
+		@addEventListener 'pressup', (ev)=>
 			@dispatchEvent 'drop'
 			false
 		false

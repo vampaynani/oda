@@ -32,7 +32,6 @@
       this.text.x = w / 2;
       this.text.y = h - this.text.getMeasuredHeight();
       this.addChild(this.shape, this.text);
-      this.shape.cursor = 'pointer';
       return false;
     };
 

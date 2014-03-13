@@ -350,7 +350,7 @@
     };
 
     Oda.prototype.createSprite = function(name, imgs, anim, x, y, position) {
-      var animation, h, img, sprite, spriteImgs, w;
+      var animation, h, img, spriteImgs, spriteSheet, w;
       if (anim == null) {
         anim = null;
       }
@@ -368,7 +368,7 @@
       }).call(this);
       w = spriteImgs[0].width;
       h = spriteImgs[0].height;
-      sprite = new createjs.SpriteSheet({
+      spriteSheet = new createjs.SpriteSheet({
         images: spriteImgs,
         animations: anim,
         frames: {
@@ -376,7 +376,7 @@
           height: h
         }
       });
-      animation = new createjs.BitmapAnimation(sprite);
+      animation = new createjs.Sprite(spriteSheet);
       animation.x = x;
       animation.y = y;
       animation.width = w;

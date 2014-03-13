@@ -191,8 +191,8 @@ class Oda
 			@preload.getResult img
 		w = spriteImgs[0].width
 		h = spriteImgs[0].height
-		sprite = new createjs.SpriteSheet (images: spriteImgs, animations: anim, frames: {width: w, height: h})
-		animation = new createjs.BitmapAnimation sprite
+		spriteSheet = new createjs.SpriteSheet (images: spriteImgs, animations: anim, frames: {width: w, height: h})
+		animation = new createjs.Sprite spriteSheet
 		animation.x = x
 		animation.y = y
 		animation.width = w

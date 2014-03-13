@@ -133,10 +133,9 @@
       dropper.y = this.library['characters'].y + 120;
       dropper.name = 'dropper';
       back = this.createBitmap('backDropper', 'gg', 0, 0);
-      h1 = new WordContainer('h1', '', '#fef2e7', '#f39234', 28, 64, 180, 44);
+      h1 = new WordContainer('h1', '', '#fef2e7', '#f39234', 28, 124, 180, 44);
       h2 = new WordContainer('h2', '', '#fef2e7', '#f39234', 237, 124, 244, 44);
       h3 = new WordContainer('h3', '', '#fef2e7', '#f39234', 508, 124, 274, 44);
-      h1.mouseEnabled = true;
       dropper.addChild(back, h1, h2, h3);
       this.addToLibrary(h1, h2, h3);
       this.addToMain(dropper);
@@ -256,7 +255,6 @@
       this.answer = e.target;
       pt = this.library['h1'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
       if (this.library['h1'].hitTest(pt.x, pt.y)) {
-        console.log(pt.x, pt.y);
         if (this.answer.index === this.answers[this.index].w1) {
           this.answer.visible = false;
           this.library['h1'].changeText(this.answer.text.text);
@@ -385,7 +383,7 @@
       var i, _i, _results;
       this.index++;
       if (this.index < this.answers.length) {
-        this.library['characters'].currentFrame = this.index;
+        this.library['characters'].gotoAndStop(this.index);
         this.library['h1'].blink();
         this.blink(this.library['backNube1']);
         TweenLite.to(this.library['characters'], 0.5, {
