@@ -189,7 +189,7 @@ class U7A6 extends Oda
 		@addToMain wordContainers 
 		@addToMain comidas
 	evaluateAnswer: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		@answer.visible = false
 		check = off
 		complete = on
@@ -203,16 +203,18 @@ class U7A6 extends Oda
 		if not check
 			current = @library.chango.currentFrame
 			current++
-			@library.chango.gotoAndStop current
-		if @library.chango.currentFrame is @library.chango.spriteSheet._numFrames		
-			b = @createBitmap 'bubble2', 'bubble2', 0,0
-			@library.burbuja.addChild b
-			current--
-			@library.chango.gotoAndStop current
-			setTimeout @finishEvaluation, 3 * 1000			
-			console.log 'perdiste'
-			return
-			#@finish()
+			if @library.chango.currentFrame is @library.chango.spriteSheet.getNumFrames() - 1		
+				current--
+				b = @createBitmap 'bubble2', 'bubble2', 0,0
+				@library.burbuja.addChild b
+				@library.chango.gotoAndStop current
+				createjs.Sound.play 'wrong'
+				setTimeout @finishEvaluation, 3 * 1000			
+				console.log 'perdiste'
+				return
+			else
+				@library.chango.gotoAndStop current
+				#@finish()
 		for i in [1..@col.length]
 			if @col[i - 1] isnt ' '
 				wc = @library["w#{i}"]
@@ -244,7 +246,7 @@ class U7A6 extends Oda
 			
 			@library.comidas.removeAllChildren()
 			@library.burbuja.removeAllChildren()
-			@library.chango.currentFrame = 0
+			@library.chango.gotoAndStop 0
 			imagen = @createBitmap @answers[@index].i, @answers[@index].i, 0, 0, 'mc'
 			imagen.scaleX = imagen.scaleY = 0.8
 			@library.comidas.addChild imagen

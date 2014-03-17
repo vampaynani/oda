@@ -270,7 +270,7 @@
       if (this.index < this.answers.length) {
         this.library['characters'].alpha = 1;
         this.library['characters'].y = stageSize.h - 360;
-        this.library['characters'].currentFrame = this.answers[this.index].id;
+        this.library['characters'].gotoAndStop(this.answers[this.index].id);
         createjs.Sound.play(this.answers[this.index].sound);
         return TweenLite.from(this.library['characters'], 0.5, {
           alpha: 0,

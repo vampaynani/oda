@@ -20,11 +20,11 @@ class ChooseText
 		@complement.x = @secondOption.x + @secondOption.width
 		@width = @complement.x + @complement.getMeasuredWidth() + 20
 
-		@firstOption.addEventListener 'click', @_dispatchEvent
-		@secondOption.addEventListener 'click', @_dispatchEvent
+		@firstOption.addEventListener 'click', @_dispatchSelection
+		@secondOption.addEventListener 'click', @_dispatchSelection
 		
 		@addChild @prev, @firstOption, @slash, @secondOption, @complement
 		false
-	_dispatchEvent: (e) =>
-		@dispatchEvent {type:'selection', success: e.target.index is @success}
+	_dispatchSelection: (e) =>
+		@dispatchEvent {type:'selection', success: e.currentTarget.index is @success}
 	window.ChooseText = ChooseText

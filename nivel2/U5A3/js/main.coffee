@@ -124,12 +124,12 @@ class U5A3 extends Oda
 				wc.index = col[i - 1]
 				wc.hitter = null
 				wc.addEventListener 'mousedown', (e) ->
-					e.addEventListener 'mousemove', (ev) ->
-						wc = e.target
-						if wc.hitter
-							wc.changeText ''
-							wc.hitter.visible = on
-							wc.hitter.returnToPlace()
+					cwc = e.currentTarget
+					cwc.addEventListener 'pressmove', (ev) ->
+						if cwc.hitter
+							cwc.changeText ''
+							cwc.hitter.visible = on
+							cwc.hitter.returnToPlace()
 				@addToLibrary wc
 				palabra.addChild wc
 		palabra.name = 'palabra'

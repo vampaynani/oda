@@ -160,7 +160,7 @@ class U4A6 extends Oda
 		@library[@preguntas[i].opcionDos].addEventListener 'click', @evaluateAnswer
 		@
 	evaluateAnswer: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @preguntas[@index].respuesta
 			createjs.Sound.play 'good'
 			@library['score'].plusOne()

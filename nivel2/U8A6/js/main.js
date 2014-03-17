@@ -348,7 +348,7 @@
     };
 
     U8A6.prototype.evaluateAnswer = function(e) {
-      this.answer = e.target;
+      this.answer = e.currentTarget;
       if (this.answer.index === this.preguntas[this.index].respuesta) {
         createjs.Sound.play('good');
         if (this.intento === 0) {

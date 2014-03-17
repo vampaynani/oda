@@ -335,7 +335,7 @@
 
     U2A5.prototype.evaluateAnswer = function(e) {
       var dropped, i, pt, _i, _ref, _ref1, _results;
-      this.answer = e.target;
+      this.answer = e.currentTarget;
       dropped = false;
       _results = [];
       for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
@@ -344,14 +344,14 @@
           if (this.answer.index === this.library["sc" + i].index) {
             if (this.answer.p) {
               if ((_ref1 = this.library["sc" + i].currentFrame) === 1 || _ref1 === 2) {
-                this.library["sc" + i].currentFrame = 3;
+                this.library["sc" + i].gotoAndStop(3);
               } else if (this.answer.p === 'p1') {
-                this.library["sc" + i].currentFrame = 1;
+                this.library["sc" + i].gotoAndStop(1);
               } else {
-                this.library["sc" + i].currentFrame = 2;
+                this.library["sc" + i].gotoAndStop(2);
               }
             } else {
-              this.library["sc" + i].currentFrame = 1;
+              this.library["sc" + i].gotoAndStop(1);
             }
             this.answer.visible = false;
             if (this.intento === 0) {

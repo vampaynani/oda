@@ -123,7 +123,9 @@ class U7A3 extends Oda
 			if scene is 2
 				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i * 150 + 110, 860, 'bc'
 				if i >= 2
-					drop.x = drop.x + 60
+					drop.x += 60
+				if i is 6
+					drop.x += 30
 			hit = new createjs.Shape()
 			hit.graphics.beginFill('rgba(255,255,255,1)').drawRect(0, 0, drop.width, drop.height)
 			hit.x = drop.x - drop.width / 2
@@ -132,18 +134,11 @@ class U7A3 extends Oda
 			hits.push hit
 			@escena.addChild hit, drop
 
-
-		for i in [0..@letras.length - 1]
-			word = @letras[i]
-			if scene is 1
-				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i * 150 + 170, 860, 'bc'
-			if scene is 2
-				drop =  @createBitmap "darea#{word.letra}", "dropArea#{word.letra}", i * 150 + 110, 860, 'bc'
-				if i >= 2
-					drop.x = drop.x + 60
 			letra = new Droppable word.letra, (@preload.getResult word.letra), i, word.x - 20, word.y - 20, @stage, hits
 			letra.scaleX = letra.scaleY = 0.43
 			letrafinal = @createBitmap "f#{@letras[i].letra}", @letras[i].letra, drop.x, drop.y - 14, 'bc'
+			if i is 6
+				letrafinal.set {x: 1075, y: 850}
 			letrafinal.visible = off
 			@addToLibrary letra, letrafinal
 			@escena.addChild letra, letrafinal
@@ -159,25 +154,20 @@ class U7A3 extends Oda
 		TweenLite.to @library.label, 0.5, {alpha: 0}
 
 		final = new createjs.Container()
-		final.name = 'final'
-		fin = @createBitmap es+'screen', es+'screen', stageSize.w / 2, stageSize.h /2, 'mc'
+		final.set {name: 'final', alpha: 1}
+		fin = @createBitmap es+'screen', es+'screen', stageSize.w / 2, stageSize.h /2 + 100, 'mc'
 		final.addChild fin
 		@addToLibrary final
 		@addToMain final
-
-		TweenLite.to @library.final, 1, {alpha: 1, delay: 0}
-		TweenLite.to @library.final, 1, {alpha: 0, delay: 2}
-
+		TweenLite.from final, 1, {alpha: 0, onComplete: @finalAndThen}
+	finalAndThen: =>
 		if @esc is 1
 			@setScene(2).initEvaluation()
-			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 40, delay: 4}
-			TweenLite.from @library.label, 0.5, {alpha: 0, delay: 4}
-
+			TweenLite.to @library.final, 0.5, {alpha: 0, delay: 2}
+			TweenLite.from @library.label, 0.5, {alpha: 0, delay: 2}
+			TweenLite.from @library.escena, 1, {alpha: 0, delay: 2, y: @library.escena.y + 40}
 		else
-			TweenLite.from @library.escena, 2, {alpha: 0, y: @library.escena.y + 40, delay: 4, onComplete: @finish()}	
-
-		#@initEvaluation()
-		@
+			TweenLite.to @library.final, 0.5, {alpha: 0, delay: 2, onComplete: @finish}
 	introEvaluation: ->
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
@@ -223,9 +213,6 @@ class U7A3 extends Oda
 			@mainContainer.removeChild @escena
 			@setFinal()
 
-	finish: ->
-		TweenLite.to @library.instructions, 1, {alpha :0}
-
-		TweenLite.to @library.escena, 1, {alpha: 0, y: @library.escena.y + 40}
+	finish: =>
 		super
 	window.U7A3 = U7A3

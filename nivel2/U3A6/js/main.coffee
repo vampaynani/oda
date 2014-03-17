@@ -134,7 +134,7 @@ class U3A6 extends Oda
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 10, 0
 		@setChango().createAlphabet().introEvaluation()
 	setChango: ->
-		@insertSprite 'chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 1098, 300, 'tl'
+		@insertSprite 'chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14'], null, 1098, 300, 'tl'
 		burbuja = new createjs.Container()
 		burbuja.name = 'burbuja'
 		burbuja.y = 298
@@ -197,7 +197,7 @@ class U3A6 extends Oda
 		@addToMain wordContainers 
 		@addToMain comidas
 	evaluateAnswer: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		@answer.visible = false
 		check = off
 		complete = on
@@ -211,16 +211,18 @@ class U3A6 extends Oda
 		if not check
 			current = @library.chango.currentFrame
 			current++
-			@library.chango.gotoAndStop current
-		if @library.chango.currentFrame is @library.chango.spriteSheet._numFrames		
-			b = @createBitmap 'bubble2', 'bubble2', 0,0
-			@library.burbuja.addChild b
-			current--
-			@library.chango.gotoAndStop current
-			setTimeout @finishEvaluation, 3 * 1000			
-			console.log 'perdiste'
-			return
-			#@finish()
+			if @library.chango.currentFrame is @library.chango.spriteSheet.getNumFrames() - 1
+				current--
+				b = @createBitmap 'bubble2', 'bubble2', 0,0
+				@library.burbuja.addChild b
+				@library.chango.gotoAndStop current
+				createjs.Sound.play 'wrong'
+				setTimeout @finishEvaluation, 3 * 1000			
+				console.log 'perdiste'
+				return
+			else
+				@library.chango.gotoAndStop current
+				#@finish()
 		for i in [1..@col.length]
 			if @col[i - 1] isnt ' '
 				wc = @library["w#{i}"]
@@ -252,9 +254,9 @@ class U3A6 extends Oda
 			
 			@library.comidas.removeAllChildren()
 			@library.burbuja.removeAllChildren()
-			@library.chango.currentFrame = 0
+			@library.chango.gotoAndStop 0
 			imagen = @createBitmap @answers[@index].i, @answers[@index].i, 0, 0, 'mc'
-			imagen.scaleX = imagen.scaleY = 0.4
+			#imagen.scaleX = imagen.scaleY = 0.4
 			@library.comidas.addChild imagen
 	
 			@library.wordContainers.removeAllChildren()

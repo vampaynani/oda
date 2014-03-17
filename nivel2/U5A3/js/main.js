@@ -327,12 +327,13 @@
           wc.index = col[i - 1];
           wc.hitter = null;
           wc.addEventListener('mousedown', function(e) {
-            return e.addEventListener('mousemove', function(ev) {
-              wc = e.target;
-              if (wc.hitter) {
-                wc.changeText('');
-                wc.hitter.visible = true;
-                return wc.hitter.returnToPlace();
+            var cwc;
+            cwc = e.currentTarget;
+            return cwc.addEventListener('pressmove', function(ev) {
+              if (cwc.hitter) {
+                cwc.changeText('');
+                cwc.hitter.visible = true;
+                return cwc.hitter.returnToPlace();
               }
             });
           });

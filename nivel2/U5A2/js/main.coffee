@@ -115,8 +115,7 @@ class U5A2 extends Oda
 			if e.success is false 
 				@warning() 
 				intento = 1
-				
-			else 
+			else
 				if intento is 0
 					@library.score.plusOne()
 					createjs.Sound.play "good"
@@ -135,7 +134,6 @@ class U5A2 extends Oda
 	nextEvaluation: =>
 		@index++
 		createjs.Sound.stop()
-
 		#@library.score.plusOne()
 		if @index < @steps.length
 			@setStep()

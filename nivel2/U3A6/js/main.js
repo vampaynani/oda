@@ -387,7 +387,7 @@
 
     U3A6.prototype.setChango = function() {
       var burbuja;
-      this.insertSprite('chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'], null, 1098, 300, 'tl');
+      this.insertSprite('chango', ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07', 'ch08', 'ch09', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14'], null, 1098, 300, 'tl');
       burbuja = new createjs.Container();
       burbuja.name = 'burbuja';
       burbuja.y = 298;
@@ -477,7 +477,7 @@
 
     U3A6.prototype.evaluateAnswer = function(e) {
       var b, check, complete, current, i, wc, _i, _j, _ref, _ref1;
-      this.answer = e.target;
+      this.answer = e.currentTarget;
       this.answer.visible = false;
       check = false;
       complete = true;
@@ -493,16 +493,18 @@
       if (!check) {
         current = this.library.chango.currentFrame;
         current++;
-        this.library.chango.gotoAndStop(current);
-      }
-      if (this.library.chango.currentFrame === this.library.chango.spriteSheet._numFrames) {
-        b = this.createBitmap('bubble2', 'bubble2', 0, 0);
-        this.library.burbuja.addChild(b);
-        current--;
-        this.library.chango.gotoAndStop(current);
-        setTimeout(this.finishEvaluation, 3 * 1000);
-        console.log('perdiste');
-        return;
+        if (this.library.chango.currentFrame === this.library.chango.spriteSheet.getNumFrames() - 1) {
+          current--;
+          b = this.createBitmap('bubble2', 'bubble2', 0, 0);
+          this.library.burbuja.addChild(b);
+          this.library.chango.gotoAndStop(current);
+          createjs.Sound.play('wrong');
+          setTimeout(this.finishEvaluation, 3 * 1000);
+          console.log('perdiste');
+          return;
+        } else {
+          this.library.chango.gotoAndStop(current);
+        }
       }
       for (i = _j = 1, _ref1 = this.col.length; 1 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 1 <= _ref1 ? ++_j : --_j) {
         if (this.col[i - 1] !== ' ') {
@@ -564,9 +566,8 @@
         this.col = word.split('');
         this.library.comidas.removeAllChildren();
         this.library.burbuja.removeAllChildren();
-        this.library.chango.currentFrame = 0;
+        this.library.chango.gotoAndStop(0);
         imagen = this.createBitmap(this.answers[this.index].i, this.answers[this.index].i, 0, 0, 'mc');
-        imagen.scaleX = imagen.scaleY = 0.4;
         this.library.comidas.addChild(imagen);
         this.library.wordContainers.removeAllChildren();
         this.library.wordContainers.x = (this.library['alphabet'].x + 354) - this.col.length * 60 / 2;

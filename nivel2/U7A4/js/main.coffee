@@ -54,7 +54,7 @@ class U7A4 extends Oda
 	setScene: (scene) ->
 		@scene = @game.scenes[scene - 1]
 		@answers = @shuffleNoRepeat @scene.answers, 7
-		@insertBitmap 'boy', "nino#{scene}",  222,  316
+		@insertBitmap 'boy', "nino#{scene}",  222,  326
 		@library.boy.scaleX = @library.boy.scaleY = 0.9
 		@
 	setClick:  ->

@@ -388,7 +388,7 @@
       this.time = 100;
       this.timer = setInterval(this.updateCounter, 1000);
       j = 0;
-      game = e.target.index;
+      game = e.currentTarget.index;
       juego = new createjs.Container();
       juego.x = 400;
       juego.y = 360;

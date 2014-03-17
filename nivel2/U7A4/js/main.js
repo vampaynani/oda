@@ -131,7 +131,7 @@
     U7A4.prototype.setScene = function(scene) {
       this.scene = this.game.scenes[scene - 1];
       this.answers = this.shuffleNoRepeat(this.scene.answers, 7);
-      this.insertBitmap('boy', "nino" + scene, 222, 316);
+      this.insertBitmap('boy', "nino" + scene, 222, 326);
       this.library.boy.scaleX = this.library.boy.scaleY = 0.9;
       return this;
     };

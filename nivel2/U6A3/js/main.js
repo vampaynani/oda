@@ -487,7 +487,7 @@
       var opt, _i, _j, _len, _len1, _ref, _ref1, _results;
       this.index++;
       if (this.index < this.steps.length) {
-        this.library.images.currentFrame = this.index;
+        this.library.images.gotoAndStop(this.index);
         this.setDropper(this.index + 1);
         TweenLite.to(this.library.dropper, 0.5, {
           alpha: 1,

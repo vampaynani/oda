@@ -194,7 +194,10 @@
       palabras.name = 'palabras';
       palabras.y = 740;
       palabras.x = stageSize.w / 2 - this.scrambled.length * 180 / 2;
-      return this.addToMain(palabras);
+      this.addToMain(palabras);
+      return TweenLite.from([frase, palabras], 1, {
+        alpha: 0
+      });
     };
 
     U6A4.prototype.evaluateAnswer = function(e) {

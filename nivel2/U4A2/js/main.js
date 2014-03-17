@@ -206,10 +206,11 @@
     };
 
     U4A2.prototype.evaluateAnswer = function(e) {
-      var answer, clktxt, h, i, oup, pos, pt, shape,
+      var answer, clktxt, h, i, oup, pos, pt, shape, target,
         _this = this;
       answer = Array();
       shape = new createjs.Shape();
+      target = e.target;
       pt = this.mainContainer.globalToLocal(this.stage.mouseX, this.stage.mouseY);
       oup = this.mainContainer.getObjectUnderPoint(pt.x, pt.y);
       i = 0;
@@ -227,7 +228,7 @@
           };
           shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x, pos.y, 52, 52, 10);
           this.library.sopa.cache(-52, -52, 572, 572);
-          e.addEventListener('mousemove', function(ev) {
+          target.addEventListener('pressmove', function(ev) {
             var npos;
             pt = _this.mainContainer.globalToLocal(_this.stage.mouseX, _this.stage.mouseY);
             oup = _this.mainContainer.getObjectUnderPoint(pt.x, pt.y);
@@ -246,7 +247,7 @@
               }
             }
           });
-          return e.addEventListener('mouseup', function(ev) {
+          return target.addEventListener('pressup', function(ev) {
             var find, obj, _i, _j, _len, _ref;
             find = false;
             answer = Array();

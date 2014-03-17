@@ -99,7 +99,7 @@
       this.insertBitmap('iconGym', 'gym', 736, 428);
       this.insertBitmap('iconArt', 'art', 388, 410);
       this.insertBitmap('iconWatch', 'watch', 503, 505);
-      this.insertBitmap('iconRead', 'read', 610, 506);
+      this.insertBitmap('iconRead', 'read', 615, 501);
       this.insertBitmap('iconLunch', 'lunch', 882, 673);
       this.intento = 0;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 5, 0));
@@ -110,7 +110,7 @@
       var group1, word1, word2, word3, word4, word5;
       group1 = new createjs.Container();
       group1.x = 1130;
-      group1.y = 140;
+      group1.y = 180;
       group1.name = 'group1';
       word1 = new ClickableText('w11', 'We read books', 1, 0, 0);
       word2 = new ClickableText('w12', 'We do exercise', 2, 0, 50);
@@ -127,7 +127,7 @@
       var group2, word1, word2, word3, word4, word5;
       group2 = new createjs.Container();
       group2.x = 1130;
-      group2.y = 420;
+      group2.y = 460;
       group2.name = 'group2';
       word1 = new ClickableText('w21', 'in the gym', 1, 0, 0);
       word2 = new ClickableText('w22', 'in the cafeteria', 2, 0, 50);
@@ -144,7 +144,7 @@
       var group3, word1, word2, word3, word4, word5;
       group3 = new createjs.Container();
       group3.x = 1130;
-      group3.y = 700;
+      group3.y = 740;
       group3.name = 'group3';
       word1 = new ClickableText('w31', 'on Monday and Friday.', 1, 0, 0);
       word2 = new ClickableText('w32', 'on Tuesday and Thursday.', 2, 0, 50);
@@ -224,7 +224,8 @@
 
     U1A3.prototype.evaluateAnswer1 = function(e) {
       var i, _i, _results;
-      this.answer = e.target;
+      this.answer = e.currentTarget;
+      console.log(this.answer);
       if (this.answer.index === this.answers[this.index].a1) {
         createjs.Sound.play('good');
         this.blink(this.library['group1'], false);
@@ -244,7 +245,7 @@
 
     U1A3.prototype.evaluateAnswer2 = function(e) {
       var i, _i, _results;
-      this.answer = e.target;
+      this.answer = e.currentTarget;
       if (this.answer.index === this.answers[this.index].a2) {
         createjs.Sound.play('good');
         this.blink(this.library['group2'], false);
@@ -264,7 +265,7 @@
 
     U1A3.prototype.evaluateAnswer3 = function(e) {
       var i, _i;
-      this.answer = e.target;
+      this.answer = e.currentTarget;
       if (this.answer.index === this.answers[this.index].a3) {
         createjs.Sound.play('good');
         this.blink(this.library['group3'], false);

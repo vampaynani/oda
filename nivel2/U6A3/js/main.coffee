@@ -204,7 +204,7 @@ class U6A3 extends Oda
 	nextEvaluation: =>
 		@index++
 		if @index < @steps.length
-			@library.images.currentFrame = @index
+			@library.images.gotoAndStop @index
 			@setDropper @index + 1
 			TweenLite.to @library.dropper, 0.5, {alpha: 1, y: @library.images.y + 40}
 			TweenLite.to @library.images, 0.5, {scaleX: 0.7, scaleY: 0.7, alpha: 1, ease: Back.easeOut}

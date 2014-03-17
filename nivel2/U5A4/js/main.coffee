@@ -198,7 +198,6 @@ class U5A4 extends Oda
 			for j in [0..current[i].length-1] by 1
 				asset = @createBitmap current[i][j], current[i][j], i * 320 + 40, 170, 'mc'
 				asset.scaleX = asset.scaleY = 0.45
-				console.log asset
 				if j > 0 
 					asset.visible = off
 				else 

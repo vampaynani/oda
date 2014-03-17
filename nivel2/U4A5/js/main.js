@@ -274,7 +274,7 @@
 
     U4A5.prototype.evaluateAnswer = function(e) {
       var ans, dropped, hit, i, pt, _i, _j, _len, _ref, _ref1, _results;
-      this.answer = e.target;
+      this.answer = e.currentTarget;
       dropped = false;
       _results = [];
       for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
@@ -282,7 +282,7 @@
         if (this.library["sc" + i].hitTest(pt.x, pt.y)) {
           if (!this.isArray(this.answer.index)) {
             if (this.answer.index === this.library["sc" + i].index) {
-              this.library["sc" + i].currentFrame = 1;
+              this.library["sc" + i].gotoAndStop(1);
               this.answer.visible = false;
               createjs.Sound.play('good');
               if (!this.library["sc" + i].failed) {
@@ -304,7 +304,7 @@
               }
             }
             if (hit) {
-              this.library["sc" + i].currentFrame = 1;
+              this.library["sc" + i].gotoAndStop(1);
               this.answer.visible = false;
               createjs.Sound.play('good');
               if (!this.library["sc" + i].failed) {

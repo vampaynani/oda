@@ -144,7 +144,7 @@ class U5A6 extends Oda
 		@time = 100
 		@timer = setInterval @updateCounter, 1000
 		j = 0
-		game = e.target.index
+		game = e.currentTarget.index
 		juego = new createjs.Container()
 		juego.x = 400
 		juego.y = 360

@@ -123,6 +123,7 @@ class U4A2 extends Oda
 	evaluateAnswer: (e) =>
 		answer = Array()
 		shape = new createjs.Shape()
+		target = e.target
 		pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
 		oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
 		i = 0
@@ -135,7 +136,7 @@ class U4A2 extends Oda
 				pos = x: clktxt.i * 52 - 26, y: clktxt.h * 52, i: clktxt.i, h: clktxt.h
 				shape.graphics.s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,52,52,10)
 				@library.sopa.cache -52,-52,572,572
-				e.addEventListener 'mousemove', (ev) =>
+				target.addEventListener 'pressmove', (ev) =>
 					pt = @mainContainer.globalToLocal @stage.mouseX, @stage.mouseY
 					oup = @mainContainer.getObjectUnderPoint pt.x, pt.y
 					if oup
@@ -147,7 +148,7 @@ class U4A2 extends Oda
 							answer.push clktxt.index
 							shape.graphics.c().s("rgba(255, 0, 0, 1)").f("rgba(255, 0, 0, 0.5)").rr(pos.x,pos.y,npos.w,npos.h,10)
 							@library.sopa.cache -52,-52,572,572
-				e.addEventListener 'mouseup', (ev) =>
+				target.addEventListener 'pressup', (ev) =>
 					find = off
 					answer = Array()
 					for i in [0..99] by 1

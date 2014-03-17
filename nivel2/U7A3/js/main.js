@@ -8,10 +8,12 @@
     __extends(U7A3, _super);
 
     function U7A3() {
+      this.finish = __bind(this.finish, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
       this.initEvaluation = __bind(this.initEvaluation, this);
+      this.finalAndThen = __bind(this.finalAndThen, this);
       this.setFinal = __bind(this.setFinal, this);
       var manifest, sounds;
       manifest = [
@@ -258,7 +260,7 @@
     };
 
     U7A3.prototype.setScene = function(scene) {
-      var drop, es, fondo, hit, hits, i, letra, letrafinal, word, _i, _j, _ref, _ref1;
+      var drop, es, fondo, hit, hits, i, letra, letrafinal, word, _i, _ref;
       this.escena = new createjs.Container();
       this.escena.x = 232;
       this.escena.y = 320;
@@ -284,7 +286,10 @@
         if (scene === 2) {
           drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 150 + 110, 860, 'bc');
           if (i >= 2) {
-            drop.x = drop.x + 60;
+            drop.x += 60;
+          }
+          if (i === 6) {
+            drop.x += 30;
           }
         }
         hit = new createjs.Shape();
@@ -294,21 +299,15 @@
         hit.name = "dropArea" + word.letra;
         hits.push(hit);
         this.escena.addChild(hit, drop);
-      }
-      for (i = _j = 0, _ref1 = this.letras.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
-        word = this.letras[i];
-        if (scene === 1) {
-          drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 150 + 170, 860, 'bc');
-        }
-        if (scene === 2) {
-          drop = this.createBitmap("darea" + word.letra, "dropArea" + word.letra, i * 150 + 110, 860, 'bc');
-          if (i >= 2) {
-            drop.x = drop.x + 60;
-          }
-        }
         letra = new Droppable(word.letra, this.preload.getResult(word.letra), i, word.x - 20, word.y - 20, this.stage, hits);
         letra.scaleX = letra.scaleY = 0.43;
         letrafinal = this.createBitmap("f" + this.letras[i].letra, this.letras[i].letra, drop.x, drop.y - 14, 'bc');
+        if (i === 6) {
+          letrafinal.set({
+            x: 1075,
+            y: 850
+          });
+        }
         letrafinal.visible = false;
         this.addToLibrary(letra, letrafinal);
         this.escena.addChild(letra, letrafinal);
@@ -329,39 +328,43 @@
         alpha: 0
       });
       final = new createjs.Container();
-      final.name = 'final';
-      fin = this.createBitmap(es + 'screen', es + 'screen', stageSize.w / 2, stageSize.h / 2, 'mc');
+      final.set({
+        name: 'final',
+        alpha: 1
+      });
+      fin = this.createBitmap(es + 'screen', es + 'screen', stageSize.w / 2, stageSize.h / 2 + 100, 'mc');
       final.addChild(fin);
       this.addToLibrary(final);
       this.addToMain(final);
-      TweenLite.to(this.library.final, 1, {
-        alpha: 1,
-        delay: 0
-      });
-      TweenLite.to(this.library.final, 1, {
+      return TweenLite.from(final, 1, {
         alpha: 0,
-        delay: 2
+        onComplete: this.finalAndThen
       });
+    };
+
+    U7A3.prototype.finalAndThen = function() {
       if (this.esc === 1) {
         this.setScene(2).initEvaluation();
-        TweenLite.from(this.library.escena, 2, {
+        TweenLite.to(this.library.final, 0.5, {
           alpha: 0,
-          y: this.library.escena.y + 40,
-          delay: 4
+          delay: 2
         });
         TweenLite.from(this.library.label, 0.5, {
           alpha: 0,
-          delay: 4
+          delay: 2
+        });
+        return TweenLite.from(this.library.escena, 1, {
+          alpha: 0,
+          delay: 2,
+          y: this.library.escena.y + 40
         });
       } else {
-        TweenLite.from(this.library.escena, 2, {
+        return TweenLite.to(this.library.final, 0.5, {
           alpha: 0,
-          y: this.library.escena.y + 40,
-          delay: 4,
-          onComplete: this.finish()
+          delay: 2,
+          onComplete: this.finish
         });
       }
-      return this;
     };
 
     U7A3.prototype.introEvaluation = function() {
@@ -450,13 +453,6 @@
     };
 
     U7A3.prototype.finish = function() {
-      TweenLite.to(this.library.instructions, 1, {
-        alpha: 0
-      });
-      TweenLite.to(this.library.escena, 1, {
-        alpha: 0,
-        y: this.library.escena.y + 40
-      });
       return U7A3.__super__.finish.apply(this, arguments);
     };
 

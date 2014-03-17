@@ -33,7 +33,7 @@ class U1A3 extends Oda
 		@insertBitmap 'iconGym', 'gym', 736, 428
 		@insertBitmap 'iconArt', 'art', 388, 410
 		@insertBitmap 'iconWatch', 'watch', 503, 505
-		@insertBitmap 'iconRead', 'read', 610, 506
+		@insertBitmap 'iconRead', 'read', 615, 501
 		@insertBitmap 'iconLunch', 'lunch', 882, 673
 		@intento = 0
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 5, 0
@@ -41,7 +41,7 @@ class U1A3 extends Oda
 	setGrupo1: ->
 		group1 = new createjs.Container()
 		group1.x = 1130
-		group1.y = 140
+		group1.y = 180
 		group1.name = 'group1'
 		word1 = new ClickableText 'w11', 'We read books', 1, 0, 0
 		word2 = new ClickableText 'w12', 'We do exercise', 2, 0, 50
@@ -56,7 +56,7 @@ class U1A3 extends Oda
 	setGrupo2: ->
 		group2 = new createjs.Container()
 		group2.x = 1130
-		group2.y = 420
+		group2.y = 460
 		group2.name = 'group2'
 		word1 = new ClickableText 'w21', 'in the gym', 1, 0, 0
 		word2 = new ClickableText 'w22', 'in the cafeteria', 2, 0, 50
@@ -71,7 +71,7 @@ class U1A3 extends Oda
 	setGrupo3: ->
 		group3 = new createjs.Container()
 		group3.x = 1130
-		group3.y = 700
+		group3.y = 740
 		group3.name = 'group3'
 		word1 = new ClickableText 'w31', 'on Monday and Friday.', 1, 0, 0
 		word2 = new ClickableText 'w32', 'on Tuesday and Thursday.', 2, 0, 50
@@ -111,7 +111,8 @@ class U1A3 extends Oda
 		for i in [1..5] by 1
 			@library['w1'+i].addEventListener 'click', @evaluateAnswer1
 	evaluateAnswer1: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
+		console.log @answer
 		if @answer.index is @answers[@index].a1
 			createjs.Sound.play 'good'
 			@blink @library['group1'], off
@@ -125,7 +126,7 @@ class U1A3 extends Oda
 
 			@warning()
 	evaluateAnswer2: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @answers[@index].a2
 			createjs.Sound.play 'good'
 			@blink @library['group2'], off
@@ -139,7 +140,7 @@ class U1A3 extends Oda
 			@intento = 1
 
 	evaluateAnswer3: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @answers[@index].a3
 			createjs.Sound.play 'good'
 			@blink @library['group3'], off

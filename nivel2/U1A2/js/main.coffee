@@ -133,7 +133,7 @@ class U1A2 extends Oda
 		if @index < @answers.length
 			@library['characters'].alpha = 1
 			@library['characters'].y = stageSize.h - 360
-			@library['characters'].currentFrame = @answers[@index].id
+			@library['characters'].gotoAndStop @answers[@index].id
 			createjs.Sound.play @answers[@index].sound
 			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
 		else

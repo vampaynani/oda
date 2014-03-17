@@ -115,9 +115,9 @@ class U8A4 extends Oda
 			res = @createSprite 'resultado', ['incorrect', 'correct'], null, @library["image#{step.tgt}"].x, @library["image#{step.tgt}"].y
 			if @library["dragble#{step.drp}"].x is @library["image#{step.tgt}"].x + 130
 				@library.score.plusOne()
-				res.currentFrame = 1
+				res.gotoAndStop 1
 			else
-				res.currentFrame = 0
+				res.gotoAndStop 0
 			@library.caras.addChild res
 		setTimeout @finish, 2 * 1000
 	finishEvaluation: =>

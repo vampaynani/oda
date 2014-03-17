@@ -457,7 +457,7 @@
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Click on the models, listen and dress them up.', 80, 200);
       this.insertBitmap('bg', 'bg', 170, 600);
-      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 16, 0));
+      this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 15, 0));
       return this.setKids('summer').setRopa().introEvaluation();
     };
 
@@ -479,7 +479,6 @@
         for (j = _k = 0, _ref = current[i].length - 1; _k <= _ref; j = _k += 1) {
           asset = this.createBitmap(current[i][j], current[i][j], i * 320 + 40, 170, 'mc');
           asset.scaleX = asset.scaleY = 0.45;
-          console.log(asset);
           if (j > 0) {
             asset.visible = false;
           } else {

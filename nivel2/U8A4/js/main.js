@@ -277,9 +277,9 @@
         res = this.createSprite('resultado', ['incorrect', 'correct'], null, this.library["image" + step.tgt].x, this.library["image" + step.tgt].y);
         if (this.library["dragble" + step.drp].x === this.library["image" + step.tgt].x + 130) {
           this.library.score.plusOne();
-          res.currentFrame = 1;
+          res.gotoAndStop(1);
         } else {
-          res.currentFrame = 0;
+          res.gotoAndStop(0);
         }
         this.library.caras.addChild(res);
       }

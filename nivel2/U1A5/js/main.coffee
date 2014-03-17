@@ -134,14 +134,15 @@ class U1A5 extends Oda
 		for i in [1..@game[@scene - 1].texts.length] by 1
 			@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 	evaluateAnswer: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
+		console.log @answer
 		dropped = off
 		for i in [1..@game[@scene - 1].positions.length] by 1
 			pt = @library["sc#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
 			if @library["sc#{i}"].hitTest pt.x, pt.y
 				if not @isArray @answer.index 
 					if @answer.index is @library["sc#{i}"].index
-						@library["sc#{i}"].currentFrame = 1
+						@library["sc#{i}"].gotoAndStop 1
 						@answer.returnToOrigin()
 						#@answer.visible = off
 						createjs.Sound.play 'good'
@@ -162,7 +163,7 @@ class U1A5 extends Oda
 							hit = true	
 					if hit
 						console.log hit
-						@library["sc#{i}"].currentFrame = 1
+						@library["sc#{i}"].gotoAndStop 1
 						@answer.returnToOrigin()
 						#@answer.visible = off
 						createjs.Sound.play 'good'

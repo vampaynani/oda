@@ -97,6 +97,8 @@ class U6A4 extends Oda
 		palabras.y = 740
 		palabras.x = stageSize.w / 2 - @scrambled.length * 180 / 2
 		@addToMain palabras
+
+		TweenLite.from [frase, palabras], 1, {alpha:0}
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		dropped = off
