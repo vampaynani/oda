@@ -237,11 +237,11 @@
     U1A4.prototype.evaluateAnswer = function(e) {
       var selection;
       this.answer = e.target;
+      selection = this.answers.where({
+        id: this.phrase.id
+      });
+      selection[0].a = true;
       if (this.phrase.id === this.answer.currentAnimation) {
-        selection = this.answers.where({
-          id: this.phrase.id
-        });
-        selection[0].a = true;
         createjs.Sound.play('good');
         this.library['score'].plusOne();
         this.library['choose1'].removeEventListener('click', this.evaluateAnswer);

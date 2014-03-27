@@ -24,12 +24,13 @@ class DraggableText
 			when 'right' then @hit.graphics.c().beginFill('#000').drawRect(-w, 0, w, h)
 		@text.hitArea = @hit
 	setHitArea: ->
-		w = @text.getMeasuredWidth()
-		h = @text.getMeasuredHeight()
+		w = @text.getMeasuredWidth() + 20
+		h = @text.getMeasuredHeight() + 20
 		switch @text.textAlign
 			when 'left' then @hit.graphics.c().beginFill('#000').drawRect(0, 0, w, h)
 			when 'center' then @hit.graphics.c().beginFill('#000').drawRect(-w/2, 0, w, h)
 			when 'right' then @hit.graphics.c().beginFill('#000').drawRect(-w, 0, w, h)
+		#@addChild @hit
 		@text.hitArea = @hit
 	initDragListener: =>
 		@addEventListener 'mousedown', @handleMouseDown

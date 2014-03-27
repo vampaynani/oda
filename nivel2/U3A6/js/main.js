@@ -568,6 +568,7 @@
         this.library.burbuja.removeAllChildren();
         this.library.chango.gotoAndStop(0);
         imagen = this.createBitmap(this.answers[this.index].i, this.answers[this.index].i, 0, 0, 'mc');
+        imagen.scaleX = imagen.scaleY = 0.8;
         this.library.comidas.addChild(imagen);
         this.library.wordContainers.removeAllChildren();
         this.library.wordContainers.x = (this.library['alphabet'].x + 354) - this.col.length * 60 / 2;

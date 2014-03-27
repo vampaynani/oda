@@ -144,18 +144,20 @@ class U6A6 extends Oda
 			'He / She puts out fires.'
 			''
 		]
-		@answers = 
-			doctor: r: off, c: [0, 1, 2, 3, 4, 5]
-			mechanic: r: off, c:[6, 7, 8, 9, 10, 11, 12, 13]
-			chef: r: off, c:[14, 15, 16, 17]
-			salesclerk: r: off, c:[18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
-			waiter: r: off, c:[28, 29, 30, 31, 32, 33]
-			police: r: off, c:[34, 4, 35, 36, 37, 7, 38, 17, 39, 40, 23, 41, 33]
-			vet: r: off, c:[42, 43, 44]
-			firefighter: r: off, c:[45, 46, 47, 48, 49, 12, 50, 51, 44, 52, 53]
+		@game =
+			answers: 
+				doctor: r: off, c: [0, 1, 2, 3, 4, 5]
+				mechanic: r: off, c:[6, 7, 8, 9, 10, 11, 12, 13]
+				chef: r: off, c:[14, 15, 16, 17]
+				salesclerk: r: off, c:[18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+				waiter: r: off, c:[28, 29, 30, 31, 32, 33]
+				police: r: off, c:[34, 4, 35, 36, 37, 7, 38, 17, 39, 40, 23, 41, 33]
+				vet: r: off, c:[42, 43, 44]
+				firefighter: r: off, c:[45, 46, 47, 48, 49, 12, 50, 51, 44, 52, 53]
 		super null, manifest, sounds
 	setStage: ->
 		super
+		@answers = @clone @game.answers
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Look and drag the letters to complete the crossword puzzle.', 80, 200
 		doc = @createBitmap 'persondoctor', 'persondoctor', 154, 242
@@ -361,6 +363,6 @@ class U6A6 extends Oda
 		TweenMax.to obj, 0.5, {alpha:.5, repeat:-1, yoyo:true}  if state
 	finish: =>
 		TweenLite.to @library.alphabet, 0.5, {alpha:0, y: @library.alphabet.y - 200, ease:Quart.easeOut}
-		TweenLite.from @library.helper, 1, {alpha: 0, y: @library.helper.y + 40}
+		TweenLite.to @library.helper, 1, {alpha: 0, y: @library.helper.y + 40}
 		super
 	window.U6A6 = U6A6

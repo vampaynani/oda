@@ -86,9 +86,9 @@ class U6A2 extends Oda
 			@addToLibrary s
 			mapa.addChild s
 
-		d1 = new Droppable 'd1', (@preload.getResult @current[0].i), @current[0].i, 1300, 110, @stage, drops
-		d2 = new Droppable 'd2', (@preload.getResult @current[1].i), @current[1].i, 1300, 310, @stage, drops
-		d3 = new Droppable 'd3', (@preload.getResult @current[2].i), @current[2].i, 1300, 510, @stage, drops
+		d1 = new Droppable 'd1', (@preload.getResult @current[0].i), @current[0].i, 1100, 110, @stage, drops
+		d2 = new Droppable 'd2', (@preload.getResult @current[1].i), @current[1].i, 1100, 310, @stage, drops
+		d3 = new Droppable 'd3', (@preload.getResult @current[2].i), @current[2].i, 1100, 510, @stage, drops
 		d1.scaleX = d1.scaleY = d2.scaleX = d2.scaleY = d3.scaleX = d3.scaleY = 0.7
  
 		@addToLibrary d1, d2, d3

@@ -331,19 +331,20 @@
       for (i = _i = 0; _i <= 5; i = _i += 1) {
         hit = this.library["b" + i];
         pt = hit.globalToLocal(this.stage.mouseX, this.stage.mouseY);
-        if ((hit.hitTest(pt.x, pt.y)) && hit.index === this.answer.index) {
-          hpp = hit.parent.localToGlobal(hit.x + hit.width / 2 - 60, hit.y + hit.height / 2 - 60);
-          app = this.answer.parent.globalToLocal(hpp.x, hpp.y);
-          this.buckets[i].a = false;
-          dropped = true;
-          this.answer.putInPlace(app);
-          this.library['score'].plusOne();
-          createjs.Sound.play('good');
-          setTimeout(this.finishEvaluation, 2 * 1000);
+        if (hit.hitTest(pt.x, pt.y)) {
+          if (hit.index === this.answer.index) {
+            hpp = hit.parent.localToGlobal(hit.x + hit.width / 2 - 60, hit.y + hit.height / 2 - 60);
+            app = this.answer.parent.globalToLocal(hpp.x, hpp.y);
+            this.buckets[i].a = false;
+            dropped = true;
+            this.answer.putInPlace(app);
+            this.library['score'].plusOne();
+            createjs.Sound.play('good');
+            setTimeout(this.finishEvaluation, 2 * 1000);
+          } else {
+            createjs.Sound.play('wrong');
+          }
         }
-      }
-      if (!dropped) {
-        createjs.Sound.play('wrong');
       }
       if (!dropped) {
         return this.answer.takeMeOut();

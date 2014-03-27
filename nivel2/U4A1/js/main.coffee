@@ -188,7 +188,10 @@ class U4A1 extends Oda
 		@youcards = @shuffleNoRepeat @animals, 9
 		@pccards = @shuffleNoRepeat @animals, 9
 		@game.animals = @shuffle @animals
-		if @round <= 1
+
+		if @game.you is 2 or @game.pc is 2
+			@finish()
+		else if @round <= 2
 			@setCardsYou().setCardsPc().introEvaluation()
 		else
 			@finish()
@@ -264,9 +267,9 @@ class U4A1 extends Oda
 		createjs.Sound.play "s#{@game.animals[@index].id}"
 		@interval = setInterval @nextEvaluation, 5 * 1000
 	evaluateClick: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @game.animals[@index].id
-			@answer.getChildByName('borde').currentFrame = 1
+			@answer.getChildByName('borde').gotoAndStop 1
 			@evaluateRows()
 	evaluateRows: (e) =>
 		if @library["cartay0"].getChildByName('borde').currentFrame is 1 and @library["cartay1"].getChildByName('borde').currentFrame is 1 and @library["cartay2"].getChildByName('borde').currentFrame is 1 then @jug().nuevaRonda()
@@ -291,7 +294,7 @@ class U4A1 extends Oda
 	nextEvaluation: =>
 		for i in [0..8]
 			if @library["cartac#{i}"].index is @game.animals[@index].id
-				@library["cartac#{i}"].getChildByName('borde').currentFrame = 2
+				@library["cartac#{i}"].getChildByName('borde').gotoAndStop 2
 				@evaluateRows()
 		@index++
 		if @index < @game.animals.length

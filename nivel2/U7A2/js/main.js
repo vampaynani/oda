@@ -273,6 +273,23 @@
       this.drop = e.drop;
       this.answer.visible = false;
       v = this.createBitmap(this.answer.name, this.answer.name, 0, 40);
+      v.hitter = this.answer;
+      v.addEventListener('mousedown', function(e) {
+        var cv;
+        cv = e.currentTarget;
+        return cv.addEventListener('pressmove', function(ev) {
+          var parent;
+          if (cv.hitter) {
+            cv.removeAllEventListeners();
+            parent = cv.parent;
+            while (parent.children.length > 1) {
+              parent.removeChildAt(parent.children.length - 1);
+            }
+            cv.hitter.visible = true;
+            return cv.hitter.returnToPlace();
+          }
+        });
+      });
       v.scaleX = v.scaleY = 0.6;
       this.setReg(v, v.width / 2, v.height / 2);
       return this.drop.addChild(v);

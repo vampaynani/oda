@@ -206,6 +206,17 @@ class U5A1 extends Oda
 				@answer.visible = false
 				relation = @game[@calendar - 1].drops.where id:@answer.name
 				v = @createBitmap relation[0].id, relation[0].tgt, 45, 25
+				v.hitter = @answer
+				v.addEventListener 'mousedown', (e) ->
+					cv = e.currentTarget
+					cv.addEventListener 'pressmove', (ev) ->
+						if cv.hitter
+							cv.removeAllEventListeners()
+							parent = cv.parent 
+							while parent.children.length > 1
+								parent.removeChildAt parent.children.length - 1
+							cv.hitter.visible = on
+							cv.hitter.returnToPlace()
 				@setReg v, v.width / 2, v.height / 2
 				@library[drop.tgt].addChild v
 		if not dropped then @answer.returnToPlace()

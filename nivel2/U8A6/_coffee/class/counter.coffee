@@ -11,8 +11,8 @@ class Counter
 		@count = count
 		@text = new createjs.Text @count, '48px Arial', '#ffffff'
 		@text.textAlign = 'center'
-		@text.x = 60
-		@text.y = 10
+		@text.x = 30
+		@text.y = 5
 		shape = new createjs.Shape()
 		shape.graphics.beginFill( back ).drawRoundRect(0, 0, 120, 72, 10)
 		@addChild shape, @text

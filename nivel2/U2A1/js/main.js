@@ -138,7 +138,7 @@
       n3 = this.createBitmap('n3', 'n3', 0, 0);
       n4 = this.createBitmap('n4', 'n4', 0, 0);
       tn1 = new DraggableText('tn0', "There is", 0, 28, 42);
-      tn2 = new DraggableText('tn1', "There are", 1, 30, 50);
+      tn2 = new DraggableText('tn1', "There are", 1, 15, 50);
       tn3 = new DraggableText('tn2', "There isn't", 2, 30, 40);
       tn4 = new DraggableText('tn3', "There aren't", 3, 26, 50);
       nube1.addChild(n1, tn1);
@@ -205,12 +205,12 @@
           this.answer.x = this.answer.pos.x;
           this.answer.y = this.answer.pos.y;
           this.library['dropper'].changeText(this.answer.text.text);
-          setTimeout(this.finishEvaluation, 1 * 1000);
-          return createjs.Sound.play('good');
+          createjs.Sound.play('good');
+          return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {
+          this.warning();
           this.answer.returnToPlace();
           this.intento++;
-          this.warning();
           if (this.intento === 2) {
             return setTimeout(this.finishEvaluation, 1 * 1000);
           }

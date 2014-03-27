@@ -81,9 +81,9 @@ class U1A4 extends Oda
 		@library['repeat'].addEventListener 'click', @repeat
 	evaluateAnswer: (e) =>
 		@answer = e.target
+		selection = @answers.where id:@phrase.id
+		selection[0].a = on
 		if @phrase.id is @answer.currentAnimation
-			selection = @answers.where id:@phrase.id
-			selection[0].a = on
 			createjs.Sound.play 'good'
 			@library['score'].plusOne()
 			@library['choose1'].removeEventListener 'click', @evaluateAnswer

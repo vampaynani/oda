@@ -47,7 +47,7 @@ class U1A2 extends Oda
 		@insertInstructions 'instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 80, 200
 		@insertSprite 'characters', ['p1','p2','p3','p4','p5','p6'], null, 200, stageSize.h - 340
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 6, 0
-		@intento = 0
+		@intento = false
 		@setDropper().setNames().introEvaluation()
 	setDropper: ->
 		myname = new createjs.Container()
@@ -94,16 +94,16 @@ class U1A2 extends Oda
 		for i in [1..6] by 1
 			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
 
-		@library['characters'].currentFrame = @answers[@index].id
+		@library['characters'].gotoAndStop @answers[@index].id - 1
 
 		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
 		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
 		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 100, delay: 1}
 		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 100, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 40, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
+		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library['characters'].currentFrame = @answers[@index].id
+		@library['characters'].gotoAndStop @answers[@index].id - 1
 		createjs.Sound.play @answers[@index].sound
 		for i in [1..6] by 1
 			@library['name'+i].blink()
@@ -111,29 +111,28 @@ class U1A2 extends Oda
 	evaluateAnswer: (e) =>
 		@answer = e.target
 		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		console.log pt
 		if @library['dropname'].hitTest pt.x, pt.y
+			console.log @answer.name, 'hit'
 			if @answer.index is @answers[@index].id
 				createjs.Sound.play 'good'
 				setTimeout @finishEvaluation, 1 * 1000
 			else
 				@warning()
-				@intento = 1
+				@intento = true
 				@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 		else
 			@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
 	finishEvaluation: =>
-		if @intento is 0
-			@library['score'].plusOne()
-		@intento = 0
+		if @intento is false then @library['score'].plusOne()
 		@answer.returnToPlace @answer.alpha, @answer.scaleX, @answer.scaleY, true
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -400, delay:0.5, ease: Back.easeOut, onComplete: @nextEvaluation}
+		TweenLite.to @library['characters'], 0.5, {alpha: 0, delay:0.5, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
 		if @index < @answers.length
+			@intento = false
 			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 360
-			@library['characters'].gotoAndStop @answers[@index].id
+			@library['characters'].y = stageSize.h - 340
+			@library['characters'].gotoAndStop @answers[@index].id - 1
 			createjs.Sound.play @answers[@index].sound
 			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
 		else

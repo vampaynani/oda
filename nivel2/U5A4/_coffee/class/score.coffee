@@ -12,7 +12,7 @@ class Score
 		@bmpBack = new createjs.Bitmap back
 		@bmpFront = new createjs.Bitmap front
 		@txtTotal = new createjs.Text total, '48px Quicksand', '#666666'
-		@txtCount = new createjs.Text count, '48px Quicksand', '#FFFFFF'
+		@txtCount = new createjs.Text count, '48px Quicksand', '#666666'
 
 		@bmpBack.x = front.width / 4 * 2
 		@bmpBack.y = front.height / 4 * 2

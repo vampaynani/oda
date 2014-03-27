@@ -56,7 +56,7 @@ class U2A5 extends Oda
 				]
 				positions:[
 					{x: 214, y: 352}
-					{x: 656, y: 358}
+					{x: 656, y: 318}
 					{x: 216, y: 756}
 					{x: 640, y: 740}
 				]
@@ -72,7 +72,7 @@ class U2A5 extends Oda
 				]
 				positions:[
 					{x: 204, y:340}
-					{x:652, y: 346}
+					{x:632, y: 306}
 					{x: 214, y: 736}
 					{x: 640, y: 736}	
 				]
@@ -96,6 +96,7 @@ class U2A5 extends Oda
 		cuento = new createjs.Container()
 		cuento.name = 'cuento'
 		@scene = scene
+		#@insertText 'part', "part #{scene}", '24px Quicksand', 0, 0
 		for i in [1..@game[scene - 1].positions.length] by 1
 			if scene is 1
 				if i in [2, 4]

@@ -256,7 +256,7 @@ class U3A6 extends Oda
 			@library.burbuja.removeAllChildren()
 			@library.chango.gotoAndStop 0
 			imagen = @createBitmap @answers[@index].i, @answers[@index].i, 0, 0, 'mc'
-			#imagen.scaleX = imagen.scaleY = 0.4
+			imagen.scaleX = imagen.scaleY = 0.8
 			@library.comidas.addChild imagen
 	
 			@library.wordContainers.removeAllChildren()

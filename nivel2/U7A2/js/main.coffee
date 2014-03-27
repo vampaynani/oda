@@ -145,6 +145,17 @@ class U7A2 extends Oda
 
 		@answer.visible = off
 		v = @createBitmap @answer.name, @answer.name, 0, 40
+		v.hitter = @answer
+		v.addEventListener 'mousedown', (e) ->
+			cv = e.currentTarget
+			cv.addEventListener 'pressmove', (ev) ->
+				if cv.hitter
+					cv.removeAllEventListeners()
+					parent = cv.parent 
+					while parent.children.length > 1
+						parent.removeChildAt parent.children.length - 1
+					cv.hitter.visible = on
+					cv.hitter.returnToPlace()
 		v.scaleX = v.scaleY = 0.6
 		@setReg v, v.width / 2, v.height / 2
 		@drop.addChild v

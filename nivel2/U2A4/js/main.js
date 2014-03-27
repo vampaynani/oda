@@ -365,9 +365,9 @@
         res = this.createSprite('resultado', ['imgwrong', 'imgcorrect'], null, this.library[answer.a].x + 75, this.library[answer.a].y);
         if (this.library[answer.q].x === this.library[answer.a].x && this.library[answer.q].y === this.library[answer.a].y) {
           this.library['score'].plusOne();
-          res.currentFrame = 1;
+          res.gotoAndStop(1);
         } else {
-          res.currentFrame = 0;
+          res.gotoAndStop(0);
         }
         this.library[this.current].addChild(res);
       }

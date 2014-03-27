@@ -190,17 +190,18 @@ class U2A6 extends Oda
 		for i in [0..5] by 1
 			hit = @library["b#{i}"]
 			pt = hit.globalToLocal @stage.mouseX, @stage.mouseY
-			if (hit.hitTest pt.x, pt.y) and hit.index is @answer.index
-				hpp = hit.parent.localToGlobal hit.x + hit.width / 2 - 60, hit.y + hit.height / 2 - 60
-				app = @answer.parent.globalToLocal hpp.x, hpp.y
-				@buckets[i].a = off
-				dropped = on
-				@answer.putInPlace app
-				@library['score'].plusOne()
-				createjs.Sound.play 'good'
-				setTimeout @finishEvaluation, 2 * 1000
-		if not dropped
-			createjs.Sound.play 'wrong'
+			if (hit.hitTest pt.x, pt.y) 
+				if hit.index is @answer.index
+					hpp = hit.parent.localToGlobal hit.x + hit.width / 2 - 60, hit.y + hit.height / 2 - 60
+					app = @answer.parent.globalToLocal hpp.x, hpp.y
+					@buckets[i].a = off
+					dropped = on
+					@answer.putInPlace app
+					@library['score'].plusOne()
+					createjs.Sound.play 'good'
+					setTimeout @finishEvaluation, 2 * 1000
+				else
+					createjs.Sound.play 'wrong'
 		@answer.takeMeOut() if not dropped
 	finishEvaluation: =>
 		@nextEvaluation()

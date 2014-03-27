@@ -297,7 +297,7 @@
         t = _ref[_i];
         if (t === '#wc') {
           txt = this.scene.steps[step - 1].targets[i];
-          h = new WordContainer("h" + i, "" + txt, '#FFF', '#eb188e', npos, 30);
+          h = new WordContainer("h" + i, "" + txt, '#FFF', '#eb188e', npos, 0, 100, 50);
           h.index = i;
           dropper.addChild(h);
           this.addToLibrary(h);

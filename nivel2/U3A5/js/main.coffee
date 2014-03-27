@@ -55,7 +55,7 @@ class U3A5 extends Oda
 				]
 				positions:[
 					{x: 224, y: 332}
-					{x: 668, y: 346}
+					{x: 668, y: 306}
 					{x: 216, y: 768}
 					{x: 650, y: 758}
 				]
@@ -71,7 +71,7 @@ class U3A5 extends Oda
 				]
 				positions:[
 					{x: 206, y: 340}
-					{x: 652, y: 346}
+					{x: 652, y: 306}
 					{x: 200, y: 756}
 					{x: 636, y: 742}	
 				]

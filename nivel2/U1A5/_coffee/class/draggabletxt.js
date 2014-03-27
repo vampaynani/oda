@@ -51,8 +51,8 @@
 
     DraggableText.prototype.setHitArea = function() {
       var h, w;
-      w = this.text.getMeasuredWidth();
-      h = this.text.getMeasuredHeight();
+      w = this.text.getMeasuredWidth() + 20;
+      h = this.text.getMeasuredHeight() + 20;
       switch (this.text.textAlign) {
         case 'left':
           this.hit.graphics.c().beginFill('#000').drawRect(0, 0, w, h);
@@ -143,6 +143,20 @@
         scaleX: scaleX,
         scaleY: scaleY
       });
+    };
+
+    DraggableText.prototype.returnToOrigin = function(alpha, scaleX, scaleY) {
+      if (alpha == null) {
+        alpha = 1;
+      }
+      if (scaleX == null) {
+        scaleX = 1;
+      }
+      if (scaleY == null) {
+        scaleY = 1;
+      }
+      this.x = this.pos.x;
+      return this.y = this.pos.y;
     };
 
     DraggableText.prototype.returnToPlace = function(alpha, scaleX, scaleY) {

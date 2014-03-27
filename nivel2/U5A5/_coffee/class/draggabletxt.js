@@ -97,6 +97,8 @@
         return false;
       });
       this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         _this.dispatchEvent('drop');
         return false;
       });

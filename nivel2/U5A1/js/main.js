@@ -489,6 +489,23 @@
             id: this.answer.name
           });
           v = this.createBitmap(relation[0].id, relation[0].tgt, 45, 25);
+          v.hitter = this.answer;
+          v.addEventListener('mousedown', function(e) {
+            var cv;
+            cv = e.currentTarget;
+            return cv.addEventListener('pressmove', function(ev) {
+              var parent;
+              if (cv.hitter) {
+                cv.removeAllEventListeners();
+                parent = cv.parent;
+                while (parent.children.length > 1) {
+                  parent.removeChildAt(parent.children.length - 1);
+                }
+                cv.hitter.visible = true;
+                return cv.hitter.returnToPlace();
+              }
+            });
+          });
           this.setReg(v, v.width / 2, v.height / 2);
           this.library[drop.tgt].addChild(v);
         }

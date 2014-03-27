@@ -167,60 +167,80 @@
             a: 'animalbeaks',
             x: 928,
             y: 1008,
+            xa: 938,
+            ya: 1008,
             s: false
           }, {
             b: 'bodyclaws',
             a: 'animalclaws',
             x: 408,
             y: 434,
+            xa: 408,
+            ya: 434,
             s: false
           }, {
             b: 'bodyfeathers',
             a: 'animalfeathers',
             x: 1220,
             y: 434,
+            xa: 1250,
+            ya: 454,
             s: false
           }, {
             b: 'bodyfins',
             a: 'animalfins',
             x: 408,
             y: 936,
+            xa: 390,
+            ya: 910,
             s: false
           }, {
             b: 'bodyfur',
             a: 'animalfur',
             x: 1220,
             y: 936,
+            xa: 1220,
+            ya: 866,
             s: false
           }, {
             b: 'bodypaws',
             a: 'animalpaws',
             x: 1392,
             y: 666,
+            xa: 1392,
+            ya: 666,
             s: false
           }, {
             b: 'bodyscales',
             a: 'animalscales',
             x: 662,
             y: 362,
+            xa: 645,
+            ya: 362,
             s: false
           }, {
             b: 'bodytails',
             a: 'animaltails',
             x: 928,
             y: 362,
+            xa: 928,
+            ya: 337,
             s: false
           }, {
             b: 'bodywhiskers',
             a: 'animalwhiskers',
             x: 660,
             y: 1008,
+            xa: 660,
+            ya: 1008,
             s: false
           }, {
             b: 'bodywings',
             a: 'animalwings',
             x: 238,
             y: 666,
+            xa: 209,
+            ya: 697,
             s: false
           }
         ]
@@ -258,7 +278,7 @@
       _ref = this.answers.pairs;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         value = _ref[_i];
-        m = this.insertBitmap(value.a, value.a, value.x, value.y, 'mc');
+        m = this.insertBitmap(value.a, value.a, value.xa, value.ya, 'mc');
         m.alpha = 0;
         this.addToLibrary(m);
         animals.addChild(m);

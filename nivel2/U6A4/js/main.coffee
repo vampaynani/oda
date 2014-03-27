@@ -86,6 +86,14 @@ class U6A4 extends Oda
 			if col[i - 1] isnt ' '
 				wc = new WordContainer "l#{i}", '', 'rgba(238,238,238,0.3)','#F00', i * 200, 0, 180, 60
 				wc.index = col[i - 1]
+				wc.hitter = null
+				wc.addEventListener 'mousedown', (e) ->
+					cwc = e.currentTarget
+					cwc.addEventListener 'pressmove', (ev) ->
+						if cwc.hitter
+							cwc.changeText ''
+							cwc.hitter.visible = on
+							cwc.hitter.returnToPlace()
 				@addToLibrary wc
 				frase.addChild wc
 		frase.name = 'frase'
@@ -109,6 +117,7 @@ class U6A4 extends Oda
 					#if @answer.index is @library["l#{i}"].index
 					if @library["l#{i}"].text.text is ''
 						@answer.visible = off
+						@library["l#{i}"].hitter = @answer
 						@library["l#{i}"].changeText @answer.index#@library["l#{i}"].index
 						dropped = on
 		if not dropped then @answer.returnToPlace() else @finishEvaluation()

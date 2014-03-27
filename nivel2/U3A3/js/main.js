@@ -697,7 +697,7 @@
       _ref = this.answers[this.current];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         value = _ref[_i];
-        pt = this.library[value.t].localToLocal(10, 10, this.library[value.d]);
+        pt = this.library[value.t].localToLocal(20, 20, this.library[value.d]);
         if (this.library[value.t].name.length > 3) {
           npt = this.library[value.t].localToLocal(0, 0, this.mainContainer);
         } else {
@@ -710,6 +710,11 @@
           this.complete = false;
           r = this.createBitmap('wrong', 'wrong', npt.x, npt.y);
         }
+        if (this.complete) {
+          createjs.Sound.play('good');
+        } else {
+          createjs.Sound.play('swrong');
+        }
         this.library[this.current].addChild(r);
       }
       return setTimeout(this.finishEvaluation, 2 * 1000);
@@ -721,16 +726,22 @@
     };
 
     U3A3.prototype.finishEvaluation = function() {
+      var chef;
       if (!this.complete) {
-        this.insertBitmap('chefAgain', 'chefAgain', 800, 1200, 'bc');
+        chef = this.insertBitmap('chefAgain', 'chefAgain', 800, 1250, 'bc');
       } else {
         if (this.current === 'salad') {
-          this.insertBitmap('chefSalad', 'chefSalad', 800, 1200, 'bc');
+          chef = this.insertBitmap('chefSalad', 'chefSalad', 800, 1250, 'bc');
         }
         if (this.current === 'sandwich') {
-          this.insertBitmap('chefSandwich', 'chefSandwich', 800, 1200, 'bc');
+          chef = this.insertBitmap('chefSandwich', 'chefSandwich', 800, 1250, 'bc');
         }
       }
+      TweenLite.from(chef, 0.5, {
+        alpha: 0,
+        y: -400,
+        ease: Back.easeOut
+      });
       return TweenLite.to(this.library[this.current], 0.5, {
         alpha: 0,
         y: -400,

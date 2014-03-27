@@ -8,6 +8,7 @@
     __extends(U5A2, _super);
 
     function U5A2() {
+      this.repeatSound = __bind(this.repeatSound, this);
       this.nextEvaluation = __bind(this.nextEvaluation, this);
       this.finishEvaluation = __bind(this.finishEvaluation, this);
       this.evaluateAnswer = __bind(this.evaluateAnswer, this);
@@ -172,6 +173,7 @@
         return _results;
       }).call(this);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
+      this.insertBitmap('repeatbtn', 'repeatbtn', 800, 900, 'mc');
       this.insertInstructions('instructions', 'Listen and click on the correct option.', 80, 200);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 15, 0));
       return this.setStep().introEvaluation();
@@ -186,10 +188,11 @@
       stepsView = this.shuffle(stepsView);
       img1 = this.preload.getResult(this.selected);
       img2 = this.preload.getResult(stepsView[0]);
-      choose = new ChooseBitmap('chooseImg', img1, img2, 1, stageSize.w / 2, 140);
+      choose = new ChooseBitmap('chooseImg', img1, img2, 1, stageSize.w / 2, 300);
       choose.scaleX = choose.scaleY = 0.6;
-      choose.setDistance(1100, 600);
+      choose.setDistance(1100, 0);
       choose.addEventListener('selection', function(e) {
+        e.currentTarget.removeAllEventListeners('selection');
         _this.tindex = 0;
         if (e.success === false) {
           _this.warning();
@@ -199,7 +202,10 @@
             _this.library.score.plusOne();
             createjs.Sound.play("good");
           }
-          return _this.showText();
+          _this.showText();
+          return TweenLite.to(_this.library.repeatbtn, 0.5, {
+            alpha: 0
+          });
         }
       });
       this.addToMain(choose);
@@ -216,6 +222,11 @@
       TweenLite.from(this.library.header, 1, {
         y: -this.library['header'].height
       });
+      TweenLite.from(this.library.repeatbtn, 1, {
+        alpha: 0,
+        y: this.library.repeatbtn.y + 40,
+        delay: 0.5
+      });
       return TweenLite.from(this.library.instructions, 1, {
         alpha: 0,
         x: 0,
@@ -228,7 +239,8 @@
     U5A2.prototype.initEvaluation = function(e) {
       U5A2.__super__.initEvaluation.apply(this, arguments);
       this.library.chooseImg.initListeners();
-      return createjs.Sound.play("s" + this.stepsid[this.index]);
+      createjs.Sound.play("s" + this.stepsid[this.index]);
+      return this.library.repeatbtn.addEventListener('click', this.repeatSound);
     };
 
     U5A2.prototype.showText = function() {
@@ -285,10 +297,18 @@
       if (this.index < this.steps.length) {
         this.setStep();
         this.library.chooseImg.initListeners();
-        return createjs.Sound.play("s" + this.stepsid[this.index]);
+        createjs.Sound.play("s" + this.stepsid[this.index]);
+        return TweenLite.to(this.library.repeatbtn, 0.5, {
+          alpha: 1
+        });
       } else {
         return this.finish();
       }
+    };
+
+    U5A2.prototype.repeatSound = function() {
+      createjs.Sound.stop();
+      return createjs.Sound.play("s" + this.stepsid[this.index]);
     };
 
     U5A2.prototype.finish = function() {

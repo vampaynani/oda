@@ -107,6 +107,8 @@
         return false;
       });
       this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         if (_this.drops.length > 0) {
           _this.evaluateDrop(e);
         } else {

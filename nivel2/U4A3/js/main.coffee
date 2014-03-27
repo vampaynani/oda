@@ -60,16 +60,16 @@ class U4A3 extends Oda
 				{w:'feathers',x:154,y:72}
 			]
 			pairs: [
-				{b:'bodybeaks', a: 'animalbeaks', x: 928, y: 1008, s: off}
-				{b:'bodyclaws', a: 'animalclaws', x: 408, y: 434,  s: off}
-				{b:'bodyfeathers', a: 'animalfeathers', x: 1220, y: 434,  s: off}
-				{b:'bodyfins', a: 'animalfins', x: 408, y: 936,  s: off}
-				{b:'bodyfur', a: 'animalfur', x: 1220, y: 936,  s: off}
-				{b:'bodypaws', a: 'animalpaws', x: 1392, y: 666,  s: off}
-				{b:'bodyscales', a: 'animalscales', x: 662, y: 362,  s: off}
-				{b:'bodytails', a: 'animaltails', x: 928, y: 362,  s: off}
-				{b:'bodywhiskers', a: 'animalwhiskers', x: 660, y: 1008,  s: off}
-				{b:'bodywings', a: 'animalwings', x: 238, y: 666,  s: off}
+				{b:'bodybeaks', a: 'animalbeaks', x: 928, y: 1008, xa: 938, ya: 1008, s: off}
+				{b:'bodyclaws', a: 'animalclaws', x: 408, y: 434, xa: 408, ya: 434, s: off}
+				{b:'bodyfeathers', a: 'animalfeathers', x: 1220, y: 434, xa: 1250, ya: 454, s: off}
+				{b:'bodyfins', a: 'animalfins', x: 408, y: 936, xa: 390, ya: 910, s: off}
+				{b:'bodyfur', a: 'animalfur', x: 1220, y: 936, xa: 1220, ya: 866, s: off}
+				{b:'bodypaws', a: 'animalpaws', x: 1392, y: 666, xa: 1392, ya: 666, s: off}
+				{b:'bodyscales', a: 'animalscales', x: 662, y: 362, xa: 645, ya: 362, s: off}
+				{b:'bodytails', a: 'animaltails', x: 928, y: 362, xa: 928, ya: 337, s: off}
+				{b:'bodywhiskers', a: 'animalwhiskers', x: 660, y: 1008, xa: 660, ya: 1008, s: off}
+				{b:'bodywings', a: 'animalwings', x: 238, y: 666, xa: 209, ya: 697, s: off}
 			]
 		super null, manifest, sounds
 	setStage: ->
@@ -92,7 +92,7 @@ class U4A3 extends Oda
 		animals = new createjs.Container()
 		animals.name = 'animals'
 		for value in @answers.pairs
-			m = @insertBitmap value.a, value.a, value.x, value.y, 'mc'
+			m = @insertBitmap value.a, value.a, value.xa, value.ya, 'mc'
 			m.alpha = 0
 			@addToLibrary m
 			animals.addChild m

@@ -564,8 +564,8 @@
 
     DraggableText.prototype.setHitArea = function() {
       var h, w;
-      w = this.text.getMeasuredWidth();
-      h = this.text.getMeasuredHeight();
+      w = this.text.getMeasuredWidth() + 20;
+      h = this.text.getMeasuredHeight() + 20;
       switch (this.text.textAlign) {
         case 'left':
           this.hit.graphics.c().beginFill('#000').drawRect(0, 0, w, h);

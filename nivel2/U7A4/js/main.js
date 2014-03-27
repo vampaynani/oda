@@ -187,6 +187,8 @@
     };
 
     U7A4.prototype.evaluateAnswer = function(e) {
+      this.library.btntrue.removeEventListener('click', this.evaluateAnswer);
+      this.library.btnfalse.removeEventListener('click', this.evaluateAnswer);
       this.answer = e.target;
       if (this.answer.index === this.answers[this.index].respuestas) {
         this.library.score.plusOne();
@@ -210,6 +212,8 @@
       this.index++;
       if (this.index < this.answers.length) {
         this.library.frases.text = this.answers[this.index].text;
+        this.library.btntrue.addEventListener('click', this.evaluateAnswer);
+        this.library.btnfalse.addEventListener('click', this.evaluateAnswer);
         return TweenLite.to(this.library.frases, 0.5, {
           alpha: 1,
           y: this.library.frases.y + 40,

@@ -44,7 +44,7 @@ class U7A5 extends Oda
 				]
 				positions:[
 					{x:202, y:320}
-					{x:650, y:342}
+					{x:650, y:282}
 					{x:212, y:750}
 					{x:660, y:726}
 				]
@@ -58,7 +58,7 @@ class U7A5 extends Oda
 				]
 				positions:[
 					{x:202, y:320}
-					{x:650, y:342}
+					{x:650, y:282}
 					{x:212, y:750}
 					{x:640, y:746}	
 				]

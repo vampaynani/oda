@@ -21,8 +21,8 @@
       this.count = count;
       this.text = new createjs.Text(this.count, '48px Arial', '#ffffff');
       this.text.textAlign = 'center';
-      this.text.x = 60;
-      this.text.y = 10;
+      this.text.x = 30;
+      this.text.y = 5;
       shape = new createjs.Shape();
       shape.graphics.beginFill(back).drawRoundRect(0, 0, 120, 72, 10);
       this.addChild(shape, this.text);

@@ -120,14 +120,16 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      this.addEventListener('mousemove', function(ev) {
+      this.addEventListener('pressmove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      this.addEventListener('mouseup', function(ev) {
+      this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         if (_this.drops.length > 0) {
           _this.evaluateDrop(e);
         } else {

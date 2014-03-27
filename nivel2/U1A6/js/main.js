@@ -511,7 +511,7 @@
       crosswords.name = 'crosswords';
       for (i = _i = 0, _ref = this.containers.length - 1; _i <= _ref; i = _i += 1) {
         drop = new WordContainer("h" + i, '', '#FFF', '#999', this.containers[i].x * 46, this.containers[i].y * 46, 46, 46);
-        drop.setRectShape('#FFF', '#999', 2, 46, 46);
+        drop.setRectShape('#FFF', '#999', 3, 46, 46);
         drop.text.y -= 3;
         drop.id = this.containers[i].id;
         this.addToLibrary(drop);
@@ -523,7 +523,7 @@
         t.y = this.numbers[i].y * 46 + 8;
         crosswords.addChild(t);
       }
-      crosswords.cache(-46, -46, 552, 480);
+      crosswords.cache(-46, -46, 560, 485);
       return this.addToMain(crosswords);
     };
 
@@ -590,7 +590,7 @@
     U1A6.prototype.initEvaluation = function(e) {
       var letter, _i, _len, _ref, _results;
       U1A6.__super__.initEvaluation.apply(this, arguments);
-      this.library.crosswords.cache(-46, -46, 552, 480);
+      this.library.crosswords.updateCache();
       _ref = this.abc;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -630,7 +630,7 @@
           this.evaluate('bass');
           this.evaluate('piano');
           this.evaluate('saxophone');
-          return this.library.crosswords.cache(-46, -46, 552, 480);
+          return this.library.crosswords.updateCache();
         } else {
           this.warning();
           return this.intento++;

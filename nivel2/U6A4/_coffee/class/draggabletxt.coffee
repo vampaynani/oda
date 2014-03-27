@@ -12,7 +12,10 @@ class DraggableText
 		@pos = x:x, y:y
 		@text = new createjs.Text text, '32px Quicksand', '#333333'
 		@hit = new createjs.Shape()
-		@hit.graphics.beginFill('#000').drawRect(-10, -10, @text.getMeasuredWidth() + 20, @text.getMeasuredHeight() + 20)
+		if @text.getMeasuredWidth() < 20
+			@hit.graphics.beginFill('#000').drawRect(-10, -10, 40, @text.getMeasuredHeight() + 20)
+		else
+			@hit.graphics.beginFill('#000').drawRect(-10, -10, @text.getMeasuredWidth() + 20, @text.getMeasuredHeight() + 20)
 		@text.hitArea = @hit
 		@inPlace = off
 		@addChild @text
@@ -50,6 +53,8 @@ class DraggableText
 			@y = posY - offset.y
 			false
 		@addEventListener 'pressup', (ev)=>
+			@removeAllEventListeners 'pressmove'
+			@removeAllEventListeners 'pressup'
 			@dispatchEvent 'drop'
 			false
 		false

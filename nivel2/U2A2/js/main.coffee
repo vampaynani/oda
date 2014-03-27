@@ -92,19 +92,19 @@ class U2A2 extends Oda
 		@library['repeat'].addEventListener 'click', @repeat
 	evaluateAnswer: (e) =>
 		@answer = e.target
+		selection = @answers.where id: @phrase.id
+		selection[0].a = on
 		if @phrase.id is @answer.currentAnimation
-			selection = @answers.where id: @phrase.id
-			selection[0].a = on
 			createjs.Sound.play 'good'
 			@library['score'].plusOne()
-			setTimeout @finishEvaluation, 1 * 1000
 		else
-			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @showPhrase}
 			@warning()
+		setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
+		console.log @index
 		if @index < @answers.length
 			@showPhrase()
 		else

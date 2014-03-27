@@ -276,24 +276,17 @@
     U2A2.prototype.evaluateAnswer = function(e) {
       var selection;
       this.answer = e.target;
+      selection = this.answers.where({
+        id: this.phrase.id
+      });
+      selection[0].a = true;
       if (this.phrase.id === this.answer.currentAnimation) {
-        selection = this.answers.where({
-          id: this.phrase.id
-        });
-        selection[0].a = true;
         createjs.Sound.play('good');
         this.library['score'].plusOne();
-        return setTimeout(this.finishEvaluation, 1 * 1000);
       } else {
-        TweenMax.to([this.library['choose1'], this.library['choose2']], 1, {
-          alpha: 0,
-          scaleX: 0.3,
-          scaleY: 0.3,
-          ease: Elastic.easeOut,
-          onComplete: this.showPhrase
-        });
-        return this.warning();
+        this.warning();
       }
+      return setTimeout(this.finishEvaluation, 1 * 1000);
     };
 
     U2A2.prototype.finishEvaluation = function() {
@@ -308,6 +301,7 @@
 
     U2A2.prototype.nextEvaluation = function() {
       this.index++;
+      console.log(this.index);
       if (this.index < this.answers.length) {
         return this.showPhrase();
       } else {

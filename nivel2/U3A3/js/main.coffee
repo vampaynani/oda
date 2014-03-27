@@ -341,7 +341,7 @@ class U3A3 extends Oda
 		@library.btnready.blink(off)
 		@library.counter.stop()
 		for value in @answers[@current]
-			pt = @library[value.t].localToLocal 10, 10, @library[value.d]
+			pt = @library[value.t].localToLocal 20, 20, @library[value.d]
 			if @library[value.t].name.length > 3
 				npt = @library[value.t].localToLocal 0, 0, @mainContainer
 			else
@@ -352,6 +352,7 @@ class U3A3 extends Oda
 			else
 				@complete = off
 				r = @createBitmap 'wrong', 'wrong', npt.x, npt.y
+			if @complete then createjs.Sound.play 'good' else createjs.Sound.play 'swrong'
 			@library[@current].addChild r
 		setTimeout @finishEvaluation, 2 * 1000
 	endGame: (e) =>
@@ -359,12 +360,13 @@ class U3A3 extends Oda
 		@finishEvaluation()
 	finishEvaluation: =>
 		if not @complete
-			@insertBitmap 'chefAgain', 'chefAgain', 800, 1200, 'bc'
+			chef = @insertBitmap 'chefAgain', 'chefAgain', 800, 1250, 'bc'
 		else
 			if @current is 'salad'
-				@insertBitmap 'chefSalad', 'chefSalad', 800, 1200, 'bc'
+				chef = @insertBitmap 'chefSalad', 'chefSalad', 800, 1250, 'bc'
 			if @current is 'sandwich'
-				@insertBitmap 'chefSandwich', 'chefSandwich', 800, 1200, 'bc'
+				chef = @insertBitmap 'chefSandwich', 'chefSandwich', 800, 1250, 'bc'
+		TweenLite.from chef, 0.5, {alpha: 0, y: -400, ease: Back.easeOut}
 		TweenLite.to @library[@current], 0.5, {alpha: 0, y: -400, ease: Back.easeOut, onComplete: @finish}
 	finish: =>
 		super

@@ -441,7 +441,9 @@
       this.youcards = this.shuffleNoRepeat(this.animals, 9);
       this.pccards = this.shuffleNoRepeat(this.animals, 9);
       this.game.animals = this.shuffle(this.animals);
-      if (this.round <= 1) {
+      if (this.game.you === 2 || this.game.pc === 2) {
+        return this.finish();
+      } else if (this.round <= 2) {
         return this.setCardsYou().setCardsPc().introEvaluation();
       } else {
         return this.finish();
@@ -552,9 +554,9 @@
     };
 
     U4A1.prototype.evaluateClick = function(e) {
-      this.answer = e.target;
+      this.answer = e.currentTarget;
       if (this.answer.index === this.game.animals[this.index].id) {
-        this.answer.getChildByName('borde').currentFrame = 1;
+        this.answer.getChildByName('borde').gotoAndStop(1);
         return this.evaluateRows();
       }
     };
@@ -617,7 +619,7 @@
       var i, _i;
       for (i = _i = 0; _i <= 8; i = ++_i) {
         if (this.library["cartac" + i].index === this.game.animals[this.index].id) {
-          this.library["cartac" + i].getChildByName('borde').currentFrame = 2;
+          this.library["cartac" + i].getChildByName('borde').gotoAndStop(2);
           this.evaluateRows();
         }
       }

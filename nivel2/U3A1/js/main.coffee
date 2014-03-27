@@ -146,10 +146,10 @@ class U3A1 extends Oda
 				{id: 'menuback', x: 304, y: 232}
 				{id: 'hojabreakfast', x: 328, y:264}
 				{id: 'hojadinner', x: 1020, y: 254}
-				{id: 'hojalunch', x: 674, y: 264}
-				{id: 'menubreakfast', x: 348, y: 328}
+				{id: 'hojalunch', x: 676, y: 264}
+				{id: 'menubreakfast', x: 363, y: 328}
 				{id: 'menudinner', x: 1052, y: 322}
-				{id: 'menulunch', x: 698, y: 328}
+				{id: 'menulunch', x: 708, y: 328}
 				{id: 'labelbreakfast', x: 428, y: 298}
 				{id: 'labeldinner', x: 1164, y: 300}
 				{id: 'labellunch', x: 814, y: 302}

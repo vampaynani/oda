@@ -71,6 +71,7 @@ class U5A2 extends Oda
 		@steps = @shuffle @game.steps
 		@stepsid = (step.id for step in @steps)
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
+		@insertBitmap 'repeatbtn', 'repeatbtn', 800, 900, 'mc'
 		@insertInstructions 'instructions', 'Listen and click on the correct option.', 80, 200
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 40, 1000, 15, 0
 		@setStep().introEvaluation()
@@ -82,10 +83,11 @@ class U5A2 extends Oda
 		stepsView = @shuffle stepsView
 		img1 = @preload.getResult @selected
 		img2 = @preload.getResult stepsView[0]
-		choose = new ChooseBitmap 'chooseImg', img1, img2, 1, stageSize.w / 2, 140
+		choose = new ChooseBitmap 'chooseImg', img1, img2, 1, stageSize.w / 2, 300
 		choose.scaleX = choose.scaleY = 0.6
-		choose.setDistance 1100, 600
+		choose.setDistance 1100, 0
 		choose.addEventListener 'selection', (e)=>
+			e.currentTarget.removeAllEventListeners 'selection'
 			@tindex = 0
 			if e.success is false 
 				@warning() 
@@ -95,17 +97,20 @@ class U5A2 extends Oda
 					@library.score.plusOne()
 					createjs.Sound.play "good"
 				@showText()
+				TweenLite.to @library.repeatbtn, 0.5, {alpha :0}
 		@addToMain choose
 		TweenLite.from choose, 1, {alpha: 0, y: @library.chooseImg.y + 100, delay: 1}
 		@
 	introEvaluation: ->
 		super
 		TweenLite.from @library.header, 1, {y:-@library['header'].height}
+		TweenLite.from @library.repeatbtn, 1, {alpha :0, y: @library.repeatbtn.y + 40, delay: 0.5}
 		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
 		@library.chooseImg.initListeners()
 		createjs.Sound.play "s#{@stepsid[@index]}"
+		@library.repeatbtn.addEventListener 'click', @repeatSound
 	showText: () ->
 		text = @steps[@index].texts[@tindex]
 		intento = 0
@@ -139,8 +144,12 @@ class U5A2 extends Oda
 			@setStep()
 			@library.chooseImg.initListeners()
 			createjs.Sound.play "s#{@stepsid[@index]}"
+			TweenLite.to @library.repeatbtn, 0.5, {alpha :1}
 		else
 			@finish()
+	repeatSound: =>
+		createjs.Sound.stop()
+		createjs.Sound.play "s#{@stepsid[@index]}"
 	finish: ->
 		super
 	window.U5A2 = U5A2

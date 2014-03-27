@@ -102,10 +102,7 @@ class U3A4 extends Oda
 		@addToMain new WordContainer 'dropper1', '', '#FFF', '#0098d7', 340, 1082, 376, 60
 		@addToMain new WordContainer 'dropper2', '', '#FFF', '#0098d7', 746, 1082, 316, 60
 		@addToMain new WordContainer 'dropper3', '', '#FFF', '#0098d7', 1088, 1082, 272, 60
-		text = new createjs.Text '.', '24px Arial', '#000'
-		text.x = 1370
-		text.y = 1090
-		@addToMain text
+		@addToMain @createText 'period', '.', '48px Arial', '#000', 1370, 1090
 		@
 	setTable: (table) ->
 		if not @library.smileys
@@ -260,11 +257,13 @@ class U3A4 extends Oda
 		if not dropped 
 			@answer.returnToPlace()
 		else
+			###
 			if success
 				if @intento is 0
 					@library.score.plusOne()
 				@intento = 0
 				createjs.Sound.play 'good'
+			###
 			if not success
 				@answer.returnToPlace()
 				@warning() 
@@ -289,17 +288,19 @@ class U3A4 extends Oda
 		if not dropped 
 			@answer.returnToPlace()
 		else
+			###
 			if success
 				if @intento is 0
 					@library.score.plusOne()
 				@intento = 0
 				createjs.Sound.play 'good'
-
+			###
 			if not success
 				@answer.returnToPlace()
 				@warning() 
 				@intento = 1
 	evaluateAnswer3: (e) =>
+		console.log e.target
 		@answer = e.target
 		dropped = off
 		success = off
@@ -316,8 +317,7 @@ class U3A4 extends Oda
 			@answer.returnToPlace()
 		else
 			if success
-				if @intento is 0
-					@library.score.plusOne()
+				if @intento is 0 then @library.score.plusOne()
 				@intento = 0
 				createjs.Sound.play 'good'
 				for i in [1..6] by 1

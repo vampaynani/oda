@@ -245,6 +245,7 @@ class U5A4 extends Oda
 			@library[kid[0]].removeEventListener 'click', @selectKid
 		
 		for i in [0..@game[@station].positions.length - 1] by 1
+			@library["r#{i}"].removeAllEventListeners()
 			@library["r#{i}"].addEventListener 'drop', @evaluateAnswer
 		@intento = 0
 

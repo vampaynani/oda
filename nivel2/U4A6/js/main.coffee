@@ -127,10 +127,7 @@ class U4A6 extends Oda
 			opciones.y = 980;
 			question.addChild opciones
 		else if @preguntas[i].tipo is 'imagen'
-			text = new createjs.Text @preguntas[i].pregunta,'48px Quicksand','#333'
-			text.name = 'titulo'
-			text.x = 600
-			text.y = 280
+			text = @createText 'titulo', @preguntas[i].pregunta,'48px Quicksand','#333', 800, 280, 'center'
 			question.addChild text
 			@addToLibrary text
 

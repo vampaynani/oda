@@ -114,7 +114,7 @@ class U8A2 extends Oda
 		for t in @scene.steps[step - 1].pattern
 			if t is '#wc'
 				txt = @scene.steps[step - 1].targets[i]
-				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#eb188e', npos, 30
+				h = new WordContainer "h#{i}", "#{txt}", '#FFF', '#eb188e', npos, 0, 100, 50
 				h.index = i
 				dropper.addChild h
 				@addToLibrary h

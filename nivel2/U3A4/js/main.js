@@ -305,14 +305,10 @@
     };
 
     U3A4.prototype.setDropper = function() {
-      var text;
       this.addToMain(new WordContainer('dropper1', '', '#FFF', '#0098d7', 340, 1082, 376, 60));
       this.addToMain(new WordContainer('dropper2', '', '#FFF', '#0098d7', 746, 1082, 316, 60));
       this.addToMain(new WordContainer('dropper3', '', '#FFF', '#0098d7', 1088, 1082, 272, 60));
-      text = new createjs.Text('.', '24px Arial', '#000');
-      text.x = 1370;
-      text.y = 1090;
-      this.addToMain(text);
+      this.addToMain(this.createText('period', '.', '48px Arial', '#000', 1370, 1090));
       return this;
     };
 
@@ -497,13 +493,14 @@
       if (!dropped) {
         return this.answer.returnToPlace();
       } else {
-        if (success) {
-          if (this.intento === 0) {
-            this.library.score.plusOne();
-          }
-          this.intento = 0;
-          createjs.Sound.play('good');
-        }
+        /*
+        			if success
+        				if @intento is 0
+        					@library.score.plusOne()
+        				@intento = 0
+        				createjs.Sound.play 'good'
+        */
+
         if (!success) {
           this.answer.returnToPlace();
           this.warning();
@@ -538,13 +535,14 @@
       if (!dropped) {
         return this.answer.returnToPlace();
       } else {
-        if (success) {
-          if (this.intento === 0) {
-            this.library.score.plusOne();
-          }
-          this.intento = 0;
-          createjs.Sound.play('good');
-        }
+        /*
+        			if success
+        				if @intento is 0
+        					@library.score.plusOne()
+        				@intento = 0
+        				createjs.Sound.play 'good'
+        */
+
         if (!success) {
           this.answer.returnToPlace();
           this.warning();
@@ -555,6 +553,7 @@
 
     U3A4.prototype.evaluateAnswer3 = function(e) {
       var dropped, i, pt, success, _i, _j, _k;
+      console.log(e.target);
       this.answer = e.target;
       dropped = false;
       success = false;

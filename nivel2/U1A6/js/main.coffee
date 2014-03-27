@@ -182,7 +182,7 @@ class U1A6 extends Oda
 		crosswords.name = 'crosswords'
 		for i in [0..@containers.length - 1] by 1
 			drop = new WordContainer "h#{i}", '', '#FFF', '#999', @containers[i].x*46, @containers[i].y*46, 46, 46
-			drop.setRectShape '#FFF', '#999', 2, 46, 46
+			drop.setRectShape '#FFF', '#999', 3, 46, 46
 			drop.text.y -= 3
 			drop.id = @containers[i].id
 			@addToLibrary drop
@@ -192,7 +192,7 @@ class U1A6 extends Oda
 			t.x = @numbers[i].x*46 + 12
 			t.y = @numbers[i].y*46 + 8
 			crosswords.addChild t
-		crosswords.cache -46, -46, 552, 480
+		crosswords.cache -46, -46, 560, 485
 		@addToMain crosswords
 	introEvaluation: ->
 		super
@@ -229,7 +229,7 @@ class U1A6 extends Oda
 		TweenLite.from @library['crosswords'], 1, {alpha: 0, y: @library['crosswords'].y + 100, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@library.crosswords.cache -46, -46, 552, 480
+		@library.crosswords.updateCache()
 		for letter in @abc
 			@library[letter].addEventListener 'drop', @evaluateAnswer
 	evaluateAnswer: (e) =>
@@ -258,7 +258,7 @@ class U1A6 extends Oda
 				@evaluate 'bass'
 				@evaluate 'piano'
 				@evaluate 'saxophone'
-				@library.crosswords.cache -46, -46, 552, 480
+				@library.crosswords.updateCache()
 			else
 				@warning()
 				@intento++

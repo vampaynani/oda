@@ -376,19 +376,19 @@
     };
 
     Draggable.prototype.onInitEvaluation = function() {
-      return this.addEventListener('mousedown', this.handleMouseDown);
+      return this.on('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.onStopEvaluation = function() {
-      return this.removeEventListener('mousedown', this.handleMouseDown);
+      return this.off('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.initDragListener = function() {
-      return this.addEventListener('mousedown', this.handleMouseDown);
+      return this.on('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.endDragListener = function() {
-      return this.removeEventListener('mousedown', this.handleMouseDown);
+      return this.off('mousedown', this.handleMouseDown);
     };
 
     Draggable.prototype.handleMouseDown = function(e) {
@@ -405,14 +405,16 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      this.addEventListener('pressmove', function(ev) {
+      this.on('pressmove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      this.addEventListener('pressup', function(ev) {
+      this.on('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         _this.dispatchEvent('drop');
         return false;
       });

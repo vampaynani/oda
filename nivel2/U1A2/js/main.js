@@ -134,7 +134,7 @@
       this.insertInstructions('instructions', 'Listen and look at the chart. Then drag the names to answer the questions.', 80, 200);
       this.insertSprite('characters', ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'], null, 200, stageSize.h - 340);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 6, 0));
-      this.intento = 0;
+      this.intento = false;
       return this.setDropper().setNames().introEvaluation();
     };
 
@@ -188,7 +188,7 @@
       for (i = _i = 1; _i <= 6; i = _i += 1) {
         this.observer.subscribe('init_evaluation', this.library['name' + i].onInitEvaluation);
       }
-      this.library['characters'].currentFrame = this.answers[this.index].id;
+      this.library['characters'].gotoAndStop(this.answers[this.index].id - 1);
       TweenLite.from(this.library['header'], 1, {
         y: -this.library['header'].height
       });
@@ -209,7 +209,7 @@
       });
       return TweenLite.from(this.library['characters'], 1, {
         alpha: 0,
-        y: this.library['characters'].y + 40,
+        y: this.library['characters'].y + 20,
         delay: 1.5,
         onComplete: this.playInstructions,
         onCompleteParams: [this]
@@ -219,7 +219,7 @@
     U1A2.prototype.initEvaluation = function(e) {
       var i, _i;
       U1A2.__super__.initEvaluation.apply(this, arguments);
-      this.library['characters'].currentFrame = this.answers[this.index].id;
+      this.library['characters'].gotoAndStop(this.answers[this.index].id - 1);
       createjs.Sound.play(this.answers[this.index].sound);
       for (i = _i = 1; _i <= 6; i = _i += 1) {
         this.library['name' + i].blink();
@@ -235,14 +235,14 @@
       var pt;
       this.answer = e.target;
       pt = this.library['dropname'].globalToLocal(this.stage.mouseX, this.stage.mouseY);
-      console.log(pt);
       if (this.library['dropname'].hitTest(pt.x, pt.y)) {
+        console.log(this.answer.name, 'hit');
         if (this.answer.index === this.answers[this.index].id) {
           createjs.Sound.play('good');
           return setTimeout(this.finishEvaluation, 1 * 1000);
         } else {
           this.warning();
-          this.intento = 1;
+          this.intento = true;
           return this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
         }
       } else {
@@ -251,14 +251,12 @@
     };
 
     U1A2.prototype.finishEvaluation = function() {
-      if (this.intento === 0) {
+      if (this.intento === false) {
         this.library['score'].plusOne();
       }
-      this.intento = 0;
       this.answer.returnToPlace(this.answer.alpha, this.answer.scaleX, this.answer.scaleY, true);
       return TweenLite.to(this.library['characters'], 0.5, {
         alpha: 0,
-        y: -400,
         delay: 0.5,
         ease: Back.easeOut,
         onComplete: this.nextEvaluation
@@ -268,9 +266,10 @@
     U1A2.prototype.nextEvaluation = function() {
       this.index++;
       if (this.index < this.answers.length) {
+        this.intento = false;
         this.library['characters'].alpha = 1;
-        this.library['characters'].y = stageSize.h - 360;
-        this.library['characters'].gotoAndStop(this.answers[this.index].id);
+        this.library['characters'].y = stageSize.h - 340;
+        this.library['characters'].gotoAndStop(this.answers[this.index].id - 1);
         createjs.Sound.play(this.answers[this.index].sound);
         return TweenLite.from(this.library['characters'], 0.5, {
           alpha: 0,

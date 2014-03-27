@@ -194,10 +194,10 @@ class U2A4 extends Oda
 			res = @createSprite 'resultado', ['imgwrong', 'imgcorrect'], null, (@library[answer.a].x) + 75, @library[answer.a].y
 			if @library[answer.q].x is @library[answer.a].x and @library[answer.q].y is @library[answer.a].y
 				@library['score'].plusOne()
-				res.currentFrame = 1
+				res.gotoAndStop 1
 				#r = @createBitmap 'correct', 'correct', (@drops[i - 1].x) + 75, @drops[i - 1].y
 			else
-				res.currentFrame = 0
+				res.gotoAndStop 0
 				#insert tache
 				#r = @createBitmap 'wrong', 'wrong', (@drops[i - 1].x) + 75, @drops[i - 1].y
 			@library[@current].addChild res

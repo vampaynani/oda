@@ -77,6 +77,8 @@ class U7A4 extends Oda
 		@insertText 'frases', @answers[@index].text, '40px Quicksand', '#333', 1040, 1000, 'center'
 		TweenLite.from @library.frases, 0.5, {alpha: 0, y: @library.frases - 20, ease: Quart.easeOut}
 	evaluateAnswer: (e) =>
+		@library.btntrue.removeEventListener 'click', @evaluateAnswer
+		@library.btnfalse.removeEventListener 'click', @evaluateAnswer
 		@answer = e.target
 		if @answer.index is @answers[@index].respuestas
 			@library.score.plusOne()
@@ -90,6 +92,8 @@ class U7A4 extends Oda
 		@index++
 		if @index < @answers.length
 			@library.frases.text = @answers[@index].text
+			@library.btntrue.addEventListener 'click', @evaluateAnswer
+			@library.btnfalse.addEventListener 'click', @evaluateAnswer
 			TweenLite.to @library.frases, 0.5, {alpha: 1, y: @library.frases.y + 40, ease: Back.easeOut}
 		else
 			if @escena is 1

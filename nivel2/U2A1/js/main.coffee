@@ -67,7 +67,7 @@ class U2A1 extends Oda
 		n4 = @createBitmap 'n4', 'n4', 0, 0
 
 		tn1 = new DraggableText 'tn0', "There is", 0, 28, 42 
-		tn2 = new DraggableText 'tn1', "There are", 1, 30, 50 
+		tn2 = new DraggableText 'tn1', "There are", 1, 15, 50 
 		tn3 = new DraggableText 'tn2', "There isn't", 2, 30, 40 
 		tn4 = new DraggableText 'tn3', "There aren't", 3, 26, 50 
 
@@ -97,26 +97,24 @@ class U2A1 extends Oda
 			@library['tn'+i].addEventListener 'drop', @evaluateAnswer
 	evaluateAnswer: (e) =>
 		@answer = e.target
+		#console.log @intento
 		pt = @library['dropper'].globalToLocal @stage.mouseX, @stage.mouseY
 		if @library['dropper'].hitTest pt.x, pt.y
 			if @answer.index is @answers[@index].id
 				@answer.x = @answer.pos.x
 				@answer.y = @answer.pos.y
 				@library['dropper'].changeText @answer.text.text
-				setTimeout @finishEvaluation, 1 * 1000
 				createjs.Sound.play 'good'
-
+				setTimeout @finishEvaluation, 1 * 1000
 			else
+				@warning()
 				@answer.returnToPlace()	
 				@intento++
-				@warning()
-				if @intento is 2
-					setTimeout @finishEvaluation, 1 * 1000
+				if @intento is 2 then setTimeout @finishEvaluation, 1 * 1000
 		else
 			@answer.returnToPlace()
 	finishEvaluation: =>
-		if @intento is 0
-			@library['score'].plusOne()
+		if @intento is 0 then @library['score'].plusOne()
 		@intento = 0
 		TweenLite.to @library['dropper'], 0.5, {alpha: 0, y: stageSize.h, ease: Back.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>

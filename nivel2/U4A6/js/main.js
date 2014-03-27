@@ -387,10 +387,7 @@
         opciones.y = 980;
         question.addChild(opciones);
       } else if (this.preguntas[i].tipo === 'imagen') {
-        text = new createjs.Text(this.preguntas[i].pregunta, '48px Quicksand', '#333');
-        text.name = 'titulo';
-        text.x = 600;
-        text.y = 280;
+        text = this.createText('titulo', this.preguntas[i].pregunta, '48px Quicksand', '#333', 800, 280, 'center');
         question.addChild(text);
         this.addToLibrary(text);
         v = this.createBitmap(this.preguntas[i].opcionUno, this.preguntas[i].opcionUno, stageSize.w / 4, stageSize.h / 2 + 60, 'mc');

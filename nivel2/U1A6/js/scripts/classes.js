@@ -541,7 +541,11 @@
       };
       this.text = new createjs.Text(text, '32px Quicksand', '#333333');
       this.hit = new createjs.Shape();
-      this.hit.graphics.beginFill('#000').drawRect(-10, -10, this.text.getMeasuredWidth() + 20, this.text.getMeasuredHeight() + 20);
+      if (this.text.getMeasuredWidth() < 20) {
+        this.hit.graphics.beginFill('#000').drawRect(-10, -10, 40, this.text.getMeasuredHeight() + 20);
+      } else {
+        this.hit.graphics.beginFill('#000').drawRect(-10, -10, this.text.getMeasuredWidth() + 20, this.text.getMeasuredHeight() + 20);
+      }
       this.text.hitArea = this.hit;
       this.inPlace = false;
       this.addChild(this.text);

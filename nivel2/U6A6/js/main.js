@@ -464,38 +464,40 @@
         }
       ];
       this.helps = ['He / She helps sick people.', 'He / She fixes cars.', 'He / She makes food.', 'He / She sells things.', 'He / She serves food.', 'He / She protects people.', 'He / She helps sick animals.', 'He / She puts out fires.', ''];
-      this.answers = {
-        doctor: {
-          r: false,
-          c: [0, 1, 2, 3, 4, 5]
-        },
-        mechanic: {
-          r: false,
-          c: [6, 7, 8, 9, 10, 11, 12, 13]
-        },
-        chef: {
-          r: false,
-          c: [14, 15, 16, 17]
-        },
-        salesclerk: {
-          r: false,
-          c: [18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
-        },
-        waiter: {
-          r: false,
-          c: [28, 29, 30, 31, 32, 33]
-        },
-        police: {
-          r: false,
-          c: [34, 4, 35, 36, 37, 7, 38, 17, 39, 40, 23, 41, 33]
-        },
-        vet: {
-          r: false,
-          c: [42, 43, 44]
-        },
-        firefighter: {
-          r: false,
-          c: [45, 46, 47, 48, 49, 12, 50, 51, 44, 52, 53]
+      this.game = {
+        answers: {
+          doctor: {
+            r: false,
+            c: [0, 1, 2, 3, 4, 5]
+          },
+          mechanic: {
+            r: false,
+            c: [6, 7, 8, 9, 10, 11, 12, 13]
+          },
+          chef: {
+            r: false,
+            c: [14, 15, 16, 17]
+          },
+          salesclerk: {
+            r: false,
+            c: [18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+          },
+          waiter: {
+            r: false,
+            c: [28, 29, 30, 31, 32, 33]
+          },
+          police: {
+            r: false,
+            c: [34, 4, 35, 36, 37, 7, 38, 17, 39, 40, 23, 41, 33]
+          },
+          vet: {
+            r: false,
+            c: [42, 43, 44]
+          },
+          firefighter: {
+            r: false,
+            c: [45, 46, 47, 48, 49, 12, 50, 51, 44, 52, 53]
+          }
         }
       };
       U6A6.__super__.constructor.call(this, null, manifest, sounds);
@@ -504,6 +506,7 @@
     U6A6.prototype.setStage = function() {
       var chef, doc, fire, mec, poli, sales, vet, wait;
       U6A6.__super__.setStage.apply(this, arguments);
+      this.answers = this.clone(this.game.answers);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
       this.insertInstructions('instructions', 'Look and drag the letters to complete the crossword puzzle.', 80, 200);
       doc = this.createBitmap('persondoctor', 'persondoctor', 154, 242);
@@ -806,7 +809,7 @@
         y: this.library.alphabet.y - 200,
         ease: Quart.easeOut
       });
-      TweenLite.from(this.library.helper, 1, {
+      TweenLite.to(this.library.helper, 1, {
         alpha: 0,
         y: this.library.helper.y + 40
       });

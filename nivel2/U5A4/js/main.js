@@ -571,6 +571,7 @@
         this.library[kid[0]].removeEventListener('click', this.selectKid);
       }
       for (i = _j = 0, _ref1 = this.game[this.station].positions.length - 1; _j <= _ref1; i = _j += 1) {
+        this.library["r" + i].removeAllEventListeners();
         this.library["r" + i].addEventListener('drop', this.evaluateAnswer);
       }
       this.intento = 0;

@@ -424,11 +424,11 @@
             y: 254
           }, {
             id: 'hojalunch',
-            x: 674,
+            x: 676,
             y: 264
           }, {
             id: 'menubreakfast',
-            x: 348,
+            x: 363,
             y: 328
           }, {
             id: 'menudinner',
@@ -436,7 +436,7 @@
             y: 322
           }, {
             id: 'menulunch',
-            x: 698,
+            x: 708,
             y: 328
           }, {
             id: 'labelbreakfast',

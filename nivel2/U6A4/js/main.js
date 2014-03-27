@@ -183,6 +183,18 @@
         if (col[i - 1] !== ' ') {
           wc = new WordContainer("l" + i, '', 'rgba(238,238,238,0.3)', '#F00', i * 200, 0, 180, 60);
           wc.index = col[i - 1];
+          wc.hitter = null;
+          wc.addEventListener('mousedown', function(e) {
+            var cwc;
+            cwc = e.currentTarget;
+            return cwc.addEventListener('pressmove', function(ev) {
+              if (cwc.hitter) {
+                cwc.changeText('');
+                cwc.hitter.visible = true;
+                return cwc.hitter.returnToPlace();
+              }
+            });
+          });
           this.addToLibrary(wc);
           frase.addChild(wc);
         }
@@ -210,6 +222,7 @@
           if (this.library["l" + i].hitTest(pt.x, pt.y)) {
             if (this.library["l" + i].text.text === '') {
               this.answer.visible = false;
+              this.library["l" + i].hitter = this.answer;
               this.library["l" + i].changeText(this.answer.index);
               dropped = true;
             }

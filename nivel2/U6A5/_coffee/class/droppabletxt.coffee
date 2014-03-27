@@ -65,6 +65,8 @@ class DroppableText
 			@y = posY - offset.y
 			false
 		@addEventListener 'pressup', (ev)=>
+			@removeAllEventListeners 'pressmove'
+			@removeAllEventListeners 'pressup'
 			if @drops.length > 0
 				@evaluateDrop e
 			else

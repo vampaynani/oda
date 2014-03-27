@@ -220,7 +220,6 @@
       this.insertBitmap('btnnext', 'btn', 1520, 1178, 'tc');
       this.library['btnnext'].visible = false;
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 40, 1000, 8, 0));
-      this.intento = 0;
       return this.setCuento(1).introEvaluation();
     };
 
@@ -308,7 +307,6 @@
     U1A5.prototype.evaluateAnswer = function(e) {
       var ans, dropped, hit, i, pt, _i, _j, _len, _ref, _ref1, _results;
       this.answer = e.currentTarget;
-      console.log(this.answer);
       dropped = false;
       _results = [];
       for (i = _i = 1, _ref = this.game[this.scene - 1].positions.length; _i <= _ref; i = _i += 1) {
@@ -320,16 +318,12 @@
               this.answer.returnToOrigin();
               createjs.Sound.play('good');
               if (!this.library["sc" + i].failed) {
-                if (this.intento === 0) {
-                  this.library['score'].plusOne();
-                }
-                this.intento = 0;
+                this.library['score'].plusOne();
               }
               _results.push(this.finishEvaluation());
             } else {
               this.library["sc" + i].failed = true;
               this.warning();
-              this.intento = 1;
               _results.push(this.answer.returnToPlace());
             }
           } else {
@@ -342,15 +336,11 @@
               }
             }
             if (hit) {
-              console.log(hit);
               this.library["sc" + i].gotoAndStop(1);
               this.answer.returnToOrigin();
               createjs.Sound.play('good');
               if (!this.library["sc" + i].failed) {
-                if (this.intento === 0) {
-                  this.library['score'].plusOne();
-                }
-                this.intento = 0;
+                this.library['score'].plusOne();
               }
               _results.push(this.finishEvaluation());
             } else {
