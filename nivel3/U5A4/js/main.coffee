@@ -20,10 +20,24 @@ class U5A4 extends Oda
 			{src:'TU3_U5_A4_instructions.mp3', id:'s/instructions'}
 			{src:'TU3_U5_A4_instructions2.mp3', id:'s/instructions2'}
 		]
+		@evaluateDrop03 = (dispatcher, target) ->
+			if lib[dispatcher].index is target.success
+				target.complete = true
+				target.update()
+				lib[dispatcher].afterSuccess()
+				target.parent.currentTarget++
+				if target.parent.currentTarget is target.parent.droptargets.length
+					next = target.parent.nextGroup
+					lib.score.plusOne()
+					createjs.Sound.play 's/good'
+					lib[next].setInvisible false
+			else
+				lib[dispatcher].afterFail()
+				lib.scene.fail()
 		@game = 
 			header: 'head'
-			instructions: {x: 40, y: 100, states: [{text:'Click on one of the pictures.', sound:'s/instructions', played: false},{text:'Drag the words to make a question. Then click on the answer', sound:'s/instructions2', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			instructions: {x: 40, y: 100, states: [{text:'Click on one of the pictures.', sound:'s/instructions', played: false},{text:'Drag the words to make a question. Then click on the answer.', sound:'s/instructions2', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#ff9933', bimg: 'c2', bcolor: '#bfd951'}
 			scenes:[
 				{
 					answers: {
@@ -95,25 +109,13 @@ class U5A4 extends Oda
 					}
 					containers:[
 						{type: 'img', id: 'sc1', x: 120, y: 150}
-						{type: 'pcpt', id: 'pcpt1', x: 270, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
+						{type: 'pcpt', id: 'pcpt1', x: 370, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
 						{type: 'img', id: 'n1', x: 600, y: 180}
-						{
-							type: 'btn', id: 'sc1btn_n11', x: 625, y: 205, index: 'was', target: 'pcpt1', eval: 'click_O1_01'
-							states: [{txt: {text: 'was', name: 'was', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
-						{
-							type: 'btn', id: 'sc1btn_n12', x: 660, y: 225, index: 'were', target: 'pcpt1', eval: 'click_O1_01'
-							states: [{txt: {text: 'were', name: 'were', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
+						{type: 'ldrg', id: 'ldrg1', x: 625,  y: 205, index: 'was', text:'was', font:'20px Quicksand', color:'#333', target: 'pcpt1', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg2', x: 660,  y: 225, index: 'were', text:'were', font:'20px Quicksand', color:'#333', target: 'pcpt1', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
 						{type: 'img', id: 'n2', x: 600, y: 280}
-						{
-							type: 'btn', id: 'sc1btn_n21', x: 626, y: 300, index: 'a', target: 'pcpt1', eval: 'click_O1_01'
-							states: [{txt: {text: 'a', name: 'a', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
-						{
-							type: 'btn', id: 'sc1btn_n22', x: 650, y: 322, index: 'any', target: 'pcpt1', eval: 'click_O1_01'
-							states: [{txt: {text: 'any', name: 'any', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
+						{type: 'ldrg', id: 'ldrg3', x: 626,  y: 300, index: 'a', text:'a', font:'20px Quicksand', color:'#333', target: 'pcpt1', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg4', x: 650,  y: 322, index: 'any', text:'any', font:'20px Quicksand', color:'#333', target: 'pcpt1', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
 						{
 							type: 'btn', id: 'sc1btn_s1', x: 300, y: 450, index: 'yeswas', target: 'global', eval: 'global_01'
 							states: [{img: {name: 'btnyesWas', x: 0, y: 0, align: 'mc'}}]
@@ -194,25 +196,13 @@ class U5A4 extends Oda
 					}
 					containers:[
 						{type: 'img', id: 'sc2', x: 120, y: 150}
-						{type: 'pcpt', id: 'pcpt2', x: 270, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
+						{type: 'pcpt', id: 'pcpt2', x: 370, y: 380, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#f59743'}
 						{type: 'img', id: 'n1', x: 600, y: 180}
-						{
-							type: 'btn', id: 'btn_n11', x: 625, y: 205, index: 'was', target: 'pcpt2', eval: 'click_O1_01'
-							states: [{txt: {text: 'was', name: 'was', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
-						{
-							type: 'btn', id: 'btn_n12', x: 660, y: 225, index: 'were', target: 'pcpt2', eval: 'click_O1_01'
-							states: [{txt: {text: 'were', name: 'were', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
+						{type: 'ldrg', id: 'ldrg_12', x: 625,  y: 205, index: 'was', text:'was', font:'20px Quicksand', color:'#333', target: 'pcpt2', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg_22', x: 660,  y: 225, index: 'were', text:'were', font:'20px Quicksand', color:'#333', target: 'pcpt2', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
 						{type: 'img', id: 'n2', x: 600, y: 280}
-						{
-							type: 'btn', id: 'btn_n21', x: 626, y: 300, index: 'a', target: 'pcpt2', eval: 'click_O1_01'
-							states: [{txt: {text: 'a', name: 'a', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
-						{
-							type: 'btn', id: 'btn_n22', x: 650, y: 322, index: 'any', target: 'pcpt2', eval: 'click_O1_01'
-							states: [{txt: {text: 'any', name: 'any', x: 0, y: 0, font: '20px Quicksand'}}]
-						}
+						{type: 'ldrg', id: 'ldrg_32', x: 626,  y: 300, index: 'a', text:'a', font:'20px Quicksand', color:'#333', target: 'pcpt2', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'ldrg', id: 'ldrg_42', x: 650,  y: 322, index: 'any', text:'any', font:'20px Quicksand', color:'#333', target: 'pcpt2', eval: @evaluateDrop03, afterSuccess: 'origin', afterFail: 'return'}
 						{
 							type: 'btn', id: 'btn_s1', x: 300, y: 450, index: 'yeswas', target: 'global', eval: 'global_01'
 							states: [{img: {name: 'btnyesWas', x: 0, y: 0, align: 'mc'}}]
@@ -227,7 +217,7 @@ class U5A4 extends Oda
 						}
 						{
 							type: 'btn', id: 'btn_s4', x: 550, y: 510, index: 'nowere', target: 'global', eval: 'global_01'
-							states: [{img: {name: 'btnnoWas', x: 0, y: 0, align: 'mc'}}]
+							states: [{img: {name: 'btnnoWere', x: 0, y: 0, align: 'mc'}}]
 						}
 					]
 					groups: [

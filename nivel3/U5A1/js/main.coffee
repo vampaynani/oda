@@ -47,6 +47,8 @@ class U5A1 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Look at the pictures for fifteen seconds.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 15, 0
+		@library.score.txtCount.color = "#bfd951"
+		@library.score.txtTotal.color = "#ff9933"
 		@setBtns().setFrase().introEvaluation()
 	setBtns:  ->
 		if @library.btns

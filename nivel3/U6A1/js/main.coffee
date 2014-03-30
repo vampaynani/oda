@@ -32,7 +32,7 @@ class U6A1 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Look and drag the letters to form a word.', sound:'s/instructions', played: false}, {text:'Now label the pictures.', sound:'s/instructions2', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 24, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 24, aimg: 'c1', acolor: '#EB2D3C', bimg: 'c2', bcolor: '#C3DB5B'}
 			scenes:[
 				{
 					answers: {
@@ -169,18 +169,18 @@ class U6A1 extends Oda
 						{type: 'img', id: 'scene2mamut', x: 400, y: 300, align: 'mc'}
 						{type: 'img', id: 'scene2velociraptor', x: 400, y: 300, align: 'mc'}
 						{type: 'img', id: 'scene2mauisaurus', x: 400, y: 300, align: 'mc'}
-						{type: 'pcpt', id: 'pcpt1', x: 120, y: 277, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt2', x: 700, y: 143, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt3', x: 205, y: 254, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt4', x: 660, y: 235, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt5', x: 185, y: 415, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt6', x: 680, y: 364, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt7', x: 137, y: 305, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt8', x: 670, y: 193, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt9', x: 670, y: 405, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt10', x: 175, y: 394, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt11', x: 145, y: 193, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
-						{type: 'pcpt', id: 'pcpt12', x: 655, y: 316, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt1', x: 120, y: 297, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt2', x: 700, y: 163, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt3', x: 205, y: 274, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt4', x: 660, y: 254, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt5', x: 185, y: 434, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt6', x: 680, y: 384, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt7', x: 137, y: 326, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt8', x: 670, y: 212, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt9', x: 670, y: 425, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt10', x: 175, y: 414, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt11', x: 145, y: 213, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
+						{type: 'pcpt', id: 'pcpt12', x: 655, y: 336, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
 						{type: 'ldrg', id: 'ldrg1', x: 140, y: 520, index: 'horn', text:'horn', font:'24px Quicksand', color:'#333', eval: 'drop_02_02', afterSuccess: 'hide', afterFail: 'return'
 						target: ['pcpt1','pcpt2','pcpt3','pcpt4','pcpt5','pcpt6','pcpt7','pcpt8','pcpt9','pcpt10','pcpt11','pcpt12']}
 						{type: 'ldrg', id: 'ldrg2', x: 220, y: 510, index: 'feather', text:'feather', font:'24px Quicksand', color:'#333', eval: 'drop_02_02', afterSuccess: 'hide', afterFail: 'return'

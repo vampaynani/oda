@@ -34,7 +34,7 @@ class U2A6 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Look and click on the correct options. Careful! You are only allowed two errors!', sound:'s/instructions', played: false}]}
-			score:{type: 'clock', x: 20, y: 500, init: 80, aimg: 'c2', acolor: '#333'}
+			score:{type: 'clock', x: 20, y: 500, init: 80, aimg: 'c2', acolor: '#C3DB5B'}
 			scenes:[
 				{
 					answers: {

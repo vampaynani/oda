@@ -29,7 +29,7 @@ class U4A3 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Read and choose the correct picture. Then click on the words to complete the sentence.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#FE008F', bimg: 'c2', bcolor: '#0A9BDD'}
 			scenes:[
 				{
 					answers: {
@@ -65,6 +65,7 @@ class U4A3 extends Oda
 								{name: 'pcpt1', opts: {pattern:['When I\'m sick, I', '#tcpt', '#tcpt','.'], targets: [{text:'go'}, {text:'to the doctor', success:'tothedoctor'}]}}
 							]
 						]
+						mixed: true
 						type: 'steps'
 					}
 					containers:[

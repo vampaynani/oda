@@ -52,13 +52,13 @@ class U5A3 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Listen and click on the correct picture.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#ff9933', bimg: 'c2', bcolor: '#bfd951'}
 			scenes:[
 				{
 					answers: {
 						collection: [
 							[
-								{name:'global', opts:{success: 2}}
+								{name:'global', opts:{success: 1}}
 								{name:'snd', opts: {id:'s/electricity1'}}
 								{name:'btn1', opts:{img: {name: 'electricity1', align: 'mc', x: 0, y: 0}}}
 								{name:'btn2', opts:{img: {name: 'electricity2', align: 'mc', x: 0, y: 0}}}

@@ -37,7 +37,7 @@ class U4A4 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Listen and click on the correct option.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#FE008F', bimg: 'c2', bcolor: '#0A9BDD'}
 			scenes:[
 				{
 					answers: {
@@ -123,15 +123,16 @@ class U4A4 extends Oda
 								{name: 'snd', opts:{id: 's/20'}}
 							]
 						]
+						mixed: true
 						type: 'steps'
 					}
 					containers:[
 						{
-							type: 'btn', id: 'btn1', x: 509, y: 286, index: 1, target: 'global', eval: 'global_01'
+							type: 'btn', id: 'btn1', x: 509, y: 286, index: 1, target: 'global', eval: 'global_01', overScale: 0.85
 							states: [{img: {name: 'btnH', align: 'mc', x: 0, y: 0}}]
 						}
 						{
-							type: 'btn', id: 'btn2', x: 330, y: 473, index: 2, target: 'global', eval: 'global_01'
+							type: 'btn', id: 'btn2', x: 330, y: 473, index: 2, target: 'global', eval: 'global_01', overScale: 0.85
 							states: [{img: {name: 'btnU', align: 'mc', x: 0, y: 0}}]
 						}
 						{

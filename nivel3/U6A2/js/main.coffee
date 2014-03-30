@@ -40,8 +40,8 @@ class U6A2 extends Oda
 		]
 		@game = 
 			header: 'head'
-			instructions: {x: 40, y: 100, states: [{text:'Listen and drag the numbers to complete the descriptions.', sound:'s/instructions', played: false}, {text:'Now label the pictures.', sound:'s/instructions2', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 16, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			instructions: {x: 40, y: 100, states: [{text:'Listen and drag the numbers to complete the descriptions.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 16, aimg: 'c1', acolor: '#EB2D3C', bimg: 'c2', bcolor: '#C3DB5B'}
 			scenes:[
 				{
 					answers: {
@@ -95,12 +95,12 @@ class U6A2 extends Oda
 						{type: 'img', id: 'tag815', x: 554, y: 152, align: 'tc'}
 						{type: 'img', id: 'tag590', x: 257, y: 162, align: 'tc'}
 						{type: 'img', id: 'tag900', x: 339, y: 150, align: 'tc'}
-						{type: 'img', id: 'propimg0', x: 400, y: 345, align: 'mc'}
-						{type: 'img', id: 'propimg1', x: 400, y: 345, align: 'mc'}
-						{type: 'img', id: 'propimg2', x: 400, y: 345, align: 'mc'}
-						{type: 'img', id: 'propimg3', x: 400, y: 345, align: 'mc'}
-						{type: 'img', id: 'propimg4', x: 400, y: 345, align: 'mc'}
-						{type: 'img', id: 'propimg5', x: 400, y: 345, align: 'mc'}
+						{type: 'img', id: 'propimg0', x: 400, y: 320, align: 'mc'}
+						{type: 'img', id: 'propimg1', x: 400, y: 320, align: 'mc'}
+						{type: 'img', id: 'propimg2', x: 400, y: 320, align: 'mc'}
+						{type: 'img', id: 'propimg3', x: 400, y: 320, align: 'mc'}
+						{type: 'img', id: 'propimg4', x: 400, y: 320, align: 'mc'}
+						{type: 'img', id: 'propimg5', x: 400, y: 320, align: 'mc'}
 						{type: 'pcpt', id: 'pcpt1', x: 400, y: 450, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#F00', stroke: 1}
 						{type: 'ldrg', id: 'ldrg1', x: 731, y: 325, index: '1', text:'1', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
 						{type: 'ldrg', id: 'ldrg2', x: 672, y: 173, index: '1,580', text:'1,580', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
@@ -117,7 +117,7 @@ class U6A2 extends Oda
 						{type: 'ldrg', id: 'ldrg13', x: 227, y: 172, index: '590', text:'590', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
 						{type: 'ldrg', id: 'ldrg14', x: 309, y: 160, index: '900', text:'900', font:'24px Quicksand', color:'#333', target: 'pcpt1', eval: 'phrase_drop_01', afterSuccess: 'origin', afterFail: 'return'}
 						{
-							type: 'btn', id: 'repeat', x: 400, y: 560, isRepeat: true
+							type: 'btn', id: 'repeat', x: 400, y: 570, isRepeat: true
 							states:[
 								img: {name:'repeat', x: 0, y: 0, align: 'mc'}
 							]

@@ -112,23 +112,27 @@ class U1A2 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Listen and click on the correct ticket.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 16, 0
+		@library.score.txtCount.color = "#bfd951"
+		@library.score.txtTotal.color = "#ff9933"
 		@setTickets().introEvaluation()
 	setTickets:  ->
 		if @library.tickets
 			tickets = @library.tickets
 		else
 			tickets = new createjs.Container()
-			tickets.name = 'tickets'
+		tickets.removeAllChildren()
+		tickets.name = 'tickets'
+		tickets.alpha = 1
 		
-			for i in [0..@current.length - 1] by 1
-				v = @createBitmap @current[i].id, @current[i].id, @current[i].x, @current[i].y, 'mc'
-				v.scaleX = v.scaleY = 0.25
-				tickets.addChild v
-				@addToLibrary v
+		for i in [0..@current.length - 1] by 1
+			v = @createBitmap @current[i].id, @current[i].id, @current[i].x, @current[i].y, 'mc'
+			v.scaleX = v.scaleY = 0.25
+			tickets.addChild v
+			@addToLibrary v
 
-			r = @createBitmap 'repeat', 'repeatbtn', stageSize.w / 2, 530, 'tc'
-			r.addEventListener 'click', @repeatSound
-			tickets.addChild r
+		r = @createBitmap 'repeat', 'repeatbtn', stageSize.w / 2, 530, 'tc'
+		r.addEventListener 'click', @repeatSound
+		tickets.addChild r
 		@addToMain tickets
 		@
 	setTicketQuestion:  ->
@@ -191,13 +195,14 @@ class U1A2 extends Oda
 	evaluateClick: (e) =>
 		if e.target.name is @current[@index].id
 			createjs.Sound.stop()
+			@library.instructions.children[1].text = "Read and click on the correct answers."
 			if @index < 1 then createjs.Sound.play 'instructions2' else createjs.Sound.play 'good'
 			@questionIndex = 0
 			@setTicketQuestion().initOptionListeners()
 		else
 			@warning()
 	evaluateAnswer: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @current[@index].questions[@questionIndex].s
 			createjs.Sound.play 'good'
 			@library.score.plusOne()
@@ -213,7 +218,10 @@ class U1A2 extends Oda
 	nextEvaluation: =>
 		@index++
 		if @index < @current.length
+			@library.instructions.children[1].text = "Listen and click on the correct ticket."
 			@setTickets()
+			for i in [0..@current.length - 1] by 1
+				@library[@current[i].id].addEventListener 'click', @evaluateClick
 			TweenLite.to @library.question, 0.5, {alpha:0, y: -@library.question.y + 20}
 			TweenLite.to @library.tickets, 0.5, {alpha:1, y: 0}
 			createjs.Sound.play "s#{@current[@index].id}"

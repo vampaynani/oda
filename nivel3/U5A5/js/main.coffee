@@ -32,7 +32,8 @@ class U3A5 extends Oda
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
 			{src:'sounds/wrong.mp3', id:'wrong'}
-		    {src:'sounds/TU3_U2_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U5_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U5_A5_scene1.mp3', id:'scene1'}
 		]
 		@game = [
 			{
@@ -65,8 +66,10 @@ class U3A5 extends Oda
 		@intento = 0
 		@insertBitmap 'bg', 'bg', 0, 100
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Listen, read and drag the correct words to the text.', 40, 100
+		@insertInstructions 'instructions', 'Listen, read and drag the words to the text.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@library.score.txtCount.color = "#bfd951"
+		@library.score.txtTotal.color = "#ff9933"
 		@setCuento(1).introEvaluation()
 	setCuento: (scene) ->
 		cuento = new createjs.Container()
@@ -111,7 +114,7 @@ class U3A5 extends Oda
 		for i in [1..@game[@scene - 1].texts.length] by 1
 			@library["t#{i}"].addEventListener 'click', @evaluateAnswer
 	evaluateAnswer: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		dropped = off
 		for i in [1..@game[@scene - 1].positions.length] by 1
 			pt = @library["hsc#{i}"].globalToLocal @stage.mouseX, @stage.mouseY
@@ -119,13 +122,13 @@ class U3A5 extends Oda
 				if @answer.index is @library["hsc#{i}"].index
 					if @answer.p
 						if @library["sc#{i}"].currentFrame in [1,2]
-							@library["sc#{i}"].currentFrame = 3
+							@library["sc#{i}"].gotoAndStop 3
 						else if @answer.p is 'p1'
-							@library["sc#{i}"].currentFrame = 1
+							@library["sc#{i}"].gotoAndStop 1
 						else
-							@library["sc#{i}"].currentFrame = 2
+							@library["sc#{i}"].gotoAndStop 2
 					else
-						@library["sc#{i}"].currentFrame = 1
+						@library["sc#{i}"].gotoAndStop 1
 					@answer.visible = off
 					createjs.Sound.play 'good'
 					if @intento is 0

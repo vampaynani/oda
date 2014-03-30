@@ -64,6 +64,8 @@ class U1A1 extends Oda
 		@insertSprite 'choose1', ['animals1', 'art1', 'cellphone1', 'drink1', 'fish1', 'line1', 'pictures1', 'run1', 'trash1'], {animals:0, art:1, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 285, 452, 'mc'
 		@insertSprite 'choose2', ['animals2', 'art2', 'cellphone2', 'drink2', 'fish2', 'line2', 'pictures2', 'run2', 'trash2'], {animals:0, art:1, cellphone:2, drink:3, fish:4, line:5, pictures:6, run:7, trash:8}, 520, 452, 'mc'
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 9, 0
+		@library.score.txtCount.color = "#bfd951"
+		@library.score.txtTotal.color = "#ff9933"
 		@introEvaluation()
 	introEvaluation: ->
 		super
@@ -83,18 +85,17 @@ class U1A1 extends Oda
 		@library['repeat'].addEventListener 'click', @repeat
 	evaluateAnswer: (e) =>
 		@answer = e.target
+		selection = @answers.where id:@phrase.id
+		selection[0].a = on
 		if @phrase.id is @answer.currentAnimation
-			selection = @answers.where id:@phrase.id
-			selection[0].a = on
 			createjs.Sound.play 'good'
+			@library['score'].plusOne()
 			@library['choose1'].removeEventListener 'click', @evaluateAnswer
 			@library['choose2'].removeEventListener 'click', @evaluateAnswer
-			setTimeout @finishEvaluation, 1 * 1000
 		else
-			TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @showPhrase}
 			@warning()
+		setTimeout @finishEvaluation, 1 * 1000
 	finishEvaluation: =>
-		@library['score'].plusOne()
 		TweenMax.to [@library['choose1'], @library['choose2']], 1, {alpha: 0, scaleX: 0.3, scaleY: 0.3, ease:Elastic.easeOut, onComplete: @nextEvaluation}
 	nextEvaluation: =>
 		@index++
@@ -109,7 +110,7 @@ class U1A1 extends Oda
 		others = @answers.filter (answer) =>
 			answer.id isnt @phrase.id
 		fake = Math.floor Math.random() * others.length
-		console.log @phrase.id
+		console.log @phrase.id, others[fake].id
 		@library["choose#{rand}"].gotoAndStop @phrase.id
 		@library["choose#{other}"].gotoAndStop others[fake].id
 		console.log "s#{@phrase.id}"

@@ -39,7 +39,7 @@ class U3A3 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Read what the students say and click on the best club for each one.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#0096DB', bimg: 'c2', bcolor: '#BFD951'}
 			scenes:[
 				{
 					answers: {

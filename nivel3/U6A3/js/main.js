@@ -87,9 +87,9 @@ NEW ODA
           init: 0,
           total: 10,
           aimg: 'c1',
-          acolor: '#333',
+          acolor: '#EB2D3C',
           bimg: 'c2',
-          bcolor: '#333'
+          bcolor: '#C3DB5B'
         },
         scenes: [
           {

@@ -126,6 +126,8 @@ class U1A4 extends Oda
 		
 		@addToMain new Button 'btnready', (@preload.getResult 'mariposabtnready'), 'ready', @positions.ready.x, @positions.ready.y
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 10, 0
+		@library.score.txtCount.color = "#bfd951"
+		@library.score.txtTotal.color = "#ff9933"
 		
 		@setMariposa()
 	setMariposa: () =>

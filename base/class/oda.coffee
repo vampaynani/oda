@@ -1,6 +1,6 @@
 window.stageSize || = {
-	w: 1600
-	h: 1200
+	w: 800
+	h: 600
 	r: 1
 }
 
@@ -41,7 +41,7 @@ class Oda
 		@
 	initStage: ->
 		@stage = new createjs.Stage 'oda'
-		createjs.Ticker.addListener @
+		createjs.Ticker.addEventListener 'tick', @stage
 		createjs.Ticker.setFPS 60
 		createjs.Touch.enable @stage
 		@stage.enableMouseOver()
@@ -192,7 +192,7 @@ class Oda
 		w = spriteImgs[0].width
 		h = spriteImgs[0].height
 		sprite = new createjs.SpriteSheet (images: spriteImgs, animations: anim, frames: {width: w, height: h})
-		animation = new createjs.BitmapAnimation sprite
+		animation = new createjs.Sprite sprite
 		animation.x = x
 		animation.y = y
 		animation.width = w

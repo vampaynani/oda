@@ -61,9 +61,9 @@ window.d2oda.utilities ?= class Utilities
 
 window.d2oda.behaviors ?= class Behaviors
 	@initDragListener = =>
-		@addEventListener 'mousedown', @handleMouseDown
+		@on 'mousedown', @handleMouseDown
 	@endDragListener = =>
-		@removeEventListener 'mousedown', @handleMouseDown
+		@off 'mousedown', @handleMouseDown
 	Behaviors
 
 window.d2oda.actions ?= class Actions
@@ -223,13 +223,13 @@ window.d2oda.evaluator ?= class Evaluator
 		createjs.Sound.play lib.scene.snd
 	@evaluateFinish = (target) ->
 		if lib[target].droptargets
+			console.log lib[target].droptargets
 			for drop in lib[target].droptargets
 				drop.showEvaluation()
 				if drop.complete
 					lib.score.plusOne()
 		else if lib[target].group
 			for tgt in lib[target].group
-				console.log lib[tgt].complete
 				if lib[tgt].complete
 					lib.score.plusOne()
 		lib.scene.success false
@@ -341,6 +341,7 @@ window.d2oda.evaluator ?= class Evaluator
 			target.update false
 	@evaluateDrop02 = (dispatcher, target) ->
 		if lib[dispatcher].index is target.success
+			target.complete = true
 			target.update()
 			lib[dispatcher].afterSuccess()
 			lib.scene.success()
@@ -561,7 +562,7 @@ class Oda
 		@stage.update()
 	_setStage: ->
 		@stage = new createjs.Stage 'oda'
-		createjs.Ticker.addListener @
+		createjs.Ticker.addEventListener 'tick', @stage
 		createjs.Ticker.setFPS 60
 		createjs.Touch.enable @stage
 		@stage.enableMouseOver(50)
@@ -727,6 +728,11 @@ class ComponentGroup
 			when 'pulseAll'
 				for item in @group
 					lib[item].pulse()
+			when 'blink'
+				for item in @group
+					TweenMax.killTweensOf lib[item]
+					TweenLite.killTweensOf lib[item]
+				if opts.target then lib[opts.target].blink()
 			when 'fadeIn'
 				for item in @group
 					TweenMax.killTweensOf lib[item]
@@ -1069,7 +1075,7 @@ class DragContainer extends Component
 					lib[t].observer.subscribe ComponentObserver.UPDATED, @update
 			else 
 				@target.observer.subscribe ComponentObserver.UPDATED, @update
-		@addEventListener 'mousedown', @handleMouseDown
+		@on 'mousedown', @handleMouseDown
 	update: (opts) =>
 		if @isArray @target
 			alldrops = new Array()
@@ -1084,13 +1090,15 @@ class DragContainer extends Component
 		offset = x: posX - @x, y: posY - @y
 		@x = posX - offset.x
 		@y = posY - offset.y
-		e.addEventListener 'mousemove', (ev)=>
+		@on 'pressmove', (ev)=>
 			posX = ev.stageX / d2oda.stage.r
 			posY = ev.stageY / d2oda.stage.r
 			@x = posX - offset.x
 			@y = posY - offset.y
 			false
-		e.addEventListener 'mouseup', (ev)=>
+		@on 'pressup', (ev)=>
+			@removeAllEventListeners 'pressmove'
+			@removeAllEventListeners 'pressup'
 			if @droptargets and @droptargets.length > 0
 				@evaluateDrop e
 			else
@@ -1135,7 +1143,10 @@ class ButtonContainer extends Component
 			@target = lib[opts.target]
 		if opts.target then @target = lib[opts.target]
 		@addEventListener 'mouseover', =>
-			TweenLite.to @, 0.5, {scaleX: 1.2, scaleY: 1.2}
+			if opts.overScale
+				TweenLite.to @, 0.5, {scaleX: opts.overScale, scaleY: opts.overScale}
+			else
+				TweenLite.to @, 0.5, {scaleX: 1.2, scaleY: 1.2}
 		@addEventListener 'mouseout', =>
 			TweenLite.to @, 0.5, {scaleX: @scale, scaleY: @scale}
 		@addEventListener 'click', =>
@@ -1296,6 +1307,7 @@ class CloneCompleterContainer extends Component
 		@droptargets = new Array()
 	update:(opts) ->
 		@removeAllChildren()
+		@droptargets = new Array()
 		i = 0
 		npos = 0
 		for c in opts.containers
@@ -1481,6 +1493,7 @@ class PhraseCompleterContainer extends Component
 		@currentTarget = 0
 		@observer = new ComponentObserver()
 		@droptargets = new Array()
+		@textlist = new Array()
 	update: (opts) ->
 		@removeAllChildren()
 		if opts.h2
@@ -1498,8 +1511,10 @@ class PhraseCompleterContainer extends Component
 				txt = opts.targets[i]
 				h = new TextCompleterContainer txt, @font, @fcolor, @bcolor, @scolor, @stroke, npos, ypos
 				@droptargets.push h
+				@textlist.push h
 				@add h, false
-				maxWidth = npos += h.width + @margin
+				npos += h.width + @margin
+				maxWidth = npos if npos > maxWidth
 				i++
 			else if t is '#rtn'
 				h = @createText 'txt', 'BLANK', @font, @fcolor, npos, 0
@@ -1508,9 +1523,12 @@ class PhraseCompleterContainer extends Component
 				ypos += h.getMeasuredHeight()
 			else
 				h = @createText 'txt', t, @font, @fcolor, npos, ypos
+				@textlist.push h
 				@add h, false
-				maxWidth = npos += h.getMeasuredWidth() + @margin
+				npos += h.getMeasuredWidth() + @margin
+				maxWidth = npos if npos > maxWidth
 		@width = maxWidth
+		console.log @textlist
 		@setPosition @align
 		@observer.notify ComponentObserver.UPDATED
 		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
@@ -1628,9 +1646,11 @@ class WordSearchContainer extends Component
 		@addEventListener 'mousedown', (e) =>
 			@path = new Array()
 			@getLetterContainer()
-			e.addEventListener 'mousemove', (ev) =>
+			@addEventListener 'pressmove', (ev) =>
 				@getLetterContainer()
-			e.addEventListener 'mouseup', (ev) =>
+			@addEventListener 'pressup', (ev) =>
+				@removeAllEventListeners 'pressmove'
+				@removeAllEventListeners 'pressup'
 				found = false
 				upath = @path.unique()
 				unames = (coord.name for coord in upath)
@@ -2058,13 +2078,15 @@ class LetterDragContainer extends Component
 		offset = x: posX - @x, y: posY - @y
 		@x = posX - offset.x
 		@y = posY - offset.y
-		e.addEventListener 'mousemove', (ev)=>
+		@addEventListener 'pressmove', (ev)=>
 			posX = ev.stageX / d2oda.stage.r
 			posY = ev.stageY / d2oda.stage.r
 			@x = posX - offset.x
 			@y = posY - offset.y
 			false
-		e.addEventListener 'mouseup', (ev)=>
+		@addEventListener 'pressup', (ev)=>
+			@removeAllEventListeners 'pressmove'
+			@removeAllEventListeners 'pressup'
 			if @droptargets and @droptargets.length > 0
 				@evaluateDrop e
 			else
@@ -2074,6 +2096,7 @@ class LetterDragContainer extends Component
 	evaluateDrop: (e) ->
 		target = null
 		dropped = false
+		console.log 'drop'
 		for drop in @droptargets
 			pt = drop.globalToLocal oda.stage.mouseX, oda.stage.mouseY
 			if drop.hitTest pt.x, pt.y
@@ -2280,6 +2303,7 @@ class Scene extends Component
 		if stopSound then createjs.Sound.stop()
 		if plusOne then lib.score.plusOne()
 		step = @answers[@currentStep]
+		console.log step
 		if step && step.length > 0
 			for target in step
 				if target.name isnt 'snd' and target.name isnt 'global' and lib[target.name].isComplete() is false

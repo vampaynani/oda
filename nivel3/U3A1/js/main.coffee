@@ -27,7 +27,7 @@ class U3A1 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Listen and drag the faces to the correct place on the chart.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 24, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 24, aimg: 'c1', acolor: '#0096DB', bimg: 'c2', bcolor: '#BFD951'}
 			scenes:[
 				{
 					answers: {

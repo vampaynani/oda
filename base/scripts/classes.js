@@ -405,14 +405,16 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('pressmove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         _this.dispatchEvent('drop');
         return false;
       });
@@ -602,14 +604,16 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('pressmove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         _this.dispatchEvent('drop');
         return false;
       });
@@ -781,14 +785,16 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('pressmove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         if (_this.drops.length > 0) {
           _this.evaluateDrop(e);
         } else {
@@ -1035,14 +1041,16 @@
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('pressmove', function(ev) {
         posX = ev.stageX / stageSize.r;
         posY = ev.stageY / stageSize.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         if (_this.drops.length > 0) {
           _this.evaluateDrop(e);
         } else {
@@ -1343,7 +1351,7 @@
 
     Oda.prototype.initStage = function() {
       this.stage = new createjs.Stage('oda');
-      createjs.Ticker.addListener(this);
+      createjs.Ticker.addEventListener('tick', this.stage);
       createjs.Ticker.setFPS(60);
       createjs.Touch.enable(this.stage);
       this.stage.enableMouseOver();
@@ -1617,7 +1625,7 @@
           height: h
         }
       });
-      animation = new createjs.BitmapAnimation(sprite);
+      animation = new createjs.Sprite(sprite);
       animation.x = x;
       animation.y = y;
       animation.width = w;

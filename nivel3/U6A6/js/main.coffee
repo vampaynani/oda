@@ -29,7 +29,7 @@ class U6A6 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Click on the letters to guess the sentences.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 8, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 8, aimg: 'c1', acolor: '#EB2D3C', bimg: 'c2', bcolor: '#C3DB5B'}
 			scenes:[
 				{
 					answers: {
@@ -102,7 +102,7 @@ class U6A6 extends Oda
 						{type: 'img', id: 'theymadetoolsfrombones', x: 300, y: 330, align:'mc'}
 						{type: 'img', id: 'theypaintedpicturesincaves', x: 300, y: 330, align:'mc'}
 						{type: 'img', id: 'theyworeanimalskins', x: 300, y: 330, align:'mc'}
-						{type: 'wcpt', id: 'wcpt1', x: 400, y: 450, margin: 10, uwidth: 20, font: '24px Quicksand', scolor: '#eb2d3d', align: 'tc', eval:'drop_03'}
+						{type: 'wcpt', id: 'wcpt1', x: 400, y: 460, margin: 10, uwidth: 20, font: '24px Quicksand', scolor: '#eb2d3d', align: 'tc', eval:'drop_03'}
 						{type: 'abc', id: 'abc1', x: 400, y: 560, font:'20px Quicksand', fcolor:'#333', uwidth: 22, uheight: 34, margin: 10, clickable:true, target:'wcpt1', eval:'hangman_click_01'}
 					]
 					groups: [

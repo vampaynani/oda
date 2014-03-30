@@ -141,11 +141,11 @@ LIBRARY
       function Behaviors() {}
 
       Behaviors.initDragListener = function() {
-        return Behaviors.addEventListener('mousedown', Behaviors.handleMouseDown);
+        return Behaviors.on('mousedown', Behaviors.handleMouseDown);
       };
 
       Behaviors.endDragListener = function() {
-        return Behaviors.removeEventListener('mousedown', Behaviors.handleMouseDown);
+        return Behaviors.off('mousedown', Behaviors.handleMouseDown);
       };
 
       Behaviors;
@@ -534,6 +534,7 @@ LIBRARY
       Evaluator.evaluateFinish = function(target) {
         var drop, tgt, _i, _j, _len, _len1, _ref, _ref1;
         if (lib[target].droptargets) {
+          console.log(lib[target].droptargets);
           _ref = lib[target].droptargets;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             drop = _ref[_i];
@@ -546,7 +547,6 @@ LIBRARY
           _ref1 = lib[target].group;
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             tgt = _ref1[_j];
-            console.log(lib[tgt].complete);
             if (lib[tgt].complete) {
               lib.score.plusOne();
             }
@@ -725,6 +725,7 @@ LIBRARY
 
       Evaluator.evaluateDrop02 = function(dispatcher, target) {
         if (lib[dispatcher].index === target.success) {
+          target.complete = true;
           target.update();
           lib[dispatcher].afterSuccess();
           return lib.scene.success();
@@ -1124,7 +1125,7 @@ LIBRARY
 
     Oda.prototype._setStage = function() {
       this.stage = new createjs.Stage('oda');
-      createjs.Ticker.addListener(this);
+      createjs.Ticker.addEventListener('tick', this.stage);
       createjs.Ticker.setFPS(60);
       createjs.Touch.enable(this.stage);
       this.stage.enableMouseOver(50);
@@ -1440,7 +1441,7 @@ LIBRARY
     }
 
     ComponentGroup.prototype.update = function(opts) {
-      var item, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref2, _ref3, _ref4, _results, _results1;
+      var item, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2, _ref3, _ref4, _ref5, _results, _results1;
       switch (opts.type) {
         case 'blinkAll':
           _ref1 = this.group;
@@ -1460,10 +1461,21 @@ LIBRARY
           }
           return _results1;
           break;
-        case 'fadeIn':
+        case 'blink':
           _ref3 = this.group;
           for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
             item = _ref3[_k];
+            TweenMax.killTweensOf(lib[item]);
+            TweenLite.killTweensOf(lib[item]);
+          }
+          if (opts.target) {
+            return lib[opts.target].blink();
+          }
+          break;
+        case 'fadeIn':
+          _ref4 = this.group;
+          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+            item = _ref4[_l];
             TweenMax.killTweensOf(lib[item]);
             TweenLite.killTweensOf(lib[item]);
             lib[item].alpha = 0;
@@ -1476,9 +1488,9 @@ LIBRARY
           }
           break;
         case 'fadeOut':
-          _ref4 = this.group;
-          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-            item = _ref4[_l];
+          _ref5 = this.group;
+          for (_m = 0, _len4 = _ref5.length; _m < _len4; _m++) {
+            item = _ref5[_m];
             TweenMax.killTweensOf(lib[item]);
             TweenLite.killTweensOf(lib[item]);
             lib[item].alpha = 1;
@@ -2075,7 +2087,7 @@ LIBRARY
           this.target.observer.subscribe(ComponentObserver.UPDATED, this.update);
         }
       }
-      return this.addEventListener('mousedown', this.handleMouseDown);
+      return this.on('mousedown', this.handleMouseDown);
     };
 
     DragContainer.prototype.update = function(opts) {
@@ -2104,14 +2116,16 @@ LIBRARY
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.on('pressmove', function(ev) {
         posX = ev.stageX / d2oda.stage.r;
         posY = ev.stageY / d2oda.stage.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.on('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         if (_this.droptargets && _this.droptargets.length > 0) {
           _this.evaluateDrop(e);
         } else {
@@ -2187,10 +2201,17 @@ LIBRARY
         this.target = lib[opts.target];
       }
       this.addEventListener('mouseover', function() {
-        return TweenLite.to(_this, 0.5, {
-          scaleX: 1.2,
-          scaleY: 1.2
-        });
+        if (opts.overScale) {
+          return TweenLite.to(_this, 0.5, {
+            scaleX: opts.overScale,
+            scaleY: opts.overScale
+          });
+        } else {
+          return TweenLite.to(_this, 0.5, {
+            scaleX: 1.2,
+            scaleY: 1.2
+          });
+        }
       });
       this.addEventListener('mouseout', function() {
         return TweenLite.to(_this, 0.5, {
@@ -2453,6 +2474,7 @@ LIBRARY
     CloneCompleterContainer.prototype.update = function(opts) {
       var c, child, gropts, i, npos, _i, _len, _ref2;
       this.removeAllChildren();
+      this.droptargets = new Array();
       i = 0;
       npos = 0;
       _ref2 = opts.containers;
@@ -2786,7 +2808,8 @@ LIBRARY
       this.align = (_ref9 = opts.align) != null ? _ref9 : '';
       this.currentTarget = 0;
       this.observer = new ComponentObserver();
-      return this.droptargets = new Array();
+      this.droptargets = new Array();
+      return this.textlist = new Array();
     };
 
     PhraseCompleterContainer.prototype.update = function(opts) {
@@ -2811,8 +2834,12 @@ LIBRARY
           txt = opts.targets[i];
           h = new TextCompleterContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, ypos);
           this.droptargets.push(h);
+          this.textlist.push(h);
           this.add(h, false);
-          maxWidth = npos += h.width + this.margin;
+          npos += h.width + this.margin;
+          if (npos > maxWidth) {
+            maxWidth = npos;
+          }
           i++;
         } else if (t === '#rtn') {
           h = this.createText('txt', 'BLANK', this.font, this.fcolor, npos, 0);
@@ -2823,11 +2850,16 @@ LIBRARY
           ypos += h.getMeasuredHeight();
         } else {
           h = this.createText('txt', t, this.font, this.fcolor, npos, ypos);
+          this.textlist.push(h);
           this.add(h, false);
-          maxWidth = npos += h.getMeasuredWidth() + this.margin;
+          npos += h.getMeasuredWidth() + this.margin;
+          if (npos > maxWidth) {
+            maxWidth = npos;
+          }
         }
       }
       this.width = maxWidth;
+      console.log(this.textlist);
       this.setPosition(this.align);
       this.observer.notify(ComponentObserver.UPDATED);
       return TweenLite.from(this, 0.3, {
@@ -3017,11 +3049,13 @@ LIBRARY
       return this.addEventListener('mousedown', function(e) {
         _this.path = new Array();
         _this.getLetterContainer();
-        e.addEventListener('mousemove', function(ev) {
+        _this.addEventListener('pressmove', function(ev) {
           return _this.getLetterContainer();
         });
-        e.addEventListener('mouseup', function(ev) {
+        _this.addEventListener('pressup', function(ev) {
           var coord, found, foundAWord, key, lcoords, ltc, unames, upath, wcoords, word, _i, _j, _k, _len, _len1, _ref11, _ref12;
+          _this.removeAllEventListeners('pressmove');
+          _this.removeAllEventListeners('pressup');
           found = false;
           upath = _this.path.unique();
           unames = (function() {
@@ -3796,14 +3830,16 @@ LIBRARY
       };
       this.x = posX - offset.x;
       this.y = posY - offset.y;
-      e.addEventListener('mousemove', function(ev) {
+      this.addEventListener('pressmove', function(ev) {
         posX = ev.stageX / d2oda.stage.r;
         posY = ev.stageY / d2oda.stage.r;
         _this.x = posX - offset.x;
         _this.y = posY - offset.y;
         return false;
       });
-      e.addEventListener('mouseup', function(ev) {
+      this.addEventListener('pressup', function(ev) {
+        _this.removeAllEventListeners('pressmove');
+        _this.removeAllEventListeners('pressup');
         if (_this.droptargets && _this.droptargets.length > 0) {
           _this.evaluateDrop(e);
         } else {
@@ -3820,6 +3856,7 @@ LIBRARY
       var drop, dropped, pt, target, _i, _len, _ref2;
       target = null;
       dropped = false;
+      console.log('drop');
       _ref2 = this.droptargets;
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
         drop = _ref2[_i];
@@ -4224,6 +4261,7 @@ LIBRARY
         lib.score.plusOne();
       }
       step = this.answers[this.currentStep];
+      console.log(step);
       if (step && step.length > 0) {
         for (_i = 0, _len = step.length; _i < _len; _i++) {
           target = step[_i];

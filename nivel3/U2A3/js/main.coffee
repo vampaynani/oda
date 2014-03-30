@@ -34,7 +34,7 @@ class U2A3 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Read the price and click on the correct item.', sound:'s/instructions', played: false}, {text: 'Read the question and drag the letters to write the answer.', sound: 's/instructions2', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 18, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 18, aimg: 'c1', acolor: '#EB2D3C', bimg: 'c2', bcolor: '#C3DB5B'}
 			scenes:[
 				{
 					answers: {

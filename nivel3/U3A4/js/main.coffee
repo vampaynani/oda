@@ -28,7 +28,7 @@ class U3A4 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Look and click on the words to make a sentence.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#0096DB', bimg: 'c2', bcolor: '#BFD951'}
 			scenes:[
 				{
 					answers: {
@@ -79,17 +79,17 @@ class U3A4 extends Oda
 					}
 					containers:[
 						{type: 'img', id: 'caras', x: 670, y: 120}
-						{type: 'img', id: 'img01', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img02', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img03', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img04', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img05', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img06', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img07', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img08', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img09', x: 400, y: 255, align: 'mc'}
-						{type: 'img', id: 'img10', x: 400, y: 255, align: 'mc'}
-						{type: 'pcpt', id: 'pcpt1', x: 400, y: 540, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#0098d7'}
+						{type: 'img', id: 'img01', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img02', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img03', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img04', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img05', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img06', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img07', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img08', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img09', x: 400, y: 225, align: 'mc'}
+						{type: 'img', id: 'img10', x: 400, y: 225, align: 'mc'}
+						{type: 'pcpt', id: 'pcpt1', x: 400, y: 560, font: '24px Quicksand', margin: 10, align: 'tc', scolor: '#0098d7'}
 						{type: 'img', id: 'n1', x: 72, y: 339}
 						{
 							type: 'btn', id: 'btn_n11', x: 109, y: 360, index: 'love', target: 'pcpt1', eval: 'click_O1'

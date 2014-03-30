@@ -137,12 +137,14 @@ class U1A6 extends Oda
 		b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
 		@addToMain b1, b2, b3
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 100, 0
+		@library.score.txtCount.color = "#bfd951"
+		@library.score.txtTotal.color = "#ff9933"
 		@introEvaluation()
 	setCards: (e) =>
 		@time = 100
 		@timer = setInterval @updateCounter, 1000
 		j = 0
-		game = e.target.index
+		game = e.currentTarget.index
 		juego = new createjs.Container()
 		juego.x = 200
 		juego.y = 180
@@ -154,7 +156,8 @@ class U1A6 extends Oda
 			for i in [0..3]
 				c = @createBitmap "carta#{game}", "carta#{game}", i*130, h*110, 'mc'
 				b = @createBitmap "cartab#{game}", @cards[j].id, i*130, h*110, 'mc'
-				#b.scaleX = b.scaleY = 0.6
+				b.scaleX = b.scaleY = 0.9
+				c.scaleX = c.scaleY = 0.9
 				c.index = @cards[j].i
 				c.addEventListener 'click', @evaluateAnswer
 				juego.addChild b, c

@@ -61,11 +61,14 @@ class U1A3 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Read, look and click on True or False.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 14, 0
+		@library.score.txtCount.color = "#bfd951"
+		@library.score.txtTotal.color = "#ff9933"
 		@setScene(1).setClick().introEvaluation()
 	setScene: (scene) ->
 		@scene = @game.scenes[scene - 1]
 		@answers = @shuffleNoRepeat @scene.answers, 7
 		@insertBitmap 'boy', "lugar#{scene}",  stageSize.w / 2, 450, 'bc'
+		if scene is 2 then @library.boy.y = 500
 		@
 	setClick:  ->
 		@insertBitmap 'btnfalse', 'btnFalse',407, 541
@@ -84,7 +87,7 @@ class U1A3 extends Oda
 		TweenLite.from @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut, delay:0.5, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
-		@insertText 'frases', @answers[@index].text, '20px Quicksand', '#333', stageSize.w / 2, 480, 'center'
+		@insertText 'frases', @answers[@index].text, '20px Quicksand', '#333', stageSize.w / 2, 500, 'center'
 		TweenLite.from @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
 	evaluateAnswer: (e) =>
 		@answer = e.target
@@ -118,103 +121,4 @@ class U1A3 extends Oda
 		TweenLite.to @library.btntrue, 1, {alpha: 0, y: @library.btntrue.y - 10, ease: Quart.easeOut}
 		TweenLite.to @library.boy, 1, {alpha: 0, y: @library.boy.y - 10, ease: Quart.easeOut}
 		TweenLite.to @library.frases, 0.5, {alpha: 0, y: @library.frases - 10, ease: Quart.easeOut}
-	###	
-	setAquarium:  ->
-		aquarium = new createjs.Container()
-		aquarium.x = 120
-		aquarium.y = 80
-
-		fondo = @createBitmap 'aqPropbg', 'aqPropbg', 15, 75
-		aquarium.addChild fondo
-		@addToLibrary fondo
-
-		for i in [0..8]
-			label = @createBitmap @personaje.aquarium[i].id, @personaje.aquarium[i].id, @personaje.aquarium[i].x, @personaje.aquarium[i].y
-			aquarium.addChild label
-			@addToLibrary label
-			
-		for i in [0..0]
-			text = new createjs.Text @preguntas.aquarium[i].statement,'24px Arial','#333'
-			text.x = stageSize.w / 2 - 75
-			text.y = 420
-			text.textAlign = 'center'
-			aquarium.addChild text
-
-		@addToMain aquarium
-		@
-	setMuseum:  ->
-		museum = new createjs.Container()
-		museum.x = 120
-		museum.y = 60
-
-		fondo = @createBitmap 'smPropbg', 'smPropbg', 73, 22
-		museum.addChild fondo
-		@addToLibrary fondo
-
-		for i in [0..7]
-			label = @createBitmap @personaje.museum[i].id, @personaje.museum[i].id, @personaje.museum[i].x, @personaje.museum[i].y
-			museum.addChild label
-			@addToLibrary label
-			
-		for i in [0..0]
-			text = new createjs.Text @preguntas.museum[i].statement,'24px Arial','#333'
-			text.x = stageSize.w / 2 - 75
-			text.y = 440
-			text.textAlign = 'center'
-			museum.addChild text
-
-		@addToMain museum
-		@
-	introEvaluation: ->
-		super
-		
-		for i in [1..6] by 1
-			@observer.subscribe 'init_evaluation', @library['name'+i].onInitEvaluation
-
-		@library['characters'].currentFrame = @answers[@index].id
-
-		TweenLite.from @library['header'], 1, {y:-@library['header'].height}
-		TweenLite.from @library['instructions'], 1, {alpha :0, x: 0, delay: 0.5}
-		TweenLite.from @library['names'], 1, {alpha: 0, y: @library['names'].y + 50, delay: 1}
-		TweenLite.from @library['dropname'], 1, {alpha: 0, y: @library['dropname'].y + 50, delay: 1}
-		TweenLite.from @library['characters'], 1, {alpha: 0, y: @library['characters'].y + 20, delay: 1.5, onComplete: @playInstructions, onCompleteParams: [@]}
-		
-	initEvaluation: (e) =>
-		super
-		@library['characters'].currentFrame = @answers[@index].id
-		createjs.Sound.play @answers[@index].sound
-		TweenLite.to @library['characters'], 0.5, {alpha: 1, y: stageSize.h - 180, ease: Quart.easeOut}
-	evaluateAnswer: (e) =>
-		@answer = e.target
-		pt = @library['dropname'].globalToLocal @stage.mouseX, @stage.mouseY
-		if @library['dropname'].hitTest pt.x, pt.y
-			if @answer.index is @answers[@index].id
-				@answer.blink off
-				setTimeout @finishEvaluation, 1 * 1000
-			else
-				@warning()
-				@answer.returnToPlace()
-		else
-			@answer.returnToPlace()
-	finishEvaluation: =>
-		TweenLite.to @library['characters'], 0.5, {alpha: 0, y: -200, ease: Back.easeOut, onComplete: @nextEvaluation}
-		@answer.returnToPlace()
-	nextEvaluation: =>
-		@index++
-		if @index < @answers.length
-			@library['score'].updateCount( @index )
-			@library['characters'].alpha = 1
-			@library['characters'].y = stageSize.h - 180
-			@library['characters'].currentFrame = @answers[@index].id
-			createjs.Sound.play @answers[@index].sound
-			TweenLite.from @library['characters'], 0.5, {alpha: 0, y: @library['characters'].y + 20, ease: Quart.easeOut}
-		else
-			@finish()
-	repeatSound: =>
-		createjs.Sound.play @answers[@index].sound
-	finish: ->
-		super
-		for i in [1..6] by 1
-			@library['name'+i].blink off
-	###
 	window.U1A3 = U1A3

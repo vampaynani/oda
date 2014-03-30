@@ -19,7 +19,7 @@ class U5A2 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Drag the verbs to complete the song.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 12, aimg: 'c1', acolor: '#ff9933', bimg: 'c2', bcolor: '#bfd951'}
 			scenes:[
 				{
 					answers: {

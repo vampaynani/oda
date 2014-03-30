@@ -162,9 +162,9 @@ NEW ODA
           init: 0,
           total: 12,
           aimg: 'c1',
-          acolor: '#333',
+          acolor: '#ff9933',
           bimg: 'c2',
-          bcolor: '#333'
+          bcolor: '#bfd951'
         },
         scenes: [
           {
@@ -174,7 +174,7 @@ NEW ODA
                   {
                     name: 'global',
                     opts: {
-                      success: 2
+                      success: 1
                     }
                   }, {
                     name: 'snd',

@@ -27,7 +27,7 @@ class U3A6 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Look and drag the letters to complete the crossword puzzle.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 6, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 6, aimg: 'c1', acolor: '#0096DB', bimg: 'c2', bcolor: '#BFD951'}
 			scenes:[
 				{
 					answers: {
@@ -74,7 +74,7 @@ class U3A6 extends Oda
 											}
 											{
 												x: 85, y: 100, target:'painting', complete: false
-												coords:['55', '65', '75', '85', '95', '105', '115']
+												coords:['55', '65', '75', '85', '95', '105', '115', '125']
 											}
 											{
 												x: -15, y: 178, target:'cooking', complete: false
