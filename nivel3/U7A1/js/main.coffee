@@ -1,4 +1,4 @@
-class U8A1 extends Oda
+class U7A1 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -68,6 +68,8 @@ class U8A1 extends Oda
 		#b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
 		#@addToMain b1, b2, b3
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 100, 0
+		@library.score.txtCount.color = "#BFD951"
+		@library.score.txtTotal.color = "#0096DB"
 		@setCards()
 		@introEvaluation()
 	setCards: (e) =>
@@ -148,4 +150,4 @@ class U8A1 extends Oda
 		TweenLite.to [@library.game1btn, @library.game2btn, @library.game3btn], 1, {alpha: 0}
 		TweenLite.to @library.juego, 1, {alpha:0, y:@library.juego.y - 20}
 		super
-	window.U8A1 = U8A1
+	window.U7A1 = U7A1

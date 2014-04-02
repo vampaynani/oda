@@ -117,9 +117,9 @@ NEW ODA
           init: 0,
           total: 20,
           aimg: 'c1',
-          acolor: '#333',
+          acolor: '#0096DB',
           bimg: 'c2',
-          bcolor: '#333'
+          bcolor: '#BFD951'
         },
         scenes: [
           {
@@ -914,50 +914,50 @@ NEW ODA
                 type: 'img',
                 name: 'ln3',
                 id: 'line',
-                x: 430,
-                y: 475,
-                align: 'mc'
-              }, {
-                type: 'img',
-                name: 'ln4',
-                id: 'line',
                 x: 160,
                 y: 505,
                 align: 'mc'
               }, {
                 type: 'img',
-                name: 'ln5',
-                id: 'line',
-                x: 290,
-                y: 505,
-                align: 'mc'
-              }, {
-                type: 'img',
-                name: 'ln6',
+                name: 'ln4',
                 id: 'line',
                 x: 420,
                 y: 505,
                 align: 'mc'
               }, {
                 type: 'img',
-                name: 'ln7',
+                name: 'ln5',
                 id: 'line',
                 x: 150,
                 y: 535,
                 align: 'mc'
               }, {
                 type: 'img',
-                name: 'ln8',
+                name: 'ln6',
+                id: 'line',
+                x: 300,
+                y: 475,
+                align: 'mc'
+              }, {
+                type: 'img',
+                name: 'ln7',
                 id: 'line',
                 x: 280,
                 y: 535,
                 align: 'mc'
               }, {
                 type: 'img',
-                name: 'ln9',
+                name: 'ln8',
                 id: 'line',
                 x: 410,
                 y: 535,
+                align: 'mc'
+              }, {
+                type: 'img',
+                name: 'ln9',
+                id: 'line',
+                x: 430,
+                y: 475,
                 align: 'mc'
               }, {
                 type: 'img',

@@ -25,23 +25,23 @@ class U8A1 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Drag the words to make sentences about the people in the picture.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#FE008F', bimg: 'c2', bcolor: '#0A9BDD'}
 			scenes:[
 				{
 					answers: {
 						collection: [
 							[
 								{name: 'grp_btn', opts:{type:'pulseAll'}}
-								{name: 'pcpt1', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'buy'}, {text:'a'}, {text:'balloon'}]}}
-								{name: 'pcpt2', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'she'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'catch'}, {text:'the'}, {text:'bus'}]}}
-								{name: 'pcpt3', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'she'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'buy'}, {text:'an'}, {text:'ice cream', success:'icecream'}]}}
-								{name: 'pcpt4', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'he'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'go'}, {text:'to'}, {text:'the'}, {text:'movies'}]}}
-								{name: 'pcpt5', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'swim'}, {text:'in'}, {text:'the'}, {text:'ocean'}]}}
-								{name: 'pcpt6', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'eat'}, {text:'pizza'}]}}
-								{name: 'pcpt7', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'he'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'build'}, {text:'a'}, {text:'sandcastle'}]}}
-								{name: 'pcpt8', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'go'}, {text:'scuba'}, {text:'diving'}]}}
-								{name: 'pcpt9', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt'], targets: [{text:'he'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'go'}, {text:'shopping'}]}}
-								{name: 'pcpt10', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'she'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'hit'}, {text:'the'}, {text:'ball'}]}}
+								{name: 'pcpt1', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'buy'}, {text:'a'}, {text:'balloon'}], label:'t1'}}
+								{name: 'pcpt2', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'she'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'catch'}, {text:'the'}, {text:'bus'}], label:'t2'}}
+								{name: 'pcpt3', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'she'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'buy'}, {text:'an'}, {text:'ice cream', success:'icecream'}], label:'t3'}}
+								{name: 'pcpt4', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'he'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'go'}, {text:'to'}, {text:'the'}, {text:'movies'}], label:'t4'}}
+								{name: 'pcpt5', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'swim'}, {text:'in'}, {text:'the'}, {text:'ocean'}], label:'t5'}}
+								{name: 'pcpt6', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'eat'}, {text:'pizza'}], label:'t6'}}
+								{name: 'pcpt7', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'he'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'build'}, {text:'a'}, {text:'sandcastle'}], label:'t7'}}
+								{name: 'pcpt8', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt', '#tcpt'], targets: [{text:'they'}, {text:'are'}, {text:'going'}, {text:'to'}, {text:'go'}, {text:'scuba'}, {text:'diving'}], label:'t8'}}
+								{name: 'pcpt9', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt'], targets: [{text:'he'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'go'}, {text:'shopping'}], label:'t9'}}
+								{name: 'pcpt10', opts:{pattern:['#tcpt', '#tcpt', '#tcpt', '#tcpt', '#tcpt',  '#tcpt', '#tcpt'], targets: [{text:'she'}, {text:'is'}, {text:'going'}, {text:'to'}, {text:'hit'}, {text:'the'}, {text:'ball'}], label:'t10'}}
 							]
 						]
 						type: 'steps'
@@ -52,43 +52,43 @@ class U8A1 extends Oda
 						{type: 'img', id: 'imgshopping', x: 557, y: 422, scale: 0.5, align: 'mr'}
 						{type: 'img', id: 'imgvolleyball', x: 445, y: 351, scale: 0.5, align: 'mr'}
 						{
-							type: 'btn', id: 'btn1', x: 477, y: 319, index: 1, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn1', x: 477, y: 319, index: 1, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgballon', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn2', x: 392, y: 462, index: 2, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn2', x: 392, y: 462, index: 2, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgbus', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn3', x: 190, y: 259, index: 3, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn3', x: 190, y: 259, index: 3, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgicecream', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn4', x: 699, y: 421, index: 4, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn4', x: 699, y: 421, index: 4, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgmovies', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn5', x: 316, y: 264, index: 5, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn5', x: 316, y: 264, index: 5, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgocean', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn6', x: 233, y: 415, index: 6, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn6', x: 233, y: 415, index: 6, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgpizza', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn7', x: 554, y: 305, index: 7, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn7', x: 554, y: 305, index: 7, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgsandcastle', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn8', x: 696, y: 236, index: 8, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn8', x: 696, y: 236, index: 8, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgscuba', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn9', x: 558, y: 423, index: 9, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn9', x: 558, y: 423, index: 9, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgshopping', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{
-							type: 'btn', id: 'btn10', x: 446, y: 352, index: 10, target: ['grp_txt','grp_pcpt'], eval: 'show_choose_01'
+							type: 'btn', id: 'btn10', x: 446, y: 352, index: 10, target: ['grp_txt','grp_pcpt'], overTween: false, eval: 'show_choose_01'
 							states: [{img: {name: 'imgvolleyball', x: 0, y: 0, scale: 0.5, align: 'mr'}}]
 						}
 						{type: 'txt', id: 't1', text:'What are they going to buy?', x: 400, y: 515, font:'18px Quicksand', align: 'center'}

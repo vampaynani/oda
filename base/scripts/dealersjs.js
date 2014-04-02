@@ -159,39 +159,75 @@ LIBRARY
     _base3.actions = Actions = (function() {
       function Actions() {}
 
-      Actions.fadeOut = function() {
+      Actions.fadeOut = function(ignoreY, ignoreCurrentAlpha) {
+        if (ignoreY == null) {
+          ignoreY = false;
+        }
+        if (ignoreCurrentAlpha == null) {
+          ignoreCurrentAlpha = false;
+        }
         TweenMax.killTweensOf(this);
         TweenLite.killTweensOf(this);
-        if (this.alpha === 0) {
-          this.y -= 20;
-          return TweenLite.from(this, 0.5, {
-            alpha: 1,
-            y: this.y + 20
-          });
+        if (this.alpha === 0 && ignoreCurrentAlpha === false) {
+          if (ignoreY) {
+            return TweenLite.from(this, 0.5, {
+              alpha: 1
+            });
+          } else {
+            this.y -= 20;
+            return TweenLite.from(this, 0.5, {
+              alpha: 1,
+              y: this.y + 20
+            });
+          }
         } else {
-          this.y += 20;
-          return TweenLite.to(this, 0.5, {
-            alpha: 0,
-            y: this.y - 20
-          });
+          if (ignoreY) {
+            return TweenLite.to(this, 0.5, {
+              alpha: 0
+            });
+          } else {
+            this.y += 20;
+            return TweenLite.to(this, 0.5, {
+              alpha: 0,
+              y: this.y - 20
+            });
+          }
         }
       };
 
-      Actions.fadeIn = function() {
+      Actions.fadeIn = function(ignoreY, ignoreCurrentAlpha) {
+        if (ignoreY == null) {
+          ignoreY = false;
+        }
+        if (ignoreCurrentAlpha == null) {
+          ignoreCurrentAlpha = false;
+        }
         TweenMax.killTweensOf(this);
         TweenLite.killTweensOf(this);
-        if (this.alpha === 1) {
-          this.y -= 20;
-          return TweenLite.from(this, 0.5, {
-            alpha: 0,
-            y: this.y + 20
-          });
+        if (this.alpha === 1 && ignoreCurrentAlpha === false) {
+          if (ignoreY) {
+            return TweenLite.from(this, 0.5, {
+              alpha: 0
+            });
+          } else {
+            this.y -= 20;
+            return TweenLite.from(this, 0.5, {
+              alpha: 0,
+              y: this.y + 20
+            });
+          }
         } else {
-          this.y += 20;
-          return TweenLite.to(this, 0.5, {
-            alpha: 1,
-            y: this.y - 20
-          });
+          if (ignoreY) {
+            return TweenLite.to(this, 0.5, {
+              alpha: 1
+            });
+          } else {
+            this.y += 20;
+            return TweenLite.to(this, 0.5, {
+              alpha: 1,
+              y: this.y - 20
+            });
+          }
         }
       };
 
@@ -370,7 +406,7 @@ LIBRARY
             height: h
           }
         });
-        animation = new createjs.BitmapAnimation(sprite);
+        animation = new createjs.Sprite(sprite);
         animation.x = x;
         animation.y = y;
         animation.width = w;
@@ -534,7 +570,6 @@ LIBRARY
       Evaluator.evaluateFinish = function(target) {
         var drop, tgt, _i, _j, _len, _len1, _ref, _ref1;
         if (lib[target].droptargets) {
-          console.log(lib[target].droptargets);
           _ref = lib[target].droptargets;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             drop = _ref[_i];
@@ -585,7 +620,6 @@ LIBRARY
             });
             failed = false;
           }
-          console.log(lib[dispatcher].index, droptarget.success, failed);
         }
         if (failed) {
           lib.scene.fail();
@@ -834,6 +868,7 @@ LIBRARY
           target.parent.currentTarget++;
           if (target.parent.currentTarget === target.parent.droptargets.length) {
             target.parent.fadeOut();
+            target.parent.hideLabel();
             return lib.scene.success();
           }
         } else {
@@ -885,8 +920,11 @@ LIBRARY
       };
 
       Evaluator.evaluateShowChoose01 = function(dispatcher, target) {
-        var g, i, index, t, _i, _len, _results;
-        console.log(dispatcher, target);
+        var g, i, index, scaleY, t, _i, _len, _results;
+        TweenMax.killTweensOf(lib[dispatcher]);
+        TweenLite.killTweensOf(lib[dispatcher]);
+        lib[dispatcher].alpha = 1;
+        lib[dispatcher].scaleX = scaleY = 1;
         index = lib[dispatcher].index - 1;
         if (d2oda.utilities.isArray(target)) {
           _results = [];
@@ -1441,7 +1479,8 @@ LIBRARY
     }
 
     ComponentGroup.prototype.update = function(opts) {
-      var item, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2, _ref3, _ref4, _ref5, _results, _results1;
+      var ignoreCurrentAlpha, ignoreY, item, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _len5, _m, _n, _ref1, _ref10, _ref11, _ref12, _ref13, _ref14, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9, _results, _results1;
+      console.log(this.name, opts);
       switch (opts.type) {
         case 'blinkAll':
           _ref1 = this.group;
@@ -1461,10 +1500,21 @@ LIBRARY
           }
           return _results1;
           break;
-        case 'blink':
+        case 'pulse':
           _ref3 = this.group;
           for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
             item = _ref3[_k];
+            TweenMax.killTweensOf(lib[item]);
+            TweenLite.killTweensOf(lib[item]);
+          }
+          if (opts.target) {
+            return lib[opts.target].pulse();
+          }
+          break;
+        case 'blink':
+          _ref4 = this.group;
+          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+            item = _ref4[_l];
             TweenMax.killTweensOf(lib[item]);
             TweenLite.killTweensOf(lib[item]);
           }
@@ -1473,33 +1523,40 @@ LIBRARY
           }
           break;
         case 'fadeIn':
-          _ref4 = this.group;
-          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-            item = _ref4[_l];
-            TweenMax.killTweensOf(lib[item]);
-            TweenLite.killTweensOf(lib[item]);
-            lib[item].alpha = 0;
-            if (!opts.target) {
-              lib[item].fadeOut();
-            }
-          }
-          if (opts.target) {
-            return lib[opts.target].fadeIn();
-          }
-          break;
-        case 'fadeOut':
           _ref5 = this.group;
           for (_m = 0, _len4 = _ref5.length; _m < _len4; _m++) {
             item = _ref5[_m];
             TweenMax.killTweensOf(lib[item]);
             TweenLite.killTweensOf(lib[item]);
-            lib[item].alpha = 1;
+            lib[item].alpha = 0;
             if (!opts.target) {
-              lib[item].fadeOut();
+              ignoreY = (_ref6 = opts.ignoreY) != null ? _ref6 : false;
+              ignoreCurrentAlpha = (_ref7 = opts.ignoreCurrentAlpha) != null ? _ref7 : false;
+              lib[item].fadeIn(ignoreY, ignoreCurrentAlpha);
             }
           }
           if (opts.target) {
-            return lib[opts.target].fadeOut();
+            ignoreY = (_ref8 = opts.ignoreY) != null ? _ref8 : false;
+            ignoreCurrentAlpha = (_ref9 = opts.ignoreCurrentAlpha) != null ? _ref9 : false;
+            return lib[opts.target].fadeIn(ignoreY, ignoreCurrentAlpha);
+          }
+          break;
+        case 'fadeOut':
+          _ref10 = this.group;
+          for (_n = 0, _len5 = _ref10.length; _n < _len5; _n++) {
+            item = _ref10[_n];
+            TweenMax.killTweensOf(lib[item]);
+            TweenLite.killTweensOf(lib[item]);
+            if (!opts.target) {
+              ignoreY = (_ref11 = opts.ignoreY) != null ? _ref11 : false;
+              ignoreCurrentAlpha = (_ref12 = opts.ignoreCurrentAlpha) != null ? _ref12 : false;
+              lib[item].fadeOut(ignoreY, ignoreCurrentAlpha);
+            }
+          }
+          if (opts.target) {
+            ignoreY = (_ref13 = opts.ignoreY) != null ? _ref13 : false;
+            ignoreCurrentAlpha = (_ref14 = opts.ignoreCurrentAlpha) != null ? _ref14 : false;
+            return lib[opts.target].fadeOut(ignoreY, ignoreCurrentAlpha);
           }
           break;
         case 'success':
@@ -1960,7 +2017,7 @@ LIBRARY
       this.y = opts.y;
       this.scaleX = (_ref4 = opts.scale) != null ? _ref4 : 1;
       this.scaleY = (_ref5 = opts.scale) != null ? _ref5 : 1;
-      this.sprite = this.createSprite(this.name, opts.imgs, opts.frames, 0, 0, align);
+      this.sprite = this.createSprite("sp_" + this.name, opts.imgs, opts.frames, 0, 0, align);
       this.width = this.sprite.width;
       this.height = this.sprite.height;
       this.mouseEnabled = true;
@@ -1994,13 +2051,18 @@ LIBRARY
       this.droptargets = [this.sprite];
       this.success = opts.success;
       this.storyboard = opts.storyboard;
+      if (opts.goto) {
+        this.goto(opts.goto);
+      }
       return this.observer.notify(ComponentObserver.UPDATED);
     };
 
     SpriteContainer.prototype.isComplete = function() {
       TweenLite.killTweensOf(this);
       TweenMax.killTweensOf(this);
-      this.alpha = 1;
+      if (this.alpha !== 0) {
+        this.alpha = 1;
+      }
       return this.sprite.currentFrame > 0;
     };
 
@@ -2062,7 +2124,7 @@ LIBRARY
           this.afterFail = this.hide;
           break;
         case 'inplace':
-          this.afterSuccess = this.putInPlace;
+          this.afterFail = this.putInPlace;
           break;
         case 'return':
           this.afterFail = this.returnToPlace;
@@ -2147,8 +2209,15 @@ LIBRARY
         drop = _ref2[_i];
         pt = drop.globalToLocal(oda.stage.mouseX, oda.stage.mouseY);
         if (drop.hitTest(pt.x, pt.y)) {
-          target = drop;
-          dropped = true;
+          if (drop instanceof createjs.Sprite) {
+            if (drop.parent.alpha > 0) {
+              target = drop;
+              dropped = true;
+            }
+          } else {
+            target = drop;
+            dropped = true;
+          }
         }
       }
       if (dropped) {
@@ -2178,7 +2247,7 @@ LIBRARY
     }
 
     ButtonContainer.prototype.initialize = function(opts) {
-      var _ref2, _ref3,
+      var _ref2, _ref3, _ref4, _ref5,
         _this = this;
       this.Container_initialize();
       Module.extend(this, d2oda.actions);
@@ -2186,12 +2255,17 @@ LIBRARY
       Module.extend(this, d2oda.utilities);
       this.x = opts.x;
       this.y = opts.y;
+      this.txtFont = '20px Arial';
+      this.txtColor = '#333';
+      this.txtAlign = 'left';
       this.index = opts.index;
       this.name = (_ref2 = opts.name) != null ? _ref2 : opts.id;
       this.scale = (_ref3 = opts.scale) != null ? _ref3 : 1;
       this.states = opts.states;
       this.currentState = 0;
+      this.overTween = (_ref4 = opts.overTween) != null ? _ref4 : true;
       this.setImageText(this.states[this.currentState].img, this.states[this.currentState].txt);
+      this.alpha = (_ref5 = opts.alpha) != null ? _ref5 : 1;
       if (this.isArray(opts.target)) {
         this.target = opts.target;
       } else {
@@ -2200,25 +2274,27 @@ LIBRARY
       if (opts.target) {
         this.target = lib[opts.target];
       }
-      this.addEventListener('mouseover', function() {
-        if (opts.overScale) {
-          return TweenLite.to(_this, 0.5, {
-            scaleX: opts.overScale,
-            scaleY: opts.overScale
-          });
-        } else {
-          return TweenLite.to(_this, 0.5, {
-            scaleX: 1.2,
-            scaleY: 1.2
-          });
-        }
-      });
-      this.addEventListener('mouseout', function() {
-        return TweenLite.to(_this, 0.5, {
-          scaleX: _this.scale,
-          scaleY: _this.scale
+      if (this.overTween) {
+        this.addEventListener('mouseover', function() {
+          if (opts.overScale) {
+            return TweenLite.to(_this, 0.5, {
+              scaleX: opts.overScale,
+              scaleY: opts.overScale
+            });
+          } else {
+            return TweenLite.to(_this, 0.5, {
+              scaleX: 1.2,
+              scaleY: 1.2
+            });
+          }
         });
-      });
+        this.addEventListener('mouseout', function() {
+          return TweenLite.to(_this, 0.5, {
+            scaleX: _this.scale,
+            scaleY: _this.scale
+          });
+        });
+      }
       return this.addEventListener('click', function() {
         if (opts.isRepeat) {
           return d2oda.evaluator.evaluate('repeat');
@@ -2231,14 +2307,14 @@ LIBRARY
     };
 
     ButtonContainer.prototype.setImageText = function(img, txt) {
-      var align, b, color, font, hit, t, text, x, y, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var align, b, hit, t, text, x, y, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       this.removeAllChildren();
       this.alpha = 1;
       if (img) {
         x = (_ref2 = img.x) != null ? _ref2 : 0;
         y = (_ref3 = img.y) != null ? _ref3 : 0;
         align = (_ref4 = img.align) != null ? _ref4 : '';
-        b = this.createBitmap('img', img.name, x, y, align);
+        b = this.createBitmap('#{@name}_img', img.name, x, y, align);
         if (img.scale) {
           b.scaleX = b.scaleY = img.scale;
         }
@@ -2246,12 +2322,12 @@ LIBRARY
       }
       if (txt) {
         text = (_ref5 = txt.text) != null ? _ref5 : '';
-        font = (_ref6 = txt.font) != null ? _ref6 : '20px Arial';
-        color = (_ref7 = txt.color) != null ? _ref7 : '#333';
+        this.txtFont = (_ref6 = txt.font) != null ? _ref6 : this.txtFont;
+        this.txtColor = (_ref7 = txt.color) != null ? _ref7 : this.txtColor;
         x = (_ref8 = txt.x) != null ? _ref8 : 0;
         y = (_ref9 = txt.y) != null ? _ref9 : 0;
-        align = (_ref10 = txt.align) != null ? _ref10 : '';
-        t = this.createText('txt', text, font, color, x, y, align);
+        this.txtAlign = (_ref10 = txt.align) != null ? _ref10 : this.txtAlign;
+        t = this.createText('#{@name}_txt', text, this.txtFont, this.txtColor, x, y, this.txtAlign);
         if (txt.lineWidth) {
           t.lineWidth = txt.lineWidth;
         }
@@ -2812,11 +2888,21 @@ LIBRARY
       return this.textlist = new Array();
     };
 
+    PhraseCompleterContainer.prototype.hideLabel = function() {
+      console.log(this.label);
+      if (this.label !== '') {
+        return TweenLite.to(lib[this.label], 0.5, {
+          alpha: 0
+        });
+      }
+    };
+
     PhraseCompleterContainer.prototype.update = function(opts) {
-      var align, h, h2, i, maxWidth, npos, t, txt, ypos, _i, _len, _ref2, _ref3;
+      var align, h, h2, i, maxWidth, npos, t, txt, ypos, _i, _len, _ref2, _ref3, _ref4;
       this.removeAllChildren();
+      this.label = (_ref2 = opts.label) != null ? _ref2 : '';
       if (opts.h2) {
-        align = (_ref2 = opts.h2.align) != null ? _ref2 : '';
+        align = (_ref3 = opts.h2.align) != null ? _ref3 : '';
         h2 = this.createText('h2', opts.h2.text, this.font, this.color, opts.h2.x, opts.h2.y, align);
         this.add(h2, false);
       }
@@ -2827,9 +2913,9 @@ LIBRARY
       npos = 0;
       ypos = -5;
       maxWidth = 0;
-      _ref3 = opts.pattern;
-      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
-        t = _ref3[_i];
+      _ref4 = opts.pattern;
+      for (_i = 0, _len = _ref4.length; _i < _len; _i++) {
+        t = _ref4[_i];
         if (t === '#tcpt') {
           txt = opts.targets[i];
           h = new TextCompleterContainer(txt, this.font, this.fcolor, this.bcolor, this.scolor, this.stroke, npos, ypos);
@@ -2847,7 +2933,7 @@ LIBRARY
             maxWidth = npos;
           }
           npos = 0;
-          ypos += h.getMeasuredHeight();
+          ypos += h.getMeasuredHeight() + h.getMeasuredHeight() * 0.2;
         } else {
           h = this.createText('txt', t, this.font, this.fcolor, npos, ypos);
           this.textlist.push(h);
@@ -2859,7 +2945,6 @@ LIBRARY
         }
       }
       this.width = maxWidth;
-      console.log(this.textlist);
       this.setPosition(this.align);
       this.observer.notify(ComponentObserver.UPDATED);
       return TweenLite.from(this, 0.3, {
@@ -3146,15 +3231,16 @@ LIBRARY
     };
 
     WordSearchContainer.prototype.isComplete = function() {
-      var word, _i, _len, _ref2;
+      var complete, word, _i, _len, _ref2;
+      complete = true;
       _ref2 = this.words;
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
         word = _ref2[_i];
         if (word.complete === false) {
-          false;
+          complete = false;
         }
       }
-      return true;
+      return complete;
     };
 
     return WordSearchContainer;
@@ -3632,7 +3718,7 @@ LIBRARY
       this.x = x;
       this.y = y;
       this.success = (_ref2 = opts.success) != null ? _ref2 : opts.text;
-      this.text = this.createText('txt', opts.text, font, fcolor, 0, -5);
+      this.text = this.createText('txt', opts.text, font, fcolor, 0, -2);
       this.width = (_ref3 = opts.width) != null ? _ref3 : this.text.getMeasuredWidth();
       this.height = (_ref4 = opts.height) != null ? _ref4 : this.text.getMeasuredHeight();
       this.complete = false;
@@ -3778,7 +3864,7 @@ LIBRARY
           this.afterFail = this.hide;
           break;
         case 'inplace':
-          this.afterSuccess = this.putInPlace;
+          this.afterFail = this.putInPlace;
           break;
         case 'return':
           this.afterFail = this.returnToPlace;
@@ -3856,7 +3942,6 @@ LIBRARY
       var drop, dropped, pt, target, _i, _len, _ref2;
       target = null;
       dropped = false;
-      console.log('drop');
       _ref2 = this.droptargets;
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
         drop = _ref2[_i];
@@ -4261,7 +4346,6 @@ LIBRARY
         lib.score.plusOne();
       }
       step = this.answers[this.currentStep];
-      console.log(step);
       if (step && step.length > 0) {
         for (_i = 0, _len = step.length; _i < _len; _i++) {
           target = step[_i];

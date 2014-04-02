@@ -81,9 +81,9 @@ NEW ODA
           init: 0,
           total: 10,
           aimg: 'c1',
-          acolor: '#333',
+          acolor: '#FE008F',
           bimg: 'c2',
-          bcolor: '#333'
+          bcolor: '#0A9BDD'
         },
         scenes: [
           {
@@ -115,7 +115,8 @@ NEW ODA
                         }, {
                           text: 'balloon'
                         }
-                      ]
+                      ],
+                      label: 't1'
                     }
                   }, {
                     name: 'pcpt2',
@@ -137,7 +138,8 @@ NEW ODA
                         }, {
                           text: 'bus'
                         }
-                      ]
+                      ],
+                      label: 't2'
                     }
                   }, {
                     name: 'pcpt3',
@@ -160,7 +162,8 @@ NEW ODA
                           text: 'ice cream',
                           success: 'icecream'
                         }
-                      ]
+                      ],
+                      label: 't3'
                     }
                   }, {
                     name: 'pcpt4',
@@ -184,7 +187,8 @@ NEW ODA
                         }, {
                           text: 'movies'
                         }
-                      ]
+                      ],
+                      label: 't4'
                     }
                   }, {
                     name: 'pcpt5',
@@ -208,7 +212,8 @@ NEW ODA
                         }, {
                           text: 'ocean'
                         }
-                      ]
+                      ],
+                      label: 't5'
                     }
                   }, {
                     name: 'pcpt6',
@@ -228,7 +233,8 @@ NEW ODA
                         }, {
                           text: 'pizza'
                         }
-                      ]
+                      ],
+                      label: 't6'
                     }
                   }, {
                     name: 'pcpt7',
@@ -250,7 +256,8 @@ NEW ODA
                         }, {
                           text: 'sandcastle'
                         }
-                      ]
+                      ],
+                      label: 't7'
                     }
                   }, {
                     name: 'pcpt8',
@@ -272,7 +279,8 @@ NEW ODA
                         }, {
                           text: 'diving'
                         }
-                      ]
+                      ],
+                      label: 't8'
                     }
                   }, {
                     name: 'pcpt9',
@@ -292,7 +300,8 @@ NEW ODA
                         }, {
                           text: 'shopping'
                         }
-                      ]
+                      ],
+                      label: 't9'
                     }
                   }, {
                     name: 'pcpt10',
@@ -314,7 +323,8 @@ NEW ODA
                         }, {
                           text: 'ball'
                         }
-                      ]
+                      ],
+                      label: 't10'
                     }
                   }
                 ]
@@ -348,6 +358,7 @@ NEW ODA
                 y: 319,
                 index: 1,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -367,6 +378,7 @@ NEW ODA
                 y: 462,
                 index: 2,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -386,6 +398,7 @@ NEW ODA
                 y: 259,
                 index: 3,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -405,6 +418,7 @@ NEW ODA
                 y: 421,
                 index: 4,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -424,6 +438,7 @@ NEW ODA
                 y: 264,
                 index: 5,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -443,6 +458,7 @@ NEW ODA
                 y: 415,
                 index: 6,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -462,6 +478,7 @@ NEW ODA
                 y: 305,
                 index: 7,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -481,6 +498,7 @@ NEW ODA
                 y: 236,
                 index: 8,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -500,6 +518,7 @@ NEW ODA
                 y: 423,
                 index: 9,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {
@@ -519,6 +538,7 @@ NEW ODA
                 y: 352,
                 index: 10,
                 target: ['grp_txt', 'grp_pcpt'],
+                overTween: false,
                 "eval": 'show_choose_01',
                 states: [
                   {

@@ -376,7 +376,6 @@
       this.scene = scene;
       nube = this.createBitmap(this.game[scene - 1].nube.id, this.game[scene - 1].nube.id, this.game[scene - 1].nube.x, this.game[scene - 1].nube.y);
       cuento.addChild(nube);
-      console.log(this.game[scene - 1].positions);
       for (i = _i = 1, _ref = this.game[scene - 1].positions.length; _i <= _ref; i = _i += 1) {
         m = this.createSprite("sc" + i, ["" + this.game[scene - 1].positions[i - 1].id, "" + this.game[scene - 1].positions[i - 1].id + "b"], null, this.game[scene - 1].positions[i - 1].x, this.game[scene - 1].positions[i - 1].y);
         hit = new createjs.Shape();

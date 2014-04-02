@@ -19,6 +19,51 @@ class U8A2 extends Oda
 			{id: 'menuRenee', src:'renee.png'}
 			{id: 'menuSam', src:'sam.png'}
 			{id: 'menuWilson', src:'wilson.png'}
+			{id: 'centerAshton', src:'b_ashton.png'}
+			{id: 'centerCarla', src:'b_carla.png'}
+			{id: 'centerEva', src:'b_eva.png'}
+			{id: 'centerJack', src:'b_jack.png'}
+			{id: 'centerKevin', src:'b_kevin.png'}
+			{id: 'centerMarissa', src:'b_marissa.png'}
+			{id: 'centerRenee', src:'b_renee.png'}
+			{id: 'centerSam', src:'b_sam.png'}
+			{id: 'centerWilson', src:'b_wilson.png'}
+			{id: 'caja0Ashton', src:'caja_ashton.png'}
+			{id: 'caja1Ashton', src:'caja1_ashton.png'}
+			{id: 'caja0Carla', src:'caja_carla.png'}
+			{id: 'caja1Carla', src:'caja1_carla.png'}
+			{id: 'caja0Eva', src:'caja_eva.png'}
+			{id: 'caja1Eva', src:'caja1_eva.png'}
+			{id: 'caja0Jack', src:'caja_jack.png'}
+			{id: 'caja1Jack', src:'caja1_jack.png'}
+			{id: 'caja0Kevin', src:'caja_kevin.png'}
+			{id: 'caja1Kevin', src:'caja1_kevin.png'}
+			{id: 'caja0Marissa', src:'caja_marissa.png'}
+			{id: 'caja1Marissa', src:'caja1_marissa.png'}
+			{id: 'caja0Renee', src:'caja_renee.png'}
+			{id: 'caja1Renee', src:'caja1_renee.png'}
+			{id: 'caja0Sam', src:'caja_sam.png'}
+			{id: 'caja1Sam', src:'caja1_sam.png'}
+			{id: 'caja0Wilson', src:'caja_wilson.png'}
+			{id: 'caja1Wilson', src:'caja1_wilson.png'}
+			{id: 'globo0Ashton', src:'globo_ashton.png'}
+			{id: 'globo1Ashton', src:'globo1_ashton.png'}
+			{id: 'globo0Carla', src:'globo00_carla.png'}
+			{id: 'globo1Carla', src:'globo01_carla.png'}
+			{id: 'globo0Eva', src:'globo_eva.png'}
+			{id: 'globo1Eva', src:'globo1_eva.png'}
+			{id: 'globo0Jack', src:'globo_jack.png'}
+			{id: 'globo1Jack', src:'globo1_jack.png'}
+			{id: 'globo0Kevin', src:'globo_kevin.png'}
+			{id: 'globo1Kevin', src:'globo1_kevin.png'}
+			{id: 'globo0Marissa', src:'globo_marissa.png'}
+			{id: 'globo1Marissa', src:'globo1_marissa.png'}
+			{id: 'globo0Renee', src:'globo_renee.png'}
+			{id: 'globo1Renee', src:'globo1_renee.png'}
+			{id: 'globo0Sam', src:'globo_sam.png'}
+			{id: 'globo1Sam', src:'globo1_sam.png'}
+			{id: 'globo0Wilson', src:'globo_wilson.png'}
+			{id: 'globo1Wilson', src:'globo1_wilson.png'}
 			{id: 'ballonAshtonDragble', src:'ballon_ashton_dragble.png'}
 			{id: 'ballonCarlaDragble', src:'ballon_carla_dragble.png'}
 			{id: 'ballonEvaDragble', src:'ballon_eva_dragble.png'}
@@ -37,118 +82,244 @@ class U8A2 extends Oda
 			{id: 'imageReneeDragble', src:'image_renee_dragble.png'}
 			{id: 'imageSamDragble', src:'image_sam_dragble.png'}
 			{id: 'imageWilsonDragble', src:'image_wilson_dragble.png'}
-			{id: 'spAshtonBig1', src:'prop_ashton_big0001.png'}
-			{id: 'spAshtonBig2', src:'prop_ashton_big0002.png'}
-			{id: 'spCarlaBig1', src:'prop_carla_big0001.png'}
-			{id: 'spCarlaBig2', src:'prop_carla_big0002.png'}
-			{id: 'spEvaBig1', src:'prop_eva_big0001.png'}
-			{id: 'spEvaBig2', src:'prop_eva_big0002.png'}
-			{id: 'spJackBig1', src:'prop_jack_big0001.png'}
-			{id: 'spJackBig2', src:'prop_jack_big0002.png'}
-			{id: 'spKevinBig1', src:'prop_kevin_big0001.png'}
-			{id: 'spKevinBig2', src:'prop_kevin_big0002.png'}
-			{id: 'spMarissaBig1', src:'prop_marissa_big0001.png'}
-			{id: 'spMarissaBig2', src:'prop_marissa_big0002.png'}
-			{id: 'spReneeBig1', src:'prop_renee_big0001.png'}
-			{id: 'spReneeBig2', src:'prop_renee_big0002.png'}
-			{id: 'spSamBig1', src:'prop_sam_big0001.png'}
-			{id: 'spSamBig2', src:'prop_sam_big0002.png'}
-			{id: 'spWilsonBig1', src:'prop_wilson_big0001.png'}
-			{id: 'spWilsonBig2', src:'prop_wilson_big0002.png'}
 			{src:'TU3_U8_A2_instructions.mp3', id:'s/instructions'}
-			{src:'TU3_U8_A2_ashton.mp3', id:'s/ashton'}
-			{src:'TU3_U8_A2_carla.mp3', id:'s/carla'}
-			{src:'TU3_U8_A2_eva.mp3', id:'s/eva'}
-			{src:'TU3_U8_A2_jack.mp3', id:'s/jack'}
-			{src:'TU3_U8_A2_kevin.mp3', id:'s/kevin'}
-			{src:'TU3_U8_A2_marissa.mp3', id:'s/marissa'}
-			{src:'TU3_U8_A2_renee.mp3', id:'s/renee'}
-			{src:'TU3_U8_A2_sam.mp3', id:'s/sam'}
-			{src:'TU3_U8_A2_wilson.mp3', id:'s/wilson'}
+			{src:'TU3_U8_A2_ashton.mp3', id:'s/Ashton'}
+			{src:'TU3_U8_A2_carla.mp3', id:'s/Carla'}
+			{src:'TU3_U8_A2_eva.mp3', id:'s/Eva'}
+			{src:'TU3_U8_A2_jack.mp3', id:'s/Jack'}
+			{src:'TU3_U8_A2_kevin.mp3', id:'s/Kevin'}
+			{src:'TU3_U8_A2_marissa.mp3', id:'s/Marissa'}
+			{src:'TU3_U8_A2_renee.mp3', id:'s/Renee'}
+			{src:'TU3_U8_A2_sam.mp3', id:'s/Sam'}
+			{src:'TU3_U8_A2_wilson.mp3', id:'s/Wilson'}
 		]
 		@btnClick = (dispatcher, target) =>
-			console.log @, dispatcher, target
 			@selection = lib[dispatcher].index
+			lib[dispatcher].scaleX = lib[dispatcher].scaleY = 1
 			lib[dispatcher].removeAllEventListeners()
-			lib.grp_btn.update {type:'fadeOut'}
-			#lib.grp_idrags.update {type:'fadeIn'}
-			#lib.grp_tdrags.update {type:'fadeIn'}
-			#lib.grp_sprites.update {type:'fadeIn', target:"sp#{@selection}"}
+			lib.grp_buttons.update {type:'fadeOut'}
+			lib.grp_center.update {type:'fadeIn', ignoreY:true, ignoreCurrentAlpha:true, target:"center#{@selection}"}
+			lib.grp_caja.update {type:'fadeIn', ignoreY:true, ignoreCurrentAlpha:true, target:"caja#{@selection}"}
+			lib.grp_globo.update {type:'fadeIn', ignoreY:true, ignoreCurrentAlpha:true, target:"globo#{@selection}"}
+			lib.grp_drags.update {type:'fadeIn'}
+			lib.scene.snd = "s/#{@selection}"
+			createjs.Sound.stop()
+			createjs.Sound.play "s/#{@selection}"
+			lib.repeat.alpha = 1
 		@drgDrop = (dispatcher, target) =>
-			console.log @, dispatcher, target
+			a = lib[dispatcher]
+			b = target.parent
+			if a.index is b.success
+				b.goto 1
+				a.afterSuccess()
+				lib.scene.success true, false
+			else
+				a.afterFail()
+				lib.scene.fail()
+			if lib["globo#{@selection}"].sprite.currentFrame is 1 and lib["caja#{@selection}"].sprite.currentFrame is 1
+				d2oda.methods.delay 1000, ->
+					lib.grp_center.update {type:'fadeOut', ignoreY:true, ignoreCurrentAlpha:true}
+					lib.grp_caja.update {type:'fadeOut', ignoreY:true, ignoreCurrentAlpha:true}
+					lib.grp_globo.update {type:'fadeOut', ignoreY:true, ignoreCurrentAlpha:true}
+					lib.grp_buttons.update {type:'fadeIn'}
+					lib.grp_drags.update {type:'fadeOut'}
+					lib.repeat.alpha = 0
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Click, listen and match.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 18, aimg: 'c1', acolor: '#FE008F', bimg: 'c2', bcolor: '#0A9BDD'}
 			scenes:[
 				{
 					answers: {
-						collection: []
+						collection: [
+							[
+								{name: 'grp_buttons', opts:{type:'fadeIn'}}
+								{name:'cajaWilson', opts:{success:'wilson'}}
+								{name:'globoWilson', opts:{success:'wilson'}}
+								{name:'cajaJack', opts:{success:'jack'}}
+								{name:'globoJack', opts:{success:'jack'}}
+								{name:'cajaRenee', opts:{success:'renee'}}
+								{name:'globoRenee', opts:{success:'renee'}}
+								{name:'cajaAshton', opts:{success:'ashton'}}
+								{name:'globoAshton', opts:{success:'ashton'}}
+								{name:'cajaEva', opts:{success:'eva'}}
+								{name:'globoEva', opts:{success:'eva'}}
+								{name:'cajaKevin', opts:{success:'kevin'}}
+								{name:'globoKevin', opts:{success:'kevin'}}
+								{name:'cajaMarissa', opts:{success:'marissa'}}
+								{name:'globoMarissa', opts:{success:'marissa'}}
+								{name:'cajaSam', opts:{success:'sam'}}
+								{name:'globoSam', opts:{success:'sam'}}
+								{name:'cajaCarla', opts:{success:'carla'}}
+								{name:'globoCarla', opts:{success:'carla'}}
+							]
+						]
 						type: 'steps'
 					}
 					containers:[
 						{
-							type: 'btn', id: 'btn1', x: 100, y: 290, index: 1, target: null
+							type: 'btn', id: 'btn1', x: 100, y: 290, index: 'Wilson', target: null
 							eval: @btnClick
-							states: [{img: {name: 'menuAshton', x: 0, y: 0, align: 'bc'}}]
+							states: [{img: {name: 'menuWilson', x: 0, y: 0, align: 'bc'}}]
 						}
 						{
-							type: 'btn', id: 'btn2', x: 250, y: 290, index: 2, target: null
-							eval: @btnClick
-							states: [{img: {name: 'menuCarla', x: 0, y: 0, align: 'bc'}}]
-						}
-						{
-							type: 'btn', id: 'btn3', x: 400, y: 290, index: 1, target: null
-							eval: @btnClick
-							states: [{img: {name: 'menuEva', x: 0, y: 0, align: 'bc'}}]
-						}
-						{
-							type: 'btn', id: 'btn4', x: 550, y: 290, index: 1, target: null
+							type: 'btn', id: 'btn2', x: 250, y: 290, index: 'Jack', target: null
 							eval: @btnClick
 							states: [{img: {name: 'menuJack', x: 0, y: 0, align: 'bc'}}]
 						}
 						{
-							type: 'btn', id: 'btn5', x: 700, y: 290, index: 1, target: null
-							eval: @btnClick
-							states: [{img: {name: 'menuKevin', x: 0, y: 0, align: 'bc'}}]
-						}
-						{
-							type: 'btn', id: 'btn6', x: 180, y: 490, index: 1, target: null
-							eval: @btnClick
-							states: [{img: {name: 'menuMarissa', x: 0, y: 0, align: 'bc'}}]
-						}
-						{
-							type: 'btn', id: 'btn7', x: 330, y: 490, index: 1, target: null
+							type: 'btn', id: 'btn3', x: 400, y: 290, index: 'Renee', target: null
 							eval: @btnClick
 							states: [{img: {name: 'menuRenee', x: 0, y: 0, align: 'bc'}}]
 						}
 						{
-							type: 'btn', id: 'btn8', x: 480, y: 490, index: 1, target: null
+							type: 'btn', id: 'btn4', x: 550, y: 290, index: 'Ashton', target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuAshton', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn5', x: 700, y: 290, index: 'Eva', target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuEva', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn6', x: 180, y: 490, index: 'Kevin', target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuKevin', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn7', x: 330, y: 490, index: 'Marissa', target: null
+							eval: @btnClick
+							states: [{img: {name: 'menuMarissa', x: 0, y: 0, align: 'bc'}}]
+						}
+						{
+							type: 'btn', id: 'btn8', x: 480, y: 490, index: 'Sam', target: null
 							eval: @btnClick
 							states: [{img: {name: 'menuSam', x: 0, y: 0, align: 'bc'}}]
 						}
 						{
-							type: 'btn', id: 'btn9', x: 630, y: 490, index: 1, target: null
+							type: 'btn', id: 'btn9', x: 630, y: 490, index: 'Carla', target: null
 							eval: @btnClick
-							states: [{img: {name: 'menuWilson', x: 0, y: 0, align: 'bc'}}]
+							states: [{img: {name: 'menuCarla', x: 0, y: 0, align: 'bc'}}]
 						}
-						{type: 'spr', id: 'spAshton', imgs: ['spAshtonBig1','spAshtonBig2'], frames: null, x: 400, y:300, align: 'mc'}
-						{type: 'spr', id: 'spCarla', imgs: ['spCarlaBig1','spCarlaBig2'], frames: null, x: 400, y:300, align: 'mc'}
-						{type: 'spr', id: 'spEva', imgs: ['spEvaBig1','spEvaBig2'], frames: null, x: 400, y:300, align: 'mc'}
-						{type: 'spr', id: 'spJack', imgs: ['spJackBig1','spJackBig2'], frames: null, x: 400, y:300, align: 'mc'}
-						{type: 'spr', id: 'spKevin', imgs: ['spKevinBig1','spKevinBig2'], frames: null, x: 400, y:300, align: 'mc'}
-						{type: 'drg', id: 'spJack', name: 'ballonAshton', x: 400, y: 300, index: 'jack', align: 'mc', target: 'iwcpt1', eval: @drgDrop, afterSuccess: 'hide', afterFail: 'return'}
+						{type: 'img', id:'centerWilson', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaWilson', imgs: ['caja0Wilson','caja1Wilson'], frames: null, x: 530, y:320, align: 'mc'}
+						{type: 'spr', id: 'globoWilson', imgs: ['globo0Wilson','globo1Wilson'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerJack', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaJack', imgs: ['caja0Jack','caja1Jack'], frames: null, x: 530, y:320, align: 'mc'}
+						{type: 'spr', id: 'globoJack', imgs: ['globo0Jack','globo1Jack'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerRenee', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaRenee', imgs: ['caja0Renee','caja1Renee'], frames: null, x: 530, y:320, align: 'mc'}
+						{type: 'spr', id: 'globoRenee', imgs: ['globo0Renee','globo1Renee'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerAshton', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaAshton', imgs: ['caja0Ashton','caja1Ashton'], frames: null, x: 530, y:340, align: 'mc'}
+						{type: 'spr', id: 'globoAshton', imgs: ['globo0Ashton','globo1Ashton'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerEva', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaEva', imgs: ['caja0Eva','caja1Eva'], frames: null, x: 530, y:350, align: 'mc'}
+						{type: 'spr', id: 'globoEva', imgs: ['globo0Eva','globo1Eva'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerKevin', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaKevin', imgs: ['caja0Kevin','caja1Kevin'], frames: null, x: 530, y:320, align: 'mc'}
+						{type: 'spr', id: 'globoKevin', imgs: ['globo0Kevin','globo1Kevin'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerMarissa', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaMarissa', imgs: ['caja0Marissa','caja1Marissa'], frames: null, x: 530, y:320, align: 'mc'}
+						{type: 'spr', id: 'globoMarissa', imgs: ['globo0Marissa','globo1Marissa'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerSam', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaSam', imgs: ['caja0Sam','caja1Sam'], frames: null, x: 530, y:340, align: 'mc'}
+						{type: 'spr', id: 'globoSam', imgs: ['globo0Sam','globo1Sam'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'img', id:'centerCarla', x: 400, y:350, align: 'mc'}
+						{type: 'spr', id: 'cajaCarla', imgs: ['caja0Carla','caja1Carla'], frames: null, x: 530, y:380, align: 'mc'}
+						{type: 'spr', id: 'globoCarla', imgs: ['globo0Carla','globo1Carla'], frames: null, x: 250, y:350, align: 'mc'}
+						{type: 'drg', id: 'imageWilsonDragble', x: 50, y: 230, index: 'wilson', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageJackDragble', x: 140, y: 200, index: 'jack', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageSamDragble', x: 230, y: 170, index: 'sam', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageReneeDragble', x: 320, y: 170, index: 'renee', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageKevinDragble', x: 410, y: 170, index: 'kevin', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageMarissaDragble', x: 500, y: 170, index: 'marissa', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageEvaDragble', x: 590, y: 170, index: 'eva', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageAshtonDragble', x: 680, y: 200, index: 'ashton', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'imageCarlaDragble', x: 770, y: 230, index: 'carla', align: 'mc', target: ['globoWilson','globoJack','globoRenee','globoAshton','globoEva','globoKevin','globoMarissa','globoSam','globoCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonReneeDragble', x: 150, y: 520, index: 'renee', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonSamDragble', x: 290, y: 520, index: 'sam', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonWilsonDragble', x: 430, y: 520, index: 'wilson', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonKevinDragble', x: 570, y: 520, index: 'kevin', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonJackDragble', x: 710, y: 520, index: 'jack', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonAshtonDragble', x: 220, y: 565, index: 'ashton', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonMarissaDragble', x: 360, y: 565, index: 'marissa', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonCarlaDragble', x: 500, y: 565, index: 'carla', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{type: 'drg', id: 'ballonEvaDragble', x: 640, y: 565, index: 'eva', align: 'mc', target: ['cajaWilson','cajaJack','cajaRenee','cajaAshton','cajaEva','cajaKevin','cajaMarissa','cajaSam','cajaCarla'], eval: @drgDrop, afterSuccess: 'origin', afterFail: 'return'}
+						{
+							type: 'btn', id: 'repeat', x: 230, y: 460, alpha: 0, isRepeat: true
+							states: [{img: {name: 'btnrepeat', x: 0, y: 0, align: 'bc'}}]
+						}
 					]	
 					groups: [
 						{
-							type: 'grp', id: 'grp_sprites'
+							type: 'grp', id:'grp_center', invisible: true
 							group: [
-								'spAshton'
-								''
+								'centerWilson'
+								'centerJack'
+								'centerSam'
+								'centerRenee'
+								'centerKevin'
+								'centerMarissa'
+								'centerEva'
+								'centerAshton'
+								'centerCarla'
 							]
 						}
 						{
-							type: 'grp', id: 'grp_btn'
+							type: 'grp', id:'grp_caja', invisible: true
+							group: [
+								'cajaWilson'
+								'cajaJack'
+								'cajaSam'
+								'cajaRenee'
+								'cajaKevin'
+								'cajaMarissa'
+								'cajaEva'
+								'cajaAshton'
+								'cajaCarla'
+							]
+						}
+						{
+							type: 'grp', id:'grp_globo', invisible: true
+							group: [
+								'globoWilson'
+								'globoJack'
+								'globoSam'
+								'globoRenee'
+								'globoKevin'
+								'globoMarissa'
+								'globoEva'
+								'globoAshton'
+								'globoCarla'
+							]
+						}
+						{
+							type: 'grp', id: 'grp_drags', invisible: true
+							group: [
+								'imageWilsonDragble'
+								'imageJackDragble'
+								'imageSamDragble'
+								'imageReneeDragble'
+								'imageKevinDragble'
+								'imageMarissaDragble'
+								'imageEvaDragble'
+								'imageAshtonDragble'
+								'imageCarlaDragble'
+								'ballonReneeDragble'
+								'ballonSamDragble'
+								'ballonWilsonDragble'
+								'ballonKevinDragble'
+								'ballonJackDragble'
+								'ballonAshtonDragble'
+								'ballonMarissaDragble'
+								'ballonCarlaDragble'
+								'ballonEvaDragble'
+							]
+						}
+						{
+							type: 'grp', id: 'grp_buttons', invisible: true
 							group: [
 								'btn1'
 								'btn2'

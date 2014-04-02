@@ -37,7 +37,7 @@ class U7A6 extends Oda
 		@game = 
 			header: 'head'
 			instructions: {x: 40, y: 100, states: [{text:'Click on the numbers, unscramble the answers and find them in the word search.', sound:'s/instructions', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#333', bimg: 'c2', bcolor: '#333'}
+			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#0096DB', bimg: 'c2', bcolor: '#BFD951'}
 			scenes:[
 				{
 					answers: {
@@ -254,13 +254,13 @@ class U7A6 extends Oda
 						{type: 'txt', id: 'calculator', text:'calculator', x: 270, y: 555, font:'18px Quicksand', align: 'center', lineWidth: 250}
 						{type: 'img', name:'ln1', id: 'line', x: 170, y: 475, align:'mc'}
 						{type: 'img', name:'ln2', id: 'line', x: 290, y: 505, align:'mc'}
-						{type: 'img', name:'ln3', id: 'line', x: 430, y: 475, align:'mc'}
-						{type: 'img', name:'ln4', id: 'line', x: 160, y: 505, align:'mc'}
-						{type: 'img', name:'ln5', id: 'line', x: 290, y: 505, align:'mc'}
-						{type: 'img', name:'ln6', id: 'line', x: 420, y: 505, align:'mc'}
-						{type: 'img', name:'ln7', id: 'line', x: 150, y: 535, align:'mc'}
-						{type: 'img', name:'ln8', id: 'line', x: 280, y: 535, align:'mc'}
-						{type: 'img', name:'ln9', id: 'line', x: 410, y: 535, align:'mc'}
+						{type: 'img', name:'ln3', id: 'line', x: 160, y: 505, align:'mc'}
+						{type: 'img', name:'ln4', id: 'line', x: 420, y: 505, align:'mc'}
+						{type: 'img', name:'ln5', id: 'line', x: 150, y: 535, align:'mc'}
+						{type: 'img', name:'ln6', id: 'line', x: 300, y: 475, align:'mc'}
+						{type: 'img', name:'ln7', id: 'line', x: 280, y: 535, align:'mc'}
+						{type: 'img', name:'ln8', id: 'line', x: 410, y: 535, align:'mc'}
+						{type: 'img', name:'ln9', id: 'line', x: 430, y: 475, align:'mc'}
 						{type: 'img', name:'ln10', id: 'line', x: 270, y: 565, align:'mc'}
 					]	
 					groups: [

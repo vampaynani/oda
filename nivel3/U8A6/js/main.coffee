@@ -86,6 +86,8 @@ class U8A6 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Click on the correct options.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 20, 0
+		@library.score.txtCount.color = "#0A9BDD"
+		@library.score.txtTotal.color = "#FE008F"
 		@setQuestion(0).introEvaluation()
 	setQuestion: (i) ->
 		question = new createjs.Container()
@@ -187,7 +189,7 @@ class U8A6 extends Oda
 		@library[@preguntas[i].opcionTres].addEventListener 'click', @evaluateAnswer
 		@
 	evaluateAnswer: (e) =>
-		@answer = e.target
+		@answer = e.currentTarget
 		if @answer.index is @preguntas[@index].respuesta
 			createjs.Sound.play 'good'
 			if @intento is 0

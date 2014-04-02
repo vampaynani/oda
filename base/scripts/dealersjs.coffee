@@ -67,24 +67,36 @@ window.d2oda.behaviors ?= class Behaviors
 	Behaviors
 
 window.d2oda.actions ?= class Actions
-	@fadeOut = ->
+	@fadeOut = (ignoreY = false, ignoreCurrentAlpha = false) ->
 		TweenMax.killTweensOf @
 		TweenLite.killTweensOf @
-		if @alpha is 0
-			@y -= 20
-			TweenLite.from @, 0.5, {alpha: 1, y: @y + 20} 
+		if @alpha is 0 and ignoreCurrentAlpha is false
+			if ignoreY
+				TweenLite.from @, 0.5, {alpha: 1}
+			else
+				@y -= 20
+				TweenLite.from @, 0.5, {alpha: 1, y: @y + 20}
 		else
-			@y += 20 
-			TweenLite.to @, 0.5, {alpha: 0, y: @y - 20}
-	@fadeIn = ->
+			if ignoreY
+				TweenLite.to @, 0.5, {alpha: 0}
+			else
+				@y += 20 
+				TweenLite.to @, 0.5, {alpha: 0, y: @y - 20}
+	@fadeIn = (ignoreY = false, ignoreCurrentAlpha = false) ->
 		TweenMax.killTweensOf @
 		TweenLite.killTweensOf @
-		if @alpha is 1
-			@y -= 20
-			TweenLite.from @, 0.5, {alpha: 0, y: @y + 20} 
+		if @alpha is 1 and ignoreCurrentAlpha is false
+			if ignoreY
+				TweenLite.from @, 0.5, {alpha: 0} 
+			else
+				@y -= 20
+				TweenLite.from @, 0.5, {alpha: 0, y: @y + 20}
 		else 
-			@y += 20
-			TweenLite.to @, 0.5, {alpha: 1, y: @y - 20}
+			if ignoreY
+				TweenLite.to @, 0.5, {alpha: 1}
+			else
+				@y += 20
+				TweenLite.to @, 0.5, {alpha: 1, y: @y - 20}
 	@pulse = (state=on) ->
 		TweenMax.killTweensOf @
 		TweenLite.killTweensOf @
@@ -144,7 +156,7 @@ window.d2oda.methods ?= class Methods
 		w = spriteImgs[0].width
 		h = spriteImgs[0].height
 		sprite = new createjs.SpriteSheet (images: spriteImgs, animations: anim, frames: {width: w, height: h})
-		animation = new createjs.BitmapAnimation sprite
+		animation = new createjs.Sprite sprite
 		animation.x = x
 		animation.y = y
 		animation.width = w
@@ -223,7 +235,6 @@ window.d2oda.evaluator ?= class Evaluator
 		createjs.Sound.play lib.scene.snd
 	@evaluateFinish = (target) ->
 		if lib[target].droptargets
-			console.log lib[target].droptargets
 			for drop in lib[target].droptargets
 				drop.showEvaluation()
 				if drop.complete
@@ -251,7 +262,6 @@ window.d2oda.evaluator ?= class Evaluator
 			if lib[dispatcher].index is droptarget.success
 				droptarget.update {complete: true}
 				failed = false
-			console.log lib[dispatcher].index, droptarget.success, failed
 		if failed
 			lib.scene.fail()
 			lib.hangman.current++
@@ -415,6 +425,7 @@ window.d2oda.evaluator ?= class Evaluator
 			target.parent.currentTarget++
 			if target.parent.currentTarget is target.parent.droptargets.length
 				target.parent.fadeOut()
+				target.parent.hideLabel()
 				lib.scene.success()
 		else
 			lib[dispatcher].afterFail()
@@ -448,7 +459,10 @@ window.d2oda.evaluator ?= class Evaluator
 		else
 			lib.scene.fail()
 	@evaluateShowChoose01 = (dispatcher, target) ->
-		console.log dispatcher, target
+		TweenMax.killTweensOf lib[dispatcher]
+		TweenLite.killTweensOf lib[dispatcher]
+		lib[dispatcher].alpha = 1
+		lib[dispatcher].scaleX = scaleY = 1
 		index  = lib[dispatcher].index - 1
 		if d2oda.utilities.isArray(target)
 			for t in target
@@ -721,6 +735,7 @@ class ComponentGroup
 		if opts.invisible
 			@setInvisible true, false
 	update: (opts) ->
+		console.log @name, opts
 		switch opts.type
 			when 'blinkAll'
 				for item in @group
@@ -728,6 +743,11 @@ class ComponentGroup
 			when 'pulseAll'
 				for item in @group
 					lib[item].pulse()
+			when 'pulse'
+				for item in @group
+					TweenMax.killTweensOf lib[item]
+					TweenLite.killTweensOf lib[item]
+				if opts.target then lib[opts.target].pulse()
 			when 'blink'
 				for item in @group
 					TweenMax.killTweensOf lib[item]
@@ -738,15 +758,26 @@ class ComponentGroup
 					TweenMax.killTweensOf lib[item]
 					TweenLite.killTweensOf lib[item]
 					lib[item].alpha = 0
-					if not opts.target then lib[item].fadeOut()
-				if opts.target then lib[opts.target].fadeIn()
+					if not opts.target
+						ignoreY = opts.ignoreY ? false
+						ignoreCurrentAlpha = opts.ignoreCurrentAlpha ? false
+						lib[item].fadeIn ignoreY, ignoreCurrentAlpha
+				if opts.target
+					ignoreY = opts.ignoreY ? false
+					ignoreCurrentAlpha = opts.ignoreCurrentAlpha ? false
+					lib[opts.target].fadeIn ignoreY, ignoreCurrentAlpha
 			when 'fadeOut'
 				for item in @group
 					TweenMax.killTweensOf lib[item]
 					TweenLite.killTweensOf lib[item]
-					lib[item].alpha = 1
-					if not opts.target then lib[item].fadeOut()
-				if opts.target then lib[opts.target].fadeOut()
+					if not opts.target
+						ignoreY = opts.ignoreY ? false
+						ignoreCurrentAlpha = opts.ignoreCurrentAlpha ? false
+						lib[item].fadeOut ignoreY, ignoreCurrentAlpha
+				if opts.target
+					ignoreY = opts.ignoreY ? false
+					ignoreCurrentAlpha = opts.ignoreCurrentAlpha ? false
+					lib[opts.target].fadeOut ignoreY, ignoreCurrentAlpha
 			when 'success'
 				@target = opts.targetGroup
 				@next = opts.nextGroup
@@ -1003,7 +1034,7 @@ class SpriteContainer extends Component
 		@y = opts.y
 		@scaleX = opts.scale ? 1
 		@scaleY = opts.scale ? 1
-		@sprite = @createSprite @name, opts.imgs, opts.frames, 0, 0, align
+		@sprite = @createSprite "sp_#{@name}", opts.imgs, opts.frames, 0, 0, align
 		@width = @sprite.width
 		@height = @sprite.height
 		@mouseEnabled = true
@@ -1024,11 +1055,12 @@ class SpriteContainer extends Component
 		@droptargets = [@sprite]
 		@success = opts.success
 		@storyboard = opts.storyboard
+		if opts.goto then @goto opts.goto
 		@observer.notify ComponentObserver.UPDATED
 	isComplete: ->
 		TweenLite.killTweensOf @
 		TweenMax.killTweensOf @
-		@alpha = 1
+		if @alpha isnt 0 then @alpha = 1
 		@sprite.currentFrame > 0
 
 class DragContainer extends Component
@@ -1061,7 +1093,7 @@ class DragContainer extends Component
 			when 'origin' then @afterSuccess = @setInOrigin
 		switch opts.afterFail
 			when 'hide' then @afterFail = @hide
-			when 'inplace' then @afterSuccess = @putInPlace
+			when 'inplace' then @afterFail = @putInPlace
 			when 'return' then @afterFail = @returnToPlace
 			when 'origin' then @afterFail = @setInOrigin
 		@add b, false
@@ -1111,8 +1143,13 @@ class DragContainer extends Component
 		for drop in @droptargets
 			pt = drop.globalToLocal oda.stage.mouseX, oda.stage.mouseY
 			if drop.hitTest pt.x, pt.y
-				target = drop
-				dropped = true
+				if drop instanceof createjs.Sprite
+					if drop.parent.alpha > 0
+						target = drop
+						dropped = true
+				else
+					target = drop
+					dropped = true
 		if dropped
 			d2oda.evaluator.evaluate @eval, @name, target
 			@dispatchEvent {type: 'dropped', drop: target}
@@ -1131,24 +1168,30 @@ class ButtonContainer extends Component
 		Module.extend @, d2oda.utilities
 		@x = opts.x
 		@y = opts.y
+		@txtFont = '20px Arial'
+		@txtColor = '#333'
+		@txtAlign = 'left'
 		@index = opts.index
 		@name = opts.name ? opts.id
 		@scale = opts.scale ? 1
 		@states = opts.states
 		@currentState = 0
+		@overTween = opts.overTween ? true
 		@setImageText @states[@currentState].img, @states[@currentState].txt
+		@alpha = opts.alpha ? 1
 		if @isArray opts.target 
 			@target = opts.target
 		else
 			@target = lib[opts.target]
 		if opts.target then @target = lib[opts.target]
-		@addEventListener 'mouseover', =>
-			if opts.overScale
-				TweenLite.to @, 0.5, {scaleX: opts.overScale, scaleY: opts.overScale}
-			else
-				TweenLite.to @, 0.5, {scaleX: 1.2, scaleY: 1.2}
-		@addEventListener 'mouseout', =>
-			TweenLite.to @, 0.5, {scaleX: @scale, scaleY: @scale}
+		if @overTween
+			@addEventListener 'mouseover', =>
+				if opts.overScale
+					TweenLite.to @, 0.5, {scaleX: opts.overScale, scaleY: opts.overScale}
+				else
+					TweenLite.to @, 0.5, {scaleX: 1.2, scaleY: 1.2}
+			@addEventListener 'mouseout', =>
+				TweenLite.to @, 0.5, {scaleX: @scale, scaleY: @scale}
 		@addEventListener 'click', =>
 			if opts.isRepeat
 				d2oda.evaluator.evaluate 'repeat'
@@ -1163,17 +1206,17 @@ class ButtonContainer extends Component
 			x = img.x ? 0
 			y = img.y ? 0
 			align = img.align ? ''
-			b = @createBitmap 'img', img.name, x, y, align
+			b = @createBitmap '#{@name}_img', img.name, x, y, align
 			if img.scale then b.scaleX = b.scaleY = img.scale
 			@add b, false
 		if txt
 			text = txt.text ? ''
-			font = txt.font ? '20px Arial'
-			color = txt.color ? '#333'
+			@txtFont = txt.font ? @txtFont
+			@txtColor = txt.color ? @txtColor
 			x = txt.x ? 0
 			y = txt.y ? 0
-			align = txt.align ? ''
-			t = @createText 'txt', text, font, color, x, y, align
+			@txtAlign = txt.align ? @txtAlign
+			t = @createText '#{@name}_txt', text, @txtFont, @txtColor, x, y, @txtAlign
 			if txt.lineWidth then t.lineWidth = txt.lineWidth
 			hit = new createjs.Shape()
 			hit.graphics.beginFill('#000').drawRect(-5, -3, t.getMeasuredWidth() + 10, t.getMeasuredHeight() + 6)
@@ -1494,8 +1537,12 @@ class PhraseCompleterContainer extends Component
 		@observer = new ComponentObserver()
 		@droptargets = new Array()
 		@textlist = new Array()
+	hideLabel: () ->
+		console.log @label
+		if @label isnt '' then TweenLite.to lib[@label], 0.5, {alpha:0}
 	update: (opts) ->
 		@removeAllChildren()
+		@label = opts.label ? ''
 		if opts.h2
 			align = opts.h2.align ? ''
 			h2 = @createText 'h2', opts.h2.text, @font, @color, opts.h2.x, opts.h2.y, align
@@ -1520,7 +1567,7 @@ class PhraseCompleterContainer extends Component
 				h = @createText 'txt', 'BLANK', @font, @fcolor, npos, 0
 				maxWidth = npos if npos > maxWidth
 				npos = 0
-				ypos += h.getMeasuredHeight()
+				ypos += h.getMeasuredHeight() + h.getMeasuredHeight() * 0.2
 			else
 				h = @createText 'txt', t, @font, @fcolor, npos, ypos
 				@textlist.push h
@@ -1528,7 +1575,6 @@ class PhraseCompleterContainer extends Component
 				npos += h.getMeasuredWidth() + @margin
 				maxWidth = npos if npos > maxWidth
 		@width = maxWidth
-		console.log @textlist
 		@setPosition @align
 		@observer.notify ComponentObserver.UPDATED
 		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
@@ -1697,9 +1743,11 @@ class WordSearchContainer extends Component
 		@observer.notify ComponentObserver.UPDATED
 		TweenLite.from @, 0.3, {alpha: 0, y: @y - 10}
 	isComplete: ->
+		complete = true
 		for word in @words
-			if word.complete is false then false
-		true
+			if word.complete is false
+				complete = false
+		complete
 
 class CrossWordsContainer extends Component
 	CrossWordsContainer.prototype = new createjs.Container()
@@ -1966,7 +2014,7 @@ class TextCompleterContainer extends Component
 		@x = x
 		@y = y
 		@success = opts.success ? opts.text
-		@text = @createText 'txt', opts.text, font, fcolor, 0, -5
+		@text = @createText 'txt', opts.text, font, fcolor, 0, -2
 		@width = opts.width ? @text.getMeasuredWidth()
 		@height = opts.height ? @text.getMeasuredHeight()
 		@complete = false
@@ -2050,7 +2098,7 @@ class LetterDragContainer extends Component
 			when 'origin' then @afterSuccess = @setInOrigin
 		switch opts.afterFail
 			when 'hide' then @afterFail = @hide
-			when 'inplace' then @afterSuccess = @putInPlace
+			when 'inplace' then @afterFail = @putInPlace
 			when 'return' then @afterFail = @returnToPlace
 			when 'origin' then @afterFail = @setInOrigin
 		hit = new createjs.Shape()
@@ -2096,7 +2144,6 @@ class LetterDragContainer extends Component
 	evaluateDrop: (e) ->
 		target = null
 		dropped = false
-		console.log 'drop'
 		for drop in @droptargets
 			pt = drop.globalToLocal oda.stage.mouseX, oda.stage.mouseY
 			if drop.hitTest pt.x, pt.y
@@ -2303,7 +2350,6 @@ class Scene extends Component
 		if stopSound then createjs.Sound.stop()
 		if plusOne then lib.score.plusOne()
 		step = @answers[@currentStep]
-		console.log step
 		if step && step.length > 0
 			for target in step
 				if target.name isnt 'snd' and target.name isnt 'global' and lib[target.name].isComplete() is false

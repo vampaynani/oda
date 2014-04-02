@@ -1,4 +1,4 @@
-class U7A4 extends Oda
+class U7A5 extends Oda
 	constructor: ->
 		manifest = [
 			{id: 'head', src: 'pleca1.png'}
@@ -98,6 +98,8 @@ class U7A4 extends Oda
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
 		@insertInstructions 'instructions', 'Complete the text with the verbs.', 40, 100
 		@addToMain new Score 'score', (@preload.getResult 'c1'), (@preload.getResult 'c2'), 20, 500, 8, 0
+		@library.score.txtCount.color = "#BFD951"
+		@library.score.txtTotal.color = "#0096DB"
 		@setCuento(1)#.introEvaluation()
 	setCuento: (scene) ->
 		cuento = new createjs.Container()
@@ -185,4 +187,4 @@ class U7A4 extends Oda
 		TweenLite.to @library['cuento'], 1, {alpha:0, y:@library['cuento'].y + 10}
 		TweenLite.to @library['bg'], 1, {alpha:0}
 		super
-	window.U7A4 = U7A4
+	window.U7A5 = U7A5

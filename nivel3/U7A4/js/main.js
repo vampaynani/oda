@@ -124,9 +124,9 @@ NEW ODA
           init: 0,
           total: 20,
           aimg: 'c1',
-          acolor: '#333',
+          acolor: '#0096DB',
           bimg: 'c2',
-          bcolor: '#333'
+          bcolor: '#BFD951'
         },
         scenes: [
           {

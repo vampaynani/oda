@@ -136,7 +136,6 @@ class U6A5 extends Oda
 		@scene = scene
 		nube = @createBitmap @game[scene - 1].nube.id, @game[scene - 1].nube.id, @game[scene - 1].nube.x, @game[scene - 1].nube.y
 		cuento.addChild nube
-		console.log @game[scene - 1].positions
 		for i in [1..@game[scene - 1].positions.length] by 1
 			m = @createSprite "sc#{i}", ["#{@game[scene - 1].positions[i - 1].id}",  "#{@game[scene - 1].positions[i - 1].id}b"],null, @game[scene - 1].positions[i - 1].x, @game[scene - 1].positions[i - 1].y 
 			hit = new createjs.Shape()
