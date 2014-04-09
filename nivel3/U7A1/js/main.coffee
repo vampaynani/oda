@@ -31,7 +31,7 @@ class U7A1 extends Oda
 		]
 		sounds = [
 			{src:'sounds/good.mp3', id:'good'}
-		    {src:'sounds/TU3_U6_A5_instructions.mp3', id:'instructions'}
+		    {src:'sounds/TU3_U7_A1_instructions.mp3', id:'instructions'}
 		    {src:'sounds/wrong.mp3', id:'wrong'}
 		]
 		@game = [
@@ -52,17 +52,13 @@ class U7A1 extends Oda
 				{id:'stubborn2', i:7}
 				{id:'vain', i:8}
 				{id:'vain2', i:8}
-				
 			]
-			
 		]
-
-
 		super null, manifest, sounds
 	setStage: ->
 		super
 		@insertBitmap 'header', 'head', stageSize.w / 2, 0, 'tc'
-		@insertInstructions 'instructions', 'Click on two cards and see if they match.', 40, 100
+		@insertInstructions 'instructions', 'Click on the cards and match the pictures and match the pictures with the adjectives.', 40, 100
 		#b1 = new Button 'game1btn', (@preload.getResult 'game1btn'), 1, 753, 460
 		#b2 = new Button 'game2btn', (@preload.getResult 'game2btn'), 2, 753, 505
 		#b3 = new Button 'game3btn', (@preload.getResult 'game3btn'), 3, 753, 550	
@@ -86,12 +82,11 @@ class U7A1 extends Oda
 		@cards = @shuffle @game[game - 1]
 		for h in [0..3]
 			for i in [0..3]
-				c = @createBitmap "carta#{game}", "carta#{game}", i*130, h*110, 'mc'
-				b = @createBitmap "cartab#{game}", @cards[j].id, i*130, h*110, 'mc'
+				c = @createBitmap "carta#{h}_#{i}", "carta#{game}", i*130, h*110, 'mc'
+				b = @createBitmap "cartab#{h}_#{i}", @cards[j].id, i*130, h*110, 'mc'
 				#b.scaleX = b.scaleY = 0.6
 				#c.scaleX = c.scaleY = 0.6
 				c.index = @cards[j].i
-				c.addEventListener 'click', @evaluateAnswer
 				juego.addChild b, c
 				@addToLibrary b, c
 				j++
@@ -105,10 +100,14 @@ class U7A1 extends Oda
 	introEvaluation: ->
 		super
 		TweenLite.from @library.header, 1, {y:-@library.header.height}
-		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5}
+		TweenLite.from @library.instructions, 1, {alpha :0, x: 0, delay: 0.5, onComplete: @playInstructions, onCompleteParams: [@]}
 		#TweenLite.from [@library.game1btn, @library.game2btn, @library.game3btn], 1, {alpha: 0, delay: 1, onComplete: @playInstructions, onCompleteParams: [@]}
 	initEvaluation: (e) =>
 		super
+		for h in [0..3]
+			for i in [0..3]
+				c = @library["carta#{h}_#{i}"]
+				c.addEventListener 'click', @evaluateAnswer
 		#@library.game1btn.blink()
 		#@library.game2btn.blink()
 		#@library.game3btn.blink()

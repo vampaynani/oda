@@ -95,7 +95,7 @@
           src: 'sounds/good.mp3',
           id: 'good'
         }, {
-          src: 'sounds/TU3_U6_A5_instructions.mp3',
+          src: 'sounds/TU3_U7_A1_instructions.mp3',
           id: 'instructions'
         }, {
           src: 'sounds/wrong.mp3',
@@ -161,7 +161,7 @@
     U7A1.prototype.setStage = function() {
       U7A1.__super__.setStage.apply(this, arguments);
       this.insertBitmap('header', 'head', stageSize.w / 2, 0, 'tc');
-      this.insertInstructions('instructions', 'Click on two cards and see if they match.', 40, 100);
+      this.insertInstructions('instructions', 'Click on the cards and match the pictures and match the pictures with the adjectives.', 40, 100);
       this.addToMain(new Score('score', this.preload.getResult('c1'), this.preload.getResult('c2'), 20, 500, 100, 0));
       this.library.score.txtCount.color = "#BFD951";
       this.library.score.txtTotal.color = "#0096DB";
@@ -184,10 +184,9 @@
       this.cards = this.shuffle(this.game[game - 1]);
       for (h = _i = 0; _i <= 3; h = ++_i) {
         for (i = _j = 0; _j <= 3; i = ++_j) {
-          c = this.createBitmap("carta" + game, "carta" + game, i * 130, h * 110, 'mc');
-          b = this.createBitmap("cartab" + game, this.cards[j].id, i * 130, h * 110, 'mc');
+          c = this.createBitmap("carta" + h + "_" + i, "carta" + game, i * 130, h * 110, 'mc');
+          b = this.createBitmap("cartab" + h + "_" + i, this.cards[j].id, i * 130, h * 110, 'mc');
           c.index = this.cards[j].i;
-          c.addEventListener('click', this.evaluateAnswer);
           juego.addChild(b, c);
           this.addToLibrary(b, c);
           j++;
@@ -217,12 +216,28 @@
       return TweenLite.from(this.library.instructions, 1, {
         alpha: 0,
         x: 0,
-        delay: 0.5
+        delay: 0.5,
+        onComplete: this.playInstructions,
+        onCompleteParams: [this]
       });
     };
 
     U7A1.prototype.initEvaluation = function(e) {
-      return U7A1.__super__.initEvaluation.apply(this, arguments);
+      var c, h, i, _i, _results;
+      U7A1.__super__.initEvaluation.apply(this, arguments);
+      _results = [];
+      for (h = _i = 0; _i <= 3; h = ++_i) {
+        _results.push((function() {
+          var _j, _results1;
+          _results1 = [];
+          for (i = _j = 0; _j <= 3; i = ++_j) {
+            c = this.library["carta" + h + "_" + i];
+            _results1.push(c.addEventListener('click', this.evaluateAnswer));
+          }
+          return _results1;
+        }).call(this));
+      }
+      return _results;
     };
 
     U7A1.prototype.clearButtons = function() {};

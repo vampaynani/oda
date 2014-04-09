@@ -644,6 +644,7 @@ LIBRARY
           }
         }
         if (complete) {
+          lib.hangman.current = 0;
           return lib.scene.success();
         }
       };
@@ -1402,7 +1403,7 @@ LIBRARY
 
     Game.prototype.initialize = function(game) {
       this.observer = new GameObserver();
-      return this.setHeader(game.header).setInstructions(game.instructions).setScore(game.score).setScenes(game.scenes);
+      return this.setHeader(game.header).setScenes(game.scenes).setInstructions(game.instructions).setScore(game.score);
     };
 
     Game.prototype.setHeader = function(header) {
@@ -1770,6 +1771,7 @@ LIBRARY
       this.instructionsComplete = __bind(this.instructionsComplete, this);
       this.prev = __bind(this.prev, this);
       this.next = __bind(this.next, this);
+      this.set = __bind(this.set, this);
       this.initialize(opts);
     }
 
@@ -1802,6 +1804,16 @@ LIBRARY
         snd.addEventListener('complete', this.instructionsComplete);
         return snd;
       }
+    };
+
+    Instructions.prototype.set = function(state) {
+      this.currentState = state;
+      this.label.text = this.states[this.currentState].text;
+      TweenLite.from(this, 0.5, {
+        alpha: 0,
+        x: this.x - 20
+      });
+      return this.playSound();
     };
 
     Instructions.prototype.next = function() {
@@ -2397,9 +2409,10 @@ LIBRARY
     };
 
     ChooseContainer.prototype.update = function(opts) {
-      var bmp, hito1, hito2, lineWidth, opt1, opt2,
+      var bmp, hito1, hito2, hito3, lineWidth, opt1, opt2, opt3, y, _ref2, _ref3,
         _this = this;
       this.removeAllChildren();
+      console.log(opts);
       switch (opts.type) {
         case 'img':
           opt1 = this.createBitmap("" + this.name + "_opt1", opts.opt1, 0, 100, 'tr');
@@ -2432,6 +2445,39 @@ LIBRARY
           hito2.graphics.beginFill('#000').drawRect(-5, -3, opt2.getMeasuredWidth() + 10, opt2.getMeasuredHeight() + 6);
           opt2.hitArea = hito2;
           opt2.index = 2;
+          break;
+        case 'mtxt':
+          if (opts.img) {
+            bmp = this.insertBitmap("" + this.name + "_img", opts.img.name, opts.img.x, opts.img.y, 'tc');
+            if (opts.img.scale) {
+              bmp.scaleY = bmp.scaleX = opts.img.scale;
+            }
+          }
+          lineWidth = this.bullets.lineWidth ? this.bullets.lineWidth : 200;
+          opt1 = this.createText("" + this.name + "_opt1", opts.opt1, this.bullets.font, this.bullets.color, 0, 300, 'center');
+          if (this.bullets.lineWidth) {
+            opt1.lineWidth = this.bullets.lineWidth;
+          }
+          hito1 = new createjs.Shape();
+          hito1.graphics.beginFill('#000').drawRect(-opt1.getMeasuredWidth() / 2 - 5, -3, opt1.getMeasuredWidth() + 10, opt1.getMeasuredHeight() + 6);
+          opt1.hitArea = hito1;
+          opt1.index = 1;
+          opt2 = this.createText("" + this.name + "_opt2", opts.opt2, this.bullets.font, this.bullets.color, 0, opt1.y + opt1.getMeasuredHeight() + 10, 'center');
+          if (this.bullets.lineWidth) {
+            opt2.lineWidth = this.bullets.lineWidth;
+          }
+          hito2 = new createjs.Shape();
+          hito2.graphics.beginFill('#000').drawRect(-opt2.getMeasuredWidth() / 2 - 5, -3, opt2.getMeasuredWidth() + 10, opt2.getMeasuredHeight() + 6);
+          opt2.hitArea = hito2;
+          opt2.index = 2;
+          opt3 = this.createText("" + this.name + "_opt3", opts.opt3, this.bullets.font, this.bullets.color, 0, opt2.y + opt2.getMeasuredHeight() + 10, 'center');
+          if (this.bullets.lineWidth) {
+            opt3.lineWidth = this.bullets.lineWidth;
+          }
+          hito3 = new createjs.Shape();
+          hito3.graphics.beginFill('#000').drawRect(-opt3.getMeasuredWidth() / 2 - 5, -3, opt3.getMeasuredWidth() + 10, opt3.getMeasuredHeight() + 6);
+          opt3.hitArea = hito3;
+          opt3.index = 3;
       }
       this.add(opt1);
       opt1.addEventListener('mouseover', function() {
@@ -2461,11 +2507,29 @@ LIBRARY
       opt2.addEventListener('click', function() {
         return d2oda.evaluator.evaluate(_this["eval"], "" + _this.name + "_opt2", _this.target);
       });
+      if (opt3) {
+        this.add(opt3);
+        opt3.addEventListener('mouseover', function() {
+          return TweenLite.to(opt3, 0.5, {
+            alpha: 0.5
+          });
+        });
+        opt3.addEventListener('mouseout', function() {
+          return TweenLite.to(opt3, 0.5, {
+            alpha: 1
+          });
+        });
+        opt3.addEventListener('click', function() {
+          return d2oda.evaluator.evaluate(_this["eval"], "" + _this.name + "_opt3", _this.target);
+        });
+      }
       if (opts.label) {
-        this.insertText("" + this.name + "_label", opts.label, this.label.font, this.label.color, 0, 40, 'center');
+        y = (_ref2 = opts.ly) != null ? _ref2 : 40;
+        this.insertText("" + this.name + "_label", opts.label, this.label.font, this.label.color, 0, y, 'center');
       }
       if (opts.caption) {
-        this.insertText("" + this.name + "_caption", opts.caption, this.caption.font, this.caption.color, 0, 360, 'center');
+        y = (_ref3 = opts.cy) != null ? _ref3 : 360;
+        this.insertText("" + this.name + "_caption", opts.caption, this.caption.font, this.caption.color, 0, y, 'center');
       }
       return TweenLite.from(this, 0.5, {
         alpha: 0
@@ -4401,6 +4465,9 @@ LIBRARY
                   snd.addEventListener('complete', this.sndsuccess);
                 }
                 _results.push(false);
+                break;
+              case 'instructions':
+                _results.push(lib.instructions.set(target.opts.state));
                 break;
               default:
                 _results.push(lib[target.name].update(target.opts));

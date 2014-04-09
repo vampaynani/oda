@@ -110,10 +110,6 @@ NEW ODA
               text: 'Write the past simple form of the verbs.',
               sound: 's/instructions',
               played: false
-            }, {
-              text: 'Complete the text with the verbs.',
-              sound: 's/instructions2',
-              played: false
             }
           ]
         },
@@ -122,7 +118,7 @@ NEW ODA
           x: 20,
           y: 500,
           init: 0,
-          total: 20,
+          total: 10,
           aimg: 'c1',
           acolor: '#0096DB',
           bimg: 'c2',

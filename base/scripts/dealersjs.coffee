@@ -274,7 +274,9 @@ window.d2oda.evaluator ?= class Evaluator
 			complete = true
 			for droptarget in lib[target].droptargets
 				complete = false if not droptarget.complete
-		if complete then lib.scene.success()
+		if complete
+			lib.hangman.current = 0
+			lib.scene.success()
 	@evaluateShowClick01 = (dispatcher, target) ->
 		lib[target].update {type:'fadeIn', target: lib[dispatcher].index}
 	@evaluateWordDrop01 = (dispatcher, target) ->
@@ -689,7 +691,7 @@ class Game
 	Game::EventDispatcher_initialize = Game::initialize
 	Game::initialize = (game) ->
 		@observer = new GameObserver()
-		@setHeader(game.header).setInstructions(game.instructions).setScore(game.score).setScenes(game.scenes)
+		@setHeader(game.header).setScenes(game.scenes).setInstructions(game.instructions).setScore(game.score)
 	setHeader: (header) ->
 		lib.mainContainer.insertBitmap 'header', header, d2oda.stage.w / 2, 0, 'tc'
 		TweenLite.from lib.header, 0.5, {alpha: 0, y: lib.header.y - 20}
@@ -902,6 +904,11 @@ class Instructions extends Component
 			snd = createjs.Sound.play @states[@currentState].sound
 			snd.addEventListener 'complete', @instructionsComplete
 			snd
+	set: (state) =>
+		@currentState = state
+		@label.text = @states[@currentState].text
+		TweenLite.from @, 0.5, {alpha: 0, x: @x - 20}
+		@playSound()
 	next: =>
 		@currentState++
 		if @states.length > 1 and @currentState < @states.length
@@ -1258,6 +1265,7 @@ class ChooseContainer extends Component
 		@bullets = opts.bullets
 	update: (opts) ->
 		@removeAllChildren()
+		console.log opts
 		switch opts.type
 			when 'img'
 				opt1 = @createBitmap "#{@name}_opt1", opts.opt1, 0, 100, 'tr'
@@ -1286,6 +1294,33 @@ class ChooseContainer extends Component
 				hito2.graphics.beginFill('#000').drawRect(-5, -3, opt2.getMeasuredWidth() + 10, opt2.getMeasuredHeight() + 6)
 				opt2.hitArea = hito2
 				opt2.index = 2
+			when 'mtxt'
+				if opts.img
+					bmp = @insertBitmap "#{@name}_img", opts.img.name, opts.img.x, opts.img.y, 'tc'
+					if opts.img.scale then bmp.scaleY = bmp.scaleX = opts.img.scale
+
+				lineWidth = if @bullets.lineWidth then @bullets.lineWidth else 200
+
+				opt1 = @createText "#{@name}_opt1", opts.opt1, @bullets.font, @bullets.color, 0, 300, 'center'
+				if @bullets.lineWidth then opt1.lineWidth = @bullets.lineWidth
+				hito1 = new createjs.Shape()
+				hito1.graphics.beginFill('#000').drawRect(-opt1.getMeasuredWidth()/2 - 5, -3, opt1.getMeasuredWidth() + 10, opt1.getMeasuredHeight() + 6)
+				opt1.hitArea = hito1
+				opt1.index = 1
+
+				opt2 = @createText "#{@name}_opt2", opts.opt2, @bullets.font, @bullets.color, 0, opt1.y + opt1.getMeasuredHeight() + 10, 'center'
+				if @bullets.lineWidth then opt2.lineWidth = @bullets.lineWidth
+				hito2 = new createjs.Shape()
+				hito2.graphics.beginFill('#000').drawRect(-opt2.getMeasuredWidth()/2 - 5, -3, opt2.getMeasuredWidth() + 10, opt2.getMeasuredHeight() + 6)
+				opt2.hitArea = hito2
+				opt2.index = 2
+
+				opt3 = @createText "#{@name}_opt3", opts.opt3, @bullets.font, @bullets.color, 0, opt2.y + opt2.getMeasuredHeight() + 10, 'center'
+				if @bullets.lineWidth then opt3.lineWidth = @bullets.lineWidth
+				hito3 = new createjs.Shape()
+				hito3.graphics.beginFill('#000').drawRect(-opt3.getMeasuredWidth()/2 - 5, -3, opt3.getMeasuredWidth() + 10, opt3.getMeasuredHeight() + 6)
+				opt3.hitArea = hito3
+				opt3.index = 3
 				
 		@add opt1
 		opt1.addEventListener 'mouseover', =>
@@ -1303,8 +1338,21 @@ class ChooseContainer extends Component
 		opt2.addEventListener 'click', =>
 			d2oda.evaluator.evaluate @eval, "#{@name}_opt2", @target
 
-		if opts.label then @insertText "#{@name}_label", opts.label, @label.font, @label.color, 0, 40, 'center'
-		if opts.caption then @insertText "#{@name}_caption", opts.caption, @caption.font, @caption.color, 0, 360, 'center'
+		if opt3
+			@add opt3
+			opt3.addEventListener 'mouseover', =>
+				TweenLite.to opt3, 0.5, {alpha: 0.5}
+			opt3.addEventListener 'mouseout', =>
+				TweenLite.to opt3, 0.5, {alpha: 1}
+			opt3.addEventListener 'click', =>
+				d2oda.evaluator.evaluate @eval, "#{@name}_opt3", @target
+
+		if opts.label
+			y = opts.ly ? 40
+			@insertText "#{@name}_label", opts.label, @label.font, @label.color, 0, y, 'center'
+		if opts.caption
+			y = opts.cy ? 360
+			@insertText "#{@name}_caption", opts.caption, @caption.font, @caption.color, 0, y, 'center'
 		TweenLite.from @, 0.5, {alpha: 0}
 	isComplete: ->
 		true
@@ -2386,6 +2434,8 @@ class Scene extends Component
 							if target.opts.successoncomplete
 								snd.addEventListener 'complete', @sndsuccess
 							false
+						when 'instructions'
+							lib.instructions.set target.opts.state
 						else
 							lib[target.name].update target.opts
 	nextStep: ->

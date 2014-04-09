@@ -37,8 +37,8 @@ class U7A4 extends Oda
 		]
 		@game = 
 			header: 'head'
-			instructions: {x: 40, y: 100, states: [{text:'Write the past simple form of the verbs.', sound:'s/instructions', played: false},{text:'Complete the text with the verbs.', sound:'s/instructions2', played: false}]}
-			score:{type: 'points', x:20, y:500, init: 0, total: 20, aimg: 'c1', acolor: '#0096DB', bimg: 'c2', bcolor: '#BFD951'}
+			instructions: {x: 40, y: 100, states: [{text:'Write the past simple form of the verbs.', sound:'s/instructions', played: false}]}
+			score:{type: 'points', x:20, y:500, init: 0, total: 10, aimg: 'c1', acolor: '#0096DB', bimg: 'c2', bcolor: '#BFD951'}
 			scenes:[
 				{
 					answers: {
